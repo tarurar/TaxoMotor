@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.Services", "TM.Services\
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TM.Database", "TM.Database\TM.Database.sqlproj", "{BACCA670-01D0-44B2-B339-C03879D71955}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.DatabaseModel", "TM.DatabaseModel\TM.DatabaseModel.csproj", "{73829979-75D4-4DD6-B37C-DA0ED1AC0EEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{BACCA670-01D0-44B2-B339-C03879D71955}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BACCA670-01D0-44B2-B339-C03879D71955}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BACCA670-01D0-44B2-B339-C03879D71955}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{73829979-75D4-4DD6-B37C-DA0ED1AC0EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73829979-75D4-4DD6-B37C-DA0ED1AC0EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73829979-75D4-4DD6-B37C-DA0ED1AC0EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73829979-75D4-4DD6-B37C-DA0ED1AC0EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

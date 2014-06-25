@@ -43,6 +43,7 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.0.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -64,7 +65,9 @@
   <ItemGroup>
     <Content Include="CoordinateV5\CoordinateV5Service.svc" />
     <Content Include="CoordinateV5\Sample\message.xml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoordinateV5\CoordinateV5Model.cs" />
@@ -81,6 +84,8 @@
     <Compile Include="CoordinateV5\Impl\SendTasks.cs" />
     <Compile Include="CoordinateV5\Impl\SetFilesAndStatus.cs" />
     <Compile Include="CoordinateV5\Impl\SetFilesAndStatuses.cs" />
+    <Compile Include="CoordinateV5\ServiceImplementation.cs" />
+    <Compile Include="DatabaseFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +109,12 @@
     <None Include="CoordinateV5\Wsdl\CoordinateV5.xsd">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TM.DatabaseModel\TM.DatabaseModel.csproj">
+      <Project>{73829979-75d4-4dd6-b37c-da0ed1ac0eec}</Project>
+      <Name>TM.DatabaseModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

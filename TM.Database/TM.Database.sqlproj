@@ -109,7 +109,7 @@
   <ItemGroup>
     <Build Include="IncomingRequestXML.sql" />
     <Build Include="fn_GetCoordinateV5RequestMessageId.sql" />
-    <Build Include="Sample\IncomingRequestXML_Insert.sql" />
+    <None Include="Sample\IncomingRequestXML_Insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
