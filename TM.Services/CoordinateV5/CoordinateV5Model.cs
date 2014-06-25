@@ -5,4431 +5,1052 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace TM.Services.CoordinateV5
 {
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class GetRequestListInMessage : MessageBase
+    [MessageContract]
+    public abstract class MessageBase
+    {
+        
+    }
+
+    [Serializable]
+    [XmlRoot(ElementName = "GetRequestListOutMessage", Namespace = Namespace.ServiceNamespace)]
+    public class GetRequestListOutMessage : MessageBase
+    {
+        [XmlArray("Requests")]
+        [XmlArrayItem("Request")]
+        public SmallRequestInfo[] Requests { get; set; }
+    }
+
+    [Serializable]
+    [XmlRoot(ElementName = "GetRequestListInMessage")]
+    public class GetRequestListInMessage : MessageBase
+    {
+        [XmlElement("FromDate", Order = 0)]
+        public DateTime FromDate { get; set; }
+
+        [XmlElement("ToDate", Order = 1)]
+        public DateTime ToDate { get; set; }
+
+        [XmlElement("ServiceCode", Order = 2)]
+        public string ServiceCode { get; set; }
+    }
+
+    [Serializable]
+    [XmlRoot(ElementName = "GetRequestsOutMessage", Namespace = Namespace.ServiceNamespace)]
+    public class GetRequestsOutMessage : MessageBase
+    {
+        [XmlArray("Requests")]
+        [XmlArrayItem("Request")]
+        public RequestInfo[] Requests { get; set; }
+    }
+
+    [Serializable]
+    [XmlRoot(ElementName = "GetRequestsInMessage")]
+    public class GetRequestsInMessage : MessageBase
+    {
+        [XmlElement("FromDate", Order = 0)]
+        public DateTime FromDate { get; set; }
+
+        [XmlElement("ToDate", Order = 1)]
+        public DateTime ToDate { get; set; }
+
+        [XmlElement("ServiceCode", Order = 2)]
+        public string ServiceCode { get; set; }
+
+        [XmlArray("ServiceNumbers", Order = 3)]
+        //[XmlArrayItem("ServiceNumber")]
+        public ServiceNumberStatusesOnly[] ServiceNumbers { get; set; }
+    }
+
+    [MessageContract(IsWrapped = false)]
+    public class CoordinateMessage : MessageBase
+    {
+        [MessageBodyMember]
+        public CoordinateData Message { get; set; }
+
+        [MessageHeader]
+        public Headers ServiceHeader { get; set; }
+    }
+
+    [MessageContract(IsWrapped = false)]
+    public class CoordinateTaskMessage : MessageBase
+    {
+        [MessageBodyMember]
+        public CoordinateTaskData TaskMessage { get; set; }
+
+        [MessageHeader]
+        public Headers ServiceHeader { get; set; }
+    }
+
+    [MessageContract(IsWrapped = false)]
+    public class CoordinateStatusMessage : MessageBase
+    {
+        [MessageBodyMember]
+        public CoordinateStatusData StatusMessage { get; set; }
+
+        [MessageHeader]
+        public Headers ServiceHeader { get; set; }
+    }
+
+    [MessageContract(IsWrapped = true)]
+    public class ErrorMessage
+    {
+        [MessageHeader]
+        public Headers ServiceHeader { get; set; }
+
+        [MessageBodyMember]
+        public ErrorMessageData Error { get; set; }
+    }
+
+    [MessageContract(IsWrapped = false)]
+    public class SendRequestsMessage : MessageBase
+    {
+        [MessageBodyMember]
+        public CoordinateData[] RequestsMessage { get; set; }
+
+        [MessageHeader]
+        public Headers ServiceHeader { get; set; }
+    }
+
+    [MessageContract(IsWrapped = false)]
+    public class SendTasksMessage : MessageBase
+    {
+        [MessageBodyMember]
+        public CoordinateTaskData[] TasksMessage { get; set; }
+
+        [MessageHeader]
+        public Headers ServiceHeader { get; set; }
+    }
+
+    [MessageContract(IsWrapped = false)]
+    public class SetFilesAndStatusesMessage : MessageBase
+    {
+        [MessageBodyMember]
+        public SetFilesAndStatusesData[] StatusesMessage { get; set; }
+
+        [MessageHeader]
+        public Headers ServiceHeader { get; set; }
+    }
+
+    public class SetFilesAndStatusesData
+    {
+        public string ServiceNumber { get; set; }
+
+        public string RequestId { get; set; }
+
+        public RequestStatus[] Statuses { get; set; }
+
+        public RequestResult Result { get; set; }
+
+        public ServiceDocument[] Documents { get; set; }
+
+        public RequestContact[] Contacts { get; set; }
+    }
+
+    public class RequestContact : BaseDeclarant
+    {
+        [XmlElement(Order = 0)]
+        public string Id { get; set; }
+
+        [XmlElementAttribute(Order = 1)]
+        public string LastName { get; set; }
+
+        // Фамилия
+
+        [XmlElementAttribute(Order = 2)]
+        public string FirstName { get; set; }
+
+        // Имя
+
+        [XmlElementAttribute(Order = 3)]
+        public string MiddleName { get; set; }
+
+        // Отчество
+
+        [XmlElementAttribute(Order = 4)]
+        public GenderType? Gender { get; set; }
+
+        [XmlElementAttribute(Order = 5)]
+        public DateTime? BirthDate { get; set; }
+
+        // Дата рождения
+
+        [XmlElementAttribute(Order = 6)]
+        public string Snils { get; set; }
+
+        // СНИЛС
+
+        [XmlElementAttribute(Order = 7)]
+        public string Inn { get; set; }
+
+        // ИНН
+
+        [XmlElementAttribute(Order = 8)]
+        public Address RegAddress { get; set; }
+
+        // Адрес
+
+        [XmlElementAttribute(Order = 9)]
+        public Address FactAddress { get; set; }
+
+        [XmlElementAttribute(Order = 10)]
+        public string MobilePhone { get; set; }
+
+        // Мобильный телефон
+
+        [XmlElementAttribute(Order = 11)]
+        public string WorkPhone { get; set; }
+
+        // Рабочий телефон 
+
+        [XmlElementAttribute(Order = 12)]
+        public string HomePhone { get; set; }
+
+        // Домашний телефон
+
+        [XmlElementAttribute(Order = 13)]
+        public string EMail { get; set; }
+
+        // E-Mail
+
+        [XmlElementAttribute(Order = 14)]
+        public string Nation { get; set; }
+
+        // Национальность
+
+        [XmlElementAttribute(Order = 15)]
+        public string Citizenship { get; set; }
+
+        // Гражданство
+
+        [XmlElementAttribute(Order = 16)]
+        public CitizenshipType? CitizenshipType { get; set; }
+
+        // Тип гражданства
+
+        [XmlElementAttribute(Order = 17)]
+        public Address BirthAddress { get; set; }
+
+        // Адрес(место) рождения
+
+        [XmlElementAttribute(Order = 18)]
+        public string JobTitle { get; set; }
+
+        // Должность
+
+        [XmlElementAttribute(Order = 19)]
+        public string OMSNum { get; set; }
+
+        [XmlElementAttribute(Order = 20)]
+        public DateTime? OMSDate { get; set; }
+
+        [XmlElementAttribute(Order = 21)]
+        public string OMSCompany { get; set; }
+
+        [XmlElementAttribute(Order = 22)]
+        public DateTime? OMSValidityPeriod { get; set; }
+
+        [XmlElementAttribute(Order = 23)]
+        public string IsiId { get; set; }
+    }
+
+    public class SmallRequestInfo
+    {
+        [XmlElement(Order = 0)]
+        public DateTime CreatedDate { get; set; }
+        [XmlElement(Order = 1)]
+        public string ServiceCode { get; set; }
+        [XmlElement(Order = 2)]
+        public string ServiceNumber { get; set; }
+        [XmlElement(Order = 3)]
+        public int StatusCode { get; set; }
+        [XmlElement(Order = 4)]
+        public DateTime StatusDate { get; set; }
+    }
+
+    public class RequestInfo
+    {
+        [XmlElement(Order = 0)]
+        public BaseDeclarant Declarant { get; set; }
+
+        [XmlElement(Order = 1)]
+        public RequestContact Trustee { get; set; }
+
+        [XmlElement(Order = 2)]
+        public RequestServiceNoFiles Service { get; set; }
+
+        [XmlElement(Order = 3)]
+        public RequestStatus[] Statuses { get; set; }
+
+        [XmlElement(Order = 4)]
+        public RequestQueryTask[] Tasks { get; set; }
+
+        [XmlElement(Order = 5)]
+        public XmlElement CustomAttributes { get; set; }
+
+        [XmlElement(Order = 6)]
+        public RequestContact[] Contacts { get; set; }
+
+        [XmlElement(Order = 7)]
+        public byte[] Signature { get; set; }
+    }
+
+    public class ServiceNumberStatusesOnly
+    {
+        [XmlElement(Order = 0)]
+        public string ServiceNumber { get; set; }
+
+        [XmlElement(Order = 1)]
+        public bool StatusesOnly { get; set; }
+    }
+
+    [System.Xml.Serialization.XmlInclude(typeof(RequestContact))]
+    [System.Xml.Serialization.XmlInclude(typeof(RequestAccount))]
+    [KnownType(typeof(RequestAccount))]
+    [KnownType(typeof(RequestContact))]
+    public abstract class BaseDeclarant
     {
 
-        private System.DateTime fromDateField;
+    }
 
-        private System.DateTime toDateField;
+    public class RequestAccount : BaseDeclarant
+    {
+        [XmlElement(Order = 0)]
+        public string FullName { get; set; }
 
-        private string serviceCodeField;
+        [XmlElement(Order = 1)]
+        public string Name { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public System.DateTime FromDate
+        [XmlElement(Order = 2)]
+        public string BrandName { get; set; }
+
+        [XmlElement(Order = 3)]
+        public string Ogrn { get; set; }
+
+        [XmlElement(Order = 4)]
+        public string OgrnAuthority { get; set; }
+
+        [XmlElement(Order = 5)]
+        public string OgrnNum { get; set; }
+
+        [XmlElement(Order = 6)]
+        public DateTime? OgrnDate { get; set; }
+
+        [XmlElement(Order = 7)]
+        public string Inn { get; set; }
+
+        [XmlElement(Order = 8)]
+        public string InnAuthority { get; set; }
+
+        [XmlElement(Order = 9)]
+        public string InnNum { get; set; }
+
+        [XmlElement(Order = 10)]
+        public DateTime? InnDate { get; set; }
+
+        [XmlElement(Order = 11)]
+        public string Kpp { get; set; }
+
+        [XmlElement(Order = 12)]
+        public string Okpo { get; set; }
+
+        [XmlElement(Order = 13)]
+        public string OrgFormCode { get; set; }
+
+        [XmlElement(Order = 14)]
+        public Address PostalAddress { get; set; }
+
+        // Почтовый адрес юридического лица
+        [XmlElement(Order = 15)]
+        public Address FactAddress { get; set; }
+
+        // Местонахождение юридического лица
+        [XmlElement(Order = 16)]
+        public RequestContact OrgHead { get; set; }
+
+        [XmlElement(Order = 17)]
+        public string Okved { get; set; }
+
+        [XmlElement(Order = 18)]
+        public string Okfs { get; set; }
+
+        [XmlElement(Order = 19)]
+        public string BankName { get; set; }
+
+        [XmlElement(Order = 20)]
+        public string BankBik { get; set; }
+
+        [XmlElement(Order = 21)]
+        public string CorrAccount { get; set; }
+
+        [XmlElement(Order = 22)]
+        public string SetAccount { get; set; }
+
+        [XmlElement(Order = 23)]
+        public string Phone { get; set; }
+
+        [XmlElement(Order = 24)]
+        public string Fax { get; set; }
+
+        [XmlElement(Order = 25)]
+        public string EMail { get; set; }
+
+        [XmlElement(Order = 26)]
+        public string WebSite { get; set; }
+    }
+
+    [DataContract]
+    public class CoordinateData
+    {
+        #region properties
+
+        [DataMember(IsRequired = true, Order = 0)]
+        public BaseDeclarant Declarant { get; set; }
+
+        [DataMember(IsRequired = false, Order = 1)]
+        public RequestContact Trustee { get; set; }
+
+        [DataMember(IsRequired = true, Order = 2)]
+        public RequestService Service { get; set; }
+
+        [DataMember(IsRequired = false, Order = 4)]
+        public XmlElement CustomAttributes { get; set; }
+
+        [DataMember(IsRequired = false, Order = 5)]
+        public RequestContact[] Contacts { get; set; }
+
+        [DataMember(IsRequired = false, Order = 6)]
+        public byte[] Signature { get; set; }
+
+        #endregion
+    }
+
+    public class Headers
+    {
+        public string FromOrgCode { get; set; }
+
+        public string ToOrgCode { get; set; }
+
+        public string MessageId { get; set; }
+
+        public string RelatesTo { get; set; }
+
+        public string ServiceNumber { get; set; }
+
+        public DateTime RequestDateTime { get; set; }
+
+        /// <summary>
+        /// Меняет местами организации и Id сообщений,
+        /// MessageId -> RelatesTo, 
+        /// Новый MessageId = SequentialGuid.NextString()
+        /// </summary>
+        /// <returns></returns>
+        public Headers Invert()
         {
-            get
+            return new Headers
             {
-                return this.fromDateField;
-            }
-            set
-            {
-                this.fromDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public System.DateTime ToDate
-        {
-            get
-            {
-                return this.toDateField;
-            }
-            set
-            {
-                this.toDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string ServiceCode
-        {
-            get
-            {
-                return this.serviceCodeField;
-            }
-            set
-            {
-                this.serviceCodeField = value;
-            }
+                FromOrgCode = ToOrgCode,
+                ToOrgCode = FromOrgCode,
+                RelatesTo = MessageId,
+                MessageId = SequentialGuid.NextString(),
+                ServiceNumber = ServiceNumber,
+                RequestDateTime = DateTime.Now
+            };
         }
     }
 
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetRequestsOutMessage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetRequestsInMessage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetRequestListOutMessage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetRequestListInMessage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public abstract partial class MessageBase
+    public class SequentialGuid
     {
-    }
+        private static readonly DateTime Initial = new DateTime(1970, 1, 1);
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class SetFilesAndStatusesData
-    {
-
-        private string serviceNumberField;
-
-        private string requestIdField;
-
-        private RequestStatus[] statusesField;
-
-        private RequestResult resultField;
-
-        private ServiceDocument[] documentsField;
-
-        private RequestContact[] contactsField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string ServiceNumber
+        public static Guid Next()
         {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
+            byte[] uid = Guid.NewGuid().ToByteArray();
+            byte[] binDate = BitConverter.GetBytes((DateTime.Now - Initial).Ticks);
+            byte[] comb = new byte[uid.Length];
+
+            // the first 7 bytes are random - if two combs
+            // are generated at the same point in time
+            // they are not guaranteed to be sequential.
+            // But for every DateTime.Tick there are
+            // 72,057,594,037,927,935 unique possibilities so
+            // there shouldn't be any collisions
+            comb[3] = uid[0];
+            comb[2] = uid[1];
+            comb[1] = uid[2];
+            comb[0] = uid[3];
+            comb[5] = uid[4];
+            comb[4] = uid[5];
+            comb[7] = uid[6];
+
+            // set the first 'nibble of the 7th byte to '1100' so 
+            // later we can validate it was generated by us
+            comb[6] = (byte)(0xc0 | (0xf & uid[7]));
+
+            // the last 8 bytes are sequential,
+            // these will reduce index fragmentation
+            // to a degree as long as there are not a large
+            // number of Combs generated per millisecond
+            comb[9] = binDate[0];
+            comb[8] = binDate[1];
+            comb[15] = binDate[2];
+            comb[14] = binDate[3];
+            comb[13] = binDate[4];
+            comb[12] = binDate[5];
+            comb[11] = binDate[6];
+            comb[10] = binDate[7];
+
+            return new Guid(comb);
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string RequestId
+        public static string NextString()
         {
-            get
-            {
-                return this.requestIdField;
-            }
-            set
-            {
-                this.requestIdField = value;
-            }
+            return Next().ToString();
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 2)]
-        public RequestStatus[] Statuses
+        public static implicit operator string(SequentialGuid f)
         {
-            get
-            {
-                return this.statusesField;
-            }
-            set
-            {
-                this.statusesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public RequestResult Result
-        {
-            get
-            {
-                return this.resultField;
-            }
-            set
-            {
-                this.resultField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 4)]
-        public ServiceDocument[] Documents
-        {
-            get
-            {
-                return this.documentsField;
-            }
-            set
-            {
-                this.documentsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 5)]
-        public RequestContact[] Contacts
-        {
-            get
-            {
-                return this.contactsField;
-            }
-            set
-            {
-                this.contactsField = value;
-            }
+            return f.ToString();
         }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestStatus
+    [DataContract]
+    public class CoordinateTaskData
     {
+        [DataMember(IsRequired = true, Order = 0)]
+        public RequestTask Task { get; set; }
 
-        private int statusCodeField;
+        [DataMember(IsRequired = false, Order = 1)]
+        public DocumentsRequestData Data { get; set; }
 
-        private System.DateTime statusDateField;
-
-        private string reasonField;
-
-        private System.Nullable<System.DateTime> validityPeriodField;
-
-        private Person responsibleField;
-
-        private Department departmentField;
-
-        private string reasonCodeField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public int StatusCode
-        {
-            get
-            {
-                return this.statusCodeField;
-            }
-            set
-            {
-                this.statusCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public System.DateTime StatusDate
-        {
-            get
-            {
-                return this.statusDateField;
-            }
-            set
-            {
-                this.statusDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string Reason
-        {
-            get
-            {
-                return this.reasonField;
-            }
-            set
-            {
-                this.reasonField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 3)]
-        public System.Nullable<System.DateTime> ValidityPeriod
-        {
-            get
-            {
-                return this.validityPeriodField;
-            }
-            set
-            {
-                this.validityPeriodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public Person Responsible
-        {
-            get
-            {
-                return this.responsibleField;
-            }
-            set
-            {
-                this.responsibleField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public Department Department
-        {
-            get
-            {
-                return this.departmentField;
-            }
-            set
-            {
-                this.departmentField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        public string ReasonCode
-        {
-            get
-            {
-                return this.reasonCodeField;
-            }
-            set
-            {
-                this.reasonCodeField = value;
-            }
-        }
+        [DataMember(IsRequired = false, Order = 2)]
+        public object Signature { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class Person
+    [DataContract]
+    public class CoordinateStatusData
     {
+        #region properties
 
-        private string lastNameField;
+        public string RequestId { get; set; }
 
-        private string firstNameField;
+        public DateTime? ResponseDate { get; set; }
 
-        private string middleNameField;
+        public DateTime? PlanDate { get; set; }
 
-        private string jobTitleField;
+        public int? StatusCode { get; set; }
 
-        private string phoneField;
+        public Person Responsible { get; set; }
 
-        private string emailField;
+        public ServiceDocument[] Documents { get; set; }
 
-        private string isiIdField;
+        public RequestContact[] Contacts { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string LastName
-        {
-            get
-            {
-                return this.lastNameField;
-            }
-            set
-            {
-                this.lastNameField = value;
-            }
-        }
+        public string Note { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string FirstName
-        {
-            get
-            {
-                return this.firstNameField;
-            }
-            set
-            {
-                this.firstNameField = value;
-            }
-        }
+        public RequestResult Result { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string MiddleName
-        {
-            get
-            {
-                return this.middleNameField;
-            }
-            set
-            {
-                this.middleNameField = value;
-            }
-        }
+        public string ServiceNumber { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string JobTitle
-        {
-            get
-            {
-                return this.jobTitleField;
-            }
-            set
-            {
-                this.jobTitleField = value;
-            }
-        }
+        public string ReasonCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public string Phone
-        {
-            get
-            {
-                return this.phoneField;
-            }
-            set
-            {
-                this.phoneField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public string Email
-        {
-            get
-            {
-                return this.emailField;
-            }
-            set
-            {
-                this.emailField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        public string IsiId
-        {
-            get
-            {
-                return this.isiIdField;
-            }
-            set
-            {
-                this.isiIdField = value;
-            }
-        }
+        #endregion
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class Department
+    public class RequestStatus
     {
+        [XmlElement(Order = 0)]
+        public int StatusCode { get; set; }
 
-        private string nameField;
+        [XmlElement(Order = 1)]
+        public DateTime StatusDate { get; set; }
 
-        private string codeField;
+        [XmlElement(Order = 2)]
+        public string Reason { get; set; }
 
-        private string innField;
+        [XmlElement(Order = 3)]
+        public DateTime? ValidityPeriod { get; set; }
 
-        private string ogrnField;
+        [XmlElement(Order = 4)]
+        public Person Responsible { get; set; }
 
-        private System.Nullable<System.DateTime> regDateField;
+        [XmlElement(Order = 5)]
+        public Department Department { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string Name
-        {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string Code
-        {
-            get
-            {
-                return this.codeField;
-            }
-            set
-            {
-                this.codeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string Inn
-        {
-            get
-            {
-                return this.innField;
-            }
-            set
-            {
-                this.innField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string Ogrn
-        {
-            get
-            {
-                return this.ogrnField;
-            }
-            set
-            {
-                this.ogrnField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 4)]
-        public System.Nullable<System.DateTime> RegDate
-        {
-            get
-            {
-                return this.regDateField;
-            }
-            set
-            {
-                this.regDateField = value;
-            }
-        }
+        [XmlElement(Order = 6)]
+        public string ReasonCode { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestResult
+    public class Person
     {
+        [XmlElement(Order = 0)]
+        public string LastName { get; set; }        // Фамилия
 
-        private string resultCodeField;
+        [XmlElement(Order = 1)]
+        public string FirstName { get; set; }       // Имя
 
-        private string[] declineReasonCodeField;
+        [XmlElement(Order = 2)]
+        public string MiddleName { get; set; }      // Отчество
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string ResultCode
-        {
-            get
-            {
-                return this.resultCodeField;
-            }
-            set
-            {
-                this.resultCodeField = value;
-            }
-        }
+        [XmlElement(Order = 3)]
+        public string JobTitle { get; set; }      // Должность
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 1)]
-        public string[] DeclineReasonCode
-        {
-            get
-            {
-                return this.declineReasonCodeField;
-            }
-            set
-            {
-                this.declineReasonCodeField = value;
-            }
-        }
+        [XmlElement(Order = 4)]
+        public string Phone { get; set; }
+
+        [XmlElement(Order = 5)]
+        public string Email { get; set; }
+
+        [XmlElement(Order = 6)]
+        public string IsiId { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class ServiceDocument
+    [DataContract]
+    public class Department
     {
+        [XmlElement(Order = 0)]
+        public string Name { get; set; }
 
-        private string idField;
+        [XmlElement(Order = 1)]
+        public string Code { get; set; }
 
-        private string docCodeField;
+        [XmlElement(Order = 2)]
+        public string Inn { get; set; }
 
-        private string docSubTypeField;
+        [XmlElement(Order = 3)]
+        public string Ogrn { get; set; }
 
-        private string docPersonField;
-
-        private string docSerieField;
-
-        private string docNumberField;
-
-        private System.Nullable<System.DateTime> docDateField;
-
-        private System.Nullable<System.DateTime> validityPeriodField;
-
-        private string whoSignField;
-
-        private System.Nullable<int> listCountField;
-
-        private System.Nullable<int> copyCountField;
-
-        private string divisionCodeField;
-
-        private byte[] signatureField;
-
-        private Note[] docNotesField;
-
-        private File[] docFilesField;
-
-        private System.Xml.XmlElement customAttributesField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string DocCode
-        {
-            get
-            {
-                return this.docCodeField;
-            }
-            set
-            {
-                this.docCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string DocSubType
-        {
-            get
-            {
-                return this.docSubTypeField;
-            }
-            set
-            {
-                this.docSubTypeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string DocPerson
-        {
-            get
-            {
-                return this.docPersonField;
-            }
-            set
-            {
-                this.docPersonField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public string DocSerie
-        {
-            get
-            {
-                return this.docSerieField;
-            }
-            set
-            {
-                this.docSerieField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public string DocNumber
-        {
-            get
-            {
-                return this.docNumberField;
-            }
-            set
-            {
-                this.docNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 6)]
-        public System.Nullable<System.DateTime> DocDate
-        {
-            get
-            {
-                return this.docDateField;
-            }
-            set
-            {
-                this.docDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 7)]
-        public System.Nullable<System.DateTime> ValidityPeriod
-        {
-            get
-            {
-                return this.validityPeriodField;
-            }
-            set
-            {
-                this.validityPeriodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public string WhoSign
-        {
-            get
-            {
-                return this.whoSignField;
-            }
-            set
-            {
-                this.whoSignField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 9)]
-        public System.Nullable<int> ListCount
-        {
-            get
-            {
-                return this.listCountField;
-            }
-            set
-            {
-                this.listCountField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 10)]
-        public System.Nullable<int> CopyCount
-        {
-            get
-            {
-                return this.copyCountField;
-            }
-            set
-            {
-                this.copyCountField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        public string DivisionCode
-        {
-            get
-            {
-                return this.divisionCodeField;
-            }
-            set
-            {
-                this.divisionCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 12)]
-        public byte[] Signature
-        {
-            get
-            {
-                return this.signatureField;
-            }
-            set
-            {
-                this.signatureField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 13)]
-        public Note[] DocNotes
-        {
-            get
-            {
-                return this.docNotesField;
-            }
-            set
-            {
-                this.docNotesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 14)]
-        public File[] DocFiles
-        {
-            get
-            {
-                return this.docFilesField;
-            }
-            set
-            {
-                this.docFilesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
-        public System.Xml.XmlElement CustomAttributes
-        {
-            get
-            {
-                return this.customAttributesField;
-            }
-            set
-            {
-                this.customAttributesField = value;
-            }
-        }
+        [XmlElement(Order = 4)]
+        public DateTime? RegDate { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class Note
+    public class RequestResult
     {
-
-        private string subjectField;
-
-        private string textField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string Subject
-        {
-            get
-            {
-                return this.subjectField;
-            }
-            set
-            {
-                this.subjectField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string Text
-        {
-            get
-            {
-                return this.textField;
-            }
-            set
-            {
-                this.textField = value;
-            }
-        }
+        public string ResultCode { get; set; }
+        public string[] DeclineReasonCode { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class File
+    public class ServiceDocument
     {
+        [XmlElement(Order = 0)]
+        public string Id { get; set; }
 
-        private string idField;
+        [XmlElement(Order = 1)]
+        public string DocCode { get; set; }
 
-        private string fileNameField;
+        [XmlElement(Order = 2)]
+        public string DocSubType { get; set; }
 
-        private string mimeTypeField;
+        [XmlElement(Order = 3)]
+        public string DocPerson { get; set; }
 
-        private byte[] fileContentField;
+        [XmlElement(Order = 4)]
+        public string DocSerie { get; set; }
 
-        private System.Nullable<bool> isFileInStoreField;
+        [XmlElement(Order = 5)]
+        public string DocNumber { get; set; }
 
-        private bool isFileInStoreFieldSpecified;
+        [XmlElement(Order = 6)]
+        public DateTime? DocDate { get; set; }
 
-        private string fileIdInStoreField;
+        [XmlElement(Order = 7)]
+        public DateTime? ValidityPeriod { get; set; }
 
-        private string storeNameField;
+        [XmlElement(Order = 8)]
+        public string WhoSign { get; set; }
 
-        private byte[] fileChecksumField;
+        [XmlElement(Order = 9)]
+        public int? ListCount { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
+        [XmlElement(Order = 10)]
+        public int? CopyCount { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string FileName
-        {
-            get
-            {
-                return this.fileNameField;
-            }
-            set
-            {
-                this.fileNameField = value;
-            }
-        }
+        [XmlElement(Order = 11)]
+        public string DivisionCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string MimeType
-        {
-            get
-            {
-                return this.mimeTypeField;
-            }
-            set
-            {
-                this.mimeTypeField = value;
-            }
-        }
+        [XmlElement(Order = 12)]
+        public byte[] Signature { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 3)]
-        public byte[] FileContent
-        {
-            get
-            {
-                return this.fileContentField;
-            }
-            set
-            {
-                this.fileContentField = value;
-            }
-        }
+        [XmlArray(Order = 13)]
+        public Note[] DocNotes { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 4)]
-        public System.Nullable<bool> IsFileInStore
-        {
-            get
-            {
-                return this.isFileInStoreField;
-            }
-            set
-            {
-                this.isFileInStoreField = value;
-            }
-        }
+        [XmlArray(Order = 14)]
+        public File[] DocFiles { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool IsFileInStoreSpecified
-        {
-            get
-            {
-                return this.isFileInStoreFieldSpecified;
-            }
-            set
-            {
-                this.isFileInStoreFieldSpecified = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public string FileIdInStore
-        {
-            get
-            {
-                return this.fileIdInStoreField;
-            }
-            set
-            {
-                this.fileIdInStoreField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        public string StoreName
-        {
-            get
-            {
-                return this.storeNameField;
-            }
-            set
-            {
-                this.storeNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 7)]
-        public byte[] FileChecksum
-        {
-            get
-            {
-                return this.fileChecksumField;
-            }
-            set
-            {
-                this.fileChecksumField = value;
-            }
-        }
+        [XmlElement(Order = 15)]
+        public System.Xml.XmlElement CustomAttributes { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestContact : BaseDeclarant
+    public class Note
     {
+        [XmlElement(Order = 0)]
+        public string Subject { get; set; }
 
-        private string idField;
-
-        private string lastNameField;
-
-        private string firstNameField;
-
-        private string middleNameField;
-
-        private System.Nullable<GenderType> genderField;
-
-        private System.Nullable<System.DateTime> birthDateField;
-
-        private string snilsField;
-
-        private string innField;
-
-        private Address regAddressField;
-
-        private Address factAddressField;
-
-        private string mobilePhoneField;
-
-        private string workPhoneField;
-
-        private string homePhoneField;
-
-        private string eMailField;
-
-        private string nationField;
-
-        private string citizenshipField;
-
-        private System.Nullable<CitizenshipType> citizenshipTypeField;
-
-        private Address birthAddressField;
-
-        private string jobTitleField;
-
-        private string oMSNumField;
-
-        private System.Nullable<System.DateTime> oMSDateField;
-
-        private string oMSCompanyField;
-
-        private System.Nullable<System.DateTime> oMSValidityPeriodField;
-
-        private string isiIdField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string LastName
-        {
-            get
-            {
-                return this.lastNameField;
-            }
-            set
-            {
-                this.lastNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string FirstName
-        {
-            get
-            {
-                return this.firstNameField;
-            }
-            set
-            {
-                this.firstNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string MiddleName
-        {
-            get
-            {
-                return this.middleNameField;
-            }
-            set
-            {
-                this.middleNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 4)]
-        public System.Nullable<GenderType> Gender
-        {
-            get
-            {
-                return this.genderField;
-            }
-            set
-            {
-                this.genderField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 5)]
-        public System.Nullable<System.DateTime> BirthDate
-        {
-            get
-            {
-                return this.birthDateField;
-            }
-            set
-            {
-                this.birthDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        public string Snils
-        {
-            get
-            {
-                return this.snilsField;
-            }
-            set
-            {
-                this.snilsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        public string Inn
-        {
-            get
-            {
-                return this.innField;
-            }
-            set
-            {
-                this.innField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public Address RegAddress
-        {
-            get
-            {
-                return this.regAddressField;
-            }
-            set
-            {
-                this.regAddressField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        public Address FactAddress
-        {
-            get
-            {
-                return this.factAddressField;
-            }
-            set
-            {
-                this.factAddressField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
-        public string MobilePhone
-        {
-            get
-            {
-                return this.mobilePhoneField;
-            }
-            set
-            {
-                this.mobilePhoneField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        public string WorkPhone
-        {
-            get
-            {
-                return this.workPhoneField;
-            }
-            set
-            {
-                this.workPhoneField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-        public string HomePhone
-        {
-            get
-            {
-                return this.homePhoneField;
-            }
-            set
-            {
-                this.homePhoneField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-        public string EMail
-        {
-            get
-            {
-                return this.eMailField;
-            }
-            set
-            {
-                this.eMailField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
-        public string Nation
-        {
-            get
-            {
-                return this.nationField;
-            }
-            set
-            {
-                this.nationField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
-        public string Citizenship
-        {
-            get
-            {
-                return this.citizenshipField;
-            }
-            set
-            {
-                this.citizenshipField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 16)]
-        public System.Nullable<CitizenshipType> CitizenshipType
-        {
-            get
-            {
-                return this.citizenshipTypeField;
-            }
-            set
-            {
-                this.citizenshipTypeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
-        public Address BirthAddress
-        {
-            get
-            {
-                return this.birthAddressField;
-            }
-            set
-            {
-                this.birthAddressField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
-        public string JobTitle
-        {
-            get
-            {
-                return this.jobTitleField;
-            }
-            set
-            {
-                this.jobTitleField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
-        public string OMSNum
-        {
-            get
-            {
-                return this.oMSNumField;
-            }
-            set
-            {
-                this.oMSNumField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 20)]
-        public System.Nullable<System.DateTime> OMSDate
-        {
-            get
-            {
-                return this.oMSDateField;
-            }
-            set
-            {
-                this.oMSDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
-        public string OMSCompany
-        {
-            get
-            {
-                return this.oMSCompanyField;
-            }
-            set
-            {
-                this.oMSCompanyField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 22)]
-        public System.Nullable<System.DateTime> OMSValidityPeriod
-        {
-            get
-            {
-                return this.oMSValidityPeriodField;
-            }
-            set
-            {
-                this.oMSValidityPeriodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
-        public string IsiId
-        {
-            get
-            {
-                return this.isiIdField;
-            }
-            set
-            {
-                this.isiIdField = value;
-            }
-        }
+        [XmlElement(Order = 1)]
+        public string Text { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
+    public class File
+    {
+        [XmlElement(Order = 0)]
+        public string Id { get; set; }
+        [XmlElement(Order = 1)]
+        public string FileName { get; set; }
+        [XmlElement(Order = 2)]
+        public string MimeType { get; set; }
+        [XmlElement(Order = 3)]
+        public byte[] FileContent { get; set; }
+    }
+
+    [DataContract]
     public enum GenderType
     {
-
-        /// <remarks/>
-        Male,
-
-        /// <remarks/>
-        Female,
+        [EnumMember]
+        Male = 1,
+        [EnumMember]
+        Female = 2
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class Address
+    public class Address
     {
+        [XmlElement(Order = 0)]
+        public string Country { get; set; }
 
-        private string countryField;
+        // Государство
 
-        private string postalCodeField;
+        [XmlElement(Order = 1)]
+        public string PostalCode { get; set; }
 
-        private string localityField;
+        // Почтовый индекс
 
-        private string regionField;
+        [XmlElement(Order = 2)]
+        public string Locality { get; set; }
 
-        private string cityField;
+        // Субъект государства
 
-        private string townField;
+        [XmlElement(Order = 3)]
+        public string Region { get; set; }
 
-        private string streetField;
+        // Район
 
-        private string houseField;
+        [XmlElement(Order = 4)]
+        public string City { get; set; }
 
-        private string buildingField;
+        // Город
 
-        private string structureField;
+        [XmlElement(Order = 5)]
+        public string Town { get; set; }
 
-        private string facilityField;
+        // Населенный пункт
 
-        private string ownershipField;
+        [XmlElement(Order = 6)]
+        public string Street { get; set; }
 
-        private string flatField;
+        // Улица
 
-        private string pOBoxField;
+        [XmlElement(Order = 7)]
+        public string House { get; set; }
 
-        private string okatoField;
+        // Дом, корпус
 
-        private string kladrCodeField;
+        [XmlElement(Order = 8)]
+        public string Building { get; set; }
 
-        private string kladrStreetCodeField;
+        // Корпус
 
-        private string oMKDistrictCodeField;
+        [XmlElement(Order = 9)]
+        public string Structure { get; set; }
 
-        private string oMKRegionCodeField;
+        // Строение
 
-        private string oMKTownCodeField;
+        [XmlElement(Order = 10)]
+        public string Facility { get; set; }
 
-        private string oMKStreetCodeField;
+        // Сооружение
 
-        private string bTIStreetCodeField;
+        [XmlElement(Order = 11)]
+        public string Ownership { get; set; }
 
-        private string bTIBuildingCodeField;
+        // Владение
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string Country
-        {
-            get
-            {
-                return this.countryField;
-            }
-            set
-            {
-                this.countryField = value;
-            }
-        }
+        [XmlElement(Order = 12)]
+        public string Flat { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string PostalCode
-        {
-            get
-            {
-                return this.postalCodeField;
-            }
-            set
-            {
-                this.postalCodeField = value;
-            }
-        }
+        // Квартира
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string Locality
-        {
-            get
-            {
-                return this.localityField;
-            }
-            set
-            {
-                this.localityField = value;
-            }
-        }
+        [XmlElement(Order = 13)]
+        public string POBox { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string Region
-        {
-            get
-            {
-                return this.regionField;
-            }
-            set
-            {
-                this.regionField = value;
-            }
-        }
+        // Абонентский ящик
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public string City
-        {
-            get
-            {
-                return this.cityField;
-            }
-            set
-            {
-                this.cityField = value;
-            }
-        }
+        [XmlElement(Order = 14)]
+        public string Okato { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public string Town
-        {
-            get
-            {
-                return this.townField;
-            }
-            set
-            {
-                this.townField = value;
-            }
-        }
+        // ОКАТО
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        public string Street
-        {
-            get
-            {
-                return this.streetField;
-            }
-            set
-            {
-                this.streetField = value;
-            }
-        }
+        //[Rkis("new_kladr", IsVocValue = true)]
+        [XmlElement(Order = 15)]
+        public string KladrCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        public string House
-        {
-            get
-            {
-                return this.houseField;
-            }
-            set
-            {
-                this.houseField = value;
-            }
-        }
+        // КЛАДР
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public string Building
-        {
-            get
-            {
-                return this.buildingField;
-            }
-            set
-            {
-                this.buildingField = value;
-            }
-        }
+        [XmlElement(Order = 16)]
+        public string KladrStreetCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        public string Structure
-        {
-            get
-            {
-                return this.structureField;
-            }
-            set
-            {
-                this.structureField = value;
-            }
-        }
+        // Улицы КЛАДР
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
-        public string Facility
-        {
-            get
-            {
-                return this.facilityField;
-            }
-            set
-            {
-                this.facilityField = value;
-            }
-        }
+        [XmlElement(Order = 17)]
+        public string OMKDistrictCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        public string Ownership
-        {
-            get
-            {
-                return this.ownershipField;
-            }
-            set
-            {
-                this.ownershipField = value;
-            }
-        }
+        [XmlElement(Order = 18)]
+        public string OMKRegionCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-        public string Flat
-        {
-            get
-            {
-                return this.flatField;
-            }
-            set
-            {
-                this.flatField = value;
-            }
-        }
+        [XmlElement(Order = 19)]
+        public string OMKTownCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-        public string POBox
-        {
-            get
-            {
-                return this.pOBoxField;
-            }
-            set
-            {
-                this.pOBoxField = value;
-            }
-        }
+        [XmlElement(Order = 20)]
+        public string OMKStreetCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
-        public string Okato
-        {
-            get
-            {
-                return this.okatoField;
-            }
-            set
-            {
-                this.okatoField = value;
-            }
-        }
+        [XmlElement(Order = 21)]
+        public string BTIStreetCode { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
-        public string KladrCode
-        {
-            get
-            {
-                return this.kladrCodeField;
-            }
-            set
-            {
-                this.kladrCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
-        public string KladrStreetCode
-        {
-            get
-            {
-                return this.kladrStreetCodeField;
-            }
-            set
-            {
-                this.kladrStreetCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
-        public string OMKDistrictCode
-        {
-            get
-            {
-                return this.oMKDistrictCodeField;
-            }
-            set
-            {
-                this.oMKDistrictCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
-        public string OMKRegionCode
-        {
-            get
-            {
-                return this.oMKRegionCodeField;
-            }
-            set
-            {
-                this.oMKRegionCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
-        public string OMKTownCode
-        {
-            get
-            {
-                return this.oMKTownCodeField;
-            }
-            set
-            {
-                this.oMKTownCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
-        public string OMKStreetCode
-        {
-            get
-            {
-                return this.oMKStreetCodeField;
-            }
-            set
-            {
-                this.oMKStreetCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
-        public string BTIStreetCode
-        {
-            get
-            {
-                return this.bTIStreetCodeField;
-            }
-            set
-            {
-                this.bTIStreetCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
-        public string BTIBuildingCode
-        {
-            get
-            {
-                return this.bTIBuildingCodeField;
-            }
-            set
-            {
-                this.bTIBuildingCodeField = value;
-            }
-        }
+        [XmlElement(Order = 22)]
+        //[Rkis("new_street.new_btistreetcode", Callback = true)]
+        public string BTIBuildingCode { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public enum CitizenshipType
+    [DataContract]
+	public enum CitizenshipType
+	{
+		[EnumMember] RF = 1,
+		[EnumMember] Foreign = 2,
+		[EnumMember] None = 3,
+		[EnumMember] Both = 4
+	}
+
+    public class RequestServiceNoFiles
+	{
+		[XmlElement(Order = 0)]
+		public string RegNum { get; set; }
+
+		[XmlElement(Order = 1)]
+		public DateTime? RegDate { get; set; }
+
+		[XmlElement(Order = 2)]
+		public string ServiceNumber { get; set; }
+
+		[XmlElement(Order = 3)]
+		public string ServiceTypeCode { get; set; }
+
+		[XmlElement(Order = 4)]
+		public decimal? ServicePrice { get; set; }
+
+		[XmlElement(Order = 5)]
+		public DateTime? PrepareTargetDate { get; set; }
+
+		[XmlElement(Order = 6)]
+		public DateTime? OutputTargetDate { get; set; }
+
+		[XmlElement(Order = 7)]
+		public int? Copies { get; set; }
+
+		[XmlElement(Order = 8)]
+		public Person Responsible { get; set; }
+
+		//[Rkis("ownerid.businessunitid", Callback = true)]
+		[XmlElement(Order = 9)]
+		public Department Department { get; set; }
+
+		[XmlArray(Order = 10)]
+		public ServiceDocumentNoFiles[] Documents { get; set; }
+
+        [XmlArray(Order = 11)]
+        public string[] DeclineReasonCodes { get; set; }
+
+        [XmlElement(Order = 12)]
+        public Department CreatedByDepartment { get; set; }
+
+        [XmlElement(Order = 13)]
+        public DateTime? PrepareFactDate { get; set; }
+
+        [XmlElement(Order = 14)]
+        public DateTime? OutputFactDate { get; set; }
+	}
+
+    public class ServiceDocumentNoFiles
     {
+        [XmlElement(Order = 0)]
+        public string Id { get; set; }
 
-        /// <remarks/>
-        RF,
+        [XmlElement(Order = 1)]
+        public string DocCode { get; set; }
 
-        /// <remarks/>
-        Foreign,
+        [XmlElement(Order = 2)]
+        public string DocSubType { get; set; }
 
-        /// <remarks/>
-        None,
+        [XmlElement(Order = 3)]
+        public string DocPerson { get; set; }
 
-        /// <remarks/>
-        Both,
+        [XmlElement(Order = 4)]
+        public string DocSerie { get; set; }
+
+        [XmlElement(Order = 5)]
+        public string DocNumber { get; set; }
+
+        [XmlElement(Order = 6)]
+        public DateTime? DocDate { get; set; }
+
+        [XmlElement(Order = 7)]
+        public DateTime? ValidityPeriod { get; set; }
+
+        [XmlElement(Order = 8)]
+        public string WhoSign { get; set; }
+
+        [XmlElement(Order = 9)]
+        public int? ListCount { get; set; }
+
+        [XmlElement(Order = 10)]
+        public int? CopyCount { get; set; }
+
+        [XmlElement(Order = 11)]
+        public string DivisionCode { get; set; }
+
+        [XmlElement(Order = 12)]
+        public byte[] Signature { get; set; }
+
+        [XmlElement(Order = 13)]
+        public System.Xml.XmlElement CustomAttributes { get; set; }
     }
 
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RequestAccount))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RequestContact))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public abstract partial class BaseDeclarant
+    public class RequestQueryTask
     {
+        [XmlElement(Order = 0)]
+        public string RequestId { get; set; }
+
+        [XmlElement(Order = 4)]
+        public string Subject { get; set; }
+
+        [XmlElement(Order = 5)]
+        public DateTime? ValidityPeriod { get; set; }
+
+        [XmlElement(Order = 6)]
+        public int StatusCode { get; set; }
+
+        [XmlElement(Order = 7)]
+        public Person Responsible { get; set; }
+
+        [XmlElement(Order = 8)]
+        public Department Department { get; set; }
+
+        [XmlElement(Order = 9)]
+        public string DocCode { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestAccount : BaseDeclarant
+    public class RequestService
     {
+        [XmlElement(Order = 0)]
+        public string RegNum { get; set; }
 
-        private string fullNameField;
+        [XmlElement(Order = 1)]
+        public DateTime? RegDate { get; set; }
 
-        private string nameField;
+        [XmlElement(Order = 2)]
+        public string ServiceNumber { get; set; }
 
-        private string brandNameField;
+        [XmlElement(Order = 3)]
+        public string ServiceTypeCode { get; set; }
 
-        private string ogrnField;
+        [XmlElement(Order = 4)]
+        public decimal? ServicePrice { get; set; }
 
-        private string ogrnAuthorityField;
+        [XmlElement(Order = 5)]
+        public DateTime? PrepareTargetDate { get; set; }
 
-        private string ogrnNumField;
+        [XmlElement(Order = 6)]
+        public DateTime? OutputTargetDate { get; set; }
 
-        private System.Nullable<System.DateTime> ogrnDateField;
+        [XmlElement(Order = 7)]
+        public int? Copies { get; set; }
 
-        private string innField;
+        [XmlElement(Order = 8)]
+        public Person Responsible { get; set; }
 
-        private string innAuthorityField;
+        [XmlElement(Order = 9)]
+        public Department Department { get; set; }
 
-        private string innNumField;
+        [XmlArray(Order = 10)]
+        public ServiceDocument[] Documents { get; set; }
 
-        private System.Nullable<System.DateTime> innDateField;
+        [XmlArray(Order = 11)]
+        public string[] DeclineReasonCodes { get; set; }
 
-        private string kppField;
+        [XmlElement(Order = 12)]
+        public Department CreatedByDepartment { get; set; }
 
-        private string okpoField;
+        [XmlElement(Order = 13)]
+        public DateTime? PrepareFactDate { get; set; }
 
-        private string orgFormCodeField;
-
-        private Address postalAddressField;
-
-        private Address factAddressField;
-
-        private RequestContact orgHeadField;
-
-        private string okvedField;
-
-        private string okfsField;
-
-        private string bankNameField;
-
-        private string bankBikField;
-
-        private string corrAccountField;
-
-        private string setAccountField;
-
-        private string phoneField;
-
-        private string faxField;
-
-        private string eMailField;
-
-        private string webSiteField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string FullName
-        {
-            get
-            {
-                return this.fullNameField;
-            }
-            set
-            {
-                this.fullNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string Name
-        {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string BrandName
-        {
-            get
-            {
-                return this.brandNameField;
-            }
-            set
-            {
-                this.brandNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string Ogrn
-        {
-            get
-            {
-                return this.ogrnField;
-            }
-            set
-            {
-                this.ogrnField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public string OgrnAuthority
-        {
-            get
-            {
-                return this.ogrnAuthorityField;
-            }
-            set
-            {
-                this.ogrnAuthorityField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public string OgrnNum
-        {
-            get
-            {
-                return this.ogrnNumField;
-            }
-            set
-            {
-                this.ogrnNumField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 6)]
-        public System.Nullable<System.DateTime> OgrnDate
-        {
-            get
-            {
-                return this.ogrnDateField;
-            }
-            set
-            {
-                this.ogrnDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        public string Inn
-        {
-            get
-            {
-                return this.innField;
-            }
-            set
-            {
-                this.innField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public string InnAuthority
-        {
-            get
-            {
-                return this.innAuthorityField;
-            }
-            set
-            {
-                this.innAuthorityField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        public string InnNum
-        {
-            get
-            {
-                return this.innNumField;
-            }
-            set
-            {
-                this.innNumField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 10)]
-        public System.Nullable<System.DateTime> InnDate
-        {
-            get
-            {
-                return this.innDateField;
-            }
-            set
-            {
-                this.innDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        public string Kpp
-        {
-            get
-            {
-                return this.kppField;
-            }
-            set
-            {
-                this.kppField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-        public string Okpo
-        {
-            get
-            {
-                return this.okpoField;
-            }
-            set
-            {
-                this.okpoField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-        public string OrgFormCode
-        {
-            get
-            {
-                return this.orgFormCodeField;
-            }
-            set
-            {
-                this.orgFormCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
-        public Address PostalAddress
-        {
-            get
-            {
-                return this.postalAddressField;
-            }
-            set
-            {
-                this.postalAddressField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
-        public Address FactAddress
-        {
-            get
-            {
-                return this.factAddressField;
-            }
-            set
-            {
-                this.factAddressField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
-        public RequestContact OrgHead
-        {
-            get
-            {
-                return this.orgHeadField;
-            }
-            set
-            {
-                this.orgHeadField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
-        public string Okved
-        {
-            get
-            {
-                return this.okvedField;
-            }
-            set
-            {
-                this.okvedField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
-        public string Okfs
-        {
-            get
-            {
-                return this.okfsField;
-            }
-            set
-            {
-                this.okfsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
-        public string BankName
-        {
-            get
-            {
-                return this.bankNameField;
-            }
-            set
-            {
-                this.bankNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
-        public string BankBik
-        {
-            get
-            {
-                return this.bankBikField;
-            }
-            set
-            {
-                this.bankBikField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
-        public string CorrAccount
-        {
-            get
-            {
-                return this.corrAccountField;
-            }
-            set
-            {
-                this.corrAccountField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
-        public string SetAccount
-        {
-            get
-            {
-                return this.setAccountField;
-            }
-            set
-            {
-                this.setAccountField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
-        public string Phone
-        {
-            get
-            {
-                return this.phoneField;
-            }
-            set
-            {
-                this.phoneField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
-        public string Fax
-        {
-            get
-            {
-                return this.faxField;
-            }
-            set
-            {
-                this.faxField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
-        public string EMail
-        {
-            get
-            {
-                return this.eMailField;
-            }
-            set
-            {
-                this.eMailField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
-        public string WebSite
-        {
-            get
-            {
-                return this.webSiteField;
-            }
-            set
-            {
-                this.webSiteField = value;
-            }
-        }
+        [XmlElement(Order = 14)]
+        public DateTime? OutputFactDate { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class ErrorMessageData
+    public class RequestTask
     {
+        [XmlElement(Order = 0)]
+        public string RequestId { get; set; }
 
-        private string errorCodeField;
+        [XmlElement(Order = 5)]
+        public string Code { get; set; }
 
-        private string errorTextField;
+        [XmlElement(Order = 6)]
+        public string Subject { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string ErrorCode
-        {
-            get
-            {
-                return this.errorCodeField;
-            }
-            set
-            {
-                this.errorCodeField = value;
-            }
-        }
+        [XmlElement(Order = 7)]
+        public DateTime? ValidityPeriod { get; set; }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string ErrorText
-        {
-            get
-            {
-                return this.errorTextField;
-            }
-            set
-            {
-                this.errorTextField = value;
-            }
-        }
+        [XmlElement(Order = 8)]
+        public Person Responsible { get; set; }
+
+        [XmlElement(Order = 9)]
+        public Department Department { get; set; }
+
+        [XmlElement(Order = 10)]
+        public string ServiceNumber { get; set; }
+
+        [XmlElement(Order = 11)]
+        public string ServiceTypeCode { get; set; }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class CoordinateStatusData
+    [DataContract]
+    public class DocumentsRequestData
     {
+        [DataMember(IsRequired = false, Order = 0)]
+        public string DocumentTypeCode { get; set; }
 
-        private string requestIdField;
+        [DataMember(IsRequired = false, Order = 1)]
+        public string ParameterTypeCode { get; set; }
 
-        private System.Nullable<System.DateTime> responseDateField;
+        [DataMember(IsRequired = false, Order = 2)]
+        public XmlElement Parameter { get; set; }
 
-        private System.Nullable<System.DateTime> planDateField;
+        [DataMember(IsRequired = false, Order = 3)]
+        public bool IncludeXmlView { get; set; }
 
-        private System.Nullable<int> statusCodeField;
+        [DataMember(IsRequired = false, Order = 4)]
+        public bool IncludeBinaryView { get; set; }
 
-        private Person responsibleField;
-
-        private ServiceDocument[] documentsField;
-
-        private RequestContact[] contactsField;
-
-        private string noteField;
-
-        private RequestResult resultField;
-
-        private string serviceNumberField;
-
-        private string reasonCodeField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string RequestId
-        {
-            get
-            {
-                return this.requestIdField;
-            }
-            set
-            {
-                this.requestIdField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 1)]
-        public System.Nullable<System.DateTime> ResponseDate
-        {
-            get
-            {
-                return this.responseDateField;
-            }
-            set
-            {
-                this.responseDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 2)]
-        public System.Nullable<System.DateTime> PlanDate
-        {
-            get
-            {
-                return this.planDateField;
-            }
-            set
-            {
-                this.planDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 3)]
-        public System.Nullable<int> StatusCode
-        {
-            get
-            {
-                return this.statusCodeField;
-            }
-            set
-            {
-                this.statusCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public Person Responsible
-        {
-            get
-            {
-                return this.responsibleField;
-            }
-            set
-            {
-                this.responsibleField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 5)]
-        public ServiceDocument[] Documents
-        {
-            get
-            {
-                return this.documentsField;
-            }
-            set
-            {
-                this.documentsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 6)]
-        public RequestContact[] Contacts
-        {
-            get
-            {
-                return this.contactsField;
-            }
-            set
-            {
-                this.contactsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        public string Note
-        {
-            get
-            {
-                return this.noteField;
-            }
-            set
-            {
-                this.noteField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public RequestResult Result
-        {
-            get
-            {
-                return this.resultField;
-            }
-            set
-            {
-                this.resultField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        public string ServiceNumber
-        {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
-        public string ReasonCode
-        {
-            get
-            {
-                return this.reasonCodeField;
-            }
-            set
-            {
-                this.reasonCodeField = value;
-            }
-        }
     }
 
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class DocumentsRequestData
+    [DataContract(Namespace = Namespace.ServiceNamespace)]
+    public class ErrorMessageData
     {
-
-        private string documentTypeCodeField;
-
-        private string parameterTypeCodeField;
-
-        private System.Xml.XmlElement parameterField;
-
-        private bool includeXmlViewField;
-
-        private bool includeBinaryViewField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string DocumentTypeCode
-        {
-            get
-            {
-                return this.documentTypeCodeField;
-            }
-            set
-            {
-                this.documentTypeCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string ParameterTypeCode
-        {
-            get
-            {
-                return this.parameterTypeCodeField;
-            }
-            set
-            {
-                this.parameterTypeCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public System.Xml.XmlElement Parameter
-        {
-            get
-            {
-                return this.parameterField;
-            }
-            set
-            {
-                this.parameterField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public bool IncludeXmlView
-        {
-            get
-            {
-                return this.includeXmlViewField;
-            }
-            set
-            {
-                this.includeXmlViewField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public bool IncludeBinaryView
-        {
-            get
-            {
-                return this.includeBinaryViewField;
-            }
-            set
-            {
-                this.includeBinaryViewField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestTask
-    {
-
-        private string requestIdField;
-
-        private string codeField;
-
-        private string subjectField;
-
-        private System.Nullable<System.DateTime> validityPeriodField;
-
-        private Person responsibleField;
-
-        private Department departmentField;
-
-        private string serviceNumberField;
-
-        private string serviceTypeCodeField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string RequestId
-        {
-            get
-            {
-                return this.requestIdField;
-            }
-            set
-            {
-                this.requestIdField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string Code
-        {
-            get
-            {
-                return this.codeField;
-            }
-            set
-            {
-                this.codeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string Subject
-        {
-            get
-            {
-                return this.subjectField;
-            }
-            set
-            {
-                this.subjectField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 3)]
-        public System.Nullable<System.DateTime> ValidityPeriod
-        {
-            get
-            {
-                return this.validityPeriodField;
-            }
-            set
-            {
-                this.validityPeriodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public Person Responsible
-        {
-            get
-            {
-                return this.responsibleField;
-            }
-            set
-            {
-                this.responsibleField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public Department Department
-        {
-            get
-            {
-                return this.departmentField;
-            }
-            set
-            {
-                this.departmentField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        public string ServiceNumber
-        {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        public string ServiceTypeCode
-        {
-            get
-            {
-                return this.serviceTypeCodeField;
-            }
-            set
-            {
-                this.serviceTypeCodeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class CoordinateTaskData
-    {
-
-        private RequestTask taskField;
-
-        private DocumentsRequestData dataField;
-
-        private object signatureField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public RequestTask Task
-        {
-            get
-            {
-                return this.taskField;
-            }
-            set
-            {
-                this.taskField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public DocumentsRequestData Data
-        {
-            get
-            {
-                return this.dataField;
-            }
-            set
-            {
-                this.dataField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public object Signature
-        {
-            get
-            {
-                return this.signatureField;
-            }
-            set
-            {
-                this.signatureField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class Headers
-    {
-
-        private string fromOrgCodeField;
-
-        private string toOrgCodeField;
-
-        private string messageIdField;
-
-        private string relatesToField;
-
-        private string serviceNumberField;
-
-        private System.DateTime requestDateTimeField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string FromOrgCode
-        {
-            get
-            {
-                return this.fromOrgCodeField;
-            }
-            set
-            {
-                this.fromOrgCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string ToOrgCode
-        {
-            get
-            {
-                return this.toOrgCodeField;
-            }
-            set
-            {
-                this.toOrgCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string MessageId
-        {
-            get
-            {
-                return this.messageIdField;
-            }
-            set
-            {
-                this.messageIdField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string RelatesTo
-        {
-            get
-            {
-                return this.relatesToField;
-            }
-            set
-            {
-                this.relatesToField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public string ServiceNumber
-        {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public System.DateTime RequestDateTime
-        {
-            get
-            {
-                return this.requestDateTimeField;
-            }
-            set
-            {
-                this.requestDateTimeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestService
-    {
-
-        private string regNumField;
-
-        private System.Nullable<System.DateTime> regDateField;
-
-        private string serviceNumberField;
-
-        private string serviceTypeCodeField;
-
-        private System.Nullable<decimal> servicePriceField;
-
-        private System.Nullable<System.DateTime> prepareTargetDateField;
-
-        private System.Nullable<System.DateTime> outputTargetDateField;
-
-        private System.Nullable<int> copiesField;
-
-        private Person responsibleField;
-
-        private Department departmentField;
-
-        private ServiceDocument[] documentsField;
-
-        private string[] declineReasonCodesField;
-
-        private Department createdByDepartmentField;
-
-        private System.Nullable<System.DateTime> prepareFactDateField;
-
-        private System.Nullable<System.DateTime> outputFactDateField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string RegNum
-        {
-            get
-            {
-                return this.regNumField;
-            }
-            set
-            {
-                this.regNumField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 1)]
-        public System.Nullable<System.DateTime> RegDate
-        {
-            get
-            {
-                return this.regDateField;
-            }
-            set
-            {
-                this.regDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string ServiceNumber
-        {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string ServiceTypeCode
-        {
-            get
-            {
-                return this.serviceTypeCodeField;
-            }
-            set
-            {
-                this.serviceTypeCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 4)]
-        public System.Nullable<decimal> ServicePrice
-        {
-            get
-            {
-                return this.servicePriceField;
-            }
-            set
-            {
-                this.servicePriceField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 5)]
-        public System.Nullable<System.DateTime> PrepareTargetDate
-        {
-            get
-            {
-                return this.prepareTargetDateField;
-            }
-            set
-            {
-                this.prepareTargetDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 6)]
-        public System.Nullable<System.DateTime> OutputTargetDate
-        {
-            get
-            {
-                return this.outputTargetDateField;
-            }
-            set
-            {
-                this.outputTargetDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 7)]
-        public System.Nullable<int> Copies
-        {
-            get
-            {
-                return this.copiesField;
-            }
-            set
-            {
-                this.copiesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public Person Responsible
-        {
-            get
-            {
-                return this.responsibleField;
-            }
-            set
-            {
-                this.responsibleField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        public Department Department
-        {
-            get
-            {
-                return this.departmentField;
-            }
-            set
-            {
-                this.departmentField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 10)]
-        public ServiceDocument[] Documents
-        {
-            get
-            {
-                return this.documentsField;
-            }
-            set
-            {
-                this.documentsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 11)]
-        public string[] DeclineReasonCodes
-        {
-            get
-            {
-                return this.declineReasonCodesField;
-            }
-            set
-            {
-                this.declineReasonCodesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-        public Department CreatedByDepartment
-        {
-            get
-            {
-                return this.createdByDepartmentField;
-            }
-            set
-            {
-                this.createdByDepartmentField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 13)]
-        public System.Nullable<System.DateTime> PrepareFactDate
-        {
-            get
-            {
-                return this.prepareFactDateField;
-            }
-            set
-            {
-                this.prepareFactDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 14)]
-        public System.Nullable<System.DateTime> OutputFactDate
-        {
-            get
-            {
-                return this.outputFactDateField;
-            }
-            set
-            {
-                this.outputFactDateField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class CoordinateData
-    {
-
-        private BaseDeclarant declarantField;
-
-        private RequestContact trusteeField;
-
-        private RequestService serviceField;
-
-        private System.Xml.XmlElement customAttributesField;
-
-        private RequestContact[] contactsField;
-
-        private byte[] signatureField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public BaseDeclarant Declarant
-        {
-            get
-            {
-                return this.declarantField;
-            }
-            set
-            {
-                this.declarantField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public RequestContact Trustee
-        {
-            get
-            {
-                return this.trusteeField;
-            }
-            set
-            {
-                this.trusteeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public RequestService Service
-        {
-            get
-            {
-                return this.serviceField;
-            }
-            set
-            {
-                this.serviceField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public System.Xml.XmlElement CustomAttributes
-        {
-            get
-            {
-                return this.customAttributesField;
-            }
-            set
-            {
-                this.customAttributesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 4)]
-        public RequestContact[] Contacts
-        {
-            get
-            {
-                return this.contactsField;
-            }
-            set
-            {
-                this.contactsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 5)]
-        public byte[] Signature
-        {
-            get
-            {
-                return this.signatureField;
-            }
-            set
-            {
-                this.signatureField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestQueryTask
-    {
-
-        private string requestIdField;
-
-        private string subjectField;
-
-        private System.Nullable<System.DateTime> validityPeriodField;
-
-        private int statusCodeField;
-
-        private Person responsibleField;
-
-        private Department departmentField;
-
-        private string docCodeField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string RequestId
-        {
-            get
-            {
-                return this.requestIdField;
-            }
-            set
-            {
-                this.requestIdField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string Subject
-        {
-            get
-            {
-                return this.subjectField;
-            }
-            set
-            {
-                this.subjectField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 2)]
-        public System.Nullable<System.DateTime> ValidityPeriod
-        {
-            get
-            {
-                return this.validityPeriodField;
-            }
-            set
-            {
-                this.validityPeriodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public int StatusCode
-        {
-            get
-            {
-                return this.statusCodeField;
-            }
-            set
-            {
-                this.statusCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public Person Responsible
-        {
-            get
-            {
-                return this.responsibleField;
-            }
-            set
-            {
-                this.responsibleField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public Department Department
-        {
-            get
-            {
-                return this.departmentField;
-            }
-            set
-            {
-                this.departmentField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        public string DocCode
-        {
-            get
-            {
-                return this.docCodeField;
-            }
-            set
-            {
-                this.docCodeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class ServiceDocumentNoFiles
-    {
-
-        private string idField;
-
-        private string docCodeField;
-
-        private string docSubTypeField;
-
-        private string docPersonField;
-
-        private string docSerieField;
-
-        private string docNumberField;
-
-        private System.Nullable<System.DateTime> docDateField;
-
-        private System.Nullable<System.DateTime> validityPeriodField;
-
-        private string whoSignField;
-
-        private System.Nullable<int> listCountField;
-
-        private System.Nullable<int> copyCountField;
-
-        private string divisionCodeField;
-
-        private byte[] signatureField;
-
-        private System.Xml.XmlElement customAttributesField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string DocCode
-        {
-            get
-            {
-                return this.docCodeField;
-            }
-            set
-            {
-                this.docCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string DocSubType
-        {
-            get
-            {
-                return this.docSubTypeField;
-            }
-            set
-            {
-                this.docSubTypeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string DocPerson
-        {
-            get
-            {
-                return this.docPersonField;
-            }
-            set
-            {
-                this.docPersonField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public string DocSerie
-        {
-            get
-            {
-                return this.docSerieField;
-            }
-            set
-            {
-                this.docSerieField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public string DocNumber
-        {
-            get
-            {
-                return this.docNumberField;
-            }
-            set
-            {
-                this.docNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 6)]
-        public System.Nullable<System.DateTime> DocDate
-        {
-            get
-            {
-                return this.docDateField;
-            }
-            set
-            {
-                this.docDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 7)]
-        public System.Nullable<System.DateTime> ValidityPeriod
-        {
-            get
-            {
-                return this.validityPeriodField;
-            }
-            set
-            {
-                this.validityPeriodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public string WhoSign
-        {
-            get
-            {
-                return this.whoSignField;
-            }
-            set
-            {
-                this.whoSignField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 9)]
-        public System.Nullable<int> ListCount
-        {
-            get
-            {
-                return this.listCountField;
-            }
-            set
-            {
-                this.listCountField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 10)]
-        public System.Nullable<int> CopyCount
-        {
-            get
-            {
-                return this.copyCountField;
-            }
-            set
-            {
-                this.copyCountField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        public string DivisionCode
-        {
-            get
-            {
-                return this.divisionCodeField;
-            }
-            set
-            {
-                this.divisionCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 12)]
-        public byte[] Signature
-        {
-            get
-            {
-                return this.signatureField;
-            }
-            set
-            {
-                this.signatureField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-        public System.Xml.XmlElement CustomAttributes
-        {
-            get
-            {
-                return this.customAttributesField;
-            }
-            set
-            {
-                this.customAttributesField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestServiceNoFiles
-    {
-
-        private string regNumField;
-
-        private System.Nullable<System.DateTime> regDateField;
-
-        private string serviceNumberField;
-
-        private string serviceTypeCodeField;
-
-        private System.Nullable<decimal> servicePriceField;
-
-        private System.Nullable<System.DateTime> prepareTargetDateField;
-
-        private System.Nullable<System.DateTime> outputTargetDateField;
-
-        private System.Nullable<int> copiesField;
-
-        private Person responsibleField;
-
-        private Department departmentField;
-
-        private ServiceDocumentNoFiles[] documentsField;
-
-        private string[] declineReasonCodesField;
-
-        private Department createdByDepartmentField;
-
-        private System.Nullable<System.DateTime> prepareFactDateField;
-
-        private System.Nullable<System.DateTime> outputFactDateField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string RegNum
-        {
-            get
-            {
-                return this.regNumField;
-            }
-            set
-            {
-                this.regNumField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 1)]
-        public System.Nullable<System.DateTime> RegDate
-        {
-            get
-            {
-                return this.regDateField;
-            }
-            set
-            {
-                this.regDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string ServiceNumber
-        {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public string ServiceTypeCode
-        {
-            get
-            {
-                return this.serviceTypeCodeField;
-            }
-            set
-            {
-                this.serviceTypeCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 4)]
-        public System.Nullable<decimal> ServicePrice
-        {
-            get
-            {
-                return this.servicePriceField;
-            }
-            set
-            {
-                this.servicePriceField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 5)]
-        public System.Nullable<System.DateTime> PrepareTargetDate
-        {
-            get
-            {
-                return this.prepareTargetDateField;
-            }
-            set
-            {
-                this.prepareTargetDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 6)]
-        public System.Nullable<System.DateTime> OutputTargetDate
-        {
-            get
-            {
-                return this.outputTargetDateField;
-            }
-            set
-            {
-                this.outputTargetDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 7)]
-        public System.Nullable<int> Copies
-        {
-            get
-            {
-                return this.copiesField;
-            }
-            set
-            {
-                this.copiesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public Person Responsible
-        {
-            get
-            {
-                return this.responsibleField;
-            }
-            set
-            {
-                this.responsibleField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        public Department Department
-        {
-            get
-            {
-                return this.departmentField;
-            }
-            set
-            {
-                this.departmentField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 10)]
-        public ServiceDocumentNoFiles[] Documents
-        {
-            get
-            {
-                return this.documentsField;
-            }
-            set
-            {
-                this.documentsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 11)]
-        public string[] DeclineReasonCodes
-        {
-            get
-            {
-                return this.declineReasonCodesField;
-            }
-            set
-            {
-                this.declineReasonCodesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-        public Department CreatedByDepartment
-        {
-            get
-            {
-                return this.createdByDepartmentField;
-            }
-            set
-            {
-                this.createdByDepartmentField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 13)]
-        public System.Nullable<System.DateTime> PrepareFactDate
-        {
-            get
-            {
-                return this.prepareFactDateField;
-            }
-            set
-            {
-                this.prepareFactDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 14)]
-        public System.Nullable<System.DateTime> OutputFactDate
-        {
-            get
-            {
-                return this.outputFactDateField;
-            }
-            set
-            {
-                this.outputFactDateField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class RequestInfo
-    {
-
-        private BaseDeclarant declarantField;
-
-        private RequestContact trusteeField;
-
-        private RequestServiceNoFiles serviceField;
-
-        private RequestStatus[] statusesField;
-
-        private RequestQueryTask[] tasksField;
-
-        private System.Xml.XmlElement customAttributesField;
-
-        private RequestContact[] contactsField;
-
-        private byte[] signatureField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public BaseDeclarant Declarant
-        {
-            get
-            {
-                return this.declarantField;
-            }
-            set
-            {
-                this.declarantField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public RequestContact Trustee
-        {
-            get
-            {
-                return this.trusteeField;
-            }
-            set
-            {
-                this.trusteeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public RequestServiceNoFiles Service
-        {
-            get
-            {
-                return this.serviceField;
-            }
-            set
-            {
-                this.serviceField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Statuses", Order = 3)]
-        public RequestStatus[] Statuses
-        {
-            get
-            {
-                return this.statusesField;
-            }
-            set
-            {
-                this.statusesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Tasks", Order = 4)]
-        public RequestQueryTask[] Tasks
-        {
-            get
-            {
-                return this.tasksField;
-            }
-            set
-            {
-                this.tasksField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public System.Xml.XmlElement CustomAttributes
-        {
-            get
-            {
-                return this.customAttributesField;
-            }
-            set
-            {
-                this.customAttributesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Contacts", Order = 6)]
-        public RequestContact[] Contacts
-        {
-            get
-            {
-                return this.contactsField;
-            }
-            set
-            {
-                this.contactsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 7)]
-        public byte[] Signature
-        {
-            get
-            {
-                return this.signatureField;
-            }
-            set
-            {
-                this.signatureField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class ServiceNumberStatusesOnly
-    {
-
-        private string serviceNumberField;
-
-        private bool statusesOnlyField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string ServiceNumber
-        {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public bool StatusesOnly
-        {
-            get
-            {
-                return this.statusesOnlyField;
-            }
-            set
-            {
-                this.statusesOnlyField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class SmallRequestInfo
-    {
-
-        private System.DateTime createdDateField;
-
-        private string serviceCodeField;
-
-        private string serviceNumberField;
-
-        private int statusCodeField;
-
-        private System.DateTime statusDateField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public System.DateTime CreatedDate
-        {
-            get
-            {
-                return this.createdDateField;
-            }
-            set
-            {
-                this.createdDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public string ServiceCode
-        {
-            get
-            {
-                return this.serviceCodeField;
-            }
-            set
-            {
-                this.serviceCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string ServiceNumber
-        {
-            get
-            {
-                return this.serviceNumberField;
-            }
-            set
-            {
-                this.serviceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        public int StatusCode
-        {
-            get
-            {
-                return this.statusCodeField;
-            }
-            set
-            {
-                this.statusCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        public System.DateTime StatusDate
-        {
-            get
-            {
-                return this.statusDateField;
-            }
-            set
-            {
-                this.statusDateField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class GetRequestsOutMessage : MessageBase
-    {
-
-        private RequestInfo[] requestsField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("Request")]
-        public RequestInfo[] Requests
-        {
-            get
-            {
-                return this.requestsField;
-            }
-            set
-            {
-                this.requestsField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class GetRequestsInMessage : MessageBase
-    {
-
-        private System.DateTime fromDateField;
-
-        private System.DateTime toDateField;
-
-        private string serviceCodeField;
-
-        private ServiceNumberStatusesOnly[] serviceNumbersField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public System.DateTime FromDate
-        {
-            get
-            {
-                return this.fromDateField;
-            }
-            set
-            {
-                this.fromDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        public System.DateTime ToDate
-        {
-            get
-            {
-                return this.toDateField;
-            }
-            set
-            {
-                this.toDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        public string ServiceCode
-        {
-            get
-            {
-                return this.serviceCodeField;
-            }
-            set
-            {
-                this.serviceCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 3)]
-        public ServiceNumberStatusesOnly[] ServiceNumbers
-        {
-            get
-            {
-                return this.serviceNumbersField;
-            }
-            set
-            {
-                this.serviceNumbersField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-    public partial class GetRequestListOutMessage : MessageBase
-    {
-
-        private SmallRequestInfo[] requestsField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("Request")]
-        public SmallRequestInfo[] Requests
-        {
-            get
-            {
-                return this.requestsField;
-            }
-            set
-            {
-                this.requestsField = value;
-            }
-        }
-    }
-
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
-
-    public partial class CoordinateMessage
-    {
-
-        [System.ServiceModel.MessageHeaderAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-        public Headers ServiceHeader;
-
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", Order = 0)]
-        public CoordinateData Message;
-
-        public CoordinateMessage()
-        {
-        }
-
-        public CoordinateMessage(Headers ServiceHeader, CoordinateData Message)
-        {
-            this.ServiceHeader = ServiceHeader;
-            this.Message = Message;
-        }
-    }
-
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
-    public partial class CoordinateTaskMessage
-    {
-
-        [System.ServiceModel.MessageHeaderAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-        public Headers ServiceHeader;
-
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", Order = 0)]
-        public CoordinateTaskData TaskMessage;
-
-        public CoordinateTaskMessage()
-        {
-        }
-
-        public CoordinateTaskMessage(Headers ServiceHeader, CoordinateTaskData TaskMessage)
-        {
-            this.ServiceHeader = ServiceHeader;
-            this.TaskMessage = TaskMessage;
-        }
-    }
-
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
-    public partial class CoordinateStatusMessage
-    {
-
-        [System.ServiceModel.MessageHeaderAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-        public Headers ServiceHeader;
-
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", Order = 0)]
-        public CoordinateStatusData StatusMessage;
-
-        public CoordinateStatusMessage()
-        {
-        }
-
-        public CoordinateStatusMessage(Headers ServiceHeader, CoordinateStatusData StatusMessage)
-        {
-            this.ServiceHeader = ServiceHeader;
-            this.StatusMessage = StatusMessage;
-        }
-    }
-
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName = "ErrorMessage", WrapperNamespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", IsWrapped = true)]
-    public partial class ErrorMessage
-    {
-
-        [System.ServiceModel.MessageHeaderAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-        public Headers ServiceHeader;
-
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", Order = 0)]
-        public ErrorMessageData Error;
-
-        public ErrorMessage()
-        {
-        }
-
-        public ErrorMessage(Headers ServiceHeader, ErrorMessageData Error)
-        {
-            this.ServiceHeader = ServiceHeader;
-            this.Error = Error;
-        }
-    }
-
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
-    public partial class SendRequestsMessage
-    {
-
-        [System.ServiceModel.MessageHeaderAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-        public Headers ServiceHeader;
-
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", Order = 0)]
-        public CoordinateData[] RequestsMessage;
-
-        public SendRequestsMessage()
-        {
-        }
-
-        public SendRequestsMessage(Headers ServiceHeader, CoordinateData[] RequestsMessage)
-        {
-            this.ServiceHeader = ServiceHeader;
-            this.RequestsMessage = RequestsMessage;
-        }
-    }
-
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
-    public partial class SendTasksMessage
-    {
-
-        [System.ServiceModel.MessageHeaderAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-        public Headers ServiceHeader;
-
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", Order = 0)]
-        public CoordinateTaskData[] TasksMessage;
-
-        public SendTasksMessage()
-        {
-        }
-
-        public SendTasksMessage(Headers ServiceHeader, CoordinateTaskData[] TasksMessage)
-        {
-            this.ServiceHeader = ServiceHeader;
-            this.TasksMessage = TasksMessage;
-        }
-    }
-
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
-    public partial class SetFilesAndStatusesMessage
-    {
-
-        [System.ServiceModel.MessageHeaderAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/")]
-        public Headers ServiceHeader;
-
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace = "http://asguf.mos.ru/rkis_gu/coordinate/v5/", Order = 0)]
-        public SetFilesAndStatusesData[] StatusesMessage;
-
-        public SetFilesAndStatusesMessage()
-        {
-        }
-
-        public SetFilesAndStatusesMessage(Headers ServiceHeader, SetFilesAndStatusesData[] StatusesMessage)
-        {
-            this.ServiceHeader = ServiceHeader;
-            this.StatusesMessage = StatusesMessage;
-        }
+        [DataMember]
+        public string ErrorCode { get; set; }
+        [DataMember]
+        public string ErrorText { get; set; }
     }
 }

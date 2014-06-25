@@ -10,9 +10,7 @@ using System.Reflection;
 
 namespace TM.Services.CoordinateV5
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "CoordinateV5Service" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select CoordinateV5Service.svc or CoordinateV5Service.svc.cs at the Solution Explorer and start debugging.
-    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true, Namespace = Namespace.ServiceNamespace)]
     public class CoordinateV5Service : ICoordinateV5Service
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();

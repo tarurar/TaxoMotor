@@ -43,6 +43,10 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.0.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Rkis.Rsmev, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2b3b604558f3f5fa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Rkis\bin\Rkis.Rsmev.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -65,6 +69,8 @@
   <ItemGroup>
     <Content Include="CoordinateV5\CoordinateV5Service.svc" />
     <Content Include="CoordinateV5\Sample\message.xml" />
+    <Content Include="Rkis\bin\Rkis.Rsmev.dll" />
+    <Content Include="Rkis\bin\Rkis.Rsmev.pdb" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -84,6 +90,7 @@
     <Compile Include="CoordinateV5\Impl\SendTasks.cs" />
     <Compile Include="CoordinateV5\Impl\SetFilesAndStatus.cs" />
     <Compile Include="CoordinateV5\Impl\SetFilesAndStatuses.cs" />
+    <Compile Include="CoordinateV5\Namespace.cs" />
     <Compile Include="CoordinateV5\ServiceImplementation.cs" />
     <Compile Include="DatabaseFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
