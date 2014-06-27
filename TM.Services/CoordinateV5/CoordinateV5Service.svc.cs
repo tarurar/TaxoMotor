@@ -15,7 +15,7 @@ namespace TM.Services.CoordinateV5
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private static readonly string logErrFmt = "Method name :{0}; Exception Details: {1}";
+        private static readonly string logErrorFmt = "There was an error while executing {0} method implementation";
 
         public GetRequestListOutMessage GetRequestList(GetRequestListInMessage request)
         {
@@ -27,7 +27,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
 
             return msg;
@@ -43,7 +43,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
 
             return msg;
@@ -57,7 +57,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
         }
 
@@ -69,7 +69,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
         }
 
@@ -81,7 +81,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
         }
 
@@ -93,7 +93,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
         }
 
@@ -105,7 +105,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
         }
 
@@ -117,7 +117,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
         }
 
@@ -129,7 +129,7 @@ namespace TM.Services.CoordinateV5
             }
             catch (Exception ex)
             {
-                logger.Error(String.Format(logErrFmt, MethodBase.GetCurrentMethod().ToString(), ex.Message), ex);
+                logger.Error(String.Format(logErrorFmt, MethodInfo.GetCurrentMethod().Name), ex);
             }
         }
     }

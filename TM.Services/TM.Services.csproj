@@ -65,6 +65,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Thinktecture.ServiceModel.Extensions.Metadata">
+      <HintPath>..\..\..\Program Files (x86)\thinktecture\WSCF.blue\Thinktecture.ServiceModel.Extensions.Metadata.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CoordinateV5\CoordinateV5Service.svc" />
@@ -91,7 +94,10 @@
     <Compile Include="CoordinateV5\Impl\SetFilesAndStatus.cs" />
     <Compile Include="CoordinateV5\Impl\SetFilesAndStatuses.cs" />
     <Compile Include="CoordinateV5\Namespace.cs" />
+    <Compile Include="CoordinateV5\AcknowledgementWorker.cs" />
     <Compile Include="CoordinateV5\ServiceImplementation.cs" />
+    <Compile Include="CoordinateV5\CoordinateV5CustomAttribModel.cs" />
+    <Compile Include="CoordinateV5\CoordinateV5Client.cs" />
     <Compile Include="DatabaseFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -124,6 +130,10 @@
     <ProjectReference Include="..\TM.DatabaseModel\TM.DatabaseModel.csproj">
       <Project>{73829979-75d4-4dd6-b37c-da0ed1ac0eec}</Project>
       <Name>TM.DatabaseModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
+      <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
+      <Name>TM.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
