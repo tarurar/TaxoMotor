@@ -11,6 +11,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.DatabaseModel", "TM.Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.Utils", "TM.Utils\TM.Utils.csproj", "{CC6F29A8-E24E-41AE-9CC6-AA69C2CE8B4D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationConfiguration", "ApplicationConfiguration", "{92F71084-FF79-49C2-A790-282FE8155188}"
+	ProjectSection(SolutionItems) = preProject
+		Application.config = Application.config
+		FxCop.targets = FxCop.targets
+		FxCopConsoleOutput.xsl = FxCopConsoleOutput.xsl
+		FxCopDictionary.xml = FxCopDictionary.xml
+		Settings.FxCop = Settings.FxCop
+		Settings.spruleset = Settings.spruleset
+		Settings.StyleCop = Settings.StyleCop
+		SharePointConfiguration.xml = SharePointConfiguration.xml
+		SPDisposeChecker.targets = SPDisposeChecker.targets
+		SPSF.targets = SPSF.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deployment", "Deployment\Deployment.csproj", "{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4EC9586-B034-42B0-93C2-ADDB28619CF8} = {A4EC9586-B034-42B0-93C2-ADDB28619CF8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.Core", "TM.SP.Core\TM.SP.Core.csproj", "{A4EC9586-B034-42B0-93C2-ADDB28619CF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +56,16 @@ Global
 		{CC6F29A8-E24E-41AE-9CC6-AA69C2CE8B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC6F29A8-E24E-41AE-9CC6-AA69C2CE8B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC6F29A8-E24E-41AE-9CC6-AA69C2CE8B4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
