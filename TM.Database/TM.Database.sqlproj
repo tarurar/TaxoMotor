@@ -105,13 +105,48 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Sample" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Functions" />
+    <Folder Include="dbo\Procedures" />
+    <Folder Include="dbo\Types" />
+    <Folder Include="Snapshots" />
+    <Folder Include="dbo\Triggers" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="IncomingRequestXML.sql" />
-    <Build Include="fn_GetCoordinateV5RequestMessageId.sql" />
+    <Build Include="dbo\Tables\File.sql" />
+    <Build Include="dbo\Tables\RequestContact.sql" />
+    <Build Include="dbo\Tables\RequestAccount.sql" />
+    <Build Include="dbo\Tables\Address.sql" />
+    <Build Include="dbo\Tables\Service.sql" />
+    <Build Include="dbo\Tables\ServiceDocument.sql" />
+    <Build Include="dbo\Tables\ServiceHeader.sql" />
+    <Build Include="dbo\Tables\taxi_info.sql" />
+    <Build Include="dbo\Tables\ServiceProperties.sql" />
+    <Build Include="dbo\Tables\Request.sql" />
     <None Include="Sample\IncomingRequestXML_Insert.sql" />
+    <Build Include="dbo\Tables\IncomingRequestXML.sql" />
+    <Build Include="dbo\Functions\fn_GetCoordinateV5RequestMessageId.sql" />
+    <Build Include="dbo\Procedures\ProcessIncomingRequestXML.sql" />
+    <Build Include="dbo\Functions\fn_GetFieldsForTable.sql" />
+    <Build Include="dbo\Functions\fn_BuildInsertStatementForXMLBody.sql" />
+    <Build Include="dbo\Types\tt_KeyValueMap.sql" />
+    <Build Include="dbo\Procedures\InsertRecordForXMLBody.sql" />
+    <Build Include="dbo\Tables\DEBUG_DATA.sql" />
+    <Build Include="dbo\Triggers\AI_DEBUG_DATA.sql" />
+    <Build Include="dbo\Procedures\InsertAddressForXMLBody.sql" />
+    <Build Include="dbo\Procedures\InsertRequestContactForXMLBody.sql" />
+    <Build Include="dbo\Procedures\InsertRequestAccountForXMLBody.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
+    <None Include="Snapshots\TM.Database_20140704_12-55-33.dacpac" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\110\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\110\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
   </ItemGroup>
 </Project>
