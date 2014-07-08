@@ -53,7 +53,6 @@ namespace TM.Services.CoordinateV5
             {
                 if (sendAck)
                 {
-                    // TODO: client certificate
                     var worker = new AcknowledgementWorker(request.ServiceHeader.Invert(), "ASGUF");
                     new Thread(worker.Work) {IsBackground = false}.Start();
                 }
