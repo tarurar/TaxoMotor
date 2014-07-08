@@ -10,6 +10,5 @@
 	[PrepareFactDate] DATETIME NULL,
 	[OutputFactDate] DATETIME NULL,
 	[Id] INT NOT NULL IDENTITY (1, 1),
-	[MessageId] VARCHAR(36) NOT NULL,
-	[Request] INT NOT NULL
+	[MessageId] VARCHAR(36) NOT NULL
 	);

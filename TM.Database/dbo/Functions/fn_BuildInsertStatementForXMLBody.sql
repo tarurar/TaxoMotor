@@ -43,6 +43,8 @@ BEGIN
 					THEN '(' + CAST([F].[LENGTH] AS NVARCHAR(255)) + ')'
 				WHEN 'CHAR'
 					THEN '(' + CAST([F].[LENGTH] AS NVARCHAR(255)) + ')'
+				WHEN 'VARBINARY'
+					THEN '(MAX)'
 				ELSE ''
 				END + ''')' AS [STATEMENT],
 			CASE 

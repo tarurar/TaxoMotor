@@ -5,6 +5,5 @@
 	[RelatesTo] NVARCHAR(255) NULL,
 	[ServiceNumber] NVARCHAR(255) NULL,
 	[RequestDateTime] DATETIME NOT NULL,
-	[Id] INT NOT NULL IDENTITY (1, 1),
-	[Request] INT NOT NULL
+	[Id] INT NOT NULL IDENTITY (1, 1)
 	);

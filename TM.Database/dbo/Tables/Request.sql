@@ -4,5 +4,7 @@
 	[DeclarantRequestAccount] INT NULL,
 	[DeclarantRequestContact] INT NULL,
 	[TrusteeRequestContact] INT NULL,
-	[ServiceProperties] INT NOT NULL
+	[ServiceProperties] INT NOT NULL,
+	[Service] INT NOT NULL,
+	[ServiceHeader] INT NOT NULL
 	);
