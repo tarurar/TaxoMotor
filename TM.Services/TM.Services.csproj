@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="CoordinateV5\CoordinateV5Service.svc" />
     <Content Include="CoordinateV5\Sample\message.xml" />
+    <Content Include="CoordinateV5\Sample\message2.xml" />
     <Content Include="Rkis\bin\Rkis.Rsmev.dll" />
     <Content Include="Rkis\bin\Rkis.Rsmev.pdb" />
     <Content Include="Web.config">
