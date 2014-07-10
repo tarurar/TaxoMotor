@@ -32,5 +32,6 @@
 	[year] INT NULL,
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL,
-	[ServiceProperties] INT NOT NULL
+	[ServiceProperties] INT NOT NULL,
+	CONSTRAINT [FK_TaxiInfo_ServiceProperties] FOREIGN KEY ([ServiceProperties]) REFERENCES [dbo].[ServiceProperties]([Id])
 	);

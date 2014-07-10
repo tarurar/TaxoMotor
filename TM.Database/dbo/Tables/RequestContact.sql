@@ -25,5 +25,8 @@
 	[MessageId] VARCHAR(36) NOT NULL,
 	[RegAddress] INT NULL,
 	[FactAddress] INT NULL,
-	[BirthAddress] INT NULL
+	[BirthAddress] INT NULL,
+	CONSTRAINT [FK_RequestContact_RegAddress] FOREIGN KEY ([RegAddress]) REFERENCES [dbo].[Address]([Id]),
+	CONSTRAINT [FK_RequestContact_FactAddress] FOREIGN KEY ([FactAddress]) REFERENCES [dbo].[Address]([Id]),
+	CONSTRAINT [FK_RequestContact_BirthAddress] FOREIGN KEY ([BirthAddress]) REFERENCES [dbo].[Address]([Id])
 	);

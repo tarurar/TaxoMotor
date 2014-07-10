@@ -159,4 +159,7 @@
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TM.Database.refactorlog" />
+  </ItemGroup>
 </Project>

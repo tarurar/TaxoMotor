@@ -15,5 +15,6 @@
 	[Signature] VARBINARY(max) NULL,
 	[Id_Auto] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL,
-	[Service] INT NOT NULL
+	[Service] INT NOT NULL,
+	CONSTRAINT [FK_ServiceDocument_Service] FOREIGN KEY ([Service]) REFERENCES [dbo].[Service]([Id])
 	);
