@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [dbo].[taxi_info] (
+	[Title] AS [num],
 	[blankno] NVARCHAR(255) NULL,
 	[brand] NVARCHAR(255) NULL,
 	[brandname] NVARCHAR(255) NULL,
@@ -29,7 +30,7 @@
 	[taxometr] BIT NULL,
 	[todate] DATETIME NULL,
 	[year] INT NULL,
-	[Id] INT NOT NULL IDENTITY (1, 1),
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL,
 	[ServiceProperties] INT NOT NULL
 	);

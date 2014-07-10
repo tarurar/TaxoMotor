@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [dbo].[Service] (
+	[Title] AS [RegNum],
 	[RegNum] NVARCHAR(255) NULL,
 	[RegDate] DATETIME NULL,
 	[ServiceNumber] NVARCHAR(255) NULL,
@@ -9,6 +10,6 @@
 	[Copies] INT NULL,
 	[PrepareFactDate] DATETIME NULL,
 	[OutputFactDate] DATETIME NULL,
-	[Id] INT NOT NULL IDENTITY (1, 1),
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL
 	);

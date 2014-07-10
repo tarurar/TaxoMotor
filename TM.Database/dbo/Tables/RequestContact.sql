@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[RequestContact] (
 	[Id] NVARCHAR(255) NULL,
+	[Title] AS CONCAT([LastName], ' ', [FirstName], ' ', [MiddleName]),
 	[LastName] NVARCHAR(255) NULL,
 	[FirstName] NVARCHAR(255) NULL,
 	[MiddleName] NVARCHAR(255) NULL,
@@ -20,7 +21,7 @@
 	[OMSCompany] NVARCHAR(255) NULL,
 	[OMSValidityPeriod] NVARCHAR(255) NULL,
 	[IsiId] NVARCHAR(255) NULL,
-	[Id_Auto] INT NOT NULL IDENTITY (1, 1),
+	[Id_Auto] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL,
 	[RegAddress] INT NULL,
 	[FactAddress] INT NULL,

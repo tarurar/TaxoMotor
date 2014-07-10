@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[IncomingRequestXML]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1), 
+	[Title] AS [Id],
     [RequestBody] XML NOT NULL, 
     [InDate] DATETIME NOT NULL, 
     [Source] NVARCHAR(50) NULL,

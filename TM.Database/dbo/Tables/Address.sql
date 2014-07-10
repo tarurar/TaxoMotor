@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [dbo].[Address] (
+	[Title] AS CONCAT([City], ' ', [Street], ' ', [House]),
 	[Country] NVARCHAR(255) NULL,
 	[PostalCode] NVARCHAR(255) NULL,
 	[Locality] NVARCHAR(255) NULL,
@@ -23,7 +24,7 @@
 	[BTIStreetCode] NVARCHAR(255) NULL,
 	[BTIBuildingCode] NVARCHAR(255) NULL,
 	[Type] NVARCHAR(255) NULL,
-	[Id] INT NOT NULL IDENTITY (1, 1),
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL,
 	CONSTRAINT [CK_Address_Type] CHECK (([Type] IN ('RegAddress', 'FactAddress', 'BirthAddress', 'PostalAddress')))
 	);

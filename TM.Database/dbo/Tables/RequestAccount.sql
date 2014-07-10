@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [dbo].[RequestAccount] (
+	[Title] AS [Name],
 	[FullName] NVARCHAR(255) NULL,
 	[Name] NVARCHAR(255) NULL,
 	[BrandName] NVARCHAR(255) NULL,
@@ -23,7 +24,7 @@
 	[Fax] NVARCHAR(255) NULL,
 	[EMail] NVARCHAR(255) NULL,
 	[WebSite] NVARCHAR(255) NULL,
-	[Id] INT NOT NULL IDENTITY (1, 1),
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL,
 	[PostalAddress] INT NULL,
 	[FactAddress] INT NULL,

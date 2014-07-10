@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Request] (
-	[Id] INT NOT NULL IDENTITY(1, 1),
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Title] AS [MessageId],
 	[MessageId] VARCHAR(36) NOT NULL,
 	[DeclarantRequestAccount] INT NULL,
 	[DeclarantRequestContact] INT NULL,
