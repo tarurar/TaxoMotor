@@ -1,0 +1,7 @@
+﻿CREATE TRIGGER [AI_ERROR_DATA]
+	ON [dbo].[ErrorData]
+	AFTER INSERT
+	AS
+	BEGIN
+		UPDATE [dbo].[ErrorData] SET [DATE] = GETDATE() WHERE ID IN (SELECT ID FROM inserted);
+	END

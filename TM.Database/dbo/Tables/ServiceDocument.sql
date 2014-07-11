@@ -1,0 +1,20 @@
+﻿CREATE TABLE [dbo].[ServiceDocument] (
+	[Id] NVARCHAR(255) NULL,
+	[Title] AS [DocNumber],
+	[DocCode] NVARCHAR(255) NULL,
+	[DocSubType] NVARCHAR(255) NULL,
+	[DocPerson] NVARCHAR(255) NULL,
+	[DocSerie] NVARCHAR(255) NULL,
+	[DocNumber] NVARCHAR(255) NULL,
+	[DocDate] DATETIME NULL,
+	[ValidityPeriod] NVARCHAR(255) NULL,
+	[WhoSign] NVARCHAR(255) NULL,
+	[ListCount] INT NULL,
+	[CopyCount] INT NULL,
+	[DivisionCode] NVARCHAR(255) NULL,
+	[Signature] VARBINARY(max) NULL,
+	[Id_Auto] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
+	[MessageId] VARCHAR(36) NOT NULL,
+	[Service] INT NOT NULL,
+	CONSTRAINT [FK_ServiceDocument_Service] FOREIGN KEY ([Service]) REFERENCES [dbo].[Service]([Id])
+	);
