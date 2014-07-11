@@ -3,5 +3,5 @@
 	AFTER INSERT
 	AS
 	BEGIN
-		UPDATE [dbo].[ErrorData] SET [DATE] = GETDATE() WHERE ID IN (SELECT ID FROM inserted);
+		UPDATE [dbo].[ErrorData] SET [Date] = GETDATE() WHERE Id IN (SELECT Id FROM inserted);
 	END
