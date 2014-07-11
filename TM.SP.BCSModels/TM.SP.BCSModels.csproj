@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{73514D73-ABD3-440E-8A49-93026866C619}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TM.SP.BCSModels</RootNamespace>
+    <AssemblyName>TM.SP.BCSModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>15.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SharePoint.Security, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BCSModels\CoordinateV5\CoordinateV5Entities.cs" />
+    <Compile Include="BCSModels\CoordinateV5\CoordinateV5EntityServices.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BCSModels\CoordinateV5\CoordinateV5.bdcm" />
+    <None Include="BCSModels\CoordinateV5\CoordinateV5.bdcm.diagram">
+      <DependentUpon>CoordinateV5.bdcm</DependentUpon>
+    </None>
+    <None Include="BCSModels\CoordinateV5\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{0acfc775-8745-4501-89ee-b983c49827be}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.feature">
+      <FeatureId>{6e4fbcbc-577b-4b94-b67a-c50d8ab7d5fa}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_CoordinateV5BCSModel\TaxoMotor_CoordinateV5BCSModel.feature">
+      <FeatureId>{0c823234-4dc3-4850-99d3-7ad6c48d452e}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="ListInstances\AddressBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{6f8d7bd9-3905-47ec-aa48-c1361253e5b6}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\FileBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{0ddf13bc-f53c-45a5-93bc-7d7b2ce7ba9c}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\RequestAccountBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{43b6fdce-28d2-42d8-8d36-a8b9053c1796}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\RequestBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{9baba01b-410a-4763-946a-b72ed5dc78b5}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\RequestContactBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{04b9b2af-1198-4a39-8497-dae3b3fda8b1}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\ServiceBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{bc26ddd1-e188-4f0c-825d-4c873cc49bb2}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\ServiceDocumentBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{8e809a16-3568-42d5-a162-34031ffb9f46}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\ServiceHeaderBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{2620c808-b880-45ed-856b-2065eb1de61d}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\ServicePropertiesBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{a7236fe0-12fb-46bd-992b-1bfea455d993}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\TaxiInfoBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{ff70c768-14c8-4ecf-b5a1-a68f401c2569}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{fa87f3e2-92b1-4f35-aaf5-c4614fb40746}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+    <None Include="Template\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{2de0f359-222c-4b3a-bae9-30ac1d8420cc}</SharePointProjectItemId>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.Template.xml">
+      <DependentUpon>TaxoMotor_CoordinateV5BCSLists.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\TaxoMotor_CoordinateV5BCSModel\TaxoMotor_CoordinateV5BCSModel.Template.xml">
+      <DependentUpon>TaxoMotor_CoordinateV5BCSModel.feature</DependentUpon>
+    </Content>
+    <Content Include="ListInstances\AddressBCSList\Elements.xml" />
+    <Content Include="ListInstances\FileBCSList\Elements.xml" />
+    <Content Include="ListInstances\RequestAccountBCSList\Elements.xml" />
+    <Content Include="ListInstances\RequestBCSList\Elements.xml" />
+    <Content Include="ListInstances\RequestContactBCSList\Elements.xml" />
+    <Content Include="ListInstances\ServiceBCSList\Elements.xml" />
+    <Content Include="ListInstances\ServiceDocumentBCSList\Elements.xml" />
+    <Content Include="ListInstances\ServiceHeaderBCSList\Elements.xml" />
+    <Content Include="ListInstances\ServicePropertiesBCSList\Elements.xml" />
+    <Content Include="ListInstances\TaxiInfoBCSList\Elements.xml" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSLists.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSModel.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

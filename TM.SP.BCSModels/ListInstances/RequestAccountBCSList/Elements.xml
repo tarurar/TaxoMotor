@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="RequestAccountBCSList"
+		Description="RequestAccountBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="C649007C-95DA-40E6-BA78-5E1DE4F71B5D"
+		Url="Lists/RequestAccountBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/RequestAccountBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="CoordinateV5" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.CoordinateV5" />
+			<Property
+				Name="Entity"
+				Value="RequestAccount" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadRequestAccountItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

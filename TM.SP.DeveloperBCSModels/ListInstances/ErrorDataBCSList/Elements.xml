@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="ErrorDataBCSList"
+		Description="ErrorDataBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="7DAC7D12-3BEF-4378-BF92-FB6EE5AA8FEE"
+		Url="Lists/ErrorDataBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/ErrorDataBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="DeveloperData" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.DeveloperData" />
+			<Property
+				Name="Entity"
+				Value="ErrorData" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadErrorDataItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

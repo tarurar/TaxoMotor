@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="RequestContactBCSList"
+		Description="RequestContactBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="BE489DDD-EC1D-4B2F-AC51-9E505037D85C"
+		Url="Lists/RequestContactBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/RequestContactBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="CoordinateV5" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.CoordinateV5" />
+			<Property
+				Name="Entity"
+				Value="RequestContact" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadRequestContactItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

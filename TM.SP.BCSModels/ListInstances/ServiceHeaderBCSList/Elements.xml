@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="ServiceHeaderBCSList"
+		Description="ServiceHeaderBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="3821D683-83E2-49B0-9CB8-6EDC7172DB3F"
+		Url="Lists/ServiceHeaderBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/ServiceHeaderBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="CoordinateV5" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.CoordinateV5" />
+			<Property
+				Name="Entity"
+				Value="ServiceHeader" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadServiceHeaderItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Model Name="DeveloperData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/windows/2007/BusinessDataCatalog">
+	<AccessControlList>
+		<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+			<Right BdcRight="Edit" />
+			<Right BdcRight="Execute" />
+			<Right BdcRight="SetPermissions" />
+			<Right BdcRight="SelectableInClients" />
+		</AccessControlEntry>
+	</AccessControlList>
+	<LobSystems>
+		<LobSystem Name="DeveloperData" DefaultDisplayName="DeveloperData" Type="DotNetAssembly">
+			<LobSystemInstances>
+				<LobSystemInstance Name="DeveloperData" DefaultDisplayName="DeveloperData"></LobSystemInstance>
+			</LobSystemInstances>
+			<Entities>
+				<Entity Name="DEBUG_DATA" Namespace="TM.SP.BCSModels.DeveloperData" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="DEBUG_DATA">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.DeveloperData.DEBUG_DATAEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Id</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadDEBUG_DATAList" DefaultDisplayName="Read DEBUG_DATA List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.DeveloperData.DEBUG_DATA, TM.SP.BCSModels]]" IsCollection="true" Name="DEBUG_DATAList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="DEBUG_DATA" TypeName="TM.SP.BCSModels.DeveloperData.DEBUG_DATA, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="DEBUG_DATA" IdentifierEntityNamespace="TM.SP.BCSModels.DeveloperData" ReadOnly="true">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="DATE" DefaultDisplayName="DATE" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="DATA_STR1" DefaultDisplayName="DATA_STR1" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="DATA_STR2" DefaultDisplayName="DATA_STR2" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="DATA_STR3" DefaultDisplayName="DATA_STR3" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="DATA_STR4" DefaultDisplayName="DATA_STR4" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="DATA_STR5" DefaultDisplayName="DATA_STR5" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="DATA_INT1" DefaultDisplayName="DATA_INT1" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="DATA_INT2" DefaultDisplayName="DATA_INT2" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="DATA_INT3" DefaultDisplayName="DATA_INT3" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="DATA_INT4" DefaultDisplayName="DATA_INT4" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="DATA_INT5" DefaultDisplayName="DATA_INT5" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadDEBUG_DATAList" DefaultDisplayName="Read DEBUG_DATA List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadDEBUG_DATAItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="DEBUG_DATA" IdentifierEntityNamespace="TM.SP.BCSModels.DeveloperData"></TypeDescriptor>
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.DeveloperData.DEBUG_DATA, TM.SP.BCSModels" Name="returnDEBUG_DATA">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="DEBUG_DATA" IdentifierEntityNamespace="TM.SP.BCSModels.DeveloperData" ReadOnly="true">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="DATE" DefaultDisplayName="DATE" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="DATA_STR1" DefaultDisplayName="DATA_STR1" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="DATA_STR2" DefaultDisplayName="DATA_STR2" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="DATA_STR3" DefaultDisplayName="DATA_STR3" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="DATA_STR4" DefaultDisplayName="DATA_STR4" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="DATA_STR5" DefaultDisplayName="DATA_STR5" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="DATA_INT1" DefaultDisplayName="DATA_INT1" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="DATA_INT2" DefaultDisplayName="DATA_INT2" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="DATA_INT3" DefaultDisplayName="DATA_INT3" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="DATA_INT4" DefaultDisplayName="DATA_INT4" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="DATA_INT5" DefaultDisplayName="DATA_INT5" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadDEBUG_DATAItem" DefaultDisplayName="Read DEBUG_DATA" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+				<Entity Name="ErrorData" Namespace="TM.SP.BCSModels.DeveloperData" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="ErrorData">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.DeveloperData.ErrorDataEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Id</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadErrorDataList" DefaultDisplayName="Read ErrorData List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.DeveloperData.ErrorData, TM.SP.BCSModels]]" IsCollection="true" Name="ErrorDataList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="ErrorData" TypeName="TM.SP.BCSModels.DeveloperData.ErrorData, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="ErrorData" IdentifierEntityNamespace="TM.SP.BCSModels.DeveloperData" ReadOnly="true">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Date" DefaultDisplayName="Date" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Number" DefaultDisplayName="Number" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="Severity" DefaultDisplayName="Severity" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="State" DefaultDisplayName="State" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="Procedure" DefaultDisplayName="Procedure" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">128</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Line" DefaultDisplayName="Line" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="Message" DefaultDisplayName="Message" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">4000</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="SystemContext" DefaultDisplayName="SystemContext" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="UserContext" DefaultDisplayName="UserContext" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadErrorDataList" DefaultDisplayName="Read ErrorData List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadErrorDataItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="ErrorData" IdentifierEntityNamespace="TM.SP.BCSModels.DeveloperData"></TypeDescriptor>
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.DeveloperData.ErrorData, TM.SP.BCSModels" Name="returnErrorData">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="ErrorData" IdentifierEntityNamespace="TM.SP.BCSModels.DeveloperData" ReadOnly="true">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Date" DefaultDisplayName="Date" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Number" DefaultDisplayName="Number" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="Severity" DefaultDisplayName="Severity" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="State" DefaultDisplayName="State" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="Procedure" DefaultDisplayName="Procedure" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">128</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Line" DefaultDisplayName="Line" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+											<TypeDescriptor Name="Message" DefaultDisplayName="Message" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">4000</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="SystemContext" DefaultDisplayName="SystemContext" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="UserContext" DefaultDisplayName="UserContext" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadErrorDataItem" DefaultDisplayName="Read ErrorData" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+			</Entities>
+		</LobSystem>
+	</LobSystems>
+</Model>

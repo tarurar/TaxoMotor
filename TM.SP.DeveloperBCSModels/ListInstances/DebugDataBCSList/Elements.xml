@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="DebugDataBCSList"
+		Description="DebugDataBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="C2304941-6433-4717-866D-F596A0ECBD4F"
+		Url="Lists/DebugDataBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/DebugDataBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="DeveloperData" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.DeveloperData" />
+			<Property
+				Name="Entity"
+				Value="DEBUG_DATA" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadDEBUG_DATAItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

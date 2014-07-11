@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="TaxiInfoBCSList"
+		Description="TaxiInfoBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="00D92625-1D0F-4764-981A-87E7CBD1B469"
+		Url="Lists/TaxiInfoBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/TaxiInfoBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="CoordinateV5" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.CoordinateV5" />
+			<Property
+				Name="Entity"
+				Value="taxi_info" />
+			<Property
+				Name="SpecificFinder"
+				Value="Readtaxi_infoItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

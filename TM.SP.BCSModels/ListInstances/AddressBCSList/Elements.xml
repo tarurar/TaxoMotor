@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="AddressBCSList"
+		Description="AddressBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="079E34D8-6E11-4122-B27D-5CE91FC46AF7"
+		Url="Lists/AddressBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/AddressBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="CoordinateV5" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.CoordinateV5" />
+			<Property
+				Name="Entity"
+				Value="Address" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadAddressItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

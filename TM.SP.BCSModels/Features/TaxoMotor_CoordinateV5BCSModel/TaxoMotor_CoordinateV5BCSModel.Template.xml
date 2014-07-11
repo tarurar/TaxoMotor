@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+************************************************************************
+       Company: Armd
+   Application: TaxoMotor
+  Created date: 2014-07-11 16:48:35Z
+    Created by: SPDEV\developer
+  Feature Name: CoordinateV5BCSModel
+ Feature Title: CoordinateV5 BCS Model
+   Description: CoordinateV5 BCS Model
+       History: Initial Version 1.0.0.0 
+************************************************************************
+-->
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ElementManifests></ElementManifests>
+</Feature>

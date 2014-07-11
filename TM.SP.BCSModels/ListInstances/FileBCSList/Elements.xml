@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="FileBCSList"
+		Description="FileBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="D86117AA-C8D1-4C7D-87C6-19F06D6A3F5C"
+		Url="Lists/FileBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/FileBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="CoordinateV5" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.CoordinateV5" />
+			<Property
+				Name="Entity"
+				Value="File" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadFileItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

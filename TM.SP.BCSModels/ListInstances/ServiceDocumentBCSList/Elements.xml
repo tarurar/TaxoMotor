@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="ServiceDocumentBCSList"
+		Description="ServiceDocumentBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="E31AB791-0849-4242-B927-9A5EA09614F9"
+		Url="Lists/ServiceDocumentBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/ServiceDocumentBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="CoordinateV5" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.CoordinateV5" />
+			<Property
+				Name="Entity"
+				Value="ServiceDocument" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadServiceDocumentItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>
