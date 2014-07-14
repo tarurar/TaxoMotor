@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<feature xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="88749623-db7e-4ffc-b1e4-b6c4cf9332b6" description="CoordinateV5 BCS Lists" featureId="88749623-db7e-4ffc-b1e4-b6c4cf9332b6" imageUrl="TaxoMotor\FeatureIcon_CoordinateV5BCSLists.gif" imageAltText="CoordinateV5 BCS Lists" solutionId="fa87f3e2-92b1-4f35-aaf5-c4614fb40746" title="CoordinateV5 BCS Lists" version="AAEAAAD/////AQAAAAAAAAAEAQAAAA5TeXN0ZW0uVmVyc2lvbgQAAAAGX01ham9yBl9NaW5vcgZfQnVpbGQJX1JldmlzaW9uAAAAAAgICAgBAAAAAAAAAAAAAAAAAAAACw==" deploymentPath="$SharePoint.Feature.FileNameWithoutExtension$" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/FeatureModel">
+<feature xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="88749623-db7e-4ffc-b1e4-b6c4cf9332b6" description="CoordinateV5 BCS Lists" featureId="88749623-db7e-4ffc-b1e4-b6c4cf9332b6" imageUrl="TaxoMotor\FeatureIcon_CoordinateV5BCSLists.gif" imageAltText="CoordinateV5 BCS Lists" receiverAssembly="$SharePoint.Project.AssemblyFullName$" receiverClass="$SharePoint.Type.0b37bb16-fb59-4c5f-93f2-d213f9cdd579.FullName$" solutionId="fa87f3e2-92b1-4f35-aaf5-c4614fb40746" title="CoordinateV5 BCS Lists" version="AAEAAAD/////AQAAAAAAAAAEAQAAAA5TeXN0ZW0uVmVyc2lvbgQAAAAGX01ham9yBl9NaW5vcgZfQnVpbGQJX1JldmlzaW9uAAAAAAgICAgBAAAAAAAAAAAAAAAAAAAACw==" deploymentPath="$SharePoint.Feature.FileNameWithoutExtension$" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/FeatureModel">
   <activationDependencies>
     <referencedFeatureActivationDependency minimumVersion="" itemId="0c823234-4dc3-4850-99d3-7ad6c48d452e" />
   </activationDependencies>
@@ -14,5 +14,6 @@
     <projectItemReference itemId="2620c808-b880-45ed-856b-2065eb1de61d" />
     <projectItemReference itemId="a7236fe0-12fb-46bd-992b-1bfea455d993" />
     <projectItemReference itemId="ff70c768-14c8-4ecf-b5a1-a68f401c2569" />
+    <projectItemReference itemId="9e13e9a6-4c9c-44bf-91b0-e79c04231fd8" />
   </projectItems>
 </feature>

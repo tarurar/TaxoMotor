@@ -560,7 +560,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     /// The samples below show the finder and specific finder method for Entity1.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
-    public class FileEntityService : CoordinateV5Service
+    public partial class FileEntityService : CoordinateV5Service
     {
         public static File ReadFileItem(System.Int32 Id_Auto)
         {

@@ -2393,7 +2393,7 @@
 						</Method>
 					</Methods>
 				</Entity>
-				<Entity Name="File" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="File">
+				<Entity Name="File" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.19" EstimatedInstanceCount="10000" DefaultDisplayName="File">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.FileEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -2847,6 +2847,20 @@
 								<MethodInstance Name="UpdateFile" Type="Updater" />
 							</MethodInstances>
 						</Method>
+            <Method Name="ReadFileItemContent">
+              <Parameters>
+                <Parameter Name="Id_Auto" Direction="In">
+                  <TypeDescriptor Name="Id_Auto" TypeName="System.Int32" DefaultDisplayName="Id_Auto" IdentifierEntityName="File" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" IdentifierName="Id_Auto" /></Parameter>
+                <Parameter Name="FileContent" Direction="Return">
+                  <TypeDescriptor Name="FileContentTypeDescriptor" TypeName="System.Stream" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="ReadFileItemContentInstance" Type="StreamAccessor" ReturnParameterName="FileContent" ReturnTypeDescriptorPath="FileContentTypeDescriptor">
+                  <Properties>
+                    <Property Name="FileNameField" Type="System.String">FileName</Property>
+                    <Property Name="MimeTypeField" Type="System.String">MimeType</Property>
+                  </Properties></MethodInstance>
+              </MethodInstances></Method>
 					</Methods>
 					<AssociationGroups>
 						<AssociationGroup Name="Id_AutoOfServiceDocumentToServiceDocumentOfFileAssociation" DefaultDisplayName="ServiceDocument to File(ServiceDocument)">

@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SandboxedSolution>False</SandboxedSolution>
+    <ActiveDeploymentConfiguration>Default</ActiveDeploymentConfiguration>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,11 +42,13 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SharePoint.Client, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SharePoint.Security, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.SharePoint" />
@@ -54,6 +57,10 @@
   <ItemGroup>
     <Compile Include="BCSModels\CoordinateV5\CoordinateV5Entities.cs" />
     <Compile Include="BCSModels\CoordinateV5\CoordinateV5EntityServices.cs" />
+    <Compile Include="BCSModels\CoordinateV5\FileEntityService.cs" />
+    <Compile Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_CoordinateV5BCSLists.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +108,9 @@
     <None Include="ListInstances\TaxiInfoBCSList\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{ff70c768-14c8-4ecf-b5a1-a68f401c2569}</SharePointProjectItemId>
     </None>
+    <None Include="Modules\Pages\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{9e13e9a6-4c9c-44bf-91b0-e79c04231fd8}</SharePointProjectItemId>
+    </None>
     <None Include="Package\Package.package">
       <PackageId>{fa87f3e2-92b1-4f35-aaf5-c4614fb40746}</PackageId>
     </None>
@@ -128,8 +138,16 @@
     <Content Include="ListInstances\ServiceHeaderBCSList\Elements.xml" />
     <Content Include="ListInstances\ServicePropertiesBCSList\Elements.xml" />
     <Content Include="ListInstances\TaxiInfoBCSList\Elements.xml" />
+    <Content Include="Modules\Pages\Elements.xml" />
+    <Content Include="Modules\Pages\ViewFileContentPage.aspx" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSLists.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSModel.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
+      <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
+      <Name>TM.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
