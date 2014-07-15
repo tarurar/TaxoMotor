@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 20, 20" name="DeveloperData">
-	<modelRootMoniker Name="DeveloperData" />
-	<nestedChildShapes>
-		<entityShape Id="f553c7a6-6d62-4a3a-a013-0b22df20fb7d" absoluteBounds="2, 1, 2, 2">
-			<entityMoniker name="TM.SP.BCSModels.DeveloperData.DEBUG_DATA" />
-			<nestedChildShapes>
-				<elementListCompartment Id="ce63cbce-e05d-4e53-b2bb-163b211acfc7" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
-				<elementListCompartment Id="66cefe35-967e-4a80-847b-eff14ba4f1a7" name="Methods" titleTextColor="Black" itemTextColor="Black" />
-			</nestedChildShapes>
-		</entityShape>
-		<entityShape Id="15c06864-ee77-440c-a3c9-475e6bb79248" absoluteBounds="7, 1, 2, 2">
-			<entityMoniker name="TM.SP.BCSModels.DeveloperData.ErrorData" />
-			<nestedChildShapes>
-				<elementListCompartment Id="a36dc98b-5056-4638-8079-c1bf7cc5fd30" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
-				<elementListCompartment Id="38f150d0-251c-4d0d-b6d4-5a9f70c464cb" name="Methods" titleTextColor="Black" itemTextColor="Black" />
-			</nestedChildShapes>
-		</entityShape>
-	</nestedChildShapes>
+<minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DeveloperData">
+  <modelRootMoniker Name="/DeveloperData" />
+  <nestedChildShapes>
+    <entityShape Id="f553c7a6-6d62-4a3a-a013-0b22df20fb7d" absoluteBounds="2, 1, 2, 1.59568359375">
+      <entityMoniker name="TM.SP.BCSModels.DeveloperData.DEBUG_DATA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ce63cbce-e05d-4e53-b2bb-163b211acfc7" absoluteBounds="2.015, 1.4100000000000001, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="66cefe35-967e-4a80-847b-eff14ba4f1a7" absoluteBounds="2.015, 1.8616910807291667, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="15c06864-ee77-440c-a3c9-475e6bb79248" absoluteBounds="7, 1, 2, 1.59568359375">
+      <entityMoniker name="TM.SP.BCSModels.DeveloperData.ErrorData" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a36dc98b-5056-4638-8079-c1bf7cc5fd30" absoluteBounds="7.015, 1.4100000000000001, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="38f150d0-251c-4d0d-b6d4-5a9f70c464cb" absoluteBounds="7.015, 1.8616910807291667, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+  </nestedChildShapes>
 </minimalLanguageDiagram>

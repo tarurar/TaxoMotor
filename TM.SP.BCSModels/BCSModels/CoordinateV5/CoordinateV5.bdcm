@@ -12,7 +12,13 @@
 	<LobSystems>
 		<LobSystem Name="CoordinateV5" DefaultDisplayName="CoordinateV5" Type="DotNetAssembly">
 			<LobSystemInstances>
-				<LobSystemInstance Name="CoordinateV5" DefaultDisplayName="CoordinateV5"></LobSystemInstance>
+				<LobSystemInstance Name="CoordinateV5" DefaultDisplayName="CoordinateV5">
+          <Properties>
+            <Property Name="DBServerName" Type="System.String">SP2013DEV</Property>
+            <Property Name="DBName" Type="System.String">TM.Data</Property>
+            <Property Name="SecureStoreAppId" Type="System.String">asguf_MSCRM</Property>
+          </Properties>
+          </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
 				<Entity Name="Address" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="Address">

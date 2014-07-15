@@ -16,16 +16,47 @@ namespace TM.SP.BCSModels.CoordinateV5
     using System.Data.Sql;
     using System.Data.SqlClient;
     using System.Data.SqlTypes;
+    using System.Security;
+    using System.Runtime.InteropServices;
+    using Microsoft.BusinessData;
+    using Microsoft.BusinessData.SystemSpecific;
+    using TM.Utils;
 
     // Base class to share connection string retrieval for all entities
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
-    public class CoordinateV5Service
+    public class CoordinateV5Service : IContextProperty
     {
-        protected static SqlConnection getSqlConnection()
+        public Microsoft.BusinessData.Runtime.IExecutionContext ExecutionContext
         {
-            // Please replace the following connectionstring with a configurable value, e.g. from web.config or from the property bag
-            SqlConnection sqlConn = new SqlConnection("Integrated Security=false;Persist Security Info=False;Initial Catalog=TM.Data;Data Source=SP2013DEV;User ID=test_bcs;Password=111222");
-            return (sqlConn);
+            get;
+            set;
+        }
+
+        public Microsoft.BusinessData.MetadataModel.ILobSystemInstance LobSystemInstance
+        {
+            get;
+            set;
+        }
+
+        public Microsoft.BusinessData.MetadataModel.IMethodInstance MethodInstance
+        {
+            get;
+            set;
+        }
+
+        protected SqlConnection getSqlConnection()
+        {
+            var secureStoreAppId = BCS.GetLobSystemProperty(this.LobSystemInstance, "SecureStoreAppId");
+
+            var cBuilder = new SqlConnectionStringBuilder()
+            {
+                DataSource      = BCS.GetLobSystemProperty(this.LobSystemInstance, "DBServerName"),
+                InitialCatalog  = BCS.GetLobSystemProperty(this.LobSystemInstance, "DBName"),
+                UserID          = Security.GetSecureStoreUserNameCredential(secureStoreAppId),
+                Password        = Security.GetSecureStorePasswordCredential(secureStoreAppId)
+            };
+
+            return new SqlConnection(cBuilder.ConnectionString);
         }
     }
     /// <summary>
@@ -35,7 +66,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class AddressEntityService : CoordinateV5Service
     {
-        public static Address ReadAddressItem(System.Int32 Id)
+        public Address ReadAddressItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             Address entity = null;
@@ -87,7 +118,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<Address> ReadAddressList()
+        public IList<Address> ReadAddressList()
         {
             SqlConnection thisConn = null;
             List<Address> allEntities = new List<Address>();
@@ -136,7 +167,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static Address CreateAddress(Address newentity)
+        public Address CreateAddress(Address newentity)
         {
             Address createdEntity = null;
             SqlConnection thisConn = null;
@@ -222,7 +253,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteAddress(System.Int32 Id)
+        public void DeleteAddress(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             try
@@ -244,7 +275,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateAddress(Address updateAddress)
+        public void UpdateAddress(Address updateAddress)
         {
             SqlConnection thisConn = null;
             try
@@ -293,7 +324,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 thisConn.Dispose();
             }
         }
-        public static IEnumerable<RequestAccount> IdOfAddressToPostalAddressOfRequestAccount(System.Nullable<System.Int32> PostalAddress)
+        public IList<RequestAccount> IdOfAddressToPostalAddressOfRequestAccount(System.Nullable<System.Int32> PostalAddress)
         {
             SqlConnection thisConn = null;
             List<RequestAccount> allEntities = new List<RequestAccount>();
@@ -347,7 +378,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<RequestAccount> IdOfAddressToFactAddressOfRequestAccount(System.Nullable<System.Int32> FactAddress)
+        public IList<RequestAccount> IdOfAddressToFactAddressOfRequestAccount(System.Nullable<System.Int32> FactAddress)
         {
             SqlConnection thisConn = null;
             List<RequestAccount> allEntities = new List<RequestAccount>();
@@ -401,7 +432,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<RequestContact> IdOfAddressToRegAddressOfRequestContact(System.Nullable<System.Int32> RegAddress)
+        public IList<RequestContact> IdOfAddressToRegAddressOfRequestContact(System.Nullable<System.Int32> RegAddress)
         {
             SqlConnection thisConn = null;
             List<RequestContact> allEntities = new List<RequestContact>();
@@ -452,7 +483,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<RequestContact> IdOfAddressToFactAddressOfRequestContact(System.Nullable<System.Int32> FactAddress)
+        public IList<RequestContact> IdOfAddressToFactAddressOfRequestContact(System.Nullable<System.Int32> FactAddress)
         {
             SqlConnection thisConn = null;
             List<RequestContact> allEntities = new List<RequestContact>();
@@ -503,7 +534,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<RequestContact> IdOfAddressToBirthAddressOfRequestContact(System.Nullable<System.Int32> BirthAddress)
+        public IList<RequestContact> IdOfAddressToBirthAddressOfRequestContact(System.Nullable<System.Int32> BirthAddress)
         {
             SqlConnection thisConn = null;
             List<RequestContact> allEntities = new List<RequestContact>();
@@ -562,7 +593,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public partial class FileEntityService : CoordinateV5Service
     {
-        public static File ReadFileItem(System.Int32 Id_Auto)
+        public File ReadFileItem(System.Int32 Id_Auto)
         {
             SqlConnection thisConn = null;
             File entity = null;
@@ -597,7 +628,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<File> ReadFileList()
+        public IList<File> ReadFileList()
         {
             SqlConnection thisConn = null;
             List<File> allEntities = new List<File>();
@@ -629,7 +660,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static File CreateFile(File newentity)
+        public File CreateFile(File newentity)
         {
             File createdEntity = null;
             SqlConnection thisConn = null;
@@ -681,7 +712,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteFile(System.Int32 Id_Auto)
+        public void DeleteFile(System.Int32 Id_Auto)
         {
             SqlConnection thisConn = null;
             try
@@ -703,7 +734,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateFile(File updateFile)
+        public void UpdateFile(File updateFile)
         {
             SqlConnection thisConn = null;
             try
@@ -743,7 +774,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class RequestEntityService : CoordinateV5Service
     {
-        public static Request ReadRequestItem(System.Int32 Id)
+        public Request ReadRequestItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             Request entity = null;
@@ -777,7 +808,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<Request> ReadRequestList()
+        public IList<Request> ReadRequestList()
         {
             SqlConnection thisConn = null;
             List<Request> allEntities = new List<Request>();
@@ -808,7 +839,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static Request CreateRequest(Request newentity)
+        public Request CreateRequest(Request newentity)
         {
             Request createdEntity = null;
             SqlConnection thisConn = null;
@@ -858,7 +889,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteRequest(System.Int32 Id)
+        public void DeleteRequest(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             try
@@ -880,7 +911,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateRequest(Request updateRequest)
+        public void UpdateRequest(Request updateRequest)
         {
             SqlConnection thisConn = null;
             try
@@ -919,7 +950,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class RequestAccountEntityService : CoordinateV5Service
     {
-        public static RequestAccount ReadRequestAccountItem(System.Int32 Id)
+        public RequestAccount ReadRequestAccountItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             RequestAccount entity = null;
@@ -974,7 +1005,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<RequestAccount> ReadRequestAccountList()
+        public IList<RequestAccount> ReadRequestAccountList()
         {
             SqlConnection thisConn = null;
             List<RequestAccount> allEntities = new List<RequestAccount>();
@@ -1026,7 +1057,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static RequestAccount CreateRequestAccount(RequestAccount newentity)
+        public RequestAccount CreateRequestAccount(RequestAccount newentity)
         {
             RequestAccount createdEntity = null;
             SqlConnection thisConn = null;
@@ -1118,7 +1149,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteRequestAccount(System.Int32 Id)
+        public void DeleteRequestAccount(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             try
@@ -1140,7 +1171,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateRequestAccount(RequestAccount updateRequestAccount)
+        public void UpdateRequestAccount(RequestAccount updateRequestAccount)
         {
             SqlConnection thisConn = null;
             try
@@ -1192,7 +1223,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 thisConn.Dispose();
             }
         }
-        public static IEnumerable<Request> IdOfRequestAccountToDeclarantRequestAccountOfRequest(System.Nullable<System.Int32> DeclarantRequestAccount)
+        public IList<Request> IdOfRequestAccountToDeclarantRequestAccountOfRequest(System.Nullable<System.Int32> DeclarantRequestAccount)
         {
             SqlConnection thisConn = null;
             List<Request> allEntities = new List<Request>();
@@ -1233,7 +1264,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class RequestContactEntityService : CoordinateV5Service
     {
-        public static RequestContact ReadRequestContactItem(System.Int32 Id_Auto)
+        public RequestContact ReadRequestContactItem(System.Int32 Id_Auto)
         {
             SqlConnection thisConn = null;
             RequestContact entity = null;
@@ -1285,7 +1316,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<RequestContact> ReadRequestContactList()
+        public IList<RequestContact> ReadRequestContactList()
         {
             SqlConnection thisConn = null;
             List<RequestContact> allEntities = new List<RequestContact>();
@@ -1334,7 +1365,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static RequestContact CreateRequestContact(RequestContact newentity)
+        public RequestContact CreateRequestContact(RequestContact newentity)
         {
             RequestContact createdEntity = null;
             SqlConnection thisConn = null;
@@ -1420,7 +1451,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteRequestContact(System.Int32 Id_Auto)
+        public void DeleteRequestContact(System.Int32 Id_Auto)
         {
             SqlConnection thisConn = null;
             try
@@ -1442,7 +1473,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateRequestContact(RequestContact updateRequestContact)
+        public void UpdateRequestContact(RequestContact updateRequestContact)
         {
             SqlConnection thisConn = null;
             try
@@ -1491,7 +1522,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 thisConn.Dispose();
             }
         }
-        public static IEnumerable<Request> Id_AutoOfRequestContactToDeclarantRequestContactOfRequest(System.Nullable<System.Int32> DeclarantRequestContact)
+        public IList<Request> Id_AutoOfRequestContactToDeclarantRequestContactOfRequest(System.Nullable<System.Int32> DeclarantRequestContact)
         {
             SqlConnection thisConn = null;
             List<Request> allEntities = new List<Request>();
@@ -1524,7 +1555,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<Request> Id_AutoOfRequestContactToTrusteeRequestContactOfRequest(System.Nullable<System.Int32> TrusteeRequestContact)
+        public IList<Request> Id_AutoOfRequestContactToTrusteeRequestContactOfRequest(System.Nullable<System.Int32> TrusteeRequestContact)
         {
             SqlConnection thisConn = null;
             List<Request> allEntities = new List<Request>();
@@ -1557,7 +1588,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<RequestAccount> Id_AutoOfRequestContactToRequestContactOfRequestAccount(System.Nullable<System.Int32> RequestContact)
+        public IList<RequestAccount> Id_AutoOfRequestContactToRequestContactOfRequestAccount(System.Nullable<System.Int32> RequestContact)
         {
             SqlConnection thisConn = null;
             List<RequestAccount> allEntities = new List<RequestAccount>();
@@ -1619,7 +1650,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class ServiceEntityService : CoordinateV5Service
     {
-        public static Service ReadServiceItem(System.Int32 Id)
+        public Service ReadServiceItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             Service entity = null;
@@ -1657,7 +1688,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<Service> ReadServiceList()
+        public IList<Service> ReadServiceList()
         {
             SqlConnection thisConn = null;
             List<Service> allEntities = new List<Service>();
@@ -1692,7 +1723,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static Service CreateService(Service newentity)
+        public Service CreateService(Service newentity)
         {
             Service createdEntity = null;
             SqlConnection thisConn = null;
@@ -1750,7 +1781,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteService(System.Int32 Id)
+        public void DeleteService(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             try
@@ -1772,7 +1803,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateService(Service updateService)
+        public void UpdateService(Service updateService)
         {
             SqlConnection thisConn = null;
             try
@@ -1807,7 +1838,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 thisConn.Dispose();
             }
         }
-        public static IEnumerable<Request> IdOfServiceToServiceOfRequest(System.Int32 Service)
+        public IList<Request> IdOfServiceToServiceOfRequest(System.Int32 Service)
         {
             SqlConnection thisConn = null;
             List<Request> allEntities = new List<Request>();
@@ -1840,7 +1871,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<ServiceDocument> IdOfServiceToServiceOfServiceDocument(System.Int32 Service)
+        public IList<ServiceDocument> IdOfServiceToServiceOfServiceDocument(System.Int32 Service)
         {
             SqlConnection thisConn = null;
             List<ServiceDocument> allEntities = new List<ServiceDocument>();
@@ -1888,7 +1919,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class ServiceDocumentEntityService : CoordinateV5Service
     {
-        public static ServiceDocument ReadServiceDocumentItem(System.Int32 Id_Auto)
+        public ServiceDocument ReadServiceDocumentItem(System.Int32 Id_Auto)
         {
             SqlConnection thisConn = null;
             ServiceDocument entity = null;
@@ -1929,7 +1960,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<ServiceDocument> ReadServiceDocumentList()
+        public IList<ServiceDocument> ReadServiceDocumentList()
         {
             SqlConnection thisConn = null;
             List<ServiceDocument> allEntities = new List<ServiceDocument>();
@@ -1967,7 +1998,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static ServiceDocument CreateServiceDocument(ServiceDocument newentity)
+        public ServiceDocument CreateServiceDocument(ServiceDocument newentity)
         {
             ServiceDocument createdEntity = null;
             SqlConnection thisConn = null;
@@ -2031,7 +2062,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteServiceDocument(System.Int32 Id_Auto)
+        public void DeleteServiceDocument(System.Int32 Id_Auto)
         {
             SqlConnection thisConn = null;
             try
@@ -2053,7 +2084,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateServiceDocument(ServiceDocument updateServiceDocument)
+        public void UpdateServiceDocument(ServiceDocument updateServiceDocument)
         {
             SqlConnection thisConn = null;
             try
@@ -2091,7 +2122,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 thisConn.Dispose();
             }
         }
-        public static IEnumerable<File> Id_AutoOfServiceDocumentToServiceDocumentOfFile(System.Int32 ServiceDocument)
+        public IList<File> Id_AutoOfServiceDocumentToServiceDocumentOfFile(System.Int32 ServiceDocument)
         {
             SqlConnection thisConn = null;
             List<File> allEntities = new List<File>();
@@ -2133,7 +2164,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class ServiceHeaderEntityService : CoordinateV5Service
     {
-        public static ServiceHeader ReadServiceHeaderItem(System.Int32 Id)
+        public ServiceHeader ReadServiceHeaderItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             ServiceHeader entity = null;
@@ -2166,7 +2197,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<ServiceHeader> ReadServiceHeaderList()
+        public IList<ServiceHeader> ReadServiceHeaderList()
         {
             SqlConnection thisConn = null;
             List<ServiceHeader> allEntities = new List<ServiceHeader>();
@@ -2196,7 +2227,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static ServiceHeader CreateServiceHeader(ServiceHeader newentity)
+        public ServiceHeader CreateServiceHeader(ServiceHeader newentity)
         {
             ServiceHeader createdEntity = null;
             SqlConnection thisConn = null;
@@ -2244,7 +2275,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteServiceHeader(System.Int32 Id)
+        public void DeleteServiceHeader(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             try
@@ -2266,7 +2297,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateServiceHeader(ServiceHeader updateServiceHeader)
+        public void UpdateServiceHeader(ServiceHeader updateServiceHeader)
         {
             SqlConnection thisConn = null;
             try
@@ -2296,7 +2327,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 thisConn.Dispose();
             }
         }
-        public static IEnumerable<Request> IdOfServiceHeaderToServiceHeaderOfRequest(System.Int32 ServiceHeader)
+        public IList<Request> IdOfServiceHeaderToServiceHeaderOfRequest(System.Int32 ServiceHeader)
         {
             SqlConnection thisConn = null;
             List<Request> allEntities = new List<Request>();
@@ -2337,7 +2368,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class ServicePropertiesEntityService : CoordinateV5Service
     {
-        public static ServiceProperties ReadServicePropertiesItem(System.Int32 Id)
+        public ServiceProperties ReadServicePropertiesItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             ServiceProperties entity = null;
@@ -2375,7 +2406,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<ServiceProperties> ReadServicePropertiesList()
+        public IList<ServiceProperties> ReadServicePropertiesList()
         {
             SqlConnection thisConn = null;
             List<ServiceProperties> allEntities = new List<ServiceProperties>();
@@ -2410,7 +2441,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static ServiceProperties CreateServiceProperties(ServiceProperties newentity)
+        public ServiceProperties CreateServiceProperties(ServiceProperties newentity)
         {
             ServiceProperties createdEntity = null;
             SqlConnection thisConn = null;
@@ -2468,7 +2499,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void DeleteServiceProperties(System.Int32 Id)
+        public void DeleteServiceProperties(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             try
@@ -2490,7 +2521,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void UpdateServiceProperties(ServiceProperties updateServiceProperties)
+        public void UpdateServiceProperties(ServiceProperties updateServiceProperties)
         {
             SqlConnection thisConn = null;
             try
@@ -2525,7 +2556,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 thisConn.Dispose();
             }
         }
-        public static IEnumerable<Request> IdOfServicePropertiesToServicePropertiesOfRequest(System.Int32 ServiceProperties)
+        public IList<Request> IdOfServicePropertiesToServicePropertiesOfRequest(System.Int32 ServiceProperties)
         {
             SqlConnection thisConn = null;
             List<Request> allEntities = new List<Request>();
@@ -2558,7 +2589,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisReader.Close();
             return allEntities;
         }
-        public static IEnumerable<taxi_info> IdOfServicePropertiesToServicePropertiesOftaxi_info(System.Int32 ServiceProperties)
+        public IEnumerable<taxi_info> IdOfServicePropertiesToServicePropertiesOftaxi_info(System.Int32 ServiceProperties)
         {
             SqlConnection thisConn = null;
             List<taxi_info> allEntities = new List<taxi_info>();
@@ -2621,7 +2652,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class taxi_infoEntityService : CoordinateV5Service
     {
-        public static taxi_info Readtaxi_infoItem(System.Int32 Id)
+        public taxi_info Readtaxi_infoItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             taxi_info entity = null;
@@ -2677,7 +2708,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return (entity);
         }
 
-        public static IEnumerable<taxi_info> Readtaxi_infoList()
+        public IEnumerable<taxi_info> Readtaxi_infoList()
         {
             SqlConnection thisConn = null;
             List<taxi_info> allEntities = new List<taxi_info>();
@@ -2730,7 +2761,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             return allEntities;
         }
 
-        public static taxi_info Createtaxi_info(taxi_info newentity)
+        public taxi_info Createtaxi_info(taxi_info newentity)
         {
             taxi_info createdEntity = null;
             SqlConnection thisConn = null;
@@ -2824,7 +2855,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             }
         }
 
-        public static void Deletetaxi_info(System.Int32 Id)
+        public void Deletetaxi_info(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             try
@@ -2846,7 +2877,7 @@ namespace TM.SP.BCSModels.CoordinateV5
         }
 
 
-        public static void Updatetaxi_info(taxi_info updatetaxi_info)
+        public void Updatetaxi_info(taxi_info updatetaxi_info)
         {
             SqlConnection thisConn = null;
             try

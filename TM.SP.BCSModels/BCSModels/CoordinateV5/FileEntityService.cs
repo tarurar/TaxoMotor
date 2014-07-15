@@ -8,7 +8,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 {
     public partial class FileEntityService
     {
-        public static Stream ReadFileItemContent(int Id_Auto)
+        public Stream ReadFileItemContent(int Id_Auto)
         {
             using (SqlConnection conn = getSqlConnection())
             using (SqlCommand cm = conn.CreateCommand())

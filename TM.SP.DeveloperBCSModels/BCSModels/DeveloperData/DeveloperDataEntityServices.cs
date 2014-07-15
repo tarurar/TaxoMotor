@@ -16,16 +16,44 @@ namespace TM.SP.BCSModels.DeveloperData
     using System.Data.Sql;
     using System.Data.SqlClient;
     using System.Data.SqlTypes;
+    using Microsoft.BusinessData;
+    using Microsoft.BusinessData.SystemSpecific;
+    using TM.Utils;
 
     // Base class to share connection string retrieval for all entities
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
-    public class DeveloperDataService
+    public class DeveloperDataService : IContextProperty
     {
-        protected static SqlConnection getSqlConnection()
+        public Microsoft.BusinessData.Runtime.IExecutionContext ExecutionContext
         {
-            // Please replace the following connectionstring with a configurable value, e.g. from web.config or from the property bag
-            SqlConnection sqlConn = new SqlConnection("Integrated Security=false;Persist Security Info=False;Initial Catalog=TM.Data;Data Source=SP2013DEV;User ID=test_bcs;Password=111222");
-            return (sqlConn);
+            get;
+            set;
+        }
+
+        public Microsoft.BusinessData.MetadataModel.ILobSystemInstance LobSystemInstance
+        {
+            get;
+            set;
+        }
+
+        public Microsoft.BusinessData.MetadataModel.IMethodInstance MethodInstance
+        {
+            get;
+            set;
+        }
+        protected SqlConnection getSqlConnection()
+        {
+            var secureStoreAppId = BCS.GetLobSystemProperty(this.LobSystemInstance, "SecureStoreAppId");
+
+            var cBuilder = new SqlConnectionStringBuilder()
+            {
+                DataSource      = BCS.GetLobSystemProperty(this.LobSystemInstance, "DBServerName"),
+                InitialCatalog  = BCS.GetLobSystemProperty(this.LobSystemInstance, "DBName"),
+                UserID          = Security.GetSecureStoreUserNameCredential(secureStoreAppId),
+                Password        = Security.GetSecureStorePasswordCredential(secureStoreAppId)
+            };
+
+            return new SqlConnection(cBuilder.ConnectionString);
         }
     }
     /// <summary>
@@ -35,7 +63,7 @@ namespace TM.SP.BCSModels.DeveloperData
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class DEBUG_DATAEntityService : DeveloperDataService
     {
-        public static DEBUG_DATA ReadDEBUG_DATAItem(System.Int32 Id)
+        public DEBUG_DATA ReadDEBUG_DATAItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             DEBUG_DATA entity = null;
@@ -72,7 +100,7 @@ namespace TM.SP.BCSModels.DeveloperData
             return (entity);
         }
 
-        public static IEnumerable<DEBUG_DATA> ReadDEBUG_DATAList()
+        public IEnumerable<DEBUG_DATA> ReadDEBUG_DATAList()
         {
             SqlConnection thisConn = null;
             List<DEBUG_DATA> allEntities = new List<DEBUG_DATA>();
@@ -113,7 +141,7 @@ namespace TM.SP.BCSModels.DeveloperData
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public class ErrorDataEntityService : DeveloperDataService
     {
-        public static ErrorData ReadErrorDataItem(System.Int32 Id)
+        public ErrorData ReadErrorDataItem(System.Int32 Id)
         {
             SqlConnection thisConn = null;
             ErrorData entity = null;
@@ -148,7 +176,7 @@ namespace TM.SP.BCSModels.DeveloperData
             return (entity);
         }
 
-        public static IEnumerable<ErrorData> ReadErrorDataList()
+        public IList<ErrorData> ReadErrorDataList()
         {
             SqlConnection thisConn = null;
             List<ErrorData> allEntities = new List<ErrorData>();

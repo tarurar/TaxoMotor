@@ -88,7 +88,7 @@
         <entityShapeMoniker Id="0c6dc571-2a39-4165-a0ff-fa3b22dd50f1" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(4 : 8); (2.71289168301877 : 6.06933752452815 : JumpStart); (2.62044165031456 : 5.93066247547185 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(4 : 8); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.RequestContact/Id_AutoOfRequestContactToDeclarantRequestContactOfRequestAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -112,7 +112,7 @@
         <entityShapeMoniker Id="0c6dc571-2a39-4165-a0ff-fa3b22dd50f1" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(9 : 8); (5.57659541916817 : 6.53282660821493 : JumpStart); (5.42340458083183 : 6.46717339178507 : JumpEnd); (4.45159541916817 : 6.05068375107207 : JumpStart); (4.29840458083183 : 5.98503053464221 : JumpEnd); (2.95159541916817 : 5.40782660821493 : JumpStart); (2.79840458083183 : 5.34217339178507 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(9 : 8); (2.95159541916817 : 5.40782660821493 : JumpStart); (2.79840458083183 : 5.34217339178507 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Service/IdOfServiceToServiceOfRequestAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -120,7 +120,7 @@
         <entityShapeMoniker Id="0c6dc571-2a39-4165-a0ff-fa3b22dd50f1" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(9 : 11); (4.75557907583813 : 7.36192492214697 : JumpStart); (4.62903630877725 : 7.25345969323764 : JumpEnd); (4.43827138353044 : 7.08994690016895 : JumpStart); (4.31172861646956 : 6.98148167125962 : JumpEnd); (2.84104916130822 : 5.72089928112133 : JumpStart); (2.71450639424734 : 5.612434052212 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(9 : 11); (2.84104916130822 : 5.72089928112133 : JumpStart); (2.71450639424734 : 5.612434052212 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.ServiceHeader/IdOfServiceHeaderToServiceHeaderOfRequestAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -160,7 +160,7 @@
         <entityShapeMoniker Id="3906c66d-2a18-4dfe-8a00-be0b48fa1c2a" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(4 : 2); (2 : 8)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(4 : 2); (2.42635231383474 : 6.72094305849579 : JumpStart); (2.37364768616526 : 6.87905694150421 : JumpEnd); (2 : 8)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Address/IdOfAddressToFactAddressOfRequestContactAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -176,7 +176,7 @@
         <entityShapeMoniker Id="3906c66d-2a18-4dfe-8a00-be0b48fa1c2a" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(9 : 8); (2 : 11)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(9 : 8); (6.74326208583484 : 8.96717339178507 : JumpStart); (6.5900712474985 : 9.03282660821493 : JumpEnd); (4.45159541916817 : 9.94931624892793 : JumpStart); (4.29840458083183 : 10.0149694653578 : JumpEnd); (3.293986723516 : 10.4454342613503 : JumpStart); (3.14079588517965 : 10.5110874777801 : JumpEnd); (2 : 11)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Service/IdOfServiceToServiceOfServiceDocumentAssociation" />
       <relativeChildShapes />
       <nodes>

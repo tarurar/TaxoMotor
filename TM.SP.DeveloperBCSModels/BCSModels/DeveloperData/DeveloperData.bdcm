@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
 <Model Name="DeveloperData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/windows/2007/BusinessDataCatalog">
 	<AccessControlList>
@@ -12,7 +12,12 @@
 	<LobSystems>
 		<LobSystem Name="DeveloperData" DefaultDisplayName="DeveloperData" Type="DotNetAssembly">
 			<LobSystemInstances>
-				<LobSystemInstance Name="DeveloperData" DefaultDisplayName="DeveloperData"></LobSystemInstance>
+				<LobSystemInstance Name="DeveloperData" DefaultDisplayName="DeveloperData">
+          <Properties>
+            <Property Name="DBServerName" Type="System.String">SP2013DEV</Property>
+            <Property Name="DBName" Type="System.String">TM.Data</Property>
+            <Property Name="SecureStoreAppId" Type="System.String">asguf_MSCRM</Property>
+          </Properties></LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
 				<Entity Name="DEBUG_DATA" Namespace="TM.SP.BCSModels.DeveloperData" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="DEBUG_DATA">
