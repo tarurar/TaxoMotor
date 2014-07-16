@@ -65,9 +65,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thinktecture.ServiceModel.Extensions.Metadata">
-      <HintPath>..\..\..\Program Files (x86)\thinktecture\WSCF.blue\Thinktecture.ServiceModel.Extensions.Metadata.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CoordinateV5\CoordinateV5Service.svc" />
