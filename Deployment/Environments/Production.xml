@@ -28,9 +28,9 @@
       <Variable Name="WebAppUrl">http://$(env:COMPUTERNAME)</Variable>
       <Variable Name="SiteUrl">http://$(env:COMPUTERNAME)/</Variable>
       <Variable Name="LCID">1033</Variable>
-      <Variable Name="BCS_Requests_DBServerName">SP2013DEV</Variable>
-      <Variable Name="BCS_Requests_DBName">TM.Data</Variable>
-      <Variable Name="BCS_Requests_CredentialsSecureStoreAppId">asguf_MSCRM</Variable>
+      <Variable Name="BCS_Requests_DBServerName">ProductionDBServerName</Variable>
+      <Variable Name="BCS_Requests_DBName">ProductionDBName</Variable>
+      <Variable Name="BCS_Requests_CredentialsSecureStoreAppId">ProductionSecureStoreApplicationId</Variable>
     </Variables>
     <PreRequisiteSolutions ID="Default" />
     <Solutions ID="Default">

@@ -1,10 +1,15 @@
 <!-- 
-This file is part of SPSD SharePoint Solution Deployer, http://spsd.codeplex.com by Matthias Einig under GPLv2 license
+This file is part of SPSD SharePoint Solution Deployer, http://spsd.codeplex.com by Matthias Einig under MS-PL license
 The file provides all currently known SharePoint Versions and licenses in a structured XML format
 The most up-to-date version can always be retrieved from http://www.matthiaseinig.de/files/SharePointVersions.xml
 This file will be updated independently of SPSD, for missing versions or errors, please use the issue tracker at http://spsd.codeplex.com 
+
+You can also use the xml file with the PowerShell script "Get cleartext release and products of your SharePoint 2010/2013 farm"
+from http://gallery.technet.microsoft.com/Get-cleartext-and-license-008ee875
+
+Last Update: 01/04/2014
  -->
-<SPSD Version="4.1.2.8623">
+<SPSD Version="5.0.3.6439">
   <SharePoint>
     <!--
 Get the SharePoint version by running SharePoint PowerShell console and calling "(Get-SPFarm).BuildVersion" (works >=SP2010)
@@ -107,6 +112,13 @@ SP2013: http://toddklindt.com/blog/Lists/Posts/Post.aspx?ID=346
       <Version Number="14.0.6134.5003" Name="SharePoint Server 2010 Feb 2013 COD" />
       <Version Number="14.0.6137.5000" Name="SharePoint Server 2010 Apr 2013 CU" />
       <Version Number="14.0.7011.1000" Name="SharePoint Server 2010 SP2 Public Beta" />
+      <Version Number="14.0.7015.1000" Name="SharePoint Server 2010 SP2" />
+      <Version Number="14.0.7102.5000" Name="SharePoint Server 2010 Jun 2013 CU Mark 1" />
+      <Version Number="14.0.7102.5004" Name="SharePoint Server 2010 Jun 2013 CU Mark 2" />
+      <Version Number="14.0.7106.5000" Name="SharePoint Server 2010 Aug 2013 CU Mark 1" />
+      <Version Number="14.0.7106.5002" Name="SharePoint Server 2010 Aug 2013 CU Mark 2" />
+      <Version Number="14.0.7110.5000" Name="SharePoint Server 2010 Oct 2013 CU" />
+      <Version Number="14.0.7113.5000" Name="SharePoint Foundation/Server 2010 December 2013 CU" />
       <Version Number="15.0.0.0"       Name="SharePoint Foundation/Server 2013" />
       <Version Number="15.0.4128.1014" Name="SharePoint Server 2013 Preview" />
       <Version Number="15.0.4420.1017" Name="SharePoint Server 2013 RTM" />
@@ -114,6 +126,12 @@ SP2013: http://toddklindt.com/blog/Lists/Posts/Post.aspx?ID=346
       <Version Number="15.0.4481.1005" Name="SharePoint Server 2013 Mar 2013 Update" />
       <Version Number="15.0.4505.1002" Name="SharePoint Foundation 2013 Apr 2013 CU" />
       <Version Number="15.0.4505.1005" Name="SharePoint Server 2013 Apr 2013 CU" />
+      <Version Number="15.0.4517.1003" Name="SharePoint Server 2013 Jun 2013 CU" />
+      <Version Number="15.0.4535.1000" Name="SharePoint Server 2013 Aug 2013 CU" />
+      <Version Number="15.0.4551.1001" Name="SharePoint Foundation 2013 Oct 2013 CU" />
+      <Version Number="15.0.4551.1005" Name="SharePoint Server 2013 Oct 2013 CU" />
+      <Version Number="15.0.4551.1508" Name="SharePoint Foundation 2013 December 2013 CU" />
+      <Version Number="15.0.4551.1511" Name="SharePoint Server 2013 December 2013 CU" />
     </Versions>
     <!--
 Get SharePoint products Guid by running SharePoint PowerShell console and call "(Get-SPFarm).Products" (works >=SP2010)

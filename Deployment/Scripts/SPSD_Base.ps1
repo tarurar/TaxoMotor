@@ -1,35 +1,37 @@
 ###############################################################################
 # SharePoint Solution Deployer (SPSD)
-# Version          : 4.1.2.2805
+# Version          : 5.0.3.6439
 # Url              : http://spsd.codeplex.com
-# Creator          : Matthias Einig
-# License          : GPLv2
+# Creator          : Matthias Einig, http://twitter.com/mattein
+# License          : MS-PL
 ###############################################################################
 #region Base
 	#region InitializeScript
 	# Desc: Initializes constants and directories
 	Function InitializeScript(){
 	    $Script:SPSD = @{
-	                        Version = [System.Version]"4.1.2.2805"
+	                        Version = [System.Version]"5.0.3.6439"
                             DisplayName ="SharePoint Solution Deployer (SPSD)"
                             StatusWidth = 79
 	                        LogTypes = @{
-	                            Error       = 0
-	                            Warning     = 1
-	                            Information = 2
-	                            Verbose     = 3
-	                            VerboseExtended = 4
+                                Success     = 0
+	                            Error       = 1
+	                            Warning     = 2
+	                            Information = 3
+	                            Normal      = 4
+
 	                        }
 	                        Commands = @{
 	                            Deploy      = 0
 	                            Retract     = 1
 	                            Redeploy    = 2
-	                            Update      = 3 
+	                            Update      = 3
+                                Ask         = 4
 	                        }
 	                        DeploymentTypes = @{
 	                            All         = 0
 	                            Solutions   = 1
-	                            Structures  = 2
+	                            Extensions  = 2
 	                        }
 	                    }
 	    $Script:LogIndentVal      = 0
@@ -40,7 +42,12 @@
 	    #region Set parameters
 	    [int]$Script:DeploymentCommand  = ParseParameter -value $Command    -values $SPSD.Commands        -default $SPSD.Commands.Deploy
 	    [int]$Script:DeploymentType     = ParseParameter -value $Type       -values $SPSD.DeploymentTypes -default $SPSD.DeploymentTypes.All
-	    [int]$Script:LogLevel           = ParseParameter -value $Verbosity  -values $SPSD.LogTypes        -default $SPSD.LogTypes.Verbose
+	    # TODO [int]$Script:LogLevel           = ParseParameter -value $Verbosity  -values $SPSD.LogTypes        -default $SPSD.LogTypes.Normal
+        [bool]$Script:isAppHost =  (Get-Host).PrivateData -eq $null
+
+        if(-not $isAppHost){
+            cls
+        }
 	    #endregion
 
 	}
@@ -76,18 +83,18 @@
      	Log -message ("Getting solutions directory") -type $SPSD.LogTypes.Information -Indent
 
 		If ($solutionDirectory -and $solutionDirectory.Length -gt 0 -and (Test-Path $solutionDirectory)){
-            Log -message "Absolute custom directory specified" -type $SPSD.LogTypes.Verbose
+            Log -message "Absolute custom directory specified" -type $SPSD.LogTypes.Normal
 	        $Script:solDir  = $solutionDirectory
         }
         elseif($solutionDirectory -and $solutionDirectory.Length -gt 0 -and (Test-Path $solutionDirectory)){
-            Log -message "Relative custom directory specified" -type $SPSD.LogTypes.Verbose
+            Log -message "Relative custom directory specified" -type $SPSD.LogTypes.Normal
             $Script:solDir  = (Get-Item $($baseDir + "\" +$solutionDirectory)).FullName
         }
         else {
-       	    Log -message "Custom directory not configured or does not exist. Using default" -type $SPSD.LogTypes.Verbose
+       	    Log -message "Custom directory not configured or does not exist. Using default" -type $SPSD.LogTypes.Normal
         	$Script:solDir  = GetDirOrCreateIt -dir ($baseDir + "\Solutions")
         }
-   	    Log -message ("Solutions directory: "+ (Get-Item $Script:solDir).FullName) -type $SPSD.LogTypes.Verbose
+   	    Log -message ("Solutions directory: "+ (Get-Item $Script:solDir).FullName) -type $SPSD.LogTypes.Normal
         LogOutdent
     }
     #endregion
@@ -95,14 +102,26 @@
 	# Desc: Writes the startup header, starts tracing and loads the required PS Addins
 	Function StartUp(){
 	    InitializeScript
-        $Host.UI.RawUI.WindowTitle = $SPSD.DisplayName + " - Version: " + $SPSD.Version
+        
+        if(-not $isAppHost){
+            $Host.UI.RawUI.WindowTitle = $SPSD.DisplayName + " - Version: " + $SPSD.Version
+        }
+
 	    StartTracing
-	    Log -message ("*"*$SPSD.StatusWidth) -type $SPSD.LogTypes.Information
-	    Log -message (GetStatusLine -text $SPSD.DisplayName ) -type $SPSD.LogTypes.Information
+
+        AskForDeploymentCommand
+
+        Get-Content -Path "$scriptDir\AppLogo.txt"
+    	Log    
+		
+		# Do not modify title, author, version, licenses or url! Thanks for keeping the credits, Matthias
+        Log -message ("*"*$SPSD.StatusWidth) -type $SPSD.LogTypes.Information
+	    Log -message (GetStatusLine -text ($SPSD.DisplayName + " by Matthias Einig (@mattein)") ) -type $SPSD.LogTypes.Information
 	    Log -message (GetStatusLine -text ("Version          : "+$($SPSD.Version))) -type $SPSD.LogTypes.Information
+	    Log -message (GetStatusLine -text ("License          : MS-PL")) -type $SPSD.LogTypes.Information
         Log -message (GetStatusLine -text ("Url              : http://spsd.codeplex.com")) -type $SPSD.LogTypes.Information
-        Log -message (GetStatusLine -text ("Started on       : "+$(get-date))) -type $SPSD.LogTypes.Information
         Log -message (GetStatusLine -text "") -type $SPSD.LogTypes.Information
+        Log -message (GetStatusLine -text ("Started on       : "+$(get-date))) -type $SPSD.LogTypes.Information
         Log -message (GetStatusLine -text ("Command          : "+$Command)) -type $SPSD.LogTypes.Information
         Log -message (GetStatusLine -text ("Type             : "+$Type)) -type $SPSD.LogTypes.Information
         Log -message (GetStatusLine -text ("Machine          : $env:COMPUTERNAME")) -type $SPSD.LogTypes.Information
@@ -114,7 +133,9 @@
 	    LoadSharePointPS
 	    LoadWebAdminPS
 	    LogOutdent
+        Register-Extensions
         SetSolutionDir
+
 	}
     #endregion
 	#region GetStatusLine
@@ -130,27 +151,49 @@
 	#region ErrorSummary
 	# Desc: Writes an error summary into a separate logfile
     Function ErrorSummary(){
-        Log -message "One or multiple errors occured while excecuting SPSD" -type $SPSD.LogTypes.Information -NoIndent 
-        $errNum = 0;
+        Log -message "One or multiple errors occurred while excecuting SPSD" -type $SPSD.LogTypes.Information -NoIndent 
+        $Script:errNum = 0;
         $error | foreach { 
-            Log -message ("Error "+$errNum+": "+$_) -type $SPSD.LogTypes.Error -NoIndent 
-            $errNum = $errNum +1
+            Log -message ("Error "+$Script:errNum+": "+$_) -type $SPSD.LogTypes.Error -NoIndent 
+             $Script:errNum +=1
             }
 
-        $errorLog = $logFile.Substring(0, $logFile.Length -4 ) + "-Errors.log"
-        Log -message ("More details can be found in "+(GetRelFilePath -filePath $errorLog)) -type $SPSD.LogTypes.Information -NoIndent 
-        $Error > $errorLog
-
+        if($logFile -ne $null){
+            $errorLog = $logFile.Substring(0, $logFile.Length -4 ) + "-Errors.log"
+            Log -message ("More details can be found in "+(GetRelFilePath -filePath $errorLog)) -type $SPSD.LogTypes.Information -NoIndent 
+            $Error > $errorLog
+        }
     }
     #endregion
 	#region FinishUp
 	# Desc: Writes the finalization text, elapsed time and log file location
 	Function FinishUp(){
         CloseAllPSSessions
-	    Log -NoIndent -message ""
+        Execute-Extensions $events.Finalize
+		Finalize $vars
+        Log
+        if($Script:errNum -gt 0){
+	        Log -NoIndent -message ("*"*$SPSD.StatusWidth) -type $SPSD.LogTypes.Error 
+            Log -NoIndent -message (GetStatusLine -text "") -type $SPSD.LogTypes.Error
+            Log -NoIndent -message (GetStatusLine -text "Operation failed!") -type $SPSD.LogTypes.Error 
+            Log -NoIndent -message (GetStatusLine -text "") -type $SPSD.LogTypes.Error
+	        Log -NoIndent -message ("*"*$SPSD.StatusWidth) -type $SPSD.LogTypes.Error 
+        }
+        else{
+	        Log -NoIndent -message ("*"*$SPSD.StatusWidth) -type $SPSD.LogTypes.Success 
+            Log -NoIndent -message (GetStatusLine -text "") -type $SPSD.LogTypes.Success
+            Log -NoIndent -message (GetStatusLine -text "Operation completed!") -type $SPSD.LogTypes.Success 
+            Log -NoIndent -message (GetStatusLine -text "") -type $SPSD.LogTypes.Success
+	        Log -NoIndent -message ("*"*$SPSD.StatusWidth) -type $SPSD.LogTypes.Success 
+        }
+        Log
 	    Log -NoIndent -message ("*"*$SPSD.StatusWidth) -type $SPSD.LogTypes.Information 
-	    Log -NoIndent -message (GetStatusLine -text "SPSD completed!") -type $SPSD.LogTypes.Information
-	    Log -NoIndent -message (GetStatusLine -text "") -type $SPSD.LogTypes.Information
+        Log -NoIndent -message (GetStatusLine -text ("Command          : "+$Command)) -type $SPSD.LogTypes.Information
+        Log -NoIndent -message (GetStatusLine -text ("Type             : "+$Type)) -type $SPSD.LogTypes.Information
+        Log -NoIndent -message (GetStatusLine -text ("Machine          : $env:COMPUTERNAME")) -type $SPSD.LogTypes.Information
+        Log -NoIndent -message (GetStatusLine -text ("User             : $env:USERDOMAIN\$env:USERNAME")) -type $SPSD.LogTypes.Information
+        Log -NoIndent -message (GetStatusLine -text "") -type $SPSD.LogTypes.Information
+        Log -NoIndent -message (GetStatusLine -text ("Started on       : "+$(get-date))) -type $SPSD.LogTypes.Information
         Log -NoIndent -message (GetStatusLine -text ("Ended on         : "+$(get-date))) -type $SPSD.LogTypes.Information
         Log -NoIndent -message (GetStatusLine -text ("Elapsed Time     : "+$Script:ElapsedTime.Elapsed)) -type $SPSD.LogTypes.Information
         Log -NoIndent -message (GetStatusLine -text ("Log file         : "+(GetRelFilePath -filePath $LogFile))) -type $SPSD.LogTypes.Information

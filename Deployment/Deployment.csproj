@@ -41,13 +41,28 @@
     <None Include="Scripts\CustomTargets.ps1" />
     <None Include="Scripts\SPSD_Base.ps1" />
     <None Include="Scripts\SPSD_Deployment.ps1" />
+    <None Include="Scripts\SPSD_Extensions.ps1" />
     <None Include="Scripts\SPSD_Main.ps1" />
     <None Include="Scripts\SPSD_Utilities.ps1" />
-    <None Include="Environments\Default.xml" />
+    <None Include="Environments\Default.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Update.bat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Package\" />
     <Folder Include="Solutions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Environments\DefaultNoComments.xml" />
+    <Content Include="Environments\Extensions\Example.xml" />
+    <Content Include="Environments\Production.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Readme.txt" />
+    <Content Include="ReleaseNotes.txt" />
+    <Content Include="Scripts\AppLogo.txt" />
+    <Content Include="Scripts\Extensions\HowToCreateExtensions.txt" />
   </ItemGroup>
   <!-- SPSD Targets and Properties -->
   <PropertyGroup>
@@ -65,11 +80,21 @@
       <Output TaskParameter="Include" ItemName="PSFilesDefault" />
     </CreateItem>
     <Copy SourceFiles="@(PSFilesDefault)" DestinationFolder="$(SPSDPackageLocation)\Scripts\%(RecursiveDir)" SkipUnchangedFiles="false" />
+    <!-- copy scripts\extensions folder -->
+    <CreateItem Include="$(SolutionDir)$(ProjectName)\Scripts\Extensions\*.*">
+      <Output TaskParameter="Include" ItemName="ExtFilesDefault" />
+    </CreateItem>
+    <Copy SourceFiles="@(ExtFilesDefault)" DestinationFolder="$(SPSDPackageLocation)\Scripts\Extensions\%(RecursiveDir)" SkipUnchangedFiles="false" />
     <!-- copy environments folder -->
     <CreateItem Include="$(SolutionDir)$(ProjectName)\Environments\*.*">
       <Output TaskParameter="Include" ItemName="EnvFiles" />
     </CreateItem>
     <Copy SourceFiles="@(EnvFiles)" DestinationFolder="$(SPSDPackageLocation)\Environments\%(RecursiveDir)" SkipUnchangedFiles="false" />
+    <!-- copy environments\extensions folder -->
+    <CreateItem Include="$(SolutionDir)$(ProjectName)\Environments\Extensions\*.*">
+      <Output TaskParameter="Include" ItemName="EnvExtFiles" />
+    </CreateItem>
+    <Copy SourceFiles="@(EnvExtFiles)" DestinationFolder="$(SPSDPackageLocation)\Environments\Extensions\%(RecursiveDir)" SkipUnchangedFiles="false" />
     <!-- copy solutions from other projects-->
     <CreateItem Include="$(SolutionDir)\**\$(Configuration)\**\*.wsp">
       <Output TaskParameter="Include" ItemName="WSPFiles" />

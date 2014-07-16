@@ -1,16 +1,16 @@
 ###############################################################################
 # SharePoint Solution Deployer (SPSD)
-# Version          : 4.1.2.2805
+# Version          : 5.0.3.6439
 # Url              : http://spsd.codeplex.com
-# Creator          : Matthias Einig
-# License          : GPLv2
+# Creator          : Matthias Einig, http://twitter.com/mattein
+# License          : MS-PL
 ###############################################################################
 #region Utilities
 	#region Utilities.PowerShell
 	    #region LoadSharePointPS
 	    # Desc: Load SharePoint PowerShell snapin
 	    Function LoadSharePointPS(){
-	    	Log -message "Loading SharePoint Powershell Snapin" -type $SPSD.LogTypes.Verbose
+	    	Log -message "Loading SharePoint Powershell Snapin" -type $SPSD.LogTypes.Normal
             If ((Get-PsSnapin |?{$_.Name -eq "Microsoft.SharePoint.PowerShell"})-eq $null)
 		    { $PSSnapin = Add-PsSnapin Microsoft.SharePoint.PowerShell -ErrorAction SilentlyContinue -WarningAction SilentlyContinue | Out-Null }
 	    }
@@ -19,7 +19,7 @@
 	    # Desc: Load WebAdministration PowerShell snapin / module depending on OS version
 	    # Ref : http://stackoverflow.com/questions/1924217/powershell-load-webadministration-in-ps1-script-on-both-iis-7-and-iis-7-5
 	    Function LoadWebAdminPS(){
-	        Log -message "Loading WebAdministration Powershell Snapin" -type $SPSD.LogTypes.Verbose
+	        Log -message "Loading WebAdministration Powershell Snapin" -type $SPSD.LogTypes.Normal
 	        if ([System.Version]$(Gwmi Win32_OperatingSystem).Version -ge [System.Version]"6.1")
 	        { Import-Module WebAdministration -ErrorAction SilentlyContinue -WarningAction SilentlyContinue | Out-Null}
 	        else
@@ -29,6 +29,9 @@
         #region CustomEnter-PSSession
 	    # Desc: Created or reuses a remote PowerShell session
         Function CustomEnter-PSSession([string]$server){
+            if($isAppHost){
+                return
+            }
             if($server -ne $env:COMPUTERNAME){
                 
                 if($Script:RemoteSessions[$server] -eq $null){
@@ -42,6 +45,9 @@
         #region CustomExit-PSSession
 	    # Desc: Exits a remote PowerShell session
         Function CustomExit-PSSession([string]$server){
+            if($isAppHost){
+                return
+            }
             if($server -ne $env:COMPUTERNAME){
                 Exit-PSSession
             }
@@ -49,7 +55,10 @@
 	    #endregion
         #region CloseAllPSSessions
 	    # Desc: Closes any open remote PowerShell sessions
-        Function CloseAllPSSessions([string]$server){
+        Function CloseAllPSSessions(){
+            if($isAppHost){
+                return
+            }
             Exit-PSSession
             foreach ($server in $servers)
             { 
@@ -83,7 +92,7 @@
 	        }
 	        $p.WaitForExit()
 	        $p.StandardOutput.ReadToEnd().Trim().Split("`n") | Foreach {
-	            Log -message ($_) -type $SPSD.LogTypes.Verbose
+	            Log -message ($_) -type $SPSD.LogTypes.Normal
 	        }
 
 	    }
@@ -92,31 +101,43 @@
     #region Utilities.Logging
 	    #region Log
 	    # Desc: Logging function which sets color and indentation
-	    Function Log([string]$message, [int]$type, [switch]$NoNewline, [switch]$Indent, [switch]$Outdent, [switch]$NoIndent, [switch]$Success){
-	        if($type -gt $Script:LogLevel){
-	            return
-	        }
-	        $foregroundColor = "White"
+	    Function Log([string]$message, [int]$type, [switch]$NoNewline, [switch]$Indent, [switch]$Outdent, [switch]$NoIndent){
+	        # TODO
+			# if($type -gt $Script:LogLevel){
+	        #    return
+	        #}
+	        $foregroundColor = "Gray"
 	        $backgroundColor = "Blue"
 	        switch ($type){
+	            $SPSD.LogTypes.Success          { $foregroundColor = "Green" }
 	            $SPSD.LogTypes.Error            { $foregroundColor = "Red" }
 	            $SPSD.LogTypes.Warning          { $foregroundColor = "Yellow" }
 	            $SPSD.LogTypes.Information      { $foregroundColor = "White" }
-	            $SPSD.LogTypes.Verbose          { $foregroundColor = "Gray" }
-	            $SPSD.LogTypes.VerboseExtended  { $foregroundColor = "Gray" }
+	            $SPSD.LogTypes.Normal           { $foregroundColor = "Gray" }
 	        }
-	        if($Success) { $foregroundColor = "Green" }
 	        if($Outdent){ LogOutdent }
 	        if(!$NoIndent){
 	            $indentChars = " " * (2 * $Script:LogIndentVal)
 	        }
-	        if($NoNewline)
-	        {
-	            Write-Host -foregroundColor $foregroundColor ($indentChars + $message) -NoNewline
-	        }
-	        else{
-	            Write-Host -foregroundColor $foregroundColor ($indentChars + $message)
-	        }
+
+            if((Get-Host).Name -eq "ConsoleHost" -and -not $isAppHost){
+	            if($NoNewline)
+	            {
+	                Write-Host -foregroundColor $foregroundColor ($indentChars + $message) -NoNewline
+	            }
+	            else{
+	                Write-Host -foregroundColor $foregroundColor ($indentChars + $message)
+	            }
+            }
+            else
+            {
+	            if($NoNewline){
+                    [System.IO.File]::AppendAllText($script:LogFile, ($indentChars + $message), [System.Text.Encoding]::Default)
+	            }
+                else{
+                    Add-Content $script:LogFile ($indentChars + $message)
+	            }
+            }
 	        if($Indent){ LogIndent }
 	    }
 	    #endregion
@@ -140,15 +161,46 @@
 	    Function StartTracing()    {
 	        $script:LogTime = Get-Date -Format yyyyMMdd-HHmmss
 	        $script:LogFile = "$logDir\$LogTime-$Command.log"
-	        Start-Transcript -Path $LogFile -Force
+            if((Get-Host).Name -eq "ConsoleHost" -and -not $isAppHost){
+	            Start-Transcript -Path $LogFile -Force
+            }
 	        $script:ElapsedTime = [System.Diagnostics.Stopwatch]::StartNew()
 	    }
         #endregion
 	    #region StopTracing
 	    # Desc: Stop tracing the PowerShell Output to a file
 	    function StopTracing(){
-		    Stop-Transcript
+            if((Get-Host).Name -eq "ConsoleHost" -and -not $isAppHost){
+		        Stop-Transcript
+            }
 	    }
+        #endregion
+	    #region ColorPattern
+	    # Desc: Colorizes and outputs a certain regex match on the piped string
+        #  Ref: http://stackoverflow.com/questions/7362097/color-words-in-powershell-script-format-table-output
+        filter ColorPattern( [string]$ErrorPattern, [string]$SuccessPattern) {
+          $lines = $_ -split "`n"
+          for( $k = 1; $k -lt $lines.Count-3; ++$k ) {
+              if($k -eq 1){
+            	 Log $lines[$k] -Type $SPSD.LogTypes.Information
+              }
+              else{
+                  Log -NoNewline #for correct indentation
+                  $split1 = $lines[$k] -split $ErrorPattern
+                  $error = [regex]::Matches( $lines[$k], $ErrorPattern, 'IgnoreCase' )
+                  for( $i = 0; $i -lt $split1.Count; ++$i ) {
+	                $split2 =  $split1[$i] -split $SuccessPattern
+                    $success = [regex]::Matches( $split1[$i], $SuccessPattern, 'IgnoreCase' )
+                    for( $j = 0; $j -lt $split2.Count; ++$j ) {
+            	        Log $split2[$j] -Type $SPSD.LogTypes.Normal -NoNewline -NoIndent
+            	        Log $success[$j] -Type $SPSD.LogTypes.Success -NoNewline -NoIndent
+                    }
+                    Log $error[$i] -Type $SPSD.LogTypes.Error -NoNewline -NoIndent
+                    }
+                   Log
+               }
+            }
+        }
         #endregion
     #endregion
     #region Utilities.Variables
@@ -308,7 +360,7 @@
 	            $newOwnedNode = $node.OwnerDocument.ImportNode($newNode, $true)
 	            $node.ParentNode.ReplaceChild($newOwnedNode, $node)
 
-	            Log -message ("Loaded '$nodeName' node$idText from '$relFilePath'") -type $SPSD.LogTypes.Verbose -level
+	            Log -message ("Loaded '$nodeName' node$idText from '$relFilePath'") -type $SPSD.LogTypes.Normal -level
 	            return $newOwnedNode
 	        }
 	        # no external node loaded, keep the on in the $envFile
@@ -335,6 +387,20 @@
         #endregion
     #endregion
 	#region Utilities.Environment
+		#region GetEnvironmentFile
+	    # Desc: Gets the environment file in the order
+        #       1. File passed as parameter to the script
+        #       2. xml file in the environments folder named after the current user
+        #       3. xml file in the environments folder named after the current computer
+        #       4. default environments file "default.xml"
+		function RunPrerequisites(){
+			Log -Message "Run Prerequisites" -Type $SPSD.LogTypes.Information -Indent
+			Log -Message "Run Custom Prerequisites" -Type $SPSD.LogTypes.Normal -Indent
+			RunCustomPrerequisites $vars
+			Log -Message "Custom Prerequisites finished" -Type $SPSD.LogTypes.Normal -Outdent
+			LogOutdent
+		}	
+        #endregion	
 	    #region GetEnvironmentFile
 	    # Desc: Gets the environment file in the order
         #       1. File passed as parameter to the script
@@ -344,7 +410,7 @@
 		Function GetEnvironmentFile(){
 		    if($envFile -and (Test-Path $envFile)){
 	            $relFilePath = (GetRelFilePath -filePath $envFile)
-		        Log -message "Loading passed environment from '$relFilePath'" -type $SPSD.LogTypes.Verbose
+		        Log -message "Loading passed environment from '$relFilePath'" -type $SPSD.LogTypes.Normal
 		        return $envFile
 		    }
 		    # no envfile passed to script
@@ -355,19 +421,19 @@
 		    $file = "$envDir\$env:USERNAME.xml"
 	        $relFilePath = (GetRelFilePath -filePath $file)
 		    if(Test-Path $file ){
-		        Log -message "Loading user specific environment for '$env:USERNAME' from '$relFilePath'" -type $SPSD.LogTypes.Verbose
+		        Log -message "Loading user specific environment for '$env:USERNAME' from '$relFilePath'" -type $SPSD.LogTypes.Normal
 		        return $file    
 		    }
 		    $file  = "$envDir\$env:COMPUTERNAME.xml"
 	        $relFilePath = (GetRelFilePath -filePath $file)
 		    if(Test-Path $file ){
-		        Log -message "Loading machine specific environment for '$env:COMPUTERNAME' from '$relFilePath'" -type $SPSD.LogTypes.Verbose
+		        Log -message "Loading machine specific environment for '$env:COMPUTERNAME' from '$relFilePath'" -type $SPSD.LogTypes.Normal
 		        return $file    
 		    }
 		    $file  = "$envDir\Default.xml"
 	        $relFilePath = (GetRelFilePath -filePath $file)
 		    if(Test-Path $file ){
-		        Log -message "Loading default environment from '$relFilePath'" -type $SPSD.LogTypes.Verbose
+		        Log -message "Loading default environment from '$relFilePath'" -type $SPSD.LogTypes.Normal
 		        return $file    
 		    }
 		    return $null
@@ -414,20 +480,21 @@
 		        $completeXml = ReplaceVariables -Variables $rawXML.SPSD.Environment.Variables -xml $completeXml
 		    }
 		    else {
-		        Log -message "No 'Variables' node found in '$relEnvFilePath'" -type $SPSD.LogTypes.Verbose
+		        Log -message "No 'Variables' node found in '$relEnvFilePath'" -type $SPSD.LogTypes.Normal
 		    }
 		    # save result XML file if name is specified
 		    if($saveEnvXml){
 		        $Script:resultXmlFile = $logDir + "\" + "$LogTime-$Command-"+([System.IO.Path]::GetFileNameWithoutExtension($envFile))+".xml"
 		        Set-Content -Value $completeXml -Path $resultXmlFile -Encoding UTF8
 	            $relResultFilePath = (GetRelFilePath -filePath $resultXmlFile)
-		        Log -message "Saved complete environment XML to '$relResultFilePath'" -type $SPSD.LogTypes.Verbose
+		        Log -message "Saved complete environment XML to '$relResultFilePath'" -type $SPSD.LogTypes.Normal
 		    }
 		    LogOutdent
 		    [xml]$Script:xmlinput =   $completeXml
 		    [System.Xml.XMLElement]$Script:conf = $xmlinput.SPSD.Configuration
 		    [System.Xml.XMLElement]$Script:env = $xmlinput.SPSD.Environment
 		    [System.Xml.XMLElement]$Script:struct = $xmlinput.SiteStructures
+		    [System.Xml.XMLElement]$Script:ext = $xmlinput.SPSD.Extensions
             if($env.Variables -and $env.Variables.GetType() -eq [System.Xml.XmlElement]){
 		        $Script:vars = BuildVarsCollection -node $env.Variables
             }
@@ -457,13 +524,67 @@
         #       If configured the function will only wait for a specific time  
 	    #  Ref: http://www.microsoft.com/technet/scriptcenter/resources/pstips/jan08/pstip0118.mspx 
 	    Function Pause{
+            if($isAppHost){
+                return
+            }
             if($WaitAfterDeployment -eq $null -or $WaitAfterDeployment -ieq "pause"){
 		        Write-Host "Press any key to exit..."
 		        $null = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
             }
             else {
-     		    Write-Host "Waiting for"$($WaitAfterDeployment/1000)"seconds before closing this window."
-                Start-Sleep -Milliseconds $WaitAfterDeployment
+                while ($WaitAfterDeployment -gt 0){
+     		        Write-Host "Waiting for"$($WaitAfterDeployment/1000)"seconds before closing this window.    "
+                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,(($Host.UI.RawUI.CursorPosition).Y-1)
+                    Start-Sleep -Milliseconds 1000
+                    $WaitAfterDeployment = $WaitAfterDeployment - 1000;
+                }
+            }
+	    }
+        #endregion
+        #region AskForDeploymentCommand
+	    # Desc: Asks for user input to set the deployment command
+ 	    Function AskForDeploymentCommand{
+            if($Script:DeploymentCommand -ne $SPSD.Commands.Ask){
+                return
+            }
+            if($isAppHost){
+                Throw "When SPSD is hosted in an application, the 'Ask' deployment type is not supported";
+            }
+
+            while ($Script:DeploymentCommand -eq $SPSD.Commands.Ask){
+                 Log -message "Select deployment command:" -type $SPSD.LogTypes.Information
+                 Log -message " (1) Deploy" -type $SPSD.LogTypes.Normal
+                 Log -message " (2) Retract" -type $SPSD.LogTypes.Normal
+                 Log -message " (3) Redeploy (first retract, then deploy)" -type $SPSD.LogTypes.Normal
+                 Log -message " (4) Update" -type $SPSD.LogTypes.Normal
+                 Log -message "SPSD:> " -type $SPSD.LogTypes.Information -NoNewline
+		         $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+                 Log -message $key.Character
+                 switch($key.Character){
+                    '1' { 
+                        $Script:DeploymentCommand = $SPSD.Commands.Deploy
+                        Log -message "Command: Deploy" -type $SPSD.LogTypes.Normal
+                        $Script:Command = "Deploy"
+                     }
+                    '2' { 
+                        $Script:DeploymentCommand = $SPSD.Commands.Retract
+                        Log -message "Command: Retract" -type $SPSD.LogTypes.Normal
+                        $Script:Command = "Retract"
+                     }
+                    '3' { 
+                        $Script:DeploymentCommand = $SPSD.Commands.Redeploy
+                        Log -message "Command: Redeploy" -type $SPSD.LogTypes.Normal
+                        $Script:Command = "Redeploy"
+                     }
+                    '4' { 
+                        $Script:DeploymentCommand = $SPSD.Commands.Update 
+                        Log -message "Command: Update" -type $SPSD.LogTypes.Normal
+                        $Script:Command = "Update"
+                    }
+                    default {
+                        Log -message "Please choose a valid command" $SPSD.LogTypes.Warning
+                    }
+                 }
             }
 	    }
         #endregion
@@ -474,14 +595,14 @@
 		Function EnsureServiceRunning([string]$serviceName, [string]$computer){
 		   $service = Get-Service -Computer $computer -Name $serviceName -ErrorAction SilentlyContinue
 		   if($service){
-		        Log -message "Ensuring $($service.DisplayName) ($serviceName) is running..." -type $SPSD.LogTypes.Verbose -NoNewline
+		        Log -message "Ensuring $($service.DisplayName) ($serviceName) is running..." -type $SPSD.LogTypes.Normal -NoNewline
 		        if($service.Status -ne "Running"){
 		               Start-Service -Name $serviceName
 		        }
 		        $timeout = $DefaultTimeout
                 $serviceStatus = (Get-Service -Computer $computer -Name $serviceName).Status
 		        While($serviceStatus -ne "Running" -and $timeout ){
-		            Log -message "." -type $SPSD.LogTypes.Verbose -NoNewline -NoIndent
+		            Log -message "." -type $SPSD.LogTypes.Normal -NoNewline -NoIndent
 		            $timeout-=500
 		            Start-Sleep -Milliseconds 500
                     $serviceStatus = (Get-Service -Computer $computer -Name $serviceName).Status
@@ -491,7 +612,7 @@
 		            Throw "Service '$serviceName' did not restart within the timeout intervall of $($DefaultTimeout)ms"
 		        }
 		        else{
-		            Log -message "$($service.Status)" -type $SPSD.LogTypes.Verbose -Success -NoIndent
+		            Log -message "$($service.Status)" -type $SPSD.LogTypes.Success -NoIndent
 		        }
 		    }
 		    else
@@ -503,16 +624,16 @@
 	    #region EnsureAppPoolRunning
 	    # Desc: Ensures that an application pool is running
 		Function EnsureAppPoolRunning([string]$appPoolName){
-		    Log -message "Ensure '$appPoolName' " -type $SPSD.LogTypes.Verbose -NoNewline
+		    Log -message "Ensure '$appPoolName' " -type $SPSD.LogTypes.Normal -NoNewline
             try{
                 # Check if apppool exists under display name
                 Get-WebAppPoolState -Name $appPoolName  | Out-Null
-                Log -message "is started..." -type $SPSD.LogTypes.Verbose -NoNewline -NoIndent                      
+                Log -message "is started..." -type $SPSD.LogTypes.Normal -NoNewline -NoIndent                      
             }                            
             catch{
                 # Get service apppool based on Guid
                 $appPoolName = Get-SPServiceApplicationPool | Where-Object {$_.Name -eq $appPoolName} | ForEach-Object {$_.ID -replace "-", ""}
-                Log -message " ($appPoolName) is started..." -type $SPSD.LogTypes.Verbose -NoNewline -NoIndent
+                Log -message " ($appPoolName) is started..." -type $SPSD.LogTypes.Normal -NoNewline -NoIndent
             }	
 
             if((Get-WebAppPoolState -Name $appPoolName).Value -ine "Started"){
@@ -520,7 +641,7 @@
 		    }
 		    $timeout = $DefSvcTimeout
 		    While( ((Get-WebAppPoolState -Name $appPoolName).Value -ine "Started") -and $timeout ){
-		        Log -message "." -type $SPSD.LogTypes.Verbose -NoNewline -NoIndent
+		        Log -message "." -type $SPSD.LogTypes.Normal -NoNewline -NoIndent
 		        $timeout-=500
 		        Start-Sleep -Milliseconds 500
 		    }
@@ -529,9 +650,33 @@
 		        Log -message "$status" -type $SPSD.LogTypes.Error -NoIndent
 		    }
 		    else{
-		        Log -message "$status" -type $SPSD.LogTypes.Verbose -Success -NoIndent
+		        Log -message "$status" -type $SPSD.LogTypes.Success -NoIndent
 		    }
 		}
         #endregion
 	#endregion
+    #region Utilities.SharePoint
+	    #region Get-SPTermStore
+	    # Desc: Retrieves the termstore by name from the central admin web application
+        function Get-SPTermStore([string] $name) {
+            $site = Get-SPSite (Get-SPCentralAdministrationUrl)
+            try{
+                $session = new-object Microsoft.SharePoint.Taxonomy.TaxonomySession($site)
+                $termstore = $session.TermStores[$name]
+            }
+            finally{
+                $site.Dispose()
+            }
+     
+            return $termstore
+        }
+        #endregion
+	    #region Get-SPCentralAdministrationUrl
+	    # Desc: Retrieves the Url of the central administration
+        function Get-SPCentralAdministrationUrl(){
+            return Get-SPWebApplication -includecentraladministration | where {$_.IsAdministrationWebApplication} | Select-Object -ExpandProperty Url
+        }
+        #enregion
+    #endregion
+
 #endregion

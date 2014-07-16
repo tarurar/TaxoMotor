@@ -26,15 +26,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationConfiguration", 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deployment", "Deployment\Deployment.csproj", "{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A4EC9586-B034-42B0-93C2-ADDB28619CF8} = {A4EC9586-B034-42B0-93C2-ADDB28619CF8}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.Core", "TM.SP.Core\TM.SP.Core.csproj", "{A4EC9586-B034-42B0-93C2-ADDB28619CF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.BCSModels", "TM.SP.BCSModels\TM.SP.BCSModels.csproj", "{73514D73-ABD3-440E-8A49-93026866C619}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.DeveloperBCSModels", "TM.SP.DeveloperBCSModels\TM.SP.DeveloperBCSModels.csproj", "{F9732410-2D3D-4FA6-8A4C-A33C03C86955}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{85013FC3-59E2-4E8D-BF33-72DB07D46F1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,12 +61,6 @@ Global
 		{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64713D38-2CAF-45BB-A5D9-EA20A8B71BA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4EC9586-B034-42B0-93C2-ADDB28619CF8}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{73514D73-ABD3-440E-8A49-93026866C619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73514D73-ABD3-440E-8A49-93026866C619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73514D73-ABD3-440E-8A49-93026866C619}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -85,5 +76,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73514D73-ABD3-440E-8A49-93026866C619} = {85013FC3-59E2-4E8D-BF33-72DB07D46F1A}
+		{F9732410-2D3D-4FA6-8A4C-A33C03C86955} = {85013FC3-59E2-4E8D-BF33-72DB07D46F1A}
 	EndGlobalSection
 EndGlobal
