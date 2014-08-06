@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/RequestBCSList;}"
+		Id="TaxoMotor.SendRequestEGRIP"
+		Location="EditControlBlock"
+		Title="Отправить запрос ЕГРИП"
+		Sequence="101">
+		<UrlAction
+			Url="javascript: (function() { alert('Запрос ЕГРИП отправлен'); })();" />
+	</CustomAction>
+</Elements>
