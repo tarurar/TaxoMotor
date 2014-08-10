@@ -40,6 +40,12 @@
       <Solution Name="TM.SP.DeveloperBCSModels.wsp" Force="true" Overwrite="true">
         <WebApplication Url="$(WebAppUrl)" />
       </Solution>
+      <Solution Name="TM.SP.AppPages.wsp" Force="true" Overwrite="true">
+        <WebApplication Url="$(WebAppUrl)" />
+      </Solution>
+      <Solution Name="TM.SP.CustomActions.wsp" Force="true" Overwrite="true">
+        <SiteCollection Url="$(WebAppUrl)" />
+      </Solution>
     </Solutions>
   </Environment>
 </SPSD>

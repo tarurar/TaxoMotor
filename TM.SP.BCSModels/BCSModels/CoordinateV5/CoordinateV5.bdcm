@@ -9622,6 +9622,26 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
+        <Entity Name="RequestAccountData" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.37" DefaultDisplayName="Request Account Data" EstimatedInstanceCount="10000">
+          <Properties>
+            <Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestAccountDataService, CoordinateV5</Property>
+          </Properties>
+          <Identifiers>
+            <Identifier Name="Id" TypeName="System.Int32" />
+            <Identifier Name="IdList" TypeName="System.String" />
+          </Identifiers>
+          <Methods>
+            <Method Name="GetItemsByIdList" DefaultDisplayName="Get Items By Id List">
+              <Parameters>
+                <Parameter Name="RequestIdList" Direction="In">
+                  <TypeDescriptor Name="RequestIdListTypeDescriptor" TypeName="System.String" IsCollection="false" DefaultDisplayName="Request Id List" IdentifierEntityName="RequestAccountData" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" IdentifierName="IdList" /></Parameter>
+                <Parameter Name="returnParameter" Direction="Out">
+                  <TypeDescriptor Name="returnParameterTypeDescriptor" TypeName="TM.SP.BCSModels.CoordinateV5.RequestAccountData, CoordinateV5" IsCollection="false" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="GetItemsByIdListInstance" Type="SpecificFinder" ReturnParameterName="returnParameter" DefaultDisplayName="GetItemsByIdListInstance" Default="true" />
+              </MethodInstances></Method>
+          </Methods></Entity>
 			</Entities>
 		</LobSystem>
 	</LobSystems>

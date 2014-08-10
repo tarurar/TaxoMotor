@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="BCSModels\CoordinateV5\CoordinateV5Entities.cs" />
     <Compile Include="BCSModels\CoordinateV5\CoordinateV5EntityServices.cs" />
+    <Compile Include="BCSModels\CoordinateV5\RequestAccountDataService.cs" />
     <Compile Include="BCSModels\CoordinateV5\FileEntityService.cs" />
     <Compile Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.EventReceiver.cs">
       <DependentUpon>TaxoMotor_CoordinateV5BCSLists.feature</DependentUpon>

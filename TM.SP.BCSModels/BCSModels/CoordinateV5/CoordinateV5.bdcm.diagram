@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 15.75" name="CoordinateV5">
+<minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.75, 15.75" name="CoordinateV5">
   <modelRootMoniker Name="/CoordinateV5" />
   <nestedChildShapes>
     <entityShape Id="cc1fbe04-9b86-4fa6-a5a3-fb227080671e" absoluteBounds="2, 1, 2, 3.1340950520833326">
@@ -80,7 +80,7 @@
         <entityShapeMoniker Id="6925da07-9d16-428c-b76f-403bdf3d70fc" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(9 : 5); (3.08333333333333 : 5 : JumpStart); (2.91666666666667 : 5 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(9 : 5); (4.45833333333333 : 5 : JumpStart); (4.29166666666667 : 5 : JumpEnd); (3.08333333333333 : 5 : JumpStart); (2.91666666666667 : 5 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.RequestAccount/IdOfRequestAccountToDeclarantRequestAccountOfRequestAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -88,7 +88,7 @@
         <entityShapeMoniker Id="0c6dc571-2a39-4165-a0ff-fa3b22dd50f1" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(4 : 8); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(4 : 8); (2.71289168301877 : 6.06933752452815 : JumpStart); (2.62044165031456 : 5.93066247547185 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.RequestContact/Id_AutoOfRequestContactToDeclarantRequestContactOfRequestAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -112,7 +112,7 @@
         <entityShapeMoniker Id="0c6dc571-2a39-4165-a0ff-fa3b22dd50f1" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(9 : 8); (2.95159541916817 : 5.40782660821493 : JumpStart); (2.79840458083183 : 5.34217339178507 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(9 : 8); (4.45159541916817 : 6.05068375107207 : JumpStart); (4.29840458083183 : 5.98503053464221 : JumpEnd); (2.95159541916817 : 5.40782660821493 : JumpStart); (2.79840458083183 : 5.34217339178507 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Service/IdOfServiceToServiceOfRequestAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -120,7 +120,7 @@
         <entityShapeMoniker Id="0c6dc571-2a39-4165-a0ff-fa3b22dd50f1" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(9 : 11); (2.84104916130822 : 5.72089928112133 : JumpStart); (2.71450639424734 : 5.612434052212 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(9 : 11); (4.43827138353044 : 7.08994690016895 : JumpStart); (4.31172861646956 : 6.98148167125962 : JumpEnd); (2.84104916130822 : 5.72089928112133 : JumpStart); (2.71450639424734 : 5.612434052212 : JumpEnd); (2 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.ServiceHeader/IdOfServiceHeaderToServiceHeaderOfRequestAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -128,7 +128,7 @@
         <entityShapeMoniker Id="0c6dc571-2a39-4165-a0ff-fa3b22dd50f1" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(4 : 2); (7 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(4 : 2); (4.31607443490112 : 2.31607443490112 : JumpStart); (4.43392556509888 : 2.43392556509888 : JumpEnd); (7 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Address/IdOfAddressToPostalAddressOfRequestAccountAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -136,7 +136,7 @@
         <entityShapeMoniker Id="461c4ab2-7054-491f-a67f-fece368dc9cb" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(4 : 2); (7 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(4 : 2); (4.31607443490112 : 2.31607443490112 : JumpStart); (4.43392556509888 : 2.43392556509888 : JumpEnd); (7 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Address/IdOfAddressToFactAddressOfRequestAccountAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -152,7 +152,7 @@
         <entityShapeMoniker Id="461c4ab2-7054-491f-a67f-fece368dc9cb" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(4 : 2); (2 : 8)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(4 : 2); (2.42635231383474 : 6.72094305849579 : JumpStart); (2.37364768616526 : 6.87905694150421 : JumpEnd); (2 : 8)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Address/IdOfAddressToRegAddressOfRequestContactAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -160,7 +160,7 @@
         <entityShapeMoniker Id="3906c66d-2a18-4dfe-8a00-be0b48fa1c2a" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(4 : 2); (2.42635231383474 : 6.72094305849579 : JumpStart); (2.37364768616526 : 6.87905694150421 : JumpEnd); (2 : 8)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(4 : 2); (2 : 8)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.CoordinateV5.Address/IdOfAddressToFactAddressOfRequestContactAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -192,5 +192,12 @@
         <entityShapeMoniker Id="a6e4e44e-ea72-4b17-a96a-5749717d6de6" />
       </nodes>
     </associationGroupConnector>
+    <entityShape Id="e774752e-e018-4b43-80c3-71c843be5926" absoluteBounds="10, 1.625, 1.5, 1.59568359375">
+      <entityMoniker name="TM.SP.BCSModels.CoordinateV5.RequestAccountData" />
+      <nestedChildShapes>
+        <elementListCompartment Id="64a51bcc-48f5-48fa-8290-89f510e195e5" absoluteBounds="10.015, 2.035, 1.4700000000000002, 0.63399251302083326" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f866d3b8-0e89-4482-817b-23c3975a033d" absoluteBounds="10.015, 2.678992513020833, 1.4700000000000002, 0.44169108072916674" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
   </nestedChildShapes>
 </minimalLanguageDiagram>

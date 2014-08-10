@@ -13,6 +13,16 @@ namespace TM.SP.BCSModels.CoordinateV5
     using System.Linq;
     using System.Text;
 
+
+    public partial class RequestAccountData
+    {
+        //TODO: Implement additional properties here.
+        public System.Int32 Id { get; set; }
+        public System.String Title { get; set; }
+        public System.String DeclarantAccountId { get; set; }
+        public System.String DeclarantAccountFullName { get; set; }
+    }
+
     /// <summary>
     /// This class contains the properties for Address
     /// </summary>
