@@ -18,6 +18,7 @@ namespace TM.SP.AppPages
     using System.Collections;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Data;
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
     using Microsoft.SharePoint.Utilities;
@@ -31,6 +32,7 @@ namespace TM.SP.AppPages
 
     using TM.SP.AppPages.ApplicationPages;
     using TM.SP.BCSModels.CoordinateV5;
+    using TM.Utils;
 
     /// <summary>
     /// TODO: Add comment for SendRequestEGRULPage
@@ -38,11 +40,13 @@ namespace TM.SP.AppPages
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class SendRequestEGRULPage : DialogLayoutsPageBase
     {
-        protected static readonly string resRequestListHeader       = "$Resources:EGRULRequest_DlgRequestListHeaderText";
-        protected static readonly string resPrecautionMessage       = "$Resources:EGRULRequest_DlgPrecautionMessageText";
-        protected static readonly string resNoRequestMessage        = "$Resources:EGRULRequest_DlgNoRequestMessageText";
+        protected static readonly string resRequestListHeader = "$Resources:EGRULRequest_DlgRequestListHeaderText";
+        protected static readonly string resPrecautionMessage = "$Resources:EGRULRequest_DlgPrecautionMessageText";
+        protected static readonly string resNoRequestMessage = "$Resources:EGRULRequest_DlgNoRequestMessageText";
         protected static readonly string resRequestListTableHeader1 = "$Resources:EGRULRequest_DlgRequestListHeader1";
         protected static readonly string resRequestListTableHeader2 = "$Resources:EGRULRequest_DlgRequestListHeader2";
+        protected static readonly string EGRULDataEntityName = "RequestAccountData";
+        protected static readonly string EGRULDataFetchMethodName = "GetItemsByIdListInstance";
 
         /// <summary>
         /// Initializes a new instance of the SendRequestEGRULPage class
@@ -52,17 +56,11 @@ namespace TM.SP.AppPages
             this.RightsCheckMode = RightsCheckModes.OnPreInit;
         }
 
-        private string BuildCAMLInValuesClause(string values, string valueType)
+        protected override void CreateChildControls()
         {
-            string[] list = values.Split(',');
-            if (list.Length == 0) return String.Empty;
+            base.CreateChildControls();
 
-            string retVal = String.Empty;
-            foreach (string value in list)
-            {
-                retVal += @"<Value Type='" + valueType + "'>" + value + @"</Value>";
-            }
-            return @"<Values>" + retVal + @"</Values>";
+            //TODO: add sharepoint grid view to display "request before" data
         }
 
         /// <summary>
@@ -74,25 +72,24 @@ namespace TM.SP.AppPages
             SPSite siteCollection = this.Site;
             SPWeb site = this.Web;
 
-            //var listId = Page.Request.Params["ListId"].ToString();
+            // load initial data from external system
+            var arguments = new object[] { Page.Request.Params["Items"].ToString() };
+            IEntity externalCT = BCS.GetEntity(
+                SPServiceContext.GetContext(siteCollection), 
+                String.Empty, 
+                BCS.LOBRequestSystemNamespace, 
+                SendRequestEGRULPage.EGRULDataEntityName);
+            IList<RequestAccountData> showData = (IList<RequestAccountData>)BCS.GetDataFromMethod(
+                BCS.LOBRequestSystemName,
+                externalCT, 
+                SendRequestEGRULPage.EGRULDataFetchMethodName, 
+                MethodInstanceType.Finder, 
+                ref arguments);
 
-            BdcService svc = SPFarm.Local.Services.GetValue<BdcService>();
-            if (svc == null) throw new Exception("No BDC Service Application found");
-            DatabaseBackedMetadataCatalog catalog = svc.GetDatabaseBackedMetadataCatalog(SPServiceContext.GetContext(siteCollection));
-            IEntity ect = catalog.GetEntity("TM.SP.BCSModels.CoordinateV5", "RequestAccountData");
-            ILobSystem lob = ect.GetLobSystem();
-            ILobSystemInstance lobi = lob.GetLobSystemInstances()["CoordinateV5"];
-            IMethodInstance mi = ect.GetMethodInstance("GetItemsByIdListInstance", MethodInstanceType.SpecificFinder);
-            IParameterCollection parameters = mi.GetMethod().GetParameters();
-            object[] arguments = new object[parameters.Count];
+            //TODO: bind showData to the grid view on the page
+            //TODO: show/hide the message ab items which won't be included into the request
+            //DataTable table = showData.ToDataTable<RequestAccountData>();
 
-            arguments[0] = Page.Request.Params["Items"].ToString();
-
-
-
-            TM.SP.BCSModels.CoordinateV5.RequestAccountData requestAD = (TM.SP.BCSModels.CoordinateV5.RequestAccountData)ect.Execute(mi, lobi, ref arguments);
-            TestLabel.Text = "request message id=" + requestAD.Title;
-            
             this.BtnOk.Click += new EventHandler(this.BtnOk_Click);
             this.BtnCancel.Click += new EventHandler(this.BtnCancel_Click);
         }
@@ -104,6 +101,7 @@ namespace TM.SP.AppPages
         /// <param name="e">Arguments of the event</param>
         private void BtnCancel_Click(object sender, EventArgs e)
         {
+            //TODO: endoperation(-1) ?
             this.EndOperation(0);
         }
 
@@ -114,6 +112,7 @@ namespace TM.SP.AppPages
         /// <param name="e">Arguments of the event</param>
         private void BtnOk_Click(object sender, EventArgs e)
         {
+            //TODO: make a requests for EGRUL
             this.EndOperation();
         }
     }

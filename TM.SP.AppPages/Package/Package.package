@@ -2,6 +2,7 @@
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="43856a1e-4111-4020-9291-af06a6006c3c" solutionId="43856a1e-4111-4020-9291-af06a6006c3c" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.AppPages" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
   <assemblies>
     <projectOutputAssembly location="TM.SP.BCSModels.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj" />
+    <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
   </assemblies>
   <projectItems>
     <projectItemReference itemId="14185da8-fbda-40a5-8617-6ddc41f38626" />

@@ -9622,7 +9622,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-        <Entity Name="RequestAccountData" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.37" DefaultDisplayName="Request Account Data" EstimatedInstanceCount="10000">
+        <Entity Name="RequestAccountData" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.41" DefaultDisplayName="Request Account Data" EstimatedInstanceCount="10000">
           <Properties>
             <Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestAccountDataService, CoordinateV5</Property>
           </Properties>
@@ -9635,11 +9635,51 @@
               <Parameters>
                 <Parameter Name="RequestIdList" Direction="In">
                   <TypeDescriptor Name="RequestIdListTypeDescriptor" TypeName="System.String" IsCollection="false" DefaultDisplayName="Request Id List" IdentifierEntityName="RequestAccountData" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" IdentifierName="IdList" /></Parameter>
-                <Parameter Name="returnParameter" Direction="Out">
-                  <TypeDescriptor Name="returnParameterTypeDescriptor" TypeName="TM.SP.BCSModels.CoordinateV5.RequestAccountData, CoordinateV5" IsCollection="false" /></Parameter>
+                <Parameter Name="returnParameter" Direction="Return">
+                  <TypeDescriptor Name="RequestAccountDataList" TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.CoordinateV5.RequestAccountData, CoordinateV5]]" IsCollection="true">
+                    <TypeDescriptors>
+                      <TypeDescriptor Name="RequestAccountData" TypeName="TM.SP.BCSModels.CoordinateV5.RequestAccountData, TM.SP.BCSModels">
+                        <TypeDescriptors>
+                          <TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="RequestAccountData" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ReadOnly="true">
+                            <Properties>
+                              <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                            </Properties>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">36</Property>
+                              <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="DeclarantAccountFullName" DefaultDisplayName="DeclarantAccountFullName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="DeclarantAccountId" DefaultDisplayName="DeclarantAccountId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                        </TypeDescriptors>
+                      </TypeDescriptor>
+                    </TypeDescriptors>
+                  </TypeDescriptor>
+                </Parameter>
               </Parameters>
               <MethodInstances>
-                <MethodInstance Name="GetItemsByIdListInstance" Type="SpecificFinder" ReturnParameterName="returnParameter" DefaultDisplayName="GetItemsByIdListInstance" Default="true" />
+                <MethodInstance Name="GetItemsByIdListInstance" Type="Finder" ReturnParameterName="returnParameter" DefaultDisplayName="GetItemsByIdListInstance" Default="true" />
               </MethodInstances></Method>
           </Methods></Entity>
 			</Entities>

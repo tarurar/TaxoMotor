@@ -19,8 +19,9 @@ namespace TM.SP.BCSModels.CoordinateV5
         //TODO: Implement additional properties here.
         public System.Int32 Id { get; set; }
         public System.String Title { get; set; }
-        public System.String DeclarantAccountId { get; set; }
+        public System.Nullable<System.Int32> DeclarantAccountId { get; set; }
         public System.String DeclarantAccountFullName { get; set; }
+        public System.String Ogrn { get; set; }
     }
 
     /// <summary>
