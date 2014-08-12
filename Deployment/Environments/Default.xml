@@ -46,6 +46,9 @@
       <Solution Name="TM.SP.CustomActions.wsp" Force="true" Overwrite="true">
         <SiteCollection Url="$(WebAppUrl)" />
       </Solution>
+      <Solution Name="TM.SP.Customizations.wsp" Force="true" Overwrite="true">
+        <WebApplication Url="$(WebAppUrl)" />
+      </Solution>
     </Solutions>
   </Environment>
 </SPSD>
