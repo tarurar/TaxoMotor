@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TM.SP.Customizations</RootNamespace>
+    <AssemblyName>TM.SP.Customizations</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>15.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+    <AssemblyDeploymentTarget>GlobalAssemblyCache</AssemblyDeploymentTarget>
+    <ProjectGuid>{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Security" />
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_TaxoMotorCustomizations.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\TaxoMotorWebAppLevelCustomizations.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_TaxoMotorWebAppLevelCustomizations.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DelegateControls\jQueryControl\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{e43ba965-efe1-48ea-90fc-16a6caa24ca7}</SharePointProjectItemId>
+    </None>
+    <None Include="DelegateControls\MasterPageCSSTuneControl\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{d01ef362-3fff-4564-aaf6-9a38e7089472}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.feature">
+      <FeatureId>{d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\TaxoMotor_TaxoMotorWebAppLevelCustomizations.feature">
+      <FeatureId>{104d62e3-828a-4c05-b8dc-25e4fceceb72}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{6dc7c3b5-1577-4f4e-ab27-e62f23bf04e5}</SharePointProjectItemId>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Package\Package.package">
+      <PackageId>{1299C90B-9054-40DE-82EE-12688D6D11B9}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+    <None Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.min.map" />
+    <None Include="Template\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{3341b68c-c9a7-4585-9e95-fa91c96d0e5e}</SharePointProjectItemId>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\TaxoMotor_TaxoMotorCustomizations\Resources.resx" />
+    <Content Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\TaxoMotor_TaxoMotorWebAppLevelCustomizations.Template.xml">
+      <DependentUpon>TaxoMotor_TaxoMotorWebAppLevelCustomizations.feature</DependentUpon>
+    </Content>
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorWebAppLevelCustomizations.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DelegateControls\jQueryControl\Elements.xml" />
+    <Content Include="DelegateControls\jQueryControl\jQueryControl.ascx" />
+    <Content Include="DelegateControls\MasterPageCSSTuneControl\Elements.xml" />
+    <Content Include="DelegateControls\MasterPageCSSTuneControl\MasterPageCSSTuneControl.ascx" />
+    <Content Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.Template.xml">
+      <DependentUpon>TaxoMotor_TaxoMotorCustomizations.feature</DependentUpon>
+    </Content>
+    <Content Include="Layouts\TM.SP.Customizations\Images\taxi_2013_logo.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\masterpage-tune.css" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorCustomizations.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\Resources.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Condition="!Exists('$(MSBuildProjectDirectory)\..\SPSF.targets')" Project="$(SolutionDir)\SPSF.targets" />
+  <Import Condition=" Exists('$(MSBuildProjectDirectory)\..\SPSF.targets')" Project="$(MSBuildProjectDirectory)\..\SPSF.targets" />
+  <Target Name="BeforeBuild" DependsOnTargets="$(BeforeBuildDependsOn)" />
+  <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)" />
+</Project>

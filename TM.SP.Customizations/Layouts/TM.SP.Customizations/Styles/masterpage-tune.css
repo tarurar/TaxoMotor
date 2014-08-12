@@ -1,0 +1,25 @@
+﻿#sideNavBox {
+    display: none;
+}
+
+#contentBox {
+    margin-left: 20px;
+    border-top: 1px solid;
+    border-color: #993300;
+}
+
+#suiteBarLeft {
+    background-color: #993300;
+}
+
+#suiteBarRight {
+    background-color: #e5e5e5;
+}
+
+.ms-core-suiteLink-a:hover {
+    background-color: #009899;
+}
+
+#globalNavBox, .ms-clientcontrol-chromeheader {
+    background-color: #e5e5e5;
+}
