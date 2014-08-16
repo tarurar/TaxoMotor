@@ -141,36 +141,36 @@ namespace TM.SP.ListModels
                 ctx.Load(web, w => w.Id);
                 ctx.ExecuteQuery();
 
-                List IncomeRequestStateBookList = allLists.Single(l => l.RootFolder.Name == "IncomeRequestStateBookList");
-                if (IncomeRequestStateBookList == null)
+                List incomeRequestStateBookList = allLists.Single(l => l.RootFolder.Name == "IncomeRequestStateBookList");
+                if (incomeRequestStateBookList == null)
                     throw new Exception("List IncomeRequestStateBookList not found");
-                List IncomeRequestStateInternalBookList = allLists.Single(l => l.RootFolder.Name == "IncomeRequestStateInternalBookList");
-                if (IncomeRequestStateInternalBookList == null)
+                List incomeRequestStateInternalBookList = allLists.Single(l => l.RootFolder.Name == "IncomeRequestStateInternalBookList");
+                if (incomeRequestStateInternalBookList == null)
                     throw new Exception("List IncomeRequestStateInternalBookList not found");
-                List DenyReasonBookList = allLists.Single(l => l.RootFolder.Name == "DenyReasonBookList");
-                if (DenyReasonBookList == null)
+                List denyReasonBookList = allLists.Single(l => l.RootFolder.Name == "DenyReasonBookList");
+                if (denyReasonBookList == null)
                     throw new Exception("List DenyReasonBookList not found");
-                List GovServiceSubTypeBookList = allLists.Single(l => l.RootFolder.Name == "GovServiceSubTypeBookList");
-                if (GovServiceSubTypeBookList == null)
+                List govServiceSubTypeBookList = allLists.Single(l => l.RootFolder.Name == "GovServiceSubTypeBookList");
+                if (govServiceSubTypeBookList == null)
                     throw new Exception("List GovServiceSubTypeBookList not found");
 
                 var rootModelLookups = SPMeta2Model.NewSiteModel(new SiteDefinition() {RequireSelfProcessing = false})
                     .WithFields(fields => fields
                         .AddField(FieldModels.TmIncomeRequestStateLookup, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(ctx.Web.Id, IncomeRequestStateBookList.Id,
+                                spField.MakeLookupConnectionToList(web.Id, incomeRequestStateBookList.Id,
                                     "LinkTitle")))
                         .AddField(FieldModels.TmIncomeRequestStateInternalLookup, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(ctx.Web.Id, IncomeRequestStateInternalBookList.Id,
+                                spField.MakeLookupConnectionToList(web.Id, incomeRequestStateInternalBookList.Id,
                                     "LinkTitle")))
                         .AddField(FieldModels.TmDenyReasonLookup, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(ctx.Web.Id, DenyReasonBookList.Id,
+                                spField.MakeLookupConnectionToList(web.Id, denyReasonBookList.Id,
                                     "LinkTitle")))
                         .AddField(FieldModels.TmRequestedDocument, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(ctx.Web.Id, GovServiceSubTypeBookList.Id,
+                                spField.MakeLookupConnectionToList(web.Id, govServiceSubTypeBookList.Id,
                                     "LinkTitle")))
                     )
                     .WithContentTypes(ctList => ctList
@@ -233,6 +233,7 @@ namespace TM.SP.ListModels
         }
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             Options options = new Options();
             CommandLine.Parser.Default.ParseArguments(args, options);
 
