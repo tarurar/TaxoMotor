@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using SPMeta2.Definitions;
 using SPMeta2.Enumerations;
 
@@ -189,6 +190,48 @@ namespace TM.SP.ListModels
             FieldType = BuiltInFieldTypes.Guid,
             Group = DefaultGroup
         };
+
+        public static XElement TmRequestAccountBcsLookupXml = new XElement("Field",
+            new XAttribute("Type", "BusinessData"),
+            new XAttribute("Name", "Tm_RequestAccountBCSLookup"),
+            new XAttribute("StaticName", "Tm_RequestAccountBCSLookup"),
+            new XAttribute("DisplayName", "Заявитель ЮЛ"),
+            new XAttribute("Required", "FALSE"),
+            new XAttribute("ID", "{5C8E8BBB-6670-4ABF-84C1-F5C529BDDB75}"),
+            new XAttribute("SystemInstance", Consts.BcsCoordinateV5SystemName),
+            new XAttribute("EntityNamespace", Consts.BcsCoordinateV5EntityNamespace),
+            new XAttribute("EntityName", Consts.BcsRequestAccountEntityName),
+            new XAttribute("BdcField", "Title"),
+            new XAttribute("Version", "1")
+        );
+
+        public static XElement TmRequestContactBcsLookupXml = new XElement("Field",
+            new XAttribute("Type", "BusinessData"),
+            new XAttribute("Name", "Tm_RequestContactBCSLookup"),
+            new XAttribute("StaticName", "Tm_RequestContactBCSLookup"),
+            new XAttribute("DisplayName", "Заявитель ФЛ"),
+            new XAttribute("Required", "FALSE"),
+            new XAttribute("ID", "{83BFA335-F62A-4CD0-BC3C-A314C871CD86}"),
+            new XAttribute("SystemInstance", Consts.BcsCoordinateV5SystemName),
+            new XAttribute("EntityNamespace", Consts.BcsCoordinateV5EntityNamespace),
+            new XAttribute("EntityName", Consts.BcsRequestContactEntityName),
+            new XAttribute("BdcField", "Title"),
+            new XAttribute("Version", "1")
+        );
+
+        public static XElement TmRequestTrusteeBcsLookupXml = new XElement("Field",
+            new XAttribute("Type", "BusinessData"),
+            new XAttribute("Name", "Tm_RequestTrusteeBcsLookupXml"),
+            new XAttribute("StaticName", "Tm_RequestTrusteeBcsLookupXml"),
+            new XAttribute("DisplayName", "Доверенное лицо"),
+            new XAttribute("Required", "FALSE"),
+            new XAttribute("ID", "{15AFC5D5-B6C3-468D-9452-02044362BC72}"),
+            new XAttribute("SystemInstance", Consts.BcsCoordinateV5SystemName),
+            new XAttribute("EntityNamespace", Consts.BcsCoordinateV5EntityNamespace),
+            new XAttribute("EntityName", Consts.BcsRequestContactEntityName),
+            new XAttribute("BdcField", "Title"),
+            new XAttribute("Version", "1")
+        );
 
 
         #endregion

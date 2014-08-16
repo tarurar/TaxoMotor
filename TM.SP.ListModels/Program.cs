@@ -229,6 +229,19 @@ namespace TM.SP.ListModels
 
                 #endregion
 
+                // adding bcs fields to list TmIncomeRequestList
+                IEnumerable<List> selectList = ctx.LoadQuery(ctx.Web.Lists.Where(l => l.RootFolder.Name == "IncomeRequestList"));
+                ctx.ExecuteQuery();
+                List incomeRequestList = selectList.First();
+                if (incomeRequestList == null)
+                    throw new Exception("List IncomeRequestList not found");
+                Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestAccountBcsLookupXml,
+                    AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToDefaultContentType);
+                Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestContactBcsLookupXml,
+                    AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToDefaultContentType);
+                Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestTrusteeBcsLookupXml,
+                    AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToDefaultContentType);
+                
             }
         }
         static void Main(string[] args)
