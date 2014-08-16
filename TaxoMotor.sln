@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.Services", "TM.Services\TM.Services.csproj", "{56AE0CAD-EE3D-4CC5-A69B-EF56391D1BC7}"
 EndProject
@@ -43,6 +43,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.AppPages", "TM.SP.AppPages\TM.SP.AppPages.csproj", "{B2A464EC-6524-415E-A218-457D4AA37D83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.Customizations", "TM.SP.Customizations\TM.SP.Customizations.csproj", "{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5BC266A2-66C4-4645-8E16-D251B68B02D0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.ListModels", "TM.SP.ListModels\TM.SP.ListModels.csproj", "{8773D57B-8F08-418D-A262-9904AACB20D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +111,10 @@ Global
 		{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{8773D57B-8F08-418D-A262-9904AACB20D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8773D57B-8F08-418D-A262-9904AACB20D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8773D57B-8F08-418D-A262-9904AACB20D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8773D57B-8F08-418D-A262-9904AACB20D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
