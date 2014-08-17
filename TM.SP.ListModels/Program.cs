@@ -39,7 +39,7 @@ namespace TM.SP.ListModels
         private static readonly Logger Logger = LogManager.GetLogger("ExceptionLogger");
         private static readonly Logger cLogger = LogManager.GetLogger("ConsoleLogger");
 
-        static bool checkArguments(Options options)
+        internal static bool CheckArguments(Options options)
         {
             bool retVal = true;
 
@@ -133,44 +133,34 @@ namespace TM.SP.ListModels
 
                 #endregion
 
-                // get common values
-                // web ID
-                Web web = ctx.Web;
-                // list ids and rootfolder names
-                IEnumerable<List> allLists = ctx.LoadQuery(ctx.Web.Lists.Include(l => l.Id, l => l.RootFolder.Name));
-                ctx.Load(web, w => w.Id);
-                ctx.ExecuteQuery();
+                #region dependent model elements deployment
 
-                List incomeRequestStateBookList = allLists.Single(l => l.RootFolder.Name == "IncomeRequestStateBookList");
-                if (incomeRequestStateBookList == null)
-                    throw new Exception("List IncomeRequestStateBookList not found");
-                List incomeRequestStateInternalBookList = allLists.Single(l => l.RootFolder.Name == "IncomeRequestStateInternalBookList");
-                if (incomeRequestStateInternalBookList == null)
-                    throw new Exception("List IncomeRequestStateInternalBookList not found");
-                List denyReasonBookList = allLists.Single(l => l.RootFolder.Name == "DenyReasonBookList");
-                if (denyReasonBookList == null)
-                    throw new Exception("List DenyReasonBookList not found");
-                List govServiceSubTypeBookList = allLists.Single(l => l.RootFolder.Name == "GovServiceSubTypeBookList");
-                if (govServiceSubTypeBookList == null)
-                    throw new Exception("List GovServiceSubTypeBookList not found");
+                Guid webId = Utils.GetWebId(ctx);
+                IEnumerable<List> allLists = Utils.GetWebLists(ctx);
+
+                List incomeRequestStateBookList = Utils.GetList(allLists, ListModels.TmIncomeRequestStateBookList.Url);
+                List incomeRequestStateInternalBookList = Utils.GetList(allLists,
+                    ListModels.TmIncomeRequestStateInternalBookList.Url);
+                List denyReasonBookList = Utils.GetList(allLists, ListModels.TmDenyReasonBookList.Url);
+                List govServiceSubTypeBookList = Utils.GetList(allLists, ListModels.TmGovServiceSubTypeBookList.Url);
 
                 var rootModelLookups = SPMeta2Model.NewSiteModel(new SiteDefinition() {RequireSelfProcessing = false})
                     .WithFields(fields => fields
                         .AddField(FieldModels.TmIncomeRequestStateLookup, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(web.Id, incomeRequestStateBookList.Id,
+                                spField.MakeLookupConnectionToList(webId, incomeRequestStateBookList.Id,
                                     "LinkTitle")))
                         .AddField(FieldModels.TmIncomeRequestStateInternalLookup, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(web.Id, incomeRequestStateInternalBookList.Id,
+                                spField.MakeLookupConnectionToList(webId, incomeRequestStateInternalBookList.Id,
                                     "LinkTitle")))
                         .AddField(FieldModels.TmDenyReasonLookup, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(web.Id, denyReasonBookList.Id,
+                                spField.MakeLookupConnectionToList(webId, denyReasonBookList.Id,
                                     "LinkTitle")))
                         .AddField(FieldModels.TmRequestedDocument, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
-                                spField.MakeLookupConnectionToList(web.Id, govServiceSubTypeBookList.Id,
+                                spField.MakeLookupConnectionToList(webId, govServiceSubTypeBookList.Id,
                                     "LinkTitle")))
                     )
                     .WithContentTypes(ctList => ctList
@@ -196,52 +186,46 @@ namespace TM.SP.ListModels
 
                 var webModelLookupLists = SPMeta2Model.NewWebModel(new WebDefinition() {RequireSelfProcessing = false})
                     .WithLists(lists => lists
-                        .AddList(ListModels.TmIncomeRequestList, l => l
-                            .AddContentTypeLink(ContentTypeModels.TmIncomeRequest)));
+                        .AddList(ListModels.TmIncomeRequestList, l =>
+                            l.AddContentTypeLink(ContentTypeModels.TmIncomeRequest)));
 
                 pService.DeployModel(SiteModelHost.FromClientContext(ctx), rootModelLookups);
                 pService.DeployModel(WebModelHost.FromClientContext(ctx), webModelLookupLists);
 
-                #region make content type default
+                #region make content types default
 
-                /*var query = ctx.Web.Lists.Where(
-                    l => l.RootFolder.Name == "IncomeRequestStateBookList")
-                    .Include(c => c.ContentTypes, c => c.RootFolder, c => c.RootFolder.ContentTypeOrder);
-
-                IEnumerable<List> objectLists = ctx.LoadQuery(query);
-                ctx.ExecuteQuery();
-
-                List incomeRequestStateList = objectLists.First();
-                List<ContentTypeId> allContentTypes = new List<ContentTypeId>();
-                foreach (ContentType ct in incomeRequestStateList.ContentTypes)
-                {
-                    if (ct.Name.Equals(ContentTypeModels.TmIncomeRequestState.Name,
-                        StringComparison.OrdinalIgnoreCase))
-                    {
-                        allContentTypes.Add(ct.Id);
-                    }
-                }
-
-                incomeRequestStateList.RootFolder.UniqueContentTypeOrder = allContentTypes;
-                incomeRequestStateList.RootFolder.Update();
-                incomeRequestStateList.Update();
-                ctx.ExecuteQuery();*/
-
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestStateBookList.Url,
+                    ContentTypeModels.TmIncomeRequestState.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestStateInternalBookList.Url,
+                    ContentTypeModels.TmIncomeRequestStateInternal.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmDenyReasonBookList.Url,
+                    ContentTypeModels.TmDenyReason.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmGovServiceSubTypeBookList.Url,
+                    ContentTypeModels.TmGovServiceSubType.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestList.Url,
+                    ContentTypeModels.TmIncomeRequest.Name);
+                
                 #endregion
 
-                // adding bcs fields to list TmIncomeRequestList
-                IEnumerable<List> selectList = ctx.LoadQuery(ctx.Web.Lists.Where(l => l.RootFolder.Name == "IncomeRequestList"));
-                ctx.ExecuteQuery();
-                List incomeRequestList = selectList.First();
-                if (incomeRequestList == null)
-                    throw new Exception("List IncomeRequestList not found");
+                #region add bcs fields to list TmIncomeRequestList without spmeta2
+                // check bdc features activated
+                if (!Utils.CheckFeatureActvation(ctx, new Guid(Consts.BcsCoordinateV5ListsFeatureId)))
+                    throw new Exception(String.Format("Feature with id = {0} must be activated",
+                        Consts.BcsCoordinateV5ListsFeatureId));
+                // refresh allLists collection after models deployment
+                allLists = Utils.GetWebLists(ctx);
+                List incomeRequestList = Utils.GetList(allLists, ListModels.TmIncomeRequestList.Url);
+
                 Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestAccountBcsLookupXml,
                     AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToDefaultContentType);
                 Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestContactBcsLookupXml,
                     AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToDefaultContentType);
                 Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestTrusteeBcsLookupXml,
                     AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToDefaultContentType);
-                
+
+                #endregion
+
+                #endregion
             }
         }
         static void Main(string[] args)
@@ -250,7 +234,7 @@ namespace TM.SP.ListModels
             Options options = new Options();
             CommandLine.Parser.Default.ParseArguments(args, options);
 
-            if (!checkArguments(options))
+            if (!CheckArguments(options))
             {
                 cLogger.Error("Есть ошибки в параметрах командной строки");
                 Console.ReadKey();

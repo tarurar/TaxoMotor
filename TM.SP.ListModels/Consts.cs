@@ -14,5 +14,7 @@ namespace TM.SP.ListModels
         public static readonly string BcsRequestAccountEntityName = "RequestAccount";
         public static readonly string BcsRequestContactEntityName = "RequestContact";
 
+        public static readonly string BcsCoordinateV5ListsFeatureId = "{88749623-db7e-4ffc-b1e4-b6c4cf9332b6}";
+
     }
 }

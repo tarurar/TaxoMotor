@@ -221,8 +221,8 @@ namespace TM.SP.ListModels
 
         public static XElement TmRequestTrusteeBcsLookupXml = new XElement("Field",
             new XAttribute("Type", "BusinessData"),
-            new XAttribute("Name", "Tm_RequestTrusteeBcsLookupXml"),
-            new XAttribute("StaticName", "Tm_RequestTrusteeBcsLookupXml"),
+            new XAttribute("Name", "Tm_RequestTrusteeBcsLookup"),
+            new XAttribute("StaticName", "Tm_RequestTrusteeBcsLookup"),
             new XAttribute("DisplayName", "Доверенное лицо"),
             new XAttribute("Required", "FALSE"),
             new XAttribute("ID", "{15AFC5D5-B6C3-468D-9452-02044362BC72}"),
