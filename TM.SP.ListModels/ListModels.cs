@@ -55,5 +55,41 @@ namespace TM.SP.ListModels
             Description = "Обращения",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmOutcomeRequestTypeBookList = new ListDefinition()
+        {
+            Title = "Тип межвед. запроса (справочник)",
+            Url = "OutcomeRequestTypeBookList",
+            TemplateType = (int)ListTemplateType.GenericList,
+            Description = "Справочник типов межведомственных запросов",
+            ContentTypesEnabled = true
+        };
+
+        public static ListDefinition TmOutcomeRequestStateList = new ListDefinition()
+        {
+            Title = "Состояние межвед. запросов",
+            Url = "OutcomeRequestStateList",
+            TemplateType = (int)ListTemplateType.GenericList,
+            Description = "Список содержит статусы межведомственных запросов по обращениям",
+            ContentTypesEnabled = true
+        };
+
+        public static ListDefinition TmTaxiList = new ListDefinition()
+        {
+            Title = "Транспортные средства",
+            Url = "TaxiList",
+            TemplateType = (int)ListTemplateType.GenericList,
+            Description = "Транспортные средства",
+            ContentTypesEnabled = true
+        };
+
+        public static ListDefinition TmIncomeRequestAttachList = new ListDefinition()
+        {
+            Title = "Документы обращения",
+            Url = "IncomeRequestAttachList",
+            TemplateType = (int)ListTemplateType.GenericList,
+            Description = "Документы обращения",
+            ContentTypesEnabled = true
+        };
     }
 }

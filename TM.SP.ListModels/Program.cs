@@ -96,6 +96,33 @@ namespace TM.SP.ListModels
                         .AddField(FieldModels.TmPrepareFactDate)
                         .AddField(FieldModels.TmPrepareTargetDate)
                         .AddField(FieldModels.TmRefuseDate)
+                        .AddField(FieldModels.TmOutputDate)
+                        .AddField(FieldModels.TmErrorDescription)
+                        .AddField(FieldModels.TmTaxiBrand)
+                        .AddField(FieldModels.TmTaxiModel)
+                        .AddField(FieldModels.TmTaxiYear)
+                        .AddField(FieldModels.TmTaxiLastToDate)
+                        .AddField(FieldModels.TmTaxiStateNumber)
+                        .AddField(FieldModels.TmTaxiLeasingContractDetails)
+                        .AddField(FieldModels.TmTaxiBodyYellow)
+                        .AddField(FieldModels.TmTaxiBodyColor)
+                        .AddField(FieldModels.TmTaxiBodyColor2)
+                        .AddField(FieldModels.TmTaxiStateNumberYellow)
+                        .AddField(FieldModels.TmTaxiTaxometer)
+                        .AddField(FieldModels.TmTaxiGps)
+                        .AddField(FieldModels.TmTaxiPrevStateNumber)
+                        .AddField(FieldModels.TmTaxiDecision)
+                        .AddField(FieldModels.TmTaxiChecked)
+                        .AddField(FieldModels.TmTaxiBlankNo)
+                        .AddField(FieldModels.TmTaxiLicenseNumber)
+                        .AddField(FieldModels.TmTaxiInfoOld)
+                        .AddField(FieldModels.TmTaxiPrevLicenseNumber)
+                        .AddField(FieldModels.TmTaxiPrevLicenseDate)
+                        .AddField(FieldModels.TmAttachType)
+                        .AddField(FieldModels.TmAttachDocNumber)
+                        .AddField(FieldModels.TmAttachDocDate)
+                        .AddField(FieldModels.TmAttachDocSerie)
+                        .AddField(FieldModels.TmAttachWhoSigned)
                         .AddField(FieldModels.TmMessageId, f => f.OnCreated(
                             (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                         .AddField(FieldModels.TmIncomeRequestForm,
@@ -113,6 +140,8 @@ namespace TM.SP.ListModels
                                 .AddContentTypeFieldLink(FieldModels.TmUsageScopeInteger))
                             .AddContentType(ContentTypeModels.TmGovServiceSubType,
                                 ct => ct.AddContentTypeFieldLink(FieldModels.TmServiceCode))
+                            .AddContentType(ContentTypeModels.TmOutcomeRequestType,
+                                ct => ct.AddContentTypeFieldLink(FieldModels.TmServiceCode))
                     );
 
                 var webModel = SPMeta2Model.NewWebModel(new WebDefinition() { RequireSelfProcessing = false })
@@ -126,6 +155,8 @@ namespace TM.SP.ListModels
                                 l => l.AddContentTypeLink(ContentTypeModels.TmDenyReason))
                             .AddList(ListModels.TmGovServiceSubTypeBookList,
                                 l => l.AddContentTypeLink(ContentTypeModels.TmGovServiceSubType))
+                            .AddList(ListModels.TmOutcomeRequestTypeBookList,
+                                l => l.AddContentTypeLink(ContentTypeModels.TmOutcomeRequestType))
                     );
 
                 pService.DeployModel(SiteModelHost.FromClientContext(ctx), rootModel);
@@ -143,6 +174,7 @@ namespace TM.SP.ListModels
                     ListModels.TmIncomeRequestStateInternalBookList.Url);
                 List denyReasonBookList = Utils.GetList(allLists, ListModels.TmDenyReasonBookList.Url);
                 List govServiceSubTypeBookList = Utils.GetList(allLists, ListModels.TmGovServiceSubTypeBookList.Url);
+                List outcomeRequestTypeBookList = Utils.GetList(allLists, ListModels.TmOutcomeRequestTypeBookList.Url);
 
                 var rootModelLookups = SPMeta2Model.NewSiteModel(new SiteDefinition() {RequireSelfProcessing = false})
                     .WithFields(fields => fields
@@ -161,6 +193,10 @@ namespace TM.SP.ListModels
                         .AddField(FieldModels.TmRequestedDocument, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
                                 spField.MakeLookupConnectionToList(webId, govServiceSubTypeBookList.Id,
+                                    "LinkTitle")))
+                        .AddField(FieldModels.TmOutputRequestTypeLookup, field => field.OnCreated(
+                            (FieldDefinition fieldDef, Field spField) =>
+                                spField.MakeLookupConnectionToList(webId, outcomeRequestTypeBookList.Id,
                                     "LinkTitle")))
                     )
                     .WithContentTypes(ctList => ctList
@@ -192,6 +228,79 @@ namespace TM.SP.ListModels
                 pService.DeployModel(SiteModelHost.FromClientContext(ctx), rootModelLookups);
                 pService.DeployModel(WebModelHost.FromClientContext(ctx), webModelLookupLists);
 
+                #endregion
+
+                #region dependent from TmIncomeRequest model elements deployment
+                // refresh allLists collection after models deployment
+                allLists = Utils.GetWebLists(ctx);
+                List incomeRequestList = Utils.GetList(allLists, ListModels.TmIncomeRequestList.Url);
+
+                var rootModelNestedLookups = SPMeta2Model.NewSiteModel(new SiteDefinition() {RequireSelfProcessing = false})
+                    .WithFields(fields => fields
+                        .AddField(FieldModels.TmIncomeRequestLookup, field => field.OnCreated(
+                            (FieldDefinition fieldDef, Field spField) =>
+                                spField.MakeLookupConnectionToList(webId, incomeRequestList.Id, "LinkTitle")))
+                     )
+                     .WithContentTypes(ctList => ctList
+                        .AddContentType(ContentTypeModels.TmOutcomeRequestState, ct => ct
+                            .AddContentTypeFieldLink(FieldModels.TmOutputRequestTypeLookup)
+                            .AddContentTypeFieldLink(FieldModels.TmOutputDate)
+                            .AddContentTypeFieldLink(FieldModels.TmErrorDescription)
+                            .AddContentTypeFieldLink(FieldModels.TmMessageId)
+                            .AddContentTypeFieldLink(FieldModels.TmIncomeRequestLookup)
+                         )
+                         .AddContentType(ContentTypeModels.TmTaxi, ct => ct
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiBrand)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiModel)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiYear)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiLastToDate)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiStateNumber)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiLeasingContractDetails)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiBodyYellow)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiBodyColor)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiBodyColor2)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiStateNumberYellow)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiTaxometer)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiGps)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiPrevStateNumber)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiDecision)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiChecked)
+                            .AddContentTypeFieldLink(FieldModels.TmDenyReasonLookup)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiBlankNo)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiLicenseNumber)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiInfoOld)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiPrevLicenseNumber)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiPrevLicenseDate)
+                            .AddContentTypeFieldLink(FieldModels.TmMessageId)
+                            .AddContentTypeFieldLink(FieldModels.TmIncomeRequestLookup)
+                         )
+                         .AddContentType(ContentTypeModels.TmAttach, ct => ct
+                            .AddContentTypeFieldLink(FieldModels.TmAttachType)
+                            .AddContentTypeFieldLink(FieldModels.TmAttachDocNumber)
+                            .AddContentTypeFieldLink(FieldModels.TmAttachDocDate)
+                            .AddContentTypeFieldLink(FieldModels.TmAttachDocSerie)
+                            .AddContentTypeFieldLink(FieldModels.TmAttachWhoSigned)
+                            .AddContentTypeFieldLink(FieldModels.TmMessageId)
+                            .AddContentTypeFieldLink(FieldModels.TmIncomeRequestLookup)
+                         )
+                     );
+
+                var webModelNestedLookupLists = SPMeta2Model.NewWebModel(new WebDefinition() { RequireSelfProcessing = false })
+                    .WithLists(lists => lists
+                        .AddList(ListModels.TmOutcomeRequestStateList, l =>
+                            l.AddContentTypeLink(ContentTypeModels.TmOutcomeRequestState))
+                        .AddList(ListModels.TmTaxiList, l =>
+                            l.AddContentTypeLink(ContentTypeModels.TmTaxi))
+                        .AddList(ListModels.TmIncomeRequestAttachList, l =>
+                            l.AddContentTypeLink(ContentTypeModels.TmAttach))
+                    );
+
+                pService.DeployModel(SiteModelHost.FromClientContext(ctx), rootModelNestedLookups);
+                pService.DeployModel(WebModelHost.FromClientContext(ctx), webModelNestedLookupLists);
+
+
+                #endregion
+
                 #region make content types default
 
                 Utils.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestStateBookList.Url,
@@ -202,9 +311,17 @@ namespace TM.SP.ListModels
                     ContentTypeModels.TmDenyReason.Name);
                 Utils.MakeContentTypeDefault(ctx, ListModels.TmGovServiceSubTypeBookList.Url,
                     ContentTypeModels.TmGovServiceSubType.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmOutcomeRequestTypeBookList.Url,
+                    ContentTypeModels.TmOutcomeRequestType.Name);
                 Utils.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestList.Url,
                     ContentTypeModels.TmIncomeRequest.Name);
-                
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmOutcomeRequestStateList.Url,
+                    ContentTypeModels.TmOutcomeRequestState.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmTaxiList.Url,
+                    ContentTypeModels.TmTaxi.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestAttachList.Url,
+                    ContentTypeModels.TmAttach.Name);
+
                 #endregion
 
                 #region add bcs fields to list TmIncomeRequestList without spmeta2
@@ -212,10 +329,7 @@ namespace TM.SP.ListModels
                 if (!Utils.CheckFeatureActvation(ctx, new Guid(Consts.BcsCoordinateV5ListsFeatureId)))
                     throw new Exception(String.Format("Feature with id = {0} must be activated",
                         Consts.BcsCoordinateV5ListsFeatureId));
-                // refresh allLists collection after models deployment
-                allLists = Utils.GetWebLists(ctx);
-                List incomeRequestList = Utils.GetList(allLists, ListModels.TmIncomeRequestList.Url);
-
+               
                 Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestAccountBcsLookupXml,
                     AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToDefaultContentType);
                 Utils.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestContactBcsLookupXml,
@@ -225,7 +339,6 @@ namespace TM.SP.ListModels
 
                 #endregion
 
-                #endregion
             }
         }
         static void Main(string[] args)

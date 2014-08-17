@@ -63,6 +63,42 @@ namespace TM.SP.ListModels
             Name = "Tm_IncomeRequest"
         };
 
+        public static ContentTypeDefinition TmOutcomeRequestType = new ContentTypeDefinition()
+        {
+            Id = new Guid("{11599BE2-7066-449F-9A2A-138FCADB35FF}"),
+            Description = "Тип межведомственного запроса",
+            Group = DefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name = "Tm_OutcomeRequestType"
+        };
+
+        public static ContentTypeDefinition TmOutcomeRequestState = new ContentTypeDefinition()
+        {
+            Id = new Guid("{0A9D8165-1B79-48E5-9F81-588F9AA06E39}"),
+            Description = "Состояние межведомственного запроса",
+            Group = DefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name = "Tm_OutcomeRequestState"
+        };
+
+        public static ContentTypeDefinition TmTaxi = new ContentTypeDefinition()
+        {
+            Id = new Guid("{1F986B2F-EF60-442A-94BE-02010E33CCFC}"),
+            Description = "Транспортное средство",
+            Group = DefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name = "Tm_Taxi"
+        };
+
+        public static ContentTypeDefinition TmAttach = new ContentTypeDefinition()
+        {
+            Id = new Guid("{2AC0EF4F-A67D-432A-AD10-8A350A38DD6E}"),
+            Description = "Документ вложение",
+            Group = DefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name = "Tm_Attach"
+        };
+
         #endregion
     }
 }
