@@ -38,6 +38,15 @@ namespace TM.SP.ListModels
             ContentTypesEnabled = true
         };
 
+        public static ListDefinition TmPossessionReasonBookList = new ListDefinition()
+        {
+            Title = "Основание владения (справочник)",
+            Url = "PossessionReasonBookList",
+            TemplateType = (int)ListTemplateType.GenericList,
+            Description = "Справочник оснований владения",
+            ContentTypesEnabled = true
+        };
+
         public static ListDefinition TmGovServiceSubTypeBookList = new ListDefinition()
         {
             Title = "Подтип госуслуги (справочник)",

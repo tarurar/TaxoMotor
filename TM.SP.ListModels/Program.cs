@@ -114,10 +114,10 @@ namespace TM.SP.ListModels
                         .AddField(FieldModels.TmTaxiDecision)
                         .AddField(FieldModels.TmTaxiChecked)
                         .AddField(FieldModels.TmTaxiBlankNo)
-                        .AddField(FieldModels.TmTaxiLicenseNumber)
                         .AddField(FieldModels.TmTaxiInfoOld)
                         .AddField(FieldModels.TmTaxiPrevLicenseNumber)
                         .AddField(FieldModels.TmTaxiPrevLicenseDate)
+                        .AddField(FieldModels.TmTaxiStsDetails)
                         .AddField(FieldModels.TmAttachType)
                         .AddField(FieldModels.TmAttachDocNumber)
                         .AddField(FieldModels.TmAttachDocDate)
@@ -142,6 +142,8 @@ namespace TM.SP.ListModels
                                 ct => ct.AddContentTypeFieldLink(FieldModels.TmServiceCode))
                             .AddContentType(ContentTypeModels.TmOutcomeRequestType,
                                 ct => ct.AddContentTypeFieldLink(FieldModels.TmServiceCode))
+                            .AddContentType(ContentTypeModels.TmPossessionReason,
+                                ct => ct.AddContentTypeFieldLink(FieldModels.TmServiceCode))
                     );
 
                 var webModel = SPMeta2Model.NewWebModel(new WebDefinition() { RequireSelfProcessing = false })
@@ -157,6 +159,8 @@ namespace TM.SP.ListModels
                                 l => l.AddContentTypeLink(ContentTypeModels.TmGovServiceSubType))
                             .AddList(ListModels.TmOutcomeRequestTypeBookList,
                                 l => l.AddContentTypeLink(ContentTypeModels.TmOutcomeRequestType))
+                            .AddList(ListModels.TmPossessionReasonBookList,
+                                l => l.AddContentTypeLink(ContentTypeModels.TmPossessionReason))
                     );
 
                 pService.DeployModel(SiteModelHost.FromClientContext(ctx), rootModel);
@@ -175,6 +179,7 @@ namespace TM.SP.ListModels
                 List denyReasonBookList = Utils.GetList(allLists, ListModels.TmDenyReasonBookList.Url);
                 List govServiceSubTypeBookList = Utils.GetList(allLists, ListModels.TmGovServiceSubTypeBookList.Url);
                 List outcomeRequestTypeBookList = Utils.GetList(allLists, ListModels.TmOutcomeRequestTypeBookList.Url);
+                List possessionReasonBookList = Utils.GetList(allLists, ListModels.TmPossessionReasonBookList.Url);
 
                 var rootModelLookups = SPMeta2Model.NewSiteModel(new SiteDefinition() {RequireSelfProcessing = false})
                     .WithFields(fields => fields
@@ -197,6 +202,10 @@ namespace TM.SP.ListModels
                         .AddField(FieldModels.TmOutputRequestTypeLookup, field => field.OnCreated(
                             (FieldDefinition fieldDef, Field spField) =>
                                 spField.MakeLookupConnectionToList(webId, outcomeRequestTypeBookList.Id,
+                                    "LinkTitle")))
+                        .AddField(FieldModels.TmPossessionReasonLookup, field => field.OnCreated(
+                            (FieldDefinition fieldDef, Field spField) =>
+                                spField.MakeLookupConnectionToList(webId, possessionReasonBookList.Id,
                                     "LinkTitle")))
                     )
                     .WithContentTypes(ctList => ctList
@@ -267,10 +276,11 @@ namespace TM.SP.ListModels
                             .AddContentTypeFieldLink(FieldModels.TmTaxiChecked)
                             .AddContentTypeFieldLink(FieldModels.TmDenyReasonLookup)
                             .AddContentTypeFieldLink(FieldModels.TmTaxiBlankNo)
-                            .AddContentTypeFieldLink(FieldModels.TmTaxiLicenseNumber)
                             .AddContentTypeFieldLink(FieldModels.TmTaxiInfoOld)
                             .AddContentTypeFieldLink(FieldModels.TmTaxiPrevLicenseNumber)
                             .AddContentTypeFieldLink(FieldModels.TmTaxiPrevLicenseDate)
+                            .AddContentTypeFieldLink(FieldModels.TmTaxiStsDetails)
+                            .AddContentTypeFieldLink(FieldModels.TmPossessionReasonLookup)
                             .AddContentTypeFieldLink(FieldModels.TmMessageId)
                             .AddContentTypeFieldLink(FieldModels.TmIncomeRequestLookup)
                          )
@@ -321,6 +331,8 @@ namespace TM.SP.ListModels
                     ContentTypeModels.TmTaxi.Name);
                 Utils.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestAttachList.Url,
                     ContentTypeModels.TmAttach.Name);
+                Utils.MakeContentTypeDefault(ctx, ListModels.TmPossessionReasonBookList.Url,
+                    ContentTypeModels.TmPossessionReason.Name);
 
                 #endregion
 

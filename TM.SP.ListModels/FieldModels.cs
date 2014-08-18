@@ -131,7 +131,7 @@ namespace TM.SP.ListModels
         {
             Id = new Guid("{915FBFA7-8BF4-4E15-8551-822272973B00}"),
             Title = "Стоимость документа",
-            Description = "Стоимость государственной услуши по выдаче соответствующего документа",
+            Description = "Стоимость государственной услуги по выдаче соответствующего документа",
             InternalName = "Tm_RequestedDocumentPrice",
             FieldType = BuiltInFieldTypes.Currency,
             Group = DefaultGroup
@@ -413,15 +413,6 @@ namespace TM.SP.ListModels
             Group = DefaultGroup
         };
 
-        public static FieldDefinition TmTaxiLicenseNumber = new FieldDefinition()
-        {
-            Id = new Guid("{2AFCEE5A-A911-434A-8171-76B3FF4C49C4}"),
-            Title = "Номер разрешения",
-            InternalName = "Tm_TaxiLicenseNumber",
-            FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
-        };
-
         public static FieldDefinition TmTaxiPrevLicenseNumber = new FieldDefinition()
         {
             Id = new Guid("{11C7D20E-3AC3-4274-8D75-E74D562CEB80}"),
@@ -446,6 +437,15 @@ namespace TM.SP.ListModels
             Title = "Сведения о ТС по старому разрешению",
             InternalName = "Tm_TaxiInfoOld",
             FieldType = BuiltInFieldTypes.Note,
+            Group = DefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiStsDetails = new FieldDefinition()
+        {
+            Id = new Guid("{B5A821CB-C4D3-4F2A-B429-957D3D4AA78E}"),
+            Title = "Реквизиты СТС",
+            InternalName = "Tm_TaxiStsDetails",
+            FieldType = BuiltInFieldTypes.Text,
             Group = DefaultGroup
         };
 
@@ -491,6 +491,15 @@ namespace TM.SP.ListModels
             Title = "Кто подписал",
             InternalName = "Tm_AttachWhoSigned",
             FieldType = BuiltInFieldTypes.Text,
+            Group = DefaultGroup
+        };
+
+        public static FieldDefinition TmPossessionReasonLookup = new FieldDefinition()
+        {
+            Id = new Guid("{BFA645C4-7FEC-417D-B67A-13C2B9DA6268}"),
+            Title = "Основание владения",
+            InternalName = "Tm_PossessionReasonLookup",
+            FieldType = BuiltInFieldTypes.Lookup,
             Group = DefaultGroup
         };
 

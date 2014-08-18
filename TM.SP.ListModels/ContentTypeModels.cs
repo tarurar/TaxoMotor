@@ -45,6 +45,15 @@ namespace TM.SP.ListModels
             Name = "Tm_DenyReason"
         };
 
+        public static ContentTypeDefinition TmPossessionReason = new ContentTypeDefinition()
+        {
+            Id = new Guid("{FCEEB6A9-6C9A-41C6-B413-3A8D6B363BAD}"),
+            Description = "Основание владения",
+            Group = DefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name = "Tm_PossessionReason"
+        };
+
         public static ContentTypeDefinition TmGovServiceSubType = new ContentTypeDefinition()
         {
             Id = new Guid("{F59F313E-2D74-4DF0-AE78-140DE2334B50}"),
