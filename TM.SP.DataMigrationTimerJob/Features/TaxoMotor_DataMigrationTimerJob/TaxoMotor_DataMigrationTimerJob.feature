@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feature dslVersion="1.0.0.0" Id="785B2032-A102-44B8-A747-08121F2A9D0B" featureId="785B2032-A102-44B8-A747-08121F2A9D0B" scope="Site" deploymentPath="$SharePoint.Feature.FileNameWithoutExtension$" title="TaxoMotor Data MigrationTimer Job" description="TaxoMotor Data MigrationTimer Job" imageUrl="TaxoMotor\FeatureIcon_DataMigrationTimerJob.gif" imageAltText="TaxoMotor Data MigrationTimer Job" version="AAEAAAD/////AQAAAAAAAAAEAQAAAA5TeXN0ZW0uVmVyc2lvbgQAAAAGX01ham9yBl9NaW5vcgZfQnVpbGQJX1JldmlzaW9uAAAAAAgICAgBAAAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==" solutionId="960c32de-a416-44cb-b75e-8183a5c03a69" ActivateOnDefault="True" receiverAssembly="TM.SP.DataMigrationTimerJob, Version=1.0.0.0, Culture=neutral, PublicKeyToken=045ba6379f16ba8b" receiverClass="TM.SP.DataMigrationTimerJob.DataMigrationTimerJobEventReceiver" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/FeatureModel">
+	<activationDependencies>
+		<!-- CoordinateV5 BCS Lists -->
+		<customFeatureActivationDependency featureId="88749623-db7e-4ffc-b1e4-b6c4cf9332b6" featureTitle="CoordinateV5 BCS Lists" featureDescription="CoordinateV5 BCS Lists" />
+	</activationDependencies>
+</feature>
