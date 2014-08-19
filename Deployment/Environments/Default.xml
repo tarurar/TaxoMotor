@@ -49,6 +49,9 @@
       <Solution Name="TM.SP.Customizations.wsp" Force="true" Overwrite="true">
         <WebApplication Url="$(WebAppUrl)" />
       </Solution>
+      <Solution Name="TM.SP.DataMigrationTimerJob.wsp" Force="true" Overwrite="true">
+        <WebApplication Url="$(WebAppUrl)" />
+      </Solution>
     </Solutions>
   </Environment>
 </SPSD>
