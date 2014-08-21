@@ -2,6 +2,7 @@
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="960c32de-a416-44cb-b75e-8183a5c03a69" solutionId="960c32de-a416-44cb-b75e-8183a5c03a69" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.DataMigrationTimerJob" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
   <assemblies>
     <projectOutputAssembly location="TM.SP.BCSModels.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj" />
+    <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
   </assemblies>
   <features>
     <featureReference itemId="75992db9-551a-4b0f-a39e-dff89ad60ff2" />

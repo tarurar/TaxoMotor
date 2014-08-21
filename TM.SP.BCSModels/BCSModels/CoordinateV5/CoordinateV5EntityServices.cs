@@ -772,7 +772,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     /// The samples below show the finder and specific finder method for Entity1.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
-    public class RequestEntityService : CoordinateV5Service
+    public partial class RequestEntityService : CoordinateV5Service
     {
         public Request ReadRequestItem(System.Int32 Id)
         {

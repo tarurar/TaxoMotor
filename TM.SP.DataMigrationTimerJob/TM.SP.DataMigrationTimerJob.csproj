@@ -17,6 +17,8 @@
     <SandboxedSolution>False</SandboxedSolution>
     <AssemblyDeploymentTarget>GlobalAssemblyCache</AssemblyDeploymentTarget>
     <ProjectGuid>{FA892F5B-E245-4C57-BFB6-C0247CF82491}</ProjectGuid>
+    <PostDeploymentCommand>net stop "SharePoint Timer Service"
+net start "SharePoint Timer Service"</PostDeploymentCommand>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +40,10 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.BusinessData, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -81,12 +87,19 @@
       <Project>{73514d73-abd3-440e-8a49-93026866c619}</Project>
       <Name>TM.SP.BCSModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
+      <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
+      <Name>TM.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\TaxoMotor_DataMigrationTimerJob\TaxoMotor_DataMigrationTimerJob.Template.xml">
       <DependentUpon>TaxoMotor_DataMigrationTimerJob.feature</DependentUpon>
     </Content>
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_DataMigrationTimerJob.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\TaxoMotor_DataMigrationTimerJob\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Threading.Tasks;
+using System.Reflection;
 using Microsoft.SharePoint;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.BusinessData.MetadataModel.Collections;
 using Microsoft.SharePoint.Administration;
 using Microsoft.SharePoint.BusinessData.SharedService;
 using Microsoft.SharePoint.BusinessData.MetadataModel;
+using Microsoft.SharePoint.BusinessData.Infrastructure;
 
 namespace TM.Utils
 {
@@ -57,6 +60,23 @@ namespace TM.Utils
             object retVal = externalCT.Execute(mi, lobi, ref _args);
             args = _args;
             return retVal;
+        }
+
+        public static void SetBCSFieldValue(SPListItem item, string bcsFieldInternalName, object bcsLookupObject, string lookupObjectIdentityName = "Id")
+        {
+            SPField field = item.Fields.GetFieldByInternalName(bcsFieldInternalName);
+            if (field == null)
+                throw new Exception("BCS field not found by internal name");
+
+            XmlDocument fieldSchema = new XmlDocument();
+            fieldSchema.LoadXml(field.SchemaXml);
+
+            string identityField = fieldSchema.FirstChild.Attributes["RelatedFieldWssStaticName"].Value;
+            string valueField = fieldSchema.FirstChild.Attributes["BdcField"].Value;
+            string identity = EntityInstanceIdEncoder.EncodeEntityInstanceId(new object[] { Reflection.GetPropertyValue<Object>(bcsLookupObject, lookupObjectIdentityName) });
+
+            item[identityField] = identity;
+            item[bcsFieldInternalName] = Reflection.GetPropertyValue<Object>(bcsLookupObject, valueField);
         }
     }
 }

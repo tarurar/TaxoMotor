@@ -19,8 +19,11 @@ namespace TM.SP.DataMigrationTimerJob
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public class DataMigrationTimerJobEventReceiver : SPFeatureReceiver
     {
+        public static readonly string webUrlPropertyKeyName = "WebUrl";
+
         private static readonly string jobName = "TaxoMotorCoordinateV5DataMigration";
-        private bool CreateJob(SPWebApplication site)
+        
+        private bool CreateJob(SPWebApplication site, string webUrl)
         {
             bool jobCreated = false;
             try
@@ -31,6 +34,16 @@ namespace TM.SP.DataMigrationTimerJob
                 schedule.EndSecond = 59;
                 schedule.Interval = 1;
                 job.Schedule = schedule;
+
+                // set web url
+                if (job.Properties.ContainsKey(webUrlPropertyKeyName))
+                {
+                    job.Properties[webUrlPropertyKeyName] = webUrl;
+                }
+                else 
+                {
+                    job.Properties.Add(webUrlPropertyKeyName, webUrl);
+                }
 
                 job.Update();
             }
@@ -71,12 +84,12 @@ namespace TM.SP.DataMigrationTimerJob
             {
                 SPSecurity.RunWithElevatedPrivileges(delegate()
                 {
-                    SPSite parentSite = (SPSite)properties.Feature.Parent;
-                    if (parentSite != null)
+                    SPWeb parentWeb = (SPWeb)properties.Feature.Parent;
+                    if (parentWeb != null)
                     {
-                        SPWebApplication parentWebApp = parentSite.WebApplication;
+                        SPWebApplication parentWebApp = parentWeb.Site.WebApplication;
                         DeleteExistingJob(jobName, parentWebApp);
-                        CreateJob(parentWebApp);
+                        CreateJob(parentWebApp, parentWeb.Url);
                     }
                     
                 });
@@ -100,9 +113,12 @@ namespace TM.SP.DataMigrationTimerJob
                 {
                     SPSecurity.RunWithElevatedPrivileges(delegate()
                     {
-                        SPSite parentSite = (SPSite)properties.Feature.Parent;
-                        SPWebApplication parentWebApp = parentSite.WebApplication;
-                        DeleteExistingJob(jobName, parentWebApp);
+                        SPWeb parentWeb = (SPWeb)properties.Feature.Parent;
+                        if (parentWeb != null)
+                        {
+                            SPWebApplication parentWebApp = parentWeb.Site.WebApplication;
+                            DeleteExistingJob(jobName, parentWebApp);
+                        }
                     });
                 }
                 catch (Exception ex)
