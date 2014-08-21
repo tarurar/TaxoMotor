@@ -79,6 +79,7 @@ namespace TM.SP.ListModels
                 ctx.Credentials = new NetworkCredential(options.windowsLogin, options.windowsPassword, options.windowsDomain);
                 var pService = new CSOMProvisionService();
 
+                // todo: Перенести описание модели в dll, чтобы использовать дефинишены в других проектах
                 #region base model deployment
 
                 var rootModel = SPMeta2Model.NewSiteModel(new SiteDefinition() {RequireSelfProcessing = false})

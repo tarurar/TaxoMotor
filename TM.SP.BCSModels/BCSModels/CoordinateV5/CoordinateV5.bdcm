@@ -2874,7 +2874,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="Request" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="Request">
+				<Entity Name="Request" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.28" EstimatedInstanceCount="10000" DefaultDisplayName="Request">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -3175,6 +3175,123 @@
 								<MethodInstance Name="UpdateRequest" Type="Updater" />
 							</MethodInstances>
 						</Method>
+            <Method Name="TakeItemForMigration">
+              <AccessControlList>
+                <AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+                  <Right BdcRight="Edit" />
+                  <Right BdcRight="Execute" />
+                  <Right BdcRight="SetPermissions" />
+                  <Right BdcRight="SelectableInClients" />
+                </AccessControlEntry>
+              </AccessControlList>
+              <Parameters>
+                <Parameter Name="returnParameter" Direction="Return">
+                  <TypeDescriptor TypeName="TM.SP.BCSModels.CoordinateV5.MigratingRequest, TM.SP.BCSModels" Name="returnMigratingRequest">
+	                  <TypeDescriptors>
+		                  <TypeDescriptor Name="TicketId" DefaultDisplayName="TicketId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                          </TypeDescriptor>
+		                  <TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                          </TypeDescriptor>
+		                  <TypeDescriptor Name="ErrorInfo" DefaultDisplayName="ErrorInfo" TypeName="System.String">
+			                  <Properties>
+				                  <Property Name="Size" Type="System.Int32">255</Property>
+				                  <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+			                  </Properties>
+			                  <Interpretation>
+				                  <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+			                  </Interpretation>
+		                  </TypeDescriptor>
+		                  <TypeDescriptor Name="StackTrace" DefaultDisplayName="StackTrace" TypeName="System.String">
+			                  <Properties>
+				                  <Property Name="Size" Type="System.Int32">8192</Property>
+				                  <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+			                  </Properties>
+			                  <Interpretation>
+				                  <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+			                  </Interpretation>
+		                  </TypeDescriptor>
+                      <TypeDescriptor Name="RequestId" DefaultDisplayName="RequestId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+	                  </TypeDescriptors>
+                  </TypeDescriptor>
+                </Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="TakeItemForMigrationInstance" Type="Scalar" DefaultDisplayName="Take Item for Migration" ReturnParameterName="returnParameter" />
+              </MethodInstances>
+            </Method>
+            <Method Name="FinishMigration">
+              <Parameters>
+                <Parameter Name="migratingRequest" Direction="In">
+                  <TypeDescriptor Name="migratingRequestTypeDescriptor" TypeName="TM.SP.BCSModels.CoordinateV5.MigratingRequest, CoordinateV5" IsCollection="false">
+                    <TypeDescriptors>
+                      <TypeDescriptor Name="TicketId" DefaultDisplayName="TicketId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="ErrorInfo" DefaultDisplayName="ErrorInfo" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="StackTrace" DefaultDisplayName="StackTrace" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">8192</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="RequestId" DefaultDisplayName="RequestId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                      </TypeDescriptor>
+                    </TypeDescriptors>
+                  </TypeDescriptor>
+                </Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="FinishMigrationInstance" Type="Updater" />
+              </MethodInstances></Method>
+            <Method Name="UpdateMigrationStatus">
+              <Parameters>
+                <Parameter Name="request" Direction="In">
+                  <TypeDescriptor Name="Request" TypeName="TM.SP.BCSModels.CoordinateV5.MigratingRequest, CoordinateV5" IsCollection="false">
+                    <TypeDescriptors>
+                      <TypeDescriptor Name="TicketId" DefaultDisplayName="TicketId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="ErrorInfo" DefaultDisplayName="ErrorInfo" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="StackTrace" DefaultDisplayName="StackTrace" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">8192</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="RequestId" DefaultDisplayName="RequestId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                      </TypeDescriptor>
+                    </TypeDescriptors>
+                  </TypeDescriptor>
+                </Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="UpdateMigrationStatus" Type="Updater" />
+              </MethodInstances></Method>
 					</Methods>
 					<AssociationGroups>
 						<AssociationGroup Name="IdOfRequestAccountToDeclarantRequestAccountOfRequestAssociation" DefaultDisplayName="RequestAccount to Request(DeclarantRequestAccount)">
