@@ -7,7 +7,7 @@ using Microsoft.SharePoint.Client;
 using SPMeta2.Definitions;
 using SPMeta2.Enumerations;
 
-namespace TM.SP.ListModels
+namespace TM.SP.DataModel
 {
     public static class ListModels
     {
@@ -53,6 +53,15 @@ namespace TM.SP.ListModels
             Url = "GovServiceSubTypeBookList",
             TemplateType = (int)ListTemplateType.GenericList,
             Description = "Справочник подтипов госуслуги",
+            ContentTypesEnabled = true
+        };
+
+        public static ListDefinition TmCancellationReasonBookList = new ListDefinition()
+        {
+            Title = "Причины аннулирования (справочник)",
+            Url = "CancellationReasonBookList",
+            TemplateType = (int)ListTemplateType.GenericList,
+            Description = "Справочник причин аннулирования разрешений",
             ContentTypesEnabled = true
         };
 

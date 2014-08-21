@@ -7,16 +7,10 @@ using System.Xml.Linq;
 using SPMeta2.Definitions;
 using SPMeta2.Enumerations;
 
-namespace TM.SP.ListModels
+namespace TM.SP.DataModel
 {
     public static class FieldModels
     {
-        #region consts
-
-        private const string DefaultGroup = "TaxoMotor Common Columns";
-
-        #endregion
-
         #region properties
 
         public static FieldDefinition TmServiceCode = new FieldDefinition()
@@ -25,7 +19,7 @@ namespace TM.SP.ListModels
             Title = "Код",
             InternalName = "Tm_ServiceCode",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmUsageScopeInteger = new FieldDefinition()
@@ -34,7 +28,7 @@ namespace TM.SP.ListModels
             Title = "Область применения (код)",
             InternalName = "Tm_UsageScopeInteger",
             FieldType = BuiltInFieldTypes.Integer,
-            Group =  DefaultGroup
+            Group =  ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmRegNumber = new FieldDefinition()
@@ -43,7 +37,7 @@ namespace TM.SP.ListModels
             Title = "Регистрационный номер",
             InternalName = "Tm_RegNumber",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmSingleNumber = new FieldDefinition()
@@ -52,7 +46,7 @@ namespace TM.SP.ListModels
             Title = "Единый номер",
             InternalName = "Tm_SingleNumber",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmIncomeRequestStateLookup = new FieldDefinition()
@@ -61,7 +55,7 @@ namespace TM.SP.ListModels
             Title = "Состояние обращения",
             InternalName = "Tm_IncomeRequestStateLookup",
             FieldType = BuiltInFieldTypes.Lookup,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmIncomeRequestStateInternalLookup = new FieldDefinition()
@@ -70,7 +64,7 @@ namespace TM.SP.ListModels
             Title = "Внутренний статус обращения",
             InternalName = "Tm_IncomeRequestStateInternalLookup",
             FieldType = BuiltInFieldTypes.Lookup,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmRegistrationDate = new FieldDefinition()
@@ -79,7 +73,7 @@ namespace TM.SP.ListModels
             Title = "Дата регистрации",
             InternalName = "Tm_RegistrationDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmIncomeRequestForm = new FieldDefinition()
@@ -88,7 +82,7 @@ namespace TM.SP.ListModels
             Title = "Форма обращения",
             InternalName = "Tm_IncomeRequestForm",
             FieldType = BuiltInFieldTypes.Choice,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmDenyReasonLookup = new FieldDefinition()
@@ -97,7 +91,7 @@ namespace TM.SP.ListModels
             Title = "Причина отказа",
             InternalName = "Tm_DenyReasonLookup",
             FieldType = BuiltInFieldTypes.Lookup,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmComment = new FieldDefinition()
@@ -106,7 +100,7 @@ namespace TM.SP.ListModels
             Title = "Примечание",
             InternalName = "Tm_Comment",
             FieldType = BuiltInFieldTypes.Note,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmRequestedDocument = new FieldDefinition()
@@ -115,7 +109,7 @@ namespace TM.SP.ListModels
             Title = "Запрашиваемый документ",
             InternalName = "Tm_RequestedDocument",
             FieldType = BuiltInFieldTypes.Lookup,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmInstanceCounter = new FieldDefinition()
@@ -124,7 +118,7 @@ namespace TM.SP.ListModels
             Title = "Количество экземпляров",
             InternalName = "Tm_InstanceCounter",
             FieldType = BuiltInFieldTypes.Integer,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmRequestedDocumentPrice = new FieldDefinition()
@@ -134,7 +128,7 @@ namespace TM.SP.ListModels
             Description = "Стоимость государственной услуги по выдаче соответствующего документа",
             InternalName = "Tm_RequestedDocumentPrice",
             FieldType = BuiltInFieldTypes.Currency,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmPrepareTargetDate = new FieldDefinition()
@@ -143,7 +137,7 @@ namespace TM.SP.ListModels
             Title = "Плановый срок подготовки",
             InternalName = "Tm_PrepareTargetDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmOutputTargetDate = new FieldDefinition()
@@ -152,7 +146,7 @@ namespace TM.SP.ListModels
             Title = "Плановый срок выдачи",
             InternalName = "Tm_OutputTargetDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmPrepareFactDate = new FieldDefinition()
@@ -161,7 +155,7 @@ namespace TM.SP.ListModels
             Title = "Дата фактической подготовки",
             InternalName = "Tm_PrepareFactDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmOutputFactDate = new FieldDefinition()
@@ -170,7 +164,7 @@ namespace TM.SP.ListModels
             Title = "Дата фактической выдачи",
             InternalName = "Tm_OutputFactDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmRefuseDate = new FieldDefinition()
@@ -179,7 +173,7 @@ namespace TM.SP.ListModels
             Title = "Дата отказа",
             InternalName = "Tm_RefuseDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmMessageId = new FieldDefinition()
@@ -188,7 +182,7 @@ namespace TM.SP.ListModels
             Title = "MessageId",
             InternalName = "Tm_MessageId",
             FieldType = BuiltInFieldTypes.Guid,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static XElement TmRequestAccountBcsLookupXml = new XElement("Field",
@@ -198,9 +192,9 @@ namespace TM.SP.ListModels
             new XAttribute("DisplayName", "Заявитель ЮЛ"),
             new XAttribute("Required", "FALSE"),
             new XAttribute("ID", "{5C8E8BBB-6670-4ABF-84C1-F5C529BDDB75}"),
-            new XAttribute("SystemInstance", Consts.BcsCoordinateV5SystemName),
-            new XAttribute("EntityNamespace", Consts.BcsCoordinateV5EntityNamespace),
-            new XAttribute("EntityName", Consts.BcsRequestAccountEntityName),
+            new XAttribute("SystemInstance", BcsModelConsts.CV5SystemName),
+            new XAttribute("EntityNamespace", BcsModelConsts.CV5EntityNamespace),
+            new XAttribute("EntityName", BcsModelConsts.CV5RequestAccountEntityName),
             new XAttribute("BdcField", "Title"),
             new XAttribute("Version", "1")
         );
@@ -212,9 +206,9 @@ namespace TM.SP.ListModels
             new XAttribute("DisplayName", "Заявитель ФЛ"),
             new XAttribute("Required", "FALSE"),
             new XAttribute("ID", "{83BFA335-F62A-4CD0-BC3C-A314C871CD86}"),
-            new XAttribute("SystemInstance", Consts.BcsCoordinateV5SystemName),
-            new XAttribute("EntityNamespace", Consts.BcsCoordinateV5EntityNamespace),
-            new XAttribute("EntityName", Consts.BcsRequestContactEntityName),
+            new XAttribute("SystemInstance", BcsModelConsts.CV5SystemName),
+            new XAttribute("EntityNamespace", BcsModelConsts.CV5EntityNamespace),
+            new XAttribute("EntityName", BcsModelConsts.CV5RequestContactEntityName),
             new XAttribute("BdcField", "Title"),
             new XAttribute("Version", "1")
         );
@@ -226,9 +220,9 @@ namespace TM.SP.ListModels
             new XAttribute("DisplayName", "Доверенное лицо"),
             new XAttribute("Required", "FALSE"),
             new XAttribute("ID", "{15AFC5D5-B6C3-468D-9452-02044362BC72}"),
-            new XAttribute("SystemInstance", Consts.BcsCoordinateV5SystemName),
-            new XAttribute("EntityNamespace", Consts.BcsCoordinateV5EntityNamespace),
-            new XAttribute("EntityName", Consts.BcsRequestContactEntityName),
+            new XAttribute("SystemInstance", BcsModelConsts.CV5SystemName),
+            new XAttribute("EntityNamespace", BcsModelConsts.CV5EntityNamespace),
+            new XAttribute("EntityName", BcsModelConsts.CV5RequestContactEntityName),
             new XAttribute("BdcField", "Title"),
             new XAttribute("Version", "1")
         );
@@ -239,7 +233,7 @@ namespace TM.SP.ListModels
             Title = "Тип запроса",
             InternalName = "Tm_OutputRequestTypeLookup",
             FieldType = BuiltInFieldTypes.Lookup,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmOutputDate = new FieldDefinition()
@@ -248,7 +242,7 @@ namespace TM.SP.ListModels
             Title = "Дата отправки",
             InternalName = "Tm_OutputDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmErrorDescription = new FieldDefinition()
@@ -257,7 +251,7 @@ namespace TM.SP.ListModels
             Title = "Ошибка",
             InternalName = "Tm_ErrorDescription",
             FieldType = BuiltInFieldTypes.Note,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmIncomeRequestLookup = new FieldDefinition()
@@ -266,7 +260,7 @@ namespace TM.SP.ListModels
             Title = "Обращение",
             InternalName = "Tm_IncomeRequestLookup",
             FieldType = BuiltInFieldTypes.Lookup,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiBrand = new FieldDefinition()
@@ -275,7 +269,7 @@ namespace TM.SP.ListModels
             Title = "Марка",
             InternalName = "Tm_TaxiBrand",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiModel = new FieldDefinition()
@@ -284,7 +278,7 @@ namespace TM.SP.ListModels
             Title = "Модель",
             InternalName = "Tm_TaxiModel",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiYear = new FieldDefinition()
@@ -293,7 +287,7 @@ namespace TM.SP.ListModels
             Title = "Год выпуска",
             InternalName = "Tm_TaxiYear",
             FieldType = BuiltInFieldTypes.Integer,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiLastToDate = new FieldDefinition()
@@ -302,7 +296,7 @@ namespace TM.SP.ListModels
             Title = "Дата ТО",
             InternalName = "Tm_TaxiLastToDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiStateNumber = new FieldDefinition()
@@ -311,7 +305,7 @@ namespace TM.SP.ListModels
             Title = "Гос. номер",
             InternalName = "Tm_TaxiStateNumber",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiPrevStateNumber = new FieldDefinition()
@@ -320,7 +314,7 @@ namespace TM.SP.ListModels
             Title = "Предыдущий гос. номер",
             InternalName = "Tm_TaxiPrevStateNumber",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiLeasingContractDetails = new FieldDefinition()
@@ -329,7 +323,7 @@ namespace TM.SP.ListModels
             Title = "Договор лизинга",
             InternalName = "Tm_LeasingContractDetails",
             FieldType = BuiltInFieldTypes.Note,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiBodyYellow = new FieldDefinition()
@@ -338,7 +332,7 @@ namespace TM.SP.ListModels
             Title = "Цвет кузова желтый",
             InternalName = "Tm_TaxiBodyYellow",
             FieldType = BuiltInFieldTypes.Boolean,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiBodyColor = new FieldDefinition()
@@ -347,7 +341,7 @@ namespace TM.SP.ListModels
             Title = "Цвет кузова",
             InternalName = "Tm_TaxiBodyColor",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiBodyColor2 = new FieldDefinition()
@@ -356,7 +350,7 @@ namespace TM.SP.ListModels
             Title = "Цвет не из списка",
             InternalName = "Tm_TaxiBodyColor2",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiStateNumberYellow = new FieldDefinition()
@@ -365,7 +359,7 @@ namespace TM.SP.ListModels
             Title = "Желтый номер",
             InternalName = "Tm_TaxiStateNumberYellow",
             FieldType = BuiltInFieldTypes.Boolean,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiTaxometer = new FieldDefinition()
@@ -374,7 +368,7 @@ namespace TM.SP.ListModels
             Title = "Таксометр",
             InternalName = "Tm_TaxiTaxometer",
             FieldType = BuiltInFieldTypes.Boolean,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiGps = new FieldDefinition()
@@ -383,7 +377,7 @@ namespace TM.SP.ListModels
             Title = "GPS/Глонасс",
             InternalName = "Tm_TaxiGps",
             FieldType = BuiltInFieldTypes.Boolean,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiDecision = new FieldDefinition()
@@ -392,7 +386,7 @@ namespace TM.SP.ListModels
             Title = "Решение",
             InternalName = "Tm_TaxiDecision",
             FieldType = BuiltInFieldTypes.Integer,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiBlankNo = new FieldDefinition()
@@ -401,7 +395,7 @@ namespace TM.SP.ListModels
             Title = "Номер бланка",
             InternalName = "Tm_TaxiBlankNo",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiPrevLicenseNumber = new FieldDefinition()
@@ -410,7 +404,7 @@ namespace TM.SP.ListModels
             Title = "Номер ранее выд. разрешения",
             InternalName = "Tm_TaxiPrevLicenseNumber",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiPrevLicenseDate = new FieldDefinition()
@@ -419,7 +413,7 @@ namespace TM.SP.ListModels
             Title = "Дата выдачи ранее выд. разрешения",
             InternalName = "Tm_TaxiPrevLicenseDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiInfoOld = new FieldDefinition()
@@ -428,7 +422,7 @@ namespace TM.SP.ListModels
             Title = "Сведения о ТС по старому разрешению",
             InternalName = "Tm_TaxiInfoOld",
             FieldType = BuiltInFieldTypes.Note,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmTaxiStsDetails = new FieldDefinition()
@@ -437,7 +431,7 @@ namespace TM.SP.ListModels
             Title = "Реквизиты СТС",
             InternalName = "Tm_TaxiStsDetails",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmAttachType = new FieldDefinition()
@@ -446,7 +440,7 @@ namespace TM.SP.ListModels
             Title = "Вид документа",
             InternalName = "Tm_AttachType",
             FieldType = BuiltInFieldTypes.Integer,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmAttachDocNumber = new FieldDefinition()
@@ -455,7 +449,7 @@ namespace TM.SP.ListModels
             Title = "Номер документа",
             InternalName = "Tm_AttachDocNumber",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmAttachDocDate = new FieldDefinition()
@@ -464,7 +458,7 @@ namespace TM.SP.ListModels
             Title = "Дата документа",
             InternalName = "Tm_AttachDocDate",
             FieldType = BuiltInFieldTypes.DateTime,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmAttachDocSerie = new FieldDefinition()
@@ -473,7 +467,7 @@ namespace TM.SP.ListModels
             Title = "Серия документа",
             InternalName = "Tm_AttachDocSerie",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmAttachWhoSigned = new FieldDefinition()
@@ -482,7 +476,7 @@ namespace TM.SP.ListModels
             Title = "Кто подписал",
             InternalName = "Tm_AttachWhoSigned",
             FieldType = BuiltInFieldTypes.Text,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         public static FieldDefinition TmPossessionReasonLookup = new FieldDefinition()
@@ -491,7 +485,88 @@ namespace TM.SP.ListModels
             Title = "Основание владения",
             InternalName = "Tm_PossessionReasonLookup",
             FieldType = BuiltInFieldTypes.Lookup,
-            Group = DefaultGroup
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_StateNumber = new FieldDefinition()
+        {
+            Id = new Guid("{5D0392C3-1B3C-4EE9-8859-B62DCA477DDB}"),
+            Title = "Изменение гос. рег-го знака",
+            InternalName = "Tm_RenewalReason_StateNumber",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_AddressCompany = new FieldDefinition()
+        {
+            Id = new Guid("{8FDC55E8-1569-4B76-BD74-6CB32E6335CB}"),
+            Title = "Изменение адреса ЮЛ",
+            InternalName = "Tm_RenewalReason_AddressCompany",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_IdentityCard = new FieldDefinition()
+        {
+            Id = new Guid("{E431F5F0-5E4E-4C18-8E43-77DF7B87137E}"),
+            Title = "Изменение данных документа удост. личность ИП",
+            InternalName = "Tm_RenewalReason_IdentityCard",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_AddressPerson = new FieldDefinition()
+        {
+            Id = new Guid("{7008E18A-127B-452B-BE68-B6796D96DB08}"),
+            Title = "Изменение адреса регистрации по месту жит. ИП",
+            InternalName = "Tm_RenewalReason_AddressPerson",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_NameCompany = new FieldDefinition()
+        {
+            Id = new Guid("{5CE81552-2411-4937-B1AE-C3CA2CE6B005}"),
+            Title = "Изменение наименования ЮЛ",
+            InternalName = "Tm_RenewalReason_NameCompany",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_ReorgCompany = new FieldDefinition()
+        {
+            Id = new Guid("{3EA8641A-190A-45E2-8015-0778991E9532}"),
+            Title = "Реорганизация ЮЛ",
+            InternalName = "Tm_RenewalReason_ReorgCompany",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_NamePerson = new FieldDefinition()
+        {
+            Id = new Guid("{5AEC0DA6-F0E9-4C62-BB71-5D5A9D5F91D4}"),
+            Title = "Изменение ФИО ИП ",
+            InternalName = "Tm_RenewalReason_NamePerson",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmCancellationReasonLookup = new FieldDefinition()
+        {
+            Id = new Guid("{E72D2328-1A5D-443C-8C6D-A354C6F6FC86}"),
+            Title = "Причина аннулирования",
+            InternalName = "Tm_CancellationReasonLookup",
+            FieldType = BuiltInFieldTypes.Lookup,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmCancellationReasonOther = new FieldDefinition()
+        {
+            Id = new Guid("{4D5425EA-6A45-4459-814B-03091DCFF1EC}"),
+            Title = "Иное основание",
+            InternalName = "Tm_CancellationReasonOther",
+            FieldType = BuiltInFieldTypes.Text,
+            Group = ModelConsts.ColumnsDefaultGroup
         };
 
         #endregion

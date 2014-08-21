@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.Services", "TM.Services\TM.Services.csproj", "{56AE0CAD-EE3D-4CC5-A69B-EF56391D1BC7}"
 EndProject
@@ -52,9 +52,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5BC266
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.ListModels", "TM.SP.ListModels\TM.SP.ListModels.csproj", "{8773D57B-8F08-418D-A262-9904AACB20D9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.DataMigrationTimerJob", "TM.SP.DataMigrationTimerJob\TM.SP.DataMigrationTimerJob.csproj", "{FA892F5B-E245-4C57-BFB6-C0247CF82491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.DataModel", "TM.SP.DataModel\TM.SP.DataModel.csproj", "{F3AF0C59-F72C-4992-B2B3-93C71ADA489C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.DataModelDeploy", "TM.SP.DataModelDeploy\TM.SP.DataModelDeploy.csproj", "{7A07ADF1-A662-4D2B-8F96-88A5CCC3204C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -114,16 +116,20 @@ Global
 		{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{8773D57B-8F08-418D-A262-9904AACB20D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8773D57B-8F08-418D-A262-9904AACB20D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8773D57B-8F08-418D-A262-9904AACB20D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8773D57B-8F08-418D-A262-9904AACB20D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA892F5B-E245-4C57-BFB6-C0247CF82491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA892F5B-E245-4C57-BFB6-C0247CF82491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA892F5B-E245-4C57-BFB6-C0247CF82491}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{FA892F5B-E245-4C57-BFB6-C0247CF82491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA892F5B-E245-4C57-BFB6-C0247CF82491}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA892F5B-E245-4C57-BFB6-C0247CF82491}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F3AF0C59-F72C-4992-B2B3-93C71ADA489C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3AF0C59-F72C-4992-B2B3-93C71ADA489C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3AF0C59-F72C-4992-B2B3-93C71ADA489C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3AF0C59-F72C-4992-B2B3-93C71ADA489C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A07ADF1-A662-4D2B-8F96-88A5CCC3204C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A07ADF1-A662-4D2B-8F96-88A5CCC3204C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A07ADF1-A662-4D2B-8F96-88A5CCC3204C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A07ADF1-A662-4D2B-8F96-88A5CCC3204C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
