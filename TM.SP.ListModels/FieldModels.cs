@@ -395,15 +395,6 @@ namespace TM.SP.ListModels
             Group = DefaultGroup
         };
 
-        public static FieldDefinition TmTaxiChecked = new FieldDefinition()
-        {
-            Id = new Guid("{8B247C15-0FDB-4F77-8C3C-A1C87217F3D1}"),
-            Title = "Проверено",
-            InternalName = "Tm_TaxiChecked",
-            FieldType = BuiltInFieldTypes.Boolean,
-            Group = DefaultGroup
-        };
-
         public static FieldDefinition TmTaxiBlankNo = new FieldDefinition()
         {
             Id = new Guid("{A931C164-9C2E-4CF3-BC72-E0D7D8C6709B}"),

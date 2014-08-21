@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SPMeta2.Definitions;
 using SPMeta2.Enumerations;
+using SPMeta2.Syntax.Default;
 
 namespace TM.SP.ListModels
 {
