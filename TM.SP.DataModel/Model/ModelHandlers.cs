@@ -14,28 +14,34 @@ namespace TM.SP.DataModel
 
         public static void MakeContentTypesDefault(ClientContext ctx)
         {
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestStateBookList.Url,
-                    ContentTypeModels.TmIncomeRequestState.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestStateInternalBookList.Url,
-                ContentTypeModels.TmIncomeRequestStateInternal.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmDenyReasonBookList.Url,
-                ContentTypeModels.TmDenyReason.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmGovServiceSubTypeBookList.Url,
-                ContentTypeModels.TmGovServiceSubType.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmOutcomeRequestTypeBookList.Url,
-                ContentTypeModels.TmOutcomeRequestType.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestList.Url,
-                ContentTypeModels.TmNewIncomeRequest.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmOutcomeRequestStateList.Url,
-                ContentTypeModels.TmOutcomeRequestState.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmTaxiList.Url,
-                ContentTypeModels.TmTaxi.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmIncomeRequestAttachList.Url,
-                ContentTypeModels.TmAttach.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmPossessionReasonBookList.Url,
-                ContentTypeModels.TmPossessionReason.Name);
-            ListHelpers.MakeContentTypeDefault(ctx, ListModels.TmCancellationReasonBookList.Url,
-                ContentTypeModels.TmCancellationReason.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIncomeRequestStateBookList.Url,
+                    ContentTypes.TmIncomeRequestState.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIncomeRequestStateInternalBookList.Url,
+                ContentTypes.TmIncomeRequestStateInternal.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmDenyReasonBookList.Url,
+                ContentTypes.TmDenyReason.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmGovServiceSubTypeBookList.Url,
+                ContentTypes.TmGovServiceSubType.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmOutcomeRequestTypeBookList.Url,
+                ContentTypes.TmOutcomeRequestType.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIncomeRequestList.Url,
+                new string[]
+                {
+                    ContentTypes.TmNewIncomeRequest.Name, 
+                    ContentTypes.TmDuplicateIncomeRequest.Name,
+                    ContentTypes.TmRenewIncomeRequest.Name, 
+                    ContentTypes.TmCancelIncomeRequest.Name
+                });
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmOutcomeRequestStateList.Url,
+                ContentTypes.TmOutcomeRequestState.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmTaxiList.Url,
+                ContentTypes.TmTaxi.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIncomeRequestAttachList.Url,
+                ContentTypes.TmAttach.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmPossessionReasonBookList.Url,
+                ContentTypes.TmPossessionReason.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmCancellationReasonBookList.Url,
+                ContentTypes.TmCancellationReason.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
@@ -45,13 +51,13 @@ namespace TM.SP.DataModel
                     BcsModelConsts.CV5ListsFeatureId));
 
             IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
-            List incomeRequestList = ListHelpers.GetList(allLists, ListModels.TmIncomeRequestList.Url);
+            List incomeRequestList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
 
-            ListHelpers.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestAccountBcsLookupXml,
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestAccountBcsLookupXml,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestContactBcsLookupXml,
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestContactBcsLookupXml,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(incomeRequestList, FieldModels.TmRequestTrusteeBcsLookupXml,
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestTrusteeBcsLookupXml,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
         }
 

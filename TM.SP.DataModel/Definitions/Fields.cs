@@ -9,7 +9,7 @@ using SPMeta2.Enumerations;
 
 namespace TM.SP.DataModel
 {
-    public static class FieldModels
+    public static class Fields
     {
         #region properties
 

@@ -12,6 +12,38 @@ namespace TM.SP.DataModel
     {
         #region methods
 
+        /// <summary>
+        /// Making order of content types in a list
+        /// </summary>
+        /// <param name="context">Object of ClientContext class</param>
+        /// <param name="listName">Internal name of the list (i.e. RootFolder name)</param>
+        /// <param name="contentTypeNames">Array of content type names. The first element will be the default content type</param>
+        public static void MakeContentTypeDefault(ClientContext context, string listName, string[] contentTypeNames)
+        {
+            List targetList = WebHelpers.GetWebList(context, listName);
+            if (targetList == null)
+                throw new Exception(String.Format("List {0} not found", listName));
+
+            List<ContentTypeId> allContentTypes = new List<ContentTypeId>();
+            foreach (string ctName in contentTypeNames)
+            {
+                ContentType listContentType = targetList.ContentTypes.SingleOrDefault(
+                    c => c.Name.Equals(ctName, StringComparison.InvariantCultureIgnoreCase));
+                if (listContentType == null)
+                    throw new Exception(String.Format("Content type {0} was not found in the list {1}", ctName, targetList.Title));
+
+                allContentTypes.Add(listContentType.Id);
+            }
+
+            if (allContentTypes.Count > 0)
+            {
+                targetList.RootFolder.UniqueContentTypeOrder = allContentTypes;
+                targetList.RootFolder.Update();
+                targetList.Update();
+                context.ExecuteQuery();                
+            }
+        }
+
         public static void MakeContentTypeDefault(ClientContext context, string listName, string contentTypeName)
         {
             List targetList = WebHelpers.GetWebList(context, listName);

@@ -9,7 +9,7 @@ using SPMeta2.Syntax.Default;
 
 namespace TM.SP.DataModel
 {
-    public static class ContentTypeModels
+    public static class ContentTypes
     {
         #region properties
 

@@ -9,7 +9,7 @@ using SPMeta2.Enumerations;
 
 namespace TM.SP.DataModel
 {
-    public static class ListModels
+    public static class Lists
     {
         public static ListDefinition TmIncomeRequestStateBookList = new ListDefinition()
         {
