@@ -54,6 +54,17 @@ namespace TM.SP.DataMigrationTimerJob
 
         #endregion
 
+        #region consts
+        // Service type constants
+        private const string scNew          = "77200101";
+        private const string scRenew        = "020202";
+        private const string scDuplicate    = "020203";
+        private const string scCancellation = "020204";
+
+        #endregion
+
+
+
         private static string GetFeatureLocalizedResource(string resourceName)
         {
             return SPUtility.GetLocalizedString(
@@ -108,24 +119,25 @@ namespace TM.SP.DataMigrationTimerJob
             return items.Count > 0 ? items[0] : null;
         }
 
-        private SPListItem MigrateIncomingRequestRow(SPWeb web, Request request)
+        /// <summary>
+        /// Assign base field values that present in any content type
+        /// </summary>
+        /// <returns></returns>
+        private SPListItem AssignIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
         {
-            SPList list = GetListByUrlOrBreak(web, "IncomeRequestList");
-            SPList govSubTypeList = GetListByUrlOrBreak(web, "GovServiceSubTypeBookList");
             Service svc = ExecBCSMethod<Service>(ServiceCT, ReadServiceItem, MethodInstanceType.SpecificFinder, request.Service);
-
-            SPListItem newItem = list.AddItem();
-            // assign values
-            newItem["Tm_RegNumber"] = svc.RegNum;
-            newItem["Tm_SingleNumber"] = svc.ServiceNumber;
+            SPList govSubTypeList = GetListByUrlOrBreak(web, "GovServiceSubTypeBookList");
+            
+            newItem["Tm_RegNumber"]     = svc.RegNum;
+            newItem["Tm_SingleNumber"]  = svc.ServiceNumber;
             // todo: default values
             // newItem["Tm_IncomeRequestStateLookup"] = состояние обращения
             // newItem["Tm_IncomeRequestStateInternalLookup"] = внутренний статус
-            newItem["Tm_RegistrationDate"] = svc.RegDate;
+            newItem["Tm_RegistrationDate"]  = svc.RegDate;
             newItem["Tm_IncomeRequestForm"] = GetFeatureLocalizedResource("IncomeRequestFormDefValue");
             if (request.DeclarantRequestAccount != null)
             {
-                RequestAccount account = ExecBCSMethod<RequestAccount>(RequestAccountCT, ReadRequestAccountItem, 
+                RequestAccount account = ExecBCSMethod<RequestAccount>(RequestAccountCT, ReadRequestAccountItem,
                     MethodInstanceType.SpecificFinder, request.DeclarantRequestAccount);
                 BCS.SetBCSFieldValue(newItem, "Tm_RequestAccountBCSLookup", account);
             }
@@ -147,17 +159,87 @@ namespace TM.SP.DataMigrationTimerJob
                 if (serviceCode != null)
                     newItem["Tm_RequestedDocument"] = serviceCode.ID;
             }
-            newItem["Tm_InstanceCounter"] = svc.Copies;
-            newItem["Tm_RequestedDocumentPrice"] = svc.ServicePrice;
-            newItem["Tm_PrepareTargetDate"] = svc.PrepareTargetDate;
-            newItem["Tm_OutputTargetDate"] = svc.OutputTargetDate;
-            newItem["Tm_PrepareFactDate"] = svc.PrepareFactDate;
-            newItem["Tm_OutputFactDate"] = svc.OutputFactDate;
-            newItem["Tm_MessageId"] = request.MessageId;
-            newItem["Title"] = String.Format(RequestTitleFmt, svc.RegNum, 
-                newItem["Tm_RequestAccountBCSLookup"] ?? newItem["Tm_RequestContactBCSLookup"]);
-            newItem.Update();
+            newItem["Tm_InstanceCounter"]           = svc.Copies;
+            newItem["Tm_RequestedDocumentPrice"]    = svc.ServicePrice;
+            newItem["Tm_PrepareTargetDate"]         = svc.PrepareTargetDate;
+            newItem["Tm_OutputTargetDate"]          = svc.OutputTargetDate;
+            newItem["Tm_PrepareFactDate"]           = svc.PrepareFactDate;
+            newItem["Tm_OutputFactDate"]            = svc.OutputFactDate;
+            newItem["Tm_MessageId"]                 = request.MessageId;
+            newItem["Title"]                        = String.Format(RequestTitleFmt, svc.RegNum, newItem["Tm_RequestAccountBCSLookup"] ?? newItem["Tm_RequestContactBCSLookup"]);
 
+            return newItem;
+        }
+
+        private SPListItem AssignNewIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
+        {
+            return AssignIncomeRequestFieldValues(web, newItem, request);
+        }
+
+        private SPListItem AssignDuplicateIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
+        {
+            return AssignIncomeRequestFieldValues(web, newItem, request);
+        }
+
+        private SPListItem AssignRenewIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
+        {
+            ServiceProperties svcProps = ExecBCSMethod<ServiceProperties>(ServicePropsCT, ReadServicePropsItem, 
+                MethodInstanceType.SpecificFinder, request.ServiceProperties);
+            newItem["Tm_RenewalReason_StateNumber"]     = svcProps.pr_pereoformlenie;
+            newItem["Tm_RenewalReason_NameCompany"]     = svcProps.pr_pereoformlenie_2;
+            newItem["Tm_RenewalReason_AddressCompany"]  = svcProps.pr_pereoformlenie_3;
+            newItem["Tm_RenewalReason_ReorgCompany"]    = svcProps.pr_pereoformlenie_4;
+            newItem["Tm_RenewalReason_NamePerson"]      = svcProps.pr_pereoformlenie_5;
+            newItem["Tm_RenewalReason_AddressPerson"]   = svcProps.pr_pereoformlenie_6;
+            newItem["Tm_RenewalReason_IdentityCard"]    = svcProps.pr_pereoformlenie_7;
+            return AssignIncomeRequestFieldValues(web, newItem, request);
+        }
+
+        private SPListItem AssignCancelIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
+        {
+            ServiceProperties svcProps = ExecBCSMethod<ServiceProperties>(ServicePropsCT, ReadServicePropsItem,
+                MethodInstanceType.SpecificFinder, request.ServiceProperties);
+            SPList cancellationReasonList = GetListByUrlOrBreak(web, "CancellationReasonBookList");
+
+            if (svcProps.delete != null)
+            {
+                SPListItem delete = GetSingleListItemByFieldValue(cancellationReasonList, "Tm_ServiceCode", svcProps.delete.ToString());
+                if (delete != null)
+                    newItem["Tm_CancellationReasonLookup"] = new SPFieldLookupValue(delete.ID, delete.Title);
+            }
+            newItem["Tm_CancellationReasonOther"] = svcProps.other;
+            return AssignIncomeRequestFieldValues(web, newItem, request);
+        }
+
+        private SPListItem MigrateIncomingRequestRow(SPWeb web, Request request)
+        {
+            Service svc = ExecBCSMethod<Service>(ServiceCT, ReadServiceItem, MethodInstanceType.SpecificFinder, request.Service);
+            SPList list = GetListByUrlOrBreak(web, "IncomeRequestList");
+            SPListItem newItem = list.AddItem();
+
+            switch (svc.ServiceTypeCode)
+            {
+                case scNew:
+                    newItem = AssignNewIncomeRequestFieldValues(web, newItem, request);
+                    newItem["ContentTypeId"] = list.ContentTypes["Tm_NewIncomeRequest"].Id;
+                    break;
+                case scRenew:
+                    newItem = AssignRenewIncomeRequestFieldValues(web, newItem, request);
+                    newItem["ContentTypeId"] = list.ContentTypes["Tm_RenewIncomeRequest"].Id;
+                    break;
+                case scDuplicate:
+                    newItem = AssignDuplicateIncomeRequestFieldValues(web, newItem, request);
+                    newItem["ContentTypeId"] = list.ContentTypes["Tm_DuplicateIncomeRequest"].Id;
+                    break;
+                case scCancellation:
+                    newItem = AssignCancelIncomeRequestFieldValues(web, newItem, request);
+                    newItem["ContentTypeId"] = list.ContentTypes["Tm_CancelIncomeRequest"].Id;
+                    break;
+                default:
+                    throw new Exception(String.Format("Unknown income request ServiceTypeCode value {0}", svc.ServiceTypeCode));
+            }
+            
+            newItem.Update();
             return newItem;
         }
 
