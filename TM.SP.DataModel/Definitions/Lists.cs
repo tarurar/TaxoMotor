@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.SharePoint.Client;
 using SPMeta2.Definitions;
 using SPMeta2.Enumerations;
 
@@ -15,7 +14,7 @@ namespace TM.SP.DataModel
         {
             Title = "Состояния обращений (справочник)",
             Url = "IncomeRequestStateBookList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Справочник состояний обращения",
             ContentTypesEnabled = true
         };
@@ -24,7 +23,7 @@ namespace TM.SP.DataModel
         {
             Title = "Внутренние статусы обращений (справочник)",
             Url = "IncomeRequestStateInternalBookList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Справочник внутренних статусов обращения",
             ContentTypesEnabled = true
         };
@@ -33,7 +32,7 @@ namespace TM.SP.DataModel
         {
             Title = "Причины отказа (справочник)",
             Url = "DenyReasonBookList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Справочник причин отказа по обращениям, автомобилям и т. д.",
             ContentTypesEnabled = true
         };
@@ -42,7 +41,7 @@ namespace TM.SP.DataModel
         {
             Title = "Основание владения (справочник)",
             Url = "PossessionReasonBookList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Справочник оснований владения",
             ContentTypesEnabled = true
         };
@@ -51,7 +50,7 @@ namespace TM.SP.DataModel
         {
             Title = "Подтип госуслуги (справочник)",
             Url = "GovServiceSubTypeBookList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Справочник подтипов госуслуги",
             ContentTypesEnabled = true
         };
@@ -60,7 +59,7 @@ namespace TM.SP.DataModel
         {
             Title = "Причины аннулирования (справочник)",
             Url = "CancellationReasonBookList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Справочник причин аннулирования разрешений",
             ContentTypesEnabled = true
         };
@@ -69,7 +68,7 @@ namespace TM.SP.DataModel
         {
             Title = "Обращения",
             Url = "IncomeRequestList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Обращения",
             ContentTypesEnabled = true
         };
@@ -78,7 +77,7 @@ namespace TM.SP.DataModel
         {
             Title = "Тип межвед. запроса (справочник)",
             Url = "OutcomeRequestTypeBookList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Справочник типов межведомственных запросов",
             ContentTypesEnabled = true
         };
@@ -87,7 +86,7 @@ namespace TM.SP.DataModel
         {
             Title = "Состояние межвед. запросов",
             Url = "OutcomeRequestStateList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Список содержит статусы межведомственных запросов по обращениям",
             ContentTypesEnabled = true
         };
@@ -96,7 +95,7 @@ namespace TM.SP.DataModel
         {
             Title = "Транспортные средства",
             Url = "TaxiList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Транспортные средства",
             ContentTypesEnabled = true
         };
@@ -105,7 +104,7 @@ namespace TM.SP.DataModel
         {
             Title = "Документы обращения",
             Url = "IncomeRequestAttachList",
-            TemplateType = (int)ListTemplateType.GenericList,
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
             Description = "Документы обращения",
             ContentTypesEnabled = true
         };
