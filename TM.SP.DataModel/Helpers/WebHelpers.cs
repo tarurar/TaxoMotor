@@ -34,7 +34,7 @@ namespace TM.SP.DataModel
         {
             var listCollection =
                 context.LoadQuery(
-                    context.Web.Lists.Where(l => l.RootFolder.Name == listName)
+                    context.Web.Lists.Where(l => l.RootFolder.Name.Equals(listName, StringComparison.CurrentCultureIgnoreCase))
                         .Include(l => l.Id, l => l.RootFolder, l => l.RootFolder.Name,
                             l => l.RootFolder.ContentTypeOrder, l => l.Fields, l => l.ContentTypes));
             context.ExecuteQuery();
