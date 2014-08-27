@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SPMeta2.Extensions;
 using SPMeta2.Models;
 using SPMeta2.Syntax.Default;
 using SPMeta2.Definitions;
 using SPMeta2.CSOM.DefaultSyntax;
 using SPMeta2.CSOM.Behaviours;
 using Microsoft.SharePoint.Client;
+using SPMeta2.Syntax.Default.Modern;
 
 namespace TM.SP.DataModel
 {
@@ -102,8 +104,26 @@ namespace TM.SP.DataModel
                     lists => lists
                         .AddList(Lists.TmIncomeRequestStateBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestState))
+                            .OnProvisioned<List>(context =>
+                            {
+                                var clientContext = context.Object.Context;
+                                var list = context.Object;
+
+                                clientContext.Load(list, inc => inc.Id);
+                                clientContext.ExecuteQuery();
+                                Plumsail.Fields.TmIncomeRequestStateLookupXml.ListId = list.Id;
+                            })
                         .AddList(Lists.TmIncomeRequestStateInternalBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestStateInternal))
+                            .OnProvisioned<List>(context =>
+                            {
+                                var clientContext = context.Object.Context;
+                                var list = context.Object;
+
+                                clientContext.Load(list, inc => inc.Id);
+                                clientContext.ExecuteQuery();
+                                Plumsail.Fields.TmIncomeRequestStateInternalLookupXml.ListId = list.Id;
+                            })
                         .AddList(Lists.TmDenyReasonBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmDenyReason))
                         .AddList(Lists.TmGovServiceSubTypeBookList,
@@ -135,14 +155,6 @@ namespace TM.SP.DataModel
 
             var model = SPMeta2Model.NewSiteModel(new SiteDefinition() { RequireSelfProcessing = false })
                 .WithFields(fields => fields
-                    .AddField(Fields.TmIncomeRequestStateLookup, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, incomeRequestStateBookList.Id,
-                                "LinkTitle")))
-                    .AddField(Fields.TmIncomeRequestStateInternalLookup, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, incomeRequestStateInternalBookList.Id,
-                                "LinkTitle")))
                     .AddField(Fields.TmDenyReasonLookup, field => field.OnCreated(
                         (FieldDefinition fieldDef, Field spField) =>
                             spField.MakeLookupConnectionToList(webId, denyReasonBookList.Id,
@@ -168,8 +180,6 @@ namespace TM.SP.DataModel
                     .AddContentType(ContentTypes.TmIncomeRequest, ct => ct
                         .AddContentTypeFieldLink(Fields.TmRegNumber)
                         .AddContentTypeFieldLink(Fields.TmSingleNumber)
-                        .AddContentTypeFieldLink(Fields.TmIncomeRequestStateLookup)
-                        .AddContentTypeFieldLink(Fields.TmIncomeRequestStateInternalLookup)
                         .AddContentTypeFieldLink(Fields.TmRegistrationDate)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestForm)
                         .AddContentTypeFieldLink(Fields.TmDenyReasonLookup)
@@ -206,14 +216,23 @@ namespace TM.SP.DataModel
 
         public static ModelNode GetTaxoMotorWebDependentModel()
         {
-            var model = SPMeta2Model.NewWebModel(new WebDefinition() { RequireSelfProcessing = false })
+            var model = SPMeta2Model.NewWebModel(new WebDefinition() {RequireSelfProcessing = false})
                 .WithLists(lists => lists
                     .AddList(Lists.TmIncomeRequestList, l => l
                         .AddContentTypeLink(ContentTypes.TmNewIncomeRequest)
                         .AddContentTypeLink(ContentTypes.TmDuplicateIncomeRequest)
                         .AddContentTypeLink(ContentTypes.TmCancelIncomeRequest)
                         .AddContentTypeLink(ContentTypes.TmRenewIncomeRequest)
-                ));
+                    )
+                    .OnProvisioned<List>(context =>
+                    {
+                        var clientContext = context.Object.Context;
+                        var list = context.Object;
+
+                        clientContext.Load(list, inc => inc.Id);
+                        clientContext.ExecuteQuery();
+                        Plumsail.Fields.TmIncomeRequestLookupXml.ListId = list.Id;
+                    }));
 
             return model;
         }
@@ -225,18 +244,12 @@ namespace TM.SP.DataModel
             List incomeRequestList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
 
             var model = SPMeta2Model.NewSiteModel(new SiteDefinition() { RequireSelfProcessing = false })
-                .WithFields(fields => fields
-                    .AddField(Fields.TmIncomeRequestLookup, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, incomeRequestList.Id, "LinkTitle")))
-                 )
                  .WithContentTypes(ctList => ctList
                     .AddContentType(ContentTypes.TmOutcomeRequestState, ct => ct
                         .AddContentTypeFieldLink(Fields.TmOutputRequestTypeLookup)
                         .AddContentTypeFieldLink(Fields.TmOutputDate)
                         .AddContentTypeFieldLink(Fields.TmErrorDescription)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
-                        .AddContentTypeFieldLink(Fields.TmIncomeRequestLookup)
                      )
                      .AddContentType(ContentTypes.TmTaxi, ct => ct
                         .AddContentTypeFieldLink(Fields.TmTaxiBrand)
@@ -261,7 +274,6 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmTaxiStsDetails)
                         .AddContentTypeFieldLink(Fields.TmPossessionReasonLookup)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
-                        .AddContentTypeFieldLink(Fields.TmIncomeRequestLookup)
                      )
                      .AddContentType(ContentTypes.TmAttach, ct => ct
                         .AddContentTypeFieldLink(Fields.TmAttachType)
@@ -270,7 +282,6 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmAttachDocSerie)
                         .AddContentTypeFieldLink(Fields.TmAttachWhoSigned)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
-                        .AddContentTypeFieldLink(Fields.TmIncomeRequestLookup)
                      )
                  );
 

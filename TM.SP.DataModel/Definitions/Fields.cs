@@ -49,24 +49,6 @@ namespace TM.SP.DataModel
             Group = ModelConsts.ColumnsDefaultGroup
         };
 
-        public static FieldDefinition TmIncomeRequestStateLookup = new FieldDefinition()
-        {
-            Id = new Guid("{DC820D1F-F672-48AE-890E-6B784422E9A9}"),
-            Title = "Состояние обращения",
-            InternalName = "Tm_IncomeRequestStateLookup",
-            FieldType = BuiltInFieldTypes.Lookup,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmIncomeRequestStateInternalLookup = new FieldDefinition()
-        {
-            Id = new Guid("{136E87D0-C4AA-4710-9E54-5BE31EFE6BCB}"),
-            Title = "Внутренний статус обращения",
-            InternalName = "Tm_IncomeRequestStateInternalLookup",
-            FieldType = BuiltInFieldTypes.Lookup,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
-
         public static FieldDefinition TmRegistrationDate = new FieldDefinition()
         {
             Id = new Guid("{A9069860-C16D-435D-AAAF-2A73457323EB}"),
@@ -251,15 +233,6 @@ namespace TM.SP.DataModel
             Title = "Ошибка",
             InternalName = "Tm_ErrorDescription",
             FieldType = BuiltInFieldTypes.Note,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmIncomeRequestLookup = new FieldDefinition()
-        {
-            Id = new Guid("{5388EA4A-9E56-4782-9786-E8249CC2BFDD}"),
-            Title = "Обращение",
-            InternalName = "Tm_IncomeRequestLookup",
-            FieldType = BuiltInFieldTypes.Lookup,
             Group = ModelConsts.ColumnsDefaultGroup
         };
 

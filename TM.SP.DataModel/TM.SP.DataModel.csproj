@@ -61,9 +61,11 @@
   <ItemGroup>
     <Compile Include="Consts\BcsModelConsts.cs" />
     <Compile Include="Consts\ModelConsts.cs" />
+    <Compile Include="Consts\PlumsailConsts.cs" />
     <Compile Include="Definitions\ContentTypes.cs" />
     <Compile Include="Definitions\Fields.cs" />
     <Compile Include="Definitions\Lists.cs" />
+    <Compile Include="Definitions\Plumsail\Fields.cs" />
     <Compile Include="Helpers\ListHelpers.cs" />
     <Compile Include="Helpers\WebHelpers.cs" />
     <Compile Include="Model\AllModels.cs" />

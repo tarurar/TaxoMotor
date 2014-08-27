@@ -28,9 +28,9 @@ namespace TM.SP.DataModel
             foreach (string ctName in contentTypeNames)
             {
                 ContentType listContentType = targetList.ContentTypes.SingleOrDefault(
-                    c => c.Name.Equals(ctName, StringComparison.InvariantCultureIgnoreCase));
+                    c => c.Name.Equals(ctName, StringComparison.OrdinalIgnoreCase));
                 if (listContentType == null)
-                    throw new Exception(String.Format("Content type {0} was not found in the list {1}", ctName, targetList.Title));
+                    throw new Exception(String.Format("Content type {0} was not found in the list {1}", ctName, listName));
 
                 allContentTypes.Add(listContentType.Id);
             }
@@ -78,16 +78,16 @@ namespace TM.SP.DataModel
             return retVal;
         }
 
-        public static void AddFieldAsXmlToList(List list, XElement fieldDefinition,
+        public static Field AddFieldAsXmlToList(List list, XElement fieldDefinition,
             AddFieldOptions options)
         {
             var listContext = list.Context;
 
             string fieldName = fieldDefinition.Attribute("Name").Value;
-            Field field = null;
+            Field exField = null;
             try
             {
-                field = list.Fields.SingleOrDefault(f => f.InternalName == fieldName);
+                exField = list.Fields.SingleOrDefault(f => f.InternalName == fieldName);
             }
             catch (Exception ex)
             {
@@ -95,20 +95,21 @@ namespace TM.SP.DataModel
                 {
                     listContext.Load(list.Fields);
                     listContext.ExecuteQuery();
-                    field = list.Fields.SingleOrDefault(f => f.InternalName == fieldName);
+                    exField = list.Fields.SingleOrDefault(f => f.InternalName == fieldName);
                 }
                 else throw;
             }
 
-            if (field != null)
+            if (exField != null)
             {
-                field.DeleteObject();
+                exField.DeleteObject();
                 listContext.ExecuteQuery();
             }
 
-            list.Fields.AddFieldAsXml(fieldDefinition.ToString(), false, options);
+            Field newField = list.Fields.AddFieldAsXml(fieldDefinition.ToString(), false, options);
             list.Update();
             listContext.ExecuteQuery();
+            return newField;
         }
 
         #endregion

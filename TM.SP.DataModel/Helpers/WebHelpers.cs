@@ -7,6 +7,12 @@ using Microsoft.SharePoint.Client;
 
 namespace TM.SP.DataModel
 {
+    public enum FeatureScope
+    {
+        Web = 0,
+        Site,
+        Farm
+    }
     public static class WebHelpers
     {
         #region methods
@@ -34,7 +40,7 @@ namespace TM.SP.DataModel
         {
             var listCollection =
                 context.LoadQuery(
-                    context.Web.Lists.Where(l => l.RootFolder.Name.Equals(listName, StringComparison.CurrentCultureIgnoreCase))
+                    context.Web.Lists.Where(l => l.RootFolder.Name == listName)
                         .Include(l => l.Id, l => l.RootFolder, l => l.RootFolder.Name,
                             l => l.RootFolder.ContentTypeOrder, l => l.Fields, l => l.ContentTypes));
             context.ExecuteQuery();
@@ -42,9 +48,22 @@ namespace TM.SP.DataModel
             return listCollection.FirstOrDefault();
         }
 
-        public static bool CheckFeatureActivation(ClientContext context, Guid featureId)
+        public static bool CheckFeatureActivation(ClientContext context, Guid featureId, FeatureScope scope)
         {
-            var featureCollection = context.LoadQuery(context.Web.Features.Include(f => f.DefinitionId));
+            FeatureCollection features = null;
+            switch (scope)
+            {
+                case FeatureScope.Web:
+                    features = context.Web.Features;
+                    break;
+                case FeatureScope.Site:
+                    features = context.Site.Features;
+                    break;
+                default:
+                    throw new NotImplementedException();
+
+            }
+            var featureCollection = context.LoadQuery(features.Include(f => f.DefinitionId));
             context.ExecuteQuery();
 
             return featureCollection.Any(f => f.DefinitionId.Equals(featureId));
