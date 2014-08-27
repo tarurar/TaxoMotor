@@ -41,8 +41,8 @@ namespace TM.SP.DataModel.Plumsail
 
         public XElement ToXml()
         {
-            if (ListId == null)
-                throw new Exception("Lookup list identifier cannot be null");
+            if (ListId == null || ListId == Guid.Empty)
+                throw new Exception("Lookup list identifier cannot be null or empty");
 
             return new XElement("Field",
                 new XAttribute(XNamespace.Xmlns + "csl", @namespace),
@@ -94,6 +94,7 @@ namespace TM.SP.DataModel.Plumsail
             Required = false,
             Mult = false,
             nsShowNew = false
+            //ListId needs to be set up in runtime
         };
 
         public static CrossSiteLookupDefinition TmIncomeRequestStateLookupXml = new CrossSiteLookupDefinition()
@@ -108,13 +109,14 @@ namespace TM.SP.DataModel.Plumsail
             Mult = false,
             nsShowNew = true,
             nsNewText = "Добавить состояние"
+            //ListId needs to be set up in runtime
         };
 
         public static CrossSiteLookupDefinition TmIncomeRequestStateInternalLookupXml = new CrossSiteLookupDefinition()
         {
             Id = new Guid("{136E87D0-C4AA-4710-9E54-5BE31EFE6BCB}"),
             Title = "Внутренний статус обращения",
-            InternalName = "Tm_IncomeRequestStateInternalLookup",
+            InternalName = "Tm_IncomeRequestStateIntLookup",
             FieldType = BuiltInFieldTypes.Lookup,
             Group = ModelConsts.ColumnsDefaultGroup,
             ShowField = "Title",
@@ -122,6 +124,83 @@ namespace TM.SP.DataModel.Plumsail
             Mult = false,
             nsShowNew = true,
             nsNewText = "Добавить статус"
+            //ListId needs to be set up in runtime
+        };
+
+
+
+        public static CrossSiteLookupDefinition TmDenyReasonLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id = new Guid("{C6837DD1-0075-4223-BDC3-DEEE57334491}"),
+            Title = "Причина отказа",
+            InternalName = "Tm_DenyReasonLookup",
+            FieldType = BuiltInFieldTypes.Lookup,
+            Group = ModelConsts.ColumnsDefaultGroup,
+            ShowField = "Title",
+            Required = false,
+            Mult = false,
+            nsShowNew = true,
+            nsNewText = "Добавить причину отказа"
+            //ListId needs to be set up in runtime
+        };
+
+        public static CrossSiteLookupDefinition TmRequestedDocumentXml = new CrossSiteLookupDefinition()
+        {
+            Id = new Guid("{83ED0D5C-C1D6-42BC-B922-855D3B4E22A7}"),
+            Title = "Запрашиваемый документ",
+            InternalName = "Tm_RequestedDocument",
+            FieldType = BuiltInFieldTypes.Lookup,
+            Group = ModelConsts.ColumnsDefaultGroup,
+            ShowField = "Title",
+            Required = false,
+            Mult = false,
+            nsShowNew = true,
+            nsNewText = "Добавить подтип госуслуги"
+            //ListId needs to be set up in runtime
+        };
+
+        public static CrossSiteLookupDefinition TmOutputRequestTypeLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id = new Guid("{C6CBD012-0605-4A82-8432-18D787DB8E2A}"),
+            Title = "Тип запроса",
+            InternalName = "Tm_OutputRequestTypeLookup",
+            FieldType = BuiltInFieldTypes.Lookup,
+            Group = ModelConsts.ColumnsDefaultGroup,
+            ShowField = "Title",
+            Required = false,
+            Mult = false,
+            nsShowNew = true,
+            nsNewText = "Добавить подтип госуслуги"
+            //ListId needs to be set up in runtime
+        };
+
+        public static CrossSiteLookupDefinition TmPossessionReasonLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id = new Guid("{BFA645C4-7FEC-417D-B67A-13C2B9DA6268}"),
+            Title = "Основание владения",
+            InternalName = "Tm_PossessionReasonLookup",
+            FieldType = BuiltInFieldTypes.Lookup,
+            Group = ModelConsts.ColumnsDefaultGroup,
+            ShowField = "Title",
+            Required = false,
+            Mult = false,
+            nsShowNew = true,
+            nsNewText = "Добавить основание"
+            //ListId needs to be set up in runtime
+        };
+
+        public static CrossSiteLookupDefinition TmCancellationReasonLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id = new Guid("{E72D2328-1A5D-443C-8C6D-A354C6F6FC86}"),
+            Title = "Причина аннулирования",
+            InternalName = "Tm_CancellationReasonLookup",
+            FieldType = BuiltInFieldTypes.Lookup,
+            Group = ModelConsts.ColumnsDefaultGroup,
+            ShowField = "Title",
+            Required = false,
+            Mult = false,
+            nsShowNew = true,
+            nsNewText = "Добавить причину аннулирования"
         };
     }
 }

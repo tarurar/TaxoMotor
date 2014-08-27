@@ -104,26 +104,8 @@ namespace TM.SP.DataModel
                     lists => lists
                         .AddList(Lists.TmIncomeRequestStateBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestState))
-                            .OnProvisioned<List>(context =>
-                            {
-                                var clientContext = context.Object.Context;
-                                var list = context.Object;
-
-                                clientContext.Load(list, inc => inc.Id);
-                                clientContext.ExecuteQuery();
-                                Plumsail.Fields.TmIncomeRequestStateLookupXml.ListId = list.Id;
-                            })
                         .AddList(Lists.TmIncomeRequestStateInternalBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestStateInternal))
-                            .OnProvisioned<List>(context =>
-                            {
-                                var clientContext = context.Object.Context;
-                                var list = context.Object;
-
-                                clientContext.Load(list, inc => inc.Id);
-                                clientContext.ExecuteQuery();
-                                Plumsail.Fields.TmIncomeRequestStateInternalLookupXml.ListId = list.Id;
-                            })
                         .AddList(Lists.TmDenyReasonBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmDenyReason))
                         .AddList(Lists.TmGovServiceSubTypeBookList,
@@ -141,50 +123,14 @@ namespace TM.SP.DataModel
 
         public static ModelNode GetTaxoMotorSiteDependentModel(ClientContext ctx)
         {
-            Guid webId = WebHelpers.GetWebId(ctx);
-            IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
-
-            List incomeRequestStateBookList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestStateBookList.Url);
-            List incomeRequestStateInternalBookList = ListHelpers.GetList(allLists,
-                Lists.TmIncomeRequestStateInternalBookList.Url);
-            List denyReasonBookList = ListHelpers.GetList(allLists, Lists.TmDenyReasonBookList.Url);
-            List govServiceSubTypeBookList = ListHelpers.GetList(allLists, Lists.TmGovServiceSubTypeBookList.Url);
-            List outcomeRequestTypeBookList = ListHelpers.GetList(allLists, Lists.TmOutcomeRequestTypeBookList.Url);
-            List possessionReasonBookList = ListHelpers.GetList(allLists, Lists.TmPossessionReasonBookList.Url);
-            List cancellationReasonBookList = ListHelpers.GetList(allLists, Lists.TmCancellationReasonBookList.Url);
-
             var model = SPMeta2Model.NewSiteModel(new SiteDefinition() { RequireSelfProcessing = false })
-                .WithFields(fields => fields
-                    .AddField(Fields.TmDenyReasonLookup, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, denyReasonBookList.Id,
-                                "LinkTitle")))
-                    .AddField(Fields.TmRequestedDocument, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, govServiceSubTypeBookList.Id,
-                                "LinkTitle")))
-                    .AddField(Fields.TmOutputRequestTypeLookup, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, outcomeRequestTypeBookList.Id,
-                                "LinkTitle")))
-                    .AddField(Fields.TmPossessionReasonLookup, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, possessionReasonBookList.Id,
-                                "LinkTitle")))
-                    .AddField(Fields.TmCancellationReasonLookup, field => field.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) =>
-                            spField.MakeLookupConnectionToList(webId, cancellationReasonBookList.Id,
-                                "LinkTitle")))
-                )
                 .WithContentTypes(ctList => ctList
                     .AddContentType(ContentTypes.TmIncomeRequest, ct => ct
                         .AddContentTypeFieldLink(Fields.TmRegNumber)
                         .AddContentTypeFieldLink(Fields.TmSingleNumber)
                         .AddContentTypeFieldLink(Fields.TmRegistrationDate)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestForm)
-                        .AddContentTypeFieldLink(Fields.TmDenyReasonLookup)
                         .AddContentTypeFieldLink(Fields.TmComment)
-                        .AddContentTypeFieldLink(Fields.TmRequestedDocument)
                         .AddContentTypeFieldLink(Fields.TmInstanceCounter)
                         .AddContentTypeFieldLink(Fields.TmRequestedDocumentPrice)
                         .AddContentTypeFieldLink(Fields.TmOutputFactDate)
@@ -206,7 +152,6 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmRenewalReason_StateNumber)
                         )
                     .AddContentType(ContentTypes.TmCancelIncomeRequest, ct => ct
-                        .AddContentTypeFieldLink(Fields.TmCancellationReasonLookup)
                         .AddContentTypeFieldLink(Fields.TmCancellationReasonOther)
                         )
                     );
@@ -223,16 +168,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeLink(ContentTypes.TmDuplicateIncomeRequest)
                         .AddContentTypeLink(ContentTypes.TmCancelIncomeRequest)
                         .AddContentTypeLink(ContentTypes.TmRenewIncomeRequest)
-                    )
-                    .OnProvisioned<List>(context =>
-                    {
-                        var clientContext = context.Object.Context;
-                        var list = context.Object;
-
-                        clientContext.Load(list, inc => inc.Id);
-                        clientContext.ExecuteQuery();
-                        Plumsail.Fields.TmIncomeRequestLookupXml.ListId = list.Id;
-                    }));
+                    ));
 
             return model;
         }
@@ -246,7 +182,6 @@ namespace TM.SP.DataModel
             var model = SPMeta2Model.NewSiteModel(new SiteDefinition() { RequireSelfProcessing = false })
                  .WithContentTypes(ctList => ctList
                     .AddContentType(ContentTypes.TmOutcomeRequestState, ct => ct
-                        .AddContentTypeFieldLink(Fields.TmOutputRequestTypeLookup)
                         .AddContentTypeFieldLink(Fields.TmOutputDate)
                         .AddContentTypeFieldLink(Fields.TmErrorDescription)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
@@ -266,13 +201,11 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmTaxiGps)
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevStateNumber)
                         .AddContentTypeFieldLink(Fields.TmTaxiDecision)
-                        .AddContentTypeFieldLink(Fields.TmDenyReasonLookup)
                         .AddContentTypeFieldLink(Fields.TmTaxiBlankNo)
                         .AddContentTypeFieldLink(Fields.TmTaxiInfoOld)
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevLicenseNumber)
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevLicenseDate)
                         .AddContentTypeFieldLink(Fields.TmTaxiStsDetails)
-                        .AddContentTypeFieldLink(Fields.TmPossessionReasonLookup)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                      )
                      .AddContentType(ContentTypes.TmAttach, ct => ct

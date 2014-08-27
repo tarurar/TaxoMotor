@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
+using SPMeta2.CSOM.Extensions;
+using SPMeta2.Definitions;
 
 namespace TM.SP.DataModel
 {
@@ -110,6 +112,28 @@ namespace TM.SP.DataModel
             list.Update();
             listContext.ExecuteQuery();
             return newField;
+        }
+
+        public static void AddListContentTypeFieldLink(ClientContext ctx, ListDefinition listDef, ContentTypeDefinition contentTypeDef, Field spField)
+        {
+            var listContentTypes = ctx.Web.Lists.GetByTitle(listDef.Title).ContentTypes;
+            ctx.Load(listContentTypes);
+            ctx.ExecuteQuery();
+
+            ContentType contentType = listContentTypes.FindByName(contentTypeDef.Name);
+            FieldLinkCollection flColl = contentType.FieldLinks;
+            ctx.Load(spField, inc => inc.Id);
+            ctx.Load(contentType);
+            ctx.Load(flColl);
+            ctx.ExecuteQuery();
+
+            FieldLink fLink = flColl.SingleOrDefault(f => f.Id == spField.Id);
+            if (fLink == null)
+            {
+                flColl.Add(new FieldLinkCreationInformation() { Field = spField });
+                contentType.Update(false);
+                ctx.ExecuteQuery();
+            }
         }
 
         #endregion

@@ -67,30 +67,12 @@ namespace TM.SP.DataModel
             Group = ModelConsts.ColumnsDefaultGroup
         };
 
-        public static FieldDefinition TmDenyReasonLookup = new FieldDefinition()
-        {
-            Id = new Guid("{C6837DD1-0075-4223-BDC3-DEEE57334491}"),
-            Title = "Причина отказа",
-            InternalName = "Tm_DenyReasonLookup",
-            FieldType = BuiltInFieldTypes.Lookup,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
-
         public static FieldDefinition TmComment = new FieldDefinition()
         {
             Id = new Guid("{1A89ECD3-C1AE-4BF7-A3D5-DE319FC325CD}"),
             Title = "Примечание",
             InternalName = "Tm_Comment",
             FieldType = BuiltInFieldTypes.Note,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmRequestedDocument = new FieldDefinition()
-        {
-            Id = new Guid("{83ED0D5C-C1D6-42BC-B922-855D3B4E22A7}"),
-            Title = "Запрашиваемый документ",
-            InternalName = "Tm_RequestedDocument",
-            FieldType = BuiltInFieldTypes.Lookup,
             Group = ModelConsts.ColumnsDefaultGroup
         };
 
@@ -208,15 +190,6 @@ namespace TM.SP.DataModel
             new XAttribute("BdcField", "Title"),
             new XAttribute("Version", "1")
         );
-
-        public static FieldDefinition TmOutputRequestTypeLookup = new FieldDefinition()
-        {
-            Id = new Guid("{C6CBD012-0605-4A82-8432-18D787DB8E2A}"),
-            Title = "Тип запроса",
-            InternalName = "Tm_OutputRequestTypeLookup",
-            FieldType = BuiltInFieldTypes.Lookup,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
 
         public static FieldDefinition TmOutputDate = new FieldDefinition()
         {
@@ -452,15 +425,6 @@ namespace TM.SP.DataModel
             Group = ModelConsts.ColumnsDefaultGroup
         };
 
-        public static FieldDefinition TmPossessionReasonLookup = new FieldDefinition()
-        {
-            Id = new Guid("{BFA645C4-7FEC-417D-B67A-13C2B9DA6268}"),
-            Title = "Основание владения",
-            InternalName = "Tm_PossessionReasonLookup",
-            FieldType = BuiltInFieldTypes.Lookup,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
-
         public static FieldDefinition TmRenewalReason_StateNumber = new FieldDefinition()
         {
             Id = new Guid("{5D0392C3-1B3C-4EE9-8859-B62DCA477DDB}"),
@@ -521,15 +485,6 @@ namespace TM.SP.DataModel
             Title = "Изменение ФИО ИП ",
             InternalName = "Tm_RenewalReason_NamePerson",
             FieldType = BuiltInFieldTypes.Boolean,
-            Group = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmCancellationReasonLookup = new FieldDefinition()
-        {
-            Id = new Guid("{E72D2328-1A5D-443C-8C6D-A354C6F6FC86}"),
-            Title = "Причина аннулирования",
-            InternalName = "Tm_CancellationReasonLookup",
-            FieldType = BuiltInFieldTypes.Lookup,
             Group = ModelConsts.ColumnsDefaultGroup
         };
 
