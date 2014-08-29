@@ -1,0 +1,61 @@
+﻿    .request-list table{
+        font-size: 12px;
+        color: #333333;
+        width: 100%;
+        border: solid 1px #a9a9a9 !important;
+        border-collapse: collapse;
+    }
+
+    .request-list table th {
+        font-size: 12px;
+        font-weight: bold;
+        color: black;
+        background-color: #a9a9a9;
+        border: solid 1px #a9a9a9 !important;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .request-list table tr {
+        background-color: #ffffff;
+        border: solid 1px #a9a9a9 !important;
+    }
+
+    .request-list table tr td {
+        font-size: 12px;
+        border: solid 1px #a9a9a9 !important;
+        padding: 8px;
+    }
+
+    .error-list table{
+        font-size: 12px;
+        color: #333333;
+        width: 100%;
+        border: solid 1px #a9a9a9 !important;
+        border-collapse: collapse;
+    }
+
+    .error-list table th {
+        font-size: 12px;
+        font-weight: bold;
+        color: black;
+        background-color: red;
+        border: solid 1px #a9a9a9 !important;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .error-list table tr {
+        background-color: #ffffff;
+        border: solid 1px #a9a9a9 !important;
+    }
+
+    .error-list table tr td {
+        font-size: 12px;
+        border: solid 1px #a9a9a9 !important;
+        padding: 8px;
+    }
+
+    tr.error-row {
+        text-decoration: line-through;
+    }

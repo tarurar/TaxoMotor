@@ -17,6 +17,7 @@
     <SandboxedSolution>False</SandboxedSolution>
     <AssemblyDeploymentTarget>GlobalAssemblyCache</AssemblyDeploymentTarget>
     <ProjectGuid>{B2A464EC-6524-415E-A218-457D4AA37D83}</ProjectGuid>
+    <ActiveDeploymentConfiguration>Default</ActiveDeploymentConfiguration>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -79,6 +81,9 @@
       <SharePointProjectItemId>{14185da8-fbda-40a5-8617-6ddc41f38626}</SharePointProjectItemId>
     </None>
     <None Include="key.snk" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{53b62489-1b58-4b8d-b2db-df48ad46cb03}</SharePointProjectItemId>
+    </None>
     <None Include="Package\Package.package">
       <PackageId>{43856A1E-4111-4020-9291-AF06A6006C3C}</PackageId>
     </None>
@@ -96,6 +101,7 @@
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Layouts\TM.SP.AppPages\Styles\dialog-lists.css" />
     <Content Include="Resources\Resources\TM.SP.AppPages.resx" />
   </ItemGroup>
   <ItemGroup>
@@ -121,4 +127,17 @@
   <Import Condition=" Exists('$(MSBuildProjectDirectory)\..\SPSF.targets')" Project="$(MSBuildProjectDirectory)\..\SPSF.targets" />
   <Target Name="BeforeBuild" DependsOnTargets="$(BeforeBuildDependsOn)" />
   <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{C1CDDADD-2546-481F-9697-4EA41081F2FC}">
+        <DeploymentConfigurations>
+          <DeploymentConfiguration Name="QuickDeploy">
+            <DeploymentSteps>CKS.Dev.SharePoint.Deployment.CopyBinaries;Microsoft.VisualStudio.SharePoint.RecycleApplicationPool;CKS.Dev.SharePoint.Deployment.WarmUpSite</DeploymentSteps>
+            <RetractionSteps>
+            </RetractionSteps>
+          </DeploymentConfiguration>
+        </DeploymentConfigurations>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

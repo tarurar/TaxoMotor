@@ -13,13 +13,49 @@ namespace TM.SP.AppPages {
     public partial class SendRequestEGRULPage {
         
         /// <summary>
-        /// TestLabel control.
+        /// CssRegistration1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TestLabel;
+        protected global::Microsoft.SharePoint.WebControls.CssRegistration CssRegistration1;
+        
+        /// <summary>
+        /// RequestList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel RequestList;
+        
+        /// <summary>
+        /// RequestListTablePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel RequestListTablePanel;
+        
+        /// <summary>
+        /// ErrorList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel ErrorList;
+        
+        /// <summary>
+        /// ErrorListTablePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel ErrorListTablePanel;
         
         /// <summary>
         /// Placeholder1 control.
