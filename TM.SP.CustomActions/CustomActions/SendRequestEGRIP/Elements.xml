@@ -3,12 +3,12 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
 	<CustomAction
 		RegistrationType="List"
-		RegistrationId="{$ListId:Lists/RequestBCSList;}"
+		RegistrationId="{$ListId:Lists/IncomeRequestList;}"
 		Id="TaxoMotor.SendRequestEGRIP"
 		Location="EditControlBlock"
-		Title="Отправить запрос ЕГРИП"
+		Title="Отправить запрос в ЕГРИП"
 		Sequence="101">
 		<UrlAction
-			Url="javascript: (function() { alert('Запрос ЕГРИП отправлен'); })();" />
+			Url="javascript: (function() { alert('Запрос в ЕГРИП отправлен'); })();" />
 	</CustomAction>
 </Elements>

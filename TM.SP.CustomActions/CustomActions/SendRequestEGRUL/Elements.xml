@@ -3,47 +3,42 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
 	<CustomAction
 		RegistrationType="List"
-		RegistrationId="{$ListId:Lists/RequestBCSList;}"
+		RegistrationId="{$ListId:Lists/IncomeRequestList;}"
 		Id="TaxoMotor.SendRequestEGRUL"
 		Location="EditControlBlock"
-		Title="Отправить запрос ЕГРЮЛ"
+		Title="Отправить запрос в ЕГРЮЛ"
 		Sequence="100">
 		<UrlAction Url="javascript: (function() {
         var listId = SP.ListOperation.Selection.getSelectedList();
-        var bdcIdentities = SP.ListOperation.Selection.getSelectedItems().map(function(e) { return e.id });
-        var itemIdArr = [];
-        ctx.ListData.Row.every(function(e) {  
-          if (itemIdArr.length == bdcIdentities.length) return false;
-          
-          if (bdcIdentities.indexOf(e.BdcIdentity) >= 0) { 
-            itemIdArr.push(e.Id); 
-          }
-          return true;
+        var identities = SP.ListOperation.Selection.getSelectedItems().filter(function (e) {
+            return (e.fsObjType || e.fsObjType == 0);
+        }).map(function (e) {
+            return e.id;
         });
-        
+
         var options = {
-          url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRULPage.aspx') + '?IsDlg=1&amp;ListId=' + listId + '&amp;Items=' + itemIdArr.join() + '&amp;Source=' + location.href,
-          title: 'Отправка запроса ЕГРЮЛ',
-          allowMaximize: false,
-          showClose: true,
-          width: 800,
-          dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
-              if (result == SP.UI.DialogResult.OK) {
-                  if (returnValue == null) {
-                      SP.UI.Notify.addNotification('Запрос успешно отправлен');
-                      SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
-                  }
-                  else {
-                      location.href = returnValue;
-                  }
-              }
-              else {
-                SP.UI.Notify.addNotification('При отправке запроса произошла ошибка');
-              }
-          })
+            url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRULPage.aspx') + '?IsDlg=1&amp;ListId=' + listId + '&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
+            title: 'Отправка запроса в Единый Государственный Реестр Юридических Лиц (ЕГРЮЛ)',
+            allowMaximize: false,
+            showClose: true,
+            width: 800,
+            dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                if (result == SP.UI.DialogResult.OK) {
+                    if (returnValue == null) {
+                        SP.UI.Notify.addNotification('Запрос успешно отправлен');
+                        SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+                    }
+                    else {
+                        location.href = returnValue;
+                    }
+                }
+                else {
+                    SP.UI.Notify.addNotification('При отправке запроса произошла ошибка');
+                }
+            })
         };
- 
-      SP.UI.ModalDialog.showModalDialog(options);
+
+        SP.UI.ModalDialog.showModalDialog(options);
             
       })();" />
 	</CustomAction>
