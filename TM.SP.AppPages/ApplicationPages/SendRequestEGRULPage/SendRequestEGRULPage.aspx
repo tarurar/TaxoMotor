@@ -12,6 +12,9 @@
 <asp:Content ContentPlaceHolderId="PlaceHolderPageTitle" runat="server">
 	<SharePoint:EncodedLiteral runat="server" text="Page Title" EncodeMethod='HtmlEncode'/>
 </asp:Content>
+<asp:Content ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
+    <SharePoint:CssRegistration ID="CssRegistration1" Name="/_layouts/15/TM.SP.AppPages/Styles/dialog-lists.css" runat="server" />
+</asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderPageTitleInTitleArea" runat="server">
 	<SharePoint:EncodedLiteral runat="server" text="Page Title" EncodeMethod='HtmlEncode'/>
 </asp:Content>
@@ -19,29 +22,31 @@
     <SharePoint:EncodedLiteral runat="server" text="Page Description" EncodeMethod='HtmlEncode'/>
 </asp:Content>
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
-    <div id="RequestList">
-        <p><%=GetLocalizedString(resRequestListHeader)%></p>
-        <div id="RequestListTableDiv">
-            <table id="RequestListTable" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <td><%=GetLocalizedString(resRequestListTableHeader1)%></td>
-                        <td><%=GetLocalizedString(resRequestListTableHeader2)%></td>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-            <asp:Label runat="server" ID="TestLabel"></asp:Label>
+    <asp:Panel ID="RequestList" runat="server">
+        <div id="ListHeader">
+            <p><%=GetLocalizedString(resRequestListCaption)%></p>
         </div>
-    </div>
+        <div id="RequestListTableDiv" class="request-list">
+            <asp:Panel ID="RequestListTablePanel" runat="server">
+            </asp:Panel>
+        </div>
+    </asp:Panel>
 
-    <div id="PrecautionMessage">
+    <asp:Panel ID="ErrorList" runat="server">
+        <div id="ErrorListHeader">
+            <p><%=GetLocalizedString(resErrorListCaption)%></p>
+        </div>
+        <div id="ErrorListTableDiv" class="error-list">
+            <asp:Panel ID="ErrorListTablePanel" runat="server">
+            </asp:Panel>
+        </div>
+    </asp:Panel>
+
+    <div id="PrecautionMessage" style="display: none">
         <p><%=GetLocalizedString(resPrecautionMessage)%></p>
     </div>
 
-    <div id="NoRequestMessage">
+    <div id="NoRequestMessage" style="display: none">
         <p><%=GetLocalizedString(resNoRequestMessage)%></p>
     </div>
 

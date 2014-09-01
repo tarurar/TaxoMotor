@@ -117,19 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EGRULRequest_DlgCancelButtonText" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="EGRULRequest_DlgErrorListCaption" xml:space="preserve">
+    <value>Обратите внимание на следующие ошибки</value>
+  </data>
+  <data name="EGRULRequest_DlgErrorListHeader1" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="EGRULRequest_DlgNoAccountErrorFmt" xml:space="preserve">
+    <value>В документе "{0}" не указано юридическое лицо</value>
+  </data>
+  <data name="EGRULRequest_DlgNoDocumentsError" xml:space="preserve">
+    <value>Нет ни одного документа, по которому можно было бы отправить запрос</value>
+  </data>
   <data name="EGRULRequest_DlgNoRequestMessageText" xml:space="preserve">
-    <value>Среди выбранных нет ни одной заявки, которая бы имела сведения о юридическом лице</value>
+    <value>Среди выбранных нет ни одного документа, который бы имел сведения о юридическом лице</value>
+  </data>
+  <data name="EGRULRequest_DlgOkButtonText" xml:space="preserve">
+    <value>Продолжить</value>
   </data>
   <data name="EGRULRequest_DlgPrecautionMessageText" xml:space="preserve">
-    <value>По некоторым заявкам запрос не будет отправлен, так как в них нет сведений о юридических лицах</value>
+    <value>По некоторым документам запрос не будет отправлен, так как в них нет сведений о юридических лицах</value>
+  </data>
+  <data name="EGRULRequest_DlgRequestListCaption" xml:space="preserve">
+    <value>Запрос будет отправлен по следующим документам</value>
   </data>
   <data name="EGRULRequest_DlgRequestListHeader1" xml:space="preserve">
-    <value>Номер заявки</value>
+    <value>Документ</value>
   </data>
   <data name="EGRULRequest_DlgRequestListHeader2" xml:space="preserve">
     <value>Информация о юридическом лице</value>
-  </data>
-  <data name="EGRULRequest_DlgRequestListHeaderText" xml:space="preserve">
-    <value>Запрос будет отправлен по следующим заявкам</value>
   </data>
 </root>
