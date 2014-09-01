@@ -48,6 +48,8 @@ namespace TM.SP.DataModel
                 ContentTypes.TmPossessionReason.Name);
             ListHelpers.MakeContentTypeDefault(ctx, Lists.TmCancellationReasonBookList.Url,
                 ContentTypes.TmCancellationReason.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmConfigurationList.Url,
+                ContentTypes.TmConfigurationEntry.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
