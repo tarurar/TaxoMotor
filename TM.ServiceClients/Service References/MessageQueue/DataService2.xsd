@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Rkis.ServiceMessenger" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Rkis.ServiceMessenger" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://rgs3.dev.armd.ru:8080/DataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfService">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Service" nillable="true" type="tns:Service" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfService" nillable="true" type="tns:ArrayOfService" />
+  <xs:complexType name="Service">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CertificateClientPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CertificateClientThumbprint" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CertificateServiceThumbprint" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceEndPoint" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ServiceInstance" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServicePassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceProiriry" type="xs:int" />
+      <xs:element minOccurs="0" name="ServiceProxy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceSendMaxCount" type="xs:int" />
+      <xs:element minOccurs="0" name="ServiceSpecification" type="xs:int" />
+      <xs:element minOccurs="0" name="ServiceTimeout" type="xs:int" />
+      <xs:element minOccurs="0" name="ServiceUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceUserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Service" nillable="true" type="tns:Service" />
+  <xs:complexType name="Message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CertificateInfo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MessageDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="MessageId" type="ser:guid" />
+      <xs:element minOccurs="0" name="MessageIdentity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MessageMethod" type="xs:int" />
+      <xs:element minOccurs="0" name="MessageText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MessageTextAck" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MessageType" type="xs:int" />
+      <xs:element minOccurs="0" name="RetriesCount" type="xs:int" />
+      <xs:element minOccurs="0" name="RetriesError" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RetriesLastDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="RetriesStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="Service" nillable="true" type="tns:Service" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Message" nillable="true" type="tns:Message" />
+</xs:schema>
