@@ -104,6 +104,36 @@
 			$instance.Update()
 			$lob.Update()
 		}
+
+	# Desc: ...
+		function AddConfigurationListEntry($vars, [string]$confKey, [string]$confValue){
+			$siteUrl = $vars["SiteUrl"]
+			$site = Get-SPSite -Identity $siteUrl
+			$web = $site.RootWeb
+			$configList = $web.GetList($vars["ConfigListUrl"])
+			if ($configList -eq $null)
+			{
+				Log -message ("There is no configuration list by url " + $vars["ConfigListUrl"]) -type $SPSD.LogTypes.Warning
+			}
+			else
+			{
+				$exItem = $configList.Items | Where-Object {$_.Title -eq $confKey};
+				if ($exItem -eq $null)
+				{
+					$newItem = $configList.Items.Add()
+					$newItem['Title'] = $confKey
+					$newItem['Tm_ConfigurationValue'] = $confValue
+					$newItem.Update()
+				}
+				else
+				{
+					Log -message ("Configuration list already has an item with the key " + $confKey) -type $SPSD.LogTypes.Warning
+					Log -message ("Value (" + $exItem['Tm_ConfigurationValue'] + ") will be overwritten") -type $SPSD.LogTypes.Warning
+					$exItem['Tm_ConfigurationValue'] = $confValue
+					$exItem.Update()
+				}
+			}
+		}
 #endregion
 
 #region BeforeDeploy
@@ -127,6 +157,7 @@
         #activate content type association feature in content web application
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "CoordinateV5"
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "DeveloperData"
+		AddConfigurationListEntry -vars $vars -confKey "MessageQueueServiceUrl" -confValue $vars['MessageQueueServiceUrl']
      }
 #endregion
 

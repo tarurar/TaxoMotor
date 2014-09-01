@@ -31,6 +31,10 @@
       <Variable Name="BCS_Requests_DBServerName">ProductionDBServerName</Variable>
       <Variable Name="BCS_Requests_DBName">ProductionDBName</Variable>
       <Variable Name="BCS_Requests_CredentialsSecureStoreAppId">ProductionSecureStoreApplicationId</Variable>
+      <Variable Name="ConfigListUrl">/Lists/ConfigurationList</Variable>
+      <!-- Config Values -->
+      <Variable Name="MessageQueueServiceUrl">http://rgs3.dev.armd.ru:8080/DataService.svc</Variable>
+      <!-- End Config Values -->
     </Variables>
     <PreRequisiteSolutions ID="Default" />
     <Solutions ID="Default">

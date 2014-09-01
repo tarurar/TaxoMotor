@@ -31,6 +31,10 @@
       <Variable Name="BCS_Requests_DBServerName">SP2013DEV</Variable>
       <Variable Name="BCS_Requests_DBName">TM.Data</Variable>
       <Variable Name="BCS_Requests_CredentialsSecureStoreAppId">asguf_MSCRM</Variable>
+      <Variable Name="ConfigListUrl">/Lists/ConfigurationList</Variable>
+      <!-- Config Values -->
+      <Variable Name="MessageQueueServiceUrl">http://rgs3.dev.armd.ru:8080/DataService.svc</Variable>
+      <!-- End Config Values -->
     </Variables>
     <PreRequisiteSolutions ID="Default" />
     <Solutions ID="Default">
