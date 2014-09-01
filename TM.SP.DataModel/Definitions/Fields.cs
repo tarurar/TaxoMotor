@@ -497,6 +497,33 @@ namespace TM.SP.DataModel
             Group = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmConfigurationCategory = new FieldDefinition()
+        {
+            Id = new Guid("{C99E5E6C-234C-4C99-9D68-9089B84C53BA}"),
+            Title = "Категория",
+            InternalName = "Tm_ConfigurationCategory",
+            FieldType = BuiltInFieldTypes.Text,
+            Group = ModelConsts.ServiceColumnsGroup
+        };
+
+        public static FieldDefinition TmConfigurationValue= new FieldDefinition()
+        {
+            Id = new Guid("{5EDE105C-9028-4003-A32C-D848878172B0}"),
+            Title = "Значение параметра",
+            InternalName = "Tm_ConfigurationValue",
+            FieldType = BuiltInFieldTypes.Text,
+            Group = ModelConsts.ServiceColumnsGroup
+        };
+
+        public static FieldDefinition TmConfigurationDescr = new FieldDefinition()
+        {
+            Id = new Guid("{B361690F-3427-43E0-B41D-43EAE2AB9CC5}"),
+            Title = "Описание",
+            InternalName = "Tm_ConfigurationDescr",
+            FieldType = BuiltInFieldTypes.Note,
+            Group = ModelConsts.ServiceColumnsGroup
+        };
+
         #endregion
     }
 }

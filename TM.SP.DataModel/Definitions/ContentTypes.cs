@@ -148,6 +148,15 @@ namespace TM.SP.DataModel
             Name = "Tm_Attach"
         };
 
+        public static ContentTypeDefinition TmConfigurationEntry = new ContentTypeDefinition()
+        {
+            Id = new Guid("{E5ABD31B-14BD-49B2-A655-8ADCE3002FE3}"),
+            Description = "Элемент конфигурации",
+            Group = ModelConsts.ServiceContentTypeGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name = "Tm_ConfigurationEntry"
+        };
+
         #endregion
     }
 }

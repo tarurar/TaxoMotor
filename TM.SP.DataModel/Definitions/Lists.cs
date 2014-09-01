@@ -108,5 +108,14 @@ namespace TM.SP.DataModel
             Description = "Документы обращения",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmConfigurationList = new ListDefinition()
+        {
+            Title = "Конфигурация",
+            Url = "ConfigurationList",
+            TemplateType = BuiltInListTemplateTypeId.GenericList,
+            Description = "Элементы конфигурации системы",
+            ContentTypesEnabled = true
+        };
     }
 }

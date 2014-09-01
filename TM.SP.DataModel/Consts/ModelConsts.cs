@@ -9,6 +9,8 @@ namespace TM.SP.DataModel
     public static class ModelConsts
     {
         public static readonly string ColumnsDefaultGroup = "TaxoMotor Columns";
+        public static readonly string ServiceColumnsGroup = "TaxoMotor Service Columns";
         public static readonly string ContentTypeDefaultGroup = "TaxoMotor Content Types";
+        public static readonly string ServiceContentTypeGroup = "TaxoMotor Service Content Types";
     }
 }
