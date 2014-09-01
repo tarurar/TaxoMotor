@@ -27,6 +27,8 @@ namespace TM.SP.DataDeploy
             public string windowsDomain { get; set; }
             [Option('f', "folder", Required = true, HelpText = "Folder path with csv files")]
             public string folderPath { get; set; }
+            [Option('e', "erase", Required = false, HelpText = "Delete existant data in list")]
+            public bool deleteData { get; set; }
         }
 
         internal static bool CheckArguments(Options options)
@@ -111,7 +113,7 @@ namespace TM.SP.DataDeploy
                 ListDataUploader uploader = new ListDataUploader();
                 foreach (string fn in allFiles)
                 {
-                    uploader.UploadToListByFileName(fn, ",", ctx);
+                    uploader.UploadToListByFileName(fn, ",", ctx, options.deleteData);
                 }
             }
 
