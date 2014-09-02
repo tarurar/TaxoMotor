@@ -209,6 +209,15 @@ namespace TM.SP.DataModel
             Group = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmAnswerReceived = new FieldDefinition()
+        {
+            Id = new Guid("{AAA21EAC-CD45-4ABC-A818-D6F9AC252389}"),
+            Title = "Ответ получен",
+            InternalName = "Tm_AnswerReceived",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
         public static FieldDefinition TmTaxiBrand = new FieldDefinition()
         {
             Id = new Guid("{DE4AF847-5CAC-44E8-AABD-91D171029CEE}"),

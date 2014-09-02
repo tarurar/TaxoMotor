@@ -72,6 +72,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmConfigurationCategory)
                     .AddField(Fields.TmConfigurationValue)
                     .AddField(Fields.TmConfigurationDescr)
+                    .AddField(Fields.TmAnswerReceived)
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -194,6 +195,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmOutputDate)
                         .AddContentTypeFieldLink(Fields.TmErrorDescription)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
+                        .AddContentTypeFieldLink(Fields.TmAnswerReceived)
                      )
                      .AddContentType(ContentTypes.TmTaxi, ct => ct
                         .AddContentTypeFieldLink(Fields.TmTaxiBrand)
