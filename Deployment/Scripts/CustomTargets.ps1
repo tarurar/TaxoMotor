@@ -158,6 +158,7 @@
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "CoordinateV5"
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "DeveloperData"
 		AddConfigurationListEntry -vars $vars -confKey "MessageQueueServiceUrl" -confValue $vars['MessageQueueServiceUrl']
+		AddConfigurationListEntry -vars $vars -confKey "BR2ServiceGuid" -confValue $vars['BR2ServiceGuid']
      }
 #endregion
 
