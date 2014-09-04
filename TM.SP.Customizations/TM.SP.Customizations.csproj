@@ -72,6 +72,9 @@
     <None Include="DelegateControls\MasterPageCSSTuneControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{d01ef362-3fff-4564-aaf6-9a38e7089472}</SharePointProjectItemId>
     </None>
+    <None Include="DelegateControls\tmsphelpersControl\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{86f2695d-b209-4bf7-ae3d-23fc0ab68482}</SharePointProjectItemId>
+    </None>
     <None Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.feature">
       <FeatureId>{d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07}</FeatureId>
     </None>
@@ -81,6 +84,9 @@
     <None Include="key.snk" />
     <None Include="Layouts\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{6dc7c3b5-1577-4f4e-ab27-e62f23bf04e5}</SharePointProjectItemId>
+    </None>
+    <None Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.min.js.map">
+      <DependentUpon>jquery-2.1.1.min.js</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Package\Package.package">
@@ -95,10 +101,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DelegateControls\tmsphelpersControl\Elements.xml" />
+    <Content Include="DelegateControls\tmsphelpersControl\tmsphelpersControl.ascx" />
     <Content Include="Features\TaxoMotor_TaxoMotorCustomizations\Resources.resx" />
     <Content Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\TaxoMotor_TaxoMotorWebAppLevelCustomizations.Template.xml">
       <DependentUpon>TaxoMotor_TaxoMotorWebAppLevelCustomizations.feature</DependentUpon>
     </Content>
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\tm.sp.js" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorWebAppLevelCustomizations.gif" />
   </ItemGroup>
   <ItemGroup>
