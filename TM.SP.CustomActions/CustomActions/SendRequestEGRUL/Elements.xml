@@ -25,15 +25,20 @@
             dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
                 if (result == SP.UI.DialogResult.OK) {
                     if (returnValue == null) {
-                        SP.UI.Notify.addNotification('Запрос успешно отправлен');
-                        SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+                        TM.SP.showIconNotification('Отправка запросов завершена', '_layouts/15/images/kpinormal-0.gif', true);
+                        setTimeout(function() {
+                          SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);  
+                        }, 2000);
                     }
                     else {
                         location.href = returnValue;
                     }
                 }
-                else {
-                    SP.UI.Notify.addNotification('При отправке запроса произошла ошибка');
+                else if (result == -1){
+                    TM.SP.showIconNotification('При отправке запросов возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                    setTimeout(function() {
+                      SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);  
+                    }, 2000);
                 }
             })
         };
