@@ -141,6 +141,9 @@
   <data name="EGRULRequest_DlgPrecautionMessageText" xml:space="preserve">
     <value>По некоторым документам запрос не будет отправлен, так как в них нет сведений о юридических лицах</value>
   </data>
+  <data name="EGRULRequest_DlgProcessNotifyText" xml:space="preserve">
+    <value>Выполняется отправка</value>
+  </data>
   <data name="EGRULRequest_DlgRequestListCaption" xml:space="preserve">
     <value>Запрос будет отправлен по следующим документам</value>
   </data>

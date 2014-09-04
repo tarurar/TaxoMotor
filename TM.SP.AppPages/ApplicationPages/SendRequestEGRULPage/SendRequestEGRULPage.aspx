@@ -14,6 +14,16 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
     <SharePoint:CssRegistration ID="CssRegistration1" Name="/_layouts/15/TM.SP.AppPages/Styles/dialog-lists.css" runat="server" />
+    <SharePoint:ScriptLink ID="jsSendRequestDialog" OnDemand="false" runat="server" Localizable="false" Name="/_layouts/15/TM.SP.AppPages/Scripts/SendRequestDialog.js"></SharePoint:ScriptLink>
+    <SharePoint:ScriptBlock runat="server">
+        var ShowEGRULSendWaitingScreen = function(){
+            var waitingMarkup = TM.SP.getProcessingMarkup('<%=GetLocalizedString(resProcessNotifyText) %>');
+
+            $('#ListHeader p').html(waitingMarkup); 
+            $('#<%= BtnOk.ClientID %>').attr('disabled', 'disabled'); 
+            $('#<%= BtnCancel.ClientID %>').attr('disabled', 'disabled'); 
+        };
+    </SharePoint:ScriptBlock>
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderPageTitleInTitleArea" runat="server">
 	<SharePoint:EncodedLiteral runat="server" text="Page Title" EncodeMethod='HtmlEncode'/>
@@ -54,7 +64,7 @@
       <wssuc:ButtonSection runat="server" ShowStandardCancelButton="False">
         <Template_Buttons>
           <asp:placeholder ID="Placeholder1" runat="server">
-            <asp:Button runat="server" class="ms-ButtonHeightWidth" ID="BtnOk" Text="Ok" />
+            <asp:Button runat="server" class="ms-ButtonHeightWidth" ID="BtnOk" Text="Ok" OnClientClick="ShowEGRULSendWaitingScreen();" UseSubmitBehavior="false"/>              
             <SeparatorHtml>
                 <span id="idSpace" class="ms-SpaceBetButtons" />
             </SeparatorHtml>

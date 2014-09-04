@@ -14,6 +14,7 @@ namespace TM.SP.AppPages
     using System.Web.UI.HtmlControls;
     using System.Web.UI.WebControls;
     using System.Xml;
+    using System.Xml.Linq;
     using System.Xml.Serialization;
     using System.Collections;
     using System.Collections.Generic;
@@ -30,19 +31,20 @@ namespace TM.SP.AppPages
     using Microsoft.BusinessData.Runtime;
     using Microsoft.BusinessData.MetadataModel;
     using Microsoft.BusinessData.MetadataModel.Collections;
-    using Microsoft.CSharp.RuntimeBinder;
+    using CamlexNET;
 
     using TM.SP.AppPages.ApplicationPages;
-    using TM.SP.BCSModels.CoordinateV5;
+    using BcsCoordinateV5Model = TM.SP.BCSModels.CoordinateV5;
     using TM.Utils;
+    using TM.Services.CoordinateV5;
+    using MessageQueueService = TM.ServiceClients.MessageQueue;
 
 
-    internal class EGRULRequestItem
+    [Serializable]
+    internal class EGRULRequestItem : RequestItem
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
         public string RequestAccount { get; set; }
-        public bool HasError { get; set; }
+        public int RequestAccountId { get; set; }
     }
 
     /// <summary>
@@ -51,28 +53,131 @@ namespace TM.SP.AppPages
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class SendRequestEGRULPage : SendRequestDialogBase
     {
-        protected static readonly string resRequestListCaption = "$Resources:EGRULRequest_DlgRequestListCaption";
-        protected static readonly string resPrecautionMessage = "$Resources:EGRULRequest_DlgPrecautionMessageText";
-        protected static readonly string resNoRequestMessage = "$Resources:EGRULRequest_DlgNoRequestMessageText";
+        #region [resourceStrings]
+        protected static readonly string resRequestListCaption      = "$Resources:EGRULRequest_DlgRequestListCaption";
+        protected static readonly string resPrecautionMessage       = "$Resources:EGRULRequest_DlgPrecautionMessageText";
+        protected static readonly string resNoRequestMessage        = "$Resources:EGRULRequest_DlgNoRequestMessageText";
         protected static readonly string resRequestListTableHeader1 = "$Resources:EGRULRequest_DlgRequestListHeader1";
         protected static readonly string resRequestListTableHeader2 = "$Resources:EGRULRequest_DlgRequestListHeader2";
-        protected static readonly string resOkButton = "$Resources:EGRULRequest_DlgOkButtonText";
-        protected static readonly string resCancelButton = "$Resources:EGRULRequest_DlgCancelButtonText";
-        protected static readonly string resNoAccountErrorFmt = "$Resources:EGRULRequest_DlgNoAccountErrorFmt";
-        protected static readonly string resErrorListCaption = "$Resources:EGRULRequest_DlgErrorListCaption";
-        protected static readonly string resErrorListHeader1 = "$Resources:EGRULRequest_DlgErrorListHeader1";
-        protected static readonly string resNoDocumentsError = "$Resources:EGRULRequest_DlgNoDocumentsError";
+        protected static readonly string resOkButton                = "$Resources:EGRULRequest_DlgOkButtonText";
+        protected static readonly string resCancelButton            = "$Resources:EGRULRequest_DlgCancelButtonText";
+        protected static readonly string resNoAccountErrorFmt       = "$Resources:EGRULRequest_DlgNoAccountErrorFmt";
+        protected static readonly string resErrorListCaption        = "$Resources:EGRULRequest_DlgErrorListCaption";
+        protected static readonly string resErrorListHeader1        = "$Resources:EGRULRequest_DlgErrorListHeader1";
+        protected static readonly string resNoDocumentsError        = "$Resources:EGRULRequest_DlgNoDocumentsError";
+        protected static readonly string resProcessNotifyText       = "$Resources:EGRULRequest_DlgProcessNotifyText";
+        #endregion
 
-        protected static readonly string EGRULDataEntityName = "RequestAccountData";
-        protected static readonly string EGRULDataFetchMethodName = "GetItemsByIdListInstance";
+        #region [fields]
+        private static readonly string EGRULServiceGuidConfigName   = "BR2ServiceGuid";
 
         private SPGridView requestListGrid;
         private SPGridView errorListGrid;
+        #endregion
+
+        #region [methods]
+        /// <summary>
+        /// Getting bcs entity RequestAccount by Id
+        /// </summary>
+        /// <param name="Id">Id of entity RequestAccount</param>
+        /// <returns></returns>
+        private BcsCoordinateV5Model.RequestAccount GetRequestAccount(int Id)
+        {
+            IEntity contentType = BCS.GetEntity(SPServiceContext.Current, String.Empty, 
+                BCS.LOBRequestSystemNamespace, "RequestAccount");
+            List<object> args = new List<object>();
+            args.Add(Id);
+            var parameters = args.ToArray();
+            return (BcsCoordinateV5Model.RequestAccount)BCS.GetDataFromMethod(BCS.LOBRequestSystemName, 
+                contentType, "ReadRequestAccountItem", MethodInstanceType.SpecificFinder, ref parameters);
+        }
+        /// <summary>
+        /// Building TaskMessage.Data.Parameter for CoordinateTaskMessage according to EGRUL request
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        private XmlElement getTaskParam(BcsCoordinateV5Model.RequestAccount account)
+        {
+            XElement el = new XElement("ServiceProperties", 
+                            new XAttribute("xmlns", String.Empty), 
+                            new XElement("ogrn", account.Ogrn),
+                            new XElement("inn", account.Inn));
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(el.CreateReader());
+
+            return doc.DocumentElement;
+        }
+        /// <summary>
+        ///  Building CoordinateTaskMessage
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private CoordinateTaskMessage GetRelevantCoordinateTaskMessage(EGRULRequestItem item)
+        {
+            // request item
+            SPListItem rItem = GetList().GetItemOrBreak(item.Id);
+            var rDocument   = rItem["Tm_RequestedDocument"] == null ? 0 : Convert.ToInt32(rItem["Tm_RequestedDocument"]);
+            var sNumber     = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
+            // request account
+            BcsCoordinateV5Model.RequestAccount rAccount = GetRequestAccount(item.RequestAccountId);
+            if (rAccount == null)
+                throw new Exception(String.Format("Bcs entity with Id = {0} not found", item.RequestAccountId));
+            // service code lookup item
+            SPList stList = this.Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
+            SPListItem stItem = stList.GetItemOrNull(rDocument);
+            var sCode = stItem == null ? String.Empty : 
+                (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
+
+            return new CoordinateTaskMessage()
+            {
+                ServiceHeader = new Headers()
+                {
+                    FromOrgCode = String.Empty,                     // todo
+                    ToOrgCode = "705",                              // todo
+                    MessageId = Guid.NewGuid().ToString("D"),       // todo
+                    ServiceNumber = sNumber,
+                    RequestDateTime = DateTime.Now
+                },
+                TaskMessage = new CoordinateTaskData()
+                {
+                    Data = new DocumentsRequestData()
+                    {
+                        DocumentTypeCode = "4020",                  // todo
+                        IncludeBinaryView = true,
+                        IncludeXmlView = true,
+                        Parameter = getTaskParam(rAccount),
+                        ParameterTypeCode = String.Empty            // todo
+                    },
+                    Task = new RequestTask()
+                    {
+                        Code = "¡–2",                               // todo
+                        Department = new Department()
+                        {
+                            Name = "ƒ“Ë–ƒ“»",                       // todo
+                            Code = "2009",                          // todo
+                            RegDate = null                          // todo
+                        },
+                        RequestId = new Guid().ToString("D"),       // todo
+                        Responsible = new Person()
+                        {
+                            LastName = String.Empty,                // todo
+                            FirstName = this.Web.CurrentUser.Name   // todo
+                        },
+                        ServiceNumber = sNumber,
+                        ServiceTypeCode = sCode,
+                        Subject = String.Empty,                     // todo
+                        ValidityPeriod = null                       // todo
+                    },
+                    Signature = String.Empty                        // todo
+                }
+            };
+        }
 
         protected override void CreateChildControls()
         {
             base.CreateChildControls();
-            // document list grid
+            #region [document list grid]
             requestListGrid = new SPGridView() { AutoGenerateColumns = false };
             requestListGrid.Columns.Add(new SPBoundField()
             {
@@ -92,7 +197,8 @@ namespace TM.SP.AppPages
             });
             requestListGrid.RowDataBound += requestListGrid_RowDataBound;
             RequestListTablePanel.Controls.Add(requestListGrid);
-            // error list grid
+            #endregion
+            #region [error list grid]
             errorListGrid = new SPGridView() { AutoGenerateColumns = false };
             errorListGrid.Columns.Add(new SPBoundField()
             {
@@ -100,6 +206,7 @@ namespace TM.SP.AppPages
                 DataField = "Message",
             });
             ErrorListTablePanel.Controls.Add(errorListGrid);
+            #endregion
 
             BtnOk.Text = GetLocalizedString(resOkButton);
             BtnCancel.Text = GetLocalizedString(resCancelButton);
@@ -126,49 +233,67 @@ namespace TM.SP.AppPages
             this.BtnOk.Click += new EventHandler(this.BtnOk_Click);
             this.BtnCancel.Click += new EventHandler(this.BtnCancel_Click);
         }
-
-        protected override List<object> LoadDocuments()
+        /// <summary>
+        /// Loading documents
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        protected override List<T> LoadDocuments<T>()
         {
             SPList docList = GetList();
-            var idList = ItemIdListParam.Split(',');
+            var idList = ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
+            
+            SPListItemCollection docItems = docList.GetItems(new SPQuery(){
+                Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString()
+            });
+            
+            List<EGRULRequestItem> retVal = new List<EGRULRequestItem>();
+            foreach (SPListItem item in docItems)
+            {
+                var account = item["Tm_RequestAccountBCSLookup"] != null ? item["Tm_RequestAccountBCSLookup"].ToString() : String.Empty;
+                var accountId = item["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestAccountBCSLookup") : null;
 
-            return (from item in docList.Items.OfType<SPListItem>()
-                   let account = item["Tm_RequestAccountBCSLookup"] != null ? item["Tm_RequestAccountBCSLookup"].ToString() : null
-                   where idList.Contains<String>(item.ID.ToString())
-                   select new EGRULRequestItem()
-                   {
-                       Id = item.ID,
-                       Title = item.Title,
-                       RequestAccount = account,
-                       HasError = false
-                   }).ToList<object>();
+                retVal.Add(new EGRULRequestItem()
+                {
+                    Id                  = item.ID,
+                    Title               = item.Title,
+                    RequestAccount      = account,
+                    RequestAccountId    = accountId != null ? (int)accountId : 0,
+                    HasError            = false
+                });
+            }
+
+            return retVal.Cast<T>().ToList();
         }
 
-        protected override void BindDocuments(List<object> documentList)
+        protected override void BindDocuments<T>(List<T> documentList)
         {
             requestListGrid.DataSource = documentList;
             requestListGrid.DataBind();
         }
 
-        protected override List<ValidationErrorInfo> ValidateDocuments(List<object> documentList)
+        protected override List<ValidationErrorInfo> ValidateDocuments<T>(List<T> documentList)
         {
             var retVal = new List<ValidationErrorInfo>();
 
-            foreach (EGRULRequestItem document in documentList)
+            foreach (T document in documentList)
             {
-                if (document.RequestAccount == null)
+                EGRULRequestItem doc = document as EGRULRequestItem;
+                #region [Rule#1 - RequestAccount cannot be null]
+                if (String.IsNullOrEmpty(doc.RequestAccount))
                 {
                     retVal.Add(new ValidationErrorInfo()
                     {
-                        Message = String.Format(GetLocalizedString(resNoAccountErrorFmt), document.Title),
+                        Message = String.Format(GetLocalizedString(resNoAccountErrorFmt), doc.Title),
                         Severity = ValidationErrorSeverity.Warning
                     });
 
-                    document.HasError = true;
+                    doc.HasError = true;
                 }
+                #endregion
             }
 
-            if (documentList.Cast<EGRULRequestItem>().All(i => i.HasError))
+            if (documentList.All(i => i.HasError))
                 retVal.Add(new ValidationErrorInfo()
                 {
                     Message = GetLocalizedString(resNoDocumentsError),
@@ -184,10 +309,12 @@ namespace TM.SP.AppPages
             errorListGrid.DataBind();
         }
 
-        protected override void HandleDocumentsLoad(List<object> documentList, List<ValidationErrorInfo> errorList)
+        protected override void HandleDocumentsLoad<T>(List<T> documentList, List<ValidationErrorInfo> errorList)
         {
+            // Save state
+            this.ViewState["requestDocumentList"] = documentList.Cast<EGRULRequestItem>().ToList();
             // UI
-            RequestList.Visible = !(documentList.Cast<EGRULRequestItem>().All(i => i.HasError));
+            RequestList.Visible = !(documentList.All(i => i.HasError));
             ErrorList.Visible = errorList.Count() > 0;
             BtnOk.Enabled = !errorList.Any<ValidationErrorInfo>(err => err.Severity == ValidationErrorSeverity.Critical);
         }
@@ -199,7 +326,6 @@ namespace TM.SP.AppPages
         /// <param name="e">Arguments of the event</param>
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            //TODO: endoperation(-1) ?
             this.EndOperation(0);
         }
 
@@ -210,9 +336,40 @@ namespace TM.SP.AppPages
         /// <param name="e">Arguments of the event</param>
         private void BtnOk_Click(object sender, EventArgs e)
         {
-            //TODO: make a requests for EGRUL
-            this.EndOperation();
+            var success = false;
+            try
+            {
+                var documentList = (List<EGRULRequestItem>)this.ViewState["requestDocumentList"];
+                success = SendRequests<EGRULRequestItem>(documentList);
+            }
+            catch (Exception)
+            {
+                this.EndOperation(-1);
+            }
+            
+            this.EndOperation(success ? 1 : -1);
         }
+
+        protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
+        {
+            EGRULRequestItem doc = document as EGRULRequestItem;
+            SPListItem configItem = Config.GetConfigItem(this.Web, EGRULServiceGuidConfigName);
+            var svcGuid = Config.GetConfigValue(configItem);
+            var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
+            var internalMessage = GetRelevantCoordinateTaskMessage(doc);
+
+            return new MessageQueueService.Message()
+            {
+                Service         = svc,
+                MessageId       = new Guid(internalMessage.ServiceHeader.MessageId),
+                MessageType     = 2,
+                MessageMethod   = 14,
+                MessageDate     = DateTime.Now,
+                MessageText     = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
+            };
+        }
+        #endregion
+
     }
 }
 

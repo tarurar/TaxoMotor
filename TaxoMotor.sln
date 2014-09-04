@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.Services", "TM.Services\TM.Services.csproj", "{56AE0CAD-EE3D-4CC5-A69B-EF56391D1BC7}"
 EndProject
@@ -59,6 +59,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.DataModelDeploy", "TM.SP.DataModelDeploy\TM.SP.DataModelDeploy.csproj", "{7A07ADF1-A662-4D2B-8F96-88A5CCC3204C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.DataDeploy", "TM.SP.DataDeploy\TM.SP.DataDeploy.csproj", "{25D32265-8754-4C12-A858-CB6B31886825}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.ServiceClients", "TM.ServiceClients\TM.ServiceClients.csproj", "{46D947B0-78CA-4A63-B74D-5A078360A665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -136,6 +138,10 @@ Global
 		{25D32265-8754-4C12-A858-CB6B31886825}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25D32265-8754-4C12-A858-CB6B31886825}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25D32265-8754-4C12-A858-CB6B31886825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46D947B0-78CA-4A63-B74D-5A078360A665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D947B0-78CA-4A63-B74D-5A078360A665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D947B0-78CA-4A63-B74D-5A078360A665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D947B0-78CA-4A63-B74D-5A078360A665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
