@@ -78,5 +78,33 @@ namespace TM.Utils
             item[identityField] = identity;
             item[bcsFieldInternalName] = Reflection.GetPropertyValue<Object>(bcsLookupObject, valueField);
         }
+
+        public static object GetBCSFieldLookupId(SPListItem item, string bcsFieldInternalName)
+        {
+            var fn = GetLookupIdentityFieldName(item, bcsFieldInternalName);
+            if (item[fn] == null)
+                throw new Exception(String.Format("Lookup field {0} contains no identity value", bcsFieldInternalName));
+
+            object[] decodedId = EntityInstanceIdEncoder.DecodeEntityInstanceId(item[fn].ToString());
+
+            return decodedId[0];
+        }
+
+        private static string GetLookupIdentityFieldName(SPField lookupField)
+        {
+            XmlDocument schema = new XmlDocument();
+            schema.LoadXml(lookupField.SchemaXml);
+
+            return schema.FirstChild.Attributes["RelatedFieldWssStaticName"].Value;
+        }
+
+        private static string GetLookupIdentityFieldName(SPListItem item, string bcsFieldInternalName)
+        {
+            SPField field = item.Fields.GetFieldByInternalName(bcsFieldInternalName);
+            if (field == null)
+                throw new Exception("BCS field not found by internal name");
+
+            return GetLookupIdentityFieldName(field);
+        }
     }
 }

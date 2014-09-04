@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Data;
 using System.ComponentModel;
+using Microsoft.SharePoint;
 
 
 namespace TM.Utils
@@ -47,6 +48,56 @@ namespace TM.Utils
                 t.Rows.Add(values);
             }
             return t;
+        }
+
+        public static SPListItem GetItemOrBreak(this SPList list, int Id)
+        {
+            SPListItem retVal;
+
+            try 
+	        {	        
+		        retVal = list.GetItemById(Id);
+	        }
+            catch (ArgumentException ex)
+	        {
+                throw new Exception(String.Format("Item with Id = {0} in list named {1} does not exist", Id, list.Title));
+	        }
+
+            return retVal;
+            
+        }
+
+        public static SPListItem GetItemOrNull(this SPList list, int Id)
+        {
+            SPListItem retVal;
+
+            try
+            {
+                retVal = list.GetItemById(Id);
+            }
+            catch (ArgumentException ex)
+            {
+                retVal = null;
+            }
+
+            return retVal;
+        }
+
+        public static SPList GetListOrBreak(this SPWeb web, string url)
+        {
+            SPList retVal;
+
+            try
+            {
+                retVal = web.GetList(url);
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new Exception(String.Format("List with url = {0} does not exist", url));
+            }
+
+            return retVal;
+
         }
     }
 }
