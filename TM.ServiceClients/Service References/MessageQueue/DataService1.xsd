@@ -28,24 +28,39 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetMessageList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="DocumentId" type="q4:guid" />
+        <xs:element minOccurs="0" name="MessageType" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMessageListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Rkis.ServiceMessenger" minOccurs="0" name="GetMessageListResult" nillable="true" type="q5:ArrayOfMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetMessage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q4:guid" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q6:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMessageResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Rkis.ServiceMessenger" minOccurs="0" name="GetMessageResult" nillable="true" type="q5:Message" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Rkis.ServiceMessenger" minOccurs="0" name="GetMessageResult" nillable="true" type="q7:Message" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddMessage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Rkis.ServiceMessenger" minOccurs="0" name="message" nillable="true" type="q6:Message" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Rkis.ServiceMessenger" minOccurs="0" name="message" nillable="true" type="q8:Message" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

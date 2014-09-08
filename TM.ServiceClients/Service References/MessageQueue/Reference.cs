@@ -295,13 +295,13 @@ namespace TM.ServiceClients.MessageQueue {
         private string CertificateInfoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid DocumentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime MessageDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid MessageIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageIdentityField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int MessageMethodField;
@@ -354,6 +354,19 @@ namespace TM.ServiceClients.MessageQueue {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid DocumentId {
+            get {
+                return this.DocumentIdField;
+            }
+            set {
+                if ((this.DocumentIdField.Equals(value) != true)) {
+                    this.DocumentIdField = value;
+                    this.RaisePropertyChanged("DocumentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime MessageDate {
             get {
                 return this.MessageDateField;
@@ -375,19 +388,6 @@ namespace TM.ServiceClients.MessageQueue {
                 if ((this.MessageIdField.Equals(value) != true)) {
                     this.MessageIdField = value;
                     this.RaisePropertyChanged("MessageId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MessageIdentity {
-            get {
-                return this.MessageIdentityField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessageIdentityField, value) != true)) {
-                    this.MessageIdentityField = value;
-                    this.RaisePropertyChanged("MessageIdentity");
                 }
             }
         }
@@ -535,6 +535,12 @@ namespace TM.ServiceClients.MessageQueue {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetService", ReplyAction="http://tempuri.org/IDataService/GetServiceResponse")]
         System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Service> GetServiceAsync(System.Guid ServiceId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetMessageList", ReplyAction="http://tempuri.org/IDataService/GetMessageListResponse")]
+        TM.ServiceClients.MessageQueue.Message[] GetMessageList(System.Guid DocumentId, int MessageType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetMessageList", ReplyAction="http://tempuri.org/IDataService/GetMessageListResponse")]
+        System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Message[]> GetMessageListAsync(System.Guid DocumentId, int MessageType);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetMessage", ReplyAction="http://tempuri.org/IDataService/GetMessageResponse")]
         TM.ServiceClients.MessageQueue.Message GetMessage(System.Guid MessageId);
         
@@ -589,6 +595,14 @@ namespace TM.ServiceClients.MessageQueue {
         
         public System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Service> GetServiceAsync(System.Guid ServiceId) {
             return base.Channel.GetServiceAsync(ServiceId);
+        }
+        
+        public TM.ServiceClients.MessageQueue.Message[] GetMessageList(System.Guid DocumentId, int MessageType) {
+            return base.Channel.GetMessageList(DocumentId, MessageType);
+        }
+        
+        public System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Message[]> GetMessageListAsync(System.Guid DocumentId, int MessageType) {
+            return base.Channel.GetMessageListAsync(DocumentId, MessageType);
         }
         
         public TM.ServiceClients.MessageQueue.Message GetMessage(System.Guid MessageId) {

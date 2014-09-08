@@ -58,6 +58,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="key.snk" />
     <None Include="Service References\MessageQueue\DataService.wsdl" />
     <None Include="Service References\MessageQueue\DataService.xsd">
