@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="c105d665-a937-4374-9d61-777697239170" solutionId="c105d665-a937-4374-9d61-777697239170" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.AnswerProcessingTimerJob" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
+    <projectOutputAssembly location="TM.ServiceClients.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.ServiceClients\TM.ServiceClients.csproj" />
+    <projectOutputAssembly location="TM.Services.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Services\TM.Services.csproj" />
+  </assemblies>
+  <features>
+    <featureReference itemId="6012f233-1f2c-4daa-ac27-4681a161a0a0" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="a77e6219-7975-4f7e-8f48-dac08fb21fa0" />
+  </projectItems>
+</package>
