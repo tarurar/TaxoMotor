@@ -9,6 +9,43 @@
 		Title="Отправить запрос в ЕГРИП"
 		Sequence="101">
 		<UrlAction
-			Url="javascript: (function() { alert('Запрос в ЕГРИП отправлен'); })();" />
+			Url="javascript: (function() {
+        var listId = SP.ListOperation.Selection.getSelectedList();
+        var identities = SP.ListOperation.Selection.getSelectedItems().filter(function (e) {
+            return (e.fsObjType || e.fsObjType == 0);
+        }).map(function (e) {
+            return e.id;
+        });
+
+        var options = {
+            url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRIPPage.aspx') + '?IsDlg=1&amp;ListId=' + listId + '&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
+            title: 'Отправка запроса в Единый Государственный Реестр Индивидуальных Предпринимателей (ЕГРИП)',
+            allowMaximize: false,
+            showClose: true,
+            width: 800,
+            dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                if (result == SP.UI.DialogResult.OK) {
+                    if (returnValue == null) {
+                        TM.SP.showIconNotification('Отправка запросов завершена', '_layouts/15/images/kpinormal-0.gif', true);
+                        setTimeout(function() {
+                          SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);  
+                        }, 2000);
+                    }
+                    else {
+                        location.href = returnValue;
+                    }
+                }
+                else if (result == -1){
+                    TM.SP.showIconNotification('При отправке запросов возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                    setTimeout(function() {
+                      SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);  
+                    }, 2000);
+                }
+            })
+        };
+
+        SP.UI.ModalDialog.showModalDialog(options);
+            
+      })();" />
 	</CustomAction>
 </Elements>

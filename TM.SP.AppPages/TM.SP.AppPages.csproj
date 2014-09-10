@@ -72,6 +72,13 @@
     <Compile Include="ApplicationPages\DialogLayoutsPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx.cs">
+      <DependentUpon>SendRequestEGRIPPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx.designer.cs">
+      <DependentUpon>SendRequestEGRIPPage.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx.cs">
       <DependentUpon>SendRequestEGRULPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -85,6 +92,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ApplicationPages\SendRequestEGRIPPage\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{699f85d2-cff1-41c3-955a-cd5d964ca603}</SharePointProjectItemId>
+    </None>
     <None Include="ApplicationPages\SendRequestEGRULPage\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{14185da8-fbda-40a5-8617-6ddc41f38626}</SharePointProjectItemId>
     </None>
@@ -107,6 +117,7 @@
     <Folder Include="Features\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />
   </ItemGroup>
   <ItemGroup>

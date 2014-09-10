@@ -41,10 +41,11 @@ namespace TM.SP.AppPages
 
 
     [Serializable]
-    internal class EGRULRequestItem : RequestItem
+    public class EGRULRequestItem : RequestItem
     {
         public string RequestAccount { get; set; }
         public int RequestAccountId { get; set; }
+        public string OrgFormCode { get; set; }
     }
 
     /// <summary>
@@ -66,13 +67,15 @@ namespace TM.SP.AppPages
         protected static readonly string resErrorListHeader1        = "$Resources:EGRULRequest_DlgErrorListHeader1";
         protected static readonly string resNoDocumentsError        = "$Resources:EGRULRequest_DlgNoDocumentsError";
         protected static readonly string resProcessNotifyText       = "$Resources:EGRULRequest_DlgProcessNotifyText";
+        protected static readonly string resAccIsEntrprnrErrorFmt   = "$Resources:EGRULRequest_DlgAccountIsEntrepreneurErrorFmt";
         #endregion
 
         #region [fields]
-        private static readonly string EGRULServiceGuidConfigName   = "BR2ServiceGuid";
+        protected static readonly string EGRULServiceGuidConfigName   = "BR2ServiceGuid";
+        protected static readonly string PrivateEntrepreneurCode      = "91";
 
-        private SPGridView requestListGrid;
-        private SPGridView errorListGrid;
+        protected SPGridView requestListGrid;
+        protected SPGridView errorListGrid;
         #endregion
 
         #region [methods]
@@ -81,7 +84,7 @@ namespace TM.SP.AppPages
         /// </summary>
         /// <param name="Id">Id of entity RequestAccount</param>
         /// <returns></returns>
-        private BcsCoordinateV5Model.RequestAccount GetRequestAccount(int Id)
+        protected BcsCoordinateV5Model.RequestAccount GetRequestAccount(int Id)
         {
             IEntity contentType = BCS.GetEntity(SPServiceContext.Current, String.Empty, 
                 BCS.LOBRequestSystemNamespace, "RequestAccount");
@@ -96,7 +99,7 @@ namespace TM.SP.AppPages
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        private XmlElement getTaskParam(BcsCoordinateV5Model.RequestAccount account)
+        protected XmlElement getTaskParam(BcsCoordinateV5Model.RequestAccount account)
         {
             XElement el = new XElement("ServiceProperties", 
                             new XAttribute("xmlns", String.Empty), 
@@ -113,7 +116,7 @@ namespace TM.SP.AppPages
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        private CoordinateTaskMessage GetRelevantCoordinateTaskMessage(EGRULRequestItem item)
+        protected virtual CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item) where T : EGRULRequestItem
         {
             // request item
             SPListItem rItem = GetList().GetItemOrBreak(item.Id);
@@ -250,15 +253,19 @@ namespace TM.SP.AppPages
             List<EGRULRequestItem> retVal = new List<EGRULRequestItem>();
             foreach (SPListItem item in docItems)
             {
-                var account = item["Tm_RequestAccountBCSLookup"] != null ? item["Tm_RequestAccountBCSLookup"].ToString() : String.Empty;
-                var accountId = item["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestAccountBCSLookup") : null;
+                BcsCoordinateV5Model.RequestAccount accountEntity = null;
+                var accountStr  = item["Tm_RequestAccountBCSLookup"] != null ? item["Tm_RequestAccountBCSLookup"].ToString() : String.Empty;
+                var accountId   = item["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestAccountBCSLookup") : null;
+                if (accountId != null)
+                    accountEntity = GetRequestAccount((int)accountId);
 
                 retVal.Add(new EGRULRequestItem()
                 {
                     Id                  = item.ID,
                     Title               = item.Title,
-                    RequestAccount      = account,
+                    RequestAccount      = accountStr,
                     RequestAccountId    = accountId != null ? (int)accountId : 0,
+                    OrgFormCode         = accountEntity != null ? accountEntity.OrgFormCode : String.Empty,
                     HasError            = false
                 });
             }
@@ -285,6 +292,18 @@ namespace TM.SP.AppPages
                     retVal.Add(new ValidationErrorInfo()
                     {
                         Message = String.Format(GetLocalizedString(resNoAccountErrorFmt), doc.Title),
+                        Severity = ValidationErrorSeverity.Warning
+                    });
+
+                    doc.HasError = true;
+                }
+                #endregion
+                #region [Rule#2 - RequestAccount must be legal person (not private entrepreneur)]
+                if (doc.OrgFormCode == PrivateEntrepreneurCode)
+                {
+                    retVal.Add(new ValidationErrorInfo()
+                    {
+                        Message = String.Format(GetLocalizedString(resAccIsEntrprnrErrorFmt), doc.Title),
                         Severity = ValidationErrorSeverity.Warning
                     });
 
