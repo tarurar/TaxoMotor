@@ -71,25 +71,26 @@ namespace TM.SP.DataModel
 
         private static void SetPlumsailLookups(ClientContext ctx)
         {
-            IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
-            List incomeRequestList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
-            List incomeRequestStateBookList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestStateBookList.Url);
-            List incomeRequestStateInternalBookList = ListHelpers.GetList(allLists,
-                Lists.TmIncomeRequestStateInternalBookList.Url);
-            List denyReasonBookList = ListHelpers.GetList(allLists, Lists.TmDenyReasonBookList.Url);
-            List govServiceSubTypeBookList = ListHelpers.GetList(allLists, Lists.TmGovServiceSubTypeBookList.Url);
-            List outcomeRequestTypeBookList = ListHelpers.GetList(allLists, Lists.TmOutcomeRequestTypeBookList.Url);
-            List possessionReasonBookList = ListHelpers.GetList(allLists, Lists.TmPossessionReasonBookList.Url);
-            List cancellationReasonBookList = ListHelpers.GetList(allLists, Lists.TmCancellationReasonBookList.Url);
+            IEnumerable<List> allLists              = WebHelpers.GetWebLists(ctx);
+            List incomeRequestList                  = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
+            List incomeRequestStateBookList         = ListHelpers.GetList(allLists, Lists.TmIncomeRequestStateBookList.Url);
+            List incomeRequestStateInternalBookList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestStateInternalBookList.Url);
+            List denyReasonBookList                 = ListHelpers.GetList(allLists, Lists.TmDenyReasonBookList.Url);
+            List govServiceSubTypeBookList          = ListHelpers.GetList(allLists, Lists.TmGovServiceSubTypeBookList.Url);
+            List outcomeRequestTypeBookList         = ListHelpers.GetList(allLists, Lists.TmOutcomeRequestTypeBookList.Url);
+            List possessionReasonBookList           = ListHelpers.GetList(allLists, Lists.TmPossessionReasonBookList.Url);
+            List cancellationReasonBookList         = ListHelpers.GetList(allLists, Lists.TmCancellationReasonBookList.Url);
+            List taxiList                           = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
 
-            PlumsailFields.TmIncomeRequestLookupXml.ListId = incomeRequestList.Id;
-            PlumsailFields.TmIncomeRequestStateLookupXml.ListId = incomeRequestStateBookList.Id;
+            PlumsailFields.TmIncomeRequestLookupXml.ListId              = incomeRequestList.Id;
+            PlumsailFields.TmIncomeRequestStateLookupXml.ListId         = incomeRequestStateBookList.Id;
             PlumsailFields.TmIncomeRequestStateInternalLookupXml.ListId = incomeRequestStateInternalBookList.Id;
-            PlumsailFields.TmDenyReasonLookupXml.ListId = denyReasonBookList.Id;
-            PlumsailFields.TmRequestedDocumentXml.ListId = govServiceSubTypeBookList.Id;
-            PlumsailFields.TmOutputRequestTypeLookupXml.ListId = outcomeRequestTypeBookList.Id;
-            PlumsailFields.TmPossessionReasonLookupXml.ListId = possessionReasonBookList.Id;
-            PlumsailFields.TmCancellationReasonLookupXml.ListId = cancellationReasonBookList.Id;
+            PlumsailFields.TmDenyReasonLookupXml.ListId                 = denyReasonBookList.Id;
+            PlumsailFields.TmRequestedDocumentXml.ListId                = govServiceSubTypeBookList.Id;
+            PlumsailFields.TmOutputRequestTypeLookupXml.ListId          = outcomeRequestTypeBookList.Id;
+            PlumsailFields.TmPossessionReasonLookupXml.ListId           = possessionReasonBookList.Id;
+            PlumsailFields.TmCancellationReasonLookupXml.ListId         = cancellationReasonBookList.Id;
+            PlumsailFields.TmTaxiLookupXml.ListId                       = taxiList.Id;
         }
 
         public static void CreatePlumsailFields(ClientContext ctx)
@@ -102,30 +103,32 @@ namespace TM.SP.DataModel
 
             Guid webId = WebHelpers.GetWebId(ctx);
             IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
-            List taxiList = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
+            List taxiList                = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
             List outcomeRequestStateList = ListHelpers.GetList(allLists, Lists.TmOutcomeRequestStateList.Url);
             List incomeRequestAttachList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestAttachList.Url);
-            List incomeRequestList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
+            List incomeRequestList       = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
 
-            ListHelpers.AddFieldAsXmlToList(taxiList, PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
+            ListHelpers.AddFieldAsXmlToList(taxiList               , PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(taxiList, PlumsailFields.TmDenyReasonLookupXml.ToXml(),
+            ListHelpers.AddFieldAsXmlToList(taxiList               , PlumsailFields.TmDenyReasonLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(taxiList, PlumsailFields.TmPossessionReasonLookupXml.ToXml(),
+            ListHelpers.AddFieldAsXmlToList(taxiList               , PlumsailFields.TmPossessionReasonLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(outcomeRequestStateList, PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(outcomeRequestStateList, PlumsailFields.TmOutputRequestTypeLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(outcomeRequestStateList, PlumsailFields.TmTaxiLookupXml.ToXml(),
+                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestAttachList, PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(incomeRequestList, PlumsailFields.TmIncomeRequestStateLookupXml.ToXml(),
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmIncomeRequestStateLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(incomeRequestList, PlumsailFields.TmIncomeRequestStateInternalLookupXml.ToXml(),
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmIncomeRequestStateInternalLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(incomeRequestList, PlumsailFields.TmDenyReasonLookupXml.ToXml(),
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmDenyReasonLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-            ListHelpers.AddFieldAsXmlToList(incomeRequestList, PlumsailFields.TmRequestedDocumentXml.ToXml(),
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmRequestedDocumentXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
 
             Field cancellationReasonLookupField = ListHelpers.AddFieldAsXmlToList(incomeRequestList,
