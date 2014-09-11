@@ -83,6 +83,7 @@
     <Compile Include="CoordinateV5\CoordinateV5Service.svc.cs">
       <DependentUpon>CoordinateV5Service.svc</DependentUpon>
     </Compile>
+    <Compile Include="CoordinateV5\Helpers.cs" />
     <Compile Include="CoordinateV5\ICoordinateV5Service.cs" />
     <Compile Include="CoordinateV5\Impl\Acknowledgement.cs" />
     <Compile Include="CoordinateV5\Impl\GetRequestList.cs" />

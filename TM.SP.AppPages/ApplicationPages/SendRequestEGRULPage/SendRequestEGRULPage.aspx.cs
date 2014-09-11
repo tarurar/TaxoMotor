@@ -120,61 +120,25 @@ namespace TM.SP.AppPages
         {
             // request item
             SPListItem rItem = GetList().GetItemOrBreak(item.Id);
-            var rDocument   = rItem["Tm_RequestedDocument"] == null ? 0 : Convert.ToInt32(rItem["Tm_RequestedDocument"]);
-            var sNumber     = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
+            var rDocument    = rItem["Tm_RequestedDocument"] == null ? 0 : Convert.ToInt32(rItem["Tm_RequestedDocument"]);
+            var sNumber      = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
             // request account
             BcsCoordinateV5Model.RequestAccount rAccount = GetRequestAccount(item.RequestAccountId);
             if (rAccount == null)
                 throw new Exception(String.Format("Bcs entity with Id = {0} not found", item.RequestAccountId));
             // service code lookup item
-            SPList stList = this.Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
-            SPListItem stItem = stList.GetItemOrNull(rDocument);
-            var sCode = stItem == null ? String.Empty : 
+            var stList  = this.Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
+            var stItem  = stList.GetItemOrNull(rDocument);
+            var sCode   = stItem == null ? String.Empty : 
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
 
-            return new CoordinateTaskMessage()
-            {
-                ServiceHeader = new Headers()
-                {
-                    FromOrgCode = String.Empty,                     // todo
-                    ToOrgCode = "705",                              // todo
-                    MessageId = Guid.NewGuid().ToString("D"),       // todo
-                    ServiceNumber = sNumber,
-                    RequestDateTime = DateTime.Now
-                },
-                TaskMessage = new CoordinateTaskData()
-                {
-                    Data = new DocumentsRequestData()
-                    {
-                        DocumentTypeCode = "4020",                  // todo
-                        IncludeBinaryView = true,
-                        IncludeXmlView = true,
-                        Parameter = getTaskParam(rAccount),
-                        ParameterTypeCode = String.Empty            // todo
-                    },
-                    Task = new RequestTask()
-                    {
-                        Code = "¡–2",                               // todo
-                        Department = new Department()
-                        {
-                            Name = "ƒ“Ë–ƒ“»",                       // todo
-                            Code = "2009",                          // todo
-                            RegDate = null                          // todo
-                        },
-                        RequestId = new Guid().ToString("D"),       // todo
-                        Responsible = new Person()
-                        {
-                            LastName = String.Empty,                // todo
-                            FirstName = this.Web.CurrentUser.Name   // todo
-                        },
-                        ServiceNumber = sNumber,
-                        ServiceTypeCode = sCode,
-                        Subject = String.Empty,                     // todo
-                        ValidityPeriod = null                       // todo
-                    },
-                    Signature = String.Empty                        // todo
-                }
-            };
+            var message = Helpers.GetEGRULMessageTemplate(getTaskParam(rAccount));
+            message.ServiceHeader.ServiceNumber            = sNumber;
+            message.TaskMessage.Task.Responsible.FirstName = String.Empty;
+            message.TaskMessage.Task.Responsible.LastName  = this.Web.CurrentUser.Name;
+            message.TaskMessage.Task.ServiceNumber         = sNumber;
+            message.TaskMessage.Task.ServiceTypeCode       = sCode;
+            return message;
         }
 
         protected override void CreateChildControls()
