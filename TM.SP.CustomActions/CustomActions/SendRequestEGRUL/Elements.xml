@@ -9,7 +9,6 @@
 		Title="Отправить запрос в ЕГРЮЛ"
 		Sequence="100">
 		<UrlAction Url="javascript: (function() {
-        var listId = SP.ListOperation.Selection.getSelectedList();
         var identities = SP.ListOperation.Selection.getSelectedItems().filter(function (e) {
             return (e.fsObjType || e.fsObjType == 0);
         }).map(function (e) {
@@ -17,7 +16,7 @@
         });
 
         var options = {
-            url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRULPage.aspx') + '?IsDlg=1&amp;ListId=' + listId + '&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
+            url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRULPage.aspx') + '?IsDlg=1&amp;ListId={ListId}&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
             title: 'Отправка запроса в Единый Государственный Реестр Юридических Лиц (ЕГРЮЛ)',
             allowMaximize: false,
             showClose: true,

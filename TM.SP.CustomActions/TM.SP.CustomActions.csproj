@@ -64,6 +64,9 @@
     <None Include="CustomActions\SendRequestEGRUL\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{5fca808d-d2f6-467a-a827-190761e900ef}</SharePointProjectItemId>
     </None>
+    <None Include="CustomActions\TaxoMotor.SendRequestPTS\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{b680bc22-39dc-4809-ae1a-391c0a298e0c}</SharePointProjectItemId>
+    </None>
     <None Include="Features\TaxoMotor_TaxoMotorCustomActions\TaxoMotor_TaxoMotorCustomActions.feature">
       <FeatureId>{b103f8da-5dab-40a2-8ed1-d12d7377d0f7}</FeatureId>
     </None>
@@ -79,6 +82,7 @@
   <ItemGroup>
     <Content Include="CustomActions\SendRequestEGRIP\Elements.xml" />
     <Content Include="CustomActions\SendRequestEGRUL\Elements.xml" />
+    <Content Include="CustomActions\TaxoMotor.SendRequestPTS\Elements.xml" />
     <Content Include="Features\TaxoMotor_TaxoMotorCustomActions\TaxoMotor_TaxoMotorCustomActions.Template.xml">
       <DependentUpon>TaxoMotor_TaxoMotorCustomActions.feature</DependentUpon>
     </Content>
