@@ -515,7 +515,7 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ServiceColumnsGroup
         };
 
-        public static FieldDefinition TmConfigurationValue= new FieldDefinition()
+        public static FieldDefinition TmConfigurationValue = new FieldDefinition()
         {
             Id           = new Guid("{5EDE105C-9028-4003-A32C-D848878172B0}"),
             Title        = "Значение параметра",
@@ -530,6 +530,15 @@ namespace TM.SP.DataModel
             Title        = "Описание",
             InternalName = "Tm_ConfigurationDescr",
             FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ServiceColumnsGroup
+        };
+
+        public static FieldDefinition TmCentralDocStoreUrl = new FieldDefinition()
+        {
+            Id           = new Guid("{86B3E450-C9D8-4656-935E-4F99FADBB242}"),
+            Title        = "Ссылка ЦХЭД",
+            InternalName = "Tm_CentralDocStoreUrl",
+            FieldType    = BuiltInFieldTypes.URL,
             Group        = ModelConsts.ServiceColumnsGroup
         };
 

@@ -50,6 +50,8 @@ namespace TM.SP.DataModel
                 ContentTypes.TmCancellationReason.Name);
             ListHelpers.MakeContentTypeDefault(ctx, Lists.TmConfigurationList.Url,
                 ContentTypes.TmConfigurationEntry.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmAttachLib.Url,
+                ContentTypes.TmAttachDoc.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
@@ -71,6 +73,7 @@ namespace TM.SP.DataModel
 
         private static void SetPlumsailLookups(ClientContext ctx)
         {
+            #region [Getting lists]
             IEnumerable<List> allLists              = WebHelpers.GetWebLists(ctx);
             List incomeRequestList                  = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
             List incomeRequestStateBookList         = ListHelpers.GetList(allLists, Lists.TmIncomeRequestStateBookList.Url);
@@ -81,7 +84,8 @@ namespace TM.SP.DataModel
             List possessionReasonBookList           = ListHelpers.GetList(allLists, Lists.TmPossessionReasonBookList.Url);
             List cancellationReasonBookList         = ListHelpers.GetList(allLists, Lists.TmCancellationReasonBookList.Url);
             List taxiList                           = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
-
+            #endregion
+            #region [Setting list links]
             PlumsailFields.TmIncomeRequestLookupXml.ListId              = incomeRequestList.Id;
             PlumsailFields.TmIncomeRequestStateLookupXml.ListId         = incomeRequestStateBookList.Id;
             PlumsailFields.TmIncomeRequestStateInternalLookupXml.ListId = incomeRequestStateInternalBookList.Id;
@@ -91,6 +95,7 @@ namespace TM.SP.DataModel
             PlumsailFields.TmPossessionReasonLookupXml.ListId           = possessionReasonBookList.Id;
             PlumsailFields.TmCancellationReasonLookupXml.ListId         = cancellationReasonBookList.Id;
             PlumsailFields.TmTaxiLookupXml.ListId                       = taxiList.Id;
+            #endregion
         }
 
         public static void CreatePlumsailFields(ClientContext ctx)
@@ -100,14 +105,17 @@ namespace TM.SP.DataModel
                     PlumsailConsts.CrossSiteLookupFeatureId));
 
             SetPlumsailLookups(ctx);
-
+            
+            #region [Getting lists]
             Guid webId = WebHelpers.GetWebId(ctx);
             IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
             List taxiList                = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
             List outcomeRequestStateList = ListHelpers.GetList(allLists, Lists.TmOutcomeRequestStateList.Url);
             List incomeRequestAttachList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestAttachList.Url);
             List incomeRequestList       = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
-
+            List attachLibrary           = ListHelpers.GetList(allLists, Lists.TmAttachLib.Url);
+            #endregion
+            #region [Adding lookup fields]
             ListHelpers.AddFieldAsXmlToList(taxiList               , PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(taxiList               , PlumsailFields.TmDenyReasonLookupXml.ToXml(),
@@ -130,12 +138,18 @@ namespace TM.SP.DataModel
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmRequestedDocumentXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
-
+            ListHelpers.AddFieldAsXmlToList(attachLibrary          , PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
+               AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(attachLibrary          , PlumsailFields.TmTaxiLookupXml.ToXml(),
+               AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            #endregion
+            #region [Adding TmCancellationReasonLookupXml field to TmCancelIncomeRequest contenttype ONLY]
             Field cancellationReasonLookupField = ListHelpers.AddFieldAsXmlToList(incomeRequestList,
                 PlumsailFields.TmCancellationReasonLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToNoContentType);
             ListHelpers.AddListContentTypeFieldLink(ctx, Lists.TmIncomeRequestList, ContentTypes.TmCancelIncomeRequest,
                 cancellationReasonLookupField);
+            #endregion
         }
 
         #endregion
