@@ -3,11 +3,11 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
 	<CustomAction
 		RegistrationType="List"
-		RegistrationId="{$ListId:Lists/IncomeRequestList;}"
-		Id="TaxoMotor.SendRequestEGRIP"
+		RegistrationId="{$ListId:Lists/TaxiList;}"
+		Id="TaxoMotor.SendRequestPTS"
 		Location="EditControlBlock"
-		Title="Отправить запрос в ЕГРИП"
-		Sequence="101">
+		Title="Запросить сведения о ТС"
+		Sequence="110">
 		<UrlAction
 			Url="javascript: (function() {
         var identities = SP.ListOperation.Selection.getSelectedItems().filter(function (e) {
@@ -17,8 +17,8 @@
         });
 
         var options = {
-            url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRIPPage.aspx') + '?IsDlg=1&amp;ListId={ListId}&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
-            title: 'Отправка запроса в Единый Государственный Реестр Индивидуальных Предпринимателей (ЕГРИП)',
+            url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestPTSPage.aspx') + '?IsDlg=1&amp;ListId={ListId}&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
+            title: 'Запрос сведений о транспортных средствах и владельцах',
             allowMaximize: false,
             showClose: true,
             width: 800,

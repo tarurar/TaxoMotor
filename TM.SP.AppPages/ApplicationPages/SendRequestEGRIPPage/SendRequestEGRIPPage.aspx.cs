@@ -100,7 +100,7 @@ namespace TM.SP.AppPages
         {
             // request item
             var rItem     = GetList().GetItemOrBreak(item.Id);
-            var rDocument = rItem["Tm_RequestedDocument"] == null ? 0 : Convert.ToInt32(rItem["Tm_RequestedDocument"]);
+            var rDocument = rItem["Tm_RequestedDocument"] == null ? 0 : new SPFieldLookupValue(rItem["Tm_RequestedDocument"].ToString()).LookupId;
             var sNumber   = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
             // request contact
             BcsCoordinateV5Model.RequestAccount rAccount = GetRequestAccount(item.RequestAccountId);
