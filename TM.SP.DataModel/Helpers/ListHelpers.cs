@@ -81,7 +81,7 @@ namespace TM.SP.DataModel
         }
 
         public static Field AddFieldAsXmlToList(List list, XElement fieldDefinition,
-            AddFieldOptions options)
+            AddFieldOptions options, bool deleteExistant = false)
         {
             var listContext = list.Context;
 
@@ -102,15 +102,27 @@ namespace TM.SP.DataModel
                 else throw;
             }
 
-            if (exField != null)
+            Field newField = null;
+            if (exField == null)
+            {
+                newField = list.Fields.AddFieldAsXml(fieldDefinition.ToString(), false, options);
+                list.Update();
+                listContext.ExecuteQuery();
+            }
+            else if (deleteExistant)
             {
                 exField.DeleteObject();
                 listContext.ExecuteQuery();
-            }
 
-            Field newField = list.Fields.AddFieldAsXml(fieldDefinition.ToString(), false, options);
-            list.Update();
-            listContext.ExecuteQuery();
+                newField = list.Fields.AddFieldAsXml(fieldDefinition.ToString(), false, options);
+                list.Update();
+                listContext.ExecuteQuery();
+            }
+            else
+            {
+                newField = exField;
+            }
+           
             return newField;
         }
 

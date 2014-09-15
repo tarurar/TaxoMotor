@@ -216,5 +216,19 @@ namespace TM.SP.DataModel.Plumsail
             nsShowNew    = false,
             nsNewText    = String.Empty
         };
+
+        public static CrossSiteLookupDefinition TmIncomeRequestAttachLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id           = new Guid("{E28E39DE-749A-4AFC-89C6-062084C42874}"),
+            Title        = "Документ обращения",
+            InternalName = "Tm_IncomeRequestAttachLookup",
+            FieldType    = BuiltInFieldTypes.Lookup,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+            ShowField    = "Title",
+            Required     = false,
+            Mult         = false,
+            nsShowNew    = false,
+            nsNewText    = String.Empty
+        };
     }
 }

@@ -73,6 +73,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmConfigurationValue)
                     .AddField(Fields.TmConfigurationDescr)
                     .AddField(Fields.TmAnswerReceived)
+                    .AddField(Fields.TmCentralDocStoreUrl)
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -96,6 +97,8 @@ namespace TM.SP.DataModel
                             ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
                         .AddContentType(ContentTypes.TmCancellationReason,
                             ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
+                        .AddContentType(ContentTypes.TmAttachDoc,
+                            ct => ct.AddContentTypeFieldLink(Fields.TmCentralDocStoreUrl))
                         .AddContentType(ContentTypes.TmConfigurationEntry, ct => ct
                             .AddContentTypeFieldLink(Fields.TmConfigurationCategory)
                             .AddContentTypeFieldLink(Fields.TmConfigurationValue)
@@ -126,6 +129,8 @@ namespace TM.SP.DataModel
                             l => l.AddContentTypeLink(ContentTypes.TmCancellationReason))
                         .AddList(Lists.TmConfigurationList,
                             l => l.AddContentTypeLink(ContentTypes.TmConfigurationEntry))
+                        .AddList(Lists.TmAttachLib,
+                            l => l.AddContentTypeLink(ContentTypes.TmAttachDoc))
                 );
 
             return model;
