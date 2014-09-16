@@ -517,15 +517,6 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
-        public static FieldDefinition TmAttachDocPerson = new FieldDefinition()
-        {
-            Id           = new Guid("{4930552C-763F-47BE-91DE-0AE82D0CDF7B}"),
-            Title        = "Владелец документа",
-            InternalName = "Tm_AttachDocPerson",
-            FieldType    = BuiltInFieldTypes.Text,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
         public static FieldDefinition TmAttachValidityPeriod = new FieldDefinition()
         {
             Id           = new Guid("{F010124C-9032-452A-96C1-EC203020A8E5}"),
