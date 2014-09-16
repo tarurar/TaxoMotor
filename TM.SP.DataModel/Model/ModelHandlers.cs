@@ -61,14 +61,16 @@ namespace TM.SP.DataModel
                     BcsModelConsts.CV5ListsFeatureId));
 
             IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
-            List incomeRequestList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
+            List incomeRequestList     = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
 
+            #region [Income Request List]
             ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestAccountBcsLookupXml,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestContactBcsLookupXml,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestTrusteeBcsLookupXml,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            #endregion
         }
 
         private static void SetPlumsailLookups(ClientContext ctx)

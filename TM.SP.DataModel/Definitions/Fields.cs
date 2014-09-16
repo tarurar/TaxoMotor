@@ -11,8 +11,10 @@ namespace TM.SP.DataModel
 {
     public static class Fields
     {
-        #region properties
-
+        #region [Общие поля]
+        /// <summary>
+        /// Код сущности, используется практически во всех справочниках
+        /// </summary>
         public static FieldDefinition TmServiceCode = new FieldDefinition()
         {
             Id           = new Guid("{698FA5A4-0DEA-41C2-8703-ABA7663ED01E}"),
@@ -21,6 +23,37 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.Text,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
+        /// <summary>
+        /// GUID входящего запроса с обращением
+        /// </summary>
+        public static FieldDefinition TmMessageId = new FieldDefinition()
+        {
+            Id           = new Guid("{81ED1C39-71F7-4A39-A6F4-F1E9E8672FD1}"),
+            Title        = "MessageId",
+            InternalName = "Tm_MessageId",
+            FieldType    = BuiltInFieldTypes.Guid,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+        /// <summary>
+        /// Lookup на обращение (BCS список)
+        /// </summary>
+        public static XElement TmRequestAccountBcsLookupXml = new XElement("Field",
+            new XAttribute("Type"           , "BusinessData"),
+            new XAttribute("Name"           , "Tm_RequestAccountBCSLookup"),
+            new XAttribute("StaticName"     , "Tm_RequestAccountBCSLookup"),
+            new XAttribute("DisplayName"    , "Заявитель ЮЛ"),
+            new XAttribute("Required"       , "FALSE"),
+            new XAttribute("ID"             , "{5C8E8BBB-6670-4ABF-84C1-F5C529BDDB75}"),
+            new XAttribute("SystemInstance" , BcsModelConsts.CV5SystemName),
+            new XAttribute("EntityNamespace", BcsModelConsts.CV5EntityNamespace),
+            new XAttribute("EntityName"     , BcsModelConsts.CV5RequestAccountEntityName),
+            new XAttribute("BdcField"       , "Title"),
+            new XAttribute("Version"        , "1")
+        );
+
+        #endregion
+
+        #region [Причина отказа]
 
         public static FieldDefinition TmUsageScopeInteger = new FieldDefinition()
         {
@@ -30,6 +63,10 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.Integer,
             Group        =  ModelConsts.ColumnsDefaultGroup
         };
+
+        #endregion
+
+        #region [Обращение - Общие поля]
 
         public static FieldDefinition TmRegNumber = new FieldDefinition()
         {
@@ -139,30 +176,9 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.DateTime,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
-
-        public static FieldDefinition TmMessageId = new FieldDefinition()
-        {
-            Id           = new Guid("{81ED1C39-71F7-4A39-A6F4-F1E9E8672FD1}"),
-            Title        = "MessageId",
-            InternalName = "Tm_MessageId",
-            FieldType    = BuiltInFieldTypes.Guid,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static XElement TmRequestAccountBcsLookupXml = new XElement("Field",
-            new XAttribute("Type"           , "BusinessData"),
-            new XAttribute("Name"           , "Tm_RequestAccountBCSLookup"),
-            new XAttribute("StaticName"     , "Tm_RequestAccountBCSLookup"),
-            new XAttribute("DisplayName"    , "Заявитель ЮЛ"),
-            new XAttribute("Required"       , "FALSE"),
-            new XAttribute("ID"             , "{5C8E8BBB-6670-4ABF-84C1-F5C529BDDB75}"),
-            new XAttribute("SystemInstance" , BcsModelConsts.CV5SystemName),
-            new XAttribute("EntityNamespace", BcsModelConsts.CV5EntityNamespace),
-            new XAttribute("EntityName"     , BcsModelConsts.CV5RequestAccountEntityName),
-            new XAttribute("BdcField"       , "Title"),
-            new XAttribute("Version"        , "1")
-        );
-
+        /// <summary>
+        /// Ссылка на физическое лицо (BCS список)
+        /// </summary>
         public static XElement TmRequestContactBcsLookupXml = new XElement("Field",
             new XAttribute("Type"           , "BusinessData"),
             new XAttribute("Name"           , "Tm_RequestContactBCSLookup"),
@@ -176,7 +192,9 @@ namespace TM.SP.DataModel
             new XAttribute("BdcField"       , "Title"),
             new XAttribute("Version"        , "1")
         );
-
+        /// <summary>
+        /// Ссылка на доверенное лицо (BCS список)
+        /// </summary>
         public static XElement TmRequestTrusteeBcsLookupXml = new XElement("Field",
             new XAttribute("Type"           , "BusinessData"),
             new XAttribute("Name"           , "Tm_RequestTrusteeBcsLookup"),
@@ -190,6 +208,90 @@ namespace TM.SP.DataModel
             new XAttribute("BdcField"       , "Title"),
             new XAttribute("Version"        , "1")
         );
+
+        #endregion
+
+        #region [Обращение - Переоформление разрешения]
+
+        public static FieldDefinition TmRenewalReason_StateNumber = new FieldDefinition()
+        {
+            Id = new Guid("{5D0392C3-1B3C-4EE9-8859-B62DCA477DDB}"),
+            Title = "Изменение гос. рег-го знака",
+            InternalName = "Tm_RenewalReason_StateNumber",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_AddressCompany = new FieldDefinition()
+        {
+            Id = new Guid("{8FDC55E8-1569-4B76-BD74-6CB32E6335CB}"),
+            Title = "Изменение адреса ЮЛ",
+            InternalName = "Tm_RenewalReason_AddressCompany",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_IdentityCard = new FieldDefinition()
+        {
+            Id = new Guid("{E431F5F0-5E4E-4C18-8E43-77DF7B87137E}"),
+            Title = "Изменение данных документа удост. личность ИП",
+            InternalName = "Tm_RenewalReason_IdentityCard",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_AddressPerson = new FieldDefinition()
+        {
+            Id = new Guid("{7008E18A-127B-452B-BE68-B6796D96DB08}"),
+            Title = "Изменение адреса регистрации по месту жит. ИП",
+            InternalName = "Tm_RenewalReason_AddressPerson",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_NameCompany = new FieldDefinition()
+        {
+            Id = new Guid("{5CE81552-2411-4937-B1AE-C3CA2CE6B005}"),
+            Title = "Изменение наименования ЮЛ",
+            InternalName = "Tm_RenewalReason_NameCompany",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_ReorgCompany = new FieldDefinition()
+        {
+            Id = new Guid("{3EA8641A-190A-45E2-8015-0778991E9532}"),
+            Title = "Реорганизация ЮЛ",
+            InternalName = "Tm_RenewalReason_ReorgCompany",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmRenewalReason_NamePerson = new FieldDefinition()
+        {
+            Id = new Guid("{5AEC0DA6-F0E9-4C62-BB71-5D5A9D5F91D4}"),
+            Title = "Изменение ФИО ИП ",
+            InternalName = "Tm_RenewalReason_NamePerson",
+            FieldType = BuiltInFieldTypes.Boolean,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        #endregion
+
+        #region [Обращение - Аннулирование разрешения]
+
+        public static FieldDefinition TmCancellationReasonOther = new FieldDefinition()
+        {
+            Id = new Guid("{4D5425EA-6A45-4459-814B-03091DCFF1EC}"),
+            Title = "Иное основание",
+            InternalName = "Tm_CancellationReasonOther",
+            FieldType = BuiltInFieldTypes.Text,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        #endregion
+
+        #region [Состояние межведомственного запроса]
 
         public static FieldDefinition TmOutputDate = new FieldDefinition()
         {
@@ -217,6 +319,10 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.Boolean,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
+
+        #endregion
+
+        #region [Транспортное средство]
 
         public static FieldDefinition TmTaxiBrand = new FieldDefinition()
         {
@@ -389,12 +495,61 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        #endregion
+
+        #region [Документ обращения]
+
         public static FieldDefinition TmAttachType = new FieldDefinition()
         {
             Id           = new Guid("{6D8F99C9-4FFE-4457-AA6F-51A11287D988}"),
             Title        = "Вид документа",
             InternalName = "Tm_AttachType",
             FieldType    = BuiltInFieldTypes.Integer,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmAttachDocSubType = new FieldDefinition()
+        {
+            Id           = new Guid("{4758A95E-A9B0-40B5-B6A6-A0A3E9AAF9A0}"),
+            Title        = "Подтип документа",
+            InternalName = "Tm_AttachSubType",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmAttachValidityPeriod = new FieldDefinition()
+        {
+            Id           = new Guid("{F010124C-9032-452A-96C1-EC203020A8E5}"),
+            Title        = "Срок действия",
+            InternalName = "Tm_AttachValidityPeriod",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmAttachListCount = new FieldDefinition()
+        {
+            Id           = new Guid("{910339C1-6BA1-490D-8E9D-543F8D55F179}"),
+            Title        = "Кол-во листов",
+            InternalName = "Tm_AttachListCount",
+            FieldType    = BuiltInFieldTypes.Integer,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmAttachCopyCount = new FieldDefinition()
+        {
+            Id           = new Guid("{8C54AD22-BABA-49A1-A890-6DA26F706EBE}"),
+            Title        = "Кол-во экземпляров",
+            InternalName = "Tm_AttachCopyCount",
+            FieldType    = BuiltInFieldTypes.Integer,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmAttachDivisionCode = new FieldDefinition()
+        {
+            Id           = new Guid("{8C202C79-9465-41DA-A975-92DA0FCC8CCF}"),
+            Title        = "Код подразделения",
+            InternalName = "Tm_AttachDivisionCode",
+            FieldType    = BuiltInFieldTypes.Text,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
@@ -434,77 +589,9 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
-        public static FieldDefinition TmRenewalReason_StateNumber = new FieldDefinition()
-        {
-            Id           = new Guid("{5D0392C3-1B3C-4EE9-8859-B62DCA477DDB}"),
-            Title        = "Изменение гос. рег-го знака",
-            InternalName = "Tm_RenewalReason_StateNumber",
-            FieldType    = BuiltInFieldTypes.Boolean,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
+        #endregion
 
-        public static FieldDefinition TmRenewalReason_AddressCompany = new FieldDefinition()
-        {
-            Id           = new Guid("{8FDC55E8-1569-4B76-BD74-6CB32E6335CB}"),
-            Title        = "Изменение адреса ЮЛ",
-            InternalName = "Tm_RenewalReason_AddressCompany",
-            FieldType    = BuiltInFieldTypes.Boolean,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmRenewalReason_IdentityCard = new FieldDefinition()
-        {
-            Id           = new Guid("{E431F5F0-5E4E-4C18-8E43-77DF7B87137E}"),
-            Title        = "Изменение данных документа удост. личность ИП",
-            InternalName = "Tm_RenewalReason_IdentityCard",
-            FieldType    = BuiltInFieldTypes.Boolean,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmRenewalReason_AddressPerson = new FieldDefinition()
-        {
-            Id           = new Guid("{7008E18A-127B-452B-BE68-B6796D96DB08}"),
-            Title        = "Изменение адреса регистрации по месту жит. ИП",
-            InternalName = "Tm_RenewalReason_AddressPerson",
-            FieldType    = BuiltInFieldTypes.Boolean,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmRenewalReason_NameCompany = new FieldDefinition()
-        {
-            Id           = new Guid("{5CE81552-2411-4937-B1AE-C3CA2CE6B005}"),
-            Title        = "Изменение наименования ЮЛ",
-            InternalName = "Tm_RenewalReason_NameCompany",
-            FieldType    = BuiltInFieldTypes.Boolean,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmRenewalReason_ReorgCompany = new FieldDefinition()
-        {
-            Id           = new Guid("{3EA8641A-190A-45E2-8015-0778991E9532}"),
-            Title        = "Реорганизация ЮЛ",
-            InternalName = "Tm_RenewalReason_ReorgCompany",
-            FieldType    = BuiltInFieldTypes.Boolean,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmRenewalReason_NamePerson = new FieldDefinition()
-        {
-            Id           = new Guid("{5AEC0DA6-F0E9-4C62-BB71-5D5A9D5F91D4}"),
-            Title        = "Изменение ФИО ИП ",
-            InternalName = "Tm_RenewalReason_NamePerson",
-            FieldType    = BuiltInFieldTypes.Boolean,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
-
-        public static FieldDefinition TmCancellationReasonOther = new FieldDefinition()
-        {
-            Id           = new Guid("{4D5425EA-6A45-4459-814B-03091DCFF1EC}"),
-            Title        = "Иное основание",
-            InternalName = "Tm_CancellationReasonOther",
-            FieldType    = BuiltInFieldTypes.Text,
-            Group        = ModelConsts.ColumnsDefaultGroup
-        };
+        #region [Список конфигураций системы]
 
         public static FieldDefinition TmConfigurationCategory = new FieldDefinition()
         {
@@ -532,6 +619,10 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.Note,
             Group        = ModelConsts.ServiceColumnsGroup
         };
+
+        #endregion
+
+        #region [Вложение для документа обращения]
 
         public static FieldDefinition TmCentralDocStoreUrl = new FieldDefinition()
         {
