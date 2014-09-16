@@ -82,22 +82,6 @@ namespace TM.SP.DataMigrationTimerJob
             this.Title = GetFeatureLocalizedResource("JobTitle");
         }
 
-        private SPList GetListByUrlOrBreak(SPWeb web, string url)
-        {
-            SPList list = null;
-
-            try
-            {
-                list = web.GetList("Lists/" + url);
-            }
-            catch (Exception)
-            {
-                throw new Exception(String.Format(ListMissingErrorFmt, url));
-            }
-
-            return list;
-        }
-
         private List<SPListItem> GetListItemsByFieldValue(SPList list, string fn, string match)
         {
             List<SPListItem> matchingItems =
@@ -126,7 +110,7 @@ namespace TM.SP.DataMigrationTimerJob
         private SPListItem AssignIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
         {
             Service svc = ExecBCSMethod<Service>(ServiceCT, ReadServiceItem, MethodInstanceType.SpecificFinder, request.Service);
-            SPList govSubTypeList = GetListByUrlOrBreak(web, "GovServiceSubTypeBookList");
+            SPList govSubTypeList = web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
             
             newItem["Tm_RegNumber"]     = svc.RegNum;
             newItem["Tm_SingleNumber"]  = svc.ServiceNumber;
@@ -199,7 +183,7 @@ namespace TM.SP.DataMigrationTimerJob
         {
             ServiceProperties svcProps = ExecBCSMethod<ServiceProperties>(ServicePropsCT, ReadServicePropsItem,
                 MethodInstanceType.SpecificFinder, request.ServiceProperties);
-            SPList cancellationReasonList = GetListByUrlOrBreak(web, "CancellationReasonBookList");
+            SPList cancellationReasonList = web.GetListOrBreak("Lists/CancellationReasonBookList");
 
             if (svcProps.delete != null)
             {
@@ -214,7 +198,7 @@ namespace TM.SP.DataMigrationTimerJob
         private SPListItem MigrateIncomingRequestRow(SPWeb web, Request request)
         {
             Service svc = ExecBCSMethod<Service>(ServiceCT, ReadServiceItem, MethodInstanceType.SpecificFinder, request.Service);
-            SPList list = GetListByUrlOrBreak(web, "IncomeRequestList");
+            SPList list = web.GetListOrBreak("Lists/IncomeRequestList");
             SPListItem newItem = list.AddItem();
 
             switch (svc.ServiceTypeCode)
@@ -245,8 +229,8 @@ namespace TM.SP.DataMigrationTimerJob
 
         private SPListItem MigrateTaxiRow(SPWeb web, SPListItem parent, taxi_info taxiInfo)
         {
-            SPList list = GetListByUrlOrBreak(web, "TaxiList");
-            SPList possessionReasonList = GetListByUrlOrBreak(web, "PossessionReasonBookList");
+            SPList list = web.GetListOrBreak("Lists/TaxiList");
+            SPList possessionReasonList = web.GetListOrBreak("Lists/PossessionReasonBookList");
             SPListItem newItem = list.AddItem();
             // assign values
             newItem["Tm_TaxiBrand"] = taxiInfo.brand;
@@ -288,32 +272,44 @@ namespace TM.SP.DataMigrationTimerJob
 
         private SPListItem MigrateDocumentRow(SPWeb web, SPListItem parent, ServiceDocument document)
         {
-            SPList list = GetListByUrlOrBreak(web, "IncomeRequestAttachList");
+            SPList list = web.GetListOrBreak("Lists/IncomeRequestAttachList");
 
-            SPListItem newItem = list.AddItem();
+            SPListItem newAttach = list.AddItem();
             // assign values
-            newItem["Title"] = document.DocNumber;
-            newItem["Tm_AttachType"] = document.DocCode;
-            newItem["Tm_AttachDocNumber"] = document.DocNumber;
-            newItem["Tm_AttachDocDate"] = document.DocDate;
-            newItem["Tm_AttachDocSerie"] = document.DocSerie;
-            newItem["Tm_AttachWhoSigned"] = document.WhoSign;
-            newItem["Tm_MessageId"] = document.MessageId;
-            newItem["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(parent.ID, parent.Title);
-            // assign attachments
+            newAttach["Title"]                  = document.DocNumber;
+            newAttach["Tm_AttachType"]          = document.DocCode;
+            newAttach["Tm_AttachDocNumber"]     = document.DocNumber;
+            newAttach["Tm_AttachDocDate"]       = document.DocDate;
+            newAttach["Tm_AttachDocSerie"]      = document.DocSerie;
+            newAttach["Tm_AttachWhoSigned"]     = document.WhoSign;
+            newAttach["Tm_MessageId"]           = document.MessageId;
+            newAttach["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(parent.ID, parent.Title);
+            newAttach.Update();
+            // add attachment files
+            var attachLib    = web.GetListOrBreak("AttachLib");
+            var parentFolder = attachLib.RootFolder.CreateSubFolders(new string[] { 
+                DateTime.Now.Year.ToString(), 
+                DateTime.Now.Month.ToString(), 
+                parent.Title });
             IList<CoordinateV5File> fileList = ExecBCSMethod<IList<CoordinateV5File>>(ServiceDocCT, ServiceDocumentFileList,
                 MethodInstanceType.AssociationNavigator, document.Id_Auto);
+            
             foreach (CoordinateV5File file in fileList)
             {
                 MemoryStream content = ExecBCSMethod<MemoryStream>(FileCT, ReadFileItemContent, MethodInstanceType.StreamAccessor, file.Id_Auto);
                 if (content != null)
                 {
-                    newItem.Attachments.Add(file.FileName, content.ToArray());
+                    var uplFolder  = parentFolder.CreateSubFolders(new string[] { (parentFolder.ItemCount + 1).ToString() });
+                    var attachFile = uplFolder.Files.Add(file.FileName, content);
+                    uplFolder.Update();
+
+                    attachFile.Item["Tm_IncomeRequestLookup"]       = new SPFieldLookupValue(parent.ID, parent.Title);
+                    attachFile.Item["Tm_IncomeRequestAttachLookup"] = new SPFieldLookupValue(newAttach.ID, newAttach.Title);
+                    attachFile.Item.Update();
                 }
             }
-            newItem.Update();
 
-            return newItem;
+            return newAttach;
         }
 
         private object ExecBCSMethod(IEntity contentType, string methodName, MethodInstanceType methodType, object inParam)

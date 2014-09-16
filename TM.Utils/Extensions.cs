@@ -99,5 +99,17 @@ namespace TM.Utils
             return retVal;
 
         }
+
+        public static SPFolder CreateSubFolders(this SPFolder parentFolder, params string[] path)
+        {
+            if (!parentFolder.Exists)
+                throw new FileNotFoundException(String.Format("Folder {0} does not exist"), parentFolder.Name);
+
+            var newFolder = parentFolder.SubFolders.Add(path[0]);
+            parentFolder.Update();
+            var newPath = path.Skip(1).ToArray();
+
+            return (newPath.Length >= 1) ? newFolder.CreateSubFolders(newPath) : newFolder;
+        }
     }
 }
