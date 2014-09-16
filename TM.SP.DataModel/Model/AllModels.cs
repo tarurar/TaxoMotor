@@ -74,6 +74,12 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmConfigurationDescr)
                     .AddField(Fields.TmAnswerReceived)
                     .AddField(Fields.TmCentralDocStoreUrl)
+                    .AddField(Fields.TmAttachDocSubType)
+                    .AddField(Fields.TmAttachDocPerson)
+                    .AddField(Fields.TmAttachValidityPeriod)
+                    .AddField(Fields.TmAttachListCount)
+                    .AddField(Fields.TmAttachCopyCount)
+                    .AddField(Fields.TmAttachDivisionCode)
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -230,6 +236,12 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmAttachDocDate)
                         .AddContentTypeFieldLink(Fields.TmAttachDocSerie)
                         .AddContentTypeFieldLink(Fields.TmAttachWhoSigned)
+                        .AddContentTypeFieldLink(Fields.TmAttachDocSubType)
+                        .AddContentTypeFieldLink(Fields.TmAttachDocPerson)
+                        .AddContentTypeFieldLink(Fields.TmAttachValidityPeriod)
+                        .AddContentTypeFieldLink(Fields.TmAttachListCount)
+                        .AddContentTypeFieldLink(Fields.TmAttachCopyCount)
+                        .AddContentTypeFieldLink(Fields.TmAttachDivisionCode)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                      )
                  );
