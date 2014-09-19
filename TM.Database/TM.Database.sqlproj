@@ -148,6 +148,7 @@
     <Build Include="dbo\Triggers\AI_ERROR_DATA.sql" />
     <Build Include="dbo\Triggers\AI_IncomingRequestXML.sql" />
     <Build Include="dbo\Tables\RequestMigrationTicket.sql" />
+    <Build Include="dbo\Functions\fn_BuildAddressSingleString.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />

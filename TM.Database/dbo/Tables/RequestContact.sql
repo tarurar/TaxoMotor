@@ -26,6 +26,9 @@
 	[RegAddress] INT NULL,
 	[FactAddress] INT NULL,
 	[BirthAddress] INT NULL,
+	[SingleStrRegAddress] AS ([dbo].[fn_BuildAddressSingleString](RegAddress)),
+	[SingleStrFactAddress] AS ([dbo].[fn_BuildAddressSingleString](FactAddress)),
+	[SingleStrBirthAddress] AS ([dbo].[fn_BuildAddressSingleString](BirthAddress)),
 	CONSTRAINT [FK_RequestContact_RegAddress] FOREIGN KEY ([RegAddress]) REFERENCES [dbo].[Address]([Id]),
 	CONSTRAINT [FK_RequestContact_FactAddress] FOREIGN KEY ([FactAddress]) REFERENCES [dbo].[Address]([Id]),
 	CONSTRAINT [FK_RequestContact_BirthAddress] FOREIGN KEY ([BirthAddress]) REFERENCES [dbo].[Address]([Id])
