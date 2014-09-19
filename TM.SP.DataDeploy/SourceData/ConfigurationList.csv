@@ -1,3 +1,3 @@
-﻿Title, Tm_ConfigurationCategory, Tm_ConfigurationValue, Tm_ConfigurationDescr
-MessageQueueServiceUrl, , , Адрес сервиса доставки сообщений в рамках очереди
-BR2ServiceGuid, , , Guid сервиса базового регистра
+﻿Title; Tm_ConfigurationCategory; Tm_ConfigurationValue; Tm_ConfigurationDescr
+MessageQueueServiceUrl; ; ; Адрес сервиса доставки сообщений в рамках очереди
+BR2ServiceGuid; ; ; Guid сервиса базового регистра

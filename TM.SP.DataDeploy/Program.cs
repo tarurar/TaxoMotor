@@ -113,7 +113,17 @@ namespace TM.SP.DataDeploy
                 ListDataUploader uploader = new ListDataUploader();
                 foreach (string fn in allFiles)
                 {
-                    uploader.UploadToListByFileName(fn, ",", ctx, options.deleteData);
+                    Console.WriteLine(String.Format("Начата обработка файла {0}", fn));
+                    try
+                    {
+                        uploader.UploadToListByFileName(fn, ";", ctx, options.deleteData);
+                        Console.WriteLine("Обработка файла {0} завершена", fn);
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("При обработке файла {0} произошла ошибка", fn);
+                        throw;
+                    }
                 }
             }
 
