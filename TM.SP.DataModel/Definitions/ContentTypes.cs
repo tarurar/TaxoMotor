@@ -166,6 +166,15 @@ namespace TM.SP.DataModel
             Name                = "Tm_AttachDoc"
         };
 
+        public static ContentTypeDefinition TmIdentityDocumentType = new ContentTypeDefinition()
+        {
+            Id                  = new Guid("{4C8C2EB1-0820-4FF5-A64A-4B9521CD9C5B}"),
+            Description         = "Вид документа удостоверяющего личность",
+            Group               = ModelConsts.ServiceContentTypeGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name                = "Tm_IdentityDocumentType"
+        };
+
         #endregion
     }
 }

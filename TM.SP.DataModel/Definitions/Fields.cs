@@ -634,5 +634,18 @@ namespace TM.SP.DataModel
         };
 
         #endregion
+
+        #region [Виды документов, удост. личность]
+
+        public static FieldDefinition TmIdentityDocTypeComment = new FieldDefinition()
+        {
+            Id           = new Guid("{A9DE7C34-63C4-4677-80CA-0A0DF36B9C38}"),
+            Title        = "Комментарий к виду ДокУдЛ",
+            InternalName = "Tm_IdentityDocTypeComment",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        #endregion
     }
 }

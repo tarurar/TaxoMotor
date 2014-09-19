@@ -79,6 +79,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmAttachListCount)
                     .AddField(Fields.TmAttachCopyCount)
                     .AddField(Fields.TmAttachDivisionCode)
+                    .AddField(Fields.TmIdentityDocTypeComment)
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -108,6 +109,9 @@ namespace TM.SP.DataModel
                             .AddContentTypeFieldLink(Fields.TmConfigurationCategory)
                             .AddContentTypeFieldLink(Fields.TmConfigurationValue)
                             .AddContentTypeFieldLink(Fields.TmConfigurationDescr))
+                        .AddContentType(ContentTypes.TmIdentityDocumentType, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmServiceCode)
+                            .AddContentTypeFieldLink(Fields.TmIdentityDocTypeComment))
                 );
 
             return model;
@@ -136,6 +140,8 @@ namespace TM.SP.DataModel
                             l => l.AddContentTypeLink(ContentTypes.TmConfigurationEntry))
                         .AddList(Lists.TmAttachLib,
                             l => l.AddContentTypeLink(ContentTypes.TmAttachDoc))
+                        .AddList(Lists.TmIdentityDocumentTypeBookList,
+                            l => l.AddContentTypeLink(ContentTypes.TmIdentityDocumentType))
                 );
 
             return model;

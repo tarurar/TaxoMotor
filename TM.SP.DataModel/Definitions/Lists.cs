@@ -126,5 +126,14 @@ namespace TM.SP.DataModel
             Description         = "Библиотека документов обращений, транспортных средства и других сущностей",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmIdentityDocumentTypeBookList = new ListDefinition()
+        {
+            Title               = "Виды документов удост. личность",
+            Url                 = "IdentityDocumentTypeBookList",
+            TemplateType        = BuiltInListTemplateTypeId.GenericList,
+            Description         = "Список видов документов, которые являются документами, удостоверяющими личность",
+            ContentTypesEnabled = true
+        };
     }
 }

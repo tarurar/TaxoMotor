@@ -52,6 +52,8 @@ namespace TM.SP.DataModel
                 ContentTypes.TmConfigurationEntry.Name);
             ListHelpers.MakeContentTypeDefault(ctx, Lists.TmAttachLib.Url,
                 ContentTypes.TmAttachDoc.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIdentityDocumentTypeBookList.Url,
+                ContentTypes.TmIdentityDocumentType.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
