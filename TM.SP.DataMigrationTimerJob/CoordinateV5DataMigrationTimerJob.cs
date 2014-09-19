@@ -275,15 +275,26 @@ namespace TM.SP.DataMigrationTimerJob
             SPList list = web.GetListOrBreak("Lists/IncomeRequestAttachList");
 
             SPListItem newAttach = list.AddItem();
+            DateTime validityPeriod;
             // assign values
-            newAttach["Title"]                  = document.DocNumber;
-            newAttach["Tm_AttachType"]          = document.DocCode;
-            newAttach["Tm_AttachDocNumber"]     = document.DocNumber;
-            newAttach["Tm_AttachDocDate"]       = document.DocDate;
-            newAttach["Tm_AttachDocSerie"]      = document.DocSerie;
-            newAttach["Tm_AttachWhoSigned"]     = document.WhoSign;
-            newAttach["Tm_MessageId"]           = document.MessageId;
-            newAttach["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(parent.ID, parent.Title);
+            newAttach["Title"]                   = document.DocNumber;
+            newAttach["Tm_AttachType"]           = document.DocCode;
+            newAttach["Tm_AttachDocNumber"]      = document.DocNumber;
+            newAttach["Tm_AttachDocDate"]        = document.DocDate;
+            newAttach["Tm_AttachDocSerie"]       = document.DocSerie;
+            newAttach["Tm_AttachWhoSigned"]      = document.WhoSign;
+            newAttach["Tm_AttachSubType"]        = document.DocSubType;
+            /*
+             * В процессе обсуждения было решено отказаться от переноса значений поля DocPerson
+             * newAttach["Tm_AttachDocPersonBcsLookup"] = document.DocPerson; 
+             */
+            newAttach["Tm_AttachListCount"]      = document.ListCount;
+            newAttach["Tm_AttachCopyCount"]      = document.CopyCount;
+            newAttach["Tm_AttachDivisionCode"]   = document.DivisionCode;
+            newAttach["Tm_MessageId"]            = document.MessageId;
+            newAttach["Tm_IncomeRequestLookup"]  = new SPFieldLookupValue(parent.ID, parent.Title);
+            if (DateTime.TryParse(document.ValidityPeriod, out validityPeriod))
+                newAttach["Tm_AttachValidityPeriod"] = validityPeriod;
             newAttach.Update();
             // add attachment files
             var attachLib    = web.GetListOrBreak("AttachLib");
