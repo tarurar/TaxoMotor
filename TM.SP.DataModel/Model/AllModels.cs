@@ -80,7 +80,9 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmAttachCopyCount)
                     .AddField(Fields.TmAttachDivisionCode)
                     .AddField(Fields.TmIdentityDocTypeComment)
-                    .AddField(Fields.TmIncomeRequestSystemUpdateAvailable)
+                    .AddField(Fields.TmAttachSingleStrDocName)
+                    .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeDefaultValue("FALSE")))
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -248,6 +250,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmAttachListCount)
                         .AddContentTypeFieldLink(Fields.TmAttachCopyCount)
                         .AddContentTypeFieldLink(Fields.TmAttachDivisionCode)
+                        .AddContentTypeFieldLink(Fields.TmAttachSingleStrDocName)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                      )
                  );

@@ -589,6 +589,16 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+
+        public static FieldDefinition TmAttachSingleStrDocName = new FieldDefinition()
+        {
+            Id           = new Guid("{51AB412A-761D-4116-AD42-B38F08FC02DE}"),
+            Title        = "Строка наименования документа",
+            InternalName = "Tm_AttachSingleStrDocName",
+            Description  = "Поле для хранения наименования документа. Используется для поиска, вычисляется в eventreceiver'ах",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
         #endregion
 
         #region [Список конфигураций системы]
