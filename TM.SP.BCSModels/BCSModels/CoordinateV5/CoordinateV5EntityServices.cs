@@ -333,7 +333,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact] FROM [dbo].[RequestAccount] WHERE [PostalAddress] = @PostalAddress";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [PostalAddress] = @PostalAddress";
 
             selectCommand.Parameters.AddWithValue("@PostalAddress", PostalAddress);
 
@@ -372,6 +372,8 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.PostalAddress = thisReader["PostalAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.RequestContact = thisReader["RequestContact"] as System.Nullable<System.Int32>;
+                entity.SingleStrPostalAddress = (thisReader["SingleStrPostalAddress"] == DBNull.Value) ? null : thisReader["SingleStrPostalAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
 
                 allEntities.Add(entity);
             }
@@ -387,7 +389,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact] FROM [dbo].[RequestAccount] WHERE [FactAddress] = @FactAddress";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [FactAddress] = @FactAddress";
 
             selectCommand.Parameters.AddWithValue("@FactAddress", FactAddress);
 
@@ -426,6 +428,8 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.PostalAddress = thisReader["PostalAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.RequestContact = thisReader["RequestContact"] as System.Nullable<System.Int32>;
+                entity.SingleStrPostalAddress = (thisReader["SingleStrPostalAddress"] == DBNull.Value) ? null : thisReader["SingleStrPostalAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
 
                 allEntities.Add(entity);
             }
@@ -441,7 +445,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] FROM [dbo].[RequestContact] WHERE [RegAddress] = @RegAddress";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [RegAddress] = @RegAddress";
 
             selectCommand.Parameters.AddWithValue("@RegAddress", RegAddress);
 
@@ -477,6 +481,9 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.RegAddress = thisReader["RegAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.BirthAddress = thisReader["BirthAddress"] as System.Nullable<System.Int32>;
+                entity.SingleStrRegAddress = (thisReader["SingleStrRegAddress"] == DBNull.Value) ? null : thisReader["SingleStrRegAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
+                entity.SingleStrBirthAddress = (thisReader["SingleStrBirthAddress"] == DBNull.Value) ? null : thisReader["SingleStrBirthAddress"].ToString();
 
                 allEntities.Add(entity);
             }
@@ -492,7 +499,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] FROM [dbo].[RequestContact] WHERE [FactAddress] = @FactAddress";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [FactAddress] = @FactAddress";
 
             selectCommand.Parameters.AddWithValue("@FactAddress", FactAddress);
 
@@ -528,6 +535,9 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.RegAddress = thisReader["RegAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.BirthAddress = thisReader["BirthAddress"] as System.Nullable<System.Int32>;
+                entity.SingleStrRegAddress = (thisReader["SingleStrRegAddress"] == DBNull.Value) ? null : thisReader["SingleStrRegAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
+                entity.SingleStrBirthAddress = (thisReader["SingleStrBirthAddress"] == DBNull.Value) ? null : thisReader["SingleStrBirthAddress"].ToString();
 
                 allEntities.Add(entity);
             }
@@ -543,7 +553,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] FROM [dbo].[RequestContact] WHERE [BirthAddress] = @BirthAddress";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [BirthAddress] = @BirthAddress";
 
             selectCommand.Parameters.AddWithValue("@BirthAddress", BirthAddress);
 
@@ -579,6 +589,9 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.RegAddress = thisReader["RegAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.BirthAddress = thisReader["BirthAddress"] as System.Nullable<System.Int32>;
+                entity.SingleStrRegAddress = (thisReader["SingleStrRegAddress"] == DBNull.Value) ? null : thisReader["SingleStrRegAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
+                entity.SingleStrBirthAddress = (thisReader["SingleStrBirthAddress"] == DBNull.Value) ? null : thisReader["SingleStrBirthAddress"].ToString();
 
                 allEntities.Add(entity);
             }
@@ -959,7 +972,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn = getSqlConnection();
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact] FROM [dbo].[RequestAccount] WHERE [Id] = @Id";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = @Id";
             selectCommand.Parameters.AddWithValue("@Id", Id);
 
             selectCommand.Connection = thisConn;
@@ -996,6 +1009,8 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.PostalAddress = thisReader["PostalAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.RequestContact = thisReader["RequestContact"] as System.Nullable<System.Int32>;
+                entity.SingleStrPostalAddress = (thisReader["SingleStrPostalAddress"] == DBNull.Value) ? null : thisReader["SingleStrPostalAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
             }
             else
             {
@@ -1014,7 +1029,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact] FROM [dbo].[RequestAccount]";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount]";
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             while (thisReader.Read())
             {
@@ -1050,6 +1065,8 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.PostalAddress = thisReader["PostalAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.RequestContact = thisReader["RequestContact"] as System.Nullable<System.Int32>;
+                entity.SingleStrPostalAddress = (thisReader["SingleStrPostalAddress"] == DBNull.Value) ? null : thisReader["SingleStrPostalAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
 
                 allEntities.Add(entity);
             }
@@ -1068,8 +1085,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[RequestAccount] ([Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact]) VALUES (@Title , @FullName , @Name , @BrandName , @Ogrn , @OgrnAuthority , @OgrnNum , @OgrnDate , @Inn , @InnAuthority , @InnNum , @InnDate , @Kpp , @Okpo , @OrgFormCode , @Okved , @Okfs , @BankName , @BankBik , @CorrAccount , @SetAccount , @Phone , @Fax , @EMail , @WebSite , @MessageId , @PostalAddress , @FactAddress , @RequestContact) SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact] FROM [dbo].[RequestAccount] WHERE [Id] = SCOPE_IDENTITY()";
-                createCommand.Parameters.AddWithValue("@Title", (newentity.Title == null) ? (object)DBNull.Value : newentity.Title);
+                createCommand.CommandText = "INSERT INTO [dbo].[RequestAccount] ([FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact]) VALUES (@FullName , @Name , @BrandName , @Ogrn , @OgrnAuthority , @OgrnNum , @OgrnDate , @Inn , @InnAuthority , @InnNum , @InnDate , @Kpp , @Okpo , @OrgFormCode , @Okved , @Okfs , @BankName , @BankBik , @CorrAccount , @SetAccount , @Phone , @Fax , @EMail , @WebSite , @MessageId , @PostalAddress , @FactAddress , @RequestContact) SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@FullName", (newentity.FullName == null) ? (object)DBNull.Value : newentity.FullName);
                 createCommand.Parameters.AddWithValue("@Name", (newentity.Name == null) ? (object)DBNull.Value : newentity.Name);
                 createCommand.Parameters.AddWithValue("@BrandName", (newentity.BrandName == null) ? (object)DBNull.Value : newentity.BrandName);
@@ -1136,6 +1152,8 @@ namespace TM.SP.BCSModels.CoordinateV5
                     createdEntity.PostalAddress = thisReader["PostalAddress"] as System.Nullable<System.Int32>;
                     createdEntity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                     createdEntity.RequestContact = thisReader["RequestContact"] as System.Nullable<System.Int32>;
+                    createdEntity.SingleStrPostalAddress = (thisReader["SingleStrPostalAddress"] == DBNull.Value) ? null : thisReader["SingleStrPostalAddress"].ToString();
+                    createdEntity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
                 }
                 else
                 {
@@ -1181,10 +1199,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[RequestAccount] SET [Title] = @Title , [FullName] = @FullName , [Name] = @Name , [BrandName] = @BrandName , [Ogrn] = @Ogrn , [OgrnAuthority] = @OgrnAuthority , [OgrnNum] = @OgrnNum , [OgrnDate] = @OgrnDate , [Inn] = @Inn , [InnAuthority] = @InnAuthority , [InnNum] = @InnNum , [InnDate] = @InnDate , [Kpp] = @Kpp , [Okpo] = @Okpo , [OrgFormCode] = @OrgFormCode , [Okved] = @Okved , [Okfs] = @Okfs , [BankName] = @BankName , [BankBik] = @BankBik , [CorrAccount] = @CorrAccount , [SetAccount] = @SetAccount , [Phone] = @Phone , [Fax] = @Fax , [EMail] = @EMail , [WebSite] = @WebSite , [MessageId] = @MessageId , [PostalAddress] = @PostalAddress , [FactAddress] = @FactAddress , [RequestContact] = @RequestContact WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[RequestAccount] SET [FullName] = @FullName , [Name] = @Name , [BrandName] = @BrandName , [Ogrn] = @Ogrn , [OgrnAuthority] = @OgrnAuthority , [OgrnNum] = @OgrnNum , [OgrnDate] = @OgrnDate , [Inn] = @Inn , [InnAuthority] = @InnAuthority , [InnNum] = @InnNum , [InnDate] = @InnDate , [Kpp] = @Kpp , [Okpo] = @Okpo , [OrgFormCode] = @OrgFormCode , [Okved] = @Okved , [Okfs] = @Okfs , [BankName] = @BankName , [BankBik] = @BankBik , [CorrAccount] = @CorrAccount , [SetAccount] = @SetAccount , [Phone] = @Phone , [Fax] = @Fax , [EMail] = @EMail , [WebSite] = @WebSite , [MessageId] = @MessageId , [PostalAddress] = @PostalAddress , [FactAddress] = @FactAddress , [RequestContact] = @RequestContact WHERE [Id] = @Id";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Title", (updateRequestAccount.Title == null) ? (object)DBNull.Value : updateRequestAccount.Title);
                 updateCommand.Parameters.AddWithValue("@FullName", (updateRequestAccount.FullName == null) ? (object)DBNull.Value : updateRequestAccount.FullName);
                 updateCommand.Parameters.AddWithValue("@Name", (updateRequestAccount.Name == null) ? (object)DBNull.Value : updateRequestAccount.Name);
                 updateCommand.Parameters.AddWithValue("@BrandName", (updateRequestAccount.BrandName == null) ? (object)DBNull.Value : updateRequestAccount.BrandName);
@@ -1273,7 +1290,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn = getSqlConnection();
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = @Id_Auto";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = @Id_Auto";
             selectCommand.Parameters.AddWithValue("@Id_Auto", Id_Auto);
 
             selectCommand.Connection = thisConn;
@@ -1307,6 +1324,9 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.RegAddress = thisReader["RegAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.BirthAddress = thisReader["BirthAddress"] as System.Nullable<System.Int32>;
+                entity.SingleStrRegAddress = (thisReader["SingleStrRegAddress"] == DBNull.Value) ? null : thisReader["SingleStrRegAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
+                entity.SingleStrBirthAddress = (thisReader["SingleStrBirthAddress"] == DBNull.Value) ? null : thisReader["SingleStrBirthAddress"].ToString();
             }
             else
             {
@@ -1325,7 +1345,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] FROM [dbo].[RequestContact]";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact]";
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             while (thisReader.Read())
             {
@@ -1358,6 +1378,9 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.RegAddress = thisReader["RegAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.BirthAddress = thisReader["BirthAddress"] as System.Nullable<System.Int32>;
+                entity.SingleStrRegAddress = (thisReader["SingleStrRegAddress"] == DBNull.Value) ? null : thisReader["SingleStrRegAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
+                entity.SingleStrBirthAddress = (thisReader["SingleStrBirthAddress"] == DBNull.Value) ? null : thisReader["SingleStrBirthAddress"].ToString();
 
                 allEntities.Add(entity);
             }
@@ -1376,9 +1399,8 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[RequestContact] ([Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress]) VALUES (@Id , @Title , @LastName , @FirstName , @MiddleName , @Gender , @BirthDate , @Snils , @Inn , @MobilePhone , @WorkPhone , @HomePhone , @EMail , @Nation , @Citizenship , @CitizenshipType , @JobTitle , @OMSNum , @OMSDate , @OMSCompany , @OMSValidityPeriod , @IsiId , @MessageId , @RegAddress , @FactAddress , @BirthAddress) SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[RequestContact] ([Id] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress]) VALUES (@Id , @LastName , @FirstName , @MiddleName , @Gender , @BirthDate , @Snils , @Inn , @MobilePhone , @WorkPhone , @HomePhone , @EMail , @Nation , @Citizenship , @CitizenshipType , @JobTitle , @OMSNum , @OMSDate , @OMSCompany , @OMSValidityPeriod , @IsiId , @MessageId , @RegAddress , @FactAddress , @BirthAddress) SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@Id", (newentity.Id == null) ? (object)DBNull.Value : newentity.Id);
-                createCommand.Parameters.AddWithValue("@Title", newentity.Title);
                 createCommand.Parameters.AddWithValue("@LastName", (newentity.LastName == null) ? (object)DBNull.Value : newentity.LastName);
                 createCommand.Parameters.AddWithValue("@FirstName", (newentity.FirstName == null) ? (object)DBNull.Value : newentity.FirstName);
                 createCommand.Parameters.AddWithValue("@MiddleName", (newentity.MiddleName == null) ? (object)DBNull.Value : newentity.MiddleName);
@@ -1411,33 +1433,36 @@ namespace TM.SP.BCSModels.CoordinateV5
                 {
                     createdEntity = new RequestContact();
 
-                    createdEntity.Id = (thisReader["Id"] == DBNull.Value) ? null : thisReader["Id"].ToString();
-                    createdEntity.Title = (System.String)thisReader["Title"];
-                    createdEntity.LastName = (thisReader["LastName"] == DBNull.Value) ? null : thisReader["LastName"].ToString();
-                    createdEntity.FirstName = (thisReader["FirstName"] == DBNull.Value) ? null : thisReader["FirstName"].ToString();
-                    createdEntity.MiddleName = (thisReader["MiddleName"] == DBNull.Value) ? null : thisReader["MiddleName"].ToString();
-                    createdEntity.Gender = (thisReader["Gender"] == DBNull.Value) ? null : thisReader["Gender"].ToString();
-                    createdEntity.BirthDate = thisReader["BirthDate"] as System.Nullable<System.DateTime>;
-                    createdEntity.Snils = (thisReader["Snils"] == DBNull.Value) ? null : thisReader["Snils"].ToString();
-                    createdEntity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
-                    createdEntity.MobilePhone = (thisReader["MobilePhone"] == DBNull.Value) ? null : thisReader["MobilePhone"].ToString();
-                    createdEntity.WorkPhone = (thisReader["WorkPhone"] == DBNull.Value) ? null : thisReader["WorkPhone"].ToString();
-                    createdEntity.HomePhone = (thisReader["HomePhone"] == DBNull.Value) ? null : thisReader["HomePhone"].ToString();
-                    createdEntity.EMail = (thisReader["EMail"] == DBNull.Value) ? null : thisReader["EMail"].ToString();
-                    createdEntity.Nation = (thisReader["Nation"] == DBNull.Value) ? null : thisReader["Nation"].ToString();
-                    createdEntity.Citizenship = (thisReader["Citizenship"] == DBNull.Value) ? null : thisReader["Citizenship"].ToString();
-                    createdEntity.CitizenshipType = (thisReader["CitizenshipType"] == DBNull.Value) ? null : thisReader["CitizenshipType"].ToString();
-                    createdEntity.JobTitle = (thisReader["JobTitle"] == DBNull.Value) ? null : thisReader["JobTitle"].ToString();
-                    createdEntity.OMSNum = (thisReader["OMSNum"] == DBNull.Value) ? null : thisReader["OMSNum"].ToString();
-                    createdEntity.OMSDate = thisReader["OMSDate"] as System.Nullable<System.DateTime>;
-                    createdEntity.OMSCompany = (thisReader["OMSCompany"] == DBNull.Value) ? null : thisReader["OMSCompany"].ToString();
-                    createdEntity.OMSValidityPeriod = (thisReader["OMSValidityPeriod"] == DBNull.Value) ? null : thisReader["OMSValidityPeriod"].ToString();
-                    createdEntity.IsiId = (thisReader["IsiId"] == DBNull.Value) ? null : thisReader["IsiId"].ToString();
-                    createdEntity.Id_Auto = (System.Int32)thisReader["Id_Auto"];
-                    createdEntity.MessageId = (System.String)thisReader["MessageId"];
-                    createdEntity.RegAddress = thisReader["RegAddress"] as System.Nullable<System.Int32>;
-                    createdEntity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
-                    createdEntity.BirthAddress = thisReader["BirthAddress"] as System.Nullable<System.Int32>;
+                    createdEntity.Id                    = (thisReader["Id"] == DBNull.Value) ? null : thisReader["Id"].ToString();
+                    createdEntity.Title                 = (System.String)thisReader["Title"];
+                    createdEntity.LastName              = (thisReader["LastName"] == DBNull.Value) ? null : thisReader["LastName"].ToString();
+                    createdEntity.FirstName             = (thisReader["FirstName"] == DBNull.Value) ? null : thisReader["FirstName"].ToString();
+                    createdEntity.MiddleName            = (thisReader["MiddleName"] == DBNull.Value) ? null : thisReader["MiddleName"].ToString();
+                    createdEntity.Gender                = (thisReader["Gender"] == DBNull.Value) ? null : thisReader["Gender"].ToString();
+                    createdEntity.BirthDate             = thisReader["BirthDate"] as System.Nullable<System.DateTime>;
+                    createdEntity.Snils                 = (thisReader["Snils"] == DBNull.Value) ? null : thisReader["Snils"].ToString();
+                    createdEntity.Inn                   = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
+                    createdEntity.MobilePhone           = (thisReader["MobilePhone"] == DBNull.Value) ? null : thisReader["MobilePhone"].ToString();
+                    createdEntity.WorkPhone             = (thisReader["WorkPhone"] == DBNull.Value) ? null : thisReader["WorkPhone"].ToString();
+                    createdEntity.HomePhone             = (thisReader["HomePhone"] == DBNull.Value) ? null : thisReader["HomePhone"].ToString();
+                    createdEntity.EMail                 = (thisReader["EMail"] == DBNull.Value) ? null : thisReader["EMail"].ToString();
+                    createdEntity.Nation                = (thisReader["Nation"] == DBNull.Value) ? null : thisReader["Nation"].ToString();
+                    createdEntity.Citizenship           = (thisReader["Citizenship"] == DBNull.Value) ? null : thisReader["Citizenship"].ToString();
+                    createdEntity.CitizenshipType       = (thisReader["CitizenshipType"] == DBNull.Value) ? null : thisReader["CitizenshipType"].ToString();
+                    createdEntity.JobTitle              = (thisReader["JobTitle"] == DBNull.Value) ? null : thisReader["JobTitle"].ToString();
+                    createdEntity.OMSNum                = (thisReader["OMSNum"] == DBNull.Value) ? null : thisReader["OMSNum"].ToString();
+                    createdEntity.OMSDate               = thisReader["OMSDate"] as System.Nullable<System.DateTime>;
+                    createdEntity.OMSCompany            = (thisReader["OMSCompany"] == DBNull.Value) ? null : thisReader["OMSCompany"].ToString();
+                    createdEntity.OMSValidityPeriod     = (thisReader["OMSValidityPeriod"] == DBNull.Value) ? null : thisReader["OMSValidityPeriod"].ToString();
+                    createdEntity.IsiId                 = (thisReader["IsiId"] == DBNull.Value) ? null : thisReader["IsiId"].ToString();
+                    createdEntity.Id_Auto               = (System.Int32)thisReader["Id_Auto"];
+                    createdEntity.MessageId             = (System.String)thisReader["MessageId"];
+                    createdEntity.RegAddress            = thisReader["RegAddress"] as System.Nullable<System.Int32>;
+                    createdEntity.FactAddress           = thisReader["FactAddress"] as System.Nullable<System.Int32>;
+                    createdEntity.BirthAddress          = thisReader["BirthAddress"] as System.Nullable<System.Int32>;
+                    createdEntity.SingleStrRegAddress   = (thisReader["SingleStrRegAddress"] == DBNull.Value) ? null : thisReader["SingleStrRegAddress"].ToString();
+                    createdEntity.SingleStrFactAddress  = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
+                    createdEntity.SingleStrBirthAddress = (thisReader["SingleStrBirthAddress"] == DBNull.Value) ? null : thisReader["SingleStrBirthAddress"].ToString();
                 }
                 else
                 {
@@ -1483,11 +1508,10 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[RequestContact] SET [Id] = @Id , [Title] = @Title , [LastName] = @LastName , [FirstName] = @FirstName , [MiddleName] = @MiddleName , [Gender] = @Gender , [BirthDate] = @BirthDate , [Snils] = @Snils , [Inn] = @Inn , [MobilePhone] = @MobilePhone , [WorkPhone] = @WorkPhone , [HomePhone] = @HomePhone , [EMail] = @EMail , [Nation] = @Nation , [Citizenship] = @Citizenship , [CitizenshipType] = @CitizenshipType , [JobTitle] = @JobTitle , [OMSNum] = @OMSNum , [OMSDate] = @OMSDate , [OMSCompany] = @OMSCompany , [OMSValidityPeriod] = @OMSValidityPeriod , [IsiId] = @IsiId , [MessageId] = @MessageId , [RegAddress] = @RegAddress , [FactAddress] = @FactAddress , [BirthAddress] = @BirthAddress WHERE [Id_Auto] = @Id_Auto";
+                updateCommand.CommandText = "UPDATE [dbo].[RequestContact] SET [Id] = @Id , [LastName] = @LastName , [FirstName] = @FirstName , [MiddleName] = @MiddleName , [Gender] = @Gender , [BirthDate] = @BirthDate , [Snils] = @Snils , [Inn] = @Inn , [MobilePhone] = @MobilePhone , [WorkPhone] = @WorkPhone , [HomePhone] = @HomePhone , [EMail] = @EMail , [Nation] = @Nation , [Citizenship] = @Citizenship , [CitizenshipType] = @CitizenshipType , [JobTitle] = @JobTitle , [OMSNum] = @OMSNum , [OMSDate] = @OMSDate , [OMSCompany] = @OMSCompany , [OMSValidityPeriod] = @OMSValidityPeriod , [IsiId] = @IsiId , [MessageId] = @MessageId , [RegAddress] = @RegAddress , [FactAddress] = @FactAddress , [BirthAddress] = @BirthAddress WHERE [Id_Auto] = @Id_Auto";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@Id", (updateRequestContact.Id == null) ? (object)DBNull.Value : updateRequestContact.Id);
-                updateCommand.Parameters.AddWithValue("@Title", updateRequestContact.Title);
                 updateCommand.Parameters.AddWithValue("@LastName", (updateRequestContact.LastName == null) ? (object)DBNull.Value : updateRequestContact.LastName);
                 updateCommand.Parameters.AddWithValue("@FirstName", (updateRequestContact.FirstName == null) ? (object)DBNull.Value : updateRequestContact.FirstName);
                 updateCommand.Parameters.AddWithValue("@MiddleName", (updateRequestContact.MiddleName == null) ? (object)DBNull.Value : updateRequestContact.MiddleName);
@@ -1597,7 +1621,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact] FROM [dbo].[RequestAccount] WHERE [RequestContact] = @RequestContact";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [RequestContact] = @RequestContact";
 
             selectCommand.Parameters.AddWithValue("@RequestContact", RequestContact);
 
@@ -1636,6 +1660,8 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.PostalAddress = thisReader["PostalAddress"] as System.Nullable<System.Int32>;
                 entity.FactAddress = thisReader["FactAddress"] as System.Nullable<System.Int32>;
                 entity.RequestContact = thisReader["RequestContact"] as System.Nullable<System.Int32>;
+                entity.SingleStrPostalAddress = (thisReader["SingleStrPostalAddress"] == DBNull.Value) ? null : thisReader["SingleStrPostalAddress"].ToString();
+                entity.SingleStrFactAddress = (thisReader["SingleStrFactAddress"] == DBNull.Value) ? null : thisReader["SingleStrFactAddress"].ToString();
 
                 allEntities.Add(entity);
             }

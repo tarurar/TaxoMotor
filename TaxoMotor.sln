@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.ServiceClients", "TM.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.AnswerProcessingTimerJob", "TM.SP.AnswerProcessingTimerJob\TM.SP.AnswerProcessingTimerJob.csproj", "{6F3CEB77-D4C6-4A87-8DFC-2D72B227A5D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.ServiceMessageBuilder", "TM.SP.ServiceMessageBuilder\TM.SP.ServiceMessageBuilder.csproj", "{D39CB701-92C9-47D1-8135-0DF657D8E87B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,10 @@ Global
 		{6F3CEB77-D4C6-4A87-8DFC-2D72B227A5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F3CEB77-D4C6-4A87-8DFC-2D72B227A5D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F3CEB77-D4C6-4A87-8DFC-2D72B227A5D8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D39CB701-92C9-47D1-8135-0DF657D8E87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D39CB701-92C9-47D1-8135-0DF657D8E87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D39CB701-92C9-47D1-8135-0DF657D8E87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D39CB701-92C9-47D1-8135-0DF657D8E87B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

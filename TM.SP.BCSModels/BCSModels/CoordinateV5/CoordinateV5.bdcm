@@ -21,7 +21,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="Address" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="Address">
+				<Entity Name="Address" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.52" EstimatedInstanceCount="10000" DefaultDisplayName="Address">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.AddressEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -1445,7 +1445,14 @@
 													<TypeDescriptor Name="PostalAddress" DefaultDisplayName="PostalAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToPostalAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="RequestContact" DefaultDisplayName="RequestContact" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id_Auto" IdentifierEntityName="RequestContact" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="Id_AutoOfRequestContactToRequestContactOfRequestAccount" ForeignIdentifierAssociationEntityName="RequestContact" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrPostalAddress" TypeName="System.String" DefaultDisplayName="SingleStrPostalAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
@@ -1695,7 +1702,14 @@
 													<TypeDescriptor Name="PostalAddress" DefaultDisplayName="PostalAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToPostalAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="RequestContact" DefaultDisplayName="RequestContact" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id_Auto" IdentifierEntityName="RequestContact" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="Id_AutoOfRequestContactToRequestContactOfRequestAccount" ForeignIdentifierAssociationEntityName="RequestContact" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrPostalAddress" TypeName="System.String" DefaultDisplayName="SingleStrPostalAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
@@ -1922,7 +1936,18 @@
 													<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
@@ -2149,7 +2174,18 @@
 													<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
@@ -2376,7 +2412,18 @@
 													<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
@@ -3314,7 +3361,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="RequestAccount" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="RequestAccount">
+				<Entity Name="RequestAccount" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.62" EstimatedInstanceCount="10000" DefaultDisplayName="RequestAccount">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestAccountEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -3558,7 +3605,14 @@
 													<TypeDescriptor Name="PostalAddress" DefaultDisplayName="PostalAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToPostalAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="RequestContact" DefaultDisplayName="RequestContact" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id_Auto" IdentifierEntityName="RequestContact" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="Id_AutoOfRequestContactToRequestContactOfRequestAccount" ForeignIdentifierAssociationEntityName="RequestContact" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrPostalAddress" TypeName="System.String" DefaultDisplayName="SingleStrPostalAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
@@ -3795,7 +3849,14 @@
 											<TypeDescriptor Name="PostalAddress" DefaultDisplayName="PostalAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToPostalAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="RequestContact" DefaultDisplayName="RequestContact" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id_Auto" IdentifierEntityName="RequestContact" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="Id_AutoOfRequestContactToRequestContactOfRequestAccount" ForeignIdentifierAssociationEntityName="RequestContact" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-										</TypeDescriptors>
+                      <TypeDescriptor Name="SingleStrPostalAddress" TypeName="System.String" DefaultDisplayName="SingleStrPostalAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor></TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
 							</Parameters>
@@ -4238,7 +4299,14 @@
 											<TypeDescriptor Name="PostalAddress" DefaultDisplayName="PostalAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToPostalAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="RequestContact" DefaultDisplayName="RequestContact" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id_Auto" IdentifierEntityName="RequestContact" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="Id_AutoOfRequestContactToRequestContactOfRequestAccount" ForeignIdentifierAssociationEntityName="RequestContact" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-										</TypeDescriptors>
+                      <TypeDescriptor Name="SingleStrPostalAddress" TypeName="System.String" DefaultDisplayName="SingleStrPostalAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor></TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
 							</Parameters>
@@ -4277,14 +4345,6 @@
 								<Parameter Name="updateRequestAccount" Direction="In">
 									<TypeDescriptor Name="RequestAccount" TypeName="TM.SP.BCSModels.CoordinateV5.RequestAccount, TM.SP.BCSModels">
 										<TypeDescriptors>
-											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String" UpdaterField="true">
-												<Properties>
-													<Property Name="Size" Type="System.Int32">255</Property>
-												</Properties>
-												<Interpretation>
-													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
-												</Interpretation>
-											</TypeDescriptor>
 											<TypeDescriptor Name="FullName" DefaultDisplayName="FullName" TypeName="System.String" UpdaterField="true">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -4483,7 +4543,18 @@
 											<TypeDescriptor Name="PostalAddress" DefaultDisplayName="PostalAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToPostalAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="RequestContact" DefaultDisplayName="RequestContact" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" IdentifierName="Id_Auto" IdentifierEntityName="RequestContact" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="Id_AutoOfRequestContactToRequestContactOfRequestAccount" ForeignIdentifierAssociationEntityName="RequestContact" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-										</TypeDescriptors>
+                      <TypeDescriptor Name="Title" TypeName="System.String" DefaultDisplayName="Title" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrPostalAddress" TypeName="System.String" DefaultDisplayName="SingleStrPostalAddress" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor></TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
 							</Parameters>
@@ -4584,7 +4655,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="RequestContact" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.0" EstimatedInstanceCount="10000" DefaultDisplayName="RequestContact">
+				<Entity Name="RequestContact" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.71" EstimatedInstanceCount="10000" DefaultDisplayName="RequestContact">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestContactEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -4805,7 +4876,18 @@
 													<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
@@ -5019,7 +5101,18 @@
 											<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-										</TypeDescriptors>
+                      <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor></TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
 							</Parameters>
@@ -5221,7 +5314,18 @@
 											<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-										</TypeDescriptors>
+                      <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor></TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
 								<Parameter Name="returnRequestContact" Direction="Return">
@@ -5415,7 +5519,18 @@
 											<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-										</TypeDescriptors>
+                      <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor></TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
 							</Parameters>
@@ -5636,7 +5751,18 @@
 											<TypeDescriptor Name="RegAddress" DefaultDisplayName="RegAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToRegAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 											<TypeDescriptor Name="BirthAddress" DefaultDisplayName="BirthAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToBirthAddressOfRequestContact" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-										</TypeDescriptors>
+                      <TypeDescriptor Name="SingleStrRegAddress" TypeName="System.String" DefaultDisplayName="SingleStrRegAddress" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor>
+                      <TypeDescriptor Name="SingleStrBirthAddress" TypeName="System.String" DefaultDisplayName="SingleStrBirthAddress" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">1024</Property>
+                        </Properties></TypeDescriptor></TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
 							</Parameters>
@@ -6033,7 +6159,14 @@
 													<TypeDescriptor Name="PostalAddress" DefaultDisplayName="PostalAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToPostalAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="FactAddress" DefaultDisplayName="FactAddress" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="IdOfAddressToFactAddressOfRequestAccount" ForeignIdentifierAssociationEntityName="Address" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
 													<TypeDescriptor Name="RequestContact" DefaultDisplayName="RequestContact" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id_Auto" IdentifierEntityName="RequestContact" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5" ForeignIdentifierAssociationName="Id_AutoOfRequestContactToRequestContactOfRequestAccount" ForeignIdentifierAssociationEntityName="RequestContact" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
-												</TypeDescriptors>
+                          <TypeDescriptor Name="SingleStrPostalAddress" TypeName="System.String" DefaultDisplayName="SingleStrPostalAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor>
+                          <TypeDescriptor Name="SingleStrFactAddress" TypeName="System.String" DefaultDisplayName="SingleStrFactAddress">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">1024</Property>
+                            </Properties></TypeDescriptor></TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>

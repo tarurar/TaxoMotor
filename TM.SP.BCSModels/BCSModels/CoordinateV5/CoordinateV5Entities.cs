@@ -134,6 +134,8 @@ namespace TM.SP.BCSModels.CoordinateV5
         public System.Nullable<System.Int32> PostalAddress { get; set; }
         public System.Nullable<System.Int32> FactAddress { get; set; }
         public System.Nullable<System.Int32> RequestContact { get; set; }
+        public System.String SingleStrPostalAddress { get; set; }
+        public System.String SingleStrFactAddress { get; set; }
     }
 
     /// <summary>
@@ -170,6 +172,9 @@ namespace TM.SP.BCSModels.CoordinateV5
         public System.Nullable<System.Int32> RegAddress { get; set; }
         public System.Nullable<System.Int32> FactAddress { get; set; }
         public System.Nullable<System.Int32> BirthAddress { get; set; }
+        public System.String SingleStrRegAddress { get; set; }
+        public System.String SingleStrFactAddress { get; set; }
+        public System.String SingleStrBirthAddress { get; set; }
     }
 
     /// <summary>
