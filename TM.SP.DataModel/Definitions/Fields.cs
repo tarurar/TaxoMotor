@@ -647,5 +647,18 @@ namespace TM.SP.DataModel
         };
 
         #endregion
+
+        #region [Состояния обращений]
+
+        public static FieldDefinition TmIncomeRequestSystemUpdateAvailable = new FieldDefinition()
+        {
+            Id           = new Guid("{511DEBBB-3B6F-4218-ABBE-B0AD961EAFDC}"),
+            Title        = "Обновление обращения разрешено",
+            InternalName = "Tm_IncomeRequestSysUpdateAvail",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        #endregion
     }
 }
