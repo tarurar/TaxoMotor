@@ -80,6 +80,9 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmAttachCopyCount)
                     .AddField(Fields.TmAttachDivisionCode)
                     .AddField(Fields.TmIdentityDocTypeComment)
+                    .AddField(Fields.TmAttachSingleStrDocName)
+                    .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeDefaultValue("FALSE")))
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -88,8 +91,9 @@ namespace TM.SP.DataModel
                 )
                 .WithContentTypes(
                     ctList => ctList
-                        .AddContentType(ContentTypes.TmIncomeRequestState,
-                            ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
+                        .AddContentType(ContentTypes.TmIncomeRequestState, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmServiceCode)
+                            .AddContentTypeFieldLink(Fields.TmIncomeRequestSystemUpdateAvailable))
                         .AddContentType(ContentTypes.TmIncomeRequestStateInternal,
                             ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
                         .AddContentType(ContentTypes.TmDenyReason, ct => ct
@@ -246,6 +250,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmAttachListCount)
                         .AddContentTypeFieldLink(Fields.TmAttachCopyCount)
                         .AddContentTypeFieldLink(Fields.TmAttachDivisionCode)
+                        .AddContentTypeFieldLink(Fields.TmAttachSingleStrDocName)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                      )
                  );
