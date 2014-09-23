@@ -790,6 +790,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmIncomeRequestSysUpdAvailText = new FieldDefinition()
+        {
+            Id           = new Guid("{EC3A867E-5EE2-4C58-A1F0-CED6217289B4}"),
+            Title        = "Обновление обращения разрешено (выч.)",
+            InternalName = "Tm_IncomeRequestSysUpdAvailText",
+            FieldType    = BuiltInFieldTypes.Calculated,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
         #endregion
     }
 }

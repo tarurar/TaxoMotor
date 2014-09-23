@@ -109,6 +109,13 @@ namespace TM.SP.DataModel
                         (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeDefaultValue("FALSE")))
+                    .AddField(Fields.TmIncomeRequestSysUpdAvailText, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) =>
+                        {
+                            FieldCalculated field = spField as FieldCalculated;
+                            if (field != null)
+                                field.Formula = "=IF([Обновление обращения разрешено], \"1\", \"0\")";
+                        }))
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -119,7 +126,8 @@ namespace TM.SP.DataModel
                     ctList => ctList
                         .AddContentType(ContentTypes.TmIncomeRequestState, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
-                            .AddContentTypeFieldLink(Fields.TmIncomeRequestSystemUpdateAvailable))
+                            .AddContentTypeFieldLink(Fields.TmIncomeRequestSystemUpdateAvailable)
+                            .AddContentTypeFieldLink(Fields.TmIncomeRequestSysUpdAvailText))
                         .AddContentType(ContentTypes.TmIncomeRequestStateInternal,
                             ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
                         .AddContentType(ContentTypes.TmDenyReason, ct => ct
