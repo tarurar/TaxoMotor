@@ -211,6 +211,127 @@ namespace TM.SP.DataModel
 
         #endregion
 
+        #region [Обращение - Вычислимые поля для поиска]
+
+        public static FieldDefinition TmIncomeRequestTaxiModels = new FieldDefinition()
+        {
+            Id           = new Guid("{9868A537-2060-423E-A80E-BDF63B4E4C71}"),
+            Title        = "Модель ТС",
+            InternalName = "Tm_IncomeRequestTaxiModels",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestTaxiBrands = new FieldDefinition()
+        {
+            Id           = new Guid("{072E7AD2-AA6E-4E9D-8521-FE4F0AF7F59A}"),
+            Title        = "Марка ТС",
+            InternalName = "Tm_IncomeRequestTaxiBrands",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestTaxiStateNumbers = new FieldDefinition()
+        {
+            Id           = new Guid("{F0C20389-2D59-42EC-959D-72A787504F10}"),
+            Title        = "Гос. номер ТС",
+            InternalName = "Tm_IncomeRequestTaxiStateNumbers",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestTaxiYears = new FieldDefinition()
+        {
+            Id           = new Guid("{1E1E1BA1-9629-4751-9C52-88C8D5597587}"),
+            Title        = "Год выпуска ТС",
+            InternalName = "Tm_IncomeRequestTaxiYears",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestTaxiLastToDates = new FieldDefinition()
+        {
+            Id           = new Guid("{9B31F82C-BAAD-4D31-8972-082155C8D055}"),
+            Title        = "Дата последнего ТО ТС",
+            InternalName = "Tm_IncomeRequestTaxiLastToDates",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestDeclarantNames = new FieldDefinition()
+        {
+            Id           = new Guid("{C0C5A54F-D1F3-4759-B126-77ED3B23C683}"),
+            Title        = "ФИО заявителя",
+            InternalName = "Tm_IncomeRequestDeclarantNames",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestDeclarantAddresses = new FieldDefinition()
+        {
+            Id           = new Guid("{BA8B57AE-8B69-4563-AFDC-D708219BFE24}"),
+            Title        = "Адрес заявителя",
+            InternalName = "Tm_IncomeRequestDeclarantAddress",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestDeclarantOrgNames = new FieldDefinition()
+        {
+            Id           = new Guid("{1C164562-59EF-48C7-AA55-C98B30C33520}"),
+            Title        = "Организация заявителя",
+            InternalName = "Tm_IncomeRequestDeclarantOrgName",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestDeclarantINNs = new FieldDefinition()
+        {
+            Id           = new Guid("{36769DEA-7B5C-417A-8750-D451FDD97DE1}"),
+            Title        = "ИНН заявителя",
+            InternalName = "Tm_IncomeRequestDeclarantINNs",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestTrusteeNames = new FieldDefinition()
+        {
+            Id           = new Guid("{2280CE8E-BEE9-43E0-8693-AB615C13D49B}"),
+            Title        = "ФИО представителя",
+            InternalName = "Tm_IncomeRequestTrusteeNames",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestTrusteeAddresses = new FieldDefinition()
+        {
+            Id           = new Guid("{2D610FDA-FC5F-4A4E-AB32-08413C42F251}"),
+            Title        = "Адрес представителя",
+            InternalName = "Tm_IncomeRequestTrusteeAddresses",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestTrusteeINNs = new FieldDefinition()
+        {
+            Id           = new Guid("{08F25938-B3BB-4E71-8745-E119C99398E1}"),
+            Title        = "ИНН представителя",
+            InternalName = "Tm_IncomeRequestTrusteeINNs",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestIdentityDocs = new FieldDefinition()
+        {
+            Id           = new Guid("{6E7BDDAA-7877-45F3-B111-31A1B5445EA4}"),
+            Title        = "Документ удост. личность",
+            InternalName = "Tm_IncomeRequestIdentityDocs",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        #endregion
+
         #region [Обращение - Переоформление разрешения]
 
         public static FieldDefinition TmRenewalReason_StateNumber = new FieldDefinition()
@@ -597,7 +718,7 @@ namespace TM.SP.DataModel
             InternalName = "Tm_AttachSingleStrDocName",
             Description  = "Поле для хранения наименования документа. Используется для поиска, вычисляется в eventreceiver'ах",
             FieldType    = BuiltInFieldTypes.Text,
-            Group        = ModelConsts.ColumnsDefaultGroup
+            Group        = ModelConsts.ColumnsCalcGroup
         };
         #endregion
 

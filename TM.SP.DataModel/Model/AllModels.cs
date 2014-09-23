@@ -81,6 +81,32 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmAttachDivisionCode)
                     .AddField(Fields.TmIdentityDocTypeComment)
                     .AddField(Fields.TmAttachSingleStrDocName)
+                    .AddField(Fields.TmIncomeRequestTaxiModels, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestTaxiBrands, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestTaxiStateNumbers, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestTaxiYears, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestTaxiLastToDates, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestDeclarantNames, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestDeclarantAddresses, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestDeclarantOrgNames, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestDeclarantINNs, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestTrusteeNames, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestTrusteeAddresses, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestTrusteeINNs, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestIdentityDocs, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeDefaultValue("FALSE")))
                     .AddField(Fields.TmMessageId, f => f.OnCreated(
@@ -168,6 +194,19 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmPrepareFactDate)
                         .AddContentTypeFieldLink(Fields.TmPrepareTargetDate)
                         .AddContentTypeFieldLink(Fields.TmRefuseDate)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiModels)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiBrands)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiStateNumbers)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiYears)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiLastToDates)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantNames)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantAddresses)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantOrgNames)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantINNs)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTrusteeNames)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTrusteeAddresses)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestTrusteeINNs)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestIdentityDocs)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                     )
                     .AddContentType(ContentTypes.TmNewIncomeRequest)
