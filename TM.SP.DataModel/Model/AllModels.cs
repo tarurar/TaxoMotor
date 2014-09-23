@@ -95,8 +95,6 @@ namespace TM.SP.DataModel
                         (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestDeclarantAddresses, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
-                    .AddField(Fields.TmIncomeRequestDeclarantOrgNames, f => f.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestDeclarantINNs, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestTrusteeNames, f => f.OnCreated(
@@ -209,7 +207,6 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiLastToDates)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantNames)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantAddresses)
-                        .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantOrgNames)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantINNs)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTrusteeNames)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTrusteeAddresses)
