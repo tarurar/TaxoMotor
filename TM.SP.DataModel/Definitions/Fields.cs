@@ -261,7 +261,7 @@ namespace TM.SP.DataModel
         public static FieldDefinition TmIncomeRequestDeclarantNames = new FieldDefinition()
         {
             Id           = new Guid("{C0C5A54F-D1F3-4759-B126-77ED3B23C683}"),
-            Title        = "ФИО заявителя",
+            Title        = "Заявитель",
             InternalName = "Tm_IncomeRequestDeclarantNames",
             FieldType    = BuiltInFieldTypes.MultiChoice,
             Group        = ModelConsts.ColumnsCalcGroup
@@ -272,15 +272,6 @@ namespace TM.SP.DataModel
             Id           = new Guid("{BA8B57AE-8B69-4563-AFDC-D708219BFE24}"),
             Title        = "Адрес заявителя",
             InternalName = "Tm_IncomeRequestDeclarantAddress",
-            FieldType    = BuiltInFieldTypes.MultiChoice,
-            Group        = ModelConsts.ColumnsCalcGroup
-        };
-
-        public static FieldDefinition TmIncomeRequestDeclarantOrgNames = new FieldDefinition()
-        {
-            Id           = new Guid("{1C164562-59EF-48C7-AA55-C98B30C33520}"),
-            Title        = "Организация заявителя",
-            InternalName = "Tm_IncomeRequestDeclarantOrgName",
             FieldType    = BuiltInFieldTypes.MultiChoice,
             Group        = ModelConsts.ColumnsCalcGroup
         };
