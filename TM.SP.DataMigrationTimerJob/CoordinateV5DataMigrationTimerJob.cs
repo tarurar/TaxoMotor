@@ -63,8 +63,6 @@ namespace TM.SP.DataMigrationTimerJob
 
         #endregion
 
-
-
         private static string GetFeatureLocalizedResource(string resourceName)
         {
             return SPUtility.GetLocalizedString(

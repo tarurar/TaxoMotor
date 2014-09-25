@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.ServiceMessageBuilder
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.IncomeRequestSearch", "TM.SP.IncomeRequestSearch\TM.SP.IncomeRequestSearch.csproj", "{61CE4935-0862-400E-8649-E0A228DFB29A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSPConsole", "TestSPConsole\TestSPConsole.csproj", "{1D573AEB-AA78-479B-A94B-DC91DD42160C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -166,6 +168,10 @@ Global
 		{61CE4935-0862-400E-8649-E0A228DFB29A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61CE4935-0862-400E-8649-E0A228DFB29A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61CE4935-0862-400E-8649-E0A228DFB29A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1D573AEB-AA78-479B-A94B-DC91DD42160C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D573AEB-AA78-479B-A94B-DC91DD42160C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D573AEB-AA78-479B-A94B-DC91DD42160C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D573AEB-AA78-479B-A94B-DC91DD42160C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

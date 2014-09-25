@@ -19,6 +19,8 @@
     <ProjectGuid>{61CE4935-0862-400E-8649-E0A228DFB29A}</ProjectGuid>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <PostDeploymentCommand>net stop "SharePoint Timer Service"
+net start "SharePoint Timer Service"</PostDeploymentCommand>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +46,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Camlex.NET.dll.3.6.0.0\lib\net20\Camlex.NET.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.BusinessData, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -62,7 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventReceivers\IncomeRequestAttachList\IncomeRequestAttachList.cs" />
+    <Compile Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\IncomeRequestSearchFieldsCalculation.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalculation.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimerJobs\CalcIncomeRequestSearchFields\CalcIncomeRequestSearchFieldsTimerJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EventReceivers\IncomeRequestAttachList\SharePointProjectItem.spdata">
@@ -70,6 +80,9 @@
     </None>
     <None Include="Features\TaxoMotor_IncomeRequestAttachListEventReceivers\TaxoMotor_IncomeRequestAttachListEventReceivers.feature">
       <FeatureId>{a48f531e-a48b-4aa7-a4cf-76ed2439613d}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\TaxoMotor_IncomeRequestSearchFieldsCalculation.feature">
+      <FeatureId>{512952c7-7072-4862-ae73-d6ea0f5cc153}</FeatureId>
     </None>
     <None Include="key.snk" />
     <None Include="packages.config" />
@@ -84,6 +97,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj">
+      <Project>{73514d73-abd3-440e-8a49-93026866c619}</Project>
+      <Name>TM.SP.BCSModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
       <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
       <Name>TM.Utils</Name>
@@ -94,7 +111,14 @@
     <Content Include="Features\TaxoMotor_IncomeRequestAttachListEventReceivers\TaxoMotor_IncomeRequestAttachListEventReceivers.Template.xml">
       <DependentUpon>TaxoMotor_IncomeRequestAttachListEventReceivers.feature</DependentUpon>
     </Content>
+    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\TaxoMotor_IncomeRequestSearchFieldsCalculation.Template.xml">
+      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalculation.feature</DependentUpon>
+    </Content>
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestAttachListEventReceivers.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestSearchFieldsCalculation.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
