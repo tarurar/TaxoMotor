@@ -44,21 +44,7 @@ namespace TM.SP.IncomeRequestSearch
         {
             var viewFields = new XElement[] {
                 new XElement("FieldRef", new XAttribute("Name", "Title")),
-                new XElement("FieldRef", new XAttribute("Name", "LookupState"))/*,
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestIdentityDocs")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTrusteeNames")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTrusteeAddresses")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTrusteeINNs")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_RequestAccountBCSLookup")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_RequestContactBCSLookup")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestDeclarantNames")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestDeclarantAddress")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestDeclarantINNs")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTaxiModels")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTaxiBrands")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTaxiStateNumbers")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTaxiYears")),
-                new XElement("FieldRef", new XAttribute("Name", "Tm_IncomeRequestTaxiLastToDates"))*/
+                new XElement("FieldRef", new XAttribute("Name", "LookupState"))
             };
             
             return String.Join("", viewFields.Select(s => s.ToString()));
