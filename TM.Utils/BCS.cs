@@ -100,7 +100,8 @@ namespace TM.Utils
 
         private static string GetLookupIdentityFieldName(SPListItem item, string bcsFieldInternalName)
         {
-            SPField field = item.Fields.GetFieldByInternalName(bcsFieldInternalName);
+            SPFieldCollection fields = item.ParentList.Fields;
+            SPField field = fields.GetFieldByInternalName(bcsFieldInternalName);
             if (field == null)
                 throw new Exception("BCS field not found by internal name");
 
