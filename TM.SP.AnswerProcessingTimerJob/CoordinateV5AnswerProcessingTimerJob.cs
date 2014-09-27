@@ -44,26 +44,14 @@ namespace TM.SP.AnswerProcessingTimerJob
             this.Title = GetFeatureLocalizedResource("JobTitle");
         }
 
-        private string GetTargetWebUrlOrBreak()
-        {
-            string propKeyName = AnswerProcessingTimerJobEventReceiver.webUrlPropertyKeyName;
-
-            string retVal = this.Properties[propKeyName].ToString();
-            if (retVal == String.Empty)
-                throw new Exception(String.Format(GetFeatureLocalizedResource("WebUrlMissedErrorFmt"), this.Title, propKeyName));
-
-            return retVal;
-        }
-
         public override void Execute(Guid targetInstanceId)
         {
             try 
 	        {
-                string webUrl = GetTargetWebUrlOrBreak();
-
-                using (SPSite site = new SPSite(webUrl))
-                using (SPWeb web = site.OpenWeb())
+                SPWebApplication webApp = this.Parent as SPWebApplication;
+                foreach (SPSite siteCollection in webApp.Sites)
                 {
+                    SPWeb web = siteCollection.RootWeb;
                     SPListItemCollection requestList = GetOutcomeRequests(web, 5);
                     foreach (SPListItem request in requestList)
                     {

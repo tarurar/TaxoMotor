@@ -23,7 +23,7 @@ namespace TM.SP.AnswerProcessingTimerJob
 
         private static readonly string jobName = "TaxoMotorCoordinateV5AnswerProcessing";
 
-        private bool CreateJob(SPWebApplication site, string webUrl)
+        private bool CreateJob(SPWebApplication site)
         {
             bool jobCreated = false;
             try
@@ -35,21 +35,11 @@ namespace TM.SP.AnswerProcessingTimerJob
                 schedule.Interval = 1;
                 job.Schedule = schedule;
 
-                // set web url
-                if (job.Properties.ContainsKey(webUrlPropertyKeyName))
-                {
-                    job.Properties[webUrlPropertyKeyName] = webUrl;
-                }
-                else
-                {
-                    job.Properties.Add(webUrlPropertyKeyName, webUrl);
-                }
-
                 job.Update();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return jobCreated;
+                throw new Exception(String.Format("Couldn't create timer job definition for {0}. Details: {1}", jobName, ex.Message));
             }
             return jobCreated;
         }
@@ -67,9 +57,9 @@ namespace TM.SP.AnswerProcessingTimerJob
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return jobDeleted;
+                throw new Exception(String.Format("Couldn't delete timer job definition for {0}. Details: {1}", jobName, ex.Message));
             }
             return jobDeleted;
         }
@@ -84,12 +74,11 @@ namespace TM.SP.AnswerProcessingTimerJob
             {
                 SPSecurity.RunWithElevatedPrivileges(delegate()
                 {
-                    SPWeb parentWeb = (SPWeb)properties.Feature.Parent;
-                    if (parentWeb != null)
+                    SPWebApplication webApp = (SPWebApplication)properties.Feature.Parent;
+                    if (webApp != null)
                     {
-                        SPWebApplication parentWebApp = parentWeb.Site.WebApplication;
-                        DeleteExistingJob(jobName, parentWebApp);
-                        CreateJob(parentWebApp, parentWeb.Url);
+                        DeleteExistingJob(jobName, webApp);
+                        CreateJob(webApp);
                     }
 
                 });
@@ -113,11 +102,10 @@ namespace TM.SP.AnswerProcessingTimerJob
                 {
                     SPSecurity.RunWithElevatedPrivileges(delegate()
                     {
-                        SPWeb parentWeb = (SPWeb)properties.Feature.Parent;
-                        if (parentWeb != null)
+                        SPWebApplication webApp = (SPWebApplication)properties.Feature.Parent;
+                        if (webApp != null)
                         {
-                            SPWebApplication parentWebApp = parentWeb.Site.WebApplication;
-                            DeleteExistingJob(jobName, parentWebApp);
+                            DeleteExistingJob(jobName, webApp);
                         }
                     });
                 }
