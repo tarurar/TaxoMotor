@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -105,7 +106,10 @@ namespace TM.Utils
             if (!parentFolder.Exists)
                 throw new FileNotFoundException(String.Format("Folder {0} does not exist"), parentFolder.Name);
 
-            var newFolder = parentFolder.SubFolders.Add(path[0]);
+            // remove illegal characters
+            string pattern     = "~|\"|#|%|&|\\*|:|<|>|\\?|\\/|\\\\|{|\\||}|\\W*$|^\\W*";
+            string correctPath = Regex.Replace(path[0], pattern, " ").Trim();
+            var newFolder      = parentFolder.SubFolders.Add(correctPath);
             parentFolder.Update();
             var newPath = path.Skip(1).ToArray();
 
