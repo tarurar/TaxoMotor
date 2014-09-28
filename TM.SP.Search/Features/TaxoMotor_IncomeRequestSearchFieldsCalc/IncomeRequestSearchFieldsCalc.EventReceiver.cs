@@ -1,9 +1,9 @@
-// <copyright file="AnswerProcessingTimerJob.EventReceiver.cs" company="Armd">
+// <copyright file="IncomeRequestSearchFieldsCalc.EventReceiver.cs" company="Armd">
 // Copyright Armd. All rights reserved.
 // </copyright>
 // <author>SPDEV\developer</author>
-// <date>2014-09-08 15:35:00Z</date>
-namespace TM.SP.AnswerProcessingTimerJob
+// <date>2014-09-28 23:24:59Z</date>
+namespace TM.SP.Search
 {
     using System;
     using System.Collections.Generic;
@@ -14,30 +14,30 @@ namespace TM.SP.AnswerProcessingTimerJob
     using Microsoft.SharePoint.Administration;
 
     /// <summary>
-    /// TODO: Add comment to AnswerProcessingTimerJobEventReceiver
+    /// TODO: Add comment to IncomeRequestSearchFieldsCalcEventReceiver
     /// </summary>
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
-    public class AnswerProcessingTimerJobEventReceiver : SPFeatureReceiver
+    public class IncomeRequestSearchFieldsCalcEventReceiver : SPFeatureReceiver
     {
-        private static readonly string jobName = "TaxoMotorCoordinateV5AnswerProcessing";
+        private static readonly string jobName = "TaxoMotorIncomeRequestSearchFieldsCalcV2";
 
         private bool CreateJob(SPWebApplication site)
         {
             bool jobCreated = false;
             try
             {
-                CoordinateV5AnswerProcessingTimerJob job = new CoordinateV5AnswerProcessingTimerJob(jobName, site);
+                IncomeRequestListFieldsCalcTimerJob job = new IncomeRequestListFieldsCalcTimerJob(jobName, site);
                 SPMinuteSchedule schedule = new SPMinuteSchedule();
                 schedule.BeginSecond = 0;
                 schedule.EndSecond = 59;
-                schedule.Interval = 1;
+                schedule.Interval = 5;
                 job.Schedule = schedule;
 
                 job.Update();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(String.Format("Couldn't create timer job definition for {0}. Details: {1}", jobName, ex.Message));
+                return jobCreated;
             }
             return jobCreated;
         }
@@ -55,9 +55,9 @@ namespace TM.SP.AnswerProcessingTimerJob
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(String.Format("Couldn't delete timer job definition for {0}. Details: {1}", jobName, ex.Message));
+                return jobDeleted;
             }
             return jobDeleted;
         }

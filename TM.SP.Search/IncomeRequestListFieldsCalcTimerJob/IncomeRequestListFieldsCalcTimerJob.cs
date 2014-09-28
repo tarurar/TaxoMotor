@@ -13,17 +13,17 @@ using CamlexNET;
 using TM.Utils;
 using BcsCoordinateV5Model = TM.SP.BCSModels.CoordinateV5;
 
-namespace TM.SP.IncomeRequestSearch
+namespace TM.SP.Search
 {
     public static class StaticCaml
     {
         public static string JoinClause()
         {
-            return new XElement("Join", 
+            return new XElement("Join",
                     new XAttribute("Type", "LEFT"),
                     new XAttribute("ListAlias", "IncomeRequestStateBookList"),
-                        new XElement("Eq", 
-                            new XElement("FieldRef", 
+                        new XElement("Eq",
+                            new XElement("FieldRef",
                                 new XAttribute("Name", "Tm_IncomeRequestStateLookup"),
                                 new XAttribute("RefType", "Id")),
                             new XElement("FieldRef",
@@ -33,10 +33,10 @@ namespace TM.SP.IncomeRequestSearch
 
         public static string ProjectedFieldsClause()
         {
-            return  new XElement("Field", 
-                        new XAttribute("Name", "LookupState"), 
-                        new XAttribute("Type", "Lookup"), 
-                        new XAttribute("List", "IncomeRequestStateBookList"), 
+            return new XElement("Field",
+                        new XAttribute("Name", "LookupState"),
+                        new XAttribute("Type", "Lookup"),
+                        new XAttribute("List", "IncomeRequestStateBookList"),
                         new XAttribute("ShowField", "Tm_IncomeRequestSysUpdAvailText")).ToString();
         }
 
@@ -46,31 +46,29 @@ namespace TM.SP.IncomeRequestSearch
                 new XElement("FieldRef", new XAttribute("Name", "Title")),
                 new XElement("FieldRef", new XAttribute("Name", "LookupState"))
             };
-            
+
             return String.Join("", viewFields.Select(s => s.ToString()));
         }
 
         public static string QueryClause()
         {
-            return new XElement("Where", 
-                    new XElement("And", 
-                        new XElement("IsNotNull", 
-                            new XElement("FieldRef", 
-                                new XAttribute("Name", "LookupState"))), 
-                        new XElement("Eq", 
-                            new XElement("FieldRef", 
-                                new XAttribute("Name", "LookupState")), 
-                            new XElement("Value", 
+            return new XElement("Where",
+                    new XElement("And",
+                        new XElement("IsNotNull",
+                            new XElement("FieldRef",
+                                new XAttribute("Name", "LookupState"))),
+                        new XElement("Eq",
+                            new XElement("FieldRef",
+                                new XAttribute("Name", "LookupState")),
+                            new XElement("Value",
                                 new XAttribute("Type", "Text")) { Value = "1" }))).ToString();
         }
     }
-
-
-    class CalcIncomeRequestSearchFieldsTimerJob : SPJobDefinition
+    class IncomeRequestListFieldsCalcTimerJob : SPJobDefinition
     {
         #region resource strings
 
-        private static readonly string FeatureId = "{ADD70A75-6538-4579-BB03-809D311A3D54}";
+        private static readonly string FeatureId = "{3bf96d98-8209-463c-959c-6161cc16095d}";
 
         private static readonly string UpdateIncomeRequestItemErrorFmt = GetFeatureLocalizedResource("UpdateItemErrorFmt");
 
@@ -82,14 +80,14 @@ namespace TM.SP.IncomeRequestSearch
                 string.Format("$Resources:_FeatureId{0},{1}", FeatureId, resourceName), string.Empty, 1033);
         }
 
-        public CalcIncomeRequestSearchFieldsTimerJob() : base() {}
+        public IncomeRequestListFieldsCalcTimerJob() : base() {}
 
-        public CalcIncomeRequestSearchFieldsTimerJob(string jobName, SPService service): base(jobName, service, null, SPJobLockType.None)
+        public IncomeRequestListFieldsCalcTimerJob(string jobName, SPService service): base(jobName, service, null, SPJobLockType.None)
         {
             this.Title = GetFeatureLocalizedResource("JobTitle");
         }
 
-        public CalcIncomeRequestSearchFieldsTimerJob(string jobName, SPWebApplication webapp)
+        public IncomeRequestListFieldsCalcTimerJob(string jobName, SPWebApplication webapp)
             : base(jobName, webapp, null, SPJobLockType.Job)
         {
             this.Title = GetFeatureLocalizedResource("JobTitle");
@@ -118,7 +116,7 @@ namespace TM.SP.IncomeRequestSearch
 
         private void ProcessCalculation(SPWeb web)
         {
-            var incomeRequests    = GetAvailableIncomeRequests(web);
+            var incomeRequests = GetAvailableIncomeRequests(web);
             var incomeRequestList = web.GetListOrBreak("Lists/IncomeRequestList");
             foreach (SPListItem item in incomeRequests)
             {
@@ -145,7 +143,7 @@ namespace TM.SP.IncomeRequestSearch
 
         private void DoCalculateOtherSearchFields(SPListItem item, SPWeb web)
         {
-            var docList     = web.GetListOrBreak("Lists/IncomeRequestAttachList");
+            var docList = web.GetListOrBreak("Lists/IncomeRequestAttachList");
             var docTypeList = web.GetListOrBreak("Lists/IdentityDocumentTypeBookList");
 
             SPListItemCollection items = docList.GetItems(new SPQuery()
@@ -176,18 +174,18 @@ namespace TM.SP.IncomeRequestSearch
 
         private void DoCalculateTrusteeSearchFields(SPListItem item, SPWeb web)
         {
-            var id      = item["Tm_RequestContactBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestContactBCSLookup") : null;
-            var name    = new SPFieldMultiChoiceValue();
+            var id = item["Tm_RequestContactBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestContactBCSLookup") : null;
+            var name = new SPFieldMultiChoiceValue();
             var address = new SPFieldMultiChoiceValue();
-            var inn     = new SPFieldMultiChoiceValue();
+            var inn = new SPFieldMultiChoiceValue();
 
             if (id != null)
             {
                 IEntity contentType = BCS.GetEntity(SPServiceContext.Current, String.Empty, BCS.LOBRequestSystemNamespace, "RequestContact");
-                List<object> args   = new List<object>();
+                List<object> args = new List<object>();
                 args.Add((int)id);
-                var parameters      = args.ToArray();
-                var entity          = (BcsCoordinateV5Model.RequestContact)BCS.GetDataFromMethod(BCS.LOBRequestSystemName,
+                var parameters = args.ToArray();
+                var entity = (BcsCoordinateV5Model.RequestContact)BCS.GetDataFromMethod(BCS.LOBRequestSystemName,
                     contentType, "ReadRequestContactItem", MethodInstanceType.SpecificFinder, ref parameters);
 
                 if (!String.IsNullOrEmpty(entity.Title))
@@ -209,7 +207,7 @@ namespace TM.SP.IncomeRequestSearch
 
         private void DoCalculateDeclarantSearchFields(SPListItem item, SPWeb web)
         {
-            var id      = item["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestAccountBCSLookup") : null;
+            var id = item["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestAccountBCSLookup") : null;
             var name    = new SPFieldMultiChoiceValue();
             var address = new SPFieldMultiChoiceValue();
             var inn     = new SPFieldMultiChoiceValue();
@@ -217,10 +215,10 @@ namespace TM.SP.IncomeRequestSearch
             if (id != null)
             {
                 IEntity contentType = BCS.GetEntity(SPServiceContext.Current, String.Empty, BCS.LOBRequestSystemNamespace, "RequestAccount");
-                List<object> args   = new List<object>();
+                List<object> args = new List<object>();
                 args.Add((int)id);
-                var parameters      = args.ToArray();
-                var entity          = (BcsCoordinateV5Model.RequestAccount)BCS.GetDataFromMethod(BCS.LOBRequestSystemName,
+                var parameters = args.ToArray();
+                var entity = (BcsCoordinateV5Model.RequestAccount)BCS.GetDataFromMethod(BCS.LOBRequestSystemName,
                     contentType, "ReadRequestAccountItem", MethodInstanceType.SpecificFinder, ref parameters);
 
                 if (!String.IsNullOrEmpty(entity.Name))
@@ -267,16 +265,16 @@ namespace TM.SP.IncomeRequestSearch
                     toDates.Add(DateTime.Parse(taxiItem["Tm_TaxiLastToDate"].ToString()).ToString("dd.MM.yyyy"));
             }
 
-            item["Tm_IncomeRequestTaxiModels"]       = models;
-            item["Tm_IncomeRequestTaxiBrands"]       = brands;
+            item["Tm_IncomeRequestTaxiModels"] = models;
+            item["Tm_IncomeRequestTaxiBrands"] = brands;
             item["Tm_IncomeRequestTaxiStateNumbers"] = stateNumbers;
-            item["Tm_IncomeRequestTaxiYears"]        = years;
-            item["Tm_IncomeRequestTaxiLastToDates"]  = toDates;
+            item["Tm_IncomeRequestTaxiYears"] = years;
+            item["Tm_IncomeRequestTaxiLastToDates"] = toDates;
         }
 
         private SPListItemCollection GetAvailableIncomeRequests(SPWeb web)
         {
-            var list  = web.GetListOrBreak("Lists/IncomeRequestList");
+            var list = web.GetListOrBreak("Lists/IncomeRequestList");
             var query = GetIncomeRequestCamlQuery();
 
             return list.GetItems(query);
@@ -292,5 +290,6 @@ namespace TM.SP.IncomeRequestSearch
                 Query           = StaticCaml.QueryClause()
             };
         }
+
     }
 }

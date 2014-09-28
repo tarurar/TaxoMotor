@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="154cac5c-1d41-48dd-a14e-0f1bc7cff55a" solutionId="154cac5c-1d41-48dd-a14e-0f1bc7cff55a" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.Search" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
+    <projectOutputAssembly location="TM.SP.BCSModels.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj" />
+  </assemblies>
+  <features>
+    <featureReference itemId="6d4ae3c4-56ec-40ac-b8b5-87d41fa05de4" />
+    <featureReference itemId="aaeb0801-07a7-4f0e-8995-6b9f997edaf0" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="c46e85a1-f03a-4842-917b-f6771cf907d6" />
+  </projectItems>
+</package>

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TM.SP.IncomeRequestSearch</RootNamespace>
-    <AssemblyName>TM.SP.IncomeRequestSearch</AssemblyName>
+    <RootNamespace>TM.SP.Search</RootNamespace>
+    <AssemblyName>TM.SP.Search</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -16,11 +16,9 @@
     <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SandboxedSolution>False</SandboxedSolution>
     <AssemblyDeploymentTarget>GlobalAssemblyCache</AssemblyDeploymentTarget>
-    <ProjectGuid>{61CE4935-0862-400E-8649-E0A228DFB29A}</ProjectGuid>
+    <ProjectGuid>{972A6611-BB13-4E9E-9720-888AA90463A4}</ProjectGuid>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PostDeploymentCommand>net stop "SharePoint Timer Service"
-net start "SharePoint Timer Service"</PostDeploymentCommand>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,29 +65,33 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\IncomeRequestSearchFieldsCalculation.EventReceiver.cs">
-      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalculation.feature</DependentUpon>
+    <Compile Include="AttachListReceiver\AttachListReceiver.cs" />
+    <Compile Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\IncomeRequestSearchFieldsCalc.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalc.feature</DependentUpon>
     </Compile>
+    <Compile Include="IncomeRequestListFieldsCalcTimerJob\IncomeRequestListFieldsCalcTimerJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimerJobs\CalcIncomeRequestSearchFields\CalcIncomeRequestSearchFieldsTimerJob.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Features\TaxoMotor_IncomeRequestAttachListReceiver\TaxoMotor_IncomeRequestAttachListReceiver.feature">
-      <FeatureId>{b4bade18-ba4a-42a4-acfa-c06945089e4b}</FeatureId>
+    <None Include="AttachListReceiver\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{ae7d0ced-5203-4247-bafd-9c5e029ae794}</SharePointProjectItemId>
     </None>
-    <None Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\TaxoMotor_IncomeRequestSearchFieldsCalculation.feature">
-      <FeatureId>{512952c7-7072-4862-ae73-d6ea0f5cc153}</FeatureId>
+    <None Include="Features\TaxoMotor_AttachListReceiver\TaxoMotor_AttachListReceiver.feature">
+      <FeatureId>{6d4ae3c4-56ec-40ac-b8b5-87d41fa05de4}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\TaxoMotor_IncomeRequestSearchFieldsCalc.feature">
+      <FeatureId>{aaeb0801-07a7-4f0e-8995-6b9f997edaf0}</FeatureId>
     </None>
     <None Include="key.snk" />
     <None Include="packages.config" />
     <None Include="Package\Package.package">
-      <PackageId>{7D157636-3EB3-4C57-B007-21412E384F3E}</PackageId>
+      <PackageId>{154CAC5C-1D41-48DD-A14E-0F1BC7CFF55A}</PackageId>
     </None>
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
     <None Include="Template\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{463d26bc-220c-4eb7-ac59-dbd8cac74679}</SharePointProjectItemId>
+      <SharePointProjectItemId>{c46e85a1-f03a-4842-917b-f6771cf907d6}</SharePointProjectItemId>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -103,22 +105,18 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Features\TaxoMotor_IncomeRequestAttachListReceiver\TaxoMotor_IncomeRequestAttachListReceiver.Template.xml">
-      <DependentUpon>TaxoMotor_IncomeRequestAttachListReceiver.feature</DependentUpon>
+    <Content Include="AttachListReceiver\Elements.xml" />
+    <Content Include="Features\TaxoMotor_AttachListReceiver\TaxoMotor_AttachListReceiver.Template.xml">
+      <DependentUpon>TaxoMotor_AttachListReceiver.feature</DependentUpon>
     </Content>
-    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\TaxoMotor_IncomeRequestSearchFieldsCalculation.Template.xml">
-      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalculation.feature</DependentUpon>
+    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\TaxoMotor_IncomeRequestSearchFieldsCalc.Template.xml">
+      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalc.feature</DependentUpon>
     </Content>
-    <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestAttachListEventReceivers.gif" />
-    <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestAttachListReceiver.gif" />
-    <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestSearchFieldsCalculation.gif" />
-    <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestSearchPages.gif" />
-    <Content Include="Template\Images\TaxoMotor\FeatureIcon_tm_testfeature1.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestSearchFieldsCalc.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalculation\Resources.resx" />
+    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\Resources.resx" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>

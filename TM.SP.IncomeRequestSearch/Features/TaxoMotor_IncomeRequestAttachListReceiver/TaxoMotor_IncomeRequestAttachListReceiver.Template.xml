@@ -3,11 +3,11 @@
 ************************************************************************
        Company: Armd
    Application: TaxoMotor
-  Created date: 2014-09-22 16:28:02Z
+  Created date: 2014-09-28 20:12:08Z
     Created by: SPDEV\developer
-  Feature Name: IncomeRequestAttachListEventReceivers
- Feature Title: Income request attach list event receivers
-   Description: IncomeRequestAttachList event receivers
+  Feature Name: IncomeRequestAttachListReceiver
+ Feature Title: Income request attach list receiver
+   Description: Income request attach list receiver
        History: Initial Version 1.0.0.0 
 ************************************************************************
 -->
