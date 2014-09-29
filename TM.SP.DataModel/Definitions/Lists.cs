@@ -135,5 +135,14 @@ namespace TM.SP.DataModel
             Description         = "Список видов документов, которые являются документами, удостоверяющими личность",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmProjectSitePages = new ListDefinition()
+        {
+            Title               = "Страницы проекта",
+            Url                 = "ProjectSitePages",
+            TemplateType        = BuiltInListTemplateTypeId.WebPageLibrary,
+            Description         = "Список для контент-страниц проекта",
+            ContentTypesEnabled = true
+        };
     }
 }

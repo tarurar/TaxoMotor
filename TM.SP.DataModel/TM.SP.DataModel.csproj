@@ -65,14 +65,28 @@
     <Compile Include="Definitions\ContentTypes.cs" />
     <Compile Include="Definitions\Fields.cs" />
     <Compile Include="Definitions\Lists.cs" />
+    <Compile Include="Definitions\Pages.cs" />
     <Compile Include="Definitions\Plumsail\Fields.cs" />
+    <Compile Include="Definitions\WebParts.cs" />
     <Compile Include="Helpers\ListHelpers.cs" />
     <Compile Include="Helpers\WebHelpers.cs" />
+    <Compile Include="Helpers\WebPartHelpers.cs" />
     <Compile Include="Model\AllModels.cs" />
     <Compile Include="Model\ModelHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebPartsRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebPartsRes.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="WebPartsRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WebPartsRes.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

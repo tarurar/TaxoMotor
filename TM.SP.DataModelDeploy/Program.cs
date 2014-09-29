@@ -77,10 +77,10 @@ namespace TM.SP.DataModelDeploy
                     options.windowsDomain);
                 var pService = new CSOMProvisionService();
 
-               pService.DeployModel(SiteModelHost.FromClientContext(ctx), 
-                    AllModels.GetTaxoMotorSiteModel());
+                pService.DeployModel(SiteModelHost.FromClientContext(ctx), 
+                    AllModels.GetTaxoMotorSiteModel(ctx));
                 pService.DeployModel(WebModelHost.FromClientContext(ctx), 
-                    AllModels.GetTaxoMotorWebModel());
+                    AllModels.GetTaxoMotorWebModel(ctx));
                 pService.DeployModel(SiteModelHost.FromClientContext(ctx), 
                     AllModels.GetTaxoMotorSiteDependentModel(ctx));
                 pService.DeployModel(WebModelHost.FromClientContext(ctx), 
@@ -88,7 +88,9 @@ namespace TM.SP.DataModelDeploy
                 pService.DeployModel(SiteModelHost.FromClientContext(ctx), 
                     AllModels.GetTaxoMotorIncomeRequestSiteDependentModel(ctx));
                 pService.DeployModel(WebModelHost.FromClientContext(ctx), 
-                    AllModels.GetTaxoMotorIncomeRequestWebDependentModel());
+                    AllModels.GetTaxoMotorIncomeRequestWebDependentModel(ctx));
+                pService.DeployModel(WebModelHost.FromClientContext(ctx),
+                    AllModels.GetTaxoMotorWebPagesModel(ctx));
                 
                 ModelHandlers.MakeContentTypesDefault(ctx);
                 ModelHandlers.CreateBcsFields(ctx);

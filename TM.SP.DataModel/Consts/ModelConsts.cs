@@ -13,5 +13,7 @@ namespace TM.SP.DataModel
         public static readonly string ServiceColumnsGroup     = "TaxoMotor Service Columns";
         public static readonly string ContentTypeDefaultGroup = "TaxoMotor Content Types";
         public static readonly string ServiceContentTypeGroup = "TaxoMotor Service Content Types";
+
+        public static readonly string SPListViewFilter20FeatureId = "{c403ae24-8713-4966-9157-d188933fd71a}";
     }
 }
