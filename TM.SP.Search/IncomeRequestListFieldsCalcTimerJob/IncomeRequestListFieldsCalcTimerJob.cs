@@ -95,22 +95,22 @@ namespace TM.SP.Search
 
         public override void Execute(Guid targetInstanceId)
         {
-            try
+            SPWebApplication webApp = this.Parent as SPWebApplication;
+            foreach (SPSite siteCollection in webApp.Sites)
             {
-                SPWebApplication webApp = this.Parent as SPWebApplication;
-                foreach (SPSite siteCollection in webApp.Sites)
+                SPWeb web = siteCollection.RootWeb;
+                try
                 {
-                    SPWeb web = siteCollection.RootWeb;
                     var context = SPServiceContext.GetContext(siteCollection);
                     using (var scope = new SPServiceContextScope(context))
                     {
                         ProcessCalculation(web);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format(GetFeatureLocalizedResource("GeneralErrorFmt"), ex.Message));
+                catch (Exception ex)
+                {
+                    throw new Exception(String.Format(GetFeatureLocalizedResource("GeneralErrorFmt"), ex.Message, web.Title));
+                }
             }
         }
 

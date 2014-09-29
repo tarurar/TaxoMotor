@@ -19,6 +19,8 @@
     <ProjectGuid>{972A6611-BB13-4E9E-9720-888AA90463A4}</ProjectGuid>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <PostDeploymentCommand>net stop "SharePoint Timer Service"
+net start "SharePoint Timer Service"</PostDeploymentCommand>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

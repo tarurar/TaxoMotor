@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GeneralErrorFmt" xml:space="preserve">
-    <value>There was an error while calculationg search fields. Details: {0}</value>
+    <value>There was an error while calculationg search fields. Details: {0}. Web: {1}</value>
   </data>
   <data name="JobTitle" xml:space="preserve">
     <value>TaxoMotor Income Request Search Fields Calculation Timer Job</value>
