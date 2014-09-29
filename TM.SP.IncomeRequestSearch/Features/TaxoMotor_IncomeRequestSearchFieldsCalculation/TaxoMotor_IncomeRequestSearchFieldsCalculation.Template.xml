@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+************************************************************************
+       Company: Armd
+   Application: TaxoMotor
+  Created date: 2014-09-23 13:34:04Z
+    Created by: SPDEV\developer
+  Feature Name: IncomeRequestSearchFieldsCalculation
+ Feature Title: Income request search fields calculation timer job
+   Description: Income request search fields calculation timer job
+       History: Initial Version 1.0.0.0 
+************************************************************************
+-->
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ElementManifests></ElementManifests>
+</Feature>

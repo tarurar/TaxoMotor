@@ -1,25 +1,19 @@
-// <copyright file="IncomeRequestAttachList.cs" company="Armd">
-// Copyright Armd. All rights reserved.
-// </copyright>
-// <author>SPDEV\developer</author>
-// <date>2014-09-22 16:28:04Z</date>
-namespace TM.SP.IncomeRequestSearch
+﻿using System;
+using System.Security.Permissions;
+using Microsoft.SharePoint;
+using Microsoft.SharePoint.Utilities;
+using Microsoft.SharePoint.Workflow;
+using Microsoft.SharePoint.Security;
+using CamlexNET;
+using TM.Utils;
+
+namespace TM.SP.Search.AttachListReceiver
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Security.Permissions;
-    using System.Text;
-    using Microsoft.SharePoint;
-    using Microsoft.SharePoint.Security;
-    using CamlexNET;
-    using TM.Utils;
-
     /// <summary>
-    /// TODO: Add comment for IncomeRequestAttachList
+    /// List Item Events
     /// </summary>
-    public class IncomeRequestAttachList : SPItemEventReceiver
+    public class AttachListReceiver : SPItemEventReceiver
     {
-
         private static SPListItem GetIdentityDocTypeListItem(string serviceCode, SPWeb web)
         {
             var list = web.GetListOrBreak("Lists/IdentityDocumentTypeBookList");
@@ -33,11 +27,11 @@ namespace TM.SP.IncomeRequestSearch
 
         private static string CalcDocString(SPItemEventDataCollection newFieldValues, SPWeb web)
         {
-            var attachType           = newFieldValues["Tm_AttachType"];
-            var attachDocSerie       = newFieldValues["Tm_AttachDocSerie"];
-            var attachDocNumber      = newFieldValues["Tm_AttachDocNumber"];
-            var attachDocDate        = newFieldValues["Tm_AttachDocDate"];
-            var attachTypeNameToGet  = default(string);
+            var attachType = newFieldValues["Tm_AttachType"];
+            var attachDocSerie = newFieldValues["Tm_AttachDocSerie"];
+            var attachDocNumber = newFieldValues["Tm_AttachDocNumber"];
+            var attachDocDate = newFieldValues["Tm_AttachDocDate"];
+            var attachTypeNameToGet = default(string);
 
             if (attachType != null)
             {
@@ -47,11 +41,11 @@ namespace TM.SP.IncomeRequestSearch
             }
 
             string a =
-                ((attachType         != null ? attachType.ToString() + " " : String.Empty) + 
+                ((attachType != null ? attachType.ToString() + " " : String.Empty) +
                 (attachTypeNameToGet != null ? attachTypeNameToGet + " " : String.Empty) +
-                (attachDocSerie      != null ? attachDocSerie.ToString() + " " : String.Empty) +
-                (attachDocNumber     != null ? attachDocNumber.ToString() + " " : String.Empty) +
-                (attachDocDate       != null ? DateTime.Parse(attachDocDate.ToString()).ToString("dd.MM.yyyy") + " " : String.Empty));
+                (attachDocSerie != null ? attachDocSerie.ToString() + " " : String.Empty) +
+                (attachDocNumber != null ? attachDocNumber.ToString() + " " : String.Empty) +
+                (attachDocDate != null ? DateTime.Parse(attachDocDate.ToString()).ToString("dd.MM.yyyy") + " " : String.Empty));
 
             return a.Trim();
         }
@@ -90,6 +84,6 @@ namespace TM.SP.IncomeRequestSearch
                 EventFiringEnabled = true;
             }
         }
+
     }
 }
-

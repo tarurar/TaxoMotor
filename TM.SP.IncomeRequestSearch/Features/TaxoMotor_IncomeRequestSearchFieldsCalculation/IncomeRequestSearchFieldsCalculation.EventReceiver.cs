@@ -1,43 +1,43 @@
-// <copyright file="DataMigrationTimerJob.EventReceiver.cs" company="Armd">
+// <copyright file="IncomeRequestSearchFieldsCalculation.EventReceiver.cs" company="Armd">
 // Copyright Armd. All rights reserved.
 // </copyright>
 // <author>SPDEV\developer</author>
-// <date>2014-08-19 15:52:40Z</date>
-namespace TM.SP.DataMigrationTimerJob
+// <date>2014-09-23 13:34:06Z</date>
+namespace TM.SP.IncomeRequestSearch
 {
     using System;
     using System.Collections.Generic;
     using System.Security.Permissions;
     using System.Text;
     using Microsoft.SharePoint;
-    using Microsoft.SharePoint.Administration;
     using Microsoft.SharePoint.Security;
+    using Microsoft.SharePoint.Administration;
 
     /// <summary>
-    /// TODO: Add comment to DataMigrationTimerJobEventReceiver
+    /// TODO: Add comment to IncomeRequestSearchFieldsCalculationEventReceiver
     /// </summary>
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
-    public class DataMigrationTimerJobEventReceiver : SPFeatureReceiver
+    public class IncomeRequestSearchFieldsCalculationEventReceiver : SPFeatureReceiver
     {
-        private static readonly string jobName = "TaxoMotorCoordinateV5DataMigration";
-        
+        private static readonly string jobName = "TaxoMotorIncomeRequestSearchFieldsCalculation";
+
         private bool CreateJob(SPWebApplication site)
         {
             bool jobCreated = false;
             try
             {
-                CoordinateV5DataMigrationTimerJob job = new CoordinateV5DataMigrationTimerJob(jobName, site);
+                CalcIncomeRequestSearchFieldsTimerJob job = new CalcIncomeRequestSearchFieldsTimerJob(jobName, site);
                 SPMinuteSchedule schedule = new SPMinuteSchedule();
                 schedule.BeginSecond = 0;
                 schedule.EndSecond = 59;
-                schedule.Interval = 1;
+                schedule.Interval = 5;
                 job.Schedule = schedule;
 
                 job.Update();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(String.Format("Couldn't create timer job definition for {0}. Details: {1}", jobName, ex.Message));
+                return jobCreated;
             }
             return jobCreated;
         }
@@ -55,12 +55,13 @@ namespace TM.SP.DataMigrationTimerJob
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(String.Format("Couldn't delete timer job definition for {0}. Details: {1}", jobName, ex.Message));
+                return jobDeleted;
             }
             return jobDeleted;
         }
+
         /// <summary>
         /// TODO: Add comment to describe the actions after feature activation
         /// </summary>
@@ -78,6 +79,7 @@ namespace TM.SP.DataMigrationTimerJob
                         DeleteExistingJob(jobName, webApp);
                         CreateJob(webApp);
                     }
+
                 });
             }
             catch (Exception ex)

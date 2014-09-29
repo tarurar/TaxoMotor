@@ -2,9 +2,11 @@
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="7d157636-3eb3-4c57-b007-21412e384f3e" solutionId="7d157636-3eb3-4c57-b007-21412e384f3e" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.IncomeRequestSearch" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
   <assemblies>
     <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
+    <projectOutputAssembly location="TM.SP.BCSModels.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj" />
   </assemblies>
   <features>
-    <featureReference itemId="a48f531e-a48b-4aa7-a4cf-76ed2439613d" />
+    <featureReference itemId="512952c7-7072-4862-ae73-d6ea0f5cc153" />
+    <featureReference itemId="b4bade18-ba4a-42a4-acfa-c06945089e4b" />
   </features>
   <projectItems>
     <projectItemReference itemId="463d26bc-220c-4eb7-ac59-dbd8cac74679" />

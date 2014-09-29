@@ -63,8 +63,6 @@ namespace TM.SP.DataMigrationTimerJob
 
         #endregion
 
-
-
         private static string GetFeatureLocalizedResource(string resourceName)
         {
             return SPUtility.GetLocalizedString(
@@ -389,27 +387,15 @@ namespace TM.SP.DataMigrationTimerJob
             //todo: migrate other entities
         }
 
-        private string GetTargetWebUrlOrBreak()
-        {
-            string propKeyName = DataMigrationTimerJobEventReceiver.webUrlPropertyKeyName;
-
-            string retVal = this.Properties[propKeyName].ToString();
-            if (retVal == String.Empty)
-                throw new Exception(String.Format(GetFeatureLocalizedResource("WebUrlMissedErrorFmt"), this.Title, propKeyName));
-
-            return retVal;
-        }
-
         public override void Execute(Guid targetInstanceId)
         {
             try 
 	        {
-                string webUrl = GetTargetWebUrlOrBreak();
-
-                using (SPSite site = new SPSite(webUrl))
-                using (SPWeb web = site.OpenWeb())
+                SPWebApplication webApp = this.Parent as SPWebApplication;
+                foreach (SPSite siteCollection in webApp.Sites)
                 {
-                    var context = SPServiceContext.GetContext(site);
+                    SPWeb web = siteCollection.RootWeb;
+                    var context = SPServiceContext.GetContext(siteCollection);
                     using (var scope = new SPServiceContextScope(context))
                     {
                         ProcessMigration(web);
