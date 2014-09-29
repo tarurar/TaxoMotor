@@ -607,6 +607,33 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmTaxiOwner = new FieldDefinition()
+        {
+            Id           = new Guid("{684231CA-C50B-4267-9938-4F82F5333B2F}"),
+            Title        = "Владелец",
+            InternalName = "Tm_TaxiOwner",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiBodyType = new FieldDefinition()
+        {
+            Id           = new Guid("{CBEBACBE-8CB0-48D5-A076-96B38C3D6741}"),
+            Title        = "Тип кузова",
+            InternalName = "Tm_TaxiBodyType",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiStatus = new FieldDefinition()
+        {
+            Id           = new Guid("{EC0F7911-4803-44A1-BD53-E1358A1583B7}"),
+            Title        = "Статус",
+            InternalName = "Tm_TaxiStatus",
+            FieldType    = BuiltInFieldTypes.Choice,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Документ обращения]
