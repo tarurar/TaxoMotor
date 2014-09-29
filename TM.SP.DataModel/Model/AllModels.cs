@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using SPMeta2.Enumerations;
 using SPMeta2.Extensions;
 using SPMeta2.Models;
 using SPMeta2.Syntax.Default;
@@ -11,6 +13,8 @@ using SPMeta2.CSOM.DefaultSyntax;
 using SPMeta2.CSOM.Behaviours;
 using Microsoft.SharePoint.Client;
 using SPMeta2.Syntax.Default.Modern;
+using TM.SP.DataModel.Definitions;
+using TM.SP.DataModel.Helpers;
 
 namespace TM.SP.DataModel
 {
@@ -18,7 +22,7 @@ namespace TM.SP.DataModel
     {
         #region methods
 
-        public static ModelNode GetTaxoMotorSiteModel()
+        public static ModelNode GetTaxoMotorSiteModel(ClientContext ctx)
         {
             var model = SPMeta2Model.NewSiteModel(new SiteDefinition() { RequireSelfProcessing = false })
                 .WithFields(fields => fields
@@ -153,7 +157,7 @@ namespace TM.SP.DataModel
             return model;
         }
 
-        public static ModelNode GetTaxoMotorWebModel()
+        public static ModelNode GetTaxoMotorWebModel(ClientContext ctx)
         {
             var model = SPMeta2Model.NewWebModel(new WebDefinition() { RequireSelfProcessing = false })
                 .WithLists(
@@ -302,7 +306,7 @@ namespace TM.SP.DataModel
             return model;
         }
 
-        public static ModelNode GetTaxoMotorIncomeRequestWebDependentModel()
+        public static ModelNode GetTaxoMotorIncomeRequestWebDependentModel(ClientContext ctx)
         {
             var model = SPMeta2Model.NewWebModel(new WebDefinition() { RequireSelfProcessing = false })
                 .WithLists(lists => lists
@@ -312,6 +316,39 @@ namespace TM.SP.DataModel
                         l.AddContentTypeLink(ContentTypes.TmTaxi))
                     .AddList(Lists.TmIncomeRequestAttachList, l =>
                         l.AddContentTypeLink(ContentTypes.TmAttach))
+                );
+
+            return model;
+        }
+
+        public static ModelNode GetTaxoMotorWebPagesModel(ClientContext ctx)
+        {
+            var model = SPMeta2Model.NewWebModel(new WebDefinition() { RequireSelfProcessing = false })
+                .WithLists(
+                    lists => lists
+                        .AddList(Lists.TmProjectSitePages, list =>
+                        {
+                            list.AddWebPartPage(Pages.IncomeRequestSearch, page =>
+                            {
+                                if (!WebHelpers.CheckFeatureActivation(ctx,
+                                        new Guid(ModelConsts.SPListViewFilter20FeatureId), FeatureScope.Site))
+                                    throw new Exception(String.Format("Feature with id = {0} must be activated",
+                                        ModelConsts.SPListViewFilter20FeatureId));
+                                string wpXml = String.Empty;
+                                // adding SPListViewFilter web part
+                                WebParts.SPListViewFilter.WebpartXmlTemplate = WebPartHelpers.SetWebPartV3PropertyNode("Title", WebParts.SPListViewFilter.Title, WebParts.SPListViewFilter.WebpartXmlTemplate);
+                                page.AddWebPart(WebParts.SPListViewFilter);
+                                // adding XsltListViewWebPart for income requests to be filtered
+                                IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
+                                List incomeRequestList     = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
+                                
+                                wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListId", incomeRequestList.Id.ToString("D"), WebParts.IncomeRequestListView.WebpartXmlTemplate);
+                                wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListName", incomeRequestList.Id.ToString("B"), wpXml);
+                                wpXml = WebPartHelpers.SetWebPartV3PropertyNode("Title", WebParts.IncomeRequestListView.Title, wpXml);
+                                WebParts.IncomeRequestListView.WebpartXmlTemplate = wpXml;
+                                page.AddWebPart(WebParts.IncomeRequestListView);
+                            });
+                        })
                 );
 
             return model;
