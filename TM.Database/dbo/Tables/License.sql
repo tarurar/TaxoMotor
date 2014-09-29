@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[License]
 (
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1), 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Title] as [RegNumber],
     [RegNumber] NVARCHAR(64) NULL, 
     [BlankSeries] NVARCHAR(12) NULL, 
     [BlankNo] NVARCHAR(12) NULL, 
@@ -28,6 +29,6 @@
     [CancellationReason] NVARCHAR(MAX) NULL, 
     [SuspensionReason] NVARCHAR(MAX) NULL, 
     [ChangeReason] NVARCHAR(MAX) NULL, 
-    [InvalidReason] NVARCHAR(MAX) NULL, 
+    [InvalidReason] NVARCHAR(MAX) NULL,  
     CONSTRAINT [FK_License_ToLicense_Parent] FOREIGN KEY ([Parent]) REFERENCES [dbo].[License]([Id]) 
 )
