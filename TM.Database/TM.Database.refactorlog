@@ -7,4 +7,46 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[FK_File_ServiceDocument]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="abb4c21d-e71e-4adc-a9d8-3d675155527a" ChangeDateTime="09/29/2014 13:48:30">
+    <Property Name="ElementName" Value="[dbo].[License].[BlankSerie]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[License]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="BlankSeries" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="00f67a95-670e-41d5-9717-c120a347755b" ChangeDateTime="09/29/2014 14:02:16">
+    <Property Name="ElementName" Value="[dbo].[License].[Ju]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[License]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Juridical" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f198cdee-4bb7-4066-9aac-0868d8dc5c42" ChangeDateTime="09/29/2014 14:02:21">
+    <Property Name="ElementName" Value="[dbo].[License].[Juridical]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[License]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="JuridicalAddress" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6866fe46-dbcd-4978-8485-37c303c194fe" ChangeDateTime="09/29/2014 14:05:51">
+    <Property Name="ElementName" Value="[dbo].[License].[Ta]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[License]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TaxiBrand" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="09320e3e-221f-47d0-9bb6-8ff1a8273a34" ChangeDateTime="09/29/2014 14:09:58">
+    <Property Name="ElementName" Value="[dbo].[License].[Re]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[License]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Reason" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="56676e37-c391-4de4-ab84-1cf485b50c12" ChangeDateTime="09/29/2014 14:11:20">
+    <Property Name="ElementName" Value="[dbo].[License].[Reason]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[License]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CancellationReason" />
+  </Operation>
 </Operations>
