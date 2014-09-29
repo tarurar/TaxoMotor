@@ -60,6 +60,11 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmTaxiPrevLicenseNumber)
                     .AddField(Fields.TmTaxiPrevLicenseDate)
                     .AddField(Fields.TmTaxiStsDetails)
+                    .AddField(Fields.TmTaxiOwner)
+                    .AddField(Fields.TmTaxiBodyType)
+                    .AddField(Fields.TmTaxiStatus, f => f.OnCreated((FieldDefinition fieldDef, Field spField) =>
+                        spField.MakeChoices(new String[] { "В работе", "Решено положительно", "Отказано", "Не получено" })))
+                    .AddField(Fields.TmTaxiDenyComment)
                     .AddField(Fields.TmAttachType)
                     .AddField(Fields.TmAttachDocNumber)
                     .AddField(Fields.TmAttachDocDate)
@@ -285,6 +290,10 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevLicenseNumber)
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevLicenseDate)
                         .AddContentTypeFieldLink(Fields.TmTaxiStsDetails)
+                        .AddContentTypeFieldLink(Fields.TmTaxiOwner)
+                        .AddContentTypeFieldLink(Fields.TmTaxiBodyType)
+                        .AddContentTypeFieldLink(Fields.TmTaxiStatus)
+                        .AddContentTypeFieldLink(Fields.TmTaxiDenyComment)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                      )
                      .AddContentType(ContentTypes.TmAttach, ct => ct

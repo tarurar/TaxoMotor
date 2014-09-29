@@ -634,6 +634,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmTaxiDenyComment = new FieldDefinition()
+        {
+            Id           = new Guid("{E1FA4BEB-2D50-4C5E-B9E8-4E85F3D0343A}"),
+            Title        = "Комментарий к отказу",
+            InternalName = "Tm_TaxiDenyComment",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Документ обращения]
