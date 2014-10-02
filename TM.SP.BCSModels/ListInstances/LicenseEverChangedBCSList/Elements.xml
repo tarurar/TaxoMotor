@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="LicenseEverChangedBCSList"
+		Description="LicenseEverChangedBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="57D71FE0-5EA0-4570-ACDF-31C9058C82B3"
+		Url="Lists/LicenseEverChangedBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/LicenseEverChangedBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="TaxiV2" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.TaxiV2" />
+			<Property
+				Name="Entity"
+				Value="LicenseEverChangedView" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadLicenseEverChangedViewItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

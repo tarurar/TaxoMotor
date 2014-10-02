@@ -1,0 +1,2834 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Model Name="TaxiV2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/windows/2007/BusinessDataCatalog">
+	<AccessControlList>
+		<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+			<Right BdcRight="Edit" />
+			<Right BdcRight="Execute" />
+			<Right BdcRight="SetPermissions" />
+			<Right BdcRight="SelectableInClients" />
+		</AccessControlEntry>
+	</AccessControlList>
+	<LobSystems>
+		<LobSystem Name="TaxiV2" DefaultDisplayName="TaxiV2" Type="DotNetAssembly">
+			<LobSystemInstances>
+				<LobSystemInstance Name="TaxiV2" DefaultDisplayName="TaxiV2">
+          <Properties>
+            <Property Name="DBServerName" Type="System.String">SP2013DEV</Property>
+            <Property Name="DBName" Type="System.String">TM.Data</Property>
+            <Property Name="SecureStoreAppId" Type="System.String">asguf_MSCRM</Property>
+          </Properties>
+          </LobSystemInstance>
+			</LobSystemInstances>
+			<Entities>
+				<Entity Name="LicenseActingView" Namespace="TM.SP.BCSModels.TaxiV2" Version="1.0.0.0" EstimatedInstanceCount="100000" DefaultDisplayName="LicenseActingView">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.TaxiV2.LicenseActingViewEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Title</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadLicenseActingViewList" DefaultDisplayName="Read LicenseActingView List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.TaxiV2.LicenseActingView, TM.SP.BCSModels]]" IsCollection="true" Name="LicenseActingViewList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="LicenseActingView" TypeName="TM.SP.BCSModels.TaxiV2.LicenseActingView, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseActingView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">128</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">24</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseActingViewList" DefaultDisplayName="Read LicenseActingView List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadLicenseActingViewItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseActingView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" />
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.TaxiV2.LicenseActingView, TM.SP.BCSModels" Name="returnLicenseActingView">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseActingView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">128</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">24</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseActingViewItem" DefaultDisplayName="Read LicenseActingView" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+				<Entity Name="LicenseAllView" Namespace="TM.SP.BCSModels.TaxiV2" Version="1.0.0.0" EstimatedInstanceCount="100000" DefaultDisplayName="LicenseAllView">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.TaxiV2.LicenseAllViewEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Title</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadLicenseAllViewList" DefaultDisplayName="Read LicenseAllView List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.TaxiV2.LicenseAllView, TM.SP.BCSModels]]" IsCollection="true" Name="LicenseAllViewList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="LicenseAllView" TypeName="TM.SP.BCSModels.TaxiV2.LicenseAllView, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseAllView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">128</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">24</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="IsLast" DefaultDisplayName="IsLast" TypeName="System.Int32">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseAllViewList" DefaultDisplayName="Read LicenseAllView List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadLicenseAllViewItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseAllView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" />
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.TaxiV2.LicenseAllView, TM.SP.BCSModels" Name="returnLicenseAllView">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseAllView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">128</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">24</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="IsLast" DefaultDisplayName="IsLast" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseAllViewItem" DefaultDisplayName="Read LicenseAllView" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+				<Entity Name="LicenseCancelledView" Namespace="TM.SP.BCSModels.TaxiV2" Version="1.0.0.0" EstimatedInstanceCount="100000" DefaultDisplayName="LicenseCancelledView">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.TaxiV2.LicenseCancelledViewEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Title</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadLicenseCancelledViewList" DefaultDisplayName="Read LicenseCancelledView List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.TaxiV2.LicenseCancelledView, TM.SP.BCSModels]]" IsCollection="true" Name="LicenseCancelledViewList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="LicenseCancelledView" TypeName="TM.SP.BCSModels.TaxiV2.LicenseCancelledView, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseCancelledView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">128</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">24</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseCancelledViewList" DefaultDisplayName="Read LicenseCancelledView List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadLicenseCancelledViewItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseCancelledView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" />
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.TaxiV2.LicenseCancelledView, TM.SP.BCSModels" Name="returnLicenseCancelledView">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseCancelledView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">128</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">24</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseCancelledViewItem" DefaultDisplayName="Read LicenseCancelledView" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+				<Entity Name="LicenseEverChangedView" Namespace="TM.SP.BCSModels.TaxiV2" Version="1.0.0.0" EstimatedInstanceCount="100000" DefaultDisplayName="LicenseEverChangedView">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.TaxiV2.LicenseEverChangedViewEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Title</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadLicenseEverChangedViewList" DefaultDisplayName="Read LicenseEverChangedView List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.TaxiV2.LicenseEverChangedView, TM.SP.BCSModels]]" IsCollection="true" Name="LicenseEverChangedViewList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="LicenseEverChangedView" TypeName="TM.SP.BCSModels.TaxiV2.LicenseEverChangedView, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseEverChangedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">128</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">24</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="IsLast" DefaultDisplayName="IsLast" TypeName="System.Int32">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseEverChangedViewList" DefaultDisplayName="Read LicenseEverChangedView List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadLicenseEverChangedViewItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseEverChangedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" />
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.TaxiV2.LicenseEverChangedView, TM.SP.BCSModels" Name="returnLicenseEverChangedView">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseEverChangedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">128</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">24</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="IsLast" DefaultDisplayName="IsLast" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseEverChangedViewItem" DefaultDisplayName="Read LicenseEverChangedView" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+				<Entity Name="LicenseEverPausedView" Namespace="TM.SP.BCSModels.TaxiV2" Version="1.0.0.0" EstimatedInstanceCount="100000" DefaultDisplayName="LicenseEverPausedView">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.TaxiV2.LicenseEverPausedViewEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Title</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadLicenseEverPausedViewList" DefaultDisplayName="Read LicenseEverPausedView List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.TaxiV2.LicenseEverPausedView, TM.SP.BCSModels]]" IsCollection="true" Name="LicenseEverPausedViewList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="LicenseEverPausedView" TypeName="TM.SP.BCSModels.TaxiV2.LicenseEverPausedView, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseEverPausedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">128</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">24</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="IsLast" DefaultDisplayName="IsLast" TypeName="System.Int32">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseEverPausedViewList" DefaultDisplayName="Read LicenseEverPausedView List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadLicenseEverPausedViewItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseEverPausedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" />
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.TaxiV2.LicenseEverPausedView, TM.SP.BCSModels" Name="returnLicenseEverPausedView">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicenseEverPausedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">128</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">24</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="IsLast" DefaultDisplayName="IsLast" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicenseEverPausedViewItem" DefaultDisplayName="Read LicenseEverPausedView" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+				<Entity Name="LicensePausedView" Namespace="TM.SP.BCSModels.TaxiV2" Version="1.0.0.0" EstimatedInstanceCount="100000" DefaultDisplayName="LicensePausedView">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.TaxiV2.LicensePausedViewEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Title</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadLicensePausedViewList" DefaultDisplayName="Read LicensePausedView List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.TaxiV2.LicensePausedView, TM.SP.BCSModels]]" IsCollection="true" Name="LicensePausedViewList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="LicensePausedView" TypeName="TM.SP.BCSModels.TaxiV2.LicensePausedView, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicensePausedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">128</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">255</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">12</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">64</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">24</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+													<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+														<Interpretation>
+															<NormalizeDateTime LobDateTimeMode="UTC" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+														<Properties>
+															<Property Name="Size" Type="System.Int32">1073741823</Property>
+														</Properties>
+														<Interpretation>
+															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+														</Interpretation>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicensePausedViewList" DefaultDisplayName="Read LicensePausedView List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadLicensePausedViewItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicensePausedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" />
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.TaxiV2.LicensePausedView, TM.SP.BCSModels" Name="returnLicensePausedView">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="LicensePausedView" IdentifierEntityNamespace="TM.SP.BCSModels.TaxiV2" ReadOnly="false">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="RegNumber" DefaultDisplayName="RegNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankSeries" DefaultDisplayName="BlankSeries" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="BlankNo" DefaultDisplayName="BlankNo" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="OrgName" DefaultDisplayName="OrgName" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Inn" DefaultDisplayName="Inn" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Signature" DefaultDisplayName="Signature" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiId" DefaultDisplayName="TaxiId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="Lfb" DefaultDisplayName="Lfb" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">128</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="JuridicalAddress" DefaultDisplayName="JuridicalAddress" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">255</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="PhoneNumber" DefaultDisplayName="PhoneNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AddContactData" DefaultDisplayName="AddContactData" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="AccountAbbr" DefaultDisplayName="AccountAbbr" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">12</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiBrand" DefaultDisplayName="TaxiBrand" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiModel" DefaultDisplayName="TaxiModel" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">64</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiStateNumber" DefaultDisplayName="TaxiStateNumber" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">24</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TaxiYear" DefaultDisplayName="TaxiYear" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+											<TypeDescriptor Name="OutputDate" DefaultDisplayName="OutputDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CreationDate" DefaultDisplayName="CreationDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillDate" DefaultDisplayName="TillDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="TillSuspensionDate" DefaultDisplayName="TillSuspensionDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+												<Interpretation>
+													<NormalizeDateTime LobDateTimeMode="UTC" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CancellationReason" DefaultDisplayName="CancellationReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="SuspensionReason" DefaultDisplayName="SuspensionReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ChangeReason" DefaultDisplayName="ChangeReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="InvalidReason" DefaultDisplayName="InvalidReason" TypeName="System.String">
+												<Properties>
+													<Property Name="Size" Type="System.Int32">1073741823</Property>
+												</Properties>
+												<Interpretation>
+													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+												</Interpretation>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadLicensePausedViewItem" DefaultDisplayName="Read LicensePausedView" />
+							</MethodInstances>
+						</Method>
+					</Methods>
+				</Entity>
+			</Entities>
+		</LobSystem>
+	</LobSystems>
+</Model>

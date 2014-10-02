@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.BusinessDataConnectivity" DefaultFile="TaxiV2.bdcm" FeatureReceiverClass="Microsoft.Office.SharePoint.ClientExtensions.Deployment.ImportModelReceiver" FeatureReceiverAssembly="Microsoft.Office.SharePoint.ClientExtensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Farm" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+	<Files>
+		<ProjectItemFile Source="TaxiV2.bdcm" Target="TaxiV2\" Type="ElementFile" />
+		<ProjectOutputFile ProjectId="73514d73-abd3-440e-8a49-93026866c619" ProjectPath="TM.SP.BCSModels.csproj" Target="BdcAssemblies\" Type="ElementFile" />
+	</Files>
+	<FeatureProperties>
+		<FeatureProperty Key="TaxiV2" Value="BdcAssemblies\$SharePoint.Project.AssemblyFileName$" />
+		<FeatureProperty Key="IncrementalUpdate" Value="true" />
+		<FeatureProperty Key="ModelFileName" Value="$SharePoint.ProjectItem.Name$\TaxiV2.bdcm" />
+	</FeatureProperties>
+</ProjectItem>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="LicenseBCSList"
+		Description="LicenseBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="1F26B873-E206-4A9C-9EA2-FFA1C5AE0B65"
+		Url="Lists/LicenseBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/LicenseBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="Taxi" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.Taxi" />
+			<Property
+				Name="Entity"
+				Value="License" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadLicenseItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

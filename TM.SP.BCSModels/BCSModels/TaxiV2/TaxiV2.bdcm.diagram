@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.875" name="TaxiV2">
+  <modelRootMoniker Name="/TaxiV2" />
+  <nestedChildShapes>
+    <entityShape Id="4240ef90-a729-4979-8bf7-03be86b53508" absoluteBounds="2, 1, 2, 1.59568359375">
+      <entityMoniker name="TM.SP.BCSModels.TaxiV2.LicenseActingView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9e63f18-153e-4efe-8835-84766e512c11" absoluteBounds="2.015, 1.4100000000000001, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="dbf75556-5789-49ba-a699-671eae5d5609" absoluteBounds="2.015, 1.8616910807291667, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="1b698ed1-43bf-4241-a1a5-7663b3bc5f63" absoluteBounds="7, 1, 2, 1.59568359375">
+      <entityMoniker name="TM.SP.BCSModels.TaxiV2.LicenseAllView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1bf9752d-d1f2-46c8-a82f-17653ee6a0b2" absoluteBounds="7.015, 1.4100000000000001, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="87eccd24-a4b1-4230-916b-81fec72f8390" absoluteBounds="7.015, 1.8616910807291667, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="715f1dd1-87b8-45bc-bc95-dfe0a933dba8" absoluteBounds="2, 4, 2, 1.5956835937499996">
+      <entityMoniker name="TM.SP.BCSModels.TaxiV2.LicenseCancelledView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f7df3c8a-1f4a-4cb1-9093-51976f76938b" absoluteBounds="2.015, 4.41, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="3792dd9e-aed9-48e5-b078-4a1354310d32" absoluteBounds="2.015, 4.8616910807291669, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="ae15c9d3-1581-4e6d-8643-cd069f1d3144" absoluteBounds="7, 4, 2, 1.5956835937499996">
+      <entityMoniker name="TM.SP.BCSModels.TaxiV2.LicenseEverChangedView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d894ee26-0bb4-4b04-a860-f14d62acadb5" absoluteBounds="7.015, 4.41, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="017648c8-1ff8-4f15-ab2d-96ac36822838" absoluteBounds="7.015, 4.8616910807291669, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="14ab511d-1dd3-475a-abff-35c42afd9e1d" absoluteBounds="2, 7, 2, 1.5956835937499996">
+      <entityMoniker name="TM.SP.BCSModels.TaxiV2.LicenseEverPausedView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ec07a4ac-241a-4cc8-a280-ed34843eacaf" absoluteBounds="2.015, 7.41, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4ccf8352-76f6-4f43-b809-38c8b8035f60" absoluteBounds="2.015, 7.8616910807291669, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="6dfaec7b-2174-4778-b79c-535653798933" absoluteBounds="7, 7, 2, 1.5956835937499996">
+      <entityMoniker name="TM.SP.BCSModels.TaxiV2.LicensePausedView" />
+      <nestedChildShapes>
+        <elementListCompartment Id="105f9984-e7a0-418b-acf9-5efcd9132e2d" absoluteBounds="7.015, 7.41, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ad34832a-6dfc-460e-861c-03410f653d0f" absoluteBounds="7.015, 7.8616910807291669, 1.9700000000000002, 0.63399251302083326" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+  </nestedChildShapes>
+</minimalLanguageDiagram>
