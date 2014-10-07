@@ -70,6 +70,9 @@
     <None Include="DelegateControls\jQueryControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e43ba965-efe1-48ea-90fc-16a6caa24ca7}</SharePointProjectItemId>
     </None>
+    <None Include="DelegateControls\knockoutjsControl\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{36bfd42b-f462-4be8-a0b7-6b7393be5e3a}</SharePointProjectItemId>
+    </None>
     <None Include="DelegateControls\MasterPageCSSTuneControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{d01ef362-3fff-4564-aaf6-9a38e7089472}</SharePointProjectItemId>
     </None>
@@ -102,6 +105,41 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DelegateControls\knockoutjsControl\Elements.xml" />
+    <Content Include="DelegateControls\knockoutjsControl\knockoutjsControl.ascx" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\accordion.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\all.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\autocomplete.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\base.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\button.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\core.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\datepicker.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\dialog.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\draggable.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\menu.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\progressbar.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\resizable.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\selectable.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\selectmenu.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\slider.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\sortable.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\spinner.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\tabs.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\theme.css" />
+    <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\tooltip.css" />
     <Content Include="DelegateControls\tmsphelpersControl\Elements.xml" />
     <Content Include="DelegateControls\tmsphelpersControl\tmsphelpersControl.ascx" />
     <Content Include="Features\TaxoMotor_TaxoMotorCustomizations\Resources.resx" />
@@ -109,6 +147,10 @@
       <DependentUpon>TaxoMotor_TaxoMotorWebAppLevelCustomizations.feature</DependentUpon>
     </Content>
     <Content Include="Layouts\TM.SP.Customizations\Scripts\tm.sp.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-ui-1.11.1.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-ui.min-1.11.1.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\knockout-3.2.0.js" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorWebAppLevelCustomizations.gif" />
   </ItemGroup>
   <ItemGroup>
