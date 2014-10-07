@@ -187,6 +187,7 @@ namespace TM.SP.DataModel
                             l => l.AddContentTypeLink(ContentTypes.TmAttachDoc))
                         .AddList(Lists.TmIdentityDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIdentityDocumentType))
+                        .AddList(Lists.TmProjectScripts)
                 );
 
             return model;
