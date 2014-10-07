@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Scripts" Url="ProjectScripts">
+    <File Path="Scripts\licenseSearchModel.js" Url="licenseSearchModel.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
+  </Module>
+</Elements>

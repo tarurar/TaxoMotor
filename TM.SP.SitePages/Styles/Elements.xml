@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Styles" Url="ProjectScripts">
+    <File Path="Styles\licenseSearchModel.css" Url="licenseSearchModel.css" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
+  </Module>
+</Elements>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Pages" Url="ProjectSitePages">
+    <File Path="Pages\licenseSearch.aspx" Url="licenseSearch.aspx" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Реестр разрешений" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
+  </Module>
+</Elements>

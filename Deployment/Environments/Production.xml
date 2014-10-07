@@ -66,6 +66,9 @@
       <Solution Name="TM.SP.Search.wsp" Force="true" Overwrite="true">
         <WebApplication Url="$(WebAppUrl)" />
       </Solution>
+      <Solution Name="TM.SP.SitePages.wsp" Force="true" Overwrite="true">
+        <SiteCollection Url="$(WebAppUrl)" />
+      </Solution>
     </Solutions>
   </Environment>
 </SPSD>
