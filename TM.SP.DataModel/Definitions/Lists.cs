@@ -144,5 +144,14 @@ namespace TM.SP.DataModel
             Description         = "Список для контент-страниц проекта",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmProjectScripts = new ListDefinition()
+        {
+            Title               = "Скрипты проекта",
+            Url                 = "ProjectScripts",
+            TemplateType        = BuiltInListTemplateTypeId.DocumentLibrary,
+            Description         = "Библиотека для скриптов",
+            ContentTypesEnabled = true
+        };
     }
 }
