@@ -39,6 +39,10 @@ input-param label {
     margin: 20px;
 }
 
+.hidden {
+    display: none;
+}
+
 
 /*Grid styles*/
 

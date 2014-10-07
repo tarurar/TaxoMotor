@@ -16,75 +16,71 @@
 </asp:Content>
 
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
-    <div>
-        <p id="message"></p>
-    </div>
-    
     <div id="searchForm" class="main-form">
         <div id="searchParams" class="search-params">
             <div class="input-param">
                 <label for="regNumber">Регистрационный номер</label>
-                <input id="regNumber" type="text" data-bind="value: Params().RegNumber"/> 
+                <input id="regNumber" type="text" data-bind="value: Params().RegNumber, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/> 
             </div>
         
             <div class="input-param">
                 <label for="blankSeries">Серия бланка</label>
-                <input id="blankSeries" type="text" data-bind="value: Params().BlankSeries"/>
+                <input id="blankSeries" type="text" data-bind="value: Params().BlankSeries, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
             
             <div class="input-param">
                 <label for="blankno">Номер бланка</label>
-                <input id="blankno" type="text" data-bind="value: Params().BlankNo"/>
+                <input id="blankno" type="text" data-bind="value: Params().BlankNo, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
 
             <div class="input-param">
                 <label for="orgName">Наименование организации</label>
-                <input id="orgName" type="text" data-bind="value: Params().OrgName"/>
+                <input id="orgName" type="text" data-bind="value: Params().OrgName, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="juridicalAddress">Юридический адрес</label>
-                <input id="juridicalAddress" type="text" data-bind="value: Params().JuridicalAddress"/>
+                <input id="juridicalAddress" type="text" data-bind="value: Params().JuridicalAddress, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="phoneNumber">Номер телефона или факса</label>
-                <input id="phoneNumber" type="text" data-bind="value: Params().PhoneNumber"/>
+                <input id="phoneNumber" type="text" data-bind="value: Params().PhoneNumber, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="addContactData">Иные контактные данные</label>
-                <input id="addContactData" type="text" data-bind="value: Params().AddContactData"/>
+                <input id="addContactData" type="text" data-bind="value: Params().AddContactData, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="ogrn">ОГРН/ОГРНИП</label>
-                <input id="ogrn" type="text" data-bind="value: Params().Ogrn"/>
+                <input id="ogrn" type="text" data-bind="value: Params().Ogrn, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="inn">ИНН</label>
-                <input id="inn" type="text" data-bind="value: Params().Inn"/>
+                <input id="inn" type="text" data-bind="value: Params().Inn, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
 
             <div class="input-param">
                 <label for="taxiBrand">Марка ТС</label>
-                <input id="taxiBrand" type="text" data-bind="value: Params().TaxiBrand"/>
+                <input id="taxiBrand" type="text" data-bind="value: Params().TaxiBrand, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="taxiModel">Модель ТС</label>
-                <input id="taxiModel" type="text" data-bind="value: Params().TaxiModel"/>
+                <input id="taxiModel" type="text" data-bind="value: Params().TaxiModel, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="taxiStateNumber">Гос. рег. знак ТС</label>
-                <input id="taxiStateNumber" type="text" data-bind="value: Params().TaxiStateNumber"/>
+                <input id="taxiStateNumber" type="text" data-bind="value: Params().TaxiStateNumber, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
                 <label for="taxiYear">Год выпуска ТС</label>
-                <input id="taxiYear" type="text" data-bind="value: Params().TaxiYear"/>
+                <input id="taxiYear" type="text" data-bind="value: Params().TaxiYear, valueUpdate: 'afterkeydown', event: { keypress: OnParamKeyDown }"/>
             </div>
         
             <div class="input-param">
@@ -118,7 +114,7 @@
             <button id="searchButton" class="alignright" type="button" data-bind="click: Search">Найти</button>
         </div>
 
-        <div id="results" class="donotfloat">
+        <div id="results" class="donotfloat" data-bind="css: { hidden: IsEmpty }">
             <table>
                 <thead>
                     <tr>
@@ -151,6 +147,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div data-bind="css: { hidden: !IsEmpty() }">
+            <p id="message">Ничего не найдено</p>
         </div>
     </div>
 

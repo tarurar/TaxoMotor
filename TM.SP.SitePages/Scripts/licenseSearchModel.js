@@ -109,10 +109,10 @@ function License(data) {
     this.TaxiModel          = ko.observable(data.TaxiModel);
     this.TaxiStateNumber    = ko.observable(data.TaxiStateNumber);
     this.TaxiYear           = ko.observable(data.TaxiYear);
-    this.OutputDate         = ko.observable(data.OutputDate);
-    this.CreationDate       = ko.observable(data.CreationDate);
-    this.TillDate           = ko.observable(data.TillDate);
-    this.TillSuspensionDate = ko.observable(data.TillSuspensionDate);
+    this.OutputDate         = ko.observable(data.OutputDate ? new Date(data.OutputDate).toLocaleDateString() : '');
+    this.CreationDate       = ko.observable(data.CreationDate ? new Date(data.CreationDate).toLocaleDateString() : '');
+    this.TillDate           = ko.observable(data.TillDate ? new Date(data.TillDate).toLocaleDateString() : '');
+    this.TillSuspensionDate = ko.observable(data.TillSuspensionDate ? new Date(data.TillSuspensionDate).toLocaleDateString() : '');
     this.CancellationReason = ko.observable(data.CancellationReason);
     this.SuspensionReason   = ko.observable(data.SuspensionReason);
     this.ChangeReason       = ko.observable(data.ChangeReason);
@@ -128,6 +128,9 @@ function LicenseSearchModel() {
     // model properties
     self.Results = ko.observableArray([]);
     self.Params = ko.observable(new Params());
+    self.IsEmpty = ko.computed(function () {
+        return self.Results().length == 0;
+    }, self);
     // model methods
     self.init = function () {
         self.hostweburl = window.location.protocol + '//' + window.location.host;
@@ -233,6 +236,13 @@ function LicenseSearchModel() {
             filterstr = "$filter=" + filterstr;
             self.LoadFilteredData(filterstr);
         } else self.loadAllData();
+    }
+
+    self.OnParamKeyDown = function (data, event) {
+        if (event.keyCode == 13) {
+            self.Search();
+        }
+        else return true;
     }
 }
 
