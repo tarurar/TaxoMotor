@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="LicenseActingBCSList"
+		Description="LicenseActingBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="002B3DC5-B8BD-4242-ABAC-1F09774F8FCF"
+		Url="Lists/LicenseActingBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/LicenseActingBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="TaxiV2" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.TaxiV2" />
+			<Property
+				Name="Entity"
+				Value="LicenseActingView" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadLicenseActingViewItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

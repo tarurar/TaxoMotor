@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="LicensePausedBCSList"
+		Description="LicensePausedBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="8264E467-5040-49AC-8577-06BD7D3904F3"
+		Url="Lists/LicensePausedBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/LicensePausedBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="TaxiV2" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.TaxiV2" />
+			<Property
+				Name="Entity"
+				Value="LicensePausedView" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadLicensePausedViewItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

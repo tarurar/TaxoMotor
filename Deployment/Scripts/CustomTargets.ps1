@@ -157,6 +157,8 @@
         #activate content type association feature in content web application
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "CoordinateV5"
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "DeveloperData"
+        UpdateBCSLobSystemProperties  -vars $vars -lobName "Taxi"
+        UpdateBCSLobSystemProperties  -vars $vars -lobName "TaxiV2"
 		AddConfigurationListEntry -vars $vars -confKey "MessageQueueServiceUrl" -confValue $vars['MessageQueueServiceUrl']
 		AddConfigurationListEntry -vars $vars -confKey "BR2ServiceGuid" -confValue $vars['BR2ServiceGuid']
      }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="LicenseCancelledBCSList"
+		Description="LicenseCancelledBCSList Description"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="291191E1-340B-47F5-A269-F193150C1137"
+		Url="Lists/LicenseCancelledBCSList"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/LicenseCancelledBCSList/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="TaxiV2" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.TaxiV2" />
+			<Property
+				Name="Entity"
+				Value="LicenseCancelledView" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadLicenseCancelledViewItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

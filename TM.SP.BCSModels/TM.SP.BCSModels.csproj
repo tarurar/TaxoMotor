@@ -69,6 +69,10 @@
     <Compile Include="BCSModels\CoordinateV5\RequestAccountDataService.cs" />
     <Compile Include="BCSModels\CoordinateV5\FileEntityService.cs" />
     <Compile Include="BCSModels\CoordinateV5\RequestEntityService.cs" />
+    <Compile Include="BCSModels\TaxiV2\TaxiV2Entities.cs" />
+    <Compile Include="BCSModels\TaxiV2\TaxiV2EntityServices.cs" />
+    <Compile Include="BCSModels\Taxi\TaxiEntities.cs" />
+    <Compile Include="BCSModels\Taxi\TaxiEntityServices.cs" />
     <Compile Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.EventReceiver.cs">
       <DependentUpon>TaxoMotor_CoordinateV5BCSLists.feature</DependentUpon>
     </Compile>
@@ -82,11 +86,37 @@
     <None Include="BCSModels\CoordinateV5\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{0acfc775-8745-4501-89ee-b983c49827be}</SharePointProjectItemId>
     </None>
+    <None Include="BCSModels\TaxiV2\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{3c35f63d-a006-45d0-a5e2-3d8cd9ab94f8}</SharePointProjectItemId>
+    </None>
+    <None Include="BCSModels\TaxiV2\TaxiV2.bdcm" />
+    <None Include="BCSModels\TaxiV2\TaxiV2.bdcm.diagram">
+      <DependentUpon>TaxiV2.bdcm</DependentUpon>
+    </None>
+    <None Include="BCSModels\Taxi\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{d85766a8-c967-43e6-81c7-eade5059ee64}</SharePointProjectItemId>
+    </None>
+    <None Include="BCSModels\Taxi\Taxi.bdcm" />
+    <None Include="BCSModels\Taxi\Taxi.bdcm.diagram">
+      <DependentUpon>Taxi.bdcm</DependentUpon>
+    </None>
     <None Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.feature">
       <FeatureId>{6e4fbcbc-577b-4b94-b67a-c50d8ab7d5fa}</FeatureId>
     </None>
     <None Include="Features\TaxoMotor_CoordinateV5BCSModel\TaxoMotor_CoordinateV5BCSModel.feature">
       <FeatureId>{0c823234-4dc3-4850-99d3-7ad6c48d452e}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxiBCSLists\TaxoMotor_TaxiBCSLists.feature">
+      <FeatureId>{719a9456-aae2-4075-b55a-149c99e6eb92}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxiBCSModel\TaxoMotor_TaxiBCSModel.feature">
+      <FeatureId>{d1610740-15f1-44a3-9a7c-646e02342e46}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxiV2BCSLists\TaxoMotor_TaxiV2BCSLists.feature">
+      <FeatureId>{709bf670-5fa5-4819-98d7-778f629b9119}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxiV2BCSModel\TaxoMotor_TaxiV2BCSModel.feature">
+      <FeatureId>{70b69ea0-1d97-4fca-a334-8b75e50b35a1}</FeatureId>
     </None>
     <None Include="key.snk" />
     <None Include="ListInstances\AddressBCSList\SharePointProjectItem.spdata">
@@ -94,6 +124,27 @@
     </None>
     <None Include="ListInstances\FileBCSList\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{0ddf13bc-f53c-45a5-93bc-7d7b2ce7ba9c}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\LicenseActingBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{3cb777cf-c785-4dd4-b5a6-dca0a6bf7c4a}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\LicenseAllBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{36fc4756-11c6-4a36-8d11-ed8fffc493d1}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\LicenseBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{d65f25d4-c847-4060-b1a9-3d03d8c28b09}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\LicenseCancelledBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{a41ca921-acbd-4b09-92df-4daaebca1fe1}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\LicenseEverChangedBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{bc9bd142-f646-40c5-9964-721e20249314}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\LicenseEverPausedBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{ad4e943a-7c46-467e-8e3c-eeaf2350f393}</SharePointProjectItemId>
+    </None>
+    <None Include="ListInstances\LicensePausedBCSList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{faf318c0-06ae-414a-adbc-43a142b53750}</SharePointProjectItemId>
     </None>
     <None Include="ListInstances\RequestAccountBCSList\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{43b6fdce-28d2-42d8-8d36-a8b9053c1796}</SharePointProjectItemId>
@@ -139,8 +190,29 @@
     <Content Include="Features\TaxoMotor_CoordinateV5BCSModel\TaxoMotor_CoordinateV5BCSModel.Template.xml">
       <DependentUpon>TaxoMotor_CoordinateV5BCSModel.feature</DependentUpon>
     </Content>
-    <Content Include="ListInstances\AddressBCSList\Elements.xml" />
+    <Content Include="Features\TaxoMotor_TaxiBCSLists\TaxoMotor_TaxiBCSLists.Template.xml">
+      <DependentUpon>TaxoMotor_TaxiBCSLists.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\TaxoMotor_TaxiBCSModel\TaxoMotor_TaxiBCSModel.Template.xml">
+      <DependentUpon>TaxoMotor_TaxiBCSModel.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\TaxoMotor_TaxiV2BCSLists\TaxoMotor_TaxiV2BCSLists.Template.xml">
+      <DependentUpon>TaxoMotor_TaxiV2BCSLists.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\TaxoMotor_TaxiV2BCSModel\TaxoMotor_TaxiV2BCSModel.Template.xml">
+      <DependentUpon>TaxoMotor_TaxiV2BCSModel.feature</DependentUpon>
+    </Content>
+    <Content Include="ListInstances\AddressBCSList\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ListInstances\FileBCSList\Elements.xml" />
+    <Content Include="ListInstances\LicenseActingBCSList\Elements.xml" />
+    <Content Include="ListInstances\LicenseAllBCSList\Elements.xml" />
+    <Content Include="ListInstances\LicenseBCSList\Elements.xml" />
+    <Content Include="ListInstances\LicenseCancelledBCSList\Elements.xml" />
+    <Content Include="ListInstances\LicenseEverChangedBCSList\Elements.xml" />
+    <Content Include="ListInstances\LicenseEverPausedBCSList\Elements.xml" />
+    <Content Include="ListInstances\LicensePausedBCSList\Elements.xml" />
     <Content Include="ListInstances\RequestAccountBCSList\Elements.xml" />
     <Content Include="ListInstances\RequestBCSList\Elements.xml" />
     <Content Include="ListInstances\RequestContactBCSList\Elements.xml" />
@@ -153,6 +225,10 @@
     <Content Include="Modules\Pages\ViewFileContentPage.aspx" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSLists.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSModel.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxiBCSLists.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxiBCSModel.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxiV2BCSLists.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxiV2BCSModel.gif" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">

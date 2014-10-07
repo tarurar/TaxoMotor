@@ -112,6 +112,7 @@
     <Folder Include="dbo\Types" />
     <Folder Include="Snapshots" />
     <Folder Include="dbo\Triggers" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\File.sql" />
@@ -150,6 +151,12 @@
     <Build Include="dbo\Tables\RequestMigrationTicket.sql" />
     <Build Include="dbo\Functions\fn_BuildAddressSingleString.sql" />
     <Build Include="dbo\Tables\License.sql" />
+    <Build Include="dbo\Views\LicenseActing.sql" />
+    <Build Include="dbo\Views\LicenseCancelled.sql" />
+    <Build Include="dbo\Views\LicenseEverPaused.sql" />
+    <Build Include="dbo\Views\LicensePaused.sql" />
+    <Build Include="dbo\Views\LicenseEverChanged.sql" />
+    <Build Include="dbo\Views\LicenseAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
