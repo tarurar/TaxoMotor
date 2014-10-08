@@ -186,7 +186,7 @@ namespace TM.SP.AppPages.ApplicationPages
         /// <typeparam name="T"></typeparam>
         /// <param name="documentList">Documents requests have to be send for</param>
         /// <returns></returns>
-        protected bool SendRequests<T>(List<T> documentList) where T : RequestItem
+        protected bool SendRequests<T>(List<T> documentList, bool needsTracking = true) where T : RequestItem
         {
             bool success = true;
             var svcClient = GetServiceClientInstance();
@@ -197,7 +197,10 @@ namespace TM.SP.AppPages.ApplicationPages
 
                 var newMessage = BuildMessage<T>(document);
                 bool sent = svcClient.AddMessage(newMessage);
-                TrackOutcomeRequest<T>(document, sent, newMessage.MessageId);
+                if (needsTracking)
+                {
+                    TrackOutcomeRequest<T>(document, sent, newMessage.MessageId);
+                }
                 success |= sent;
             }
 

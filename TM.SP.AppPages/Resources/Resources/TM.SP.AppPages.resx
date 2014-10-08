@@ -195,4 +195,10 @@
   <data name="PTSRequest_DlgNoStateNumberErrorFmt" xml:space="preserve">
     <value>У транспортного средства "{0}" не указан государственный регистрационный номер</value>
   </data>
+  <data name="SendStatusRequest_DlgNoDocumentsError" xml:space="preserve">
+    <value>Нет ни одного обращения, по которому можно было бы отправить статус</value>
+  </data>
+  <data name="SendStatusRequest_DlgNoStatusError" xml:space="preserve">
+    <value>В обращении {0} не указан статус</value>
+  </data>
 </root>

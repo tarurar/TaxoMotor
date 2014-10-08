@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.SendStatus"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Отправить статус"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/IncomeRequestList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Manage.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.SendStatus.Button"
+						Command="TaxoMotor.SendStatus.ButtonCommand"
+						Sequence="20"
+						Image16by16="/_layouts/15/TM.SP.AppPages/Images/send-status-16.png"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/send-status-32.png"
+						LabelText="Отправить статус"
+						ToolTipTitle="Отправка статуса обращения в АС ГУФ"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.SendStatus.ButtonCommand"
+					CommandAction="javascript:(function(){
+            var url = _spPageContextInfo.webAbsoluteUrl + '/' + _spPageContextInfo.layoutsUrl + '/' + 'TaxoMotor/SendStatus.aspx?ListId={ListId}&amp;Items={ItemId}';
+            $.ajax({
+              url: encodeURI(url),
+              method: 'POST',
+              success: function (data) {
+                TM.SP.showIconNotification('Отправка статуса завершена', '_layouts/15/images/kpinormal-0.gif', true);
+              },
+              error: function (data, errorCode, errorMessage) {
+                TM.SP.showIconNotification('При отправке статуса возникла ошибка', '_layouts/15/images/kpinormal-2.gif', true);
+              }
+            });
+          })();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

@@ -77,6 +77,9 @@
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
+    <None Include="Ribbons\SendStatus\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{4a9a84f8-2c6d-4549-9acd-e96b13dcf040}</SharePointProjectItemId>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -86,6 +89,7 @@
     <Content Include="Features\TaxoMotor_TaxoMotorCustomActions\TaxoMotor_TaxoMotorCustomActions.Template.xml">
       <DependentUpon>TaxoMotor_TaxoMotorCustomActions.feature</DependentUpon>
     </Content>
+    <Content Include="Ribbons\SendStatus\Elements.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
