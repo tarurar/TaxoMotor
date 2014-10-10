@@ -13,6 +13,8 @@ using Microsoft.BusinessData.MetadataModel.Collections;
 using Microsoft.BusinessData.Runtime;
 using Microsoft.SharePoint.Administration;
 
+using TM.ClientUtils.Bcs;
+
 namespace TM.Utils
 {
     public class BusinessDataColumnUpdater
@@ -114,7 +116,7 @@ namespace TM.Utils
             string property = bizDataField.GetProperty("SecondaryFieldWssNames");
 
             //populate the array of secondary names
-            string[] secondaryWssFieldNames = BCS.SecondaryFieldNamesHelper.Decode(property);
+            string[] secondaryWssFieldNames = SecondaryFieldNamesHelper.Decode(property);
 
             int totalListItems = _list.ItemCount;
 
