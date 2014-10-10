@@ -175,6 +175,15 @@ namespace TM.SP.DataModel
             Name                = "Tm_IdentityDocumentType"
         };
 
+        public static ContentTypeDefinition TmLicense = new ContentTypeDefinition()
+        {
+            Id                  = new Guid("{932BA366-BEA9-45D2-85C8-F69ACD4D9DC7}"),
+            Description         = "Разрешение (лицензия)",
+            Group               = ModelConsts.ContentTypeDefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name                = "Tm_License"
+        };
+
         #endregion
     }
 }

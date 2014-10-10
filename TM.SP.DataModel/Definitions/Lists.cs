@@ -153,5 +153,14 @@ namespace TM.SP.DataModel
             Description         = "Библиотека для скриптов",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmLicenseList = new ListDefinition()
+        {
+            Title               = "Разрешения",
+            Url                 = "LicenseList",
+            TemplateType        = BuiltInListTemplateTypeId.GenericList,
+            Description         = "Список разрешений (лицензий) на осуществление таксомоторной деятельности",
+            ContentTypesEnabled = true
+        };
     }
 }

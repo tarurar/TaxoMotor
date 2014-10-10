@@ -54,16 +54,17 @@ namespace TM.SP.DataModel
                 ContentTypes.TmAttachDoc.Name);
             ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIdentityDocumentTypeBookList.Url,
                 ContentTypes.TmIdentityDocumentType.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmLicenseList.Url,
+                ContentTypes.TmLicense.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
         {
-            if (!WebHelpers.CheckFeatureActivation(ctx, new Guid(BcsModelConsts.CV5ListsFeatureId), FeatureScope.Web))
-                throw new Exception(String.Format("Feature with id = {0} must be activated",
-                    BcsModelConsts.CV5ListsFeatureId));
+            CheckBcsFeaturesActivation(ctx);
 
             IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
             List incomeRequestList     = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
+            List licenseList           = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
 
             #region [Income Request List]
             ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestAccountBcsLookupXml,
@@ -73,6 +74,23 @@ namespace TM.SP.DataModel
             ListHelpers.AddFieldAsXmlToList(incomeRequestList, Fields.TmRequestTrusteeBcsLookupXml,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             #endregion
+
+            #region [License List]
+            ListHelpers.AddFieldAsXmlToList(licenseList, Fields.TmLicenseAllViewBcsLookupXml,
+                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            #endregion
+        }
+
+        private static void CheckBcsFeaturesActivation(ClientContext ctx)
+        {
+            if (!WebHelpers.CheckFeatureActivation(ctx, new Guid(BcsModelConsts.CV5ListsFeatureId), FeatureScope.Web))
+                throw new Exception(String.Format("Feature with id = {0} must be activated", BcsModelConsts.CV5ListsFeatureId));
+
+            if (!WebHelpers.CheckFeatureActivation(ctx, new Guid(BcsModelConsts.TaxiListsFeatureId), FeatureScope.Web))
+                throw new Exception(String.Format("Feature with id = {0} must be activated", BcsModelConsts.TaxiListsFeatureId));
+
+            if (!WebHelpers.CheckFeatureActivation(ctx, new Guid(BcsModelConsts.TaxiV2ListsFeatureId), FeatureScope.Web))
+                throw new Exception(String.Format("Feature with id = {0} must be activated", BcsModelConsts.TaxiV2ListsFeatureId));
         }
 
         private static void SetPlumsailLookups(ClientContext ctx)
@@ -89,6 +107,7 @@ namespace TM.SP.DataModel
             List cancellationReasonBookList         = ListHelpers.GetList(allLists, Lists.TmCancellationReasonBookList.Url);
             List taxiList                           = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
             List incomeRequestAttachList            = ListHelpers.GetList(allLists, Lists.TmIncomeRequestAttachList.Url);
+            List licenseList                        = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
             #endregion
             #region [Setting list links]
             PlumsailFields.TmIncomeRequestLookupXml.ListId              = incomeRequestList.Id;
@@ -101,6 +120,7 @@ namespace TM.SP.DataModel
             PlumsailFields.TmCancellationReasonLookupXml.ListId         = cancellationReasonBookList.Id;
             PlumsailFields.TmTaxiLookupXml.ListId                       = taxiList.Id;
             PlumsailFields.TmIncomeRequestAttachLookupXml.ListId        = incomeRequestAttachList.Id;
+            PlumsailFields.TmLicenseParentLicenseLookupXml.ListId       = licenseList.Id;
             #endregion
         }
 
@@ -120,6 +140,7 @@ namespace TM.SP.DataModel
             List incomeRequestAttachList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestAttachList.Url);
             List incomeRequestList       = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
             List attachLibrary           = ListHelpers.GetList(allLists, Lists.TmAttachLib.Url);
+            List licenseList             = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
             #endregion
             #region [Adding lookup fields]
             ListHelpers.AddFieldAsXmlToList(taxiList               , PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
@@ -149,6 +170,10 @@ namespace TM.SP.DataModel
             ListHelpers.AddFieldAsXmlToList(attachLibrary          , PlumsailFields.TmTaxiLookupXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(attachLibrary          , PlumsailFields.TmIncomeRequestAttachLookupXml.ToXml(),
+               AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(licenseList            , PlumsailFields.TmLicenseParentLicenseLookupXml.ToXml(),
+               AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(licenseList            , PlumsailFields.TmTaxiLookupXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             #endregion
             #region [Adding TmCancellationReasonLookupXml field to TmCancelIncomeRequest contenttype ONLY]

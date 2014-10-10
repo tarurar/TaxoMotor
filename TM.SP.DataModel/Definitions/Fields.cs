@@ -7,6 +7,8 @@ using System.Xml.Linq;
 using SPMeta2.Definitions;
 using SPMeta2.Enumerations;
 
+using TM.ClientUtils.Bcs;
+
 namespace TM.SP.DataModel
 {
     public static class Fields
@@ -825,6 +827,193 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.Calculated,
             Group        = ModelConsts.ColumnsCalcGroup
         };
+
+        #endregion
+
+        #region [Разрешение]
+
+        public static FieldDefinition TmBlankSeries = new FieldDefinition()
+        {
+            Id           = new Guid("{BA2CD0A1-40AA-4118-B023-EC3B8E0D41BA}"),
+            Title        = "Серия бланка",
+            InternalName = "Tm_BlankSeries",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmBlankNo = new FieldDefinition()
+        {
+            Id           = new Guid("{543E9DB8-EC5F-466A-8BCF-324E86E65101}"),
+            Title        = "Номер бланка",
+            InternalName = "Tm_BlankNo",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOrganizationName = new FieldDefinition()
+        {
+            Id           = new Guid("{F45C91A8-0801-4CFC-9E74-6B47CA93A3A8}"),
+            Title        = "Наименование организации",
+            InternalName = "Tm_OrganizationName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOrgOgrn = new FieldDefinition()
+        {
+            Id           = new Guid("{30A710D1-8ADA-4397-83D0-B276E7ADF870}"),
+            Title        = "ОГРН",
+            InternalName = "Tm_OrgOgrn",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOrgInn = new FieldDefinition()
+        {
+            Id           = new Guid("{E6620411-C231-46C5-9BCF-2D5BCCAC92F9}"),
+            Title        = "ИНН",
+            InternalName = "Tm_OrgInn",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOrgLfb = new FieldDefinition()
+        {
+            Id           = new Guid("{D2E5C464-F2B7-48C4-9374-19B5E7F8FDEC}"),
+            Title        = "Организационно-правовая форма",
+            InternalName = "Tm_OrgLfb",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmJuridicalAddress = new FieldDefinition()
+        {
+            Id           = new Guid("{B6748CF9-A34D-4012-8459-C549388B709E}"),
+            Title        = "Юридический адрес",
+            InternalName = "Tm_JuridicalAddress",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmPhoneNumber = new FieldDefinition()
+        {
+            Id           = new Guid("{65C0073C-FA3D-4B25-AC9B-14607AC1AE5C}"),
+            Title        = "Номер телефона",
+            InternalName = "Tm_PhoneNumber",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmAddContactData = new FieldDefinition()
+        {
+            Id           = new Guid("{28A80B63-8D0A-433D-BD24-0D01962335D0}"),
+            Title        = "Доп. контактные данные",
+            InternalName = "Tm_AddContactData",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmJuridicalPersonAbbreviation = new FieldDefinition()
+        {
+            Id           = new Guid("{F2A95693-A71A-42D7-9856-06CCA567AF43}"),
+            Title        = "Аббревиатура ЮЛ",
+            InternalName = "Tm_JuridicalPersonAbbreviation",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseOutputDate = new FieldDefinition()
+        {
+            Id           = new Guid("{71EB2275-9BE3-4CD0-81F6-AC45C1FE6ABF}"),
+            Title        = "Дата выдачи",
+            InternalName = "Tm_LicenseOutputDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseTillDate = new FieldDefinition()
+        {
+            Id           = new Guid("{78CF58D5-9825-4650-8B81-75A008889171}"),
+            Title        = "Срок действия (до)",
+            InternalName = "Tm_LicenseTillDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseTillSuspensionDate = new FieldDefinition()
+        {
+            Id           = new Guid("{07674A82-AFBF-4B9F-8760-F6676558037D}"),
+            Title        = "Срок приостановки (до)",
+            InternalName = "Tm_LicenseTillSuspensionDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseCancellationReason = new FieldDefinition()
+        {
+            Id           = new Guid("{078DBA35-673A-4256-897F-954F479EF2B4}"),
+            Title        = "Причина аннулирования",
+            InternalName = "Tm_LicenseCancellationReason",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseSuspensionReason = new FieldDefinition()
+        {
+            Id           = new Guid("{EAF745C0-96B6-4D02-B54E-BC1210B459D6}"),
+            Title        = "Причина приостановки",
+            InternalName = "Tm_LicenseSuspensionReason",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseChangeReason = new FieldDefinition()
+        {
+            Id           = new Guid("{05E54335-D48A-4B20-8AF8-AF8E6F85550E}"),
+            Title        = "Причина изменений",
+            InternalName = "Tm_LicenseChangeReason",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseInvalidReason = new FieldDefinition()
+        {
+            Id           = new Guid("{669315FA-61D3-4F7F-A61D-2FD1D2788E84}"),
+            Title        = "Причина признания недействительным",
+            InternalName = "TmLicenseInvalidReason",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static  FieldDefinition TmLicenseStatus = new FieldDefinition()
+        {
+            Id           = new Guid("{2E1509C3-D5AC-4181-8520-D48C2FAC91C9}"),
+            Title        = "Статус",
+            InternalName = "Tm_LicenseStatus",
+            FieldType    = BuiltInFieldTypes.Choice,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        /// <summary>
+        /// Ссылка на разрешение (BCS список)
+        /// </summary>
+        public static XElement TmLicenseAllViewBcsLookupXml = new XElement("Field",
+            new XAttribute("Type", "BusinessData"),
+            new XAttribute("Name", "Tm_LicenseAllViewBcsLookup"),
+            new XAttribute("StaticName", "Tm_LicenseAllViewBcsLookup"),
+            new XAttribute("DisplayName", "Ссылка на внешний список"),
+            new XAttribute("BaseRenderingType", "Text"),
+            new XAttribute("Required", "FALSE"),
+            new XAttribute("ID", "{6EFF9171-6245-4C52-B5A1-9038E219D1BD}"),
+            new XAttribute("SystemInstance", BcsModelConsts.TaxiV2SystemName),
+            new XAttribute("EntityNamespace", BcsModelConsts.TaxiV2EntityNamespace),
+            new XAttribute("EntityName", BcsModelConsts.TaxiV2LicenseAllEntityName),
+            new XAttribute("BdcField", "Title"),
+            new XAttribute("SecondaryFieldBdcNames", SecondaryFieldNamesHelper.Encode(new string[] { "IsLast" })),
+            new XAttribute("SecondaryFieldWssNames", SecondaryFieldNamesHelper.Encode(new string[] { "LicenseAllView_IsLast" })),
+            new XAttribute("SecondaryFieldsWssStaticNames", SecondaryFieldNamesHelper.Encode(new string[] { "LicenseAllView_IsLast" })),
+            new XAttribute("Version", "1")
+        );
 
         #endregion
     }
