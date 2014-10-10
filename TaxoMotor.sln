@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.Search", "TM.SP.Searc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.SitePages", "TM.SP.SitePages\TM.SP.SitePages.csproj", "{16DBE984-D312-4192-A7F2-64B6D812E498}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.ClientUtils", "TM.ClientUtils\TM.ClientUtils.csproj", "{C7E55FAA-3035-49DE-86CC-20B7F5D89C33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -181,6 +183,10 @@ Global
 		{16DBE984-D312-4192-A7F2-64B6D812E498}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16DBE984-D312-4192-A7F2-64B6D812E498}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16DBE984-D312-4192-A7F2-64B6D812E498}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C7E55FAA-3035-49DE-86CC-20B7F5D89C33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7E55FAA-3035-49DE-86CC-20B7F5D89C33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7E55FAA-3035-49DE-86CC-20B7F5D89C33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7E55FAA-3035-49DE-86CC-20B7F5D89C33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
