@@ -157,6 +157,7 @@
     <Build Include="dbo\Views\LicensePaused.sql" />
     <Build Include="dbo\Views\LicenseEverChanged.sql" />
     <Build Include="dbo\Views\LicenseAll.sql" />
+    <Build Include="dbo\Tables\LicenseMigrationTicket.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
