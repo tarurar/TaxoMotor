@@ -118,11 +118,17 @@ namespace TM.Utils
             }
             else
             {
-                SPList parentlist = parentFolder.ParentWeb.Lists.GetList(parentFolder.ParentListId, false);
-                SPListItem newFolderItem = parentlist.Items.Add(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.Folder);
-                newFolderItem["Title"] = correctPath;
-                newFolderItem.Update();
-                newFolder = newFolderItem.Folder;
+                SPWeb web = parentFolder.ParentWeb;
+                // checking existance
+                newFolder = web.GetFolder(parentFolder.Url + "/" + correctPath);
+                if (!newFolder.Exists)
+                {
+                    SPList parentList = web.Lists.GetList(parentFolder.ParentListId, false);
+                    SPListItem newFolderItem = parentList.Items.Add(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.Folder);
+                    newFolderItem["Title"] = correctPath;
+                    newFolderItem.Update();
+                    newFolder = newFolderItem.Folder;
+                }
             }
             var newPath = path.Skip(1).ToArray();
 
