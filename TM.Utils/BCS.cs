@@ -19,6 +19,14 @@ using Microsoft.SharePoint.BusinessData.Infrastructure;
 
 namespace TM.Utils
 {
+    public struct BcsMethodExecutionInfo
+    {
+        public string lob;
+        public string ns;
+        public string contentType;
+        public string methodName;
+        public MethodInstanceType methodType;
+    }
     public static class BCS
     {
         #region [classes]
@@ -327,7 +335,12 @@ namespace TM.Utils
 
         #region [properties]
         public static readonly string LOBRequestSystemName = "CoordinateV5";
+        public static readonly string LOBTaxiSystemName = "Taxi";
+        public static readonly string LOBTaxiV2SystemName = "TaxiV2";
+
         public static readonly string LOBRequestSystemNamespace = "TM.SP.BCSModels.CoordinateV5";
+        public static readonly string LOBTaxiSystemNamespace = "TM.SP.BCSModels.Taxi";
+        public static readonly string LOBTaxiV2SystemNamespace = "TM.SP.BCSModels.TaxiV2";
         #endregion
 
         #region [public methods]
