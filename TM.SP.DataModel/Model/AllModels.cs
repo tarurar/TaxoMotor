@@ -90,6 +90,28 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmAttachDivisionCode)
                     .AddField(Fields.TmIdentityDocTypeComment)
                     .AddField(Fields.TmAttachSingleStrDocName)
+                    .AddField(Fields.TmBlankNo)
+                    .AddField(Fields.TmBlankSeries)
+                    .AddField(Fields.TmOrganizationName)
+                    .AddField(Fields.TmOrgOgrn)
+                    .AddField(Fields.TmOrgInn)
+                    .AddField(Fields.TmLicenseStatus, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeChoices(new String[] {"Оригинал", "Дубль", "Пристановлено", "Аннулировано"})))
+                    .AddField(Fields.TmOrgLfb)
+                    .AddField(Fields.TmJuridicalAddress)
+                    .AddField(Fields.TmPhoneNumber)
+                    .AddField(Fields.TmAddContactData)
+                    .AddField(Fields.TmJuridicalPersonAbbreviation)
+                    .AddField(Fields.TmLicenseOutputDate, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeDateOnly()))
+                    .AddField(Fields.TmLicenseTillDate, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeDateOnly()))
+                    .AddField(Fields.TmLicenseTillSuspensionDate, f => f.OnCreated(
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeDateOnly()))
+                    .AddField(Fields.TmLicenseCancellationReason)
+                    .AddField(Fields.TmLicenseChangeReason)
+                    .AddField(Fields.TmLicenseSuspensionReason)
+                    .AddField(Fields.TmLicenseInvalidReason)
                     .AddField(Fields.TmIncomeRequestTaxiModels, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestTaxiBrands, f => f.OnCreated(
@@ -157,6 +179,30 @@ namespace TM.SP.DataModel
                         .AddContentType(ContentTypes.TmIdentityDocumentType, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmIdentityDocTypeComment))
+                        .AddContentType(ContentTypes.TmLicense, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmRegNumber)
+                            .AddContentTypeFieldLink(Fields.TmBlankSeries)
+                            .AddContentTypeFieldLink(Fields.TmBlankNo)
+                            .AddContentTypeFieldLink(Fields.TmOrganizationName)
+                            .AddContentTypeFieldLink(Fields.TmOrgOgrn)
+                            .AddContentTypeFieldLink(Fields.TmOrgInn)
+                            .AddContentTypeFieldLink(Fields.TmLicenseStatus)
+                            .AddContentTypeFieldLink(Fields.TmOrgLfb)
+                            .AddContentTypeFieldLink(Fields.TmJuridicalAddress)
+                            .AddContentTypeFieldLink(Fields.TmPhoneNumber)
+                            .AddContentTypeFieldLink(Fields.TmAddContactData)
+                            .AddContentTypeFieldLink(Fields.TmJuridicalPersonAbbreviation)
+                            .AddContentTypeFieldLink(Fields.TmTaxiBrand)
+                            .AddContentTypeFieldLink(Fields.TmTaxiModel)
+                            .AddContentTypeFieldLink(Fields.TmTaxiYear)
+                            .AddContentTypeFieldLink(Fields.TmTaxiStateNumber)
+                            .AddContentTypeFieldLink(Fields.TmLicenseOutputDate)
+                            .AddContentTypeFieldLink(Fields.TmLicenseTillDate)
+                            .AddContentTypeFieldLink(Fields.TmLicenseTillSuspensionDate)
+                            .AddContentTypeFieldLink(Fields.TmLicenseCancellationReason)
+                            .AddContentTypeFieldLink(Fields.TmLicenseSuspensionReason)
+                            .AddContentTypeFieldLink(Fields.TmLicenseChangeReason)
+                            .AddContentTypeFieldLink(Fields.TmLicenseInvalidReason))
                 );
 
             return model;
@@ -188,6 +234,8 @@ namespace TM.SP.DataModel
                         .AddList(Lists.TmIdentityDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIdentityDocumentType))
                         .AddList(Lists.TmProjectScripts)
+                        .AddList(Lists.TmLicenseList, 
+                            l => l.AddContentTypeLink(ContentTypes.TmLicense))
                 );
 
             return model;
