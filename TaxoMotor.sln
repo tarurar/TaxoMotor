@@ -37,6 +37,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deployment", "Deployment\De
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.BCSModels", "TM.SP.BCSModels\TM.SP.BCSModels.csproj", "{73514D73-ABD3-440E-8A49-93026866C619}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C7E55FAA-3035-49DE-86CC-20B7F5D89C33} = {C7E55FAA-3035-49DE-86CC-20B7F5D89C33}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.DeveloperBCSModels", "TM.SP.DeveloperBCSModels\TM.SP.DeveloperBCSModels.csproj", "{F9732410-2D3D-4FA6-8A4C-A33C03C86955}"
 EndProject
