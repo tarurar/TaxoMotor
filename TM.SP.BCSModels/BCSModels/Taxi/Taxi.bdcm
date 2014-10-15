@@ -20,7 +20,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.0" EstimatedInstanceCount="100000" DefaultDisplayName="License">
+				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.28" EstimatedInstanceCount="100000" DefaultDisplayName="License">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Taxi.LicenseEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -1365,6 +1365,141 @@
 								</Association>
 							</MethodInstances>
 						</Method>
+            <Method Name="TakeItemForMigration">
+              <AccessControlList>
+                <AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+                  <Right BdcRight="Edit" />
+                  <Right BdcRight="Execute" />
+                  <Right BdcRight="SetPermissions" />
+                  <Right BdcRight="SelectableInClients" />
+                </AccessControlEntry>
+              </AccessControlList>
+              <Parameters>
+                <Parameter Name="parameter" Direction="Return">
+                  <TypeDescriptor Name="returnMigratingLicense" TypeName="TM.SP.BCSModels.Taxi.MigratingLicense, Taxi" IsCollection="false">
+                    <TypeDescriptors>
+                      <TypeDescriptor Name="TicketId" DefaultDisplayName="TicketId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="ErrorInfo" DefaultDisplayName="ErrorInfo" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="StackTrace" DefaultDisplayName="StackTrace" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">8192</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="LicenseId" DefaultDisplayName="LicenseId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                    </TypeDescriptors>
+                  </TypeDescriptor>
+                </Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="TakeItemForMigrationInstance" Type="Scalar" DefaultDisplayName="Take Item for Migration" ReturnParameterName="parameter" />
+              </MethodInstances>
+            </Method>
+            <Method Name="FinishMigration">
+              <AccessControlList>
+                <AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+                  <Right BdcRight="Edit" />
+                  <Right BdcRight="Execute" />
+                  <Right BdcRight="SetPermissions" />
+                  <Right BdcRight="SelectableInClients" />
+                </AccessControlEntry>
+              </AccessControlList>
+              <Parameters>
+                <Parameter Name="migratingLicense" Direction="In">
+                  <TypeDescriptor Name="migratingLicenseTypeDescriptor" TypeName="TM.SP.BCSModels.Taxi.MigratingLicense, Taxi" IsCollection="false">
+                    <TypeDescriptors>
+                      <TypeDescriptor Name="TicketId" DefaultDisplayName="TicketId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="ErrorInfo" DefaultDisplayName="ErrorInfo" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="StackTrace" DefaultDisplayName="StackTrace" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">8192</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="LicenseId" DefaultDisplayName="LicenseId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                    </TypeDescriptors>
+                  </TypeDescriptor>
+                </Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="FinishMigrationInstance" Type="Updater" />
+              </MethodInstances>
+            </Method>
+            <Method Name="UpdateMigrationStatus">
+              <AccessControlList>
+                <AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+                  <Right BdcRight="Edit" />
+                  <Right BdcRight="Execute" />
+                  <Right BdcRight="SetPermissions" />
+                  <Right BdcRight="SelectableInClients" />
+                </AccessControlEntry>
+              </AccessControlList>
+              <Parameters>
+                <Parameter Name="request" Direction="In">
+                  <TypeDescriptor Name="requestTypeDescriptor" TypeName="TM.SP.BCSModels.Taxi.MigratingLicense, Taxi" IsCollection="false">
+                    <TypeDescriptors>
+                      <TypeDescriptor Name="TicketId" DefaultDisplayName="TicketId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="ErrorInfo" DefaultDisplayName="ErrorInfo" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="StackTrace" DefaultDisplayName="StackTrace" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">8192</Property>
+                          <Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToEmptyString" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="LicenseId" DefaultDisplayName="LicenseId" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, &#x9;&#x9;PublicKeyToken=b77a5c561934e089]]">
+                      </TypeDescriptor>
+                    </TypeDescriptors>
+                  </TypeDescriptor>
+                </Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="UpdateMigrationStatus" Type="Updater" />
+              </MethodInstances>
+            </Method>
 					</Methods>
 					<AssociationGroups>
 						<AssociationGroup Name="IdOfLicenseToParentOfLicenseAssociation" DefaultDisplayName="License to License(Parent)">

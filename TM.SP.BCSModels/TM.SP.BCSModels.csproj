@@ -69,8 +69,11 @@
     <Compile Include="BCSModels\CoordinateV5\RequestAccountDataService.cs" />
     <Compile Include="BCSModels\CoordinateV5\FileEntityService.cs" />
     <Compile Include="BCSModels\CoordinateV5\RequestEntityService.cs" />
+    <Compile Include="BCSModels\MigratingStatus.cs" />
     <Compile Include="BCSModels\TaxiV2\TaxiV2Entities.cs" />
     <Compile Include="BCSModels\TaxiV2\TaxiV2EntityServices.cs" />
+    <Compile Include="BCSModels\Taxi\LicenseEntityService.cs" />
+    <Compile Include="BCSModels\Taxi\MigratingLicense.cs" />
     <Compile Include="BCSModels\Taxi\TaxiEntities.cs" />
     <Compile Include="BCSModels\Taxi\TaxiEntityServices.cs" />
     <Compile Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.EventReceiver.cs">
