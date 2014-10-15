@@ -129,6 +129,12 @@
   <data name="JobTitle" xml:space="preserve">
     <value>TaxoMotor CoordinateV5 Data Migration Timer Job</value>
   </data>
+  <data name="LicenseEntityName" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="LicenseV2AllViewEntityName" xml:space="preserve">
+    <value>LicenseAllView</value>
+  </data>
   <data name="ListMissingErrorFmt" xml:space="preserve">
     <value>Cann't find list with name {0} to migrate data to</value>
   </data>
@@ -137,6 +143,12 @@
   </data>
   <data name="ReadFileItemContentMethodName" xml:space="preserve">
     <value>ReadFileItemContentInstance</value>
+  </data>
+  <data name="ReadLicenseAllViewItemMethodName" xml:space="preserve">
+    <value>ReadLicenseAllViewItem</value>
+  </data>
+  <data name="ReadLicenseItemMethodName" xml:space="preserve">
+    <value>ReadLicenseItem</value>
   </data>
   <data name="ReadRequestAccountItemMethodName" xml:space="preserve">
     <value>ReadRequestAccountItem</value>
@@ -191,6 +203,9 @@
   </data>
   <data name="SingleListValueErrorFmt" xml:space="preserve">
     <value>Expected single value in a list {0} for specified field name {1}</value>
+  </data>
+  <data name="SingleParentItemErrorFmt" xml:space="preserve">
+    <value>Expected single parent item in a sharepoint list {0}. Parent external id = {1}. Item external id = {2}. Currently, there are {3} parent items in sharepoint list.</value>
   </data>
   <data name="TakeItemMethodName" xml:space="preserve">
     <value>TakeItemForMigrationInstance</value>
