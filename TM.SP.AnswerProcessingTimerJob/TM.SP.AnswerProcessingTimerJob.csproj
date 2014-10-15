@@ -42,9 +42,9 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Camlex.NET, Version=3.6.0.0, Culture=neutral, PublicKeyToken=831792d54d5285b7, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Camlex.NET.dll.3.6.0.0\lib\net20\Camlex.NET.dll</HintPath>
+    <Reference Include="Camlex.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=831792d54d5285b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

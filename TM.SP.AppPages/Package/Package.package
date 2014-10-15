@@ -5,7 +5,7 @@
     <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
     <projectOutputAssembly location="TM.ServiceClients.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.ServiceClients\TM.ServiceClients.csproj" />
     <projectOutputAssembly location="TM.Services.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Services\TM.Services.csproj" />
-    <customAssembly location="Camlex.NET.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Camlex.NET.dll.3.6.0.0\lib\net20\Camlex.NET.dll" />
+    <customAssembly location="Camlex.NET.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll" />
   </assemblies>
   <projectItems>
     <projectItemReference itemId="14185da8-fbda-40a5-8617-6ddc41f38626" />

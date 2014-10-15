@@ -3,6 +3,7 @@
   <assemblies>
     <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
     <projectOutputAssembly location="TM.SP.BCSModels.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj" />
+    <customAssembly location="Camlex.NET.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll" />
   </assemblies>
   <features>
     <featureReference itemId="6d4ae3c4-56ec-40ac-b8b5-87d41fa05de4" />
