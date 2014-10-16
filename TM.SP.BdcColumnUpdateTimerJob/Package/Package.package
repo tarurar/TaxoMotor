@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="1469237a-d5d8-4f1c-9668-2094432135a6" solutionId="1469237a-d5d8-4f1c-9668-2094432135a6" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.BdcColumnUpdateTimerJob" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
+  </assemblies>
+  <features>
+    <featureReference itemId="4ca86b98-cb91-4a63-bafe-e57fc63215b1" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="a3ad2dd9-0ad6-4fda-aea0-ccee84f225a4" />
+  </projectItems>
+</package>

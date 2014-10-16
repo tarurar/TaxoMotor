@@ -64,7 +64,7 @@ namespace TM.SP.BCSModels.Taxi
     /// The samples below show the finder and specific finder method for Entity1.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
-    public class LicenseEntityService : TaxiService
+    public partial class LicenseEntityService : TaxiService
     {
         public License ReadLicenseItem(System.Int32 Id)
         {

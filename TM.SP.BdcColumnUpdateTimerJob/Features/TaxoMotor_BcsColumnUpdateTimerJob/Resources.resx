@@ -117,106 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FileEntityName" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="FinishMigrationMethodName" xml:space="preserve">
-    <value>FinishMigrationInstance</value>
-  </data>
-  <data name="IncomeRequestFormDefValue" xml:space="preserve">
-    <value>Портал госуслуг</value>
+  <data name="BcsColumnUpdateGeneralErrorFmt" xml:space="preserve">
+    <value>There was an error while updating external fields. Details: {0}</value>
   </data>
   <data name="JobTitle" xml:space="preserve">
-    <value>TaxoMotor CoordinateV5 Data Migration Timer Job</value>
-  </data>
-  <data name="LicenseEntityName" xml:space="preserve">
-    <value>License</value>
-  </data>
-  <data name="LicenseV2AllViewEntityName" xml:space="preserve">
-    <value>LicenseAllView</value>
-  </data>
-  <data name="ListMissingErrorFmt" xml:space="preserve">
-    <value>Cann't find list with name {0} to migrate data to</value>
-  </data>
-  <data name="MigrationGeneralErrorFmt" xml:space="preserve">
-    <value>There was an error while processing data migration. See data migration log. Details: {0}</value>
-  </data>
-  <data name="ReadFileItemContentMethodName" xml:space="preserve">
-    <value>ReadFileItemContentInstance</value>
-  </data>
-  <data name="ReadLicenseAllViewItemMethodName" xml:space="preserve">
-    <value>ReadLicenseAllViewItem</value>
-  </data>
-  <data name="ReadLicenseItemMethodName" xml:space="preserve">
-    <value>ReadLicenseItem</value>
-  </data>
-  <data name="ReadRequestAccountItemMethodName" xml:space="preserve">
-    <value>ReadRequestAccountItem</value>
-  </data>
-  <data name="ReadRequestContactItemMethodName" xml:space="preserve">
-    <value>ReadRequestContactItem</value>
-  </data>
-  <data name="ReadRequestItemMethodName" xml:space="preserve">
-    <value>ReadRequestItem</value>
-  </data>
-  <data name="ReadServiceHeaderItemMethodName" xml:space="preserve">
-    <value>ReadServiceHeaderItem</value>
-  </data>
-  <data name="ReadServiceItemMethodName" xml:space="preserve">
-    <value>ReadServiceItem</value>
-  </data>
-  <data name="ReadServicePropertiesItemMethodName" xml:space="preserve">
-    <value>ReadServicePropertiesItem</value>
-  </data>
-  <data name="RequestAccountEntityName" xml:space="preserve">
-    <value>RequestAccount</value>
-  </data>
-  <data name="RequestContactEntityName" xml:space="preserve">
-    <value>RequestContact</value>
-  </data>
-  <data name="RequestEntityName" xml:space="preserve">
-    <value>Request</value>
-  </data>
-  <data name="RequestTitleFmt" xml:space="preserve">
-    <value>Обращение №{0} от {1}</value>
-  </data>
-  <data name="ServiceDocumentEntityName" xml:space="preserve">
-    <value>ServiceDocument</value>
-  </data>
-  <data name="ServiceDocumentFileListMethodName" xml:space="preserve">
-    <value>Id_AutoOfServiceDocumentToServiceDocumentOfFile</value>
-  </data>
-  <data name="ServiceDocumentListMethodName" xml:space="preserve">
-    <value>IdOfServiceToServiceOfServiceDocument</value>
-  </data>
-  <data name="ServiceEntityName" xml:space="preserve">
-    <value>Service</value>
-  </data>
-  <data name="ServiceHeaderEntityName" xml:space="preserve">
-    <value>ServiceHeader</value>
-  </data>
-  <data name="ServicePropertiesEntityName" xml:space="preserve">
-    <value>ServiceProperties</value>
-  </data>
-  <data name="ServicePropertiesTaxiListMethodName" xml:space="preserve">
-    <value>IdOfServicePropertiesToServicePropertiesOftaxi_info</value>
-  </data>
-  <data name="SingleListValueErrorFmt" xml:space="preserve">
-    <value>Expected single value in a list {0} for specified field name {1}</value>
-  </data>
-  <data name="SingleParentItemErrorFmt" xml:space="preserve">
-    <value>Expected single parent item in a sharepoint list {0}. Parent external id = {1}. Item external id = {2}. Currently, there are {3} parent items in sharepoint list.</value>
-  </data>
-  <data name="TakeItemMethodName" xml:space="preserve">
-    <value>TakeItemForMigrationInstance</value>
-  </data>
-  <data name="TaxiTitleFmt" xml:space="preserve">
-    <value>{0} гос. номер {1}</value>
-  </data>
-  <data name="UpdateMigrationStatusMethodName" xml:space="preserve">
-    <value>UpdateMigrationStatus</value>
-  </data>
-  <data name="WebUrlMissedErrorFmt" xml:space="preserve">
-    <value>Timer job {0} doesn't know which web to process. Timer job property named {1} is empty</value>
+    <value>TaxoMotor Bcs Column Update Timer Job</value>
   </data>
 </root>

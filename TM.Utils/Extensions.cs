@@ -109,8 +109,27 @@ namespace TM.Utils
             // remove illegal characters
             string pattern     = "~|\"|#|%|&|\\*|:|<|>|\\?|\\/|\\\\|{|\\||}|\\W*$|^\\W*";
             string correctPath = Regex.Replace(path[0], pattern, " ").Trim();
-            var newFolder      = parentFolder.SubFolders.Add(correctPath);
-            parentFolder.Update();
+
+            SPFolder newFolder = null;
+            if (parentFolder.DocumentLibrary != null)
+            {
+                newFolder = parentFolder.SubFolders.Add(correctPath);
+                parentFolder.Update();
+            }
+            else
+            {
+                SPWeb web = parentFolder.ParentWeb;
+                // checking existance
+                newFolder = web.GetFolder(parentFolder.Url + "/" + correctPath);
+                if (!newFolder.Exists)
+                {
+                    SPList parentList = web.Lists.GetList(parentFolder.ParentListId, false);
+                    SPListItem newFolderItem = parentList.Items.Add(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.Folder);
+                    newFolderItem["Title"] = correctPath;
+                    newFolderItem.Update();
+                    newFolder = newFolderItem.Folder;
+                }
+            }
             var newPath = path.Skip(1).ToArray();
 
             return (newPath.Length >= 1) ? newFolder.CreateSubFolders(newPath) : newFolder;

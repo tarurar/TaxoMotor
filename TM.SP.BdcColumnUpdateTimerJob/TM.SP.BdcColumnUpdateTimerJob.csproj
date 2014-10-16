@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TM.SP.Search</RootNamespace>
-    <AssemblyName>TM.SP.Search</AssemblyName>
+    <RootNamespace>TM.SP.BdcColumnUpdateTimerJob</RootNamespace>
+    <AssemblyName>TM.SP.BdcColumnUpdateTimerJob</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -16,9 +16,7 @@
     <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SandboxedSolution>False</SandboxedSolution>
     <AssemblyDeploymentTarget>GlobalAssemblyCache</AssemblyDeploymentTarget>
-    <ProjectGuid>{972A6611-BB13-4E9E-9720-888AA90463A4}</ProjectGuid>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <ProjectGuid>{DC1602DF-CABE-454C-A735-06767243C145}</ProjectGuid>
     <PostDeploymentCommand>net stop "SharePoint Timer Service"
 net start "SharePoint Timer Service"</PostDeploymentCommand>
   </PropertyGroup>
@@ -42,14 +40,6 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Camlex.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=831792d54d5285b7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.BusinessData, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -67,57 +57,41 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttachListReceiver\AttachListReceiver.cs" />
-    <Compile Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\IncomeRequestSearchFieldsCalc.EventReceiver.cs">
-      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalc.feature</DependentUpon>
+    <Compile Include="BcsColumnUpdateTimerJob.cs" />
+    <Compile Include="Features\TaxoMotor_BcsColumnUpdateTimerJob\BcsColumnUpdateTimerJob.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_BcsColumnUpdateTimerJob.feature</DependentUpon>
     </Compile>
-    <Compile Include="IncomeRequestListFieldsCalcTimerJob\IncomeRequestListFieldsCalcTimerJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AttachListReceiver\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{ae7d0ced-5203-4247-bafd-9c5e029ae794}</SharePointProjectItemId>
-    </None>
-    <None Include="Features\TaxoMotor_AttachListReceiver\TaxoMotor_AttachListReceiver.feature">
-      <FeatureId>{6d4ae3c4-56ec-40ac-b8b5-87d41fa05de4}</FeatureId>
-    </None>
-    <None Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\TaxoMotor_IncomeRequestSearchFieldsCalc.feature">
-      <FeatureId>{aaeb0801-07a7-4f0e-8995-6b9f997edaf0}</FeatureId>
+    <None Include="Features\TaxoMotor_BcsColumnUpdateTimerJob\TaxoMotor_BcsColumnUpdateTimerJob.feature">
+      <FeatureId>{4ca86b98-cb91-4a63-bafe-e57fc63215b1}</FeatureId>
     </None>
     <None Include="key.snk" />
-    <None Include="packages.config" />
     <None Include="Package\Package.package">
-      <PackageId>{154CAC5C-1D41-48DD-A14E-0F1BC7CFF55A}</PackageId>
+      <PackageId>{1469237A-D5D8-4F1C-9668-2094432135A6}</PackageId>
     </None>
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
     <None Include="Template\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{c46e85a1-f03a-4842-917b-f6771cf907d6}</SharePointProjectItemId>
+      <SharePointProjectItemId>{a3ad2dd9-0ad6-4fda-aea0-ccee84f225a4}</SharePointProjectItemId>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj">
-      <Project>{73514d73-abd3-440e-8a49-93026866c619}</Project>
-      <Name>TM.SP.BCSModels</Name>
-    </ProjectReference>
+    <Content Include="Features\TaxoMotor_BcsColumnUpdateTimerJob\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\TaxoMotor_BcsColumnUpdateTimerJob\TaxoMotor_BcsColumnUpdateTimerJob.Template.xml">
+      <DependentUpon>TaxoMotor_BcsColumnUpdateTimerJob.feature</DependentUpon>
+    </Content>
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_BcsColumnUpdateTimerJob.gif" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
       <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
       <Name>TM.Utils</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AttachListReceiver\Elements.xml" />
-    <Content Include="Features\TaxoMotor_AttachListReceiver\TaxoMotor_AttachListReceiver.Template.xml">
-      <DependentUpon>TaxoMotor_AttachListReceiver.feature</DependentUpon>
-    </Content>
-    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\TaxoMotor_IncomeRequestSearchFieldsCalc.Template.xml">
-      <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalc.feature</DependentUpon>
-    </Content>
-    <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestSearchFieldsCalc.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -129,11 +103,4 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
   <Import Condition=" Exists('$(MSBuildProjectDirectory)\..\SPSF.targets')" Project="$(MSBuildProjectDirectory)\..\SPSF.targets" />
   <Target Name="BeforeBuild" DependsOnTargets="$(BeforeBuildDependsOn)" />
   <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
 </Project>

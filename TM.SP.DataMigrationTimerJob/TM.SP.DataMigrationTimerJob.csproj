@@ -19,6 +19,8 @@
     <ProjectGuid>{FA892F5B-E245-4C57-BFB6-C0247CF82491}</ProjectGuid>
     <PostDeploymentCommand>net stop "SharePoint Timer Service"
 net start "SharePoint Timer Service"</PostDeploymentCommand>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +42,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Camlex.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=831792d54d5285b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.BusinessData, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
@@ -72,6 +78,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
       <FeatureId>{75992db9-551a-4b0f-a39e-dff89ad60ff2}</FeatureId>
     </None>
     <None Include="key.snk" />
+    <None Include="packages.config" />
     <None Include="Package\Package.package">
       <PackageId>{960C32DE-A416-44CB-B75E-8183A5C03A69}</PackageId>
     </None>
@@ -111,4 +118,11 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
   <Import Condition=" Exists('$(MSBuildProjectDirectory)\..\SPSF.targets')" Project="$(MSBuildProjectDirectory)\..\SPSF.targets" />
   <Target Name="BeforeBuild" DependsOnTargets="$(BeforeBuildDependsOn)" />
   <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
 </Project>
