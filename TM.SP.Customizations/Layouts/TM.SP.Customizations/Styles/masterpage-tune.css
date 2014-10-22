@@ -1,9 +1,9 @@
-﻿#sideNavBox {
+﻿.ms-core-sideNavBox-removeLeftMargin { 
     display: none;
 }
 
 #contentBox {
-    margin-left: 20px;
+    margin-left: 0;
 }
 
 #suiteBarLeft {
