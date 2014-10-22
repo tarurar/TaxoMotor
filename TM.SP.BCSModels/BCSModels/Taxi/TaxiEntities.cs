@@ -12,35 +12,47 @@ namespace TM.SP.BCSModels.Taxi
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// This class contains the properties for License
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
+    [Serializable]
     public partial class License
     {
-        //TODO: Implement additional properties here.
+        #region [properties]
+        [XmlIgnore]
         public System.Int32 Id { get; set; }
+        [XmlIgnore]
         public System.String Title { get; set; }
         public System.String RegNumber { get; set; }
         public System.String BlankSeries { get; set; }
         public System.String BlankNo { get; set; }
         public System.String OrgName { get; set; }
+        [XmlIgnore]
         public System.String Ogrn { get; set; }
+        [XmlIgnore]
         public System.String Inn { get; set; }
+        [XmlIgnore]
         public System.Nullable<System.Int32> Parent { get; set; }
         public System.Nullable<System.Int32> Status { get; set; }
+        [XmlIgnore]
         public System.String Document { get; set; }
+        [XmlIgnore]
         public System.String Signature { get; set; }
+        [XmlIgnore]
         public System.Nullable<System.Int32> TaxiId { get; set; }
         public System.String Lfb { get; set; }
         public System.String JuridicalAddress { get; set; }
+        [XmlIgnore]
         public System.String PhoneNumber { get; set; }
         public System.String AddContactData { get; set; }
         public System.String AccountAbbr { get; set; }
         public System.String TaxiBrand { get; set; }
         public System.String TaxiModel { get; set; }
         public System.String TaxiStateNumber { get; set; }
+        [XmlIgnore]
         public System.Nullable<System.Int32> TaxiYear { get; set; }
         public System.Nullable<System.DateTime> OutputDate { get; set; }
         public System.Nullable<System.DateTime> CreationDate { get; set; }
@@ -50,6 +62,47 @@ namespace TM.SP.BCSModels.Taxi
         public System.String SuspensionReason { get; set; }
         public System.String ChangeReason { get; set; }
         public System.String InvalidReason { get; set; }
+        #endregion
+
+        #region [methods]
+
+        public License Clone() 
+        {
+            return new License()
+            {
+                AccountAbbr        = this.AccountAbbr,
+                AddContactData     = this.AddContactData,
+                BlankNo            = this.BlankNo,
+                BlankSeries        = this.BlankSeries,
+                CancellationReason = this.CancellationReason,
+                ChangeReason       = this.ChangeReason,
+                CreationDate       = DateTime.Now,
+                Document           = String.Empty,
+                Id                 = 0,
+                Inn                = this.Inn,
+                InvalidReason      = this.InvalidReason,
+                JuridicalAddress   = this.JuridicalAddress,
+                Lfb                = this.Lfb,
+                Ogrn               = this.Ogrn,
+                OrgName            = this.OrgName,
+                OutputDate         = this.OutputDate,
+                Parent             = this.Id,
+                PhoneNumber        = this.PhoneNumber,
+                RegNumber          = this.RegNumber,
+                Signature          = String.Empty,
+                Status             = this.Status,
+                SuspensionReason   = this.SuspensionReason,
+                TaxiBrand          = this.TaxiBrand,
+                TaxiId             = this.TaxiId,
+                TaxiModel          = this.TaxiModel,
+                TaxiStateNumber    = this.TaxiStateNumber,
+                TaxiYear           = this.TaxiYear,
+                TillDate           = this.TillDate,
+                TillSuspensionDate = this.TillSuspensionDate
+            };
+        }
+
+        #endregion
     }
 }
 
