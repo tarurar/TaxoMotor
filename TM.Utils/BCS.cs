@@ -682,6 +682,18 @@ namespace TM.Utils
 
             return decodedId[0];
         }
+
+        public static EntityType ExecuteBcsMethod<EntityType>(BcsMethodExecutionInfo methodInfo, object inParam)
+        {
+            IEntity contentType = GetEntity(SPServiceContext.Current, String.Empty, methodInfo.ns, methodInfo.contentType);
+
+            List<object> args = new List<object>();
+            if (inParam != null) args.Add(inParam);
+            var parameters = args.ToArray();
+
+            return (EntityType)GetDataFromMethod(methodInfo.lob, contentType, methodInfo.methodName, methodInfo.methodType, ref parameters);
+        }
+
         #endregion
 
         #region [private methods]

@@ -134,5 +134,11 @@ namespace TM.Utils
 
             return (newPath.Length >= 1) ? newFolder.CreateSubFolders(newPath) : newFolder;
         }
+
+        public static bool IsJavascriptNullDate(this DateTime date)
+        {
+            var jsNullDate = new DateTime(1970, 1, 1);
+            return jsNullDate == date;
+        }
     }
 }
