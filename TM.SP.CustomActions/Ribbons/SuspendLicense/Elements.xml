@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.SuspendLicense"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Приостановить"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/LicenseList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.SuspendLicense.Button"
+						Command="TaxoMotor.SuspendLicense.ButtonCommand"
+						Sequence="20"
+						Image16by16="/_layouts/15/TM.SP.AppPages/Images/pause-16.png"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/pause-32.png"
+						LabelText="Приостановить"
+						ToolTipTitle="Приостановка действия разрешения"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.SuspendLicense.ButtonCommand"
+					CommandAction="javascript: (function() {
+        var options = {
+            url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/SuspendLicense.aspx?ListId={ListId}&amp;ItemId={ItemId}',
+            title: 'Приостановка действия разрешения',
+            allowMaximize: false,
+            showClose: true,
+            dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                if (result == SP.UI.DialogResult.OK) {
+                    if (returnValue == null) {
+                        TM.SP.showIconNotification('Действие разрешения приостановлено', '_layouts/15/images/kpinormal-0.gif', true);
+                        setTimeout(function() {
+                          SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);  
+                        }, 2000);
+                    }
+                    else {
+                        location.href = returnValue;
+                    }
+                }
+                else if (result == -1){
+                    TM.SP.showIconNotification('В процессе приостановки разрешения возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                    setTimeout(function() {
+                      SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);  
+                    }, 2000);
+                }
+            })
+        };
+
+        SP.UI.ModalDialog.showModalDialog(options);
+            
+      })();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

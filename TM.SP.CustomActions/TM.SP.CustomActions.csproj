@@ -77,8 +77,17 @@
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
+    <None Include="Ribbons\CancelLicense\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{72a626b3-41ae-41b1-ba0b-efa3dcbe1af7}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\RenewLicense\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f679fe08-c132-4607-88c3-c422a867540a}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\SendStatus\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{4a9a84f8-2c6d-4549-9acd-e96b13dcf040}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\SuspendLicense\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{04e92286-c656-4a3c-a07c-f1b116c871ac}</SharePointProjectItemId>
     </None>
   </ItemGroup>
   <ItemGroup />
@@ -89,7 +98,10 @@
     <Content Include="Features\TaxoMotor_TaxoMotorCustomActions\TaxoMotor_TaxoMotorCustomActions.Template.xml">
       <DependentUpon>TaxoMotor_TaxoMotorCustomActions.feature</DependentUpon>
     </Content>
+    <Content Include="Ribbons\CancelLicense\Elements.xml" />
+    <Content Include="Ribbons\RenewLicense\Elements.xml" />
     <Content Include="Ribbons\SendStatus\Elements.xml" />
+    <Content Include="Ribbons\SuspendLicense\Elements.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

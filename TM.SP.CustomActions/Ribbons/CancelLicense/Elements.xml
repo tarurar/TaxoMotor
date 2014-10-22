@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.CancelLicense"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Аннулировать"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/LicenseList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.CancelLicense.Button"
+						Command="TaxoMotor.CancelLicense.ButtonCommand"
+						Sequence="30"
+						Image16by16="/_layouts/15/TM.SP.AppPages/Images/cancellation-16.png"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/cancellation-32.png"
+						LabelText="Аннулировать"
+						ToolTipTitle="Аннулирования разрешения"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.CancelLicense.ButtonCommand"
+					CommandAction="javascript:alert('Аннулирование');" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>
