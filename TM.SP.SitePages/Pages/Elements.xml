@@ -5,5 +5,9 @@
       <Property Name="Title" Value="Реестр разрешений" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\SuspendLicense.aspx" Url="SuspendLicense.aspx" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Приостановка действия разрешения" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

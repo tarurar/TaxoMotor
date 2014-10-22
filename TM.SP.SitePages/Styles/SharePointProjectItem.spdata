@@ -3,5 +3,6 @@
   <Files>
     <ProjectItemFile Source="Elements.xml" Target="Styles\" Type="ElementManifest" />
     <ProjectItemFile Source="licenseSearchModel.css" Target="Styles\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseActions.css" Target="Styles\" Type="ElementFile" />
   </Files>
 </ProjectItem>

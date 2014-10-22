@@ -2,5 +2,7 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
   <Module Name="Scripts" Url="ProjectScripts">
     <File Path="Scripts\licenseSearchModel.js" Url="licenseSearchModel.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
+    <File Path="Scripts\SuspendLicense.js" Url="SuspendLicense.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
+    <File Path="Scripts\CryptoPro.js" Url="CryptoPro.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
   </Module>
 </Elements>
