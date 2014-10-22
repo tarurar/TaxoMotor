@@ -59,6 +59,7 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.SharePoint" />
@@ -71,6 +72,13 @@
   <ItemGroup>
     <Compile Include="ApplicationPages\DialogLayoutsPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\LicenseService\LicenseService.aspx.cs">
+      <DependentUpon>LicenseService.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\LicenseService\LicenseService.aspx.designer.cs">
+      <DependentUpon>LicenseService.aspx.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx.cs">
       <DependentUpon>SendRequestEGRIPPage.aspx</DependentUpon>
@@ -106,6 +114,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ApplicationPages\LicenseService\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{7845935f-55e5-41c5-bed4-a7b3d4c61baf}</SharePointProjectItemId>
+    </None>
     <None Include="ApplicationPages\SendRequestEGRIPPage\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{699f85d2-cff1-41c3-955a-cd5d964ca603}</SharePointProjectItemId>
     </None>
@@ -137,12 +148,19 @@
     <Folder Include="Features\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationPages\SendRequestPTSPage\SendRequestPTSPage.aspx" />
     <Content Include="ApplicationPages\SendStatus\SendStatus.aspx" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\pause-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\pause-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\renew-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\renew-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\send-status-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\send-status-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Scripts\SendRequestDialog.js" />
