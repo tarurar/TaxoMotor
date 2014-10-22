@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.ClientUtils", "TM.Client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.BdcColumnUpdateTimerJob", "TM.SP.BdcColumnUpdateTimerJob\TM.SP.BdcColumnUpdateTimerJob.csproj", "{DC1602DF-CABE-454C-A735-06767243C145}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP.SP.DataMigration", "TP.SP.DataMigration\TP.SP.DataMigration.csproj", "{484E3049-16B0-4D2D-9DCE-58159469427B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,10 @@ Global
 		{DC1602DF-CABE-454C-A735-06767243C145}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC1602DF-CABE-454C-A735-06767243C145}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC1602DF-CABE-454C-A735-06767243C145}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{484E3049-16B0-4D2D-9DCE-58159469427B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{484E3049-16B0-4D2D-9DCE-58159469427B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{484E3049-16B0-4D2D-9DCE-58159469427B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{484E3049-16B0-4D2D-9DCE-58159469427B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
