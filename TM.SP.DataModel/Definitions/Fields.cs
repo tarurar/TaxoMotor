@@ -994,6 +994,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmLicenseExternalId = new FieldDefinition()
+        {
+            Id           = new Guid("{02D2608B-B4F1-4CDE-BB97-430FD93DE862}"),
+            Title        = "Внешний ИД",
+            InternalName = "Tm_LicenseExternalId",
+            FieldType    = BuiltInFieldTypes.Integer,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         /// <summary>
         /// Ссылка на разрешение (BCS список)
         /// </summary>

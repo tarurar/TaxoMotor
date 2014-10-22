@@ -96,7 +96,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmOrgOgrn)
                     .AddField(Fields.TmOrgInn)
                     .AddField(Fields.TmLicenseStatus, f => f.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) => spField.MakeChoices(new String[] {"Оригинал", "Дубль", "Пристановлено", "Аннулировано"})))
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeChoices(new String[] {"Оригинал", "Дубль", "Пристановлено", "Аннулировано", "С изменениями"})))
                     .AddField(Fields.TmOrgLfb)
                     .AddField(Fields.TmJuridicalAddress)
                     .AddField(Fields.TmPhoneNumber)
@@ -112,6 +112,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmLicenseChangeReason)
                     .AddField(Fields.TmLicenseSuspensionReason)
                     .AddField(Fields.TmLicenseInvalidReason)
+                    .AddField(Fields.TmLicenseExternalId)
                     .AddField(Fields.TmIncomeRequestTaxiModels, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) => spField.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestTaxiBrands, f => f.OnCreated(
@@ -202,7 +203,8 @@ namespace TM.SP.DataModel
                             .AddContentTypeFieldLink(Fields.TmLicenseCancellationReason)
                             .AddContentTypeFieldLink(Fields.TmLicenseSuspensionReason)
                             .AddContentTypeFieldLink(Fields.TmLicenseChangeReason)
-                            .AddContentTypeFieldLink(Fields.TmLicenseInvalidReason))
+                            .AddContentTypeFieldLink(Fields.TmLicenseInvalidReason)
+                            .AddContentTypeFieldLink(Fields.TmLicenseExternalId))
                 );
 
             return model;
@@ -234,15 +236,18 @@ namespace TM.SP.DataModel
                         .AddList(Lists.TmIdentityDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIdentityDocumentType))
                         .AddList(Lists.TmProjectScripts)
-                        .AddList(Lists.TmLicenseList, 
-                            l => l.AddContentTypeLink(ContentTypes.TmLicense))
+                        .AddList(Lists.TmLicenseList, l =>
+                        {
+                            l.AddContentTypeLink(ContentTypes.TmLicense);
+                            l.OnCreated((ListDefinition def, List spList) => spList.MakeFolderCreationAvailable(true));
+                        })
                 );
 
             return model;
         }
 
         public static ModelNode GetTaxoMotorSiteDependentModel(ClientContext ctx)
-        {
+        { 
             var model = SPMeta2Model.NewSiteModel(new SiteDefinition() { RequireSelfProcessing = false })
                 .WithContentTypes(ctList => ctList
                     .AddContentType(ContentTypes.TmIncomeRequest, ct => ct
