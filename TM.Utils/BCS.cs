@@ -90,7 +90,7 @@ namespace TM.Utils
         /* Note: This is the public method that you should call in a production
          * environment. 
          * */
-        public virtual void UpdateColumnUsingBatch()
+        public virtual void UpdateColumnUsingBatch(int itemId = 0)
         {
             if (_enableTracing && _traceMessages.Length > 0)
                 _traceMessages = new StringBuilder();
@@ -135,6 +135,7 @@ namespace TM.Utils
                 _traceMessages.AppendLine("LOB System Entity Name: " + _entity.Name);
                 _traceMessages.AppendLine("List: " + _list.Title);
                 _traceMessages.AppendLine("List Items Found: " + totalListItems);
+                _traceMessages.AppendLine("Mode: " + (itemId == 0 ? "Multiple items" : "Single item"));
                 _traceMessages.AppendLine("-------------------------------");
                 _traceMessages.AppendLine("");
                 _traceMessages.AppendLine("Attempting to update list items....");
@@ -146,7 +147,15 @@ namespace TM.Utils
             //BDC field that we want to update.  this should be an efficient way to
             //work with a large list in a production environment.
             var query = new SPQuery();
-            query.RowLimit = totalListItems < 2000 ? (uint)totalListItems : (uint)2000;
+            if (itemId == 0)
+            {
+                query.RowLimit = totalListItems < 2000 ? (uint) totalListItems : (uint) 2000;
+            }
+            else
+            {
+                query.Query = "<Where><Eq><FieldRef Name='ID' /><Value Type='Integer'>" + itemId + "</Value></Eq></Where>";
+            }
+            
             query.ViewFields = string.Format("<FieldRef Name='{0}'/><FieldRef Name='{1}'/>", _columnName, relatedFieldName);
             query.ViewAttributes = "Scope=\"Recursive\""; //you must set this value to recursive to update things in subfolders
 
@@ -275,11 +284,11 @@ namespace TM.Utils
                 _methodBuilder.Append(methodFormat.ToString());
 
             } //end try
-            catch (Microsoft.BusinessData.Runtime.ObjectNotFoundException notFoundEx)
+            catch (Microsoft.BusinessData.Runtime.ObjectNotFoundException)
             {
 
             }
-            catch (Exception genericErr)
+            catch (Exception)
             {
             }
 

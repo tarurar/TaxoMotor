@@ -59,7 +59,7 @@ namespace TM.Utils
 	        {	        
 		        retVal = list.GetItemById(Id);
 	        }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
 	        {
                 throw new Exception(String.Format("Item with Id = {0} in list named {1} does not exist", Id, list.Title));
 	        }
@@ -76,7 +76,7 @@ namespace TM.Utils
             {
                 retVal = list.GetItemById(Id);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 retVal = null;
             }
@@ -92,7 +92,7 @@ namespace TM.Utils
             {
                 retVal = web.GetList(url);
             }
-            catch (FileNotFoundException ex)
+            catch (FileNotFoundException)
             {
                 throw new Exception(String.Format("List with url = {0} does not exist", url));
             }
