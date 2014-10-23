@@ -8,7 +8,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 {
     public partial class RequestEntityService
     {
-        public MigratingRequest TakeItemForMigration()
+        public MigratingRequest TakeItemForMigration(int ItemId)
         {
             MigratingRequest retVal = null;
 
@@ -16,11 +16,29 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = @"INSERT INTO [dbo].[RequestMigrationTicket] ([MessageId], [Status], [StartDate], [RequestId])
+
+            const string selectAnyText = @"INSERT INTO [dbo].[RequestMigrationTicket] ([MessageId], [Status], [StartDate], [RequestId])
                                         OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[RequestId]
                                         SELECT TOP 1 r.[MessageId], @Status, GETDATE(), r.[Id] FROM [dbo].[Request] r
                                         LEFT JOIN [dbo].[RequestMigrationTicket] m on m.[RequestId] = r.[Id]
                                         WHERE m.[Title] IS NULL";
+
+            const string selectItemText = @"INSERT INTO [dbo].[RequestMigrationTicket] ([MessageId], [Status], [StartDate], [RequestId])
+                                        OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[RequestId]
+                                        SELECT r.[MessageId], @Status, GETDATE(), r.[Id] FROM [dbo].[Request] r
+                                        LEFT JOIN [dbo].[RequestMigrationTicket] m on m.[RequestId] = r.[Id]
+                                        WHERE m.[Title] IS NULL AND r.[Id] = @ItemId";
+
+            if (ItemId == 0)
+            {
+                selectCommand.CommandText = selectAnyText;
+            }
+            else
+            {
+                selectCommand.CommandText = selectItemText;
+                selectCommand.Parameters.AddWithValue("@ItemId", ItemId);
+            }
+
             selectCommand.Parameters.AddWithValue("@Status", (Int32)MigratingStatus.Reserved);
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             if (thisReader.Read())
@@ -29,7 +47,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 {
                     TicketId = (System.Int32)thisReader["Id"],
                     Status = thisReader["Status"] == DBNull.Value ? (System.Int32)MigratingStatus.Undefined : (System.Int32)thisReader["Status"],
-                    RequestId = (System.Int32)thisReader["RequestId"],
+                    ItemId = (System.Int32)thisReader["RequestId"],
                     ErrorInfo = String.Empty,
                     StackInfo = String.Empty
                 };

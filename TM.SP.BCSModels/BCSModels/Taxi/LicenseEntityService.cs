@@ -8,7 +8,7 @@ namespace TM.SP.BCSModels.Taxi
 {
     public partial class LicenseEntityService
     {
-        public MigratingLicense TakeItemForMigration()
+        public MigratingLicense TakeItemForMigration(int ItemId)
         {
             MigratingLicense retVal = null;
 
@@ -16,12 +16,30 @@ namespace TM.SP.BCSModels.Taxi
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = @"INSERT INTO [dbo].[LicenseMigrationTicket] ([Status], [StartDate], [LicenseId])
-                                        OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[LicenseId]
-                                        SELECT TOP 1 @Status, GETDATE(), l.[Id] FROM [dbo].[License] l
-                                        LEFT JOIN [dbo].[LicenseMigrationTicket] m on m.[LicenseId] = l.[Id]
-                                        WHERE m.[Title] IS NULL
-                                        ORDER BY l.[Parent] ASC"; // we need an order instruction to be sure in the parent existance
+
+            const string selectAnyText = @"INSERT INTO [dbo].[LicenseMigrationTicket] ([Status], [StartDate], [LicenseId])
+                                            OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[LicenseId]
+                                            SELECT TOP 1 @Status, GETDATE(), l.[Id] FROM [dbo].[License] l
+                                            LEFT JOIN [dbo].[LicenseMigrationTicket] m on m.[LicenseId] = l.[Id]
+                                            WHERE m.[Title] IS NULL
+                                            ORDER BY l.[Parent] ASC"; // we need an order instruction to be sure in the parent existance
+                
+            const string selectItemText = @"INSERT INTO [dbo].[LicenseMigrationTicket] ([Status], [StartDate], [LicenseId])
+                                            OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[LicenseId]
+                                            SELECT @Status, GETDATE(), l.[Id] FROM [dbo].[License] l
+                                            LEFT JOIN [dbo].[LicenseMigrationTicket] m on m.[LicenseId] = l.[Id]
+                                            WHERE m.[Title] IS NULL AND l.[Id] = @ItemId
+                                            ORDER BY l.[Parent] ASC";
+
+            if (ItemId == 0)
+            {
+                selectCommand.CommandText = selectAnyText;
+            }
+            else
+            {
+                selectCommand.CommandText = selectItemText;
+                selectCommand.Parameters.AddWithValue("@ItemId", ItemId);
+            }
             selectCommand.Parameters.AddWithValue("@Status", (Int32)MigratingStatus.Reserved);
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             if (thisReader.Read())
@@ -30,7 +48,7 @@ namespace TM.SP.BCSModels.Taxi
                 {
                     TicketId = (System.Int32)thisReader["Id"],
                     Status = thisReader["Status"] == DBNull.Value ? (System.Int32)MigratingStatus.Undefined : (System.Int32)thisReader["Status"],
-                    LicenseId = (System.Int32)thisReader["LicenseId"],
+                    ItemId = (System.Int32)thisReader["LicenseId"],
                     ErrorInfo = String.Empty,
                     StackInfo = String.Empty
                 };

@@ -14,7 +14,7 @@
 			<LobSystemInstances>
 				<LobSystemInstance Name="CoordinateV5" DefaultDisplayName="CoordinateV5">
           <Properties>
-            <Property Name="DBServerName" Type="System.String">SP2013DEV</Property>
+            <Property Name="DBServerName" Type="System.String">win-snu4u1n6vq1</Property>
             <Property Name="DBName" Type="System.String">TM.Data</Property>
             <Property Name="SecureStoreAppId" Type="System.String">asguf_MSCRM</Property>
           </Properties>
@@ -2921,7 +2921,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="Request" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.28" EstimatedInstanceCount="10000" DefaultDisplayName="Request">
+				<Entity Name="Request" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.31" EstimatedInstanceCount="10000" DefaultDisplayName="Request">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -3262,6 +3262,8 @@
 	                  </TypeDescriptors>
                   </TypeDescriptor>
                 </Parameter>
+                <Parameter Name="ItemId" Direction="In">
+                  <TypeDescriptor Name="ItemIdTypeDescriptor" TypeName="System.Int32" /></Parameter>
               </Parameters>
               <MethodInstances>
                 <MethodInstance Name="TakeItemForMigrationInstance" Type="Scalar" DefaultDisplayName="Take Item for Migration" ReturnParameterName="returnParameter" />

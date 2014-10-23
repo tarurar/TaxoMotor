@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace TM.SP.BCSModels.CoordinateV5
 {
-    public partial class MigratingRequest
+    public partial class MigratingRequest : MigratingTicket
     {
-        public System.Nullable<System.Int32> TicketId { get; set; }
-        public System.Nullable<System.Int32> Status { get; set; }
-        public System.String ErrorInfo {get; set;}
-        public System.String StackInfo {get; set;}
-        public System.Nullable<System.Int32> RequestId { get; set; }
+
     }
 }

@@ -13,7 +13,7 @@
 			<LobSystemInstances>
 				<LobSystemInstance Name="TaxiV2" DefaultDisplayName="TaxiV2">
           <Properties>
-            <Property Name="DBServerName" Type="System.String">SP2013DEV</Property>
+            <Property Name="DBServerName" Type="System.String">win-snu4u1n6vq1</Property>
             <Property Name="DBName" Type="System.String">TM.Data</Property>
             <Property Name="SecureStoreAppId" Type="System.String">asguf_MSCRM</Property>
           </Properties>
