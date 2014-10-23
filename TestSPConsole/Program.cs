@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Xml.Linq;
 using System.Threading.Tasks;
 using Microsoft.SharePoint;
-using CamlexNET;
+using TM.Utils;
 
 using TM.Utils;
 
@@ -96,21 +97,16 @@ namespace TestSPConsole
         static void Main(string[] args)
         {
 
-            using (SPSite site = new SPSite("http://sp2013dev"))
+            using (SPSite site = new SPSite("http://win-snu4u1n6vq1"))
             using (SPWeb web = site.OpenWeb())
             {
-                var taxiList = web.GetListOrBreak("Lists/TaxiList");
-                var requestList = web.GetListOrBreak("Lists/IncomeRequestList");
-
-                var request = requestList.GetItemById(6);
-                var incomeRequests = GetAvailableIncomeRequests(web);
-
-                SPListItemCollection items = taxiList.GetItems(new SPQuery()
+                var context = SPServiceContext.GetContext(site);
+                using (var scope = new SPServiceContextScope(context))
                 {
-                    Query = Camlex.Query().Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)request["ID"].ToString()).ToString()
-                });
-
-                Console.WriteLine(items.Count);
+                    var licenseList = web.GetListOrBreak("Lists/LicenseList");
+                    var refresher = new BusinessDataColumnUpdater(licenseList, "Tm_LicenseAllViewBcsLookup");
+                    refresher.UpdateColumnUsingBatch(85);
+                }
             }
         }
     }
