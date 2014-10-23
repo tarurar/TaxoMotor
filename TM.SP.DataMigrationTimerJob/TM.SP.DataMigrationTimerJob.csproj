@@ -98,6 +98,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
       <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
       <Name>TM.Utils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TP.SP.DataMigration\TP.SP.DataMigration.csproj">
+      <Project>{484e3049-16b0-4d2d-9dce-58159469427b}</Project>
+      <Name>TP.SP.DataMigration</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\TaxoMotor_DataMigrationTimerJob\TaxoMotor_DataMigrationTimerJob.Template.xml">
