@@ -120,10 +120,10 @@ namespace TM.SP.DataModel
 
         public static ListDefinition TmAttachLib = new ListDefinition()
         {
-            Title               = "Документы",
+            Title               = "Вложения документов",
             Url                 = "AttachLib",
             TemplateType        = BuiltInListTemplateTypeId.DocumentLibrary,
-            Description         = "Библиотека документов обращений, транспортных средства и других сущностей",
+            Description         = "Библиотека документов обращений, транспортных средств и других сущностей",
             ContentTypesEnabled = true
         };
 
