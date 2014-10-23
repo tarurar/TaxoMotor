@@ -50,10 +50,10 @@
       <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="SPMeta2">
-      <HintPath>..\..\spmeta2\SPMeta2\SPMeta2.CSOM\bin\Release\SPMeta2.dll</HintPath>
+      <HintPath>..\..\spmeta2\SPMeta2\SPMeta2\bin\Debug\SPMeta2.dll</HintPath>
     </Reference>
     <Reference Include="SPMeta2.CSOM">
-      <HintPath>..\..\spmeta2\SPMeta2\SPMeta2.CSOM\bin\Release\SPMeta2.CSOM.dll</HintPath>
+      <HintPath>..\..\spmeta2\SPMeta2\SPMeta2.CSOM\bin\Debug\SPMeta2.CSOM.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
