@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
-using Microsoft.SharePoint.Applications.GroupBoard.WebControls;
 using TM.SP.BCSModels;
 using TM.Utils;
 
 namespace TP.SP.DataMigration
 {
-    public class MigrationManager<ItemType, TicketType> where TicketType: MigratingTicket
+    public class MigrationManager<TItemType, TTicketType> where TTicketType: MigratingTicket
     {
         private string _lob;
         private string _ns;
 
         public MigrationManager(string lobName, string lobNamespace)
         {
-            this._lob = lobName;
-            this._ns = lobNamespace;
+            _lob = lobName;
+            _ns = lobNamespace;
         }
 
-        public void Process(int id, string contentType, string getItemMethodName, SPWeb web, Func<SPWeb, ItemType, SPListItem> assignFields)
+        public SPListItem Process(int id, string contentType, string getItemMethodName, SPWeb web, Func<SPWeb, TItemType, SPListItem> assignFields)
         {
             // trying to get entity with specified id
-            TicketType ticket = BCS.ExecuteBcsMethod<TicketType>(new BcsMethodExecutionInfo()
+            var ticket = BCS.ExecuteBcsMethod<TTicketType>(new BcsMethodExecutionInfo
             {
                 lob         = _lob,
                 ns          = _ns,
@@ -33,13 +28,13 @@ namespace TP.SP.DataMigration
                 methodName  = "TakeItemForMigrationInstance",
                 methodType  = MethodInstanceType.Scalar
             }, id);
-            if (ticket == null) return;
+            if (ticket == null) return null;
 
             try
             {
                 // set entity status to designate acting
                 ticket.Status = (Int32)MigratingStatus.Processing;
-                BCS.ExecuteBcsMethod<TicketType>(new BcsMethodExecutionInfo()
+                BCS.ExecuteBcsMethod<TTicketType>(new BcsMethodExecutionInfo
                 {
                     lob         = _lob,
                     ns          = _ns,
@@ -48,8 +43,8 @@ namespace TP.SP.DataMigration
                     methodType  = MethodInstanceType.Updater
                 }, ticket);
 
-                // process license itself
-                ItemType item = BCS.ExecuteBcsMethod<ItemType>(new BcsMethodExecutionInfo()
+                // process entity itself
+                var item = BCS.ExecuteBcsMethod<TItemType>(new BcsMethodExecutionInfo
                 {
                     lob         = _lob,
                     ns          = _ns,
@@ -57,10 +52,10 @@ namespace TP.SP.DataMigration
                     methodName  = getItemMethodName,
                     methodType  = MethodInstanceType.SpecificFinder
                 }, ticket.ItemId);
-                SPListItem spItem = assignFields(web, item);
+                var spItem = assignFields(web, item);
 
                 ticket.Status = (Int32)MigratingStatus.Processed;
-                BCS.ExecuteBcsMethod<TicketType>(new BcsMethodExecutionInfo()
+                BCS.ExecuteBcsMethod<TTicketType>(new BcsMethodExecutionInfo
                 {
                     lob         = _lob,
                     ns          = _ns,
@@ -68,13 +63,15 @@ namespace TP.SP.DataMigration
                     methodName  = "FinishMigrationInstance",
                     methodType  = MethodInstanceType.Updater
                 }, ticket);
+
+                return spItem;
             }
             catch (Exception ex)
             {
                 ticket.Status    = (Int32)MigratingStatus.Error;
                 ticket.ErrorInfo = ex.Message;
                 ticket.StackInfo = ex.StackTrace;
-                BCS.ExecuteBcsMethod<TicketType>(new BcsMethodExecutionInfo()
+                BCS.ExecuteBcsMethod<TTicketType>(new BcsMethodExecutionInfo
                 {
                     lob         = _lob,
                     ns          = _ns,
