@@ -55,10 +55,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Http.SelfHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -186,6 +190,10 @@
     <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
       <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
       <Name>TM.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TP.SP.DataMigration\TP.SP.DataMigration.csproj">
+      <Project>{484e3049-16b0-4d2d-9dce-58159469427b}</Project>
+      <Name>TP.SP.DataMigration</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

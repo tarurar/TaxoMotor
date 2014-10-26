@@ -1,33 +1,34 @@
-// <copyright file="LicenseService.aspx.cs" company="Armd">
+﻿// <copyright file="LicenseService.aspx.cs" company="Armd">
 // Copyright Armd. All rights reserved.
 // </copyright>
 // <author>SPDEV\developer</author>
 // <date>2014-10-16 19:53:14Z</date>
+
+
+
+// ReSharper disable once CheckNamespace
+
+
 namespace TM.SP.AppPages
 {
     using System;
     using System.IO;
     using System.Security.Permissions;
     using System.Text;
-    using System.Web;
-    using System.Web.UI;
     using System.Web.Services;
-    using System.Web.UI.HtmlControls;
-    using System.Web.UI.WebControls;
     using System.Xml;
     using System.Xml.Serialization;
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
-    using Microsoft.SharePoint.Utilities;
     using Microsoft.SharePoint.WebControls;
-    using Microsoft.SharePoint.Administration;
-
-    using TM.Utils;
-    using TM.SP.BCSModels.Taxi;
+    using Utils;
+    using BCSModels.Taxi;
+    using TP.SP.DataMigration;
     using Microsoft.BusinessData.MetadataModel;
+    using CamlexNET;
 
     /// <summary>
-    /// TODO: Add comment for LicenseService
+    /// Service page for serving requests
     /// </summary>
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class LicenseService : LayoutsPageBase
@@ -35,9 +36,36 @@ namespace TM.SP.AppPages
         /// <summary>
         /// Initializes a new instance of the LicenseService class
         /// </summary>
-        public LicenseService()
+        protected LicenseService()
         {
-            this.RightsCheckMode = RightsCheckModes.OnPreInit;
+            RightsCheckMode = RightsCheckModes.OnPreInit;
+        }
+
+        private static void MigrateItem(SPList list, License license)
+        {
+            var migrationManager = new MigrationManager<License, MigratingLicense>(BCS.LOBTaxiSystemName, BCS.LOBTaxiSystemNamespace);
+            var item = migrationManager.Process(license.Id, "License", "ReadLicenseItem", list.ParentWeb, LicenseMigrator.Execute);
+
+            // updating external fields in sp list
+            var refresher = new BusinessDataColumnUpdater(list, "Tm_LicenseAllViewBcsLookup");
+            if (item != null)
+            {
+                refresher.UpdateColumnUsingBatch(item.ID);
+            }
+            else
+            {
+                // getting sp item
+                SPListItemCollection items = list.GetItems(new SPQuery()
+                {
+                    Query = Camlex.Query().Where(x => (int)x["Tm_LicenseExternalId"] == license.Id).ToString(),
+                    ViewAttributes = "Scope='RecursiveAll'"
+                });
+                // updating items's external fields
+                if (items.Count > 0)
+                {
+                    refresher.UpdateColumnUsingBatch(items[0].ID);
+                }
+            }
         }
 
         private static void SaveSigned(int licenseId, Action<License> contextAction)
@@ -46,7 +74,7 @@ namespace TM.SP.AppPages
             SPList spList     = web.GetListOrBreak("Lists/LicenseList");
             SPListItem spItem = spList.GetItemOrBreak(licenseId);
 
-            License license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo()
+            var parentLicense = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
             {
                 contentType = "License",
                 lob         = BCS.LOBTaxiSystemName,
@@ -55,17 +83,32 @@ namespace TM.SP.AppPages
                 ns          = BCS.LOBTaxiSystemNamespace
             }, Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
-            var newLicense = license.Clone();
-            contextAction(newLicense);
+            var newLicenseBefore = parentLicense.Clone();
+            contextAction(newLicenseBefore);
 
-            BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo() 
+            var newLicenseAfter = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
             {
                 contentType = "License",
                 lob         = BCS.LOBTaxiSystemName,
                 methodName  = "CreateLicense",
                 methodType  = MethodInstanceType.Creator,
                 ns          = BCS.LOBTaxiSystemNamespace
-            }, newLicense);
+            }, newLicenseBefore);
+
+            var context = SPServiceContext.GetContext(web.Site);
+            using (var scope = new SPServiceContextScope(context))
+            {
+                web.AllowUnsafeUpdates = true;
+                try
+                {
+                    MigrateItem(spList, parentLicense); //in case parent data hasn't been migrated yet
+                    MigrateItem(spList, newLicenseAfter);
+                }
+                finally
+                {
+                    web.AllowUnsafeUpdates = false;                    
+                }
+            }
         }
 
         private static string GetLicenseXml(int licenseId, Action<License> contextAction)
@@ -74,7 +117,7 @@ namespace TM.SP.AppPages
             SPList spList     = web.GetListOrBreak("Lists/LicenseList");
             SPListItem spItem = spList.GetItemOrBreak(licenseId);
 
-            License license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo()
+            var license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
             {
                 contentType = "License",
                 lob         = BCS.LOBTaxiSystemName,
@@ -87,9 +130,9 @@ namespace TM.SP.AppPages
             contextAction(newLicense);
 
             //serialization
-            StringWriter intWriter = new StringWriter(new StringBuilder());
+            var intWriter = new StringWriter(new StringBuilder());
             XmlWriter writer = new XmlTextWriter(intWriter);
-            XmlSerializer serializer = new XmlSerializer(typeof(License));
+            var serializer = new XmlSerializer(typeof(License));
             writer.WriteStartElement("Data");
             serializer.Serialize(writer, newLicense);
             writer.WriteEndElement();
@@ -113,7 +156,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.CreationDate       = dateFrom != null ? dateFrom : DateTime.Now;
+                l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.CancellationReason = reason;
             });
         }
@@ -123,7 +166,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.CreationDate = dateFrom != null ? dateFrom : DateTime.Now;
+                l.CreationDate = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.ChangeReason = reason;
             });
         }
@@ -133,10 +176,10 @@ namespace TM.SP.AppPages
         {
             SaveSigned(licenseId, l =>
             {
-                l.CreationDate       = dateFrom;
+                l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.TillSuspensionDate = dateTo.IsJavascriptNullDate() ? (DateTime?)null : dateTo;
                 l.SuspensionReason   = reason;
-                l.Signature          = System.Uri.UnescapeDataString(signature);
+                l.Signature          = Uri.UnescapeDataString(signature);
                 l.Status             = 2;
             });
         }
