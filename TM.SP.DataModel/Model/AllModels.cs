@@ -34,7 +34,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmComment)
                     .AddField(Fields.TmInstanceCounter)
                     .AddField(Fields.TmRequestedDocumentPrice)
-                    .AddField(Fields.TmOutputFactDate)
+                    .AddField(Fields.TmOutputFactDate, f => f.OnCreated((FieldDefinition def, Field spField) => spField.MakeDateOnly()))
                     .AddField(Fields.TmOutputTargetDate, f => f.OnCreated((FieldDefinition def, Field spField) => spField.MakeDateOnly()))
                     .AddField(Fields.TmPrepareFactDate, f => f.OnCreated((FieldDefinition def, Field spField) => spField.MakeDateOnly()))
                     .AddField(Fields.TmPrepareTargetDate, f => f.OnCreated((FieldDefinition def, Field spField) => spField.MakeDateOnly()))
