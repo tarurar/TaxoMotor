@@ -30,7 +30,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmUsageScopeInteger)
                     .AddField(Fields.TmRegNumber)
                     .AddField(Fields.TmSingleNumber)
-                    .AddField(Fields.TmRegistrationDate)
+                    .AddField(Fields.TmRegistrationDate, f => f.OnCreated((FieldDefinition def, Field spField) => spField.MakeDateOnly()))
                     .AddField(Fields.TmComment)
                     .AddField(Fields.TmInstanceCounter)
                     .AddField(Fields.TmRequestedDocumentPrice)
