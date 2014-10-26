@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.Services", "TM.Services\TM.Services.csproj", "{56AE0CAD-EE3D-4CC5-A69B-EF56391D1BC7}"
 EndProject
@@ -84,6 +84,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.BdcColumnUpdateTimerJob", "TM.SP.BdcColumnUpdateTimerJob\TM.SP.BdcColumnUpdateTimerJob.csproj", "{DC1602DF-CABE-454C-A735-06767243C145}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP.SP.DataMigration", "TP.SP.DataMigration\TP.SP.DataMigration.csproj", "{484E3049-16B0-4D2D-9DCE-58159469427B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A8A75C4-6A8E-4E17-9008-FB6F0FB45514}"
+	ProjectSection(SolutionItems) = preProject
+		WebEssentials-Settings.json = WebEssentials-Settings.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
