@@ -1,9 +1,11 @@
-﻿var CryptoPro;
+﻿/*global ActiveXObject*/
 
-(function(CryptoPro) {
+var cryptoPro;
+
+(function(cryptoPro) {
 
     // CAPICOM_STORE_LOCATION enumeration
-    CryptoPro.StoreLocation = {
+    cryptoPro.StoreLocation = {
         CAPICOM_MEMORY_STORE: 0,
         CAPICOM_LOCAL_MACHINE_STORE: 1,
         CAPICOM_CURRENT_USER_STORE: 2,
@@ -12,7 +14,7 @@
     };
 
     // CAPICOM_STORE_OPEN_MODE enumeration
-    CryptoPro.StoreOpenMode = {
+    cryptoPro.StoreOpenMode = {
         CAPICOM_STORE_OPEN_READ_ONLY: 0,
         CAPICOM_STORE_OPEN_READ_WRITE: 1,
         CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED: 2,
@@ -21,7 +23,7 @@
     };
 
     // CAPICOM_CERTIFICATE_FIND_TYPE enumeration
-    CryptoPro.CertFindType = {
+    cryptoPro.CertFindType = {
         CAPICOM_CERTIFICATE_FIND_SHA1_HASH: 0,
         CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME: 1,
         CAPICOM_CERTIFICATE_FIND_ISSUER_NAME: 2,
@@ -38,7 +40,7 @@
     };
 
     // CAPICOM_PROPID enumeration
-    CryptoPro.PropId = {
+    cryptoPro.PropId = {
         CAPICOM_PROPID_UNKNOWN: 0,
         CAPICOM_PROPID_KEY_PROV_HANDLE: 1,
         CAPICOM_PROPID_KEY_PROV_INFO: 2,
@@ -81,14 +83,14 @@
     };
 
     // CADESCOM_XML_SIGNATURE_TYPE enumeration
-    CryptoPro.SignatureType = {
+    cryptoPro.SignatureType = {
         CADESCOM_XML_SIGNATURE_TYPE_ENVELOPED: 0,
         CADESCOM_XML_SIGNATURE_TYPE_ENVELOPING: 1,
         CADESCOM_XML_SIGNATURE_TYPE_TEMPLATE: 2
     };
 
     // CADESCOM_HASH_ALGORITHM enumeration
-    CryptoPro.HashAlgorithm = {
+    cryptoPro.HashAlgorithm = {
         CADESCOM_HASH_ALGORITHM_CP_GOST_3411: 100,
         CADESCOM_HASH_ALGORITHM_MD2: 1,
         CADESCOM_HASH_ALGORITHM_MD4: 2,
@@ -99,16 +101,16 @@
         CADESCOM_HASH_ALGORITHM_SHA1: 0
     };
 
-    CryptoPro.StoreNames = {
+    cryptoPro.StoreNames = {
         CAPICOM_MY_STORE: "My"
     };
 
-    CryptoPro.GostXmlDSigUrls = {
+    cryptoPro.GostXmlDSigUrls = {
         XmlDsigGost3410Url : "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr34102001-gostr3411",
         XmlDsigGost3411Url : "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr3411"
     };
 
-    function GetErrorMessage(e) {
+    function getErrorMessage(e) {
         var err = e.message;
         if (!err) {
             err = e;
@@ -118,47 +120,47 @@
         return err;
     }
 
-    CryptoPro.isPluginInstalled = function () {
+    cryptoPro.isPluginInstalled = function() {
         try {
             var oAbout = this.CreateObject("CAdESCOM.About");
             // После получения объекта CAdESCOM.About можно дополнительно проверить версию
             // установленного КриптоПро ЭЦП Browser plug-in
-            return true;
+            return oAbout;
+        } catch(err) {
         }
-        catch (err) { }
         return false;
-    }
+    };
 
-    CryptoPro.CreateObject = function (name) {
+    cryptoPro.CreateObject = function(name) {
         switch (navigator.appName) {
-            case "Microsoft Internet Explorer":
+        case "Microsoft Internet Explorer":
+            return new ActiveXObject(name);
+        default:
+            var userAgent = navigator.userAgent;
+            if (userAgent.match(/Trident\/./i)) { // IE11
                 return new ActiveXObject(name);
-            default:
-                var userAgent = navigator.userAgent;
-                if (userAgent.match(/Trident\/./i)) { // IE11
-                    return new ActiveXObject(name);
-                }
-                var cadesobject = document.getElementById("cadesplugin");
-                return cadesobject.CreateObject(name);
+            }
+            var cadesobject = document.getElementById("cadesplugin");
+            return cadesobject.CreateObject(name);
         }
-    }
+    };
 
-    CryptoPro.SelectCertificate = function (storeLocation, storeName, storeOpenMode) {
+    cryptoPro.SelectCertificate = function(storeLocation, storeName, storeOpenMode) {
         try {
             var oStore = this.CreateObject("CAPICOM.Store");
             oStore.Open(storeLocation, storeName, storeOpenMode);
 
             var oCertificates = oStore.Certificates;
             // Не рассматриваются сертификаты, в которых отсутствует закрытый ключ
-            /*if (oCertificates.Count > 0)
-                oCertificates = oCertificates.Find(CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY, CryptoPro.PropId.CAPICOM_PROPID_KEY_PROV_INFO);*/
+            if (oCertificates.Count > 0)
+                oCertificates = oCertificates.Find(cryptoPro.CertFindType.CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY, cryptoPro.PropId.CAPICOM_PROPID_KEY_PROV_INFO);
 
             // Выбираются только сертификаты, действительные в настоящее время
             var today = new Date();
             var date = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
-            /*if (oCertificates.Count > 0)
-                oCertificates = oCertificates.Find(CryptoPro.CertFindType.CAPICOM_CERTIFICATE_FIND_TIME_VALID, date);*/
-                
+            if (oCertificates.Count > 0)
+                oCertificates = oCertificates.Find(cryptoPro.CertFindType.CAPICOM_CERTIFICATE_FIND_TIME_VALID, date);
+
             if (oCertificates.Count > 1) {
                 oCertificates = oCertificates.Select("Выбор сертификата для подписи", "АИС ТаксоМотор", false);
             }
@@ -167,72 +169,54 @@
 
             return oCertificate;
 
-        } catch (e) {
-            if (e.number != -2138568446) // отказ от выбора сертификата
-                alert("Ошибка выбора сертификата: " + GetErrorMessage(e));
+        } catch(e) {
+            if (e.number !== -2138568446) // отказ от выбора сертификата
+                alert("Ошибка выбора сертификата: " + getErrorMessage(e));
             return false;
-        } 
-    }
+        }
+    };
 
-    CryptoPro.SignXMLCreate = function(oCertificate, dataToSign) {
+    cryptoPro.SignXMLCreate = function(oCertificate, dataToSign) {
         // Создаем объект CAdESCOM.CPSigner
         var oSigner = this.CreateObject("CAdESCOM.CPSigner");
         oSigner.Certificate = oCertificate;
 
         // Создаем объект CAdESCOM.SignedXML
-        var oSignedXML = this.CreateObject("CAdESCOM.SignedXML");
-        oSignedXML.Content = dataToSign;
+        var oSignedXml = this.CreateObject("CAdESCOM.SignedXML");
+        oSignedXml.Content = dataToSign;
 
         // Указываем тип подписи - в данном случае вложенная
-        oSignedXML.SignatureType = this.SignatureType.CADESCOM_XML_SIGNATURE_TYPE_ENVELOPED;
+        oSignedXml.SignatureType = this.SignatureType.CADESCOM_XML_SIGNATURE_TYPE_ENVELOPED;
 
         // Указываем алгоритм подписи
-        oSignedXML.SignatureMethod = this.GostXmlDSigUrls.XmlDsigGost3410Url;
+        oSignedXml.SignatureMethod = this.GostXmlDSigUrls.XmlDsigGost3410Url;
 
         // Указываем алгоритм хэширования
-        oSignedXML.DigestMethod = this.GostXmlDSigUrls.XmlDsigGost3411Url;
+        oSignedXml.DigestMethod = this.GostXmlDSigUrls.XmlDsigGost3411Url;
 
-        var sSignedMessage = "";
+        var sSignedMessage;
+        sSignedMessage = "";
         try {
-            sSignedMessage = oSignedXML.Sign(oSigner);
-        } catch (err) {
-            alert("Failed to create signature. Error: " + GetErrorMessage(err));
-            return;
+            sSignedMessage = oSignedXml.Sign(oSigner);
+        } catch(err) {
+            alert("Failed to create signature. Error: " + getErrorMessage(err));
+            return sSignedMessage;
         }
 
         return sSignedMessage;
-    }
+    };
 
-    CryptoPro.XmlVerify = function(sSignedMessage) {
+    cryptoPro.XmlVerify = function(sSignedMessage) {
         // Создаем объект CAdESCOM.SignedXML
-        var oSignedXML = this.CreateObject("CAdESCOM.SignedXML");
+        var oSignedXml = this.CreateObject("CAdESCOM.SignedXML");
 
         try {
-            oSignedXML.Verify(sSignedMessage);
-        } catch (err) {
-            alert("Failed to verify signature. Error: " + GetErrorMessage(err));
+            oSignedXml.Verify(sSignedMessage);
+        } catch(err) {
+            alert("Failed to verify signature. Error: " + getErrorMessage(err));
             return false;
         }
 
         return true;
-    }
-
-    CryptoPro.SignSimpleCreate = function(oCertificate, dataToSign) {
-        var oSigner = this.CreateObject("CAdESCOM.CPSigner");
-        oSigner.Certificate = oCertificate;
-
-        var oSignedData = this.CreateObject("CAdESCOM.CadesSignedData");
-        oSignedData.Content = dataToSign;
-        oSigner.Options = 1; // simple signature
-
-        try {
-            var sSignedData = oSignedData.SignCades(oSigner, 1);
-        } catch (e) {
-            alert("Не удалось создать подпись из-за ошибки: " + GetErrorMessage(e));
-            return;
-        }
-
-        return sSignedData;
-    }
-
-})(CryptoPro || (CryptoPro = {}));
+    };
+})(cryptoPro || (cryptoPro = {}));

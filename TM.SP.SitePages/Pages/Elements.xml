@@ -9,5 +9,13 @@
       <Property Name="Title" Value="Приостановка действия разрешения" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\CancellationLicense.aspx" Url="CancellationLicense.aspx" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Аннулирование разрешения" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
+    <File Path="Pages\RenewalLicense.aspx" Url="RenewalLicense.aspx" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Возобновление действия разрешения" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

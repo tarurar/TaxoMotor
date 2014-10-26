@@ -74,14 +74,7 @@ namespace TM.SP.AppPages
             SPList spList     = web.GetListOrBreak("Lists/LicenseList");
             SPListItem spItem = spList.GetItemOrBreak(licenseId);
 
-            var parentLicense = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                contentType = "License",
-                lob         = BCS.LOBTaxiSystemName,
-                methodName  = "ReadLicenseItem",
-                methodType  = MethodInstanceType.SpecificFinder,
-                ns          = BCS.LOBTaxiSystemNamespace
-            }, Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
+            var parentLicense = GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
             var newLicenseBefore = parentLicense.Clone();
             contextAction(newLicenseBefore);
@@ -95,19 +88,15 @@ namespace TM.SP.AppPages
                 ns          = BCS.LOBTaxiSystemNamespace
             }, newLicenseBefore);
 
-            var context = SPServiceContext.GetContext(web.Site);
-            using (var scope = new SPServiceContextScope(context))
+            web.AllowUnsafeUpdates = true;
+            try
             {
-                web.AllowUnsafeUpdates = true;
-                try
-                {
-                    MigrateItem(spList, parentLicense); //in case parent data hasn't been migrated yet
-                    MigrateItem(spList, newLicenseAfter);
-                }
-                finally
-                {
-                    web.AllowUnsafeUpdates = false;                    
-                }
+                MigrateItem(spList, parentLicense); //in case parent data hasn't been migrated yet
+                MigrateItem(spList, newLicenseAfter);
+            }
+            finally
+            {
+                web.AllowUnsafeUpdates = false;                    
             }
         }
 
@@ -117,14 +106,7 @@ namespace TM.SP.AppPages
             SPList spList     = web.GetListOrBreak("Lists/LicenseList");
             SPListItem spItem = spList.GetItemOrBreak(licenseId);
 
-            var license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                contentType = "License",
-                lob         = BCS.LOBTaxiSystemName,
-                methodName  = "ReadLicenseItem",
-                methodType  = MethodInstanceType.SpecificFinder,
-                ns          = BCS.LOBTaxiSystemNamespace
-            }, Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
+            var license = GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
             var newLicense = license.Clone();
             contextAction(newLicense);
@@ -138,6 +120,23 @@ namespace TM.SP.AppPages
             writer.WriteEndElement();
             
             return intWriter.ToString();
+        }
+
+        private static License GetLicense(int? id)
+        {
+            if (id == null || id == 0)
+                throw new Exception("Item id must be specified");
+
+            var item = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                contentType = "License",
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                methodName  = "ReadLicenseItem",
+                methodType  = MethodInstanceType.SpecificFinder
+            }, id);
+
+            return item;
         }
 
         [WebMethod]
@@ -181,6 +180,33 @@ namespace TM.SP.AppPages
                 l.SuspensionReason   = reason;
                 l.Signature          = Uri.UnescapeDataString(signature);
                 l.Status             = 2;
+            });
+        }
+
+        [WebMethod]
+        public static void SaveSignedCancellation(int licenseId, DateTime dateFrom, string reason, string signature)
+        {
+            SaveSigned(licenseId, l =>
+            {
+                l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.CancellationReason = reason;
+                l.Signature          = Uri.UnescapeDataString(signature);
+                l.Status             = 3;
+            });
+        }
+
+        [WebMethod]
+        public static void SaveSignedRenewal(int licenseId, DateTime dateFrom, string reason, string signature)
+        {
+            SaveSigned(licenseId, l =>
+            {
+                l.CreationDate = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.ChangeReason = reason;
+                l.Signature    = Uri.UnescapeDataString(signature);
+                // setting status
+                var parent     = GetLicense(l.Parent);
+                var grandpa    = GetLicense(parent.Parent);
+                l.Status       = grandpa.Status;
             });
         }
     }

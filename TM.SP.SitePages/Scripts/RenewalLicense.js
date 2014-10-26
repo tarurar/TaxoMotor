@@ -3,42 +3,38 @@
 (function (cryptoPro) {
     'use strict';
 
-// ReSharper disable once InconsistentNaming
+    // ReSharper disable once InconsistentNaming
     function ErrorMessage(message) {
-// ReSharper restore InconsistentNaming
+        // ReSharper restore InconsistentNaming
         var self = this;
 
         self.MessageBody = ko.observable(message);
     }
 
-// ReSharper disable InconsistentNaming
+    // ReSharper disable InconsistentNaming
     function Params() {
-// ReSharper restore InconsistentNaming
+        // ReSharper restore InconsistentNaming
         var self = this;
 
         self.DateFrom = ko.observable(new Date());
-        self.DateTill = ko.observable();
         self.ActionReason = ko.observable("");
     }
 
-// ReSharper disable InconsistentNaming
+    // ReSharper disable InconsistentNaming
     function LicenseModel() {
-// ReSharper restore InconsistentNaming
+        // ReSharper restore InconsistentNaming
         var self = this;
         // model properties
         self.Params = ko.observable(new Params());
         self.Errors = ko.observableArray([]);
         // model methods
-        self.Validate = function() {
+        self.Validate = function () {
             self.Errors.removeAll();
 
             var dateFrom = self.Params().DateFrom();
-            var dateTill = self.Params().DateTill();
 
             if (!dateFrom)
-                self.AddError(new ErrorMessage('Необходимо указать дату начала действия приостановки'));
-            if (dateFrom && dateTill && (dateFrom >= dateTill))
-                self.AddError(new ErrorMessage('Дата завершения действия приостановки должна быть больше даты начала действия приостановки'));
+                self.AddError(new ErrorMessage('Необходимо указать дату возобновления'));
             if (!cryptoPro.isPluginInstalled())
                 self.AddError(new ErrorMessage('Необходимо <a href="http://www.cryptopro.ru/products/cades/plugin/get">установить плагин</a> для работы с ЭЦП'));
 
@@ -46,50 +42,46 @@
             if (dlg) dlg.autoSize();
         };
 
-        self.BuildGetXmlJson = function() {
+        self.BuildGetXmlJson = function () {
             var itemId = JSRequest.QueryString.ItemId;
             var dateFrom = self.Params().DateFrom().getTime();
-            var dateTill = self.Params().DateTill() ? self.Params().DateTill().getTime() : 0;
             var reason = self.Params().ActionReason();
 
             return '{' +
                 'licenseId: ' + itemId + ', ' +
                 'dateFrom: "\\\/Date(' + dateFrom + ')\\\/", ' +
-                'dateTo: "\\\/Date(' + dateTill + ')\\\/", ' +
                 'reason: "' + reason + '"' +
                 '}';
         };
 
-        self.BuildSaveSignedJson = function(signatureValue) {
+        self.BuildSaveSignedJson = function (signatureValue) {
             var itemId = JSRequest.QueryString.ItemId;
             var dateFrom = self.Params().DateFrom().getTime();
-            var dateTill = self.Params().DateTill() ? self.Params().DateTill().getTime() : 0;
             var reason = self.Params().ActionReason();
 
             return '{' +
                 'licenseId: ' + itemId + ', ' +
                 'dateFrom: "\\\/Date(' + dateFrom + ')\\\/", ' +
-                'dateTo: "\\\/Date(' + dateTill + ')\\\/", ' +
                 'reason: "' + reason + '", ' +
                 'signature: "' + encodeURIComponent(signatureValue) + '"' +
                 '}';
         };
 
-        self.AddError = function(newError) {
+        self.AddError = function (newError) {
             self.Errors.push(newError);
 
             var dlg = SP.UI.ModalDialog.get_childDialog();
             if (dlg) dlg.autoSize();
         };
 
-        self.DoAction = function() {
+        self.DoAction = function () {
             self.Validate();
 
             if (self.Errors().length > 0) return;
 
             $.ajax({
                 type: 'POST',
-                url: self.RequestUrl + '/SuspensionGetXml',
+                url: self.RequestUrl + '/RenewalGetXml',
                 data: self.BuildGetXmlJson(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
@@ -113,19 +105,19 @@
                             var signedData;
                             try {
                                 signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
-                            } catch(e) {
+                            } catch (e) {
                                 self.AddError(new ErrorMessage("Ошибка при формировании подписи: " + e.message));
                             }
 
                             if (typeof signedData === 'undefined' || !signedData) return;
-                            
+
                             $.ajax({
                                 type: 'POST',
-                                url: self.RequestUrl + '/SaveSignedSuspension',
+                                url: self.RequestUrl + '/SaveSignedRenewal',
                                 data: self.BuildSaveSignedJson(signedData),
                                 contentType: 'application/json; charset=utf-8',
                                 dataType: 'json',
-                                success: function() {
+                                success: function () {
                                     window.frameElement.commonModalDialogClose(1, null);
                                 },
                                 error: function (xhr, ajaxOptions, thrownError) {
@@ -135,13 +127,13 @@
                         }
                     }
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
                     self.AddError(new ErrorMessage("Ошибка получения xml для подписи: " + xhr.status + ", " + thrownError));
                 }
             });
         };
 
-        self.CancelAction = function() {
+        self.CancelAction = function () {
             window.frameElement.commonModalDialogClose(0, null);
         };
 
@@ -155,15 +147,15 @@
     }
 
     ko.bindingHandlers.href = {
-        update: function(element, valueAccessor) {
-            ko.bindingHandlers.attr.update(element, function() {
+        update: function (element, valueAccessor) {
+            ko.bindingHandlers.attr.update(element, function () {
                 return { href: valueAccessor() };
             });
         }
     };
 
     ko.bindingHandlers.datepicker = {
-        init: function(element, valueAccessor, allBindingsAccessor) {
+        init: function (element, valueAccessor, allBindingsAccessor) {
             //initialize datepicker with some optional options
             var options = allBindingsAccessor().datepickerOptions || {},
                 $el = $(element);
@@ -171,18 +163,18 @@
             $el.datepicker(options);
 
             //handle the field changing
-            ko.utils.registerEventHandler(element, "change", function() {
+            ko.utils.registerEventHandler(element, "change", function () {
                 var observable = valueAccessor();
                 observable($el.datepicker("getDate"));
             });
 
             //handle disposal (if KO removes by the template binding)
-            ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
                 $el.datepicker("destroy");
             });
 
         },
-        update: function(element, valueAccessor) {
+        update: function (element, valueAccessor) {
             var value = ko.utils.unwrapObservable(valueAccessor()),
                 $el = $(element);
 
@@ -199,10 +191,10 @@
         }
     };
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         SP.SOD.executeOrDelayUntilScriptLoaded(sharepointReady, "SP.js");
 
-        jQuery(function($) {
+        jQuery(function ($) {
             $.datepicker.regional.ru = {
                 closeText: 'Закрыть',
                 prevText: '&#x3c;Пред',

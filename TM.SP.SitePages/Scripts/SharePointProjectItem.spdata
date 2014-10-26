@@ -5,5 +5,7 @@
     <ProjectItemFile Source="licenseSearchModel.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="SuspendLicense.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CryptoPro.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CancellationLicense.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="RenewalLicense.js" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

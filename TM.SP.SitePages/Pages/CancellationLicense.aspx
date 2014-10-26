@@ -2,11 +2,11 @@
 <%@ Register TagPrefix="wssuc" TagName="ButtonSection" Src="/_controltemplates/15/ButtonSection.ascx" %>
 
 <asp:Content ContentPlaceHolderID="PlaceHolderPageTitle" runat="server">
-    Приостановка действия разрешения
+    Аннулирование разрешения
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" runat="server">
-    Приостановка действия разрешения
+    Аннулирование разрешения
 </asp:Content>
 
 <asp:Content ID="AddPageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
@@ -34,15 +34,11 @@
                 <label for="dateFrom" style="display: block">Дата с</label>
                 <input id="dateFrom" style="display: block" data-bind="datepicker: DateFrom"/>
             </div>
-            <div style="float: left;">
-                <label for="dateTill" style="display: block">Дата по</label>
-                <input id="dateTill" style="display: block" data-bind="datepicker: DateTill"/>
-            </div>
             <br style="clear:both;" />
         </section>
         <section style="margin-top: 10px;">
             <div style="float: left; margin-right: 20px; width: 100%;">
-                <label for="actionReason" style="display: block">Причина приостановки</label>
+                <label for="actionReason" style="display: block">Причина аннулирования</label>
                 <textarea id="actionReason" style="display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" rows="7" data-bind="value: ActionReason" ></textarea>
             </div>
         </section>
@@ -74,5 +70,5 @@
         </table>
     </div>
 
-    <script type="text/javascript" src="/ProjectScripts/SuspendLicense.js"></script>
+    <script type="text/javascript" src="/ProjectScripts/CancellationLicense.js"></script>
 </asp:Content>

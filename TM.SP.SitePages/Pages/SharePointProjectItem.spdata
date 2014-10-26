@@ -4,5 +4,7 @@
     <ProjectItemFile Source="Elements.xml" Target="Pages\" Type="ElementManifest" />
     <ProjectItemFile Source="licenseSearch.aspx" Target="Pages\" Type="ElementFile" />
     <ProjectItemFile Source="SuspendLicense.aspx" Target="Pages\" Type="ElementFile" />
+    <ProjectItemFile Source="CancellationLicense.aspx" Target="Pages\" Type="ElementFile" />
+    <ProjectItemFile Source="RenewalLicense.aspx" Target="Pages\" Type="ElementFile" />
   </Files>
 </ProjectItem>

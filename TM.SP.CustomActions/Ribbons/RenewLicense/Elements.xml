@@ -25,7 +25,39 @@
 			<CommandUIHandlers>
 				<CommandUIHandler
 					Command="TaxoMotor.RenewLicense.ButtonCommand"
-					CommandAction="javascript:alert('Возобновление');" />
+					CommandAction="javascript: (function() {
+        var options = {
+            url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/RenewalLicense.aspx?ListId={ListId}&amp;ItemId={ItemId}',
+            title: 'Возобновление действия разрешения',
+            allowMaximize: false,
+            showClose: true,
+            dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                if (result == SP.UI.DialogResult.OK) {
+                    if (returnValue == null) {
+                        TM.SP.showIconNotification('Действие разрешения возобновлено', '_layouts/15/images/kpinormal-0.gif', true);
+                        setTimeout(function() {
+                          var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
+                          if (gobackBtn) {
+                            gobackBtn.click();
+                          }
+                        }, 2000);
+                    }
+                    else {
+                        location.href = returnValue;
+                    }
+                }
+                else if (result == -1){
+                    TM.SP.showIconNotification('В процессе возобновления разрешения возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                    setTimeout(function() {
+                      SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);  
+                    }, 2000);
+                }
+            })
+        };
+
+        SP.UI.ModalDialog.showModalDialog(options);
+            
+      })();" />
 			</CommandUIHandlers>
 		</CommandUIExtension>
 	</CustomAction>

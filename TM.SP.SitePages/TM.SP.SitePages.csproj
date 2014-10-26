@@ -82,7 +82,6 @@
       <SharePointProjectItemId>{e3e1b591-f155-4895-9d21-337a3bc333b4}</SharePointProjectItemId>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -120,9 +119,12 @@
     <Content Include="Features\TaxoMotor_SitePages\TaxoMotor_SitePages.Template.xml">
       <DependentUpon>TaxoMotor_SitePages.feature</DependentUpon>
     </Content>
+    <Content Include="Pages\CancellationLicense.aspx" />
     <Content Include="Pages\Elements.xml" />
     <Content Include="Pages\licenseSearch.aspx" />
+    <Content Include="Pages\RenewalLicense.aspx" />
     <Content Include="Pages\SuspendLicense.aspx" />
+    <Content Include="Scripts\CancellationLicense.js" />
     <Content Include="Scripts\CryptoPro.js" />
     <Content Include="Scripts\Elements.xml" />
     <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
@@ -133,6 +135,7 @@
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
     <Content Include="Scripts\licenseSearchModel.js" />
+    <Content Include="Scripts\RenewalLicense.js" />
     <Content Include="Scripts\SuspendLicense.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Styles\Elements.xml" />
