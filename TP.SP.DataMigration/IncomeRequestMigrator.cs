@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
 using TM.SP.BCSModels.CoordinateV5;
@@ -17,10 +16,10 @@ namespace TP.SP.DataMigration
     {
         #region consts
         // Service type constants
-        private const string scNew = "77200101";
-        private const string scRenew = "020202";
-        private const string scDuplicate = "020203";
-        private const string scCancellation = "020204";
+        private const string ScNew = "77200101";
+        private const string ScRenew = "020202";
+        private const string ScDuplicate = "020203";
+        private const string ScCancellation = "020204";
 
         #endregion
 
@@ -46,7 +45,7 @@ namespace TP.SP.DataMigration
         }
         private static SPListItem MigrateIncomingRequestRow(SPWeb web, Request request)
         {
-            Service svc = BCS.ExecuteBcsMethod<Service>(new BcsMethodExecutionInfo()
+            var svc = BCS.ExecuteBcsMethod<Service>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBRequestSystemName,
                 ns          = BCS.LOBRequestSystemNamespace,
@@ -60,19 +59,19 @@ namespace TP.SP.DataMigration
 
             switch (svc.ServiceTypeCode)
             {
-                case scNew:
+                case ScNew:
                     newItem = AssignNewIncomeRequestFieldValues(web, newItem, request);
                     newItem["ContentTypeId"] = list.ContentTypes["Tm_NewIncomeRequest"].Id;
                     break;
-                case scRenew:
+                case ScRenew:
                     newItem = AssignRenewIncomeRequestFieldValues(web, newItem, request);
                     newItem["ContentTypeId"] = list.ContentTypes["Tm_RenewIncomeRequest"].Id;
                     break;
-                case scDuplicate:
+                case ScDuplicate:
                     newItem = AssignDuplicateIncomeRequestFieldValues(web, newItem, request);
                     newItem["ContentTypeId"] = list.ContentTypes["Tm_DuplicateIncomeRequest"].Id;
                     break;
-                case scCancellation:
+                case ScCancellation:
                     newItem = AssignCancelIncomeRequestFieldValues(web, newItem, request);
                     newItem["ContentTypeId"] = list.ContentTypes["Tm_CancelIncomeRequest"].Id;
                     break;
@@ -89,7 +88,7 @@ namespace TP.SP.DataMigration
         /// <returns></returns>
         private static SPListItem AssignIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
         {
-            Service svc = BCS.ExecuteBcsMethod<Service>(new BcsMethodExecutionInfo()
+            var svc = BCS.ExecuteBcsMethod<Service>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBRequestSystemName,
                 ns          = BCS.LOBRequestSystemNamespace,
@@ -109,7 +108,7 @@ namespace TP.SP.DataMigration
             newItem["Tm_IncomeRequestForm"] = "Портал госуслуг";
             if (request.DeclarantRequestAccount != null)
             {
-                RequestAccount account = BCS.ExecuteBcsMethod<RequestAccount>(new BcsMethodExecutionInfo()
+                var account = BCS.ExecuteBcsMethod<RequestAccount>(new BcsMethodExecutionInfo
                 {
                     lob = BCS.LOBRequestSystemName,
                     ns = BCS.LOBRequestSystemNamespace,
@@ -122,7 +121,7 @@ namespace TP.SP.DataMigration
             }
             if (request.DeclarantRequestContact != null)
             {
-                RequestContact contact = BCS.ExecuteBcsMethod<RequestContact>(new BcsMethodExecutionInfo()
+                var contact = BCS.ExecuteBcsMethod<RequestContact>(new BcsMethodExecutionInfo
                 {
                     lob = BCS.LOBRequestSystemName,
                     ns = BCS.LOBRequestSystemNamespace,
@@ -135,7 +134,7 @@ namespace TP.SP.DataMigration
             }
             if (request.TrusteeRequestContact != null)
             {
-                RequestContact contact = BCS.ExecuteBcsMethod<RequestContact>(new BcsMethodExecutionInfo()
+                var contact = BCS.ExecuteBcsMethod<RequestContact>(new BcsMethodExecutionInfo
                 {
                     lob = BCS.LOBRequestSystemName,
                     ns = BCS.LOBRequestSystemNamespace,
@@ -173,7 +172,7 @@ namespace TP.SP.DataMigration
         }
         private static SPListItem AssignRenewIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
         {
-            ServiceProperties svcProps = BCS.ExecuteBcsMethod<ServiceProperties>(new BcsMethodExecutionInfo()
+            var svcProps = BCS.ExecuteBcsMethod<ServiceProperties>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBRequestSystemName,
                 ns          = BCS.LOBRequestSystemNamespace,
@@ -194,7 +193,7 @@ namespace TP.SP.DataMigration
         }
         private static SPListItem AssignCancelIncomeRequestFieldValues(SPWeb web, SPListItem newItem, Request request)
         {
-            ServiceProperties svcProps = BCS.ExecuteBcsMethod<ServiceProperties>(new BcsMethodExecutionInfo()
+            var svcProps = BCS.ExecuteBcsMethod<ServiceProperties>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBRequestSystemName,
                 ns          = BCS.LOBRequestSystemNamespace,
@@ -214,7 +213,7 @@ namespace TP.SP.DataMigration
             newItem["Tm_CancellationReasonOther"] = svcProps.other;
             return AssignIncomeRequestFieldValues(web, newItem, request);
         }
-        private static SPListItem MigrateTaxiRow(SPWeb web, SPListItem parent, taxi_info taxiInfo)
+        private static void MigrateTaxiRow(SPWeb web, SPListItem parent, taxi_info taxiInfo)
         {
             SPList list = web.GetListOrBreak("Lists/TaxiList");
             SPList possessionReasonList = web.GetListOrBreak("Lists/PossessionReasonBookList");
@@ -253,10 +252,8 @@ namespace TP.SP.DataMigration
             newItem["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(parent.ID, parent.Title);
             newItem["Title"]                  = String.Format("{0} гос. номер {1}", taxiInfo.brand, taxiInfo.num);
             newItem.Update();
-
-            return newItem;
         }
-        private static SPListItem MigrateDocumentRow(SPWeb web, SPListItem parent, ServiceDocument document)
+        private static void MigrateDocumentRow(SPWeb web, SPListItem parent, ServiceDocument document)
         {
             SPList list = web.GetListOrBreak("Lists/IncomeRequestAttachList");
 
@@ -284,12 +281,12 @@ namespace TP.SP.DataMigration
             newAttach.Update();
             // add attachment files
             var attachLib = web.GetListOrBreak("AttachLib");
-            var parentFolder = attachLib.RootFolder.CreateSubFolders(new string[] { 
-                DateTime.Now.Year.ToString(), 
-                DateTime.Now.Month.ToString(), 
+            var parentFolder = attachLib.RootFolder.CreateSubFolders(new[] { 
+                DateTime.Now.Year.ToString(CultureInfo.InvariantCulture), 
+                DateTime.Now.Month.ToString(CultureInfo.InvariantCulture), 
                 parent.Title });
 
-            IList<CoordinateV5File> fileList = BCS.ExecuteBcsMethod<IList<CoordinateV5File>>(new BcsMethodExecutionInfo()
+            var fileList = BCS.ExecuteBcsMethod<IList<CoordinateV5File>>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBRequestSystemName,
                 ns          = BCS.LOBRequestSystemNamespace,
@@ -300,7 +297,7 @@ namespace TP.SP.DataMigration
 
             foreach (CoordinateV5File file in fileList)
             {
-                MemoryStream content = BCS.ExecuteBcsMethod<MemoryStream>(new BcsMethodExecutionInfo()
+                var content = BCS.ExecuteBcsMethod<MemoryStream>(new BcsMethodExecutionInfo
                 {
                     lob         = BCS.LOBRequestSystemName,
                     ns          = BCS.LOBRequestSystemNamespace,
@@ -311,8 +308,9 @@ namespace TP.SP.DataMigration
 
                 if (content != null)
                 {
-                    var uplFolder = parentFolder.CreateSubFolders(new string[] { (parentFolder.ItemCount + 1).ToString() });
-                    var attachFile = uplFolder.Files.Add(file.FileName, content);
+                    var uplFolder  = parentFolder.CreateSubFolders(new[] { (parentFolder.ItemCount + 1).ToString(CultureInfo.InvariantCulture) });
+                    var randomFn   = new Random().Next(1, 999999).ToString(CultureInfo.InvariantCulture);
+                    var attachFile = uplFolder.Files.Add(randomFn, content);
                     uplFolder.Update();
 
                     attachFile.Item["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(parent.ID, parent.Title);
@@ -320,14 +318,12 @@ namespace TP.SP.DataMigration
                     attachFile.Item.Update();
                 }
             }
-
-            return newAttach;
         }
         public static SPListItem Execute(SPWeb web, Request request)
         {
             SPListItem spRequest = MigrateIncomingRequestRow(web, request);
             // process taxi list
-            IEnumerable<taxi_info> taxiList = BCS.ExecuteBcsMethod<IEnumerable<taxi_info>>(new BcsMethodExecutionInfo()
+            var taxiList = BCS.ExecuteBcsMethod<IEnumerable<taxi_info>>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBRequestSystemName,
                 ns          = BCS.LOBRequestSystemNamespace,
@@ -340,7 +336,7 @@ namespace TP.SP.DataMigration
                 MigrateTaxiRow(web, spRequest, taxi);
             }
             // process service document list
-            IList<ServiceDocument> docList = BCS.ExecuteBcsMethod<IList<ServiceDocument>>(new BcsMethodExecutionInfo()
+            var docList = BCS.ExecuteBcsMethod<IList<ServiceDocument>>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBRequestSystemName,
                 ns          = BCS.LOBRequestSystemNamespace,
