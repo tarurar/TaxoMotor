@@ -55,7 +55,7 @@ namespace TM.SP.AppPages
             else
             {
                 // getting sp item
-                SPListItemCollection items = list.GetItems(new SPQuery()
+                SPListItemCollection items = list.GetItems(new SPQuery
                 {
                     Query = Camlex.Query().Where(x => (int)x["Tm_LicenseExternalId"] == license.Id).ToString(),
                     ViewAttributes = "Scope='RecursiveAll'"

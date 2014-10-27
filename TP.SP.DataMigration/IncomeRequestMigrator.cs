@@ -16,9 +16,9 @@ namespace TP.SP.DataMigration
     {
         #region consts
         // Service type constants
-        private const string ScNew = "77200101";
-        private const string ScRenew = "020202";
-        private const string ScDuplicate = "020203";
+        private const string ScNew          = "77200101";
+        private const string ScRenew        = "020202";
+        private const string ScDuplicate    = "020203";
         private const string ScCancellation = "020204";
 
         #endregion
@@ -97,12 +97,15 @@ namespace TP.SP.DataMigration
                 methodType  = MethodInstanceType.SpecificFinder,
                 
             }, request.Service);
-            SPList govSubTypeList = web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
+            var govSubTypeList       = web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
+            var requestStateBookList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
+            var requestStateOk       = GetSingleListItemByFieldValue(requestStateBookList, "Tm_ServiceCode", "1020");
 
-            newItem["Tm_RegNumber"] = svc.RegNum;
+            newItem["Tm_RegNumber"]    = svc.RegNum;
             newItem["Tm_SingleNumber"] = svc.ServiceNumber;
+            if (requestStateOk != null)
+                newItem["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(requestStateOk.ID, requestStateOk.Title);
             // todo: default values
-            // newItem["Tm_IncomeRequestStateLookup"] = состояние обращения
             // newItem["Tm_IncomeRequestStateInternalLookup"] = внутренний статус
             newItem["Tm_RegistrationDate"] = svc.RegDate;
             newItem["Tm_IncomeRequestForm"] = "Портал госуслуг";
@@ -309,7 +312,7 @@ namespace TP.SP.DataMigration
                 if (content != null)
                 {
                     var uplFolder  = parentFolder.CreateSubFolders(new[] { (parentFolder.ItemCount + 1).ToString(CultureInfo.InvariantCulture) });
-                    var randomFn   = new Random().Next(1, 999999).ToString(CultureInfo.InvariantCulture);
+                    var randomFn   = new Random().Next(1, 999999).ToString(CultureInfo.InvariantCulture) + Path.GetExtension(file.FileName);
                     var attachFile = uplFolder.Files.Add(randomFn, content);
                     uplFolder.Update();
 
@@ -322,31 +325,47 @@ namespace TP.SP.DataMigration
         public static SPListItem Execute(SPWeb web, Request request)
         {
             SPListItem spRequest = MigrateIncomingRequestRow(web, request);
-            // process taxi list
-            var taxiList = BCS.ExecuteBcsMethod<IEnumerable<taxi_info>>(new BcsMethodExecutionInfo
+            try
             {
-                lob         = BCS.LOBRequestSystemName,
-                ns          = BCS.LOBRequestSystemNamespace,
-                contentType = "ServiceProperties",
-                methodName  = "IdOfServicePropertiesToServicePropertiesOftaxi_info",
-                methodType  = MethodInstanceType.AssociationNavigator
-            }, request.ServiceProperties);
-            foreach (taxi_info taxi in taxiList)
-            {
-                MigrateTaxiRow(web, spRequest, taxi);
+                // process taxi list
+                var taxiList = BCS.ExecuteBcsMethod<IEnumerable<taxi_info>>(new BcsMethodExecutionInfo
+                {
+                    lob         = BCS.LOBRequestSystemName,
+                    ns          = BCS.LOBRequestSystemNamespace,
+                    contentType = "ServiceProperties",
+                    methodName  = "IdOfServicePropertiesToServicePropertiesOftaxi_info",
+                    methodType  = MethodInstanceType.AssociationNavigator
+                }, request.ServiceProperties);
+                foreach (taxi_info taxi in taxiList)
+                {
+                    MigrateTaxiRow(web, spRequest, taxi);
+                }
+                // process service document list
+                var docList = BCS.ExecuteBcsMethod<IList<ServiceDocument>>(new BcsMethodExecutionInfo
+                {
+                    lob         = BCS.LOBRequestSystemName,
+                    ns          = BCS.LOBRequestSystemNamespace,
+                    contentType = "Service",
+                    methodName  = "IdOfServiceToServiceOfServiceDocument",
+                    methodType  = MethodInstanceType.AssociationNavigator
+                }, request.Service);
+                foreach (ServiceDocument doc in docList)
+                {
+                    MigrateDocumentRow(web, spRequest, doc);
+                }
             }
-            // process service document list
-            var docList = BCS.ExecuteBcsMethod<IList<ServiceDocument>>(new BcsMethodExecutionInfo
+            catch (Exception ex)
             {
-                lob         = BCS.LOBRequestSystemName,
-                ns          = BCS.LOBRequestSystemNamespace,
-                contentType = "Service",
-                methodName  = "IdOfServiceToServiceOfServiceDocument",
-                methodType  = MethodInstanceType.AssociationNavigator
-            }, request.Service);
-            foreach (ServiceDocument doc in docList)
-            {
-                MigrateDocumentRow(web, spRequest, doc);
+                // marking income request with error status
+                var stateList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
+                var stateError = GetSingleListItemByFieldValue(stateList, "Tm_ServiceCode", "2010");
+                if (stateError != null)
+                {
+                    spRequest["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(stateError.ID, stateError.Title);
+                    spRequest.Update();
+                }
+                // reraising exception for calling code to be able to process it
+                throw;
             }
 
             return spRequest;

@@ -74,6 +74,9 @@
     <None Include="Pages\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e1f1de0f-c193-4d1b-b439-8f6b576bc08b}</SharePointProjectItemId>
     </None>
+    <None Include="Scripts\jquery-2.1.1.min.js.map">
+      <DependentUpon>jquery-2.1.1.min.js</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{18a9959a-66d3-4d1f-8fa9-cf4fd18ce2ad}</SharePointProjectItemId>

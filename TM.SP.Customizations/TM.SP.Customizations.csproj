@@ -95,6 +95,9 @@
     <None Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.min.js.map">
       <DependentUpon>jquery-2.1.1.min.js</DependentUpon>
     </None>
+    <None Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.min.js.map">
+      <DependentUpon>jquery.mb.browser.min.js</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Package\Package.package">
       <PackageId>{1299C90B-9054-40DE-82EE-12688D6D11B9}</PackageId>

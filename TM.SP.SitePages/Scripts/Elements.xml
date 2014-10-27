@@ -6,5 +6,6 @@
     <File Path="Scripts\CryptoPro.js" Url="CryptoPro.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
     <File Path="Scripts\CancellationLicense.js" Url="CancellationLicense.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\RenewalLicense.js" Url="RenewalLicense.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\jquery-2.1.1.min.js.map" Url="Scripts/jquery-2.1.1.min.js.map" />
   </Module>
 </Elements>
