@@ -61,19 +61,19 @@ namespace TP.SP.DataMigration
             {
                 case ScNew:
                     newItem = AssignNewIncomeRequestFieldValues(web, newItem, request);
-                    newItem["ContentTypeId"] = list.ContentTypes["Tm_NewIncomeRequest"].Id;
+                    newItem["ContentTypeId"] = list.ContentTypes["Новое"].Id;
                     break;
                 case ScRenew:
                     newItem = AssignRenewIncomeRequestFieldValues(web, newItem, request);
-                    newItem["ContentTypeId"] = list.ContentTypes["Tm_RenewIncomeRequest"].Id;
+                    newItem["ContentTypeId"] = list.ContentTypes["Переоформление"].Id;
                     break;
                 case ScDuplicate:
                     newItem = AssignDuplicateIncomeRequestFieldValues(web, newItem, request);
-                    newItem["ContentTypeId"] = list.ContentTypes["Tm_DuplicateIncomeRequest"].Id;
+                    newItem["ContentTypeId"] = list.ContentTypes["Выдача дубликата"].Id;
                     break;
                 case ScCancellation:
                     newItem = AssignCancelIncomeRequestFieldValues(web, newItem, request);
-                    newItem["ContentTypeId"] = list.ContentTypes["Tm_CancelIncomeRequest"].Id;
+                    newItem["ContentTypeId"] = list.ContentTypes["Аннулирование"].Id;
                     break;
                 default:
                     throw new Exception(String.Format("Unknown income request ServiceTypeCode value {0}", svc.ServiceTypeCode));
