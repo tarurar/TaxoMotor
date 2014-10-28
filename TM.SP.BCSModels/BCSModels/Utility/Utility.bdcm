@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Model Name="Utility" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/windows/2007/BusinessDataCatalog">
+	<AccessControlList>
+		<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+			<Right BdcRight="Edit" />
+			<Right BdcRight="Execute" />
+			<Right BdcRight="SetPermissions" />
+			<Right BdcRight="SelectableInClients" />
+		</AccessControlEntry>
+	</AccessControlList>
+	<LobSystems>
+		<LobSystem Name="Utility" DefaultDisplayName="Utility" Type="DotNetAssembly">
+			<LobSystemInstances>
+				<LobSystemInstance Name="Utility" DefaultDisplayName="Utility">
+          <Properties>
+            <Property Name="DBServerName" Type="System.String">win-snu4u1n6vq1</Property>
+            <Property Name="DBName" Type="System.String">TM.Data</Property>
+            <Property Name="SecureStoreAppId" Type="System.String">asguf_MSCRM</Property>
+          </Properties>
+          </LobSystemInstance>
+			</LobSystemInstances>
+			<Entities>
+				<Entity Name="RequestCounter" Namespace="TM.SP.BCSModels.Utility" Version="1.0.0.21" EstimatedInstanceCount="1000" DefaultDisplayName="RequestCounter">
+					<Properties>
+						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Utility.RequestCounterEntityService, TM.SP.BCSModels</Property>
+						<Property Name="Title" Type="System.String">Title</Property>
+					</Properties>
+					<AccessControlList>
+						<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+							<Right BdcRight="Edit" />
+							<Right BdcRight="Execute" />
+							<Right BdcRight="SetPermissions" />
+							<Right BdcRight="SelectableInClients" />
+						</AccessControlEntry>
+					</AccessControlList>
+					<Identifiers>
+						<Identifier TypeName="System.Int32" Name="Id" />
+						<!-- TODO: Change the name of the ID and if needed the TypeName of your identifier. -->
+					</Identifiers>
+					<Methods>
+						<Method Name="ReadRequestCounterList" DefaultDisplayName="Read RequestCounter List">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.Utility.RequestCounter, TM.SP.BCSModels]]" IsCollection="true" Name="RequestCounterList">
+										<TypeDescriptors>
+											<TypeDescriptor Name="RequestCounter" TypeName="TM.SP.BCSModels.Utility.RequestCounter, TM.SP.BCSModels">
+												<TypeDescriptors>
+													<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="RequestCounter" IdentifierEntityNamespace="TM.SP.BCSModels.Utility" ReadOnly="true">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.Int32">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="Year" DefaultDisplayName="Year" TypeName="System.Int32">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+													<TypeDescriptor Name="ServiceCode" DefaultDisplayName="ServiceCode" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">10</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+													</TypeDescriptor>
+													<TypeDescriptor Name="CounterValue" DefaultDisplayName="CounterValue" TypeName="System.Int32">
+														<Properties>
+															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+														</Properties>
+													</TypeDescriptor>
+												</TypeDescriptors>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadRequestCounterList" DefaultDisplayName="Read RequestCounter List" />
+							</MethodInstances>
+						</Method>
+						<Method Name="ReadRequestCounterItem">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="@Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="RequestCounter" IdentifierEntityNamespace="TM.SP.BCSModels.Utility" />
+								</Parameter>
+								<Parameter Direction="Return" Name="returnParameter">
+									<TypeDescriptor TypeName="TM.SP.BCSModels.Utility.RequestCounter, TM.SP.BCSModels" Name="returnRequestCounter">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="RequestCounter" IdentifierEntityNamespace="TM.SP.BCSModels.Utility" ReadOnly="true">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Year" DefaultDisplayName="Year" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ServiceCode" DefaultDisplayName="ServiceCode" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">10</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CounterValue" DefaultDisplayName="CounterValue" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Type="SpecificFinder" ReturnParameterName="returnParameter" Default="true" Name="ReadRequestCounterItem" DefaultDisplayName="Read RequestCounter" />
+							</MethodInstances>
+						</Method>
+						<Method Name="CreateRequestCounter">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Name="newRequestCounter" Direction="In">
+									<TypeDescriptor Name="NewRequestCounter" TypeName="TM.SP.BCSModels.Utility.RequestCounter, TM.SP.BCSModels">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.Int32" CreatorField="true" />
+											<TypeDescriptor Name="Year" DefaultDisplayName="Year" TypeName="System.Int32" CreatorField="true" />
+											<TypeDescriptor Name="ServiceCode" DefaultDisplayName="ServiceCode" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">10</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CounterValue" DefaultDisplayName="CounterValue" TypeName="System.Int32" CreatorField="true" />
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+								<Parameter Name="returnRequestCounter" Direction="Return">
+									<TypeDescriptor Name="ReturnRequestCounter" TypeName="TM.SP.BCSModels.Utility.RequestCounter, TM.SP.BCSModels">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="RequestCounter" IdentifierEntityNamespace="TM.SP.BCSModels.Utility" ReadOnly="true">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="Year" DefaultDisplayName="Year" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+											<TypeDescriptor Name="ServiceCode" DefaultDisplayName="ServiceCode" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">10</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CounterValue" DefaultDisplayName="CounterValue" TypeName="System.Int32">
+												<Properties>
+													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
+												</Properties>
+											</TypeDescriptor>
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Name="CreateRequestCounter" Type="Creator" ReturnParameterName="returnRequestCounter" ReturnTypeDescriptorPath="ReturnRequestCounter" />
+							</MethodInstances>
+						</Method>
+						<Method Name="DeleteRequestCounter">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Direction="In" Name="Id">
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="RequestCounter" IdentifierEntityNamespace="TM.SP.BCSModels.Utility" />
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Name="DeleteRequestCounter" Type="Deleter" />
+							</MethodInstances>
+						</Method>
+						<Method Name="UpdateRequestCounter">
+							<AccessControlList>
+								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
+									<Right BdcRight="Edit" />
+									<Right BdcRight="Execute" />
+									<Right BdcRight="SetPermissions" />
+									<Right BdcRight="SelectableInClients" />
+								</AccessControlEntry>
+							</AccessControlList>
+							<Parameters>
+								<Parameter Name="updateRequestCounter" Direction="In">
+									<TypeDescriptor Name="RequestCounter" TypeName="TM.SP.BCSModels.Utility.RequestCounter, TM.SP.BCSModels">
+										<TypeDescriptors>
+											<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" UpdaterField="true" IdentifierName="Id" IdentifierEntityName="RequestCounter" IdentifierEntityNamespace="TM.SP.BCSModels.Utility" />
+											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.Int32" UpdaterField="true" />
+											<TypeDescriptor Name="Year" DefaultDisplayName="Year" TypeName="System.Int32" UpdaterField="true" />
+											<TypeDescriptor Name="ServiceCode" DefaultDisplayName="ServiceCode" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">10</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+											</TypeDescriptor>
+											<TypeDescriptor Name="CounterValue" DefaultDisplayName="CounterValue" TypeName="System.Int32" UpdaterField="true" />
+										</TypeDescriptors>
+									</TypeDescriptor>
+								</Parameter>
+							</Parameters>
+							<MethodInstances>
+								<MethodInstance Name="UpdateRequestCounter" Type="Updater" />
+							</MethodInstances>
+						</Method>
+            <Method Name="GetNextNumber">
+              <Parameters>
+                <Parameter Name="serviceCode" Direction="In">
+                  <TypeDescriptor Name="serviceCodeTypeDescriptor" TypeName="System.String" /></Parameter>
+                <Parameter Name="number" Direction="Return">
+                  <TypeDescriptor Name="numberTypeDescriptor" TypeName="System.Int32" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="GetNextNumberInstance" Type="Scalar" ReturnParameterName="number" ReturnTypeDescriptorPath="numberTypeDescriptor" />
+              </MethodInstances></Method>
+					</Methods>
+				</Entity>
+			</Entities>
+		</LobSystem>
+	</LobSystems>
+</Model>

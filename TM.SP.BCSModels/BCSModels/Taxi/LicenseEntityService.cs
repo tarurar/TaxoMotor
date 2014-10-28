@@ -12,10 +12,9 @@ namespace TM.SP.BCSModels.Taxi
         {
             MigratingLicense retVal = null;
 
-            SqlConnection thisConn = getSqlConnection();
+            var thisConn = getSqlConnection();
             thisConn.Open();
-            SqlCommand selectCommand = new SqlCommand();
-            selectCommand.Connection = thisConn;
+            var selectCommand = new SqlCommand {Connection = thisConn};
 
             const string selectAnyText = @"INSERT INTO [dbo].[LicenseMigrationTicket] ([Status], [StartDate], [LicenseId])
                                             OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[LicenseId]
@@ -41,7 +40,7 @@ namespace TM.SP.BCSModels.Taxi
                 selectCommand.Parameters.AddWithValue("@ItemId", ItemId);
             }
             selectCommand.Parameters.AddWithValue("@Status", (Int32)MigratingStatus.Reserved);
-            SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            var thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             if (thisReader.Read())
             {
                 retVal = new MigratingLicense()

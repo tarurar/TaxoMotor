@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ListInstance
+		Title="RequestCounter"
+		Description="RequestCounter"
+		FeatureId="00BFEA71-9549-43f8-B978-E47E54A10600"
+		TemplateType="600"
+		Id="F6660631-B73A-4B16-9B8A-C48E225AC268"
+		Url="Lists/RequestCounter"
+		OnQuickLaunch="TRUE"
+		QuickLaunchUrl="Lists/RequestCounter/AllItems.aspx"
+		RootWebOnly="FALSE">
+		<DataSource>
+			<Property
+				Name="LobSystemInstance"
+				Value="Utility" />
+			<Property
+				Name="EntityNamespace"
+				Value="TM.SP.BCSModels.Utility" />
+			<Property
+				Name="Entity"
+				Value="RequestCounter" />
+			<Property
+				Name="SpecificFinder"
+				Value="ReadRequestCounterItem" />
+		</DataSource>
+	</ListInstance>
+</Elements>

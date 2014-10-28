@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Utility">
+  <modelRootMoniker Name="/Utility" />
+  <nestedChildShapes>
+    <entityShape Id="12079fe8-b779-4d41-b31b-d4b2b827164f" absoluteBounds="2, 1, 2, 2.364889322916667">
+      <entityMoniker name="TM.SP.BCSModels.Utility.RequestCounter" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f10b1004-ae3b-454f-bf62-b0fb8f40b15d" absoluteBounds="2.015, 1.4100000000000001, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="546d4eb3-0593-4cdb-bc35-c74717cc505a" absoluteBounds="2.015, 1.8616910807291667, 1.9700000000000002, 1.4031982421875" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+  </nestedChildShapes>
+</minimalLanguageDiagram>

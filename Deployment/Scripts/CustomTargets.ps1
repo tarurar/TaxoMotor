@@ -159,6 +159,7 @@
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "DeveloperData"
         UpdateBCSLobSystemProperties  -vars $vars -lobName "Taxi"
         UpdateBCSLobSystemProperties  -vars $vars -lobName "TaxiV2"
+		UpdateBCSLobSystemProperties  -vars $vars -lobName "Utility"
 		AddConfigurationListEntry -vars $vars -confKey "MessageQueueServiceUrl" -confValue $vars['MessageQueueServiceUrl']
 		AddConfigurationListEntry -vars $vars -confKey "BR2ServiceGuid" -confValue $vars['BR2ServiceGuid']
      }
