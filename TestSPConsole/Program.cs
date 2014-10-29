@@ -6,6 +6,7 @@ using System.Web;
 using System.Xml.Linq;
 using System.Threading.Tasks;
 using Microsoft.SharePoint;
+using Microsoft.SharePoint.Utilities;
 using TM.Utils;
 
 using TM.Utils;
@@ -103,9 +104,8 @@ namespace TestSPConsole
                 var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
-                    var licenseList = web.GetListOrBreak("Lists/LicenseList");
-                    var refresher = new BusinessDataColumnUpdater(licenseList, "Tm_LicenseAllViewBcsLookup");
-                    refresher.UpdateColumnUsingBatch(85);
+                    var date = DateTime.Now.Date;
+                    var date2 = SPUtility.CreateISO8601DateTimeFromSystemDateTime(date);
                 }
             }
         }

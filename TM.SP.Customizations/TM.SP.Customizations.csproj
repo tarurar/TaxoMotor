@@ -58,6 +58,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventReceivers\erIncomeRequestItem\erIncomeRequestItem.cs" />
     <Compile Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.EventReceiver.cs">
       <DependentUpon>TaxoMotor_TaxoMotorCustomizations.feature</DependentUpon>
     </Compile>
@@ -81,6 +82,9 @@
     </None>
     <None Include="DelegateControls\tmsphelpersControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{86f2695d-b209-4bf7-ae3d-23fc0ab68482}</SharePointProjectItemId>
+    </None>
+    <None Include="EventReceivers\erIncomeRequestItem\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{307d1fff-015a-4e4f-a551-9bcf4e473ef7}</SharePointProjectItemId>
     </None>
     <None Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.feature">
       <FeatureId>{d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07}</FeatureId>
@@ -115,6 +119,7 @@
     <Content Include="DelegateControls\jQueryMbBrowser\jQueryMbBrowser.ascx" />
     <Content Include="DelegateControls\knockoutjsControl\Elements.xml" />
     <Content Include="DelegateControls\knockoutjsControl\knockoutjsControl.ascx" />
+    <Content Include="EventReceivers\erIncomeRequestItem\Elements.xml" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.min.js" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\accordion.css" />
@@ -180,6 +185,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
+      <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
+      <Name>TM.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

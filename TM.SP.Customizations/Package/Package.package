@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="1299c90b-9054-40de-82ee-12688d6d11b9" solutionId="1299c90b-9054-40de-82ee-12688d6d11b9" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.Customizations" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
+  </assemblies>
   <features>
     <featureReference itemId="d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07" />
     <featureReference itemId="104d62e3-828a-4c05-b8dc-25e4fceceb72" />
