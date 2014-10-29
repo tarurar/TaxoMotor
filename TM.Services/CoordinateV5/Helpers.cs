@@ -1,34 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Xml;
+using TM.Utils;
 
 namespace TM.Services.CoordinateV5
 {
-    public static class Consts
-    {
-        #region [E-government Informational System Codes]
-        public static readonly string ASGUFSysCode           = "1131";
-        public static readonly string TaxoMotorSysCode       = "1131";
-        public static readonly string TaxInspectionSysCode   = "705";
-        public static readonly string GIBDDSysCode           = "775";
-        #endregion
-        #region [E-government Service Codes]
-        public static readonly string BaseRegistrServiceCode = "БР2";
-        #endregion
-        #region [Government Department Names]
-        public static readonly string TaxoMotorDepName       = "ДТиРДТИ";
-        #endregion
-        #region [Government Department Codes]
-        public static readonly string TaxoMotorDepCode       = "2009";
-        #endregion
-        #region [Document Codes]
-        public static readonly string EGRULDocCode              = "4020";
-        public static readonly string EGRIPDocCode              = "7830";
-        public static readonly string PTSDocCode                = "10615";
-        #endregion
-    }
     public static class Helpers
     {
         #region [methods]
@@ -67,7 +42,7 @@ namespace TM.Services.CoordinateV5
             message.ServiceHeader.MessageId             = Guid.NewGuid().ToString("D");
             message.ServiceHeader.RequestDateTime       = DateTime.Now;
             // TaskMessage.Data
-            message.TaskMessage.Data.DocumentTypeCode   = Consts.EGRULDocCode;
+            message.TaskMessage.Data.DocumentTypeCode   = Consts.EgripDocCode;
             message.TaskMessage.Data.IncludeBinaryView  = true;
             message.TaskMessage.Data.IncludeXmlView     = true;
             message.TaskMessage.Data.ParameterTypeCode  = String.Empty;
@@ -95,7 +70,7 @@ namespace TM.Services.CoordinateV5
         {
             var message = GetEGRULMessageTemplate(parameter);
             // TaskMessage.Data
-            message.TaskMessage.Data.DocumentTypeCode   = Consts.EGRIPDocCode;
+            message.TaskMessage.Data.DocumentTypeCode   = Consts.EgripDocCode;
 
             return message;
         }
@@ -110,11 +85,11 @@ namespace TM.Services.CoordinateV5
             var message = GetDefaultMessageTemplate();
             // ServiceHeader
             message.ServiceHeader.FromOrgCode           = Consts.TaxoMotorSysCode;
-            message.ServiceHeader.ToOrgCode             = Consts.GIBDDSysCode;
+            message.ServiceHeader.ToOrgCode             = Consts.GibddSysCode;
             message.ServiceHeader.MessageId             = Guid.NewGuid().ToString("D");
             message.ServiceHeader.RequestDateTime       = DateTime.Now;
             // TaskMessage.Data
-            message.TaskMessage.Data.DocumentTypeCode   = Consts.PTSDocCode;
+            message.TaskMessage.Data.DocumentTypeCode   = Consts.PtsDocCode;
             message.TaskMessage.Data.IncludeBinaryView  = true;
             message.TaskMessage.Data.IncludeXmlView     = true;
             message.TaskMessage.Data.ParameterTypeCode  = String.Empty;
