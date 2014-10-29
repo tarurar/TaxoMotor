@@ -261,12 +261,19 @@ namespace TP.SP.DataMigration
         private static void MigrateDocumentRow(SPWeb web, SPListItem parent, ServiceDocument document)
         {
             SPList list = web.GetListOrBreak("Lists/IncomeRequestAttachList");
+            SPList docTypeBooklist = web.GetListOrBreak("Lists/DocumentTypeBookList");
 
             SPListItem newAttach = list.AddItem();
             DateTime validityPeriod;
             // assign values
             newAttach["Title"]              = document.DocNumber;
             newAttach["Tm_AttachType"]      = document.DocCode;
+            if (!String.IsNullOrEmpty(document.DocCode))
+            {
+                var docTypeItem = docTypeBooklist.GetSingleListItemByFieldValue("Tm_ServiceCode", document.DocCode);
+                if (docTypeItem != null)
+                    newAttach["Tm_DocumentTypeLookup"] = new SPFieldLookupValue(docTypeItem.ID, docTypeItem.Title);
+            }
             newAttach["Tm_AttachDocNumber"] = document.DocNumber;
             newAttach["Tm_AttachDocDate"]   = document.DocDate;
             newAttach["Tm_AttachDocSerie"]  = document.DocSerie;
@@ -356,7 +363,7 @@ namespace TP.SP.DataMigration
                     MigrateDocumentRow(web, spRequest, doc);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // marking income request with error status
                 var stateList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
