@@ -162,5 +162,14 @@ namespace TM.SP.DataModel
             Description         = "Список разрешений (лицензий) на осуществление таксомоторной деятельности",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmDocumentTypeBookList = new ListDefinition()
+        {
+            Title               = "Виды документов",
+            Url                 = "DocumentTypeBookList",
+            TemplateType        = BuiltInListTemplateTypeId.GenericList,
+            Description         = "Список видов документов",
+            ContentTypesEnabled = true
+        };
     }
 }

@@ -244,5 +244,19 @@ namespace TM.SP.DataModel.Plumsail
             nsShowNew    = false,
             nsNewText    = String.Empty
         };
+
+        public static CrossSiteLookupDefinition TmDocumentTypeLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id           = new Guid("{77F5777C-5AB3-4DA2-8379-DAADB011D09E}"),
+            Title        = "Наименование вида документа",
+            InternalName = "Tm_DocumentTypeLookup",
+            FieldType    = BuiltInFieldTypes.Lookup,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+            ShowField    = "Title",
+            Required     = false,
+            Mult         = false,
+            nsShowNew    = false,
+            nsNewText    = String.Empty
+        };
     }
 }

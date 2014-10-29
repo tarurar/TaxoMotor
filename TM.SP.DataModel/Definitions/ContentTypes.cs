@@ -178,6 +178,15 @@ namespace TM.SP.DataModel
             Name                = "Tm_License"
         };
 
+        public static ContentTypeDefinition TmDocumentType = new ContentTypeDefinition
+        {
+            Id                  = new Guid("{95AA6D18-371B-44F0-958B-550CFD9558B0}"),
+            Description         = "Вид документа",
+            Group               = ModelConsts.ContentTypeDefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name                = "Tm_DocumentType"
+        };
+
         #endregion
     }
 }

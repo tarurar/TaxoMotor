@@ -53,6 +53,15 @@ namespace TM.SP.DataModel
             new XAttribute("Version"        , "1")
         );
 
+        public static FieldDefinition TmShortName = new FieldDefinition()
+        {
+            Id           = new Guid("{10CD5E51-F233-4529-856B-02523C1AB61F}"),
+            Title        = "Краткое наименование",
+            InternalName = "Tm_ShortName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Причина отказа]

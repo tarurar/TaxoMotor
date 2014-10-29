@@ -142,7 +142,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmIncomeRequestSysUpdAvailText, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) =>
                         {
-                            FieldCalculated field = spField as FieldCalculated;
+                            var field = spField as FieldCalculated;
                             if (field != null)
                                 field.Formula = "=IF([Обновление обращения разрешено], \"1\", \"0\")";
                         }))
@@ -151,6 +151,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmIncomeRequestForm,
                         f => f.OnCreated((FieldDefinition fieldDef, Field spField) =>
                             spField.MakeChoices(new String[] { "Портал госуслуг", "Очный визит" })))
+                    .AddField(Fields.TmShortName)
                 )
                 .WithContentTypes(
                     ctList => ctList
@@ -205,6 +206,9 @@ namespace TM.SP.DataModel
                             .AddContentTypeFieldLink(Fields.TmLicenseChangeReason)
                             .AddContentTypeFieldLink(Fields.TmLicenseInvalidReason)
                             .AddContentTypeFieldLink(Fields.TmLicenseExternalId))
+                        .AddContentType(ContentTypes.TmDocumentType, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmServiceCode)
+                            .AddContentTypeFieldLink(Fields.TmShortName))
                 );
 
             return model;
@@ -241,6 +245,8 @@ namespace TM.SP.DataModel
                             l.AddContentTypeLink(ContentTypes.TmLicense);
                             l.OnCreated((ListDefinition def, List spList) => spList.MakeFolderCreationAvailable(true));
                         })
+                        .AddList(Lists.TmDocumentTypeBookList,
+                            l => l.AddContentTypeLink(ContentTypes.TmDocumentType))
                 );
 
             return model;
