@@ -158,8 +158,10 @@ namespace TP.SP.DataMigration
             newItem["Tm_RequestedDocumentPrice"] = svc.ServicePrice;
             newItem["Tm_PrepareTargetDate"]      = svc.PrepareTargetDate;
             newItem["Tm_OutputTargetDate"]       = svc.OutputTargetDate;
+            /*
             newItem["Tm_PrepareFactDate"]        = svc.PrepareFactDate;
             newItem["Tm_OutputFactDate"]         = svc.OutputFactDate;
+             */
             newItem["Tm_MessageId"]              = request.MessageId;
             newItem["Title"] = String.Format("Обращение №{0} от {1}", svc.RegNum, newItem["Tm_RequestAccountBCSLookup"] ?? newItem["Tm_RequestContactBCSLookup"]);
 
