@@ -36,6 +36,8 @@ namespace TM.SP.BCSModels.Taxi
         public System.String Inn { get; set; }
         [XmlIgnore]
         public System.Nullable<System.Int32> Parent { get; set; }
+        [XmlIgnore]
+        public System.Nullable<System.Int32> RootParent { get; set; }
         public System.Nullable<System.Int32> Status { get; set; }
         [XmlIgnore]
         public System.String Document { get; set; }
@@ -87,6 +89,7 @@ namespace TM.SP.BCSModels.Taxi
                 OrgName            = this.OrgName,
                 OutputDate         = this.OutputDate,
                 Parent             = this.Id,
+                RootParent         = this.RootParent,
                 PhoneNumber        = this.PhoneNumber,
                 RegNumber          = this.RegNumber,
                 Signature          = String.Empty,

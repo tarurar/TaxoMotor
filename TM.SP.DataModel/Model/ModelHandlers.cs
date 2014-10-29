@@ -124,6 +124,8 @@ namespace TM.SP.DataModel
             PlumsailFields.TmTaxiLookupXml.ListId                       = taxiList.Id;
             PlumsailFields.TmIncomeRequestAttachLookupXml.ListId        = incomeRequestAttachList.Id;
             PlumsailFields.TmLicenseParentLicenseLookupXml.ListId       = licenseList.Id;
+            PlumsailFields.TmLicenseRootParentLicenseLookupXml.ListId   = licenseList.Id;
+            PlumsailFields.TmLicenseLookupXml.ListId                    = licenseList.Id;
             PlumsailFields.TmDocumentTypeLookupXml.ListId               = documentTypeBookList.Id;
             #endregion
         }
@@ -159,6 +161,8 @@ namespace TM.SP.DataModel
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(outcomeRequestStateList, PlumsailFields.TmTaxiLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(outcomeRequestStateList, PlumsailFields.TmLicenseLookupXml.ToXml(),
+                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestAttachList, PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestAttachList, PlumsailFields.TmDocumentTypeLookupXml.ToXml(),
@@ -178,6 +182,8 @@ namespace TM.SP.DataModel
             ListHelpers.AddFieldAsXmlToList(attachLibrary          , PlumsailFields.TmIncomeRequestAttachLookupXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(licenseList            , PlumsailFields.TmLicenseParentLicenseLookupXml.ToXml(),
+               AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(licenseList, PlumsailFields.TmLicenseRootParentLicenseLookupXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(licenseList            , PlumsailFields.TmTaxiLookupXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);

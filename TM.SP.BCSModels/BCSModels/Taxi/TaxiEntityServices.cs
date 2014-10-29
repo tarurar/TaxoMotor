@@ -20,7 +20,7 @@ namespace TM.SP.BCSModels.Taxi
     using Microsoft.BusinessData;
     using Microsoft.BusinessData.SystemSpecific;
 
-    using TM.Utils;
+    using Utils;
 
     // Base class to share connection string retrieval for all entities
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
@@ -46,12 +46,12 @@ namespace TM.SP.BCSModels.Taxi
 
         protected SqlConnection getSqlConnection()
         {
-            var secureStoreAppId = BCS.GetLobSystemProperty(this.LobSystemInstance, "SecureStoreAppId");
+            var secureStoreAppId = BCS.GetLobSystemProperty(LobSystemInstance, "SecureStoreAppId");
 
             var cBuilder = new SqlConnectionStringBuilder()
             {
-                DataSource     = BCS.GetLobSystemProperty(this.LobSystemInstance, "DBServerName"),
-                InitialCatalog = BCS.GetLobSystemProperty(this.LobSystemInstance, "DBName"),
+                DataSource     = BCS.GetLobSystemProperty(LobSystemInstance, "DBServerName"),
+                InitialCatalog = BCS.GetLobSystemProperty(LobSystemInstance, "DBName"),
                 UserID         = Security.GetSecureStoreUserNameCredential(secureStoreAppId),
                 Password       = Security.GetSecureStorePasswordCredential(secureStoreAppId)
             };
@@ -66,17 +66,19 @@ namespace TM.SP.BCSModels.Taxi
     [System.CodeDom.Compiler.GeneratedCode("SPSF", "4.1")]
     public partial class LicenseEntityService : TaxiService
     {
-        public License ReadLicenseItem(System.Int32 Id)
+        public License ReadLicenseItem(Int32 id)
         {
-            SqlConnection thisConn = null;
             License entity = null;
 
             entity = new License();
-            thisConn = getSqlConnection();
+            SqlConnection thisConn = getSqlConnection();
             thisConn.Open();
-            SqlCommand selectCommand = new SqlCommand();
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License] WHERE [Id] = @Id";
-            selectCommand.Parameters.AddWithValue("@Id", Id);
+            var selectCommand = new SqlCommand
+            {
+                CommandText =
+                    "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License] WHERE [Id] = @Id"
+            };
+            selectCommand.Parameters.AddWithValue("@Id", id);
 
             selectCommand.Connection = thisConn;
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -91,6 +93,7 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
                 entity.Parent = thisReader["Parent"] as System.Nullable<System.Int32>;
+                entity.RootParent = thisReader["RootParent"] as System.Nullable<System.Int32>;
                 entity.Status = thisReader["Status"] as System.Nullable<System.Int32>;
                 entity.Document = (thisReader["Document"] == DBNull.Value) ? null : thisReader["Document"].ToString();
                 entity.Signature = (thisReader["Signature"] == DBNull.Value) ? null : thisReader["Signature"].ToString();
@@ -130,7 +133,7 @@ namespace TM.SP.BCSModels.Taxi
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License]";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License]";
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             while (thisReader.Read())
             {
@@ -145,6 +148,7 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
                 entity.Parent = thisReader["Parent"] as System.Nullable<System.Int32>;
+                entity.RootParent = thisReader["RootParent"] as System.Nullable<System.Int32>;
                 entity.Status = thisReader["Status"] as System.Nullable<System.Int32>;
                 entity.Document = (thisReader["Document"] == DBNull.Value) ? null : thisReader["Document"].ToString();
                 entity.Signature = (thisReader["Signature"] == DBNull.Value) ? null : thisReader["Signature"].ToString();
@@ -184,7 +188,7 @@ namespace TM.SP.BCSModels.Taxi
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[License] ([RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason]) VALUES (@RegNumber , @BlankSeries , @BlankNo , @OrgName , @Ogrn , @Inn , @Parent , @Status , @Document , @Signature , @TaxiId , @Lfb , @JuridicalAddress , @PhoneNumber , @AddContactData , @AccountAbbr , @TaxiBrand , @TaxiModel , @TaxiStateNumber , @TaxiYear , @OutputDate , @CreationDate , @TillDate , @TillSuspensionDate , @CancellationReason , @SuspensionReason , @ChangeReason , @InvalidReason) SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License] WHERE [Id] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[License] ([RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason]) VALUES (@RegNumber , @BlankSeries , @BlankNo , @OrgName , @Ogrn , @Inn , @Parent , @RootParent , @Status , @Document , @Signature , @TaxiId , @Lfb , @JuridicalAddress , @PhoneNumber , @AddContactData , @AccountAbbr , @TaxiBrand , @TaxiModel , @TaxiStateNumber , @TaxiYear , @OutputDate , @CreationDate , @TillDate , @TillSuspensionDate , @CancellationReason , @SuspensionReason , @ChangeReason , @InvalidReason) SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@RegNumber", (newentity.RegNumber == null) ? (object)DBNull.Value : newentity.RegNumber);
                 createCommand.Parameters.AddWithValue("@BlankSeries", (newentity.BlankSeries == null) ? (object)DBNull.Value : newentity.BlankSeries);
                 createCommand.Parameters.AddWithValue("@BlankNo", (newentity.BlankNo == null) ? (object)DBNull.Value : newentity.BlankNo);
@@ -192,6 +196,7 @@ namespace TM.SP.BCSModels.Taxi
                 createCommand.Parameters.AddWithValue("@Ogrn", (newentity.Ogrn == null) ? (object)DBNull.Value : newentity.Ogrn);
                 createCommand.Parameters.AddWithValue("@Inn", (newentity.Inn == null) ? (object)DBNull.Value : newentity.Inn);
                 createCommand.Parameters.AddWithValue("@Parent", (newentity.Parent == null) ? (object)DBNull.Value : newentity.Parent);
+                createCommand.Parameters.AddWithValue("@RootParent", (newentity.RootParent == null) ? (object)DBNull.Value : newentity.RootParent);
                 createCommand.Parameters.AddWithValue("@Status", (newentity.Status == null) ? (object)DBNull.Value : newentity.Status);
                 createCommand.Parameters.AddWithValue("@Document", (newentity.Document == null) ? (object)DBNull.Value : newentity.Document);
                 createCommand.Parameters.AddWithValue("@Signature", (newentity.Signature == null) ? (object)DBNull.Value : newentity.Signature);
@@ -229,6 +234,7 @@ namespace TM.SP.BCSModels.Taxi
                     createdEntity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                     createdEntity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
                     createdEntity.Parent = thisReader["Parent"] as System.Nullable<System.Int32>;
+                    createdEntity.RootParent = thisReader["RootParent"] as System.Nullable<System.Int32>;
                     createdEntity.Status = thisReader["Status"] as System.Nullable<System.Int32>;
                     createdEntity.Document = (thisReader["Document"] == DBNull.Value) ? null : thisReader["Document"].ToString();
                     createdEntity.Signature = (thisReader["Signature"] == DBNull.Value) ? null : thisReader["Signature"].ToString();
@@ -295,7 +301,7 @@ namespace TM.SP.BCSModels.Taxi
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[License] SET [RegNumber] = @RegNumber , [BlankSeries] = @BlankSeries , [BlankNo] = @BlankNo , [OrgName] = @OrgName , [Ogrn] = @Ogrn , [Inn] = @Inn , [Parent] = @Parent , [Status] = @Status , [Document] = @Document , [Signature] = @Signature , [TaxiId] = @TaxiId , [Lfb] = @Lfb , [JuridicalAddress] = @JuridicalAddress , [PhoneNumber] = @PhoneNumber , [AddContactData] = @AddContactData , [AccountAbbr] = @AccountAbbr , [TaxiBrand] = @TaxiBrand , [TaxiModel] = @TaxiModel , [TaxiStateNumber] = @TaxiStateNumber , [TaxiYear] = @TaxiYear , [OutputDate] = @OutputDate , [CreationDate] = @CreationDate , [TillDate] = @TillDate , [TillSuspensionDate] = @TillSuspensionDate , [CancellationReason] = @CancellationReason , [SuspensionReason] = @SuspensionReason , [ChangeReason] = @ChangeReason , [InvalidReason] = @InvalidReason WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[License] SET [RegNumber] = @RegNumber , [BlankSeries] = @BlankSeries , [BlankNo] = @BlankNo , [OrgName] = @OrgName , [Ogrn] = @Ogrn , [Inn] = @Inn , [Parent] = @Parent , [RootParent] = @RootParent , [Status] = @Status , [Document] = @Document , [Signature] = @Signature , [TaxiId] = @TaxiId , [Lfb] = @Lfb , [JuridicalAddress] = @JuridicalAddress , [PhoneNumber] = @PhoneNumber , [AddContactData] = @AddContactData , [AccountAbbr] = @AccountAbbr , [TaxiBrand] = @TaxiBrand , [TaxiModel] = @TaxiModel , [TaxiStateNumber] = @TaxiStateNumber , [TaxiYear] = @TaxiYear , [OutputDate] = @OutputDate , [CreationDate] = @CreationDate , [TillDate] = @TillDate , [TillSuspensionDate] = @TillSuspensionDate , [CancellationReason] = @CancellationReason , [SuspensionReason] = @SuspensionReason , [ChangeReason] = @ChangeReason , [InvalidReason] = @InvalidReason WHERE [Id] = @Id";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@RegNumber", (updateLicense.RegNumber == null) ? (object)DBNull.Value : updateLicense.RegNumber);
@@ -305,6 +311,7 @@ namespace TM.SP.BCSModels.Taxi
                 updateCommand.Parameters.AddWithValue("@Ogrn", (updateLicense.Ogrn == null) ? (object)DBNull.Value : updateLicense.Ogrn);
                 updateCommand.Parameters.AddWithValue("@Inn", (updateLicense.Inn == null) ? (object)DBNull.Value : updateLicense.Inn);
                 updateCommand.Parameters.AddWithValue("@Parent", (updateLicense.Parent == null) ? (object)DBNull.Value : updateLicense.Parent);
+                updateCommand.Parameters.AddWithValue("@RootParent", (updateLicense.RootParent == null) ? (object)DBNull.Value : updateLicense.RootParent);
                 updateCommand.Parameters.AddWithValue("@Status", (updateLicense.Status == null) ? (object)DBNull.Value : updateLicense.Status);
                 updateCommand.Parameters.AddWithValue("@Document", (updateLicense.Document == null) ? (object)DBNull.Value : updateLicense.Document);
                 updateCommand.Parameters.AddWithValue("@Signature", (updateLicense.Signature == null) ? (object)DBNull.Value : updateLicense.Signature);
@@ -345,7 +352,7 @@ namespace TM.SP.BCSModels.Taxi
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License] WHERE [Parent] = @Parent";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] FROM [dbo].[License] WHERE [Parent] = @Parent";
 
             selectCommand.Parameters.AddWithValue("@Parent", Parent);
 
@@ -363,6 +370,7 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
                 entity.Parent = thisReader["Parent"] as System.Nullable<System.Int32>;
+                entity.RootParent = thisReader["RootParent"] as System.Nullable<System.Int32>;
                 entity.Status = thisReader["Status"] as System.Nullable<System.Int32>;
                 entity.Document = (thisReader["Document"] == DBNull.Value) ? null : thisReader["Document"].ToString();
                 entity.Signature = (thisReader["Signature"] == DBNull.Value) ? null : thisReader["Signature"].ToString();

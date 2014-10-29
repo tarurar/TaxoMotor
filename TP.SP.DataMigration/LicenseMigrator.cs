@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
-using TM.SP.BCSModels.Taxi;
 using TM.SP.BCSModels.TaxiV2;
 using License = TM.SP.BCSModels.Taxi.License;
 using TM.Utils;
@@ -17,6 +11,19 @@ namespace TP.SP.DataMigration
 {
     public static class LicenseMigrator
     {
+        private static SPFieldLookupValue GetLicenseParentLookupValue(License license, int parentId, SPList parentList)
+        {
+            SPListItemCollection parentLicenses = parentList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().Where(x => (int)x["Tm_LicenseExternalId"] == parentId).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            if (parentLicenses.Count != 1)
+                throw new Exception(String.Format("Expected single parent item in a sharepoint list {0}. Parent external id = {1}. Item external id = {2}. Currently, there are {3} parent items in sharepoint list.", parentList.Title, parentId, license.Id, parentLicenses.Count));
+
+            return new SPFieldLookupValue(parentLicenses[0].ID, parentLicenses[0].Title);
+        }
         public static SPListItem Execute(SPWeb web, License license)
         {
             SPList list = web.GetListOrBreak("Lists/LicenseList");
@@ -25,7 +32,7 @@ namespace TP.SP.DataMigration
             string yearStr = license.CreationDate.HasValue ? license.CreationDate.Value.Year.ToString(CultureInfo.CurrentCulture) : "noDate";
             string monthstr = license.CreationDate.HasValue ? license.CreationDate.Value.ToString("MMM", CultureInfo.CurrentCulture) : "noDate";
             string num = license.RegNumber;
-            SPFolder parentFolder = list.RootFolder.CreateSubFolders(new string[] { yearStr, monthstr, num });
+            SPFolder parentFolder = list.RootFolder.CreateSubFolders(new[] { yearStr, monthstr, num });
 
             SPListItem newItem = list.AddItem(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
 
@@ -55,7 +62,7 @@ namespace TP.SP.DataMigration
             newItem["Tm_LicenseExternalId"]           = license.Id;
 
             // license status
-            string status = String.Empty;
+            string status;
             switch (license.Status)
             {
                 case 0:
@@ -82,7 +89,7 @@ namespace TP.SP.DataMigration
                 newItem["Tm_TaxiLookup"] = new SPFieldLookupValue(taxiItem.ID, taxiItem.Title);
             }
             // external link to LicenseAllView
-            LicenseAllView licenseAllViewLookup = BCS.ExecuteBcsMethod<LicenseAllView>(new BcsMethodExecutionInfo()
+            var licenseAllViewLookup = BCS.ExecuteBcsMethod<LicenseAllView>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBTaxiV2SystemName,
                 ns          = BCS.LOBTaxiV2SystemNamespace,
@@ -93,18 +100,10 @@ namespace TP.SP.DataMigration
             BCS.SetBCSFieldValue(newItem, "Tm_LicenseAllViewBcsLookup", licenseAllViewLookup);
             // parent lookup
             if (license.Parent.HasValue)
-            {
-                SPListItemCollection parentLicenses = list.GetItems(new SPQuery()
-                {
-                    Query = Camlex.Query().Where(x => (int)x["Tm_LicenseExternalId"] == license.Parent.Value).ToString(),
-                    ViewAttributes = "Scope='RecursiveAll'"
-                });
-
-                if (parentLicenses.Count != 1)
-                    throw new Exception(String.Format("Expected single parent item in a sharepoint list {0}. Parent external id = {1}. Item external id = {2}. Currently, there are {3} parent items in sharepoint list.", list.Title, license.Parent.Value, license.Id, parentLicenses.Count));
-
-                newItem["Tm_LicenseParentLicenseLookup"] = new SPFieldLookupValue(parentLicenses[0].ID, parentLicenses[0].Title);
-            }
+                newItem["Tm_LicenseParentLicenseLookup"] = GetLicenseParentLookupValue(license, license.Parent.Value, list);
+            // root parent lookup
+            if (license.RootParent.HasValue)
+                newItem["Tm_LicenseRootParentLicenseLookup"] = GetLicenseParentLookupValue(license, license.RootParent.Value, list);
             newItem["ContentTypeId"] = list.ContentTypes["Tm_License"].Id;
 
             newItem.Update();

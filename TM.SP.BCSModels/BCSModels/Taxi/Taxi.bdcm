@@ -20,7 +20,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.32" EstimatedInstanceCount="100000" DefaultDisplayName="License">
+				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.33" EstimatedInstanceCount="100000" DefaultDisplayName="License">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Taxi.LicenseEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -115,6 +115,7 @@
 														</Interpretation>
 													</TypeDescriptor>
 													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="License" IdentifierEntityNamespace="TM.SP.BCSModels.Taxi" ForeignIdentifierAssociationName="IdOfLicenseToParentOfLicense" ForeignIdentifierAssociationEntityName="License" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.Taxi" />
+                          <TypeDescriptor Name="RootParent" DefaultDisplayName="RootParent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
 														<Properties>
@@ -338,6 +339,7 @@
 												</Interpretation>
 											</TypeDescriptor>
 											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="License" IdentifierEntityNamespace="TM.SP.BCSModels.Taxi" ForeignIdentifierAssociationName="IdOfLicenseToParentOfLicense" ForeignIdentifierAssociationEntityName="License" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.Taxi" />
+                      <TypeDescriptor Name="RootParent" DefaultDisplayName="RootParent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
 												<Properties>
@@ -551,6 +553,7 @@
 												</Interpretation>
 											</TypeDescriptor>
 											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true" IdentifierName="Id" IdentifierEntityName="License" IdentifierEntityNamespace="TM.SP.BCSModels.Taxi" ForeignIdentifierAssociationName="IdOfLicenseToParentOfLicense" ForeignIdentifierAssociationEntityName="License" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.Taxi" />
+                      <TypeDescriptor Name="RootParent" DefaultDisplayName="RootParent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true" />
 											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String" CreatorField="true">
 												<Properties>
@@ -754,6 +757,7 @@
 												</Interpretation>
 											</TypeDescriptor>
 											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="License" IdentifierEntityNamespace="TM.SP.BCSModels.Taxi" ForeignIdentifierAssociationName="IdOfLicenseToParentOfLicense" ForeignIdentifierAssociationEntityName="License" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.Taxi" />
+                      <TypeDescriptor Name="RootParent" DefaultDisplayName="RootParent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
 												<Properties>
@@ -986,6 +990,7 @@
 												</Interpretation>
 											</TypeDescriptor>
 											<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" IdentifierName="Id" IdentifierEntityName="License" IdentifierEntityNamespace="TM.SP.BCSModels.Taxi" ForeignIdentifierAssociationName="IdOfLicenseToParentOfLicense" ForeignIdentifierAssociationEntityName="License" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.Taxi" />
+                      <TypeDescriptor Name="RootParent" DefaultDisplayName="RootParent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" />
 											<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true" />
 											<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String" UpdaterField="true">
 												<Properties>
@@ -1209,6 +1214,7 @@
 														</Interpretation>
 													</TypeDescriptor>
 													<TypeDescriptor Name="Parent" DefaultDisplayName="Parent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" IdentifierName="Id" IdentifierEntityName="License" IdentifierEntityNamespace="TM.SP.BCSModels.Taxi" ForeignIdentifierAssociationName="IdOfLicenseToParentOfLicense" ForeignIdentifierAssociationEntityName="License" ForeignIdentifierAssociationEntityNamespace="TM.SP.BCSModels.Taxi" />
+                          <TypeDescriptor Name="RootParent" DefaultDisplayName="RootParent" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 													<TypeDescriptor Name="Status" DefaultDisplayName="Status" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
 													<TypeDescriptor Name="Document" DefaultDisplayName="Document" TypeName="System.String">
 														<Properties>

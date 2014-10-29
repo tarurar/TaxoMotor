@@ -245,6 +245,34 @@ namespace TM.SP.DataModel.Plumsail
             nsNewText    = String.Empty
         };
 
+        public static CrossSiteLookupDefinition TmLicenseRootParentLicenseLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id           = new Guid("{C6FDD9BF-502A-4B2A-84A4-A75167FBDE29}"),
+            Title        = "Корневой родитель",
+            InternalName = "Tm_LicenseRootParentLicenseLookup",
+            FieldType    = BuiltInFieldTypes.Lookup,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+            ShowField    = "Title",
+            Required     = false,
+            Mult         = false,
+            nsShowNew    = false,
+            nsNewText    = String.Empty
+        };
+
+        public static CrossSiteLookupDefinition TmLicenseLookupXml = new CrossSiteLookupDefinition()
+        {
+            Id           = new Guid("{837FC12D-7D49-48EB-AFDD-E75E0A0FA2FF}"),
+            Title        = "Разрешение",
+            InternalName = "Tm_LicenseLookup",
+            FieldType    = BuiltInFieldTypes.Lookup,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+            ShowField    = "Title",
+            Required     = false,
+            Mult         = false,
+            nsShowNew    = false,
+            nsNewText    = String.Empty
+        };
+
         public static CrossSiteLookupDefinition TmDocumentTypeLookupXml = new CrossSiteLookupDefinition()
         {
             Id           = new Guid("{77F5777C-5AB3-4DA2-8379-DAADB011D09E}"),

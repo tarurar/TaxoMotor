@@ -9,6 +9,7 @@
     [Ogrn] NVARCHAR(255) NULL, 
     [Inn] NVARCHAR(255) NULL, 
     [Parent] INT NULL, 
+	[RootParent] INT NULL, 
     [Status] INT NULL, 
     [Document] XML NULL, 
     [Signature] XML NULL, 
@@ -30,5 +31,6 @@
     [SuspensionReason] NVARCHAR(MAX) NULL, 
     [ChangeReason] NVARCHAR(MAX) NULL, 
     [InvalidReason] NVARCHAR(MAX) NULL,  
-    CONSTRAINT [FK_License_ToLicense_Parent] FOREIGN KEY ([Parent]) REFERENCES [dbo].[License]([Id]) 
+    CONSTRAINT [FK_License_ToLicense_Parent] FOREIGN KEY ([Parent]) REFERENCES [dbo].[License]([Id]),
+	CONSTRAINT [FK_License_ToLicense_RootParent] FOREIGN KEY ([RootParent]) REFERENCES [dbo].[License]([Id]) 
 )
