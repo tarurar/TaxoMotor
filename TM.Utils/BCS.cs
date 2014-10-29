@@ -611,13 +611,15 @@ namespace TM.Utils
         #endregion
 
         #region [properties]
-        public static readonly string LOBRequestSystemName = "CoordinateV5";
-        public static readonly string LOBTaxiSystemName = "Taxi";
-        public static readonly string LOBTaxiV2SystemName = "TaxiV2";
+        public static readonly string LOBRequestSystemName      = "CoordinateV5";
+        public static readonly string LOBTaxiSystemName         = "Taxi";
+        public static readonly string LOBTaxiV2SystemName       = "TaxiV2";
+        public static readonly string LOBUtilitySystemName      = "Utility";
 
         public static readonly string LOBRequestSystemNamespace = "TM.SP.BCSModels.CoordinateV5";
-        public static readonly string LOBTaxiSystemNamespace = "TM.SP.BCSModels.Taxi";
-        public static readonly string LOBTaxiV2SystemNamespace = "TM.SP.BCSModels.TaxiV2";
+        public static readonly string LOBTaxiSystemNamespace    = "TM.SP.BCSModels.Taxi";
+        public static readonly string LOBTaxiV2SystemNamespace  = "TM.SP.BCSModels.TaxiV2";
+        public static readonly string LOBUtilitySystemNamespace = "TM.SP.BCSModels.Utility";
         #endregion
 
         #region [public methods]
