@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.BusinessData.MetadataModel;
+using Microsoft.SharePoint;
 
 namespace TM.Utils
 {
@@ -24,6 +25,19 @@ namespace TM.Utils
             }, serviceCode);
 
             return String.Format(pattern, orgCode, sysCode, service, number, year);
+        }
+
+        public static bool TryGetListItemFromLookupValue(object fieldValue, SPFieldLookup field, out SPListItem item)
+        {
+            item = null;
+            if (fieldValue == null || (string) fieldValue == String.Empty) return false;
+
+            SPWeb web = field.ParentList.ParentWeb;
+            var lookupList = web.Lists[new Guid(field.LookupList)];
+            var lookupValue = new SPFieldLookupValue(fieldValue.ToString());
+
+            item = lookupList.GetItemById(lookupValue.LookupId);
+            return true;
         }
     }
 }
