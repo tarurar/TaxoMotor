@@ -340,15 +340,15 @@ namespace TM.SP.AppPages
             var svcGuid = Config.GetConfigValue(configItem);
             var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
             var internalMessage = GetRelevantCoordinateTaskMessage(doc);
-
-            return new MessageQueueService.Message()
+            
+            return new MessageQueueService.Message
             {
                 Service         = svc,
                 MessageId       = new Guid(internalMessage.ServiceHeader.MessageId),
                 MessageType     = 2,
                 MessageMethod   = 14,
                 MessageDate     = DateTime.Now,
-                MessageText     = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
+                MessageText     = internalMessage.ToXElement<CoordinateTaskMessage>().ToString()
             };
         }
         #endregion

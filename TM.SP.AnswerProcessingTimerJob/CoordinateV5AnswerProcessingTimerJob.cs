@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 using System.IO;
-using System.Threading.Tasks;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using Microsoft.SharePoint.Administration;
 using CamlexNET;
 
 using TM.Utils;
-using TM.ServiceClients;
 using TM.Services.CoordinateV5;
 using MessageQueueService = TM.ServiceClients.MessageQueue;
 using CoordinateV5File = TM.Services.CoordinateV5.File;
@@ -32,36 +29,42 @@ namespace TM.SP.AnswerProcessingTimerJob
             return SPUtility.GetLocalizedString(
                 string.Format("$Resources:_FeatureId{0},{1}", FeatureId, resourceName), string.Empty, 1033);
         }
-        public CoordinateV5AnswerProcessingTimerJob() : base() {}
+        public CoordinateV5AnswerProcessingTimerJob()
+        {}
 
         public CoordinateV5AnswerProcessingTimerJob(string jobName, SPService service): base(jobName, service, null, SPJobLockType.None)
         {
-            this.Title = GetFeatureLocalizedResource("JobTitle");
+            Title = GetFeatureLocalizedResource("JobTitle");
         }
 
         public CoordinateV5AnswerProcessingTimerJob(string jobName, SPWebApplication webapp): base(jobName, webapp, null, SPJobLockType.Job)
         {
-            this.Title = GetFeatureLocalizedResource("JobTitle");
+            Title = GetFeatureLocalizedResource("JobTitle");
         }
 
         public override void Execute(Guid targetInstanceId)
         {
-            try 
-	        {
-                SPWebApplication webApp = this.Parent as SPWebApplication;
-                foreach (SPSite siteCollection in webApp.Sites)
+            try
+            {
+                var webApp = Parent as SPWebApplication;
+                if (webApp != null)
                 {
-                    SPWeb web = siteCollection.RootWeb;
-                    SPListItemCollection requestList = GetOutcomeRequests(web, 5);
-                    foreach (SPListItem request in requestList)
+                    foreach (SPSite siteCollection in webApp.Sites)
                     {
-                        CoordinateV5File[] answer = GetAnswerForOutcomeRequest(web, request);
-                        if (answer.Count() > 0)
-                            UpdateOutcomeRequestWithAnswer(request, answer);
+                        SPWeb web = siteCollection.RootWeb;
+                        SPListItemCollection requestList = GetOutcomeRequests(web, 5);
+                        foreach (SPListItem request in requestList)
+                        {
+                            CoordinateV5File[] answer = GetAnswerForOutcomeRequest(web, request);
+                            if (answer.Any())
+                            {
+                                UpdateOutcomeRequestWithAnswer(request, answer);
+                            }
+                        }
                     }
                 }
-	        }
-	        catch (Exception ex)
+            }
+            catch (Exception ex)
 	        {
                 throw new Exception(String.Format(GetFeatureLocalizedResource("AnswerProcessGeneralErrorFmt"), ex.Message));
 	        }
@@ -96,7 +99,7 @@ namespace TM.SP.AnswerProcessingTimerJob
             foreach (MessageQueueService.Message message in messageList)
             {
                 var serializer = new XmlSerializer(typeof(CoordinateStatusMessage));
-                CoordinateStatusMessage csMessage = null;
+                CoordinateStatusMessage csMessage;
                 using (TextReader reader = new StringReader(message.MessageText))
                 {
                     csMessage = (CoordinateStatusMessage)serializer.Deserialize(reader);
@@ -119,7 +122,7 @@ namespace TM.SP.AnswerProcessingTimerJob
         {
             SPList list = web.GetListOrBreak("Lists/OutcomeRequestStateList");
 
-            SPListItemCollection items = list.GetItems(new SPQuery()
+            SPListItemCollection items = list.GetItems(new SPQuery
             {
                 Query = Camlex.Query().Where(x => (bool)x["Tm_AnswerReceived"] == false).ToString(),
                 RowLimit = count
