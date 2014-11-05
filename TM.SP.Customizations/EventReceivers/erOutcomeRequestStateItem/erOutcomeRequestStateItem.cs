@@ -57,7 +57,7 @@ namespace TM.SP.Customizations
 
         private static void DoItemUpdating(SPItemEventProperties properties, SPWeb web)
         {
-            var answered = properties.AfterProperties["Tm_AnswerReceived"].ToString() == "1";
+            var answered = properties.AfterProperties["Tm_AnswerReceived"] != null && properties.AfterProperties["Tm_AnswerReceived"].ToString() == "1";
 
             if (!properties.IsFieldChanged("Tm_AnswerReceived") || !answered) return;
 
