@@ -103,7 +103,7 @@ namespace TP.SP.DataMigration
                 newItem["Tm_LicenseParentLicenseLookup"] = GetLicenseParentLookupValue(license, license.Parent.Value, list);
             // root parent lookup
             if (license.RootParent.HasValue)
-                newItem["Tm_LicenseRootParentLicenseLookup"] = GetLicenseParentLookupValue(license, license.RootParent.Value, list);
+                newItem["Tm_LicenseRtParentLicenseLookup"] = GetLicenseParentLookupValue(license, license.RootParent.Value, list);
             newItem["ContentTypeId"] = list.ContentTypes["Tm_License"].Id;
 
             newItem.Update();
