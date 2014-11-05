@@ -249,7 +249,7 @@ namespace TM.SP.DataModel.Plumsail
         {
             Id           = new Guid("{C6FDD9BF-502A-4B2A-84A4-A75167FBDE29}"),
             Title        = "Корневой родитель",
-            InternalName = "Tm_LicenseRootParentLicenseLookup",
+            InternalName = "Tm_LicenseRtParentLicenseLookup",
             FieldType    = BuiltInFieldTypes.Lookup,
             Group        = ModelConsts.ColumnsDefaultGroup,
             ShowField    = "Title",

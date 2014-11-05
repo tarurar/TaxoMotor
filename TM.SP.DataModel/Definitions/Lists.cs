@@ -171,5 +171,14 @@ namespace TM.SP.DataModel
             Description         = "Список видов документов",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmIncomeRequestStatusLogList = new ListDefinition()
+        {
+            Title               = "История статусов обращений",
+            Url                 = "IncomeRequestStatusLogList",
+            TemplateType        = BuiltInListTemplateTypeId.GenericList,
+            Description         = "История статусов обращений",
+            ContentTypesEnabled = true
+        };
     }
 }

@@ -152,6 +152,7 @@ namespace TM.SP.DataModel
                         f => f.OnCreated((FieldDefinition fieldDef, Field spField) =>
                             spField.MakeChoices(new String[] { "Портал госуслуг", "Очный визит" })))
                     .AddField(Fields.TmShortName)
+                    .AddField(Fields.TmXmlValue)
                 )
                 .WithContentTypes(
                     ctList => ctList
@@ -209,6 +210,8 @@ namespace TM.SP.DataModel
                         .AddContentType(ContentTypes.TmDocumentType, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmShortName))
+                        .AddContentType(ContentTypes.TmIncomeRequestStatusLog, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmXmlValue))
                 );
 
             return model;
@@ -247,6 +250,8 @@ namespace TM.SP.DataModel
                         })
                         .AddList(Lists.TmDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmDocumentType))
+                        .AddList(Lists.TmIncomeRequestStatusLogList,
+                            l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestStatusLog))
                 );
 
             return model;

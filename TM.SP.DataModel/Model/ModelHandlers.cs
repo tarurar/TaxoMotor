@@ -58,6 +58,8 @@ namespace TM.SP.DataModel
                 ContentTypes.TmLicense.Name);
             ListHelpers.MakeContentTypeDefault(ctx, Lists.TmDocumentTypeBookList.Url,
                 ContentTypes.TmDocumentType.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIncomeRequestStatusLogList.Url,
+                ContentTypes.TmIncomeRequestStatusLog.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
@@ -141,12 +143,13 @@ namespace TM.SP.DataModel
             #region [Getting lists]
             Guid webId = WebHelpers.GetWebId(ctx);
             IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
-            List taxiList                = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
-            List outcomeRequestStateList = ListHelpers.GetList(allLists, Lists.TmOutcomeRequestStateList.Url);
-            List incomeRequestAttachList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestAttachList.Url);
-            List incomeRequestList       = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
-            List attachLibrary           = ListHelpers.GetList(allLists, Lists.TmAttachLib.Url);
-            List licenseList             = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
+            List taxiList                   = ListHelpers.GetList(allLists, Lists.TmTaxiList.Url);
+            List outcomeRequestStateList    = ListHelpers.GetList(allLists, Lists.TmOutcomeRequestStateList.Url);
+            List incomeRequestAttachList    = ListHelpers.GetList(allLists, Lists.TmIncomeRequestAttachList.Url);
+            List incomeRequestList          = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
+            List attachLibrary              = ListHelpers.GetList(allLists, Lists.TmAttachLib.Url);
+            List licenseList                = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
+            List incomeRequestStateLogList  = ListHelpers.GetList(allLists, Lists.TmIncomeRequestStatusLogList.Url);
             #endregion
             #region [Adding lookup fields]
             ListHelpers.AddFieldAsXmlToList(taxiList               , PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
@@ -186,6 +189,10 @@ namespace TM.SP.DataModel
             ListHelpers.AddFieldAsXmlToList(licenseList, PlumsailFields.TmLicenseRootParentLicenseLookupXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(licenseList            , PlumsailFields.TmTaxiLookupXml.ToXml(),
+               AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(incomeRequestStateLogList, PlumsailFields.TmIncomeRequestLookupXml.ToXml(),
+               AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(incomeRequestStateLogList, PlumsailFields.TmIncomeRequestStateLookupXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             #endregion
             #region [Adding TmCancellationReasonLookupXml field to TmCancelIncomeRequest contenttype ONLY]

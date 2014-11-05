@@ -62,6 +62,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmXmlValue = new FieldDefinition()
+        {
+            Id           = new Guid("{98A7BB85-7E83-4AA7-BFC8-268A1250FBC3}"),
+            Title        = "XML",
+            InternalName = "Tm_XmlValue",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Причина отказа]
