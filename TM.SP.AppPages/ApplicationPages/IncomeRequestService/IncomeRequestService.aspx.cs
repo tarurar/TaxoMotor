@@ -222,10 +222,10 @@ namespace TM.SP.AppPages
         }
 
         /// <summary>
-        /// Проверка возможности выдать разрешение по каждому транспортному средству, принятому в работу в указанном обращении
+        /// Проверка возможности выдать разрешение по каждому транспортному средству, принятому в работу в указанном обращении. Ошибкой считается наличие еще действующего разрешения (+ интервал).
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
-        /// <returns></returns>
+        /// <returns>Структура данных  с полями CanRelease и TaxiNumber. В TaxiNumber записывается номер первого ТС, которое не прошло проверку</returns>
         [WebMethod]
         public static dynamic CanReleaseNewLicensesForRequest(int incomeRequestId)
         {
@@ -242,6 +242,40 @@ namespace TM.SP.AppPages
                     var taxiItem = taxiList.GetItemById(Convert.ToInt32(taxiId));
                     failedTaxiNumber = taxiItem["Tm_TaxiStateNumber"] != null &&
                                        (string) taxiItem["Tm_TaxiStateNumber"] != String.Empty
+                        ? taxiItem["Tm_TaxiStateNumber"].ToString()
+                        : "Гос номер ТС не указан";
+                    break;
+                }
+            }
+
+            return new
+            {
+                CanRelease = failedTaxiNumber == String.Empty,
+                TaxiNumber = failedTaxiNumber
+            };
+        }
+
+        /// <summary>
+        /// Проверка наличия действующего разрешения у всех транспортных средства указанного обращения, принятых в работу. Ошибкой считается отсутствие действующего разрешения.
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns>Структура данных  с полями CanRelease и TaxiNumber. В TaxiNumber записывается номер первого ТС, которое не прошло проверку</returns>
+        [WebMethod]
+        public static dynamic HasRequestActingLicenses(int incomeRequestId)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var taxiList = web.GetListOrBreak("Lists/TaxiList");
+            var taxiIdList = GetAllWorkingTaxiInRequest(incomeRequestId);
+            var arrTaxi = taxiIdList.Split(';');
+
+            string failedTaxiNumber = String.Empty;
+            foreach (string taxiId in arrTaxi)
+            {
+                if (!HasTaxiActingLicense(Convert.ToInt32(taxiId)))
+                {
+                    var taxiItem = taxiList.GetItemById(Convert.ToInt32(taxiId));
+                    failedTaxiNumber = taxiItem["Tm_TaxiStateNumber"] != null &&
+                                       (string)taxiItem["Tm_TaxiStateNumber"] != String.Empty
                         ? taxiItem["Tm_TaxiStateNumber"].ToString()
                         : "Гос номер ТС не указан";
                     break;

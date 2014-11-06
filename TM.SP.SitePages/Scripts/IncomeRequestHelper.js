@@ -49,6 +49,16 @@
                 });
             };
 
+            ir.HasRequestActingLicenses = function (incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/HasRequestActingLicenses',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.SendEgripRequest = function (incomeRequestId, onsuccess, onfail) {
                 var url = SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRIPPage.aspx') + '?IsDlg=1&ListId=' +
                     _spPageContextInfo.pageListId + '&Items=' + incomeRequestId + '&Source=' + location.href;
@@ -240,7 +250,41 @@
                                                 ir.ApplyForNewForJuridicalPerson(incomeRequestId, onsuccess, onfail);
                                             }
                                         }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
-                                    } else onfail('Разрешение на ТС с номером ' + data3.d.TaxiNumber + ' уже существует');
+                                    } else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' уже существует');
+                                }).fail(onfail);
+                            } else onfail('В обращении нет ТС');
+                        }).fail(onfail);
+                    } else onfail('Не всем ТС проставлен признак');
+                }).fail(onfail);
+            };
+
+            ir.ApplyForDuplicate = function (incomeRequestId, onsuccess, onfail) {
+                // Проверить всем ли ТС присвоен статус
+                ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
+                    if (data && data.d) {
+                        // Проверить, остались ли в обращении ТС со статусом
+                        ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
+                            if (data && data.d) {
+                                // Провести проверку на дубли разрешений. Наличие дублей обязательно.
+                                ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
+                                    if (data && data.d.CanRelease) {
+                                        // Расчет сроков оказания услуги и установка статуса обращения
+                                        ir.CalculateDatesAndSetStatus(incomeRequestId, 1110).success(function () {
+                                            // Получение xml для измененного состояния обращения
+                                            ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                                //Подписывание xml
+                                                if (data && data.d) {
+                                                    ir.SignXml(data.d, function (signedData) {
+                                                        // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                        ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                            // Отправка статуса обращения по межведомственному взаимодействию
+                                                            ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                        }).fail(onfail);
+                                                    }, onfail);
+                                                } else onfail("Не удалось получить статус обращения в виде xml");
+                                            }).fail(onfail);
+                                        }).fail(onfail);
+                                    } else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' не существует');
                                 }).fail(onfail);
                             } else onfail('В обращении нет ТС');
                         }).fail(onfail);
