@@ -101,7 +101,7 @@ namespace TM.SP.DataModelDeploy
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            Options options = new Options();
+            var options = new Options();
             CommandLine.Parser.Default.ParseArguments(args, options);
 
             if (!CheckArguments(options))

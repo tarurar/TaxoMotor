@@ -196,7 +196,7 @@ namespace TM.SP.AppPages
                 ServiceHeader = new Headers()
                 {
                     FromOrgCode     = Consts.TaxoMotorSysCode,
-                    ToOrgCode       = Consts.ASGUFSysCode,
+                    ToOrgCode       = Consts.AsgufSysCode,
                     MessageId       = Guid.NewGuid().ToString("D"),
                     RequestDateTime = DateTime.Now,
                     ServiceNumber   = sNumber

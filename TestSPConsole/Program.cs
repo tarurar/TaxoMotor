@@ -97,15 +97,22 @@ namespace TestSPConsole
         }
         static void Main(string[] args)
         {
-
             using (SPSite site = new SPSite("http://win-snu4u1n6vq1"))
             using (SPWeb web = site.OpenWeb())
             {
                 var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
-                    var date = DateTime.Now.Date;
-                    var date2 = SPUtility.CreateISO8601DateTimeFromSystemDateTime(date);
+                    var list = web.GetListOrBreak("Lists/LicenseList");
+                    SPListItem item = list.GetItemById(46);
+
+                    Console.OutputEncoding = System.Text.Encoding.Unicode; //_x0421__x0441__x044b__x043b__x04
+                    foreach (SPField f in item.Fields) //SecondaryFieldNamesHelper.Encode(new string[] { "LicenseAllView_IsLast" })
+                    {
+                        Console.WriteLine(f.Title + " * " + f.StaticName + " * " + f.InternalName);
+                    }
+
+                    Console.ReadKey();
                 }
             }
         }

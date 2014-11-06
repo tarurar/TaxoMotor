@@ -3,41 +3,28 @@
 // </copyright>
 // <author>SPDEV\developer</author>
 // <date>2014-08-06 17:56:53Z</date>
+// ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
+// ReSharper restore CheckNamespace
 {
     using System;
-    using System.IO;
     using System.Security.Permissions;
-    using System.Text;
-    using System.Web;
-    using System.Web.UI;
-    using System.Web.UI.HtmlControls;
     using System.Web.UI.WebControls;
     using System.Xml;
     using System.Xml.Linq;
-    using System.Xml.Serialization;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Reflection;
-    using System.Data;
     using System.Linq;
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
-    using Microsoft.SharePoint.Utilities;
     using Microsoft.SharePoint.WebControls;
-    using Microsoft.SharePoint.Administration;
-    using Microsoft.SharePoint.BusinessData.SharedService;
-    using Microsoft.SharePoint.BusinessData.MetadataModel;
-    using Microsoft.BusinessData.Runtime;
     using Microsoft.BusinessData.MetadataModel;
-    using Microsoft.BusinessData.MetadataModel.Collections;
     using CamlexNET;
 
-    using TM.SP.AppPages.ApplicationPages;
-    using BcsCoordinateV5Model = TM.SP.BCSModels.CoordinateV5;
-    using TM.Utils;
-    using TM.Services.CoordinateV5;
-    using MessageQueueService = TM.ServiceClients.MessageQueue;
+    using ApplicationPages;
+    using BcsCoordinateV5Model = BCSModels.CoordinateV5;
+    using Utils;
+    using Services.CoordinateV5;
+    using MessageQueueService = ServiceClients.MessageQueue;
 
 
     [Serializable]
@@ -72,7 +59,7 @@ namespace TM.SP.AppPages
 
         #region [fields]
         protected static readonly string EGRULServiceGuidConfigName   = "BR2ServiceGuid";
-        protected static readonly string PrivateEntrepreneurCode      = "91";
+        public static readonly string PrivateEntrepreneurCode      = "91";
 
         protected SPGridView requestListGrid;
         protected SPGridView errorListGrid;
@@ -82,14 +69,14 @@ namespace TM.SP.AppPages
         /// <summary>
         /// Getting bcs entity RequestAccount by Id
         /// </summary>
-        /// <param name="Id">Id of entity RequestAccount</param>
+        /// <param name="id">Id of entity RequestAccount</param>
         /// <returns></returns>
-        protected BcsCoordinateV5Model.RequestAccount GetRequestAccount(int Id)
+        public static BcsCoordinateV5Model.RequestAccount GetRequestAccount(int id)
         {
             IEntity contentType = BCS.GetEntity(SPServiceContext.Current, String.Empty, 
                 BCS.LOBRequestSystemNamespace, "RequestAccount");
             List<object> args = new List<object>();
-            args.Add(Id);
+            args.Add(id);
             var parameters = args.ToArray();
             return (BcsCoordinateV5Model.RequestAccount)BCS.GetDataFromMethod(BCS.LOBRequestSystemName, 
                 contentType, "ReadRequestAccountItem", MethodInstanceType.SpecificFinder, ref parameters);
@@ -127,7 +114,7 @@ namespace TM.SP.AppPages
             if (rAccount == null)
                 throw new Exception(String.Format("Bcs entity with Id = {0} not found", item.RequestAccountId));
             // service code lookup item
-            var stList  = this.Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
+            var stList  = Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
             var stItem  = stList.GetItemOrNull(rDocument);
             var sCode   = stItem == null ? String.Empty : 
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
@@ -135,7 +122,7 @@ namespace TM.SP.AppPages
             var message = Helpers.GetEGRULMessageTemplate(getTaskParam(rAccount));
             message.ServiceHeader.ServiceNumber            = sNumber;
             message.TaskMessage.Task.Responsible.FirstName = String.Empty;
-            message.TaskMessage.Task.Responsible.LastName  = this.Web.CurrentUser.Name;
+            message.TaskMessage.Task.Responsible.LastName  = Web.CurrentUser.Name;
             message.TaskMessage.Task.ServiceNumber         = sNumber;
             message.TaskMessage.Task.ServiceTypeCode       = sCode;
             return message;
@@ -145,19 +132,19 @@ namespace TM.SP.AppPages
         {
             base.CreateChildControls();
             #region [document list grid]
-            requestListGrid = new SPGridView() { AutoGenerateColumns = false };
-            requestListGrid.Columns.Add(new SPBoundField()
+            requestListGrid = new SPGridView { AutoGenerateColumns = false };
+            requestListGrid.Columns.Add(new SPBoundField
             {
                 HeaderText = "ID",
                 DataField = "Id",
                 Visible = false
             });
-            requestListGrid.Columns.Add(new SPBoundField()
+            requestListGrid.Columns.Add(new SPBoundField
             {
                 HeaderText = GetLocalizedString(resRequestListTableHeader1),
                 DataField = "Title"
             });
-            requestListGrid.Columns.Add(new SPBoundField()
+            requestListGrid.Columns.Add(new SPBoundField
             {
                 HeaderText = GetLocalizedString(resRequestListTableHeader2),
                 DataField = "RequestAccount"
@@ -166,8 +153,8 @@ namespace TM.SP.AppPages
             RequestListTablePanel.Controls.Add(requestListGrid);
             #endregion
             #region [error list grid]
-            errorListGrid = new SPGridView() { AutoGenerateColumns = false };
-            errorListGrid.Columns.Add(new SPBoundField()
+            errorListGrid = new SPGridView { AutoGenerateColumns = false };
+            errorListGrid.Columns.Add(new SPBoundField
             {
                 HeaderText = GetLocalizedString(resErrorListHeader1),
                 DataField = "Message",
@@ -197,8 +184,8 @@ namespace TM.SP.AppPages
         {
             base.OnLoad(e);
 
-            this.BtnOk.Click += new EventHandler(this.BtnOk_Click);
-            this.BtnCancel.Click += new EventHandler(this.BtnCancel_Click);
+            BtnOk.Click += BtnOk_Click;
+            BtnCancel.Click += BtnCancel_Click;
         }
         /// <summary>
         /// Loading documents
@@ -210,11 +197,12 @@ namespace TM.SP.AppPages
             SPList docList = GetList();
             var idList = ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
             
-            SPListItemCollection docItems = docList.GetItems(new SPQuery(){
+            SPListItemCollection docItems = docList.GetItems(new SPQuery 
+            {
                 Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString()
             });
             
-            List<EGRULRequestItem> retVal = new List<EGRULRequestItem>();
+            var retVal = new List<EGRULRequestItem>();
             foreach (SPListItem item in docItems)
             {
                 BcsCoordinateV5Model.RequestAccount accountEntity = null;
@@ -223,7 +211,7 @@ namespace TM.SP.AppPages
                 if (accountId != null)
                     accountEntity = GetRequestAccount((int)accountId);
 
-                retVal.Add(new EGRULRequestItem()
+                retVal.Add(new EGRULRequestItem
                 {
                     Id                  = item.ID,
                     Title               = item.Title,
@@ -253,7 +241,7 @@ namespace TM.SP.AppPages
                 #region [Rule#1 - RequestAccount cannot be null]
                 if (String.IsNullOrEmpty(doc.RequestAccount))
                 {
-                    retVal.Add(new ValidationErrorInfo()
+                    retVal.Add(new ValidationErrorInfo
                     {
                         Message = String.Format(GetLocalizedString(resNoAccountErrorFmt), doc.Title),
                         Severity = ValidationErrorSeverity.Warning
@@ -265,7 +253,7 @@ namespace TM.SP.AppPages
                 #region [Rule#2 - RequestAccount must be legal person (not private entrepreneur)]
                 if (doc.OrgFormCode == PrivateEntrepreneurCode)
                 {
-                    retVal.Add(new ValidationErrorInfo()
+                    retVal.Add(new ValidationErrorInfo
                     {
                         Message = String.Format(GetLocalizedString(resAccIsEntrprnrErrorFmt), doc.Title),
                         Severity = ValidationErrorSeverity.Warning
@@ -277,7 +265,7 @@ namespace TM.SP.AppPages
             }
 
             if (documentList.All(i => i.HasError))
-                retVal.Add(new ValidationErrorInfo()
+                retVal.Add(new ValidationErrorInfo
                 {
                     Message = GetLocalizedString(resNoDocumentsError),
                     Severity = ValidationErrorSeverity.Critical
@@ -295,11 +283,11 @@ namespace TM.SP.AppPages
         protected override void HandleDocumentsLoad<T>(List<T> documentList, List<ValidationErrorInfo> errorList)
         {
             // Save state
-            this.ViewState["requestDocumentList"] = documentList.Cast<EGRULRequestItem>().ToList();
+            ViewState["requestDocumentList"] = documentList.Cast<EGRULRequestItem>().ToList();
             // UI
             RequestList.Visible = !(documentList.All(i => i.HasError));
             ErrorList.Visible = errorList.Count() > 0;
-            BtnOk.Enabled = !errorList.Any<ValidationErrorInfo>(err => err.Severity == ValidationErrorSeverity.Critical);
+            BtnOk.Enabled = !errorList.Any(err => err.Severity == ValidationErrorSeverity.Critical);
         }
 
         /// <summary>
@@ -309,7 +297,7 @@ namespace TM.SP.AppPages
         /// <param name="e">Arguments of the event</param>
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            this.EndOperation(0);
+            EndOperation(0);
         }
 
         /// <summary>
@@ -322,21 +310,21 @@ namespace TM.SP.AppPages
             var success = false;
             try
             {
-                var documentList = (List<EGRULRequestItem>)this.ViewState["requestDocumentList"];
+                var documentList = (List<EGRULRequestItem>)ViewState["requestDocumentList"];
                 success = SendRequests<EGRULRequestItem>(documentList);
             }
             catch (Exception)
             {
-                this.EndOperation(-1);
+                EndOperation(-1);
             }
             
-            this.EndOperation(success ? 1 : -1);
+            EndOperation(success ? 1 : -1);
         }
 
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
             EGRULRequestItem doc = document as EGRULRequestItem;
-            SPListItem configItem = Config.GetConfigItem(this.Web, EGRULServiceGuidConfigName);
+            SPListItem configItem = Config.GetConfigItem(Web, EGRULServiceGuidConfigName);
             var svcGuid = Config.GetConfigValue(configItem);
             var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
             var internalMessage = GetRelevantCoordinateTaskMessage(doc);

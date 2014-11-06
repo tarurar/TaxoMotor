@@ -77,6 +77,13 @@
     <Compile Include="ApplicationPages\DialogLayoutsPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx.cs">
+      <DependentUpon>IncomeRequestService.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx.designer.cs">
+      <DependentUpon>IncomeRequestService.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationPages\LicenseService\LicenseService.aspx.cs">
       <DependentUpon>LicenseService.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -118,6 +125,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ApplicationPages\IncomeRequestService\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{bf49c9d8-e24e-40d4-acad-ced08c80037e}</SharePointProjectItemId>
+    </None>
     <None Include="ApplicationPages\LicenseService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{7845935f-55e5-41c5-bed4-a7b3d4c61baf}</SharePointProjectItemId>
     </None>
@@ -152,6 +162,7 @@
     <Folder Include="Features\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
     <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />

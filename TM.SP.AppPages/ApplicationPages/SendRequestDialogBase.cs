@@ -43,7 +43,7 @@ namespace TM.SP.AppPages.ApplicationPages
         /// <returns></returns>
         protected SPList GetList()
         {
-            return this.Web.Lists.GetList(ListIdParam, false);
+            return Web.Lists.GetList(ListIdParam, false);
         }
         /// <summary>
         /// ListId parameter from query string
