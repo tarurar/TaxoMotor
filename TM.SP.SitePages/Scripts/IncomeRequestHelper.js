@@ -232,6 +232,10 @@
                 }, onfail);
             };
 
+            ir.ApplyForChangeForJuridicalPerson = ir.ApplyForNewForJuridicalPerson;
+
+            ir.ApplyForChangeForPrivateEntrepreneur = ir.ApplyForNewForPrivateEntrepreneur;
+
             ir.ApplyForNew = function(incomeRequestId, onsuccess, onfail) {
                 // Проверить всем ли ТС присвоен статус
                 ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
@@ -291,6 +295,34 @@
                     } else onfail('Не всем ТС проставлен признак');
                 }).fail(onfail);
             };
+
+            ir.ApplyForChange = function (incomeRequestId, onsuccess, onfail) {
+                // Проверить всем ли ТС присвоен статус
+                ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
+                    if (data && data.d) {
+                        // Проверить, остались ли в обращении ТС со статусом
+                        ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
+                            if (data && data.d) {
+                                // Провести проверку на дубли разрешений. Наличие дублей обязательно.
+                                ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
+                                    if (data && data.d.CanRelease) {
+                                        // Заявитель - индивидуальный предприниматель?
+                                        ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
+                                            if (data && data.d) {
+                                                ir.ApplyForChangeForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
+                                            } else {
+                                                ir.ApplyForChangeForJuridicalPerson(incomeRequestId, onsuccess, onfail);
+                                            }
+                                        }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
+                                    } else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' не существует');
+                                }).fail(onfail);
+                            } else onfail('В обращении нет ТС');
+                        }).fail(onfail);
+                    } else onfail('Не всем ТС проставлен признак');
+                }).fail(onfail);
+            }
+
+            ir.ApplyForCancellation = ir.ApplyForChange;
 
             ir.IsRequestDeclarantPrivateEntrepreneur = function (incomeRequestId) {
                 return $.ajax({
