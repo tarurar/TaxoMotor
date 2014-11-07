@@ -20,14 +20,14 @@ namespace TM.SP.BCSModels.Taxi
                                             OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[LicenseId]
                                             SELECT TOP 1 @Status, GETDATE(), l.[Id] FROM [dbo].[License] l
                                             LEFT JOIN [dbo].[LicenseMigrationTicket] m on m.[LicenseId] = l.[Id]
-                                            WHERE m.[Title] IS NULL
+                                            WHERE m.[Title] IS NULL AND l.[Status] <> 4
                                             ORDER BY l.[Parent] ASC"; // we need an order instruction to be sure in the parent existance
                 
             const string selectItemText = @"INSERT INTO [dbo].[LicenseMigrationTicket] ([Status], [StartDate], [LicenseId])
                                             OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[LicenseId]
                                             SELECT @Status, GETDATE(), l.[Id] FROM [dbo].[License] l
                                             LEFT JOIN [dbo].[LicenseMigrationTicket] m on m.[LicenseId] = l.[Id]
-                                            WHERE m.[Title] IS NULL AND l.[Id] = @ItemId
+                                            WHERE m.[Title] IS NULL AND l.[Id] = @ItemId AND l.[Status] <> 4
                                             ORDER BY l.[Parent] ASC";
 
             if (ItemId == 0)
