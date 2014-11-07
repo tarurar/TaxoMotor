@@ -9,3 +9,4 @@ FROM [dbo].[License] AS L1
 LEFT JOIN [dbo].[License] L2 ON L1.Id = L2.Parent
 WHERE 
     L1.Parent IS NOT NULL   -- changed
+	AND L1.STATUS <> 4		-- no drafts
