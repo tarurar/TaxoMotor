@@ -324,6 +324,56 @@
 
             ir.ApplyForCancellation = ir.ApplyForChange;
 
+            ir.SetRefuseReasonAndComment = function(incomeRequestId, refuseReasonCode, refuseComment) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/SetRefuseReasonAndComment',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' , refuseReasonCode: ' + refuseReasonCode + ' , refuseComment: "' + refuseComment + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.Refuse = function(incomeRequestId, onsuccess, onfail) {
+                // Получим причину и комментарий
+                var options = {
+                    url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/DenyIncomeRequest.aspx',
+                    title: 'Отказ по обращению',
+                    allowMaximize: false,
+                    width: 600,
+                    showClose: true,
+                    dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                        if (result == SP.UI.DialogResult.OK) {
+
+                            var reasonCode = returnValue.SelectedReason.Code;
+                            var reasonText = returnValue.ActionComment;
+
+                            // Установка причины отказа и комментария
+                            ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText).success(function() {
+                                // Установка статуса обращения
+                                ir.CalculateDatesAndSetStatus(incomeRequestId, 1080).success(function () {
+                                    // Получение xml для измененного состояния обращения
+                                    ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                        //Подписывание xml
+                                        if (data && data.d) {
+                                            ir.SignXml(data.d, function (signedData) {
+                                                // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                    // Отправка статуса обращения по межведомственному взаимодействию
+                                                    ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                }).fail(onfail);
+                                            }, onfail);
+                                        } else onfail("Не удалось получить статус обращения в виде xml");
+                                    }).fail(onfail);
+                                }).fail(onfail);
+                            }).fail(onfail);
+                        }
+                    })
+                };
+
+                SP.UI.ModalDialog.showModalDialog(options);
+            };
+
             ir.IsRequestDeclarantPrivateEntrepreneur = function (incomeRequestId) {
                 return $.ajax({
                     type: 'POST',
@@ -358,13 +408,13 @@
                     }
 
                     if (errorMsg) {
-                        onfail(errorMsg);
+                        if (onfail) onfail(errorMsg);
                     } else {
                         onsuccess(signedData);
                     }
 
                 } else {
-                    onfail("При формировании ЭЦП не удалось обнаружить сертификат");
+                    if (onfail) onfail("При формировании ЭЦП не удалось обнаружить сертификат");
                 }
             };
 

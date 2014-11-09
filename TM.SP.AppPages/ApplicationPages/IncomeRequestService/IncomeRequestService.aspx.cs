@@ -329,6 +329,7 @@ namespace TM.SP.AppPages
 
         /// <summary>
         ///  Вычисление и установка сроков предоставления гос услуги, а также установка нового статуса
+        ///  Сроки вычисляются для всех ситуаций кроме Отказа
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
         /// <param name="statusCode">Новый статус</param>
@@ -345,7 +346,9 @@ namespace TM.SP.AppPages
                 var item       = list.GetItemById(incomeRequestId);
                 var statusItem = statusList.GetSingleListItemByFieldValue("Tm_ServiceCode", statusCode.ToString(CultureInfo.InvariantCulture));
 
-                item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(14).Date);
+                // В случае отказа сроки проедоставления услуги не рассчитываем
+                if (statusCode != 1080)
+                    item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(14).Date);
                 if (statusItem != null)
                     item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(statusItem.ID, statusItem.Title);
 
@@ -434,6 +437,38 @@ namespace TM.SP.AppPages
                 web.AllowUnsafeUpdates = false;
             }
 
+        }
+
+        /// <summary>
+        /// Установка причины отказа по обращению и комментария к отказу
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <param name="refuseReasonCode">Код причины отказа</param>
+        /// <param name="refuseComment">Текст комментария к отказу</param>
+        [WebMethod]
+        public static void SetRefuseReasonAndComment(int incomeRequestId, int refuseReasonCode, string refuseComment)
+        {
+            SPWeb web = SPContext.Current.Web;
+
+            web.AllowUnsafeUpdates = true;
+            try
+            {
+                var list = web.GetListOrBreak("Lists/IncomeRequestList");
+                var refuseList = web.GetListOrBreak("Lists/DenyReasonBookList");
+                var item = list.GetItemById(incomeRequestId);
+                var refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode", refuseReasonCode.ToString(CultureInfo.InvariantCulture));
+
+                if (refuseItem != null)
+                    item["Tm_DenyReasonLookup"] = new SPFieldLookupValue(refuseItem.ID, refuseItem.Title);
+                item["Tm_Comment"] = refuseComment;
+                item["Tm_RefuseDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+
+                item.Update();
+            }
+            finally
+            {
+                web.AllowUnsafeUpdates = false;
+            }
         }
     }
 }

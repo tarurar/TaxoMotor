@@ -17,5 +17,9 @@
       <Property Name="Title" Value="Возобновление действия разрешения" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\DenyIncomeRequest.aspx" Url="DenyIncomeRequest.aspx" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Отказ по обращению" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

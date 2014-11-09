@@ -8,5 +8,6 @@
     <File Path="Scripts\RenewalLicense.js" Url="RenewalLicense.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\jquery-2.1.1.min.js.map" Url="Scripts/jquery-2.1.1.min.js.map" />
     <File Path="Scripts\IncomeRequestHelper.js" Url="IncomeRequestHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\DenyIncomeRequest.js" Url="DenyIncomeRequest.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
   </Module>
 </Elements>

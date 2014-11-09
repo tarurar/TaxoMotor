@@ -123,12 +123,14 @@
       <DependentUpon>TaxoMotor_SitePages.feature</DependentUpon>
     </Content>
     <Content Include="Pages\CancellationLicense.aspx" />
+    <Content Include="Pages\DenyIncomeRequest.aspx" />
     <Content Include="Pages\Elements.xml" />
     <Content Include="Pages\licenseSearch.aspx" />
     <Content Include="Pages\RenewalLicense.aspx" />
     <Content Include="Pages\SuspendLicense.aspx" />
     <Content Include="Scripts\CancellationLicense.js" />
     <Content Include="Scripts\CryptoPro.js" />
+    <Content Include="Scripts\DenyIncomeRequest.js" />
     <Content Include="Scripts\Elements.xml" />
     <Content Include="Scripts\IncomeRequestHelper.js" />
     <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
@@ -143,6 +145,7 @@
     <Content Include="Scripts\SuspendLicense.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Styles\Elements.xml" />
+    <Content Include="Styles\IncomeRequestActions.css" />
     <Content Include="Styles\LicenseActions.css" />
     <Content Include="Styles\licenseSearchModel.css" />
   </ItemGroup>
