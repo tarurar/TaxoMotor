@@ -180,5 +180,14 @@ namespace TM.SP.DataModel
             Description         = "История статусов обращений",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmDocumentTemplateLib = new ListDefinition()
+        {
+            Title               = "Шаблоны генерируемых документов",
+            Url                 = "DocumentTemplateLib",
+            TemplateType        = BuiltInListTemplateTypeId.DocumentLibrary,
+            Description         = "Библиотека шаблонов, используемых при генерации документов",
+            ContentTypesEnabled = true
+        };
     }
 }

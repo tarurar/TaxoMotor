@@ -212,6 +212,8 @@ namespace TM.SP.DataModel
                             .AddContentTypeFieldLink(Fields.TmShortName))
                         .AddContentType(ContentTypes.TmIncomeRequestStatusLog, ct => ct
                             .AddContentTypeFieldLink(Fields.TmXmlValue))
+                        .AddContentType(ContentTypes.TmDocumentTemplate, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmServiceCode))
                 );
 
             return model;
@@ -252,6 +254,8 @@ namespace TM.SP.DataModel
                             l => l.AddContentTypeLink(ContentTypes.TmDocumentType))
                         .AddList(Lists.TmIncomeRequestStatusLogList,
                             l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestStatusLog))
+                        .AddList(Lists.TmDocumentTemplateLib,
+                            l => l.AddContentTypeLink(ContentTypes.TmDocumentTemplate))
                 );
 
             return model;

@@ -196,6 +196,15 @@ namespace TM.SP.DataModel
             Name                = "Tm_IncomeRequestStatusLog"
         };
 
+        public static ContentTypeDefinition TmDocumentTemplate = new ContentTypeDefinition
+        {
+            Id                  = new Guid("{DF41E967-D9F8-40E9-80AC-7A0725171B25}"),
+            Description         = "Шаблон документа",
+            Group               = ModelConsts.ContentTypeDefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Document,
+            Name                = "Tm_DocumentTemplate"
+        };
+
         #endregion
     }
 }

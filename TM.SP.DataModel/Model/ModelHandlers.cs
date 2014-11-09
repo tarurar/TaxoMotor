@@ -60,6 +60,8 @@ namespace TM.SP.DataModel
                 ContentTypes.TmDocumentType.Name);
             ListHelpers.MakeContentTypeDefault(ctx, Lists.TmIncomeRequestStatusLogList.Url,
                 ContentTypes.TmIncomeRequestStatusLog.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmDocumentTemplateLib.Url,
+                ContentTypes.TmDocumentTemplate.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
