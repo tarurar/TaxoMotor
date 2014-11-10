@@ -7,6 +7,7 @@
     <projectOutputAssembly location="TM.Services.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Services\TM.Services.csproj" />
     <customAssembly location="Camlex.NET.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll" />
     <projectOutputAssembly location="TP.SP.DataMigration.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TP.SP.DataMigration\TP.SP.DataMigration.csproj" />
+    <customAssembly location="Aspose.Words.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\Aspose\Aspose.Words.dll" />
   </assemblies>
   <projectItems>
     <projectItemReference itemId="14185da8-fbda-40a5-8617-6ddc41f38626" />

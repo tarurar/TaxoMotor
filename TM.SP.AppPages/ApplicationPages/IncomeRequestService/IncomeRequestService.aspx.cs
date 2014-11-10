@@ -6,12 +6,15 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Web.Services;
 using CamlexNET.Impl.Helpers;
 using Microsoft.SharePoint.Utilities;
 using TM.Services.CoordinateV5;
+using Aspose.Words;
 
 // ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
@@ -469,6 +472,120 @@ namespace TM.SP.AppPages
             {
                 web.AllowUnsafeUpdates = false;
             }
+        }
+
+        /// <summary>
+        /// Генерация документа уведомления об отказе по обращению
+        /// </summary>
+        /// <param name="refusedIncomeRequestId">Идентификатор обращения по которому отказано</param>
+        /// <returns>Структура данных содержащщая поля: Идентификатор созданного документа в библиотеке AttachLib, Адрес документа в библиотеке AttachLib</returns>
+        [WebMethod]
+        public static dynamic CreateIncomeRequestRefuseNotifyDocument(int refusedIncomeRequestId)
+        {
+            SPWeb web = SPContext.Current.Web;
+
+            web.AllowUnsafeUpdates = true;
+            try
+            {
+                // getting data
+                var spList    = web.GetListOrBreak("Lists/IncomeRequestList");
+                var spItem    = spList.GetItemOrBreak(refusedIncomeRequestId);
+                var tmplLib   = web.GetListOrBreak("DocumentTemplateLib");
+                var tmplItem  = tmplLib.GetSingleListItemByFieldValue("Tm_ServiceCode", "1");
+                var attachLib = web.GetListOrBreak("AttachLib");
+
+                SPListItem requestedDocument;
+                Utility.TryGetListItemFromLookupValue(spItem["Tm_RequestedDocument"],
+                    spItem.Fields.GetFieldByInternalName("Tm_RequestedDocument") as SPFieldLookup, out requestedDocument);
+                SPListItem denyReason;
+                Utility.TryGetListItemFromLookupValue(spItem["Tm_DenyReasonLookup"],
+                    spItem.Fields.GetFieldByInternalName("Tm_DenyReasonLookup") as SPFieldLookup, out denyReason);
+
+                var refuseDate = spItem["Tm_RefuseDate"] != null
+                    ? DateTime.Parse(spItem["Tm_RefuseDate"].ToString()).ToString("dd.MM.yyyy")
+                    : "Дата отказа не указана";
+                var regDate = spItem["Tm_RegistrationDate"] != null
+                    ? DateTime.Parse(spItem["Tm_RegistrationDate"].ToString()).ToString("dd.MM.yyyy")
+                    : "Дата регистрации не указана";
+
+                // getting Aspose license for generating PDF
+                var asposeLicense = new License();
+                asposeLicense.SetLicense("Aspose.Total.lic");
+
+                var doc = new Document(tmplItem.File.OpenBinaryStream());
+                doc.MailMerge.Execute(
+                    new[]
+                    {
+                        "RefuseDate", "DeclarantName", "CreationDate", "SingleNumber", "SubServiceName",
+                        "RefuseReasonTitle", "RefuseReasonText", "OperatorDepartment", "OperatorName"
+                    },
+                    new[]
+                    {
+                        refuseDate, 
+                        spItem["Tm_RequestAccountBCSLookup"] ?? "", 
+                        regDate, spItem["Tm_SingleNumber"] ?? "",
+                        requestedDocument != null ? requestedDocument.Title : "", 
+                        denyReason != null ? denyReason.Title : "", 
+                        spItem["Tm_Comment"] ?? "", 
+                        "", 
+                        web.CurrentUser.Name
+                    });
+
+                using (var ms = new MemoryStream())
+                {
+                    doc.Save(ms, SaveFormat.Pdf);
+
+                    var parentFolder = attachLib.RootFolder.CreateSubFolders(new[] { 
+                        DateTime.Now.Year.ToString(CultureInfo.InvariantCulture), 
+                        DateTime.Now.Month.ToString(CultureInfo.InvariantCulture), 
+                        spItem.Title });
+
+                    var uplFolder = parentFolder.CreateSubFolders(new[] { (parentFolder.ItemCount + 1).ToString(CultureInfo.InvariantCulture) });
+                    var fn = Path.HasExtension(tmplItem.File.Name) ? Path.ChangeExtension(tmplItem.File.Name, "pdf") : tmplItem.File.Name + ".pdf";
+                    var templatedDoc = uplFolder.Files.Add(fn, ms);
+                    uplFolder.Update();
+
+                    templatedDoc.Item["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(spItem.ID, spItem.Title);
+                    templatedDoc.Item.Update();
+
+                    return new
+                    {
+                       templatedDoc.Item.ID, 
+                       templatedDoc.ServerRelativeUrl
+                    };
+                }
+            }
+            finally
+            {
+                web.AllowUnsafeUpdates = false;
+            }
+        }
+
+        [WebMethod]
+        public static void SaveDocumentDetachedSignature(int documentId, string signature)
+        {
+            SPWeb web = SPContext.Current.Web;
+
+            web.AllowUnsafeUpdates = true;
+            try
+            {
+                // getting data
+                var attachLib   = web.GetListOrBreak("AttachLib");
+                var attachItem  = attachLib.GetItemById(documentId);
+                var sigFileName = attachItem.File.Name + ".sig";
+
+                var uplFolder = attachItem.File.ParentFolder;
+                SPFile sigFile = uplFolder.Files.Add(sigFileName, Encoding.UTF8.GetBytes(Uri.UnescapeDataString(signature)));
+                uplFolder.Update();
+
+                sigFile.Item["Tm_IncomeRequestLookup"] = attachItem["Tm_IncomeRequestLookup"];
+                sigFile.Item.Update();
+            }
+            finally
+            {
+                web.AllowUnsafeUpdates = false;
+            }
+            
         }
     }
 }

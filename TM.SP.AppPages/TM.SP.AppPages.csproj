@@ -41,6 +41,10 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Words, Version=8.0.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rd\Aspose\Aspose.Words.dll</HintPath>
+    </Reference>
     <Reference Include="Camlex.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=831792d54d5285b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll</HintPath>
@@ -125,6 +129,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="3rd\Aspose\Aspose.Total.lic" />
     <None Include="ApplicationPages\IncomeRequestService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{bf49c9d8-e24e-40d4-acad-ced08c80037e}</SharePointProjectItemId>
     </None>
@@ -162,6 +167,7 @@
     <Folder Include="Features\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="3rd\Aspose\Aspose.Words.dll" />
     <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
     <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />

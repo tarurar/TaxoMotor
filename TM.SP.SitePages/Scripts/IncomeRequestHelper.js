@@ -196,6 +196,16 @@
                 });
             }
 
+            ir.CreateIncomeRequestRefuseNotifyDocument = function(incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/CreateIncomeRequestRefuseNotifyDocument',
+                    data: '{ refusedIncomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            }
+
             ir.EndingApplyForNew = function (incomeRequestId, onsuccess, onfail) {
                 // Запросы ПТС по транспортным средствам обращения
                 ir.SendPTSRequest(incomeRequestId, function () {
@@ -352,18 +362,29 @@
                             ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText).success(function() {
                                 // Установка статуса обращения
                                 ir.CalculateDatesAndSetStatus(incomeRequestId, 1080).success(function () {
-                                    // Получение xml для измененного состояния обращения
-                                    ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
-                                        //Подписывание xml
-                                        if (data && data.d) {
-                                            ir.SignXml(data.d, function (signedData) {
-                                                // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                    // Отправка статуса обращения по межведомственному взаимодействию
-                                                    ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                    // Генерация документов отказа
+                                    ir.CreateIncomeRequestRefuseNotifyDocument(incomeRequestId).success(function (refuseDocData) {
+                                        if (refuseDocData && refuseDocData.d && refuseDocData.d.ID != 0) {
+                                            // Подписание документа отказа
+                                            ir.SignDocumentContent(refuseDocData.d.ServerRelativeUrl, function (signedRefuseDoc) {
+                                                // Сохранение подписи документа отказа
+                                                ir.SaveDocumentDetachedSignature(refuseDocData.d.ID, signedRefuseDoc).success(function() {
+                                                    // Получение xml для измененного состояния обращения
+                                                    ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                                        //Подписание xml
+                                                        if (data && data.d) {
+                                                            ir.SignXml(data.d, function (signedData) {
+                                                                // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                                    // Отправка статуса обращения по межведомственному взаимодействию
+                                                                    ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                                }).fail(onfail);
+                                                            }, onfail);
+                                                        } else onfail("Не удалось получить статус обращения в виде xml");
+                                                    }).fail(onfail);
                                                 }).fail(onfail);
                                             }, onfail);
-                                        } else onfail("Не удалось получить статус обращения в виде xml");
+                                        } else onfail("Не удалось создать документ-уведомление");
                                     }).fail(onfail);
                                 }).fail(onfail);
                             }).fail(onfail);
@@ -384,12 +405,24 @@
                 });
             }
 
+            ir.SaveDocumentDetachedSignature = function(documentId, signature) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/SaveDocumentDetachedSignature',
+                    data: '{ documentId: ' + documentId + ' , signature: "' + encodeURIComponent(signature) + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            }
+
             ir.SignXml = function(xml, onsuccess, onfail) {
 
-                var oCertificate = cryptoPro && cryptoPro.SelectCertificate(
+                var oCertificate = ir.SelectedCertificate || (cryptoPro && cryptoPro.SelectCertificate(
                         cryptoPro.StoreLocation.CAPICOM_LOCAL_MACHINE_STORE,
                         cryptoPro.StoreNames.CAPICOM_MY_STORE,
-                        cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+                        cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED));
+
+                ir.SelectedCertificate = ir.SelectedCertificate || oCertificate;
 
                 if (oCertificate) {
                     xml =
@@ -417,6 +450,45 @@
                     if (onfail) onfail("При формировании ЭЦП не удалось обнаружить сертификат");
                 }
             };
+
+            ir.SignPkcs7 = function (dataToSign, onsuccess, onfail) {
+
+                var oCertificate = ir.SelectedCertificate || (cryptoPro && cryptoPro.SelectCertificate(
+                        cryptoPro.StoreLocation.CAPICOM_LOCAL_MACHINE_STORE,
+                        cryptoPro.StoreNames.CAPICOM_MY_STORE,
+                        cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED));
+
+                ir.SelectedCertificate = ir.SelectedCertificate || oCertificate;
+
+                if (oCertificate) {
+                    var signedData;
+                    var errorMsg;
+                    try {
+                        signedData = cryptoPro.signPkcs7Create(oCertificate, dataToSign);
+                    } catch (e) {
+                        errorMsg = "Ошибка при формировании подписи pkcs7: " + e.message;
+                    }
+
+                    if (errorMsg) {
+                        if (onfail) onfail(errorMsg);
+                    } else {
+                        onsuccess(signedData);
+                    }
+
+                } else {
+                    if (onfail) onfail("При формировании ЭЦП pkcs7 не удалось обнаружить сертификат");
+                }
+            };
+
+            ir.SignDocumentContent = function(documentUrl, onsuccess, onfail) {
+                $.get(documentUrl, function(data) {
+                    if (data) {
+                        ir.SignPkcs7(data, onsuccess, onfail);
+                    } else onfail("Невозможно загрузить документ по адресу " + documentUrl);
+                });
+            };
+
+            ir.SelectedCertificate = null;
 
             return ir;
         })(tmsp.IncomeRequest || (tmsp.IncomeRequest = {}));
