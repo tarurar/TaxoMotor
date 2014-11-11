@@ -576,7 +576,8 @@ namespace TM.SP.AppPages
                 var sigFileName = attachItem.File.Name + ".sig";
 
                 var uplFolder = attachItem.File.ParentFolder;
-                SPFile sigFile = uplFolder.Files.Add(sigFileName, Encoding.UTF8.GetBytes(Uri.UnescapeDataString(signature)));
+
+                SPFile sigFile = uplFolder.Files.Add(sigFileName, Convert.FromBase64String(signature));
                 uplFolder.Update();
 
                 sigFile.Item["Tm_IncomeRequestLookup"] = attachItem["Tm_IncomeRequestLookup"];

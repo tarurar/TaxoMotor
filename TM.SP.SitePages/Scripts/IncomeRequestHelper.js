@@ -411,7 +411,7 @@
                 return $.ajax({
                     type: 'POST',
                     url: ir.ServiceUrl + '/SaveDocumentDetachedSignature',
-                    data: '{ documentId: ' + documentId + ' , signature: "' + encodeURIComponent(signature) + '" }',
+                    data: '{ documentId: ' + documentId + ' , signature: "' + signature + '" }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
                 });
