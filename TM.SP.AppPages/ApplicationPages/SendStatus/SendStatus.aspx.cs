@@ -1,4 +1,4 @@
-// <copyright file="SendStatus.aspx.cs" company="Armd">
+﻿// <copyright file="SendStatus.aspx.cs" company="Armd">
 // Copyright Armd. All rights reserved.
 // </copyright>
 // <author>SPDEV\developer</author>
@@ -6,24 +6,11 @@
 namespace TM.SP.AppPages
 {
     using System;
-    using System.IO;
     using System.Security.Permissions;
-    using System.Text;
-    using System.Web;
-    using System.Web.UI;
-    using System.Web.UI.HtmlControls;
-    using System.Web.UI.WebControls;
-    using System.Xml;
-    using System.Xml.Serialization;
     using System.Net;
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
-    using Microsoft.SharePoint.Utilities;
-    using Microsoft.SharePoint.WebControls;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Reflection;
-    using System.Data;
     using System.Linq;
 
     using TM.SP.AppPages.ApplicationPages;
@@ -36,6 +23,7 @@ namespace TM.SP.AppPages
     public class SendStatusRequestItem : RequestItem
     {
         public int StatusLookupId { get; set; }
+        public List<int> AttachDocumentList { get; set; }
     }
 
     /// <summary>
@@ -58,6 +46,14 @@ namespace TM.SP.AppPages
         public SendStatus()
         {
             this.RightsCheckMode = RightsCheckModes.OnPreInit;
+        }
+
+        protected string AttachIdListParam
+        {
+            get
+            {
+                return String.IsNullOrEmpty(Request.Params["AttachDocuments"]) ? String.Empty : Request.Params["AttachDocuments"];
+            }
         }
 
         /// <summary>
@@ -90,7 +86,15 @@ namespace TM.SP.AppPages
         protected override List<T> LoadDocuments<T>()
         {
             SPList docList = GetList();
-            var idList = ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
+            var idList = String.IsNullOrEmpty(ItemIdListParam)
+                ? null
+                : ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
+            var attachIdList = String.IsNullOrEmpty(AttachIdListParam)
+                ? null
+                : AttachIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
+
+            if (idList == null)
+                throw new Exception("Для отправки статуса должен быть указан идентификатор обращения");
 
             SPListItemCollection docItems = docList.GetItems(new SPQuery()
             {
@@ -108,6 +112,9 @@ namespace TM.SP.AppPages
                     HasError = false
                 });
             }
+
+            if ((retVal.Count == 1) && (attachIdList != null))
+                retVal[0].AttachDocumentList = attachIdList;
 
             return retVal.Cast<T>().ToList();
         }
@@ -190,8 +197,30 @@ namespace TM.SP.AppPages
             var stItem = stList.GetItemOrNull(item.StatusLookupId);
             var stCode = stItem == null ? String.Empty :
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
+            // attachs
+            ServiceDocument attachs = null;
+            if (item.AttachDocumentList != null && item.AttachDocumentList.Count > 0)
+            {
+                var attachLib = Web.GetListOrBreak("AttachLib");
 
-            var message = new CoordinateStatusMessage() 
+                attachs = new ServiceDocument
+                {
+                    DocCode   = "10004",
+                    DocDate   = DateTime.Now,
+                    DocNumber = "БН",
+                    DocFiles  = (from attachId in item.AttachDocumentList
+                                select attachLib.GetItemById(attachId)
+                                into spItem
+                                let content = spItem.File.OpenBinary()
+                                select new File
+                                {
+                                    FileContent = content,
+                                    FileName    = spItem.File.Name,
+                                }).ToArray()
+                };
+            }
+
+            var message = new CoordinateStatusMessage()
             {
                 ServiceHeader = new Headers()
                 {
@@ -205,6 +234,7 @@ namespace TM.SP.AppPages
                 {
                     ServiceNumber = sNumber,
                     StatusCode    = Convert.ToInt32(stCode),
+                    Documents     = attachs != null ? new ServiceDocument[] { attachs } : null
                 }
             };
            

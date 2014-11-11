@@ -563,9 +563,10 @@ namespace TM.SP.AppPages
         }
 
         [WebMethod]
-        public static void SaveDocumentDetachedSignature(int documentId, string signature)
+        public static int SaveDocumentDetachedSignature(int documentId, string signature)
         {
             SPWeb web = SPContext.Current.Web;
+            var retVal = 0;
 
             web.AllowUnsafeUpdates = true;
             try
@@ -582,12 +583,14 @@ namespace TM.SP.AppPages
 
                 sigFile.Item["Tm_IncomeRequestLookup"] = attachItem["Tm_IncomeRequestLookup"];
                 sigFile.Item.Update();
+                retVal = sigFile.Item.ID;
             }
             finally
             {
                 web.AllowUnsafeUpdates = false;
             }
-            
+
+            return retVal;
         }
 
         /// <summary>

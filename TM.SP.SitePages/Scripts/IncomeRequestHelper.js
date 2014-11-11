@@ -155,9 +155,11 @@
                 }).fail(onfail);
             };
 
-            ir.SendStatus = function(incomeRequestId) {
+            ir.SendStatus = function(incomeRequestId, attachsStr) {
                 var url = _spPageContextInfo.webAbsoluteUrl + '/' + _spPageContextInfo.layoutsUrl + '/' + 'TaxoMotor/SendStatus.aspx?ListId=' +
-                    _spPageContextInfo.pageListId + '&Items=' + incomeRequestId;
+                    _spPageContextInfo.pageListId +
+                    '&Items=' + incomeRequestId +
+                    (attachsStr != '' ? '&AttachDocuments=' + attachsStr : '');
 
                 return $.ajax({
                     url: encodeURI(url),
@@ -364,26 +366,31 @@
                                     // Генерация документов отказа
                                     ir.CreateIncomeRequestRefuseNotifyDocument(incomeRequestId).success(function (refuseDocData) {
                                         if (refuseDocData && refuseDocData.d && refuseDocData.d.ID != 0) {
+                                            var refuseFileId = refuseDocData.d.ID;
                                             // Подписание документа отказа
                                             ir.SignDocumentContent(refuseDocData.d.ServerRelativeUrl, function (signedRefuseDoc) {
                                                 // Сохранение подписи документа отказа
-                                                ir.SaveDocumentDetachedSignature(refuseDocData.d.ID, signedRefuseDoc).success(function () {
-                                                    // Удаление черновиков всех разрешений по всем ТС обращения
-                                                    ir.DeleteLicenseDraftsOnRefusing(incomeRequestId).success(function() {
-                                                        // Получение xml для измененного состояния обращения
-                                                        ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
-                                                            //Подписание xml
-                                                            if (data && data.d) {
-                                                                ir.SignXml(data.d, function (signedData) {
-                                                                    // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                                    ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                                        // Отправка статуса обращения по межведомственному взаимодействию
-                                                                        ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
-                                                                    }).fail(onfail);
-                                                                }, onfail);
-                                                            } else onfail("Не удалось получить статус обращения в виде xml");
+                                                ir.SaveDocumentDetachedSignature(refuseDocData.d.ID, signedRefuseDoc).success(function (sigFileData) {
+                                                    if (sigFileData && sigFileData.d) {
+                                                        var sigFileId = sigFileData.d;
+                                                        // Удаление черновиков всех разрешений по всем ТС обращения
+                                                        ir.DeleteLicenseDraftsOnRefusing(incomeRequestId).success(function() {
+                                                            // Получение xml для измененного состояния обращения
+                                                            ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function(data) {
+                                                                //Подписание xml
+                                                                if (data && data.d) {
+                                                                    ir.SignXml(data.d, function(signedData) {
+                                                                        // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                        ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                                            var attachs = refuseFileId + ', ' + sigFileId;
+                                                                            // Отправка статуса обращения по межведомственному взаимодействию
+                                                                            ir.SendStatus(incomeRequestId, attachs).success(onsuccess).fail(function(err) { onfail("При отправке статуса возникла ошибка"); });
+                                                                        }).fail(onfail);
+                                                                    }, onfail);
+                                                                } else onfail("Не удалось получить статус обращения в виде xml");
+                                                            }).fail(onfail);
                                                         }).fail(onfail);
-                                                    }).fail(onfail);
+                                                    } else onfail("Не удалось создать документ открепленной подписи");
                                                 }).fail(onfail);
                                             }, onfail);
                                         } else onfail("Не удалось создать документ-уведомление");
