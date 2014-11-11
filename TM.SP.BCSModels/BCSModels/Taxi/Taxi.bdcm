@@ -20,7 +20,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.33" EstimatedInstanceCount="100000" DefaultDisplayName="License">
+				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.43" EstimatedInstanceCount="100000" DefaultDisplayName="License">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Taxi.LicenseEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -1509,6 +1509,14 @@
                 <MethodInstance Name="UpdateMigrationStatus" Type="Updater" />
               </MethodInstances>
             </Method>
+            <Method Name="DeleteLicenseDraftForSPTaxiId">
+              <Parameters>
+                <Parameter Name="spTaxiId" Direction="In">
+                  <TypeDescriptor Name="spTaxiIdTypeDescriptor" TypeName="System.Int32" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="DeleteLicenseDraftForSPTaxiIdInstance" Type="Updater" />
+              </MethodInstances></Method>
 					</Methods>
 					<AssociationGroups>
 						<AssociationGroup Name="IdOfLicenseToParentOfLicenseAssociation" DefaultDisplayName="License to License(Parent)">

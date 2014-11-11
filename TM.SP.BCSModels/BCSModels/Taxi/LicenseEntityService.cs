@@ -107,5 +107,40 @@ namespace TM.SP.BCSModels.Taxi
                 thisConn.Dispose();
             }
         }
+
+        public void DeleteLicenseDraftForSPTaxiId(int spTaxiId)
+        {
+            SqlConnection thisConn = null;
+            try
+            {
+                thisConn = getSqlConnection();
+                thisConn.Open();
+
+                var deleteCommand = new SqlCommand {
+                    Connection = thisConn, 
+                    CommandText = @" DELETE
+                                    FROM [dbo].[LicenseMigrationTicket]
+                                    WHERE LicenseId IN (
+		                                    SELECT Id
+		                                    FROM [dbo].[License]
+		                                    WHERE [Status] = @Status
+			                                    AND [TaxiId] = @TaxiId
+		                                    );
+
+                                    DELETE
+                                    FROM [dbo].[License]
+                                    WHERE [Status] = @Status
+	                                    AND [TaxiId] = @TaxiId;
+                                    "};
+                deleteCommand.Parameters.AddWithValue("@Status", 4);
+                deleteCommand.Parameters.AddWithValue("@TaxiId", spTaxiId);
+
+                deleteCommand.ExecuteNonQuery();
+            }
+            finally
+            {
+                thisConn.Dispose();
+            }
+        }
     }
 }

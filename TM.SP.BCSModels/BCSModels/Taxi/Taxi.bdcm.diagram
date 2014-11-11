@@ -2,14 +2,14 @@
 <minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Taxi">
   <modelRootMoniker Name="/Taxi" />
   <nestedChildShapes>
-    <entityShape Id="61ae7e76-304c-4dde-b507-b24c397a74a4" absoluteBounds="2, 1, 2, 2.941793619791667">
+    <entityShape Id="61ae7e76-304c-4dde-b507-b24c397a74a4" absoluteBounds="2, 1, 3.25, 3.1340950520833326">
       <entityMoniker name="TM.SP.BCSModels.Taxi.License" />
       <nestedChildShapes>
-        <elementListCompartment Id="d32b32a2-ca93-45e0-bf7c-b21f8a3a8652" absoluteBounds="2.015, 1.4100000000000001, 1.9700000000000002, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
-        <elementListCompartment Id="f3962e27-7260-4557-91a3-af40a1a86003" absoluteBounds="2.015, 1.8616910807291667, 1.9700000000000002, 1.9801025390625" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d32b32a2-ca93-45e0-bf7c-b21f8a3a8652" absoluteBounds="2.015, 1.4100000000000001, 3.2199999999999998, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f3962e27-7260-4557-91a3-af40a1a86003" absoluteBounds="2.015, 1.8616910807291667, 3.2199999999999998, 2.1724039713541661" name="Methods" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </entityShape>
-    <associationGroupConnector edgePoints="[(2.70923076923077 : 3.94179361979167); (2.70923076923077 : 4.19179361979167); (3.30461538461538 : 4.19179361979167); (3.30461538461538 : 3.94179361979167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(3.15062768930288 : 4.13409505208333); (3.15062768930288 : 4.38409505208333); (4.12196146834936 : 4.38409505208333); (4.12196146834936 : 4.13409505208333)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.Taxi.License/IdOfLicenseToParentOfLicenseAssociation" />
       <relativeChildShapes />
       <nodes>

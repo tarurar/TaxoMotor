@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Web.Services;
 using CamlexNET.Impl.Helpers;
+using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint.Utilities;
 using TM.Services.CoordinateV5;
 using Aspose.Words;
@@ -586,6 +587,43 @@ namespace TM.SP.AppPages
                 web.AllowUnsafeUpdates = false;
             }
             
+        }
+
+        /// <summary>
+        /// Удаление черновиков разрешений для всех ТС указанного обращения
+        /// </summary>
+        /// <param name="refusedIncomeRequestId">Идентификатор обращения, по которому отказано</param>
+        [WebMethod]
+        public static void DeleteLicenseDraftsOnRefusing(int refusedIncomeRequestId)
+        {
+            SPSite curSite = SPContext.Current.Site;
+            SPWeb curWeb = SPContext.Current.Web;
+
+            SPSecurity.RunWithElevatedPrivileges(() =>
+            {
+                using (var site = new SPSite(curSite.ID))
+                using (var web = site.OpenWeb(curWeb.ID))
+                {
+                    var context = SPServiceContext.GetContext(web.Site);
+                    using (new SPServiceContextScope(context))
+                    {
+                        var allTaxiStr = GetAllTaxiInRequest(refusedIncomeRequestId);
+                        string[] allTaxiArr = allTaxiStr.Split(';');
+                        foreach (string taxiId in allTaxiArr)
+                        {
+                            BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                            {
+                                lob         = BCS.LOBTaxiSystemName,
+                                ns          = BCS.LOBTaxiSystemNamespace,
+                                contentType = "License",
+                                methodName  = "DeleteLicenseDraftForSPTaxiIdInstance",
+                                methodType  = MethodInstanceType.Updater
+                            }, Convert.ToInt32(taxiId));
+                        }
+
+                    }
+                }
+            });
         }
     }
 }

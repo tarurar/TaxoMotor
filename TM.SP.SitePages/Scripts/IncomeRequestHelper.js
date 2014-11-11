@@ -36,7 +36,6 @@
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
                 });
-
             };
 
             ir.CanReleaseNewLicensesForRequest = function (incomeRequestId) {
@@ -368,19 +367,22 @@
                                             // Подписание документа отказа
                                             ir.SignDocumentContent(refuseDocData.d.ServerRelativeUrl, function (signedRefuseDoc) {
                                                 // Сохранение подписи документа отказа
-                                                ir.SaveDocumentDetachedSignature(refuseDocData.d.ID, signedRefuseDoc).success(function() {
-                                                    // Получение xml для измененного состояния обращения
-                                                    ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
-                                                        //Подписание xml
-                                                        if (data && data.d) {
-                                                            ir.SignXml(data.d, function (signedData) {
-                                                                // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                                ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                                    // Отправка статуса обращения по межведомственному взаимодействию
-                                                                    ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
-                                                                }).fail(onfail);
-                                                            }, onfail);
-                                                        } else onfail("Не удалось получить статус обращения в виде xml");
+                                                ir.SaveDocumentDetachedSignature(refuseDocData.d.ID, signedRefuseDoc).success(function () {
+                                                    // Удаление черновиков всех разрешений по всем ТС обращения
+                                                    ir.DeleteLicenseDraftsOnRefusing(incomeRequestId).success(function() {
+                                                        // Получение xml для измененного состояния обращения
+                                                        ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                                            //Подписание xml
+                                                            if (data && data.d) {
+                                                                ir.SignXml(data.d, function (signedData) {
+                                                                    // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                    ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                                        // Отправка статуса обращения по межведомственному взаимодействию
+                                                                        ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                                    }).fail(onfail);
+                                                                }, onfail);
+                                                            } else onfail("Не удалось получить статус обращения в виде xml");
+                                                        }).fail(onfail);
                                                     }).fail(onfail);
                                                 }).fail(onfail);
                                             }, onfail);
@@ -485,6 +487,16 @@
                     if (data) {
                         ir.SignPkcs7(data, onsuccess, onfail);
                     } else onfail("Невозможно загрузить документ по адресу " + documentUrl);
+                });
+            };
+
+            ir.DeleteLicenseDraftsOnRefusing = function (incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/DeleteLicenseDraftsOnRefusing',
+                    data: '{ refusedIncomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
                 });
             };
 
