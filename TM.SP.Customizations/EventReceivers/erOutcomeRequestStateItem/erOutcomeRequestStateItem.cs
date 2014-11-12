@@ -44,7 +44,7 @@ namespace TM.SP.Customizations
             catch(Exception ex)
             {
                 properties.Status = SPEventReceiverStatus.CancelWithError;
-                properties.ErrorMessage = ex.Message;
+                properties.ErrorMessage = "erOutcomeRequestStateItem.ItemUpdating receiver error. Details: " + ex.Message;
                 return;
             }
             finally
