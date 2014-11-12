@@ -245,7 +245,7 @@ namespace TP.SP.DataMigration
             newItem["Tm_TaxiTaxometer"]         = taxiInfo.taxometr;
             newItem["Tm_TaxiGps"]               = taxiInfo.gps;
             newItem["Tm_TaxiPrevStateNumber"]   = taxiInfo.num2;
-            newItem["Tm_TaxiBlankNo"]           = taxiInfo.blankno;
+            newItem["Tm_BlankNo"]               = taxiInfo.blankno;
             newItem["Tm_TaxiInfoOld"]           = taxiInfo.taxi_info_old;
             newItem["Tm_TaxiPrevLicenseNumber"] = taxiInfo.number_ran;
 

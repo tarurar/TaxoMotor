@@ -71,6 +71,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmNeedPersonVisit = new FieldDefinition()
+        {
+            Id           = new Guid("{79FBF37A-F195-4C00-8877-65CE592CF6F9}"),
+            Title        = "Необходимость очного визита",
+            InternalName = "Tm_NeedPersonVisit",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Причина отказа]
@@ -662,6 +671,8 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.Note,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
+
+
 
         #endregion
 

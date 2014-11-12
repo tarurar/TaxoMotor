@@ -153,6 +153,7 @@ namespace TM.SP.DataModel
                             spField.MakeChoices(new String[] { "Портал госуслуг", "Очный визит" })))
                     .AddField(Fields.TmShortName)
                     .AddField(Fields.TmXmlValue)
+                    .AddField(Fields.TmNeedPersonVisit)
                 )
                 .WithContentTypes(
                     ctList => ctList
@@ -291,6 +292,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTrusteeINNs)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestIdentityDocs)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
+                        .AddContentTypeFieldLink(Fields.TmNeedPersonVisit)
                     )
                     .AddContentType(ContentTypes.TmNewIncomeRequest)
                     .AddContentType(ContentTypes.TmDuplicateIncomeRequest)
@@ -354,7 +356,8 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmTaxiGps)
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevStateNumber)
                         .AddContentTypeFieldLink(Fields.TmTaxiDecision)
-                        .AddContentTypeFieldLink(Fields.TmTaxiBlankNo)
+                        .AddContentTypeFieldLink(Fields.TmBlankSeries)
+                        .AddContentTypeFieldLink(Fields.TmBlankNo)
                         .AddContentTypeFieldLink(Fields.TmTaxiInfoOld)
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevLicenseNumber)
                         .AddContentTypeFieldLink(Fields.TmTaxiPrevLicenseDate)
@@ -364,6 +367,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmTaxiStatus)
                         .AddContentTypeFieldLink(Fields.TmTaxiDenyComment)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
+                        .AddContentTypeFieldLink(Fields.TmNeedPersonVisit)
                      )
                      .AddContentType(ContentTypes.TmAttach, ct => ct
                         .AddContentTypeFieldLink(Fields.TmAttachType)
