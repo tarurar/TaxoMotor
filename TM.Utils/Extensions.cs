@@ -176,8 +176,13 @@ namespace TM.Utils
         public static bool IsFieldChanged(this SPItemEventProperties properties, SPField field)
         {
             var after = (string)properties.AfterProperties[field.InternalName];
-            var before = Convert.ToString(properties.ListItem[field.Id]);
 
+            if (properties.ListItem == null)
+            {
+                return false;
+            }
+
+            var before = Convert.ToString(properties.ListItem[field.Id]);
 
             //AfterProperties[fieldname] == null - field not changed
             if (after == null)
