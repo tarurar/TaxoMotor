@@ -111,6 +111,7 @@ namespace TM.SP.DataModelDeploy
                 return;
             }
 
+            cLogger.Info("Развертывание модели начато...");
             try
             {
                 Deploy(options);
