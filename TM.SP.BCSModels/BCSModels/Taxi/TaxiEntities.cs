@@ -118,7 +118,7 @@ namespace TM.SP.BCSModels.Taxi
                 OrgName            = OrgName,
                 OutputDate         = OutputDate,
                 Parent             = Id,
-                RootParent         = RootParent,
+                RootParent         = RootParent ?? Id,
                 PhoneNumber        = PhoneNumber,
                 RegNumber          = RegNumber,
                 Signature          = String.Empty,
