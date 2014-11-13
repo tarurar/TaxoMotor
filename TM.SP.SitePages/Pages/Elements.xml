@@ -21,5 +21,9 @@
       <Property Name="Title" Value="Отказ по обращению" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\DenyTaxi.aspx" Url="DenyTaxi.aspx" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Отказ по транспортному средству" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

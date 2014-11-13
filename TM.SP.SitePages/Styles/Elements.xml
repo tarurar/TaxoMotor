@@ -4,5 +4,6 @@
     <File Path="Styles\licenseSearchModel.css" Url="licenseSearchModel.css" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
     <File Path="Styles\LicenseActions.css" Url="LicenseActions.css" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Styles\IncomeRequestActions.css" Url="IncomeRequestActions.css" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Styles\TaxiActions.css" Url="TaxiActions.css" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
   </Module>
 </Elements>

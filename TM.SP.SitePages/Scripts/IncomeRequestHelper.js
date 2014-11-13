@@ -38,6 +38,31 @@
                 });
             };
 
+            ir.AcceptTaxiRequest = function (incomeRequestId, taxiIdList) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/AcceptTaxi',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' , taxiIdList: "' + taxiIdList + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.RefuseTaxiRequest = function(incomeRequestId, taxiIdList, refuseReasonCode, refuseComment,
+                needPersonVisit) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/RefuseTaxi',
+                    data: '{ incomeRequestId: ' + incomeRequestId +
+                          ' , taxiIdList: "' + taxiIdList + '"' +
+                          ' , refuseReasonCode: ' + refuseReasonCode +
+                          ' , refuseComment: "' + refuseComment + '"' +
+                          ' , needPersonVisit: ' + needPersonVisit + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            }
+
             ir.CanReleaseNewLicensesForRequest = function (incomeRequestId) {
                 return $.ajax({
                     type: 'POST',
@@ -507,7 +532,69 @@
                 });
             };
 
+            ir.AcceptTaxi = function (incomeRequestId, taxiIdList, onsuccess, onfail) {
+                ir.AcceptTaxiRequest(incomeRequestId, taxiIdList)
+                    .success(onsuccess)
+                    .fail(onfail);
+            };
+
+            ir.RefuseTaxi = function (incomeRequestId, taxiIdList, onsuccess, onfail) {
+                // Получим причину и комментарий
+                var options = {
+                    url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/DenyTaxi.aspx',
+                    title: 'Отказ по транспортному средству',
+                    allowMaximize: false,
+                    width: 600,
+                    showClose: true,
+                    dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                        if (result == SP.UI.DialogResult.OK) {
+                            
+                            var reasonCode = returnValue.SelectedReason.Code;
+                            var reasonText = returnValue.ActionComment;
+                            var needPersonVisit = returnValue.NeedPersonVisit;
+                            // Выполним запрос на отмену транспортных средств в обращении
+                            ir.RefuseTaxiRequest(incomeRequestId, taxiIdList, reasonCode, reasonText, needPersonVisit)
+                                .success(onsuccess)
+                                .fail(onfail);
+                        }
+                    })
+                };
+
+                SP.UI.ModalDialog.showModalDialog(options);
+            }
+
             ir.SelectedCertificate = null;
+
+            ir.FindWebPartsByListUrl = function (listUrl) {
+                if (!fd_relateditems_webparts) return null;
+
+                var retVal = [];
+
+                for (var i = 0; i < fd_relateditems_webparts.length; i++) {
+                    var ctxNum = g_ViewIdToViewCounterMap['{' + fd_relateditems_webparts[i].toUpperCase() + '}'];
+                    var ctxT = window["ctx" + ctxNum];
+
+                    if (ctxT.listUrlDir == listUrl)
+                        retVal.push(ctxT);
+                }
+
+                return retVal;
+            };
+
+            ir.GetWebPartSelectedItemsDict = function(webPartContext) {
+                var dictSelRet = [];
+                var i = 0;
+
+                for (var key in GetSelectedItemsDict(webPartContext)) {
+                    dictSelRet[i] = {
+                        id: webPartContext.dictSel[key].id,
+                        fsObjType: webPartContext.dictSel[key].fsObjType
+                    };
+                    i++;
+                }
+
+                return dictSelRet;
+            };
 
             return ir;
         })(tmsp.IncomeRequest || (tmsp.IncomeRequest = {}));

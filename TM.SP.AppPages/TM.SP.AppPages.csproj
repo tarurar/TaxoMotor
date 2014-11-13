@@ -176,10 +176,12 @@
   <ItemGroup>
     <Content Include="ApplicationPages\SendRequestPTSPage\SendRequestPTSPage.aspx" />
     <Content Include="ApplicationPages\SendStatus\SendStatus.aspx" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\accept-icon-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\button_minus.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\button_plus.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\deny-icon-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\renew-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\renew-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\send-status-16.png" />

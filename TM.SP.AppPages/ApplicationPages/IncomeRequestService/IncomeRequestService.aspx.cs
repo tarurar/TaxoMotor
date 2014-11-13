@@ -9,13 +9,19 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
+using System.ServiceModel.Channels;
 using System.Text;
+using System.Web;
 using System.Web.Services;
 using CamlexNET.Impl.Helpers;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint.Utilities;
 using TM.Services.CoordinateV5;
+using TM.SP.BCSModels;
 using Aspose.Words;
+using License = TM.SP.BCSModels.Taxi.License;
+using AsposeLicense = Aspose.Words.License;
 
 // ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
@@ -510,7 +516,7 @@ namespace TM.SP.AppPages
                     : "Дата регистрации не указана";
 
                 // getting Aspose license for generating PDF
-                var asposeLicense = new License();
+                var asposeLicense = new AsposeLicense();
                 asposeLicense.SetLicense("Aspose.Total.lic");
 
                 var doc = new Document(tmplItem.File.OpenBinaryStream());
@@ -566,7 +572,7 @@ namespace TM.SP.AppPages
         public static int SaveDocumentDetachedSignature(int documentId, string signature)
         {
             SPWeb web = SPContext.Current.Web;
-            var retVal = 0;
+            int retVal;
 
             web.AllowUnsafeUpdates = true;
             try
@@ -629,6 +635,165 @@ namespace TM.SP.AppPages
                 }
             });
         }
+
+        [WebMethod]
+        public static dynamic AcceptTaxi(int incomeRequestId, string taxiIdList)
+        {
+            try
+            {
+                SPSite curSite = SPContext.Current.Site;
+                SPWeb curWeb = SPContext.Current.Web;
+
+                SPSecurity.RunWithElevatedPrivileges(() =>
+                {
+                    using (var site = new SPSite(curSite.ID))
+                    using (var web = site.OpenWeb(curWeb.ID))
+                    {
+                        var context = SPServiceContext.GetContext(web.Site);
+                        using (new SPServiceContextScope(context))
+                        {
+                            web.AllowUnsafeUpdates = true;
+                            try
+                            {
+                                var rList = web.GetListOrBreak("Lists/IncomeRequestList");
+                                var rItem = rList.GetItemOrBreak(incomeRequestId);
+                                var taxiList = web.GetListOrBreak("Lists/TaxiList");
+                                var taxiIdArr = taxiIdList.Split(';');
+
+                                SPListItem rStatus;
+                                Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"],
+                                    rList.Fields.GetFieldByInternalName("Tm_IncomeRequestStateLookup") as SPFieldLookup, out rStatus);
+
+                                if (rStatus == null)
+                                    throw new Exception("У обращения должно быть установлено значение статуса");
+                                var rStatusCode = rStatus["Tm_ServiceCode"] != null
+                                    ? rStatus["Tm_ServiceCode"].ToString()
+                                    : String.Empty;
+
+                                foreach (var taxiItem in taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
+                                {
+                                    switch (rStatusCode)
+                                    {
+                                        case "1020":
+                                            taxiItem["Tm_TaxiStatus"] = "В работе";
+                                            taxiItem.Update();
+                                            break;
+                                        case "6420":
+                                            var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
+                                            var licenseDraft = new License
+                                            {
+                                                Status = (int)LicenseStatus.Draft,
+                                                TaxiId = taxiItem.ID
+                                            };
+
+                                            if (ctId == rList.ContentTypes["Новое"].Id)
+                                            {
+                                                var storedLicenseDraft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                                                {
+                                                    lob = BCS.LOBTaxiSystemName,
+                                                    ns = BCS.LOBTaxiSystemNamespace,
+                                                    contentType = "License",
+                                                    methodName = "CreateLicense",
+                                                    methodType = MethodInstanceType.Creator
+                                                }, licenseDraft);
+                                                if (storedLicenseDraft != null)
+                                                    taxiItem["Tm_TaxiPrevLicenseNumber"] = storedLicenseDraft.RegNumber;
+                                            }
+                                            else
+                                            {
+                                                var regNumber = taxiItem["Tm_TaxiPrevLicenseNumber"];
+                                                if (regNumber != null && regNumber.ToString() != String.Empty)
+                                                {
+                                                    licenseDraft.RegNumber = regNumber.ToString();
+                                                    BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                                                    {
+                                                        lob = BCS.LOBTaxiSystemName,
+                                                        ns = BCS.LOBTaxiSystemNamespace,
+                                                        contentType = "License",
+                                                        methodName = "CreateLicense",
+                                                        methodType = MethodInstanceType.Creator
+                                                    }, licenseDraft);
+                                                }
+                                                else
+                                                    throw new Exception("В транспортном средстве не указан номер ранее выданного разрешения");
+                                            }
+
+                                            taxiItem["Tm_TaxiStatus"] = "Решено положительно";
+                                            taxiItem.Update();
+                                            break;
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                web.AllowUnsafeUpdates = false;
+                            }
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new
+                {
+                    Error = new
+                    {
+                        UserMessage = "Ошибка при принятии транспортного средства",
+                        SystemMessage = ex.Message,
+                        ex.StackTrace
+                    }
+                };
+            }
+            return new {};
+        }
+
+        [WebMethod]
+        public static dynamic RefuseTaxi(int incomeRequestId, string taxiIdList, int refuseReasonCode, string refuseComment,
+            bool needPersonVisit)
+        {
+            SPWeb web = SPContext.Current.Web;
+
+            web.AllowUnsafeUpdates = true;
+            try
+            {
+                var taxiList = web.GetListOrBreak("Lists/TaxiList");
+                var refuseList = web.GetListOrBreak("Lists/DenyReasonBookList");
+                var refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode",
+                    refuseReasonCode.ToString(CultureInfo.InvariantCulture));
+
+                var taxiIdArr = taxiIdList.Split(';');
+
+                foreach (var taxiItem in taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
+                {
+                    taxiItem["Tm_DenyReasonLookup"] = new SPFieldLookupValue(refuseItem.ID, refuseItem.Title);
+                    taxiItem["Tm_TaxiDenyComment"] = refuseComment;
+                    taxiItem["Tm_NeedPersonVisit"] = needPersonVisit;
+                    taxiItem["Tm_TaxiStatus"] = "Отказано";
+                    taxiItem.Update();
+                }
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new
+                {
+                    Error = new
+                    {
+                        UserMessage = "Ошибка при отказе по транспортному средству",
+                        SystemMessage = ex.Message,
+                        ex.StackTrace
+                    }
+                };
+            }
+            finally
+            {
+                web.AllowUnsafeUpdates = false;
+            }
+
+            return new {};
+        }
+
     }
 }
 
