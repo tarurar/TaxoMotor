@@ -639,126 +639,90 @@ namespace TM.SP.AppPages
         [WebMethod]
         public static dynamic AcceptTaxi(int incomeRequestId, string taxiIdList)
         {
-            try
+            return Utility.WithCatchExceptionOnWebMethod("Ошибка при принятии транспортного средства", () => 
+                   Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) => 
+                   Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
             {
-                SPSite curSite = SPContext.Current.Site;
-                SPWeb curWeb = SPContext.Current.Web;
+                var rList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                var rItem = rList.GetItemOrBreak(incomeRequestId);
+                var taxiList = safeWeb.GetListOrBreak("Lists/TaxiList");
+                var taxiIdArr = taxiIdList.Split(';');
 
-                SPSecurity.RunWithElevatedPrivileges(() =>
+                SPListItem rStatus;
+                Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"],
+                    rList.Fields.GetFieldByInternalName("Tm_IncomeRequestStateLookup") as SPFieldLookup, out rStatus);
+
+                if (rStatus == null)
+                    throw new Exception("У обращения должно быть установлено значение статуса");
+                var rStatusCode = rStatus["Tm_ServiceCode"] != null
+                    ? rStatus["Tm_ServiceCode"].ToString()
+                    : String.Empty;
+
+                foreach (var taxiItem in taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
                 {
-                    using (var site = new SPSite(curSite.ID))
-                    using (var web = site.OpenWeb(curWeb.ID))
+                    switch (rStatusCode)
                     {
-                        var context = SPServiceContext.GetContext(web.Site);
-                        using (new SPServiceContextScope(context))
-                        {
-                            web.AllowUnsafeUpdates = true;
-                            try
+                        case "1020":
+                            taxiItem["Tm_TaxiStatus"] = "В работе";
+                            taxiItem.Update();
+                            break;
+                        case "6420":
+                            var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
+                            var licenseDraft = new License
                             {
-                                var rList = web.GetListOrBreak("Lists/IncomeRequestList");
-                                var rItem = rList.GetItemOrBreak(incomeRequestId);
-                                var taxiList = web.GetListOrBreak("Lists/TaxiList");
-                                var taxiIdArr = taxiIdList.Split(';');
+                                Status = (int)LicenseStatus.Draft,
+                                TaxiId = taxiItem.ID
+                            };
 
-                                SPListItem rStatus;
-                                Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"],
-                                    rList.Fields.GetFieldByInternalName("Tm_IncomeRequestStateLookup") as SPFieldLookup, out rStatus);
-
-                                if (rStatus == null)
-                                    throw new Exception("У обращения должно быть установлено значение статуса");
-                                var rStatusCode = rStatus["Tm_ServiceCode"] != null
-                                    ? rStatus["Tm_ServiceCode"].ToString()
-                                    : String.Empty;
-
-                                foreach (var taxiItem in taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
+                            if (ctId == rList.ContentTypes["Новое"].Id)
+                            {
+                                var storedLicenseDraft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                                 {
-                                    switch (rStatusCode)
-                                    {
-                                        case "1020":
-                                            taxiItem["Tm_TaxiStatus"] = "В работе";
-                                            taxiItem.Update();
-                                            break;
-                                        case "6420":
-                                            var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
-                                            var licenseDraft = new License
-                                            {
-                                                Status = (int)LicenseStatus.Draft,
-                                                TaxiId = taxiItem.ID
-                                            };
-
-                                            if (ctId == rList.ContentTypes["Новое"].Id)
-                                            {
-                                                var storedLicenseDraft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                                {
-                                                    lob = BCS.LOBTaxiSystemName,
-                                                    ns = BCS.LOBTaxiSystemNamespace,
-                                                    contentType = "License",
-                                                    methodName = "CreateLicense",
-                                                    methodType = MethodInstanceType.Creator
-                                                }, licenseDraft);
-                                                if (storedLicenseDraft != null)
-                                                    taxiItem["Tm_TaxiPrevLicenseNumber"] = storedLicenseDraft.RegNumber;
-                                            }
-                                            else
-                                            {
-                                                var regNumber = taxiItem["Tm_TaxiPrevLicenseNumber"];
-                                                if (regNumber != null && regNumber.ToString() != String.Empty)
-                                                {
-                                                    licenseDraft.RegNumber = regNumber.ToString();
-                                                    BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                                    {
-                                                        lob = BCS.LOBTaxiSystemName,
-                                                        ns = BCS.LOBTaxiSystemNamespace,
-                                                        contentType = "License",
-                                                        methodName = "CreateLicense",
-                                                        methodType = MethodInstanceType.Creator
-                                                    }, licenseDraft);
-                                                }
-                                                else
-                                                    throw new Exception("В транспортном средстве не указан номер ранее выданного разрешения");
-                                            }
-
-                                            taxiItem["Tm_TaxiStatus"] = "Решено положительно";
-                                            taxiItem.Update();
-                                            break;
-                                    }
-                                }
+                                    lob = BCS.LOBTaxiSystemName,
+                                    ns = BCS.LOBTaxiSystemNamespace,
+                                    contentType = "License",
+                                    methodName = "CreateLicense",
+                                    methodType = MethodInstanceType.Creator
+                                }, licenseDraft);
+                                if (storedLicenseDraft != null)
+                                    taxiItem["Tm_TaxiPrevLicenseNumber"] = storedLicenseDraft.RegNumber;
                             }
-                            finally
+                            else
                             {
-                                web.AllowUnsafeUpdates = false;
+                                var regNumber = taxiItem["Tm_TaxiPrevLicenseNumber"];
+                                if (regNumber != null && regNumber.ToString() != String.Empty)
+                                {
+                                    licenseDraft.RegNumber = regNumber.ToString();
+                                    BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                                    {
+                                        lob = BCS.LOBTaxiSystemName,
+                                        ns = BCS.LOBTaxiSystemNamespace,
+                                        contentType = "License",
+                                        methodName = "CreateLicense",
+                                        methodType = MethodInstanceType.Creator
+                                    }, licenseDraft);
+                                }
+                                else
+                                    throw new Exception("В транспортном средстве не указан номер ранее выданного разрешения");
                             }
-                        }
+
+                            taxiItem["Tm_TaxiStatus"] = "Решено положительно";
+                            taxiItem.Update();
+                            break;
                     }
-                });
-            }
-            catch (Exception ex)
-            {
-                HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new
-                {
-                    Error = new
-                    {
-                        UserMessage = "Ошибка при принятии транспортного средства",
-                        SystemMessage = ex.Message,
-                        ex.StackTrace
-                    }
-                };
-            }
-            return new {};
+                }
+            })));
         }
 
         [WebMethod]
         public static dynamic RefuseTaxi(int incomeRequestId, string taxiIdList, int refuseReasonCode, string refuseComment,
             bool needPersonVisit)
         {
-            SPWeb web = SPContext.Current.Web;
-
-            web.AllowUnsafeUpdates = true;
-            try
+            return Utility.WithCatchExceptionOnWebMethod("Ошибка при отказе по транспортному средству", () => 
+                   Utility.WithSafeUpdate(SPContext.Current.Web, (safeWeb) =>
             {
-                var taxiList = web.GetListOrBreak("Lists/TaxiList");
-                var refuseList = web.GetListOrBreak("Lists/DenyReasonBookList");
+                var taxiList = safeWeb.GetListOrBreak("Lists/TaxiList");
+                var refuseList = safeWeb.GetListOrBreak("Lists/DenyReasonBookList");
                 var refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode",
                     refuseReasonCode.ToString(CultureInfo.InvariantCulture));
 
@@ -772,26 +736,7 @@ namespace TM.SP.AppPages
                     taxiItem["Tm_TaxiStatus"] = "Отказано";
                     taxiItem.Update();
                 }
-            }
-            catch (Exception ex)
-            {
-                HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return new
-                {
-                    Error = new
-                    {
-                        UserMessage = "Ошибка при отказе по транспортному средству",
-                        SystemMessage = ex.Message,
-                        ex.StackTrace
-                    }
-                };
-            }
-            finally
-            {
-                web.AllowUnsafeUpdates = false;
-            }
-
-            return new {};
+            }));
         }
 
     }

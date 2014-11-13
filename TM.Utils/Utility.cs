@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Net;
+using System.Web;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
 
@@ -38,6 +40,62 @@ namespace TM.Utils
 
             item = lookupList.GetItemById(lookupValue.LookupId);
             return true;
+        }
+
+        public static void WithSafeUpdate(SPWeb web, Action<SPWeb> action)
+        {
+            web.AllowUnsafeUpdates = true;
+            try
+            {
+                action(web);
+            }
+            finally
+            {
+                web.AllowUnsafeUpdates = false;    
+            }
+        }
+
+        public static void WithSPServiceContext(SPContext ctx, Action<SPWeb> action)
+        {
+            SPSite curSite = ctx.Site;
+            SPWeb curWeb   = ctx.Web;
+
+            SPSecurity.RunWithElevatedPrivileges(() =>
+            {
+                using (var site = new SPSite(curSite.ID))
+                using (var web = site.OpenWeb(curWeb.ID))
+                {
+                    var context = SPServiceContext.GetContext(site);
+                    using (new SPServiceContextScope(context))
+                    {
+                        action(web);
+                    }
+                }
+            });
+        }
+
+        public static dynamic WithCatchExceptionOnWebMethod(string ifExceptionMessage, Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                return new
+                {
+                    Error = new
+                    {
+                        UserMessage = ifExceptionMessage,
+                        SystemMessage = ex.Message,
+                        ex.StackTrace
+                    }
+                };
+            }
+
+            return new {};
         }
     }
 }
