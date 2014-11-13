@@ -5,24 +5,28 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @Id INT;
+	DECLARE @RegNumber NVARCHAR(64);
 
-	SELECT @Id = i.Id
+	SELECT @Id = i.Id, @RegNumber = i.RegNumber
 	FROM INSERTED i;
 
-	UPDATE [dbo].[License]
-	SET [RegNumber] = CAST((
-				SELECT TOP 1 IntRegNumber
-				FROM (
-					SELECT CAST(RegNumber AS INT) + 1 AS IntRegNumber
-					FROM [dbo].[License]
-					WHERE RegNumber IS NOT NULL
-					) ii
-				WHERE IntRegNumber NOT IN (
-						SELECT CAST(RegNumber AS INT)
+	IF (@RegNumber IS NULL)
+	BEGIN
+		UPDATE [dbo].[License]
+		SET [RegNumber] = CAST((
+					SELECT TOP 1 IntRegNumber
+					FROM (
+						SELECT CAST(RegNumber AS INT) + 1 AS IntRegNumber
 						FROM [dbo].[License]
 						WHERE RegNumber IS NOT NULL
-						)
-				ORDER BY IntRegNumber
-				) AS NVARCHAR(64))
-	WHERE Id = @Id;
+						) ii
+					WHERE IntRegNumber NOT IN (
+							SELECT CAST(RegNumber AS INT)
+							FROM [dbo].[License]
+							WHERE RegNumber IS NOT NULL
+							)
+					ORDER BY IntRegNumber
+					) AS NVARCHAR(64))
+		WHERE Id = @Id;
+	END
 END
