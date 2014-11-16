@@ -10,7 +10,7 @@ namespace TM.Utils
     {
         #region [E-government Informational System Codes]
         public static readonly string AsgufSysCode           = "1131";
-        public static readonly string TaxoMotorSysCode       = "1131";
+        public static readonly string TaxoMotorSysCode       = "9000062";
         public static readonly string TaxInspectionSysCode   = "705";
         public static readonly string GibddSysCode           = "775";
         #endregion
@@ -21,7 +21,7 @@ namespace TM.Utils
         public static readonly string TaxoMotorDepName       = "ДТиРДТИ";
         #endregion
         #region [Government Department Codes]
-        public static readonly string TaxoMotorDepCode       = "2009";
+        public static readonly string TaxoMotorDepCode       = "200903";
         #endregion
         #region [Document Codes]
         public static readonly string EgrulDocCode           = "4020";
