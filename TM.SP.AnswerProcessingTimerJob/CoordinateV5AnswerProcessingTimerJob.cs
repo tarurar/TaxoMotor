@@ -21,6 +21,9 @@ namespace TM.SP.AnswerProcessingTimerJob
 
         private static readonly string FeatureId = "{6f650624-0887-40ef-bc4b-e8e2318fb867}";
 
+        public static readonly string TaxiListsFeatureId = "{fd2daa37-e95d-4e98-b360-2f8390c3f2ba}";
+        public static readonly string TaxiV2ListsFeatureId = "{38cd390b-fda5-434c-8f3b-2810dee6c8a1}";
+
         #endregion
 
         #region [methods]
@@ -52,13 +55,19 @@ namespace TM.SP.AnswerProcessingTimerJob
                     foreach (SPSite siteCollection in webApp.Sites)
                     {
                         SPWeb web = siteCollection.RootWeb;
-                        SPListItemCollection requestList = GetOutcomeRequests(web, 5);
-                        foreach (SPListItem request in requestList)
+
+                        if (web.Features[new Guid(TaxiListsFeatureId)] != null &&
+                            web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
                         {
-                            CoordinateV5File[] answer = GetAnswerForOutcomeRequest(web, request);
-                            if (answer.Any())
+
+                            SPListItemCollection requestList = GetOutcomeRequests(web, 5);
+                            foreach (SPListItem request in requestList)
                             {
-                                UpdateOutcomeRequestWithAnswer(request, answer);
+                                CoordinateV5File[] answer = GetAnswerForOutcomeRequest(web, request);
+                                if (answer.Any())
+                                {
+                                    UpdateOutcomeRequestWithAnswer(request, answer);
+                                }
                             }
                         }
                     }
