@@ -162,6 +162,8 @@
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "Utility"
 		AddConfigurationListEntry -vars $vars -confKey "MessageQueueServiceUrl" -confValue $vars['MessageQueueServiceUrl']
 		AddConfigurationListEntry -vars $vars -confKey "BR2ServiceGuid" -confValue $vars['BR2ServiceGuid']
+		AddConfigurationListEntry -vars $vars -confKey "AsGufServiceGuid" -confValue $vars['AsGufServiceGuid']
+
      }
 #endregion
 

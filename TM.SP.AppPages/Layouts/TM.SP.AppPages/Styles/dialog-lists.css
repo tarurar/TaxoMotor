@@ -59,3 +59,7 @@
     tr.error-row {
         text-decoration: line-through;
     }
+
+    #contentBox {
+        margin-left: 0 !important;
+    }

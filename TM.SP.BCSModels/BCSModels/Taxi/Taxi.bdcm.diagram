@@ -2,14 +2,14 @@
 <minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Taxi">
   <modelRootMoniker Name="/Taxi" />
   <nestedChildShapes>
-    <entityShape Id="61ae7e76-304c-4dde-b507-b24c397a74a4" absoluteBounds="2, 1, 3.875, 3.3263964843749996">
+    <entityShape Id="61ae7e76-304c-4dde-b507-b24c397a74a4" absoluteBounds="2, 1, 3.875, 3.5186979166666665">
       <entityMoniker name="TM.SP.BCSModels.Taxi.License" />
       <nestedChildShapes>
         <elementListCompartment Id="d32b32a2-ca93-45e0-bf7c-b21f8a3a8652" absoluteBounds="2.015, 1.4100000000000001, 3.8449999999999998, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
-        <elementListCompartment Id="f3962e27-7260-4557-91a3-af40a1a86003" absoluteBounds="2.015, 1.8616910807291667, 3.8449999999999998, 2.364705403645833" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f3962e27-7260-4557-91a3-af40a1a86003" absoluteBounds="2.015, 1.8616910807291667, 3.8449999999999998, 2.5570068359375" name="Methods" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </entityShape>
-    <associationGroupConnector edgePoints="[(3.36527255859375 : 4.326396484375); (3.36527255859375 : 4.576396484375); (4.5369763671875 : 4.576396484375); (4.5369763671875 : 4.326396484375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(3.36837896634615 : 4.51869791666667); (3.36837896634615 : 4.76869791666667); (4.53372203525641 : 4.76869791666667); (4.53372203525641 : 4.51869791666667)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.Taxi.License/IdOfLicenseToParentOfLicenseAssociation" />
       <relativeChildShapes />
       <nodes>
@@ -17,7 +17,7 @@
         <entityShapeMoniker Id="61ae7e76-304c-4dde-b507-b24c397a74a4" />
       </nodes>
     </associationGroupConnector>
-    <associationGroupConnector edgePoints="[(3.36527255859375 : 1); (3.36527255859375 : 0.75); (4.5369763671875 : 0.75); (4.5369763671875 : 1)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationGroupConnector edgePoints="[(3.36837896634615 : 1); (3.36837896634615 : 0.75); (4.53372203525641 : 0.75); (4.53372203525641 : 1)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <associationGroupMoniker name="/TM.SP.BCSModels.Taxi.License/IdOfLicenseToRootParentOfLicenseAssociation" />
       <relativeChildShapes />
       <nodes>

@@ -5,6 +5,7 @@
 // <date>2014-10-30 14:36:53Z</date>
 
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,15 +14,21 @@ using System.Net;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.Services;
+using System.Xml;
+using System.Xml.Serialization;
 using CamlexNET.Impl.Helpers;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint.Utilities;
 using TM.Services.CoordinateV5;
 using TM.SP.BCSModels;
+using TM.SP.BCSModels.CoordinateV5;
 using Aspose.Words;
+using Address = TM.SP.BCSModels.CoordinateV5.Address;
 using License = TM.SP.BCSModels.Taxi.License;
 using AsposeLicense = Aspose.Words.License;
+using RequestContact = TM.SP.BCSModels.CoordinateV5.RequestContact;
 
 // ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
@@ -34,6 +41,12 @@ namespace TM.SP.AppPages
     using Microsoft.SharePoint.WebControls;
     using CamlexNET;
     using Utils;
+
+    public struct LicenseXml
+    {
+        public int ExternalId;
+        public string Xml;
+    }
 
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class IncomeRequestService : LayoutsPageBase
@@ -206,12 +219,12 @@ namespace TM.SP.AppPages
         }
 
         /// <summary>
-        /// Получение списка всех транспортных средств обращения принятых в работу
+        /// Получение списка всех транспортных средств обращения в указанном статусе
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
-        /// <returns>Строка с перечислением идентификаторов транпортных средств через точку с запятой</returns>
+        /// <returns>Статус ТС</returns>
         [WebMethod]
-        public static string GetAllWorkingTaxiInRequest(int incomeRequestId)
+        public static string GetAllTaxiInRequestByStatus(int incomeRequestId, string status)
         {
             SPWeb web = SPContext.Current.Web;
             var taxiList = web.GetListOrBreak("Lists/TaxiList");
@@ -219,7 +232,7 @@ namespace TM.SP.AppPages
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString(CultureInfo.InvariantCulture),
-                x => x["Tm_TaxiStatus"] == (DataTypes.Choice)"В работе"
+                x => x["Tm_TaxiStatus"] == (DataTypes.Choice)status
             };
             SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
             {
@@ -229,6 +242,17 @@ namespace TM.SP.AppPages
 
             return taxiItems.Cast<SPListItem>().Aggregate(String.Empty,
                     (current, item) => current + (String.IsNullOrEmpty(current) ? String.Empty : ";") + item.ID.ToString(CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>
+        /// Получение списка всех транспортных средств обращения принятых в работу
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns>Строка с перечислением идентификаторов транпортных средств через точку с запятой</returns>
+        [WebMethod]
+        public static string GetAllWorkingTaxiInRequest(int incomeRequestId)
+        {
+            return GetAllTaxiInRequestByStatus(incomeRequestId, "В работе");
         }
 
         /// <summary>
@@ -394,7 +418,7 @@ namespace TM.SP.AppPages
             {
                 ServiceHeader = new Headers
                 {
-                    FromOrgCode     = Consts.TaxoMotorSysCode,
+                    FromOrgCode     = Consts.TaxoMotorDepCode,
                     ToOrgCode       = Consts.AsgufSysCode,
                     MessageId       = Guid.NewGuid().ToString("D"),
                     RequestDateTime = DateTime.Now,
@@ -482,92 +506,95 @@ namespace TM.SP.AppPages
         }
 
         /// <summary>
-        /// Генерация документа уведомления об отказе по обращению
+        /// Генерация документов по обращению при его закрытии
         /// </summary>
-        /// <param name="refusedIncomeRequestId">Идентификатор обращения по которому отказано</param>
-        /// <returns>Структура данных содержащщая поля: Идентификатор созданного документа в библиотеке AttachLib, Адрес документа в библиотеке AttachLib</returns>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns>Массив структур DocumentMetaData</returns>
         [WebMethod]
-        public static dynamic CreateIncomeRequestRefuseNotifyDocument(int refusedIncomeRequestId)
+        public static DocumentMetaData[] CreateDocumentsWhileClosing(int incomeRequestId)
         {
             SPWeb web = SPContext.Current.Web;
+            var retValList = new List<DocumentMetaData>();
 
-            web.AllowUnsafeUpdates = true;
-            try
+            Utility.WithSafeUpdate(web, (safeWeb) =>
             {
                 // getting data
-                var spList    = web.GetListOrBreak("Lists/IncomeRequestList");
-                var spItem    = spList.GetItemOrBreak(refusedIncomeRequestId);
-                var tmplLib   = web.GetListOrBreak("DocumentTemplateLib");
-                var tmplItem  = tmplLib.GetSingleListItemByFieldValue("Tm_ServiceCode", "1");
-                var attachLib = web.GetListOrBreak("AttachLib");
+                var spList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                var spItem = spList.GetItemOrBreak(incomeRequestId);
+                var ctId   = new SPContentTypeId(spItem["ContentTypeId"].ToString());
 
-                SPListItem requestedDocument;
-                Utility.TryGetListItemFromLookupValue(spItem["Tm_RequestedDocument"],
-                    spItem.Fields.GetFieldByInternalName("Tm_RequestedDocument") as SPFieldLookup, out requestedDocument);
-                SPListItem denyReason;
-                Utility.TryGetListItemFromLookupValue(spItem["Tm_DenyReasonLookup"],
-                    spItem.Fields.GetFieldByInternalName("Tm_DenyReasonLookup") as SPFieldLookup, out denyReason);
+                var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
 
-                var refuseDate = spItem["Tm_RefuseDate"] != null
-                    ? DateTime.Parse(spItem["Tm_RefuseDate"].ToString()).ToString("dd.MM.yyyy")
-                    : "Дата отказа не указана";
-                var regDate = spItem["Tm_RegistrationDate"] != null
-                    ? DateTime.Parse(spItem["Tm_RegistrationDate"].ToString()).ToString("dd.MM.yyyy")
-                    : "Дата регистрации не указана";
-
-                // getting Aspose license for generating PDF
-                var asposeLicense = new AsposeLicense();
-                asposeLicense.SetLicense("Aspose.Total.lic");
-
-                var doc = new Document(tmplItem.File.OpenBinaryStream());
-                doc.MailMerge.Execute(
-                    new[]
-                    {
-                        "RefuseDate", "DeclarantName", "CreationDate", "SingleNumber", "SubServiceName",
-                        "RefuseReasonTitle", "RefuseReasonText", "OperatorDepartment", "OperatorName"
-                    },
-                    new[]
-                    {
-                        refuseDate, 
-                        spItem["Tm_RequestAccountBCSLookup"] ?? "", 
-                        regDate, spItem["Tm_SingleNumber"] ?? "",
-                        requestedDocument != null ? requestedDocument.Title : "", 
-                        denyReason != null ? denyReason.Title : "", 
-                        spItem["Tm_Comment"] ?? "", 
-                        "", 
-                        web.CurrentUser.Name
-                    });
-
-                using (var ms = new MemoryStream())
+                if (IsAllTaxiInStatus(incomeRequestId, "Решено положительно"))
                 {
-                    doc.Save(ms, SaveFormat.Pdf);
-
-                    var parentFolder = attachLib.RootFolder.CreateSubFolders(new[] { 
-                        DateTime.Now.Year.ToString(CultureInfo.InvariantCulture), 
-                        DateTime.Now.Month.ToString(CultureInfo.InvariantCulture), 
-                        spItem.Title });
-
-                    var uplFolder = parentFolder.CreateSubFolders(new[] { (parentFolder.ItemCount + 1).ToString(CultureInfo.InvariantCulture) });
-                    var fn = Path.HasExtension(tmplItem.File.Name) ? Path.ChangeExtension(tmplItem.File.Name, "pdf") : tmplItem.File.Name + ".pdf";
-                    var templatedDoc = uplFolder.Files.Add(fn, ms);
-                    uplFolder.Update();
-
-                    templatedDoc.Item["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(spItem.ID, spItem.Title);
-                    templatedDoc.Item.Update();
-
-                    return new
-                    {
-                       templatedDoc.Item.ID, 
-                       templatedDoc.ServerRelativeUrl
-                    };
+                    retValList.Add(ctId == spList.ContentTypes["Аннулирование"].Id
+                        ? docBuilder.RenderDocument(4)
+                        : docBuilder.RenderDocument(5));
                 }
-            }
-            finally
-            {
-                web.AllowUnsafeUpdates = false;
-            }
+                else if (IsAnyTaxiInStatus(incomeRequestId, "Отказано"))
+                {
+                    retValList.Add(ctId == spList.ContentTypes["Аннулирование"].Id
+                        ? docBuilder.RenderDocument(4)
+                        : docBuilder.RenderDocument(5));
+                    retValList.Add(docBuilder.RenderDocument(6));
+                }
+            });
+
+            return retValList.ToArray();
         }
 
+        /// <summary>
+        /// Генерация документов по обращению при отказе
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns>Массив структур DocumentMetaData</returns>
+        [WebMethod]
+        public static DocumentMetaData[] CreateDocumentsWhileRefusing(int incomeRequestId)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var retValList = new List<DocumentMetaData>();
+
+            Utility.WithSafeUpdate(web, (safeWeb) =>
+            {
+                // getting data
+                var spList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                var spItem = spList.GetItemOrBreak(incomeRequestId);
+                var ctId = new SPContentTypeId(spItem["ContentTypeId"].ToString());
+
+                var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
+
+                var status = docBuilder.RequestStatus;
+                if (status != null)
+                {
+                    var statusCode = status["Tm_ServiceCode"] != null
+                        ? status["Tm_ServiceCode"].ToString()
+                        : String.Empty;
+
+                    switch (statusCode)
+                    {
+                        case "1020":
+                            retValList.Add(docBuilder.NeedPersonVisit
+                                ? docBuilder.RenderDocument(1)
+                                : docBuilder.RenderDocument(2));
+                            break;
+                        case "1110":
+                        case "6420":
+                            retValList.Add(docBuilder.RenderDocument(3));
+                            break;
+                    }
+                }
+            });
+
+            return retValList.ToArray();
+        }
+
+
+        /// <summary>
+        /// Сохранение открепленной цифровой подписи для документа
+        /// </summary>
+        /// <param name="documentId">Идентификатор документа в библиотеке AttachLib</param>
+        /// <param name="signature">Значение подписи</param>
+        /// <returns></returns>
         [WebMethod]
         public static int SaveDocumentDetachedSignature(int documentId, string signature)
         {
@@ -630,12 +657,17 @@ namespace TM.SP.AppPages
                                 methodType  = MethodInstanceType.Updater
                             }, Convert.ToInt32(taxiId));
                         }
-
                     }
                 }
             });
         }
 
+        /// <summary>
+        /// Принятие ТС в работу
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <param name="taxiIdList">Строка с перечислением идентификаторов транпортных средств через точку с запятой</param>
+        /// <returns>Структура с описанием ошибки и стеком для разработчика</returns>
         [WebMethod]
         public static dynamic AcceptTaxi(int incomeRequestId, string taxiIdList)
         {
@@ -714,6 +746,15 @@ namespace TM.SP.AppPages
             })));
         }
 
+        /// <summary>
+        /// Отказ по ТС
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <param name="taxiIdList">Строка с перечислением идентификаторов транпортных средств через точку с запятой</param>
+        /// <param name="refuseReasonCode">Код причины отказа</param>
+        /// <param name="refuseComment">Комментарий к отказу</param>
+        /// <param name="needPersonVisit">Требуется ли очный визит</param>
+        /// <returns>Структура с описанием ошибки и стеком для разработчика</returns>
         [WebMethod]
         public static dynamic RefuseTaxi(int incomeRequestId, string taxiIdList, int refuseReasonCode, string refuseComment,
             bool needPersonVisit)
@@ -739,6 +780,167 @@ namespace TM.SP.AppPages
             }));
         }
 
+        [WebMethod]
+        public static bool IsAllTaxiInStatusHasBlankNo(int incomeRequestId, string status)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var taxiList = web.GetListOrBreak("Lists/TaxiList");
+
+            var choicesCondition = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_TaxiStatus"] == (DataTypes.Choice)status
+            };
+            var choicesExpr = ExpressionsHelper.CombineOr(choicesCondition);
+
+            var parentCondition = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x =>
+                    x["Tm_IncomeRequestLookup"] ==
+                    (DataTypes.LookupId) incomeRequestId.ToString(CultureInfo.InvariantCulture)
+            };
+            var parentExpr = ExpressionsHelper.CombineOr(parentCondition);
+
+            var blankNoCondition = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_BlankNo"] == null,
+                x => x["Tm_BlankSeries"] == null
+            };
+            var blankExpr = ExpressionsHelper.CombineOr(blankNoCondition);
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { choicesExpr, parentExpr, blankExpr };
+
+            SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            return taxiItems.Count == 0;
+        }
+
+        [WebMethod]
+        public static dynamic PromoteLicenseDrafts(int incomeRequestId)
+        {
+            var externalIdList = new List<int>();
+
+            var catchData = 
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при обновлении черновиков разрешений", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
+                        Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
+                        {
+                            var taxiList = safeWeb.GetListOrBreak("Lists/TaxiList");
+
+                            var taxiIdList = GetAllTaxiInRequestByStatus(incomeRequestId, "Решено положительно");
+                            var taxiIdArr = taxiIdList.Split(';');
+
+                            foreach (
+                                var taxiItem in
+                                    taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
+                            {
+                                var externalId = LicenseHelper.PromoteDraftFor(safeWeb, incomeRequestId, taxiItem.ID);
+                                externalIdList.Add(externalId);
+                            }
+                        })));
+
+            var payLoad = String.Join(";", externalIdList.Select(el => el.ToString(CultureInfo.InvariantCulture)));
+
+            var catchDataObj  = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData     = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+
+            return new
+            {
+                Error = errorData,
+                Data = payLoad
+            };
+        }
+
+        [WebMethod]
+        public static dynamic GetLicenseXmlById(string licenseIdList)
+        {
+            var licenseXmlList = new List<LicenseXml>();
+
+            var catchData =
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при сериализации разрешений", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, web =>
+                    {
+                        var licenseIdArr = licenseIdList.Split(';');
+
+                        foreach (string licenseId in licenseIdArr)
+                        {
+                            var license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                            {
+                                lob         = BCS.LOBTaxiSystemName,
+                                ns          = BCS.LOBTaxiSystemNamespace,
+                                contentType = "License",
+                                methodName  = "ReadLicenseItem",
+                                methodType  = MethodInstanceType.SpecificFinder
+                            }, Convert.ToInt32(licenseId));
+
+                            if (license == null) continue;
+
+                            //serialization
+                            var intWriter    = new StringWriter(new StringBuilder());
+                            XmlWriter writer = new XmlTextWriter(intWriter);
+                            var serializer   = new XmlSerializer(typeof(License));
+                            writer.WriteStartElement("Data");
+                            serializer.Serialize(writer, license);
+                            writer.WriteEndElement();
+
+                            licenseXmlList.Add(new LicenseXml
+                            {
+                                ExternalId = Convert.ToInt32(licenseId),
+                                Xml = intWriter.ToString()
+                            });
+                        }
+                    }));
+
+            var payLoad = licenseXmlList.ToArray();
+
+            var catchDataObj = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+
+            return new
+            {
+                Error = errorData,
+                Data = payLoad
+            };
+        }
+
+        [WebMethod]
+        public static dynamic UpdateSignatureForLicense(int licenseId, string signature)
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при обновлении подписи в разрешении", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
+                        Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
+                        {
+                            var license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                            {
+                                lob         = BCS.LOBTaxiSystemName,
+                                ns          = BCS.LOBTaxiSystemNamespace,
+                                contentType = "License",
+                                methodName  = "ReadLicenseItem",
+                                methodType  = MethodInstanceType.SpecificFinder
+                            }, licenseId);
+
+                            if (license != null)
+                            {
+                                license.Signature = Uri.UnescapeDataString(signature);
+
+                                BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                                {
+                                    lob         = BCS.LOBTaxiSystemName,
+                                    ns          = BCS.LOBTaxiSystemNamespace,
+                                    contentType = "License",
+                                    methodName  = "UpdateLicense",
+                                    methodType  = MethodInstanceType.Updater
+                                }, license);
+                            }
+                            else throw new Exception("Разрешение не найдено");
+
+                        })));
+        }
     }
 }
 

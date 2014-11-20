@@ -102,8 +102,8 @@ namespace TM.SP.AnswerProcessingTimerJob
         {
             var svcClient = GetServiceClientInstance(web);
             List<CoordinateV5File> retVal = new List<CoordinateV5File>();
-            MessageQueueService.Message[] messageList = 
-                svcClient.GetMessageList(new Guid(request["MessageId"].ToString()), 1);
+            MessageQueueService.Message[] messageList =
+                svcClient.GetMessageList(new Guid(request["Tm_MessageId"].ToString()), 1);
 
             foreach (MessageQueueService.Message message in messageList)
             {

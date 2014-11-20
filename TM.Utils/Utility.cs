@@ -25,8 +25,9 @@ namespace TM.Utils
                 methodName  = "GetNextNumberInstance",
                 methodType  = MethodInstanceType.Scalar
             }, serviceCode);
+            var formattedNumber = String.Format("{0:000000}", number);
 
-            return String.Format(pattern, orgCode, sysCode, service, number, year);
+            return String.Format(pattern, orgCode, sysCode, service, formattedNumber, year);
         }
 
         public static bool TryGetListItemFromLookupValue(object fieldValue, SPFieldLookup field, out SPListItem item)

@@ -5,3 +5,7 @@
 select, option {
     width: 100%;
 }
+
+#contentBox {
+    margin-left: 0 !important;
+}

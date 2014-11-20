@@ -10,5 +10,6 @@
     <File Path="Scripts\IncomeRequestHelper.js" Url="IncomeRequestHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\DenyIncomeRequest.js" Url="DenyIncomeRequest.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\DenyTaxi.js" Url="DenyTaxi.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
+    <File Path="Scripts\ProgressDlg.js" Url="ProgressDlg.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
   </Module>
 </Elements>

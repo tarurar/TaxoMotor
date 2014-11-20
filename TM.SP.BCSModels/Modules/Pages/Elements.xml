@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
-  <Module Name="Pages" Url="SitePages">
+  <Module Name="Pages" Url="Pages">
     <File Path="Pages\ViewFileContentPage.aspx" Url="ViewFileContentPage.aspx" Type="GhostableInLibrary"
 			IgnoreIfAlreadyExists="TRUE">
       <Property Name="Title" Value="File Attachments" />

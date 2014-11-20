@@ -32,6 +32,9 @@ namespace TM.ServiceClients.MessageQueue {
         private string CertificateServiceThumbprintField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServiceCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ServiceEndPointField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -112,6 +115,19 @@ namespace TM.ServiceClients.MessageQueue {
                 if ((object.ReferenceEquals(this.CertificateServiceThumbprintField, value) != true)) {
                     this.CertificateServiceThumbprintField = value;
                     this.RaisePropertyChanged("CertificateServiceThumbprint");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServiceCode {
+            get {
+                return this.ServiceCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServiceCodeField, value) != true)) {
+                    this.ServiceCodeField = value;
+                    this.RaisePropertyChanged("ServiceCode");
                 }
             }
         }
@@ -295,9 +311,6 @@ namespace TM.ServiceClients.MessageQueue {
         private string CertificateInfoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid DocumentIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime MessageDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -314,6 +327,9 @@ namespace TM.ServiceClients.MessageQueue {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int MessageTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid RequestIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int RetriesCountField;
@@ -349,19 +365,6 @@ namespace TM.ServiceClients.MessageQueue {
                 if ((object.ReferenceEquals(this.CertificateInfoField, value) != true)) {
                     this.CertificateInfoField = value;
                     this.RaisePropertyChanged("CertificateInfo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid DocumentId {
-            get {
-                return this.DocumentIdField;
-            }
-            set {
-                if ((this.DocumentIdField.Equals(value) != true)) {
-                    this.DocumentIdField = value;
-                    this.RaisePropertyChanged("DocumentId");
                 }
             }
         }
@@ -440,6 +443,19 @@ namespace TM.ServiceClients.MessageQueue {
                 if ((this.MessageTypeField.Equals(value) != true)) {
                     this.MessageTypeField = value;
                     this.RaisePropertyChanged("MessageType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid RequestId {
+            get {
+                return this.RequestIdField;
+            }
+            set {
+                if ((this.RequestIdField.Equals(value) != true)) {
+                    this.RequestIdField = value;
+                    this.RaisePropertyChanged("RequestId");
                 }
             }
         }
@@ -536,10 +552,10 @@ namespace TM.ServiceClients.MessageQueue {
         System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Service> GetServiceAsync(System.Guid ServiceId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetMessageList", ReplyAction="http://tempuri.org/IDataService/GetMessageListResponse")]
-        TM.ServiceClients.MessageQueue.Message[] GetMessageList(System.Guid DocumentId, int MessageType);
+        TM.ServiceClients.MessageQueue.Message[] GetMessageList(System.Guid RequestId, int MessageType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetMessageList", ReplyAction="http://tempuri.org/IDataService/GetMessageListResponse")]
-        System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Message[]> GetMessageListAsync(System.Guid DocumentId, int MessageType);
+        System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Message[]> GetMessageListAsync(System.Guid RequestId, int MessageType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/GetMessage", ReplyAction="http://tempuri.org/IDataService/GetMessageResponse")]
         TM.ServiceClients.MessageQueue.Message GetMessage(System.Guid MessageId);
@@ -597,12 +613,12 @@ namespace TM.ServiceClients.MessageQueue {
             return base.Channel.GetServiceAsync(ServiceId);
         }
         
-        public TM.ServiceClients.MessageQueue.Message[] GetMessageList(System.Guid DocumentId, int MessageType) {
-            return base.Channel.GetMessageList(DocumentId, MessageType);
+        public TM.ServiceClients.MessageQueue.Message[] GetMessageList(System.Guid RequestId, int MessageType) {
+            return base.Channel.GetMessageList(RequestId, MessageType);
         }
         
-        public System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Message[]> GetMessageListAsync(System.Guid DocumentId, int MessageType) {
-            return base.Channel.GetMessageListAsync(DocumentId, MessageType);
+        public System.Threading.Tasks.Task<TM.ServiceClients.MessageQueue.Message[]> GetMessageListAsync(System.Guid RequestId, int MessageType) {
+            return base.Channel.GetMessageListAsync(RequestId, MessageType);
         }
         
         public TM.ServiceClients.MessageQueue.Message GetMessage(System.Guid MessageId) {

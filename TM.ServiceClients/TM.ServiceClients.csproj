@@ -78,14 +78,14 @@
     <None Include="Service References\CoordinateV6\TM.ServiceClients.CoordinateV6.GetRequestsOutMessage.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MessageQueue\DataService.wsdl" />
-    <None Include="Service References\MessageQueue\DataService.xsd">
+    <None Include="Service References\MessageQueue\DataService1.wsdl" />
+    <None Include="Service References\MessageQueue\DataService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MessageQueue\DataService1.xsd">
+    <None Include="Service References\MessageQueue\DataService31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MessageQueue\DataService2.xsd">
+    <None Include="Service References\MessageQueue\DataService32.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MessageQueue\TM.ServiceClients.MessageQueue.Message.datasource">

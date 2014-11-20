@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://rgs3.dev.armd.ru:8080/?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://77.95.132.133:8082/DataService.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="DataService.xsd" MetadataType="Schema" ID="032dd2e6-d280-4001-9240-5c19f954aabf" SourceId="1" SourceUrl="http://rgs3.dev.armd.ru:8080/DataService.svc?xsd=xsd1" />
-    <MetadataFile FileName="DataService1.xsd" MetadataType="Schema" ID="008c09cf-dca2-43fb-a50f-78c85f2975d4" SourceId="1" SourceUrl="http://rgs3.dev.armd.ru:8080/DataService.svc?xsd=xsd0" />
-    <MetadataFile FileName="DataService.wsdl" MetadataType="Wsdl" ID="1784baea-7141-4ed9-81e8-cebddcf0b274" SourceId="1" SourceUrl="http://rgs3.dev.armd.ru:8080/?wsdl" />
-    <MetadataFile FileName="DataService2.xsd" MetadataType="Schema" ID="5f5e7a2a-2f36-441c-ace3-b0ef546c3be6" SourceId="1" SourceUrl="http://rgs3.dev.armd.ru:8080/DataService.svc?xsd=xsd2" />
+    <MetadataFile FileName="DataService1.wsdl" MetadataType="Wsdl" ID="8be4da2f-d945-426b-9a63-bd207a3f8f68" SourceId="1" SourceUrl="http://77.95.132.133:8082/DataService.svc?wsdl" />
+    <MetadataFile FileName="DataService3.xsd" MetadataType="Schema" ID="c1cdb671-ffd7-42e9-9a40-9076eca8538b" SourceId="1" SourceUrl="http://win-snu4u1n6vq1.spdomain.sp:8082/DataService.svc?xsd=xsd0" />
+    <MetadataFile FileName="DataService31.xsd" MetadataType="Schema" ID="9b83cd64-08eb-4f29-9e06-91a7ceb6a02a" SourceId="1" SourceUrl="http://win-snu4u1n6vq1.spdomain.sp:8082/DataService.svc?xsd=xsd1" />
+    <MetadataFile FileName="DataService32.xsd" MetadataType="Schema" ID="c7708666-c18d-414e-9b29-fe4f81bbd8f5" SourceId="1" SourceUrl="http://win-snu4u1n6vq1.spdomain.sp:8082/DataService.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

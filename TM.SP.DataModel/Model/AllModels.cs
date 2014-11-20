@@ -142,7 +142,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmIncomeRequestSysUpdAvailText, f => f.OnCreated(
                         (FieldDefinition fieldDef, Field spField) =>
                         {
-                            var field = spField as FieldCalculated;
+                            var field = spField.Context.CastTo<FieldCalculated>(spField);
+                            
                             if (field != null)
                                 field.Formula = "=IF([Обновление обращения разрешено], \"1\", \"0\")";
                         }))

@@ -28,6 +28,16 @@
                 });
             };
 
+            ir.IsAllTaxiInStatusHasBlankNo = function(incomeRequestId, status) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/IsAllTaxiInStatusHasBlankNo',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ', status: "' + status + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.GetAllWorkingTaxiInRequest = function (incomeRequestId) {
                 return $.ajax({
                     type: 'POST',
@@ -78,6 +88,56 @@
                     type: 'POST',
                     url: ir.ServiceUrl + '/HasRequestActingLicenses',
                     data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.CreateDocumentsWhileClosing = function(incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/CreateDocumentsWhileClosing',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.CreateDocumentsWhileRefusing = function(incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/CreateDocumentsWhileRefusing',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.PromoteLicenseDrafts = function(incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/PromoteLicenseDrafts',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.GetLicenseXmlById = function (licenseIdList) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/GetLicenseXmlById',
+                    data: '{ licenseIdList: "' + licenseIdList + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.UpdateSignatureForLicense = function (licenseId, signature) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/UpdateSignatureForLicense',
+                    data: '{ licenseId: ' + licenseId + ', signature: "' + encodeURIComponent(signature) + '" }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
                 });
@@ -217,16 +277,6 @@
                     type: 'POST',
                     url: ir.ServiceUrl + '/SaveIncomeRequestStatusLog',
                     data: '{ incomeRequestId: ' + incomeRequestId + ' , signature: "' + encodeURIComponent(signature) + '" }',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json'
-                });
-            }
-
-            ir.CreateIncomeRequestRefuseNotifyDocument = function(incomeRequestId) {
-                return $.ajax({
-                    type: 'POST',
-                    url: ir.ServiceUrl + '/CreateIncomeRequestRefuseNotifyDocument',
-                    data: '{ refusedIncomeRequestId: ' + incomeRequestId + ' }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
                 });
@@ -386,33 +436,34 @@
 
                             // Установка причины отказа и комментария
                             ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText).success(function() {
-                                // Установка статуса обращения
-                                ir.CalculateDatesAndSetStatus(incomeRequestId, 1080).success(function () {
                                     // Генерация документов отказа
-                                    ir.CreateIncomeRequestRefuseNotifyDocument(incomeRequestId).success(function (refuseDocData) {
-                                        if (refuseDocData && refuseDocData.d && refuseDocData.d.ID != 0) {
-                                            var refuseFileId = refuseDocData.d.ID;
+                                    ir.CreateDocumentsWhileRefusing(incomeRequestId).success(function (refuseDocData) {
+                                        if (refuseDocData && refuseDocData.d && refuseDocData.d[0]) {
+                                            var refuseFileId = refuseDocData.d[0].DocumentId;
                                             // Подписание документа отказа
-                                            ir.SignDocumentContent(refuseDocData.d.ServerRelativeUrl, function (signedRefuseDoc) {
+                                            ir.SignDocumentContent(refuseDocData.d[0].DocumentUrl, function (signedRefuseDoc) {
                                                 // Сохранение подписи документа отказа
-                                                ir.SaveDocumentDetachedSignature(refuseDocData.d.ID, signedRefuseDoc).success(function (sigFileData) {
+                                                ir.SaveDocumentDetachedSignature(refuseFileId, signedRefuseDoc).success(function (sigFileData) {
                                                     if (sigFileData && sigFileData.d) {
                                                         var sigFileId = sigFileData.d;
                                                         // Удаление черновиков всех разрешений по всем ТС обращения
-                                                        ir.DeleteLicenseDraftsOnRefusing(incomeRequestId).success(function() {
-                                                            // Получение xml для измененного состояния обращения
-                                                            ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function(data) {
-                                                                //Подписание xml
-                                                                if (data && data.d) {
-                                                                    ir.SignXml(data.d, function(signedData) {
-                                                                        // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                                        ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                                            var attachs = refuseFileId + ', ' + sigFileId;
-                                                                            // Отправка статуса обращения по межведомственному взаимодействию
-                                                                            ir.SendStatus(incomeRequestId, attachs).success(onsuccess).fail(function(err) { onfail("При отправке статуса возникла ошибка"); });
-                                                                        }).fail(onfail);
-                                                                    }, onfail);
-                                                                } else onfail("Не удалось получить статус обращения в виде xml");
+                                                        ir.DeleteLicenseDraftsOnRefusing(incomeRequestId).success(function () {
+                                                            // Установка статуса обращения
+                                                            ir.CalculateDatesAndSetStatus(incomeRequestId, 1080).success(function() {
+                                                                // Получение xml для измененного состояния обращения
+                                                                ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function(data) {
+                                                                    //Подписание xml
+                                                                    if (data && data.d) {
+                                                                        ir.SignXml(data.d, function(signedData) {
+                                                                            // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                            ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function() {
+                                                                                var attachs = refuseFileId + ', ' + sigFileId;
+                                                                                // Отправка статуса обращения по межведомственному взаимодействию
+                                                                                ir.SendStatus(incomeRequestId, attachs).success(onsuccess).fail(function(err) { onfail("При отправке статуса возникла ошибка"); });
+                                                                            }).fail(onfail);
+                                                                        }, onfail);
+                                                                    } else onfail("Не удалось получить статус обращения в виде xml");
+                                                                }).fail(onfail);
                                                             }).fail(onfail);
                                                         }).fail(onfail);
                                                     } else onfail("Не удалось создать документ открепленной подписи");
@@ -420,7 +471,6 @@
                                             }, onfail);
                                         } else onfail("Не удалось создать документ-уведомление");
                                     }).fail(onfail);
-                                }).fail(onfail);
                             }).fail(onfail);
                         }
                     })
@@ -562,6 +612,177 @@
 
                 SP.UI.ModalDialog.showModalDialog(options);
             }
+
+            ir.SignDocumentSaveSignatureMultiple = function(docsMetadata, onsucces, onfail) {
+                var deferreds = [];
+
+                for (var i = 0; i < docsMetadata.length; i++) {
+                    var currentDeferred = $.Deferred();
+                    var currentDocData = docsMetadata[i];
+
+                    ir.SignDocumentContent(currentDocData.DocumentUrl, function(document, def) {
+                        return function(signedDoc) {
+                            ir.SaveDocumentDetachedSignature(document.DocumentId, signedDoc).success(function(sigFileData) {
+                                if (sigFileData && sigFileData.d) {
+                                    def.resolve();
+                                } else def.rejectWith(document, ["Не удалось создать документ открепленной подписи"]);
+                            }).fail(function(jqXhr, status, error) {
+                                def.rejectWith(document, [error]);
+                            });
+                        }
+                    }(currentDocData, currentDeferred), function(document, def) {
+                        return function(err) {
+                            def.rejectWith(document, [err]);
+                        }
+                    }(currentDocData, currentDeferred));
+
+                    deferreds.push(currentDeferred);
+                }
+
+                $.when.apply($, deferreds).done(onsucces).fail(onfail);
+            };
+
+            ir.SignLicenseSaveSignatureMultiple = function (docsMetadata, onsucces, onfail) {
+                var deferreds = [];
+
+                for (var i = 0; i < docsMetadata.length; i++) {
+                    var currentDeferred = $.Deferred();
+                    var currentDocData = docsMetadata[i];
+
+                    ir.SignXml(currentDocData.Xml, function(document, def) {
+                        return function(signedData) {
+                            ir.UpdateSignatureForLicense(document.ExternalId, signedData).success(function() {
+                                def.resolve();
+                            }).fail(function (jqXhr, status, error) {
+                                var response = $.parseJSON(jqXhr.responseText);
+                                console.error("Exception Message: " + response.Error.SystemMessage);
+                                console.error("Exception StackTrace: " + response.Error.StackTrace);
+                                def.rejectWith(document, [response.Error.UserMessage]);
+                            });
+                        }
+                    }(currentDocData, currentDeferred), function(document, def) {
+                        return function(err)
+                        {
+                            def.rejectWith(document, [err]);
+                        }
+                    }(currentDocData, currentDeferred));
+
+                    deferreds.push(currentDeferred);
+                }
+
+                $.when.apply($, deferreds).done(onsucces).fail(onfail);
+            };
+
+            // Выполняется для всех услуг кроме аннулирования
+            ir.PromoteLicenseDraftsAndSign = function (incomeRequestId) {
+
+                var def = $.Deferred();
+
+                ir.GetContentTypeName(incomeRequestId, function (ctName) {
+                    if (ctName == 'Аннулирование') {
+                        def.resolve();
+                    }
+                    else {
+                        ir.PromoteLicenseDrafts(incomeRequestId).success(function (data) {
+                            ir.GetLicenseXmlById(data.d.Data).success(function (data) {
+                                ir.SignLicenseSaveSignatureMultiple(data.d.Data, def.resolve, def.reject);
+                            }).fail(function (jqXhr, status, error) {
+                                var response = $.parseJSON(jqXhr.responseText);
+                                console.error("Exception Message: " + response.Error.SystemMessage);
+                                console.error("Exception StackTrace: " + response.Error.StackTrace);
+                                def.reject();
+                            });
+                        }).fail(function (jqXhr, status, error) {
+                            var response = $.parseJSON(jqXhr.responseText);
+                            console.error("Exception Message: " + response.Error.SystemMessage);
+                            console.error("Exception StackTrace: " + response.Error.StackTrace);
+                            def.reject();
+                        });
+                    }
+                });
+
+                return def;
+            };
+
+            ir.GetContentTypeName = function (incomeRequestId, callback) {
+
+                SP.SOD.executeOrDelayUntilScriptLoaded(function() {
+                    var ctx  = SP.ClientContext.get_current();
+                    var list = ctx.get_web().get_lists().getById(_spPageContextInfo.pageListId);
+                    var item = list.getItemById(incomeRequestId);
+                    var ct   = item.get_contentType();
+
+                    ctx.load(ct);
+                    ctx.executeQueryAsync(function () {
+                        if (callback)
+                            callback(ct.get_name());
+                    });
+                }, "sp.js");
+            }
+
+            ir.Close = function(incomeRequestId, onsuccess, onfail) {
+
+                var options = {
+                    url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/ProgressDlg.aspx',
+                    title: 'Завершение работы с обращением',
+                    allowMaximize: false,
+                    showClose: false
+                };
+                SP.UI.ModalDialog.showModalDialog(options);
+
+                TM.SP.registeredProgressDlgConsumer = function(progress) {
+                    
+                    var action = progress.addAction('Проверка на наличие ТС со статусом "Решено положительно"');
+                    ir.IsAnyTaxiInStatus(incomeRequestId, "Решено положительно").success(function(data) {
+                        if (data && data.d) {
+                            progress.finishAction(action, 10);
+
+                            action = progress.addAction('Проверяем все ли ТС находятся в статусе "Решено положительно" или "Отказано"');
+                            ir.IsAllTaxiInStatus(incomeRequestId, "Решено положительно;Отказано").success(function(data) {
+                                if (data && data.d) {
+                                    progress.finishAction(action, 20);
+
+                                    action = progress.addAction('Проверяем у всех ли ТС со статусом "Решено положительно" заполнены номер и серия бланка разрешения');
+                                    ir.IsAllTaxiInStatusHasBlankNo(incomeRequestId, "Решено положительно").success(function (data) {
+                                        if (data && data.d) {
+                                            progress.finishAction(action, 30);
+
+                                            action = progress.addAction('Формирование и подписание уведомлений');
+                                            ir.CreateDocumentsWhileClosing(incomeRequestId).success(function (docs) {
+                                                if (docs && docs.d) {
+                                                    ir.SignDocumentSaveSignatureMultiple(docs.d, function() {
+                                                        progress.finishAction(action, 50);
+                                                        // Для всех услуг кроме аннулирование подписываем разрешения
+                                                        action = progress.addAction('Подписание разрешений');
+                                                        ir.PromoteLicenseDraftsAndSign(incomeRequestId).done(function () {
+                                                            progress.finishAction(action, 70);
+                                                            
+                                                            //continue
+
+                                                        }).fail(function(err) {
+                                                            progress.errorAction(action, err);
+                                                        });
+                                                    }, function(err) {
+                                                        progress.errorAction(action, err);
+                                                    });
+                                                } else progress.errorAction(action);
+                                            }).fail(function(jqXhr, status, error) {
+                                                progress.errorAction(action, error.message);
+                                            });
+                                        } else progress.errorAction(action);
+                                    }).fail(function (jqXhr, status, error) {
+                                        progress.errorAction(action, error.message);
+                                    });
+                                } else progress.errorAction(action);
+                            }).fail(function (jqXhr, status, error) {
+                                progress.errorAction(action, error.message);
+                            });
+                        } else progress.errorAction(action);
+                    }).fail(function (jqXHR, status, error) {
+                        progress.errorAction(action, error.message);
+                    });
+                }
+            };
 
             ir.SelectedCertificate = null;
 

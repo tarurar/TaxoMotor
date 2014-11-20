@@ -127,6 +127,7 @@
     <Content Include="Pages\DenyTaxi.aspx" />
     <Content Include="Pages\Elements.xml" />
     <Content Include="Pages\licenseSearch.aspx" />
+    <Content Include="Pages\ProgressDlg.aspx" />
     <Content Include="Pages\RenewalLicense.aspx" />
     <Content Include="Pages\SuspendLicense.aspx" />
     <Content Include="Scripts\CancellationLicense.js" />
@@ -143,6 +144,7 @@
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
     <Content Include="Scripts\licenseSearchModel.js" />
+    <Content Include="Scripts\ProgressDlg.js" />
     <Content Include="Scripts\RenewalLicense.js" />
     <Content Include="Scripts\SuspendLicense.js" />
     <Content Include="Scripts\_references.js" />
@@ -150,6 +152,7 @@
     <Content Include="Styles\IncomeRequestActions.css" />
     <Content Include="Styles\LicenseActions.css" />
     <Content Include="Styles\licenseSearchModel.css" />
+    <Content Include="Styles\ProgressDlg.css" />
     <Content Include="Styles\TaxiActions.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -25,5 +25,9 @@
       <Property Name="Title" Value="Отказ по транспортному средству" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\ProgressDlg.aspx" Url="ProgressDlg.aspx"  Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Ход процесса" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

@@ -37,7 +37,7 @@ namespace TM.Services.CoordinateV5
         {
             var message = GetDefaultMessageTemplate();
             // ServiceHeader
-            message.ServiceHeader.FromOrgCode           = Consts.TaxoMotorSysCode;
+            message.ServiceHeader.FromOrgCode           = Consts.TaxoMotorDepCode;
             message.ServiceHeader.ToOrgCode             = Consts.TaxInspectionSysCode;
             message.ServiceHeader.MessageId             = Guid.NewGuid().ToString("D");
             message.ServiceHeader.RequestDateTime       = DateTime.Now;
@@ -84,7 +84,7 @@ namespace TM.Services.CoordinateV5
         {
             var message = GetDefaultMessageTemplate();
             // ServiceHeader
-            message.ServiceHeader.FromOrgCode           = Consts.TaxoMotorSysCode;
+            message.ServiceHeader.FromOrgCode           = Consts.TaxoMotorDepCode;
             message.ServiceHeader.ToOrgCode             = Consts.GibddSysCode;
             message.ServiceHeader.MessageId             = Guid.NewGuid().ToString("D");
             message.ServiceHeader.RequestDateTime       = DateTime.Now;

@@ -8,5 +8,6 @@
     <ProjectItemFile Source="RenewalLicense.aspx" Target="Pages\" Type="ElementFile" />
     <ProjectItemFile Source="DenyIncomeRequest.aspx" Target="Pages\" Type="ElementFile" />
     <ProjectItemFile Source="DenyTaxi.aspx" Target="Pages\" Type="ElementFile" />
+    <ProjectItemFile Source="ProgressDlg.aspx" Target="Pages\" Type="ElementFile" />
   </Files>
 </ProjectItem>
