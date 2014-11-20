@@ -176,7 +176,7 @@ namespace TM.SP.AppPages
                 Service       = svc,
                 MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
                 MessageType   = 2,
-                MessageMethod = 2,
+                MessageMethod = 3,
                 MessageDate   = DateTime.Now,
                 MessageText   = internalMessage.ToXElement<CoordinateStatusMessage>().ToString()
             };
