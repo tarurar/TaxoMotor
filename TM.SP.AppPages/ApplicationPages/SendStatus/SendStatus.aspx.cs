@@ -38,7 +38,7 @@ namespace TM.SP.AppPages
         #endregion
 
         #region [fields]
-        protected static readonly string ServiceGuidConfigName = "BR2ServiceGuid";
+        protected static readonly string ServiceGuidConfigName = "AsGufServiceGuid";
         #endregion
         /// <summary>
         /// Initializes a new instance of the SendStatus class

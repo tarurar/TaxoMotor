@@ -53,6 +53,17 @@ namespace TM.SP.AppPages
 
         #region [methods]
 
+        protected override List<T> LoadDocuments<T>()
+        {
+            var documentList = base.LoadDocuments<T>();
+            foreach (var doc in documentList.Select(document => document as EGRULRequestItem))
+            {
+                doc.RequestTypeCode = OutcomeRequestType.Egrip;
+            }
+
+            return documentList;
+        }
+
         protected override List<ValidationErrorInfo> ValidateDocuments<T>(List<T> documentList)
         {
             var retVal = new List<ValidationErrorInfo>();

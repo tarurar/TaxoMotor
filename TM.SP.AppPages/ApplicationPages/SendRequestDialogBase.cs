@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,14 @@ namespace TM.SP.AppPages.ApplicationPages
         public int Id {get; set;}
         public string Title { get; set; }
         public bool HasError {get; set;}
+        public OutcomeRequestType RequestTypeCode { get; set; }
+    }
+
+    public enum OutcomeRequestType
+    {
+        Pts = 1,
+        Egrul,
+        Egrip
     }
     
     public enum ValidationErrorSeverity
@@ -167,13 +176,17 @@ namespace TM.SP.AppPages.ApplicationPages
         protected virtual SPListItem TrackOutcomeRequest<T>(T document, bool success, Guid requestId) where T : RequestItem
         {
             if (!success) return null;
+            
+            var trackList = Web.GetListOrBreak("Lists/OutcomeRequestStateList");
+            var requestTypeList = Web.GetListOrBreak("Lists/OutcomeRequestTypeBookList");
+            var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
+                ((int) document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
 
-            var trackList = this.Web.GetListOrBreak("Lists/OutcomeRequestStateList");
             var newItem = trackList.AddItem();
             newItem["Title"]                        = requestId.ToString("B");
             newItem["Tm_OutputDate"]                = DateTime.Now;
             newItem["Tm_IncomeRequestLookup"]       = new SPFieldLookupValue(document.Id, document.Title);
-            newItem["Tm_OutputRequestTypeLookup"]   = null;   // todo
+            newItem["Tm_OutputRequestTypeLookup"]   = new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title);
             newItem["Tm_AnswerReceived"]            = false;
             newItem["Tm_MessageId"]                 = requestId;
             newItem.Update();
@@ -199,7 +212,7 @@ namespace TM.SP.AppPages.ApplicationPages
                 bool sent = svcClient.AddMessage(newMessage);
                 if (needsTracking)
                 {
-                    TrackOutcomeRequest<T>(document, sent, newMessage.MessageId);
+                    TrackOutcomeRequest<T>(document, sent, newMessage.RequestId);
                 }
                 success |= sent;
             }
