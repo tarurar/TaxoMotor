@@ -162,20 +162,26 @@ var cryptoPro;
             oStore.Open(storeLocation, storeName, storeOpenMode);
 
             var oCertificates = oStore.Certificates;
-            // Не рассматриваются сертификаты, в которых отсутствует закрытый ключ
-            if (oCertificates.Count > 0)
-                oCertificates = oCertificates.Find(cryptoPro.CertFindType.CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY, cryptoPro.PropId.CAPICOM_PROPID_KEY_PROV_INFO);
+            if (oCertificates.Count == 0) {
+                alert('В хранилище нет ни одного сертификата');
+            } else {
+                // Не рассматриваются сертификаты, в которых отсутствует закрытый ключ
+                if (oCertificates.Count > 0)
+                    oCertificates = oCertificates.Find(cryptoPro.CertFindType.CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY, cryptoPro.PropId.CAPICOM_PROPID_KEY_PROV_INFO);
 
-            // Выбираются только сертификаты, действительные в настоящее время
-            var today = new Date();
-            var date = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
-            if (oCertificates.Count > 0)
-                oCertificates = oCertificates.Find(cryptoPro.CertFindType.CAPICOM_CERTIFICATE_FIND_TIME_VALID, date);
+                // Выбираются только сертификаты, действительные в настоящее время
+                var today = new Date();
+                var date = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
+                if (oCertificates.Count > 0)
+                    oCertificates = oCertificates.Find(cryptoPro.CertFindType.CAPICOM_CERTIFICATE_FIND_TIME_VALID, date);
 
-            if (oCertificates.Count > 1) {
-                oCertificates = oCertificates.Select("Выбор сертификата для подписи", "АИС ТаксоМотор", false);
+                if (oCertificates.Count > 1) {
+                    oCertificates = oCertificates.Select("Выбор сертификата для подписи", "АИС ТаксоМотор", false);
+                }
+
+                var oCertificate = oCertificates.Item(1);
             }
-            var oCertificate = oCertificates.Item(1);
+            
             oStore.Close();
 
             return oCertificate;
