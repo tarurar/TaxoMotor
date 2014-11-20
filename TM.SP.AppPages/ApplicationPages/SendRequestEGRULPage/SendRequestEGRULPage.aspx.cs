@@ -33,6 +33,11 @@ namespace TM.SP.AppPages
         public string RequestAccount { get; set; }
         public int RequestAccountId { get; set; }
         public string OrgFormCode { get; set; }
+
+        public EGRULRequestItem()
+        {
+            RequestTypeCode = OutcomeRequestType.Egrul;
+        }
     }
 
     /// <summary>
@@ -334,9 +339,10 @@ namespace TM.SP.AppPages
                 Service         = svc,
                 MessageId       = new Guid(internalMessage.ServiceHeader.MessageId),
                 MessageType     = 2,
-                MessageMethod   = 14,
+                MessageMethod   = 2,
                 MessageDate     = DateTime.Now,
-                MessageText     = internalMessage.ToXElement<CoordinateTaskMessage>().ToString()
+                MessageText     = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
+                RequestId       = new Guid(internalMessage.TaskMessage.Task.RequestId)
             };
         }
         #endregion

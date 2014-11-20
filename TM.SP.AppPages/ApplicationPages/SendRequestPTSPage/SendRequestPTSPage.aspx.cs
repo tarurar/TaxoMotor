@@ -3,6 +3,9 @@
 // </copyright>
 // <author>SPDEV\developer</author>
 // <date>2014-09-11 17:00:28Z</date>
+
+using System.Globalization;
+
 namespace TM.SP.AppPages
 {
     using System;
@@ -43,6 +46,11 @@ namespace TM.SP.AppPages
     public class PTSRequestItem : RequestItem
     {
         public string TaxiStateNumber { get; set; }
+
+        public PTSRequestItem()
+        {
+            RequestTypeCode = OutcomeRequestType.Pts;
+        }
     }
 
     /// <summary>
@@ -258,12 +266,13 @@ namespace TM.SP.AppPages
 
             return new MessageQueueService.Message()
             {
-                Service = svc,
-                MessageId = new Guid(internalMessage.ServiceHeader.MessageId),
-                MessageType = 2,
-                MessageMethod = 14,
-                MessageDate = DateTime.Now,
-                MessageText = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
+                Service       = svc,
+                MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
+                MessageType   = 2,
+                MessageMethod = 2,
+                MessageDate   = DateTime.Now,
+                MessageText   = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
+                RequestId     = new Guid(internalMessage.TaskMessage.Task.RequestId)
             };
         }
 
@@ -312,6 +321,27 @@ namespace TM.SP.AppPages
             #endregion
 
             return message;
+        }
+
+        protected override SPListItem TrackOutcomeRequest<T>(T document, bool success, Guid requestId)
+        {
+            if (!success) return null;
+
+            var trackList = Web.GetListOrBreak("Lists/OutcomeRequestStateList");
+            var requestTypeList = Web.GetListOrBreak("Lists/OutcomeRequestTypeBookList");
+            var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
+                ((int)document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
+
+            var newItem = trackList.AddItem();
+            newItem["Title"] = requestId.ToString("B");
+            newItem["Tm_OutputDate"] = DateTime.Now;
+            newItem["Tm_TaxiLookup"] = new SPFieldLookupValue(document.Id, document.Title);
+            newItem["Tm_OutputRequestTypeLookup"] = new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title);
+            newItem["Tm_AnswerReceived"] = false;
+            newItem["Tm_MessageId"] = requestId;
+            newItem.Update();
+
+            return newItem;
         }
 
         #endregion

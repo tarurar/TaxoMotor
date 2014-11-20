@@ -173,12 +173,12 @@ namespace TM.SP.AppPages
 
             return new MessageQueueService.Message()
             {
-                Service = svc,
-                MessageId = new Guid(internalMessage.ServiceHeader.MessageId),
-                MessageType = 2,
-                MessageMethod = 14,
-                MessageDate = DateTime.Now,
-                MessageText = internalMessage.ToXElement<CoordinateStatusMessage>().ToString(),
+                Service       = svc,
+                MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
+                MessageType   = 2,
+                MessageMethod = 2,
+                MessageDate   = DateTime.Now,
+                MessageText   = internalMessage.ToXElement<CoordinateStatusMessage>().ToString()
             };
         }
 
@@ -224,7 +224,7 @@ namespace TM.SP.AppPages
             {
                 ServiceHeader = new Headers()
                 {
-                    FromOrgCode     = Consts.TaxoMotorSysCode,
+                    FromOrgCode     = Consts.TaxoMotorDepCode,
                     ToOrgCode       = Consts.AsgufSysCode,
                     MessageId       = Guid.NewGuid().ToString("D"),
                     RequestDateTime = DateTime.Now,
