@@ -266,13 +266,16 @@ namespace TP.SP.DataMigration
             SPListItem newAttach = list.AddItem();
             DateTime validityPeriod;
             // assign values
-            newAttach["Title"]              = document.DocNumber;
+            newAttach["Title"]              = "Б/Н";
             newAttach["Tm_AttachType"]      = document.DocCode;
             if (!String.IsNullOrEmpty(document.DocCode))
             {
                 var docTypeItem = docTypeBooklist.GetSingleListItemByFieldValue("Tm_ServiceCode", document.DocCode);
                 if (docTypeItem != null)
+                {
                     newAttach["Tm_DocumentTypeLookup"] = new SPFieldLookupValue(docTypeItem.ID, docTypeItem.Title);
+                    newAttach["Title"] = docTypeItem.Title;
+                }
             }
             newAttach["Tm_AttachDocNumber"] = document.DocNumber;
             newAttach["Tm_AttachDocDate"]   = document.DocDate;
