@@ -85,6 +85,72 @@
 	[Date_OD] DATETIME NULL,
 	-- Признак создания разрешения на портале АСГУФ
 	[FromPortal] BIT NULL,
+	-- Фирменное наименование перевозчика
+	[FirmName] NVARCHAR(128) NULL,
+	-- Брэнд перевозчика
+	[Brand] NVARCHAR(128) NULL,
+	-- Серия и номер свидетельства
+	[OgrnNum] NVARCHAR(64) NULL,
+	-- Кем выдан ОГРН
+	[OgrnName] NVARCHAR(256) NULL,
+	-- Адрес органа, осуществившего регистрацию
+	[GRAddress] NVARCHAR(256) NULL,
+	-- Дата постановки на налоговый учет
+	[InnDate] DATETIME NULL,
+	-- Кем выдан ИНН
+	[InnName] NVARCHAR(256) NULL,
+	-- Серия и номер свидетельства
+	[InnNum] NVARCHAR(64) NULL,
+	-- Адрес перевозчика (фактический адрес)
+	[Address_Fact] NVARCHAR(256) NULL,
+	-- Страна (фактический адрес)
+	[Country_Fact] NVARCHAR(32) NULL,
+	-- Индекс (фактический адрес)
+	[PostalCode_Fact] NVARCHAR(32) NULL,
+	-- Область (фактический адрес)
+	[Locality_Fact] NVARCHAR(64) NULL,
+	-- Регион (фактический адрес)
+	[Region_Fact] NVARCHAR(64) NULL,
+	-- Город  (фактический адрес)
+	[City_Fact] NVARCHAR(32) NULL,
+	-- Населенный пункт (фактический адрес)
+	[Town_Fact] NVARCHAR(64) NULL,
+	-- Улица (фактический адрес)
+	[Street_Fact] NVARCHAR(64) NULL,
+	-- Дом  (фактический адрес)
+	[House_Fact] NVARCHAR(16) NULL,
+	-- Корпус (фактический адрес)
+	[Building_Fact] NVARCHAR(16) NULL,
+	-- Строение (фактический адрес
+	[Structure_Fact] NVARCHAR(16) NULL,
+	-- Сооружение (фактический адрес)
+	[Facility_Fact] NVARCHAR(16) NULL,
+	-- Владение (фактический адрес)
+	[Ownership_Fact] NVARCHAR(16) NULL,
+	-- Квартира (фактический адрес)
+	[Flat_Fact] NVARCHAR(16) NULL,
+	-- Наличие ГЛОНАСС/GPS
+	[Gps] BIT NULL,
+	-- Наличие таксометра
+	[Taxometr] BIT NULL,
+	-- Дата прохождения последнего ТО к моменту внесения записи в реестр разрешений
+	[TODate] DATETIME NULL,
+	-- Номер свидетельства о регистрации ТС
+	[STSNumber] NVARCHAR(32) NULL,
+	-- Дата выдачи свидетельства о регистрации ТС
+	[STSDate] DATETIME NULL,
+	-- Основания владения ТС
+	[OwnType] INT NULL,
+	-- Номер документа основания владения ТС
+	[OwnNumber] NVARCHAR(32) NULL,
+	-- Дата документа основания владения ТС
+	[OwnDate] DATETIME NULL,
+	-- Признак обращения МО
+	[MO] bit NULL,
+	-- GUID сообщения из МО
+	[GUID_MO] NVARCHAR(64) NULL,
+	-- Признак (дата) загрузки в систему МО
+	[DATE_MO] DATETIME NULL
     CONSTRAINT [FK_License_ToLicense_Parent] FOREIGN KEY ([Parent]) REFERENCES [dbo].[License]([Id]),
 	CONSTRAINT [FK_License_ToLicense_RootParent] FOREIGN KEY ([RootParent]) REFERENCES [dbo].[License]([Id]) 
 )
