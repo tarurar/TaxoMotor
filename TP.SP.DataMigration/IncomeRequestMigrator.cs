@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using CamlexNET;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
 using TM.SP.BCSModels.CoordinateV5;
@@ -262,6 +264,21 @@ namespace TP.SP.DataMigration
         {
             SPList list = web.GetListOrBreak("Lists/IncomeRequestAttachList");
             SPList docTypeBooklist = web.GetListOrBreak("Lists/DocumentTypeBookList");
+            SPList taxiList = web.GetListOrBreak("Lists/TaxiList");
+
+            // getting taxi link - start
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)parent.ID.ToString(CultureInfo.InvariantCulture),
+                x => (string)x["Tm_TaxiStateNumber"] == document.DocSubType
+            };
+            SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+            var taxiItem = taxiItems.Count == 1 ? taxiItems[0] : null;
+            // getting taxi link - end
 
             SPListItem newAttach = list.AddItem();
             DateTime validityPeriod;
@@ -291,6 +308,9 @@ namespace TP.SP.DataMigration
             newAttach["Tm_AttachDivisionCode"]  = document.DivisionCode;
             newAttach["Tm_MessageId"]           = document.MessageId;
             newAttach["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(parent.ID, parent.Title);
+            if (taxiItem != null)
+                newAttach["Tm_TaxiLookup"] = new SPFieldLookupValue(taxiItem.ID, taxiItem.Title);
+
             if (DateTime.TryParse(document.ValidityPeriod, out validityPeriod))
                 newAttach["Tm_AttachValidityPeriod"] = validityPeriod;
             newAttach.Update();
@@ -329,6 +349,8 @@ namespace TP.SP.DataMigration
                     uplFolder.Update();
 
                     attachFile.Item["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(parent.ID, parent.Title);
+                    if (taxiItem != null)
+                        attachFile.Item["Tm_TaxiLookup"] = new SPFieldLookupValue(taxiItem.ID, taxiItem.Title);
                     attachFile.Item["Tm_IncomeRequestAttachLookup"] = new SPFieldLookupValue(newAttach.ID, newAttach.Title);
                     attachFile.Item.Update();
                 }
