@@ -663,6 +663,68 @@ namespace TM.SP.AppPages
         }
 
         /// <summary>
+        /// Удаление черновиков разрешений для ТС указанного обращения в указанном статусе
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// /// <param name="status">Статус ТС</param>
+        [WebMethod]
+        public static dynamic DeleteLicenseDraftsByTaxiStatus(int incomeRequestId, string status)
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при удалении черновиков разрешений", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
+                        Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
+                        {
+                            var allTaxiStr = GetAllTaxiInRequestByStatus(incomeRequestId, status);
+                            if (!String.IsNullOrEmpty(allTaxiStr))
+                            {
+                                string[] allTaxiArr = allTaxiStr.Split(';');
+                                foreach (string taxiId in allTaxiArr)
+                                {
+                                    BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                                    {
+                                        lob = BCS.LOBTaxiSystemName,
+                                        ns = BCS.LOBTaxiSystemNamespace,
+                                        contentType = "License",
+                                        methodName = "DeleteLicenseDraftForSPTaxiIdInstance",
+                                        methodType = MethodInstanceType.Updater
+                                    }, Convert.ToInt32(taxiId));
+                                }    
+                            }
+                        })));
+        }
+
+
+        /// <summary>
+        /// Установка статуса обращения при его закрытии
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static dynamic SetStatusOnClosing(int incomeRequestId)
+        {
+            SPWeb web = SPContext.Current.Web;
+
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка обновления статуса при закрытии обращения", () =>
+                    Utility.WithSafeUpdate(web, (safeWeb) =>
+                    {
+                        var list = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                        var item = list.GetItemById(incomeRequestId);
+                        var statusList = safeWeb.GetListOrBreak("Lists/IncomeRequestStateBookList");
+
+                        SPListItem newStatus = statusList.GetSingleListItemByFieldValue("Tm_ServiceCode",
+                            IsAnyTaxiInStatus(incomeRequestId, "Отказано") ? "1085" : "1075");
+
+                        if (newStatus != null)
+                        {
+                            item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(newStatus.ID, newStatus.Title);
+                            item.Update();
+                        }
+                    }));
+        }
+
+        /// <summary>
         /// Принятие ТС в работу
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
