@@ -75,7 +75,7 @@ namespace TM.SP.Customizations
                 Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"], rStatusLookupField, out rStatusItem))
             {
                 var rStatusCode = rStatusItem["Tm_ServiceCode"];
-                if (rStatusCode != null && (string)rStatusCode == "1020")
+                if (rStatusCode != null && (string)rStatusCode == "1110")
                 {
                     var orList = web.GetListOrBreak("Lists/OutcomeRequestStateList");
 
@@ -94,7 +94,7 @@ namespace TM.SP.Customizations
                     if (uncompleteRequests.Count <= 1)
                     {
                         var rCompletedStatusItem =
-                            rStatusList.GetSingleListItemByFieldValue("Tm_ServiceCode", "1110");
+                            rStatusList.GetSingleListItemByFieldValue("Tm_ServiceCode", "6420");
                         if (rCompletedStatusItem != null)
                         {
                             rItem["Tm_IncomeRequestStateLookup"] =
