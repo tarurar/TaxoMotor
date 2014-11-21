@@ -331,11 +331,14 @@ namespace TM.SP.AppPages
             var requestTypeList = Web.GetListOrBreak("Lists/OutcomeRequestTypeBookList");
             var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
                 ((int)document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
+            var taxiList = Web.GetListOrBreak("Lists/TaxiList");
+            var taxiItem = taxiList.GetItemById(document.Id);
 
             var newItem = trackList.AddItem();
             newItem["Title"] = requestId.ToString("B");
             newItem["Tm_OutputDate"] = DateTime.Now;
             newItem["Tm_TaxiLookup"] = new SPFieldLookupValue(document.Id, document.Title);
+            newItem["Tm_IncomeRequestLookup"] = taxiItem["Tm_IncomeRequestLookup"];
             newItem["Tm_OutputRequestTypeLookup"] = new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title);
             newItem["Tm_AnswerReceived"] = false;
             newItem["Tm_MessageId"] = requestId;
