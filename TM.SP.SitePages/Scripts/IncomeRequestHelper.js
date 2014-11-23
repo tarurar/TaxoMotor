@@ -324,6 +324,28 @@
                 }, onfail);
             };
 
+            ir.EndingApplyForCancellation = function (incomeRequestId, onsuccess, onfail) {
+                // Запросы ПТС по транспортным средствам обращения
+                ir.SendPTSRequest(incomeRequestId, function () {
+                    // Расчет сроков оказания услуги и установка статуса обращения
+                    ir.CalculateDatesAndSetStatus(incomeRequestId, 1050).success(function () {
+                        // Получение xml для измененного состояния обращения
+                        ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                            //Подписывание xml
+                            if (data && data.d) {
+                                ir.SignXml(data.d, function (signedData) {
+                                    // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                    ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                        // Отправка статуса обращения по межведомственному взаимодействию
+                                        ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                    }).fail(onfail);
+                                }, onfail);
+                            } else onfail("Не удалось получить статус обращения в виде xml");
+                        }).fail(onfail);
+                    }).fail(onfail);
+                }, onfail);
+            };
+
             ir.ApplyForNewForJuridicalPerson = function (incomeRequestId, onsuccess, onfail) {
                 // Запрос в ЕГРЮЛ
                 ir.SendEgrulRequest(incomeRequestId, function () {
@@ -341,6 +363,20 @@
             ir.ApplyForChangeForJuridicalPerson = ir.ApplyForNewForJuridicalPerson;
 
             ir.ApplyForChangeForPrivateEntrepreneur = ir.ApplyForNewForPrivateEntrepreneur;
+
+            ir.ApplyForCancellationForPrivateEntrepreneur = function (incomeRequestId, onsuccess, onfail) {
+                // Запрос в ЕГРИП
+                ir.SendEgripRequest(incomeRequestId, function () {
+                    ir.EndingApplyForCancellation(incomeRequestId, onsuccess, onfail);
+                }, onfail);
+            };
+
+            ir.ApplyForCancellationForJuridicalPerson = function (incomeRequestId, onsuccess, onfail) {
+                // Запрос в ЕГРЮЛ
+                ir.SendEgrulRequest(incomeRequestId, function () {
+                    ir.EndingApplyForCancellation(incomeRequestId, onsuccess, onfail);
+                }, onfail);
+            };
 
             ir.ApplyForNew = function(incomeRequestId, onsuccess, onfail) {
                 // Проверить всем ли ТС присвоен статус
@@ -379,7 +415,7 @@
                                 ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
                                     if (data && data.d.CanRelease) {
                                         // Расчет сроков оказания услуги и установка статуса обращения
-                                        ir.CalculateDatesAndSetStatus(incomeRequestId, 1110).success(function () {
+                                        ir.CalculateDatesAndSetStatus(incomeRequestId, 1050).success(function () {
                                             // Получение xml для измененного состояния обращения
                                             ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
                                                 //Подписывание xml
@@ -428,7 +464,31 @@
                 }).fail(onfail);
             }
 
-            ir.ApplyForCancellation = ir.ApplyForChange;
+            ir.ApplyForCancellation = function (incomeRequestId, onsuccess, onfail) {
+                // Проверить всем ли ТС присвоен статус
+                ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
+                    if (data && data.d) {
+                        // Проверить, остались ли в обращении ТС со статусом
+                        ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
+                            if (data && data.d) {
+                                // Провести проверку на дубли разрешений. Наличие дублей обязательно.
+                                ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
+                                    if (data && data.d.CanRelease) {
+                                        // Заявитель - индивидуальный предприниматель?
+                                        ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
+                                            if (data && data.d) {
+                                                ir.ApplyForCancellationForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
+                                            } else {
+                                                ir.ApplyForCancellationForJuridicalPerson(incomeRequestId, onsuccess, onfail);
+                                            }
+                                        }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
+                                    } else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' не существует');
+                                }).fail(onfail);
+                            } else onfail('В обращении нет ТС');
+                        }).fail(onfail);
+                    } else onfail('Не всем ТС проставлен признак');
+                }).fail(onfail);
+            };
 
             ir.SetRefuseReasonAndComment = function(incomeRequestId, refuseReasonCode, refuseComment) {
                 return $.ajax({
@@ -746,7 +806,10 @@
                     url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/ProgressDlg.aspx',
                     title: 'Завершение работы с обращением',
                     allowMaximize: false,
-                    showClose: false
+                    showClose: false,
+                    dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                        SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+                    })
                 };
                 SP.UI.ModalDialog.showModalDialog(options);
 
