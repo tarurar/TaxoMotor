@@ -96,7 +96,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmOrgOgrn)
                     .AddField(Fields.TmOrgInn)
                     .AddField(Fields.TmLicenseStatus, f => f.OnCreated(
-                        (FieldDefinition fieldDef, Field spField) => spField.MakeChoices(new String[] {"Оригинал", "Дубль", "Пристановлено", "Аннулировано", "С изменениями"})))
+                        (FieldDefinition fieldDef, Field spField) => spField.MakeChoices(new String[] {"Оригинал", "Дубль", "Приостановлено", "Аннулировано", "С изменениями"})))
                     .AddField(Fields.TmOrgLfb)
                     .AddField(Fields.TmJuridicalAddress)
                     .AddField(Fields.TmPhoneNumber)
