@@ -183,7 +183,7 @@ namespace TM.SP.AppPages.ApplicationPages
                 ((int) document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
 
             var newItem = trackList.AddItem();
-            newItem["Title"]                        = requestId.ToString("B");
+            newItem["Title"]                        = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
             newItem["Tm_OutputDate"]                = DateTime.Now;
             newItem["Tm_IncomeRequestLookup"]       = new SPFieldLookupValue(document.Id, document.Title);
             newItem["Tm_OutputRequestTypeLookup"]   = new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title);
