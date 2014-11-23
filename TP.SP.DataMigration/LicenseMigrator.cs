@@ -98,6 +98,11 @@ namespace TP.SP.DataMigration
                 methodType  = MethodInstanceType.SpecificFinder
             }, license.Id);
             BCS.SetBCSFieldValue(newItem, "Tm_LicenseAllViewBcsLookup", licenseAllViewLookup);
+
+            // in case license.RootParent links to itself we have to execute update to be able to get link (before 
+            // executing update new item in reality doesn't being saved into the database)
+            if (license.RootParent.HasValue && license.RootParent.Value == license.Id)
+                newItem.Update();
             // parent lookup
             if (license.Parent.HasValue)
                 newItem["Tm_LicenseParentLicenseLookup"] = GetLicenseParentLookupValue(license, license.Parent.Value, list);
