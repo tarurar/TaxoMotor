@@ -1,4 +1,4 @@
-// <copyright file="SendRequestPTSPage.aspx.cs" company="Armd">
+﻿// <copyright file="SendRequestPTSPage.aspx.cs" company="Armd">
 // Copyright Armd. All rights reserved.
 // </copyright>
 // <author>SPDEV\developer</author>
@@ -335,7 +335,7 @@ namespace TM.SP.AppPages
             var taxiItem = taxiList.GetItemById(document.Id);
 
             var newItem = trackList.AddItem();
-            newItem["Title"] = requestId.ToString("B");
+            newItem["Title"] = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
             newItem["Tm_OutputDate"] = DateTime.Now;
             newItem["Tm_TaxiLookup"] = new SPFieldLookupValue(document.Id, document.Title);
             newItem["Tm_IncomeRequestLookup"] = taxiItem["Tm_IncomeRequestLookup"];
