@@ -48,7 +48,7 @@ namespace TM.Services.CoordinateV5
             message.TaskMessage.Data.ParameterTypeCode  = String.Empty;
             message.TaskMessage.Data.Parameter          = parameter;
             // TaskMessage.Signature
-            message.TaskMessage.Signature               = String.Empty;
+            message.TaskMessage.Signature               = null;
             // TaskMessage.Task
             message.TaskMessage.Task.Code               = Consts.BaseRegistrServiceCode;
             message.TaskMessage.Task.Department.Name    = Consts.TaxoMotorDepName;
@@ -95,7 +95,7 @@ namespace TM.Services.CoordinateV5
             message.TaskMessage.Data.ParameterTypeCode  = String.Empty;
             message.TaskMessage.Data.Parameter          = parameter;
             // TaskMessage.Signature
-            message.TaskMessage.Signature               = String.Empty;
+            message.TaskMessage.Signature               = null;
             // TaskMessage.Task
             message.TaskMessage.Task.Code               = Consts.BaseRegistrServiceCode;
             message.TaskMessage.Task.Department.Name    = Consts.TaxoMotorDepName;
