@@ -496,6 +496,7 @@ namespace TM.SP.AppPages
                     item["Tm_DenyReasonLookup"] = new SPFieldLookupValue(refuseItem.ID, refuseItem.Title);
                 item["Tm_Comment"] = refuseComment;
                 item["Tm_RefuseDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+                item["Tm_PrepareFactDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
 
                 item.Update();
             }
