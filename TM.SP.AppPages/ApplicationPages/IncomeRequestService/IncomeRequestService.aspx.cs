@@ -717,10 +717,9 @@ namespace TM.SP.AppPages
                             IsAnyTaxiInStatus(incomeRequestId, "Отказано") ? "1085" : "1075");
 
                         if (newStatus != null)
-                        {
                             item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(newStatus.ID, newStatus.Title);
-                            item.Update();
-                        }
+                        item["Tm_PrepareFactDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+                        item.Update();
                     }));
         }
 
