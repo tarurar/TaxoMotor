@@ -163,6 +163,16 @@
                 });
             };
 
+            ir.UpdateOutcomeRequestsOnClosing = function(closingIncomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/UpdateOutcomeRequestsOnClosing',
+                    data: '{ closingIncomeRequestId: ' + closingIncomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.SendEgripRequest = function (incomeRequestId, onsuccess, onfail) {
                 var url = SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRIPPage.aspx') + '?IsDlg=1&ListId=' +
                     _spPageContextInfo.pageListId + '&Items=' + incomeRequestId + '&Source=' + location.href;
@@ -862,7 +872,12 @@
                                                                                     ir.SendStatus(incomeRequestId, attachs).success(function() {
                                                                                         progress.finishAction(action, 90);
 
-                                                                                        // continue todo
+                                                                                        action = progress.addAction('Обновление межведомственных запросов');
+                                                                                        ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function() {
+                                                                                            progress.finishAction(action, 100);
+                                                                                        }).fail(function (jqXhr, status, error) {
+                                                                                            progress.errorAction(action, error);
+                                                                                        });
 
                                                                                     }).fail(function (jqXhr, status, error) {
                                                                                         progress.errorAction(action, error);

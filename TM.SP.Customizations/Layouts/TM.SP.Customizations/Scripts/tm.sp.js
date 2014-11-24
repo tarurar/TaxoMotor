@@ -10,6 +10,21 @@
             return SP.UI.Notify.addNotification(messageHtml, !autoClose);
         };
 
+        TMSP.setTargetBlank = function (toFindInLink) {
+            // Get the collection of <a> tags
+            var aAllLinks = document.getElementsByTagName('a');
+
+            // For each <a> tags, 
+            for (var i = 0; i < aAllLinks.length; i++) {
+                var oA = aAllLinks[i];
+                var sHref = oA.attributes["href"] ? oA.attributes["href"].value.toLowerCase() : null;
+
+                // If href value contains paramter
+                if (sHref && sHref.indexOf(toFindInLink.toLowerCase()) > 0)
+                    oA.attributes["target"].value = "_blank";
+            }
+        };
+
         return TMSP;
     })(TM.SP || (TM.SP = {}));
 

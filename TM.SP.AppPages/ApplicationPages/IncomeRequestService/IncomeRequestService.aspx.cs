@@ -772,11 +772,11 @@ namespace TM.SP.AppPages
                             {
                                 var storedLicenseDraft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                                 {
-                                    lob = BCS.LOBTaxiSystemName,
-                                    ns = BCS.LOBTaxiSystemNamespace,
+                                    lob         = BCS.LOBTaxiSystemName,
+                                    ns          = BCS.LOBTaxiSystemNamespace,
                                     contentType = "License",
-                                    methodName = "CreateLicense",
-                                    methodType = MethodInstanceType.Creator
+                                    methodName  = "CreateLicense",
+                                    methodType  = MethodInstanceType.Creator
                                 }, licenseDraft);
                                 if (storedLicenseDraft != null)
                                     taxiItem["Tm_TaxiPrevLicenseNumber"] = storedLicenseDraft.RegNumber;
@@ -789,11 +789,11 @@ namespace TM.SP.AppPages
                                     licenseDraft.RegNumber = regNumber.ToString();
                                     BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                                     {
-                                        lob = BCS.LOBTaxiSystemName,
-                                        ns = BCS.LOBTaxiSystemNamespace,
+                                        lob         = BCS.LOBTaxiSystemName,
+                                        ns          = BCS.LOBTaxiSystemNamespace,
                                         contentType = "License",
-                                        methodName = "CreateLicense",
-                                        methodType = MethodInstanceType.Creator
+                                        methodName  = "CreateLicense",
+                                        methodType  = MethodInstanceType.Creator
                                     }, licenseDraft);
                                 }
                                 else
@@ -842,6 +842,12 @@ namespace TM.SP.AppPages
             }));
         }
 
+        /// <summary>
+        /// Все ли транспортные средства обращения, находящиеся в указанном статусе, имеют указанный номер и серию бланка
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <param name="status">Статус ТС</param>
+        /// <returns></returns>
         [WebMethod]
         public static bool IsAllTaxiInStatusHasBlankNo(int incomeRequestId, string status)
         {
@@ -879,6 +885,11 @@ namespace TM.SP.AppPages
             return taxiItems.Count == 0;
         }
 
+        /// <summary>
+        /// Перевод разрешения из черновика в один из "действующих" статусов в зависимости от ситуации
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns>Информация об ошибке</returns>
         [WebMethod]
         public static dynamic PromoteLicenseDrafts(int incomeRequestId)
         {
@@ -890,6 +901,7 @@ namespace TM.SP.AppPages
                         Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
                         {
                             var taxiList = safeWeb.GetListOrBreak("Lists/TaxiList");
+                            var licenseList = safeWeb.GetListOrBreak("Lists/LicenseList");
 
                             var taxiIdList = GetAllTaxiInRequestByStatus(incomeRequestId, "Решено положительно");
                             var taxiIdArr = taxiIdList.Split(';');
@@ -899,6 +911,9 @@ namespace TM.SP.AppPages
                                     taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
                             {
                                 var externalId = LicenseHelper.PromoteDraftFor(safeWeb, incomeRequestId, taxiItem.ID);
+                                // immediately execute migration on item
+                                var license = LicenseService.GetLicense(externalId);
+                                LicenseService.MigrateItem(licenseList, license);
                                 externalIdList.Add(externalId);
                             }
                         })));
@@ -916,6 +931,11 @@ namespace TM.SP.AppPages
             };
         }
 
+        /// <summary>
+        /// Формирование xml представления ВНЕШНИХ разрешений по списку ВНЕШНИХ идентификаторов
+        /// </summary>
+        /// <param name="licenseIdList">Список ВНЕШНИХ идентификаторов разрешений через точку с запятой</param>
+        /// <returns>Информация об ошибке</returns>
         [WebMethod]
         public static dynamic GetLicenseXmlById(string licenseIdList)
         {
@@ -969,13 +989,19 @@ namespace TM.SP.AppPages
             };
         }
 
+        /// <summary>
+        /// Обновление подписи для указанного разрешения во ВНЕШНЕМ источнике данных
+        /// </summary>
+        /// <param name="licenseId">ВНЕШНИЙ идентификатор разрешения</param>
+        /// <param name="signature">Подпись</param>
+        /// <returns>Информация об ошибке</returns>
         [WebMethod]
         public static dynamic UpdateSignatureForLicense(int licenseId, string signature)
         {
             return
                 Utility.WithCatchExceptionOnWebMethod("Ошибка при обновлении подписи в разрешении", () =>
                     Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
-                        Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
+                        Utility.WithSafeUpdate(serviceContextWeb, safeWeb =>
                         {
                             var license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                             {
@@ -1002,6 +1028,69 @@ namespace TM.SP.AppPages
                             else throw new Exception("Разрешение не найдено");
 
                         })));
+        }
+
+        /// <summary>
+        /// Обновление исходящих межведомственных запросов при закрытии обращения
+        /// </summary>
+        /// <param name="closingIncomeRequestId">Идентификатор обращения</param>
+        /// <returns>Информация об ошибке</returns>
+        [WebMethod]
+        public static dynamic UpdateOutcomeRequestsOnClosing(int closingIncomeRequestId)
+        {
+            var web = SPContext.Current.Web;
+
+            return
+                Utility.WithCatchExceptionOnWebMethod("Обновление межвед. запросов при закрытии обращения", () =>
+                    Utility.WithSafeUpdate(web, safeWeb =>
+                    {
+                        var licList          = safeWeb.GetListOrBreak("Lists/LicenseList");
+                        var outRequestStList = safeWeb.GetListOrBreak("Lists/OutcomeRequestStateList");
+                        var taxiIdList       = GetAllTaxiInRequestByStatus(closingIncomeRequestId, "Решено положительно");
+                        var taxiIdArr        = taxiIdList.Split(';');
+                        // iterating throw all the taxi items in the closing income request that were given a license
+                        foreach (var taxiId in taxiIdArr)
+                        {
+                            var id = taxiId;
+                            // at that moment we have to be sure that our new licenses have already been migrated to sp list
+                            var licItems = licList.GetItems(new SPQuery
+                            {
+                                Query =
+                                    Camlex.Query()
+                                        .Where(x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) id)
+                                        .OrderBy(x => x["Created"] as Camlex.Desc)
+                                        .ToString(),
+                                ViewAttributes = "Scope='RecursiveAll'"
+                            });
+                            // in case we have more than one license (by the way, this is error) we will take the latest one by date
+                            var lic = licItems.Count > 0 ? licItems[0] : null;
+
+                            if (lic != null && lic["Tm_LicenseRtParentLicenseLookup"] != null)
+                            {
+                                // we need the root parent's link
+                                var licRootParent = lic["Tm_LicenseRtParentLicenseLookup"];
+                                var incomeRequestIdStr = closingIncomeRequestId.ToString(CultureInfo.InvariantCulture);
+                                // searching for outcome requests by current taxi and income request
+                                var expressions = new List<Expression<Func<SPListItem, bool>>>
+                                {
+                                    x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) id,
+                                    x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId) incomeRequestIdStr,
+                                };
+
+                                SPListItemCollection outRequests = outRequestStList.GetItems(new SPQuery
+                                {
+                                    Query = Camlex.Query().WhereAll(expressions).ToString(),
+                                    ViewAttributes = "Scope='RecursiveAll'"
+                                });
+                                // setting links for all outcome requests that we have found
+                                foreach (SPListItem outRequestItem in outRequests)
+                                {
+                                    outRequestItem["Tm_LicenseLookup"] = licRootParent;
+                                    outRequestItem.SystemUpdate();
+                                }
+                            }
+                        }
+                    }));
         }
     }
 }

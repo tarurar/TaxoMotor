@@ -38,7 +38,7 @@ namespace TM.SP.AppPages
             RightsCheckMode = RightsCheckModes.OnPreInit;
         }
 
-        private static void MigrateItem(SPList list, License license)
+        public static void MigrateItem(SPList list, License license)
         {
             var migrationManager = new MigrationManager<License, MigratingLicense>(BCS.LOBTaxiSystemName, BCS.LOBTaxiSystemNamespace);
             var item = migrationManager.Process(license.Id, "License", "ReadLicenseItem", list.ParentWeb, LicenseMigrator.Execute);
@@ -119,7 +119,7 @@ namespace TM.SP.AppPages
             return intWriter.ToString();
         }
 
-        private static License GetLicense(int? id)
+        public static License GetLicense(int? id)
         {
             if (id == null || id == 0)
                 throw new Exception("Item id must be specified");
