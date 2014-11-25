@@ -118,8 +118,17 @@ namespace TM.SP.DataModel
         public static FieldDefinition TmRegistrationDate = new FieldDefinition()
         {
             Id           = new Guid("{A9069860-C16D-435D-AAAF-2A73457323EB}"),
-            Title        = "Дата регистрации",
+            Title        = "Дата подачи обращения",
             InternalName = "Tm_RegistrationDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmApplyDate = new FieldDefinition()
+        {
+            Id           = new Guid("{C2FF64F9-C9A6-4C16-A526-A2B02A485EA5}"),
+            Title        = "Дата регистрации",
+            InternalName = "Tm_ApplyDate",
             FieldType    = BuiltInFieldTypes.DateTime,
             Group        = ModelConsts.ColumnsDefaultGroup
         };

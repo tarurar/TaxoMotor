@@ -26,6 +26,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmSingleNumber)
                     .AddField(Fields.TmRegistrationDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
+                    .AddField(Fields.TmApplyDate, 
+                        f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmComment)
                     .AddField(Fields.TmInstanceCounter)
                     .AddField(Fields.TmRequestedDocumentPrice)
@@ -276,6 +278,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmRegNumber)
                         .AddContentTypeFieldLink(Fields.TmSingleNumber)
                         .AddContentTypeFieldLink(Fields.TmRegistrationDate)
+                        .AddContentTypeFieldLink(Fields.TmApplyDate)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestForm)
                         .AddContentTypeFieldLink(Fields.TmComment)
                         .AddContentTypeFieldLink(Fields.TmInstanceCounter)

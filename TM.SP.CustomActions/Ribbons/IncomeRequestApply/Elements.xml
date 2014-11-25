@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.IncomeRequestApply"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Принять в работу"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/IncomeRequestList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.IncomeRequestApply.Button"
+						Command="TaxoMotor.IncomeRequestApply.ButtonCommand"
+						Sequence="500"
+						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
+						Image16by16Top="-64"
+						Image16by16Left="-192"
+						Image32by32="/_layouts/15/1033/images/formatmap32x32.png"
+						Image32by32Top="0"
+						Image32by32Left="-384"
+						LabelText="Принять в работу"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.IncomeRequestApply.ButtonCommand"
+					CommandAction="javascript: (function(){
+            SP.SOD.executeFunc('sp.js','SP.ClientContext', function() {
+
+              SP.UI.Status.removeAllStatus(true);
+              TM.SP.IncomeRequest.ApplyForNew({ItemId}, function ApplyForNewOnSuccess() {
+	              var successStatus = SP.UI.Status.addStatus('Обращение принято в работу');
+	              SP.UI.Status.setStatusPriColor(successStatus, 'green');
+	              setTimeout(function() {
+		              SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+	              }, 1500);
+              }, function ApplyForNewOnFail(message){
+	              var failStatus = SP.UI.Status.addStatus(message);
+	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+            });
+            
+          })();" 
+          EnabledScript="javascript: function enabled() { 
+            var result = false;
+            
+            if (!TM.SP.IncomeRequest.currentStatusCode) {
+              JSRequest.EnsureSetup();
+              var currentItemId = JSRequest.QueryString.ID;
+              
+              TM.SP.IncomeRequest.GetCurrentStatusCode(currentItemId).success(function(data){
+                TM.SP.IncomeRequest.currentStatusCode = data.d.Data;
+                RefreshCommandUI();
+              }).fail(function(){
+                var failStatus = SP.UI.Status.addStatus('Произошла ошибка при запросе статуса обращения');
+	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+            }
+            else {
+              result = TM.SP.IncomeRequest.currentStatusCode == 1010;
+            }
+            
+            return result;
+          } enabled();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

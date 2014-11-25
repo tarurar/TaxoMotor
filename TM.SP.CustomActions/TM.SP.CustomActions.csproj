@@ -80,6 +80,15 @@
     <None Include="Ribbons\CancelLicense\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{72a626b3-41ae-41b1-ba0b-efa3dcbe1af7}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\IncomeRequestApply\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f17c85f5-0a2a-4b0c-aa91-b2a257ba08e2}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\IncomeRequestClose\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{9de7a84a-e06d-49b2-b9bb-57681e0241ef}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\IncomeRequestRefuse\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{0196141a-4301-497c-8a88-c7172af32681}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\RenewLicense\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{f679fe08-c132-4607-88c3-c422a867540a}</SharePointProjectItemId>
     </None>
@@ -91,6 +100,18 @@
     </None>
     <None Include="Ribbons\SuspendLicense\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{04e92286-c656-4a3c-a07c-f1b116c871ac}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\TaxiApply\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{6b9f6f78-4bc3-41e6-986d-d2ef47d70544}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\TaxiEditBlankNo\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{21ef43c8-05d2-44a6-a5a9-972d6919edce}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\TaxiPrintLicense\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{15498d58-19e3-43e6-9da5-61e9849d723b}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\TaxiRefuse\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{60630ebc-4f5b-4d90-a2ff-3dc2467e38b2}</SharePointProjectItemId>
     </None>
   </ItemGroup>
   <ItemGroup />
@@ -104,12 +125,29 @@
       <DependentUpon>TaxoMotor_TaxoMotorCustomActions.feature</DependentUpon>
     </Content>
     <Content Include="Ribbons\CancelLicense\Elements.xml" />
+    <Content Include="Ribbons\IncomeRequestApply\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Ribbons\IncomeRequestClose\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Ribbons\IncomeRequestRefuse\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Ribbons\RenewLicense\Elements.xml" />
     <Content Include="Ribbons\SendRequestPenalty\Elements.xml" />
     <Content Include="Ribbons\SendStatus\Elements.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Ribbons\SuspendLicense\Elements.xml" />
+    <Content Include="Ribbons\TaxiApply\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Ribbons\TaxiEditBlankNo\Elements.xml" />
+    <Content Include="Ribbons\TaxiPrintLicense\Elements.xml" />
+    <Content Include="Ribbons\TaxiRefuse\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

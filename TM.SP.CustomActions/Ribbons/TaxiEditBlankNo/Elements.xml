@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.TaxiEditBlankNo"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Внести номер бланка"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/TaxiList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.TaxiEditBlankNo.Button"
+						Command="TaxoMotor.TaxiEditBlankNo.ButtonCommand"
+						Sequence="540"
+						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
+						Image16by16Top="-64"
+						Image16by16Left="-192"
+						Image32by32="/_layouts/15/1033/images/formatmap32x32.png"
+						Image32by32Top="0"
+						Image32by32Left="-384"
+						LabelText="Внести номер бланка"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.TaxiEditBlankNo.ButtonCommand"
+					CommandAction="javascript:alert('Hello, world');" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

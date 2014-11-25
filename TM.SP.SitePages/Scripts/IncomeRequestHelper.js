@@ -173,6 +173,16 @@
                 });
             };
 
+            ir.GetCurrentStatusCode = function(incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/GetCurrentStatusCode',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.SendEgripRequest = function (incomeRequestId, onsuccess, onfail) {
                 var url = SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRIPPage.aspx') + '?IsDlg=1&ListId=' +
                     _spPageContextInfo.pageListId + '&Items=' + incomeRequestId + '&Source=' + location.href;
@@ -538,23 +548,32 @@
                                                         var sigFileId = sigFileData.d;
                                                         // Удаление черновиков всех разрешений по всем ТС обращения
                                                         ir.DeleteLicenseDraftsOnRefusing(incomeRequestId).success(function () {
-                                                            // Установка статуса обращения
-                                                            ir.CalculateDatesAndSetStatus(incomeRequestId, 1080).success(function() {
-                                                                // Получение xml для измененного состояния обращения
-                                                                ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function(data) {
-                                                                    //Подписание xml
-                                                                    if (data && data.d) {
-                                                                        ir.SignXml(data.d, function(signedData) {
-                                                                            // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                                            ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function() {
-                                                                                var attachs = refuseFileId + ', ' + sigFileId;
-                                                                                // Отправка статуса обращения по межведомственному взаимодействию
-                                                                                ir.SendStatus(incomeRequestId, attachs).success(onsuccess).fail(function(err) { onfail("При отправке статуса возникла ошибка"); });
-                                                                            }).fail(onfail);
-                                                                        }, onfail);
-                                                                    } else onfail("Не удалось получить статус обращения в виде xml");
+                                                            // В зависимости от текущего статуса устанавливаем новый
+                                                            ir.GetCurrentStatusCode(incomeRequestId).success(function (data) {
+                                                                var currStatus = data.d.Data;
+                                                                var newStatus = currStatus == 1010 ? 1030 : 1080;
+                                                                // Установка статуса обращения
+                                                                ir.CalculateDatesAndSetStatus(incomeRequestId, newStatus).success(function () {
+                                                                    // Получение xml для измененного состояния обращения
+                                                                    ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                                                        //Подписание xml
+                                                                        if (data && data.d) {
+                                                                            ir.SignXml(data.d, function (signedData) {
+                                                                                // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                                ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                                                    var attachs = refuseFileId + ', ' + sigFileId;
+                                                                                    // Отправка статуса обращения по межведомственному взаимодействию
+                                                                                    ir.SendStatus(incomeRequestId, attachs).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                                                }).fail(onfail);
+                                                                            }, onfail);
+                                                                        } else onfail("Не удалось получить статус обращения в виде xml");
+                                                                    }).fail(onfail);
                                                                 }).fail(onfail);
-                                                            }).fail(onfail);
+                                                            }).fail(function(jqXhr, status, error) {
+                                                                var response = $.parseJSON(jqXhr.responseText).d;
+                                                                console.error("Exception Message: " + response.Error.SystemMessage);
+                                                                console.error("Exception StackTrace: " + response.Error.StackTrace);
+                                                            });
                                                         }).fail(onfail);
                                                     } else onfail("Не удалось создать документ открепленной подписи");
                                                 }).fail(onfail);

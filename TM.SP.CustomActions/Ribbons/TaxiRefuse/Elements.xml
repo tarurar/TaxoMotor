@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.TaxiRefuse"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Отказать"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/TaxiList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.TaxiRefuse.Button"
+						Command="TaxoMotor.TaxiRefuse.ButtonCommand"
+						Sequence="520"
+						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
+						Image16by16Top="-64"
+						Image16by16Left="-192"
+						Image32by32="/_layouts/15/1033/images/formatmap32x32.png"
+						Image32by32Top="0"
+						Image32by32Left="-384"
+						LabelText="Отказать"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.TaxiRefuse.ButtonCommand"
+					CommandAction="javascript: (function(){
+            SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function(){
+	            SP.UI.Status.removeAllStatus(true);
+	
+	            $.ajax({
+		            method: 'GET',
+		            url: encodeURI(_spPageContextInfo.webAbsoluteUrl + &quot;/_api/web/lists/getByTitle('Транспортные средства')/items(1)?$select=Tm_IncomeRequestLookup/ID&amp;$expand=Tm_IncomeRequestLookup&quot;),
+		            headers: { Accept: 'application/json;odata=verbose' }
+	            }).success(function(data){
+		            var incomeRequestId = data.d.Tm_IncomeRequestLookup.ID;
+		
+		            TM.SP.IncomeRequest.RefuseTaxi(incomeRequestId, {ItemId}, function(){
+			            var successStatus = SP.UI.Status.addStatus('Выполнено успешно');
+			            SP.UI.Status.setStatusPriColor(successStatus, 'green');
+			
+			            setTimeout(function() {
+				            SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+			            }, 1000);
+		            }, function(message){
+			            var failStatus = SP.UI.Status.addStatus(message.responseJSON.d.Error.UserMessage);
+			            console.error('Exception Message: ' + message.responseJSON.d.Error.SystemMessage);
+			            console.error('Exception StackTrace: ' + message.responseJSON.d.Error.StackTrace);
+			            SP.UI.Status.setStatusPriColor(failStatus, 'red');
+		            });
+	            }).fail(function(){
+		            var failStatus = SP.UI.Status.addStatus('Не удалось получить ссылку на обращение');
+		            SP.UI.Status.setStatusPriColor(failStatus, 'red');
+	            });
+            });            
+          })();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

@@ -379,10 +379,28 @@ namespace TM.SP.AppPages
                 var statusList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
                 var item       = list.GetItemById(incomeRequestId);
                 var statusItem = statusList.GetSingleListItemByFieldValue("Tm_ServiceCode", statusCode.ToString(CultureInfo.InvariantCulture));
+                var ctId       = new SPContentTypeId(item["ContentTypeId"].ToString());
 
-                // В случае отказа сроки проедоставления услуги не рассчитываем
+                // В случае отказа сроки предоставления услуги не рассчитываем
                 if (statusCode != 1080)
-                    item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(14).Date);
+                {
+                    item["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+
+                    if (ctId == list.ContentTypes["Аннулирование"].Id)
+                    {
+                        item["Tm_PrepareTargetDate"] =
+                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(1).Date);
+                        item["Tm_OutputTargetDate"] =
+                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(2).Date);
+                    }
+                    else
+                    {
+                        item["Tm_PrepareTargetDate"] =
+                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(14).Date);
+                        item["Tm_OutputTargetDate"] =
+                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(15).Date);
+                    }
+                }
                 if (statusItem != null)
                     item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(statusItem.ID, statusItem.Title);
 
@@ -1091,6 +1109,37 @@ namespace TM.SP.AppPages
                             }
                         }
                     }));
+        }
+
+
+        [WebMethod]
+        public static dynamic GetCurrentStatusCode(int incomeRequestId)
+        {
+            int payLoad = 0;
+
+            var catchData = Utility.WithCatchExceptionOnWebMethod("Получение текущего статуса обращения", () =>
+            {
+                var web = SPContext.Current.Web;
+                var list = web.GetListOrBreak("Lists/IncomeRequestList");
+                var item = list.GetItemById(incomeRequestId);
+
+                SPListItem statusItem;
+                Utility.TryGetListItemFromLookupValue(item["Tm_IncomeRequestStateLookup"],
+                    item.Fields.GetFieldByInternalName("Tm_IncomeRequestStateLookup") as SPFieldLookup, out statusItem);
+
+                if (statusItem != null)
+                    payLoad = statusItem["Tm_ServiceCode"] != null ? Convert.ToInt32(statusItem["Tm_ServiceCode"]) : 0;
+            });
+
+            var catchDataObj = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+
+            return new
+            {
+                Error = errorData,
+                Data = payLoad
+            };
         }
     }
 }

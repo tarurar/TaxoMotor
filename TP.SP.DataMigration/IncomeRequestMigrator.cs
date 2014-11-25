@@ -101,7 +101,7 @@ namespace TP.SP.DataMigration
             }, request.Service);
             var govSubTypeList       = web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
             var requestStateBookList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
-            var requestStateOk       = GetSingleListItemByFieldValue(requestStateBookList, "Tm_ServiceCode", "1020");
+            var requestStateOk       = GetSingleListItemByFieldValue(requestStateBookList, "Tm_ServiceCode", "1010");
 
             newItem["Tm_RegNumber"]    = svc.RegNum;
             newItem["Tm_SingleNumber"] = svc.ServiceNumber;
