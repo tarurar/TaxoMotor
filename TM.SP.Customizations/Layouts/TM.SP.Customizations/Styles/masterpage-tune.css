@@ -21,3 +21,46 @@
 #globalNavBox, .ms-clientcontrol-chromeheader {
     background-color: #e5e5e5;
 }
+
+/*
+    SharePoint List Views custom css
+*/
+
+.ms-vhltr {
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ececec 0%, #d3d3d3 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ececec), color-stop(100%,#d3d3d3));
+	background: -webkit-linear-gradient(top, #ececec 0%,#d3d3d3 100%);
+	background: -o-linear-gradient(top, #ececec 0%,#d3d3d3 100%);
+	background: -ms-linear-gradient(top, #ececec 0%,#d3d3d3 100%);
+	background: linear-gradient(to bottom, #ececec 0%,#d3d3d3 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ececec', endColorstr='#d3d3d3',GradientType=0 );
+}
+.ms-vh2{
+	color: #000 !important;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 1);
+	font-size: 1.2em;
+}
+a,.ms-link:visited{
+	color: #444 !important;
+}
+.ms-vb2 a:link, .ms-vb-user a:link {
+	text-decoration: underline !important;
+}
+.ms-cellstyle{
+	border-bottom: 1px solid #ececec !important;
+}
+.ms-csrlistview-controldiv {
+	margin-bottom: 9px !important;
+}
+.ms-pivotControl-container {
+	border-bottom: 1px solid #ececec !important;
+	padding-bottom: 0px !important; 
+}
+.ms-pivotControl-surfacedOpt-selected {
+	background: #ececec !important;
+	padding: 5px 15px !important;
+}
+.ms-pivotControl-surfacedOpt, .ms-pivotControl-surfacedOpt-selected {
+	padding: 5px 15px !important;
+}
