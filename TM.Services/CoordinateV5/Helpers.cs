@@ -108,6 +108,34 @@ namespace TM.Services.CoordinateV5
             return message;
         }
 
+        public static CoordinateTaskMessage GetPenaltyMessageTemplate(XmlElement parameter)
+        {
+            var message = GetDefaultMessageTemplate();
+            // ServiceHeader
+            message.ServiceHeader.FromOrgCode           = Consts.TaxoMotorDepCode;
+            message.ServiceHeader.ToOrgCode             = Consts.GibddSysCode;
+            message.ServiceHeader.MessageId             = Guid.NewGuid().ToString("D");
+            message.ServiceHeader.RequestDateTime       = DateTime.Now;
+            // TaskMessage.Data
+            message.TaskMessage.Data.DocumentTypeCode   = Consts.PenaltyDocCode;
+            message.TaskMessage.Data.IncludeBinaryView  = true;
+            message.TaskMessage.Data.IncludeXmlView     = true;
+            message.TaskMessage.Data.ParameterTypeCode  = String.Empty;
+            message.TaskMessage.Data.Parameter          = parameter;
+            // TaskMessage.Signature
+            message.TaskMessage.Signature               = null;
+            // TaskMessage.Task
+            message.TaskMessage.Task.Code               = Consts.BaseRegistrServiceCode;
+            message.TaskMessage.Task.Department.Name    = Consts.TaxoMotorDepName;
+            message.TaskMessage.Task.Department.Code    = Consts.TaxoMotorDepCode;
+            message.TaskMessage.Task.Department.RegDate = null;
+            message.TaskMessage.Task.RequestId          = Guid.NewGuid().ToString("D");
+            message.TaskMessage.Task.Subject            = String.Empty;
+            message.TaskMessage.Task.ValidityPeriod     = null;
+
+            return message;
+        }
+
         #endregion
     }
 }

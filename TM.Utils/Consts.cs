@@ -27,6 +27,8 @@ namespace TM.Utils
         public static readonly string EgrulDocCode           = "4020";
         public static readonly string EgripDocCode           = "7830";
         public static readonly string PtsDocCode             = "10615";
+        public static readonly string PenaltyDocCode         = "10773";
+
         #endregion
     }
 }

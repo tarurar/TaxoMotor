@@ -9,31 +9,15 @@ using System.Globalization;
 namespace TM.SP.AppPages
 {
     using System;
-    using System.IO;
     using System.Security.Permissions;
-    using System.Text;
-    using System.Web;
-    using System.Web.UI;
-    using System.Web.UI.HtmlControls;
     using System.Web.UI.WebControls;
     using System.Xml;
     using System.Xml.Linq;
-    using System.Xml.Serialization;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Reflection;
-    using System.Data;
     using System.Linq;
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
-    using Microsoft.SharePoint.Utilities;
     using Microsoft.SharePoint.WebControls;
-    using Microsoft.SharePoint.Administration;
-    using Microsoft.SharePoint.BusinessData.SharedService;
-    using Microsoft.SharePoint.BusinessData.MetadataModel;
-    using Microsoft.BusinessData.Runtime;
-    using Microsoft.BusinessData.MetadataModel;
-    using Microsoft.BusinessData.MetadataModel.Collections;
     using CamlexNET;
 
     using TM.SP.AppPages.ApplicationPages;
@@ -60,6 +44,7 @@ namespace TM.SP.AppPages
     public partial class SendRequestPTSPage : SendRequestDialogBase
     {
         #region [resourceStrings]
+// ReSharper disable InconsistentNaming
         protected static readonly string resRequestListCaption      = "$Resources:PTSRequest_DlgRequestListCaption";
         protected static readonly string resPrecautionMessage       = "$Resources:PTSRequest_DlgPrecautionMessageText";
         protected static readonly string resNoRequestMessage        = "$Resources:PTSRequest_DlgNoRequestMessageText";
@@ -72,6 +57,7 @@ namespace TM.SP.AppPages
         protected static readonly string resNoDocumentsError        = "$Resources:PTSRequest_DlgNoDocumentsError";
         protected static readonly string resNoStateNumberErrorFmt   = "$Resources:PTSRequest_DlgNoStateNumberErrorFmt";
         protected static readonly string resProcessNotifyText       = "$Resources:PTSRequest_DlgProcessNotifyText";
+// ReSharper restore InconsistentNaming
         #endregion
 
         #region [fields]
@@ -155,10 +141,11 @@ namespace TM.SP.AppPages
 
             SPListItemCollection docItems = docList.GetItems(new SPQuery()
             {
-                Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString()
+                Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
             });
 
-            List<PTSRequestItem> retVal = new List<PTSRequestItem>();
+            var retVal = new List<PTSRequestItem>();
             foreach (SPListItem item in docItems)
             {
                 retVal.Add(new PTSRequestItem()
@@ -339,7 +326,7 @@ namespace TM.SP.AppPages
             newItem["Tm_OutputDate"] = DateTime.Now;
             newItem["Tm_TaxiLookup"] = new SPFieldLookupValue(document.Id, document.Title);
             newItem["Tm_IncomeRequestLookup"] = taxiItem["Tm_IncomeRequestLookup"];
-            newItem["Tm_OutputRequestTypeLookup"] = new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title);
+            newItem["Tm_OutputRequestTypeLookup"] = requestTypeItem != null ? new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title) : null;
             newItem["Tm_AnswerReceived"] = false;
             newItem["Tm_MessageId"] = requestId;
             newItem.Update();

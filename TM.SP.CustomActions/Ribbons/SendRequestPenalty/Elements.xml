@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.SendRequestPenalty"
+		Location="CommandUI.Ribbon.ListView"
+		Title="Запросить штрафы"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/LicenseList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListItem.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.SendRequestPenalty.Button"
+						Command="TaxoMotor.SendRequestPenalty.ButtonCommand"
+						Sequence="500"
+						Image16by16="/_layouts/15/TM.SP.AppPages/Images/penalty-16.png"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/penalty-32.png"
+						LabelText="Запросить штрафы"
+						ToolTipTitle="Запрос штрафов по транспортному средству, для которого выдано разрешение"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.SendRequestPenalty.ButtonCommand"
+					CommandAction="javascript: (function(){
+          
+            var identities = SP.ListOperation.Selection.getSelectedItems().filter(function (e) {
+                return (e.fsObjType || e.fsObjType == 0);
+            }).map(function (e) {
+                return e.id;
+            });
+
+            var options = {
+                url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestPenaltyPage.aspx') + '?IsDlg=1&amp;ListId={ListId}&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
+                title: 'Запрос информации о штрафах',
+                allowMaximize: false,
+                showClose: true,
+                width: 800,
+                dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                    if (result == SP.UI.DialogResult.OK) {
+                        if (returnValue == null) {
+                            TM.SP.showIconNotification('Отправка запросов завершена', '_layouts/15/images/kpinormal-0.gif', true);
+                            setTimeout(function() {
+                              SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);  
+                            }, 2000);
+                        }
+                        else {
+                            location.href = returnValue;
+                        }
+                    }
+                    else if (result == -1){
+                        TM.SP.showIconNotification('При отправке запросов возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                        setTimeout(function() {
+                          SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);  
+                        }, 2000);
+                    }
+                })
+            };
+
+            SP.UI.ModalDialog.showModalDialog(options);
+          
+          })();" 
+          EnabledScript="javascript:function enabled() { var items = SP.ListOperation.Selection.getSelectedItems(); return (items.length > 0); } enabled();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

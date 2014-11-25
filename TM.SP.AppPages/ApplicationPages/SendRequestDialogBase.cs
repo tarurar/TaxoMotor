@@ -28,7 +28,8 @@ namespace TM.SP.AppPages.ApplicationPages
     {
         Pts = 1,
         Egrul,
-        Egrip
+        Egrip,
+        Penalty
     }
     
     public enum ValidationErrorSeverity

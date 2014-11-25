@@ -109,6 +109,13 @@
     <Compile Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx.designer.cs">
       <DependentUpon>SendRequestEGRULPage.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationPages\SendRequestPenaltyPage\SendRequestPenaltyPage.aspx.cs">
+      <DependentUpon>SendRequestPenaltyPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\SendRequestPenaltyPage\SendRequestPenaltyPage.aspx.designer.cs">
+      <DependentUpon>SendRequestPenaltyPage.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationPages\SendRequestPTSPage\SendRequestPTSPage.aspx.cs">
       <DependentUpon>SendRequestPTSPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -144,6 +151,9 @@
     <None Include="ApplicationPages\SendRequestEGRULPage\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{14185da8-fbda-40a5-8617-6ddc41f38626}</SharePointProjectItemId>
     </None>
+    <None Include="ApplicationPages\SendRequestPenaltyPage\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{aa753303-5285-4f5f-8e92-63dcfb8a375c}</SharePointProjectItemId>
+    </None>
     <None Include="ApplicationPages\SendRequestPTSPage\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{90d494a4-c9a4-4d2c-be7e-0de27b3dc194}</SharePointProjectItemId>
     </None>
@@ -176,6 +186,7 @@
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationPages\SendRequestPenaltyPage\SendRequestPenaltyPage.aspx" />
     <Content Include="ApplicationPages\SendRequestPTSPage\SendRequestPTSPage.aspx" />
     <Content Include="ApplicationPages\SendStatus\SendStatus.aspx" />
     <Content Include="Layouts\TM.SP.AppPages\Images\accept-icon-16.png" />
@@ -184,6 +195,8 @@
     <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\deny-icon-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\penalty-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\penalty-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\renew-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\renew-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\send-status-16.png" />

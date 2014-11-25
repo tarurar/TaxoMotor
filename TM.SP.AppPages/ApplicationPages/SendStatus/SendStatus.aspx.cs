@@ -98,7 +98,8 @@ namespace TM.SP.AppPages
 
             SPListItemCollection docItems = docList.GetItems(new SPQuery()
             {
-                Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString()
+                Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
             });
 
             List<SendStatusRequestItem> retVal = new List<SendStatusRequestItem>();
