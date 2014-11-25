@@ -68,23 +68,16 @@ namespace TM.SP.AnswerProcessingTimerJob
         [SharePointPermission(SecurityAction.LinkDemand, ObjectModel = true)]
         public override void FeatureActivated(SPFeatureReceiverProperties properties)
         {
-            try
+            SPSecurity.RunWithElevatedPrivileges(delegate()
             {
-                SPSecurity.RunWithElevatedPrivileges(delegate()
+                var webApp = (SPWebApplication)properties.Feature.Parent;
+                if (webApp != null)
                 {
-                    SPWebApplication webApp = (SPWebApplication)properties.Feature.Parent;
-                    if (webApp != null)
-                    {
-                        DeleteExistingJob(jobName, webApp);
-                        CreateJob(webApp);
-                    }
+                    DeleteExistingJob(jobName, webApp);
+                    CreateJob(webApp);
+                }
 
-                });
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            });
         }
 
         /// <summary>
@@ -96,19 +89,12 @@ namespace TM.SP.AnswerProcessingTimerJob
         {
             lock (this)
             {
-                try
+                SPSecurity.RunWithElevatedPrivileges(delegate()
                 {
-                    SPSecurity.RunWithElevatedPrivileges(delegate()
-                    {
-                        SPWebApplication webApp = (SPWebApplication)properties.Feature.Parent;
-                        if (webApp != null)
-                            DeleteExistingJob(jobName, webApp);
-                    });
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                    var webApp = (SPWebApplication)properties.Feature.Parent;
+                    if (webApp != null)
+                        DeleteExistingJob(jobName, webApp);
+                });
             }
         }
 
