@@ -22,6 +22,10 @@
     background-color: #e5e5e5;
 }
 
+#s4-titlerow {
+    display: none !important;
+}
+
 /*
     SharePoint List Views custom css
 */
