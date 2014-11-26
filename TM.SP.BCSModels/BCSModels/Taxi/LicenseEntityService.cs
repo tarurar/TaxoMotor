@@ -151,7 +151,7 @@ namespace TM.SP.BCSModels.Taxi
             var selectCommand = new SqlCommand
             {
                 CommandText =
-                    "SELECT TOP 1 [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] FROM [dbo].[License] WHERE [TaxiId] = @TaxiId AND [Status] = @Status ORDER BY [Id] DESC"
+                    "SELECT TOP 1 [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] , [FirmName] , [Brand] , [OgrnNum] , [OgrnName] , [GRAddress] , [InnDate] , [InnName] , [InnNum] , [Address_Fact] , [Country_Fact] , [PostalCode_Fact] , [Locality_Fact] , [Region_Fact] , [City_Fact] , [Town_Fact] , [Street_Fact] , [House_Fact] , [Building_Fact] , [Structure_Fact] , [Facility_Fact] , [Ownership_Fact] , [Flat_Fact] , [Gps] , [Taxometr] , [TODate] , [STSNumber] , [STSDate] , [OwnType] , [OwnNumber] , [OwnDate] , [MO] , [GUID_MO] , [DATE_MO] FROM [dbo].[License] WHERE [TaxiId] = @TaxiId AND [Status] = @Status ORDER BY [Id] DESC"
             };
             selectCommand.Parameters.AddWithValue("@TaxiId", spTaxiId);
             selectCommand.Parameters.AddWithValue("@Status", 4);
@@ -218,6 +218,39 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Guid_OD = (thisReader["Guid_OD"] == DBNull.Value) ? null : thisReader["Guid_OD"].ToString();
                 entity.Date_OD = thisReader["Date_OD"] as System.Nullable<System.DateTime>;
                 entity.FromPortal = thisReader["FromPortal"] as System.Nullable<System.Boolean>;
+                entity.FirmName = (thisReader["FirmName"] == DBNull.Value) ? null : thisReader["FirmName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
+                entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
+                entity.OgrnName = (thisReader["OgrnName"] == DBNull.Value) ? null : thisReader["OgrnName"].ToString();
+                entity.GRAddress = (thisReader["GRAddress"] == DBNull.Value) ? null : thisReader["GRAddress"].ToString();
+                entity.InnDate = thisReader["InnDate"] as System.Nullable<System.DateTime>;
+                entity.InnName = (thisReader["InnName"] == DBNull.Value) ? null : thisReader["InnName"].ToString();
+                entity.InnNum = (thisReader["InnNum"] == DBNull.Value) ? null : thisReader["InnNum"].ToString();
+                entity.Address_Fact = (thisReader["Address_Fact"] == DBNull.Value) ? null : thisReader["Address_Fact"].ToString();
+                entity.Country_Fact = (thisReader["Country_Fact"] == DBNull.Value) ? null : thisReader["Country_Fact"].ToString();
+                entity.PostalCode_Fact = (thisReader["PostalCode_Fact"] == DBNull.Value) ? null : thisReader["PostalCode_Fact"].ToString();
+                entity.Locality_Fact = (thisReader["Locality_Fact"] == DBNull.Value) ? null : thisReader["Locality_Fact"].ToString();
+                entity.Region_Fact = (thisReader["Region_Fact"] == DBNull.Value) ? null : thisReader["Region_Fact"].ToString();
+                entity.City_Fact = (thisReader["City_Fact"] == DBNull.Value) ? null : thisReader["City_Fact"].ToString();
+                entity.Town_Fact = (thisReader["Town_Fact"] == DBNull.Value) ? null : thisReader["Town_Fact"].ToString();
+                entity.Street_Fact = (thisReader["Street_Fact"] == DBNull.Value) ? null : thisReader["Street_Fact"].ToString();
+                entity.House_Fact = (thisReader["House_Fact"] == DBNull.Value) ? null : thisReader["House_Fact"].ToString();
+                entity.Building_Fact = (thisReader["Building_Fact"] == DBNull.Value) ? null : thisReader["Building_Fact"].ToString();
+                entity.Structure_Fact = (thisReader["Structure_Fact"] == DBNull.Value) ? null : thisReader["Structure_Fact"].ToString();
+                entity.Facility_Fact = (thisReader["Facility_Fact"] == DBNull.Value) ? null : thisReader["Facility_Fact"].ToString();
+                entity.Ownership_Fact = (thisReader["Ownership_Fact"] == DBNull.Value) ? null : thisReader["Ownership_Fact"].ToString();
+                entity.Flat_Fact = (thisReader["Flat_Fact"] == DBNull.Value) ? null : thisReader["Flat_Fact"].ToString();
+                entity.Gps = thisReader["Gps"] as System.Nullable<System.Boolean>;
+                entity.Taxometr = thisReader["Taxometr"] as System.Nullable<System.Boolean>;
+                entity.TODate = thisReader["TODate"] as System.Nullable<System.DateTime>;
+                entity.STSNumber = (thisReader["STSNumber"] == DBNull.Value) ? null : thisReader["STSNumber"].ToString();
+                entity.STSDate = thisReader["STSDate"] as System.Nullable<System.DateTime>;
+                entity.OwnType = thisReader["OwnType"] as System.Nullable<System.Int32>;
+                entity.OwnNumber = (thisReader["OwnNumber"] == DBNull.Value) ? null : thisReader["OwnNumber"].ToString();
+                entity.OwnDate = thisReader["OwnDate"] as System.Nullable<System.DateTime>;
+                entity.MO = thisReader["MO"] as System.Nullable<System.Boolean>;
+                entity.GUID_MO = (thisReader["GUID_MO"] == DBNull.Value) ? null : thisReader["GUID_MO"].ToString();
+                entity.DATE_MO = thisReader["DATE_MO"] as System.Nullable<System.DateTime>;
             }
             else
             {

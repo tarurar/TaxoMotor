@@ -20,7 +20,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.60" EstimatedInstanceCount="100000" DefaultDisplayName="License">
+				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.61" EstimatedInstanceCount="100000" DefaultDisplayName="License">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Taxi.LicenseEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -451,6 +451,227 @@
                             </Interpretation>
                           </TypeDescriptor>
                           <TypeDescriptor Name="FromPortal" DefaultDisplayName="FromPortal" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="FirmName" DefaultDisplayName="FirmName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">128</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">128</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OgrnName" DefaultDisplayName="OgrnName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="GRAddress" DefaultDisplayName="GRAddress" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnDate" DefaultDisplayName="InnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnName" DefaultDisplayName="InnName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnNum" DefaultDisplayName="InnNum" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Address_Fact" DefaultDisplayName="Address_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Country_Fact" DefaultDisplayName="Country_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="PostalCode_Fact" DefaultDisplayName="PostalCode_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Locality_Fact" DefaultDisplayName="Locality_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Region_Fact" DefaultDisplayName="Region_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="City_Fact" DefaultDisplayName="City_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Town_Fact" DefaultDisplayName="Town_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Street_Fact" DefaultDisplayName="Street_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="House_Fact" DefaultDisplayName="House_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Building_Fact" DefaultDisplayName="Building_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Structure_Fact" DefaultDisplayName="Structure_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Facility_Fact" DefaultDisplayName="Facility_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Ownership_Fact" DefaultDisplayName="Ownership_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Flat_Fact" DefaultDisplayName="Flat_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Gps" DefaultDisplayName="Gps" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="Taxometr" DefaultDisplayName="Taxometr" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="TODate" DefaultDisplayName="TODate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="STSNumber" DefaultDisplayName="STSNumber" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="STSDate" DefaultDisplayName="STSDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OwnType" DefaultDisplayName="OwnType" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="OwnNumber" DefaultDisplayName="OwnNumber" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OwnDate" DefaultDisplayName="OwnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="MO" DefaultDisplayName="MO" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="GUID_MO" DefaultDisplayName="GUID_MO" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="DATE_MO" DefaultDisplayName="DATE_MO" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
 												</TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
@@ -875,6 +1096,227 @@
                         </Interpretation>
                       </TypeDescriptor>
                       <TypeDescriptor Name="FromPortal" DefaultDisplayName="FromPortal" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="FirmName" DefaultDisplayName="FirmName" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnName" DefaultDisplayName="OgrnName" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="GRAddress" DefaultDisplayName="GRAddress" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnDate" DefaultDisplayName="InnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnName" DefaultDisplayName="InnName" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnNum" DefaultDisplayName="InnNum" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Address_Fact" DefaultDisplayName="Address_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Country_Fact" DefaultDisplayName="Country_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="PostalCode_Fact" DefaultDisplayName="PostalCode_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Locality_Fact" DefaultDisplayName="Locality_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Region_Fact" DefaultDisplayName="Region_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="City_Fact" DefaultDisplayName="City_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Town_Fact" DefaultDisplayName="Town_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Street_Fact" DefaultDisplayName="Street_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="House_Fact" DefaultDisplayName="House_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Building_Fact" DefaultDisplayName="Building_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Structure_Fact" DefaultDisplayName="Structure_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Facility_Fact" DefaultDisplayName="Facility_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Ownership_Fact" DefaultDisplayName="Ownership_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Flat_Fact" DefaultDisplayName="Flat_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Gps" DefaultDisplayName="Gps" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="Taxometr" DefaultDisplayName="Taxometr" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="TODate" DefaultDisplayName="TODate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSNumber" DefaultDisplayName="STSNumber" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSDate" DefaultDisplayName="STSDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnType" DefaultDisplayName="OwnType" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="OwnNumber" DefaultDisplayName="OwnNumber" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnDate" DefaultDisplayName="OwnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="MO" DefaultDisplayName="MO" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="GUID_MO" DefaultDisplayName="GUID_MO" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="DATE_MO" DefaultDisplayName="DATE_MO" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -1289,6 +1731,227 @@
                         </Interpretation>
                       </TypeDescriptor>
                       <TypeDescriptor Name="FromPortal" DefaultDisplayName="FromPortal" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="FirmName" DefaultDisplayName="FirmName" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnName" DefaultDisplayName="OgrnName" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="GRAddress" DefaultDisplayName="GRAddress" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnDate" DefaultDisplayName="InnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnName" DefaultDisplayName="InnName" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnNum" DefaultDisplayName="InnNum" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Address_Fact" DefaultDisplayName="Address_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Country_Fact" DefaultDisplayName="Country_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="PostalCode_Fact" DefaultDisplayName="PostalCode_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Locality_Fact" DefaultDisplayName="Locality_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Region_Fact" DefaultDisplayName="Region_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="City_Fact" DefaultDisplayName="City_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Town_Fact" DefaultDisplayName="Town_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Street_Fact" DefaultDisplayName="Street_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="House_Fact" DefaultDisplayName="House_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Building_Fact" DefaultDisplayName="Building_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Structure_Fact" DefaultDisplayName="Structure_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Facility_Fact" DefaultDisplayName="Facility_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Ownership_Fact" DefaultDisplayName="Ownership_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Flat_Fact" DefaultDisplayName="Flat_Fact" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Gps" DefaultDisplayName="Gps" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="Taxometr" DefaultDisplayName="Taxometr" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="TODate" DefaultDisplayName="TODate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSNumber" DefaultDisplayName="STSNumber" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSDate" DefaultDisplayName="STSDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnType" DefaultDisplayName="OwnType" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="OwnNumber" DefaultDisplayName="OwnNumber" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnDate" DefaultDisplayName="OwnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="MO" DefaultDisplayName="MO" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="GUID_MO" DefaultDisplayName="GUID_MO" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="DATE_MO" DefaultDisplayName="DATE_MO" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" CreatorField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -1693,6 +2356,227 @@
                         </Interpretation>
                       </TypeDescriptor>
                       <TypeDescriptor Name="FromPortal" DefaultDisplayName="FromPortal" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="FirmName" DefaultDisplayName="FirmName" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnName" DefaultDisplayName="OgrnName" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="GRAddress" DefaultDisplayName="GRAddress" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnDate" DefaultDisplayName="InnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnName" DefaultDisplayName="InnName" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnNum" DefaultDisplayName="InnNum" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Address_Fact" DefaultDisplayName="Address_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Country_Fact" DefaultDisplayName="Country_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="PostalCode_Fact" DefaultDisplayName="PostalCode_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Locality_Fact" DefaultDisplayName="Locality_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Region_Fact" DefaultDisplayName="Region_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="City_Fact" DefaultDisplayName="City_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Town_Fact" DefaultDisplayName="Town_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Street_Fact" DefaultDisplayName="Street_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="House_Fact" DefaultDisplayName="House_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Building_Fact" DefaultDisplayName="Building_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Structure_Fact" DefaultDisplayName="Structure_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Facility_Fact" DefaultDisplayName="Facility_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Ownership_Fact" DefaultDisplayName="Ownership_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Flat_Fact" DefaultDisplayName="Flat_Fact" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Gps" DefaultDisplayName="Gps" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="Taxometr" DefaultDisplayName="Taxometr" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="TODate" DefaultDisplayName="TODate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSNumber" DefaultDisplayName="STSNumber" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSDate" DefaultDisplayName="STSDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnType" DefaultDisplayName="OwnType" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="OwnNumber" DefaultDisplayName="OwnNumber" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnDate" DefaultDisplayName="OwnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="MO" DefaultDisplayName="MO" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="GUID_MO" DefaultDisplayName="GUID_MO" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="DATE_MO" DefaultDisplayName="DATE_MO" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -2126,6 +3010,227 @@
                         </Interpretation>
                       </TypeDescriptor>
                       <TypeDescriptor Name="FromPortal" DefaultDisplayName="FromPortal" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="FirmName" DefaultDisplayName="FirmName" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">128</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OgrnName" DefaultDisplayName="OgrnName" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="GRAddress" DefaultDisplayName="GRAddress" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnDate" DefaultDisplayName="InnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnName" DefaultDisplayName="InnName" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="InnNum" DefaultDisplayName="InnNum" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Address_Fact" DefaultDisplayName="Address_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">256</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Country_Fact" DefaultDisplayName="Country_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="PostalCode_Fact" DefaultDisplayName="PostalCode_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Locality_Fact" DefaultDisplayName="Locality_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Region_Fact" DefaultDisplayName="Region_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="City_Fact" DefaultDisplayName="City_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Town_Fact" DefaultDisplayName="Town_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Street_Fact" DefaultDisplayName="Street_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="House_Fact" DefaultDisplayName="House_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Building_Fact" DefaultDisplayName="Building_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Structure_Fact" DefaultDisplayName="Structure_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Facility_Fact" DefaultDisplayName="Facility_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Ownership_Fact" DefaultDisplayName="Ownership_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Flat_Fact" DefaultDisplayName="Flat_Fact" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">16</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="Gps" DefaultDisplayName="Gps" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="Taxometr" DefaultDisplayName="Taxometr" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="TODate" DefaultDisplayName="TODate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSNumber" DefaultDisplayName="STSNumber" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="STSDate" DefaultDisplayName="STSDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnType" DefaultDisplayName="OwnType" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="OwnNumber" DefaultDisplayName="OwnNumber" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">32</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="OwnDate" DefaultDisplayName="OwnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="MO" DefaultDisplayName="MO" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true"></TypeDescriptor>
+                      <TypeDescriptor Name="GUID_MO" DefaultDisplayName="GUID_MO" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">64</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
+                      <TypeDescriptor Name="DATE_MO" DefaultDisplayName="DATE_MO" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" UpdaterField="true">
+                        <Interpretation>
+                          <NormalizeDateTime LobDateTimeMode="UTC" />
+                        </Interpretation>
+                      </TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -2550,6 +3655,227 @@
                             </Interpretation>
                           </TypeDescriptor>
                           <TypeDescriptor Name="FromPortal" DefaultDisplayName="FromPortal" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="FirmName" DefaultDisplayName="FirmName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">128</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">128</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OgrnName" DefaultDisplayName="OgrnName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="GRAddress" DefaultDisplayName="GRAddress" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnDate" DefaultDisplayName="InnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnName" DefaultDisplayName="InnName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnNum" DefaultDisplayName="InnNum" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Address_Fact" DefaultDisplayName="Address_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Country_Fact" DefaultDisplayName="Country_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="PostalCode_Fact" DefaultDisplayName="PostalCode_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Locality_Fact" DefaultDisplayName="Locality_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Region_Fact" DefaultDisplayName="Region_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="City_Fact" DefaultDisplayName="City_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Town_Fact" DefaultDisplayName="Town_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Street_Fact" DefaultDisplayName="Street_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="House_Fact" DefaultDisplayName="House_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Building_Fact" DefaultDisplayName="Building_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Structure_Fact" DefaultDisplayName="Structure_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Facility_Fact" DefaultDisplayName="Facility_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Ownership_Fact" DefaultDisplayName="Ownership_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Flat_Fact" DefaultDisplayName="Flat_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Gps" DefaultDisplayName="Gps" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="Taxometr" DefaultDisplayName="Taxometr" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="TODate" DefaultDisplayName="TODate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="STSNumber" DefaultDisplayName="STSNumber" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="STSDate" DefaultDisplayName="STSDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OwnType" DefaultDisplayName="OwnType" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="OwnNumber" DefaultDisplayName="OwnNumber" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OwnDate" DefaultDisplayName="OwnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="MO" DefaultDisplayName="MO" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="GUID_MO" DefaultDisplayName="GUID_MO" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="DATE_MO" DefaultDisplayName="DATE_MO" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
 												</TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
@@ -3133,6 +4459,227 @@
                             </Interpretation>
                           </TypeDescriptor>
                           <TypeDescriptor Name="FromPortal" DefaultDisplayName="FromPortal" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="FirmName" DefaultDisplayName="FirmName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">128</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">128</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OgrnName" DefaultDisplayName="OgrnName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="GRAddress" DefaultDisplayName="GRAddress" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnDate" DefaultDisplayName="InnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnName" DefaultDisplayName="InnName" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="InnNum" DefaultDisplayName="InnNum" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Address_Fact" DefaultDisplayName="Address_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">256</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Country_Fact" DefaultDisplayName="Country_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="PostalCode_Fact" DefaultDisplayName="PostalCode_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Locality_Fact" DefaultDisplayName="Locality_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Region_Fact" DefaultDisplayName="Region_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="City_Fact" DefaultDisplayName="City_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Town_Fact" DefaultDisplayName="Town_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Street_Fact" DefaultDisplayName="Street_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="House_Fact" DefaultDisplayName="House_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Building_Fact" DefaultDisplayName="Building_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Structure_Fact" DefaultDisplayName="Structure_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Facility_Fact" DefaultDisplayName="Facility_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Ownership_Fact" DefaultDisplayName="Ownership_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Flat_Fact" DefaultDisplayName="Flat_Fact" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">16</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="Gps" DefaultDisplayName="Gps" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="Taxometr" DefaultDisplayName="Taxometr" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="TODate" DefaultDisplayName="TODate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="STSNumber" DefaultDisplayName="STSNumber" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="STSDate" DefaultDisplayName="STSDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OwnType" DefaultDisplayName="OwnType" TypeName="System.Nullable`1[[System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="OwnNumber" DefaultDisplayName="OwnNumber" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">32</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="OwnDate" DefaultDisplayName="OwnDate" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="MO" DefaultDisplayName="MO" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="GUID_MO" DefaultDisplayName="GUID_MO" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">64</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
+                          <TypeDescriptor Name="DATE_MO" DefaultDisplayName="DATE_MO" TypeName="System.Nullable`1[[System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+                            <Interpretation>
+                              <NormalizeDateTime LobDateTimeMode="UTC" />
+                            </Interpretation>
+                          </TypeDescriptor>
                         </TypeDescriptors>
                       </TypeDescriptor>
                     </TypeDescriptors>
@@ -3159,7 +4706,8 @@
                 <Parameter Name="spTaxiId" Direction="In">
                   <TypeDescriptor Name="spTaxiIdTypeDescriptor" TypeName="System.Int32" /></Parameter>
                 <Parameter Name="returnLicense" Direction="Return">
-                  <TypeDescriptor Name="returnLicenseTypeDescriptor" TypeName="TM.SP.BCSModels.Taxi.License, TM.SP.BCSModels" IsCollection="false" /></Parameter>
+                  <TypeDescriptor Name="returnLicenseTypeDescriptor" TypeName="TM.SP.BCSModels.Taxi.License, TM.SP.BCSModels" IsCollection="false" />
+                </Parameter>
               </Parameters>
               <MethodInstances>
                 <MethodInstance Name="GetLicenseDraftForSPTaxiId" Type="SpecificFinder" ReturnParameterName="returnLicense" DefaultDisplayName="Get License Draft For SPTaxi Id" />

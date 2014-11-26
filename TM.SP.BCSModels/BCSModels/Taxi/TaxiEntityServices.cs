@@ -76,7 +76,7 @@ namespace TM.SP.BCSModels.Taxi
             var selectCommand = new SqlCommand
             {
                 CommandText =
-                    "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] FROM [dbo].[License] WHERE [Id] = @Id"
+                    "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] , [FirmName] , [Brand] , [OgrnNum] , [OgrnName] , [GRAddress] , [InnDate] , [InnName] , [InnNum] , [Address_Fact] , [Country_Fact] , [PostalCode_Fact] , [Locality_Fact] , [Region_Fact] , [City_Fact] , [Town_Fact] , [Street_Fact] , [House_Fact] , [Building_Fact] , [Structure_Fact] , [Facility_Fact] , [Ownership_Fact] , [Flat_Fact] , [Gps] , [Taxometr] , [TODate] , [STSNumber] , [STSDate] , [OwnType] , [OwnNumber] , [OwnDate] , [MO] , [GUID_MO] , [DATE_MO] FROM [dbo].[License] WHERE [Id] = @Id"
             };
             selectCommand.Parameters.AddWithValue("@Id", id);
 
@@ -142,6 +142,39 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Guid_OD = (thisReader["Guid_OD"] == DBNull.Value) ? null : thisReader["Guid_OD"].ToString();
                 entity.Date_OD = thisReader["Date_OD"] as System.Nullable<System.DateTime>;
                 entity.FromPortal = thisReader["FromPortal"] as System.Nullable<System.Boolean>;
+                entity.FirmName = (thisReader["FirmName"] == DBNull.Value) ? null : thisReader["FirmName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
+                entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
+                entity.OgrnName = (thisReader["OgrnName"] == DBNull.Value) ? null : thisReader["OgrnName"].ToString();
+                entity.GRAddress = (thisReader["GRAddress"] == DBNull.Value) ? null : thisReader["GRAddress"].ToString();
+                entity.InnDate = thisReader["InnDate"] as System.Nullable<System.DateTime>;
+                entity.InnName = (thisReader["InnName"] == DBNull.Value) ? null : thisReader["InnName"].ToString();
+                entity.InnNum = (thisReader["InnNum"] == DBNull.Value) ? null : thisReader["InnNum"].ToString();
+                entity.Address_Fact = (thisReader["Address_Fact"] == DBNull.Value) ? null : thisReader["Address_Fact"].ToString();
+                entity.Country_Fact = (thisReader["Country_Fact"] == DBNull.Value) ? null : thisReader["Country_Fact"].ToString();
+                entity.PostalCode_Fact = (thisReader["PostalCode_Fact"] == DBNull.Value) ? null : thisReader["PostalCode_Fact"].ToString();
+                entity.Locality_Fact = (thisReader["Locality_Fact"] == DBNull.Value) ? null : thisReader["Locality_Fact"].ToString();
+                entity.Region_Fact = (thisReader["Region_Fact"] == DBNull.Value) ? null : thisReader["Region_Fact"].ToString();
+                entity.City_Fact = (thisReader["City_Fact"] == DBNull.Value) ? null : thisReader["City_Fact"].ToString();
+                entity.Town_Fact = (thisReader["Town_Fact"] == DBNull.Value) ? null : thisReader["Town_Fact"].ToString();
+                entity.Street_Fact = (thisReader["Street_Fact"] == DBNull.Value) ? null : thisReader["Street_Fact"].ToString();
+                entity.House_Fact = (thisReader["House_Fact"] == DBNull.Value) ? null : thisReader["House_Fact"].ToString();
+                entity.Building_Fact = (thisReader["Building_Fact"] == DBNull.Value) ? null : thisReader["Building_Fact"].ToString();
+                entity.Structure_Fact = (thisReader["Structure_Fact"] == DBNull.Value) ? null : thisReader["Structure_Fact"].ToString();
+                entity.Facility_Fact = (thisReader["Facility_Fact"] == DBNull.Value) ? null : thisReader["Facility_Fact"].ToString();
+                entity.Ownership_Fact = (thisReader["Ownership_Fact"] == DBNull.Value) ? null : thisReader["Ownership_Fact"].ToString();
+                entity.Flat_Fact = (thisReader["Flat_Fact"] == DBNull.Value) ? null : thisReader["Flat_Fact"].ToString();
+                entity.Gps = thisReader["Gps"] as System.Nullable<System.Boolean>;
+                entity.Taxometr = thisReader["Taxometr"] as System.Nullable<System.Boolean>;
+                entity.TODate = thisReader["TODate"] as System.Nullable<System.DateTime>;
+                entity.STSNumber = (thisReader["STSNumber"] == DBNull.Value) ? null : thisReader["STSNumber"].ToString();
+                entity.STSDate = thisReader["STSDate"] as System.Nullable<System.DateTime>;
+                entity.OwnType = thisReader["OwnType"] as System.Nullable<System.Int32>;
+                entity.OwnNumber = (thisReader["OwnNumber"] == DBNull.Value) ? null : thisReader["OwnNumber"].ToString();
+                entity.OwnDate = thisReader["OwnDate"] as System.Nullable<System.DateTime>;
+                entity.MO = thisReader["MO"] as System.Nullable<System.Boolean>;
+                entity.GUID_MO = (thisReader["GUID_MO"] == DBNull.Value) ? null : thisReader["GUID_MO"].ToString();
+                entity.DATE_MO = thisReader["DATE_MO"] as System.Nullable<System.DateTime>;
             }
             else
             {
@@ -150,7 +183,6 @@ namespace TM.SP.BCSModels.Taxi
             thisReader.Close();
             return (entity);
         }
-
         public IList<License> ReadLicenseList()
         {
             SqlConnection thisConn = null;
@@ -160,7 +192,7 @@ namespace TM.SP.BCSModels.Taxi
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] FROM [dbo].[License]";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] , [FirmName] , [Brand] , [OgrnNum] , [OgrnName] , [GRAddress] , [InnDate] , [InnName] , [InnNum] , [Address_Fact] , [Country_Fact] , [PostalCode_Fact] , [Locality_Fact] , [Region_Fact] , [City_Fact] , [Town_Fact] , [Street_Fact] , [House_Fact] , [Building_Fact] , [Structure_Fact] , [Facility_Fact] , [Ownership_Fact] , [Flat_Fact] , [Gps] , [Taxometr] , [TODate] , [STSNumber] , [STSDate] , [OwnType] , [OwnNumber] , [OwnDate] , [MO] , [GUID_MO] , [DATE_MO] FROM [dbo].[License]";
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             while (thisReader.Read())
             {
@@ -224,13 +256,45 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Guid_OD = (thisReader["Guid_OD"] == DBNull.Value) ? null : thisReader["Guid_OD"].ToString();
                 entity.Date_OD = thisReader["Date_OD"] as System.Nullable<System.DateTime>;
                 entity.FromPortal = thisReader["FromPortal"] as System.Nullable<System.Boolean>;
+                entity.FirmName = (thisReader["FirmName"] == DBNull.Value) ? null : thisReader["FirmName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
+                entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
+                entity.OgrnName = (thisReader["OgrnName"] == DBNull.Value) ? null : thisReader["OgrnName"].ToString();
+                entity.GRAddress = (thisReader["GRAddress"] == DBNull.Value) ? null : thisReader["GRAddress"].ToString();
+                entity.InnDate = thisReader["InnDate"] as System.Nullable<System.DateTime>;
+                entity.InnName = (thisReader["InnName"] == DBNull.Value) ? null : thisReader["InnName"].ToString();
+                entity.InnNum = (thisReader["InnNum"] == DBNull.Value) ? null : thisReader["InnNum"].ToString();
+                entity.Address_Fact = (thisReader["Address_Fact"] == DBNull.Value) ? null : thisReader["Address_Fact"].ToString();
+                entity.Country_Fact = (thisReader["Country_Fact"] == DBNull.Value) ? null : thisReader["Country_Fact"].ToString();
+                entity.PostalCode_Fact = (thisReader["PostalCode_Fact"] == DBNull.Value) ? null : thisReader["PostalCode_Fact"].ToString();
+                entity.Locality_Fact = (thisReader["Locality_Fact"] == DBNull.Value) ? null : thisReader["Locality_Fact"].ToString();
+                entity.Region_Fact = (thisReader["Region_Fact"] == DBNull.Value) ? null : thisReader["Region_Fact"].ToString();
+                entity.City_Fact = (thisReader["City_Fact"] == DBNull.Value) ? null : thisReader["City_Fact"].ToString();
+                entity.Town_Fact = (thisReader["Town_Fact"] == DBNull.Value) ? null : thisReader["Town_Fact"].ToString();
+                entity.Street_Fact = (thisReader["Street_Fact"] == DBNull.Value) ? null : thisReader["Street_Fact"].ToString();
+                entity.House_Fact = (thisReader["House_Fact"] == DBNull.Value) ? null : thisReader["House_Fact"].ToString();
+                entity.Building_Fact = (thisReader["Building_Fact"] == DBNull.Value) ? null : thisReader["Building_Fact"].ToString();
+                entity.Structure_Fact = (thisReader["Structure_Fact"] == DBNull.Value) ? null : thisReader["Structure_Fact"].ToString();
+                entity.Facility_Fact = (thisReader["Facility_Fact"] == DBNull.Value) ? null : thisReader["Facility_Fact"].ToString();
+                entity.Ownership_Fact = (thisReader["Ownership_Fact"] == DBNull.Value) ? null : thisReader["Ownership_Fact"].ToString();
+                entity.Flat_Fact = (thisReader["Flat_Fact"] == DBNull.Value) ? null : thisReader["Flat_Fact"].ToString();
+                entity.Gps = thisReader["Gps"] as System.Nullable<System.Boolean>;
+                entity.Taxometr = thisReader["Taxometr"] as System.Nullable<System.Boolean>;
+                entity.TODate = thisReader["TODate"] as System.Nullable<System.DateTime>;
+                entity.STSNumber = (thisReader["STSNumber"] == DBNull.Value) ? null : thisReader["STSNumber"].ToString();
+                entity.STSDate = thisReader["STSDate"] as System.Nullable<System.DateTime>;
+                entity.OwnType = thisReader["OwnType"] as System.Nullable<System.Int32>;
+                entity.OwnNumber = (thisReader["OwnNumber"] == DBNull.Value) ? null : thisReader["OwnNumber"].ToString();
+                entity.OwnDate = thisReader["OwnDate"] as System.Nullable<System.DateTime>;
+                entity.MO = thisReader["MO"] as System.Nullable<System.Boolean>;
+                entity.GUID_MO = (thisReader["GUID_MO"] == DBNull.Value) ? null : thisReader["GUID_MO"].ToString();
+                entity.DATE_MO = thisReader["DATE_MO"] as System.Nullable<System.DateTime>;
 
                 allEntities.Add(entity);
             }
             thisReader.Close();
             return allEntities;
         }
-
         public License CreateLicense(License newentity)
         {
             License createdEntity = null;
@@ -242,7 +306,7 @@ namespace TM.SP.BCSModels.Taxi
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[License] ([RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal]) VALUES (@RegNumber , @BlankSeries , @BlankNo , @OrgName , @Ogrn , @Inn , @Parent , @RootParent , @Status , @Document , @Signature , @TaxiId , @Lfb , @JuridicalAddress , @PhoneNumber , @AddContactData , @AccountAbbr , @TaxiBrand , @TaxiModel , @TaxiStateNumber , @TaxiYear , @OutputDate , @CreationDate , @TillDate , @TillSuspensionDate , @CancellationReason , @SuspensionReason , @ChangeReason , @InvalidReason , @ShortName , @LastName , @FirstName , @SecondName , @OgrnDate , @Country , @PostalCode , @Locality , @Region , @City , @Town , @Street , @House , @Building , @Structure , @Facility , @Ownership , @Flat , @Fax , @EMail , @TaxiColor , @TaxiNumberColor , @TaxiVin , @ChangeDate , @Guid_OD , @Date_OD , @FromPortal) SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] FROM [dbo].[License] WHERE [Id] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[License] ([RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] , [FirmName] , [Brand] , [OgrnNum] , [OgrnName] , [GRAddress] , [InnDate] , [InnName] , [InnNum] , [Address_Fact] , [Country_Fact] , [PostalCode_Fact] , [Locality_Fact] , [Region_Fact] , [City_Fact] , [Town_Fact] , [Street_Fact] , [House_Fact] , [Building_Fact] , [Structure_Fact] , [Facility_Fact] , [Ownership_Fact] , [Flat_Fact] , [Gps] , [Taxometr] , [TODate] , [STSNumber] , [STSDate] , [OwnType] , [OwnNumber] , [OwnDate] , [MO] , [GUID_MO] , [DATE_MO]) VALUES (@RegNumber , @BlankSeries , @BlankNo , @OrgName , @Ogrn , @Inn , @Parent , @RootParent , @Status , @Document , @Signature , @TaxiId , @Lfb , @JuridicalAddress , @PhoneNumber , @AddContactData , @AccountAbbr , @TaxiBrand , @TaxiModel , @TaxiStateNumber , @TaxiYear , @OutputDate , @CreationDate , @TillDate , @TillSuspensionDate , @CancellationReason , @SuspensionReason , @ChangeReason , @InvalidReason , @ShortName , @LastName , @FirstName , @SecondName , @OgrnDate , @Country , @PostalCode , @Locality , @Region , @City , @Town , @Street , @House , @Building , @Structure , @Facility , @Ownership , @Flat , @Fax , @EMail , @TaxiColor , @TaxiNumberColor , @TaxiVin , @ChangeDate , @Guid_OD , @Date_OD , @FromPortal , @FirmName , @Brand , @OgrnNum , @OgrnName , @GRAddress , @InnDate , @InnName , @InnNum , @Address_Fact , @Country_Fact , @PostalCode_Fact , @Locality_Fact , @Region_Fact , @City_Fact , @Town_Fact , @Street_Fact , @House_Fact , @Building_Fact , @Structure_Fact , @Facility_Fact , @Ownership_Fact , @Flat_Fact , @Gps , @Taxometr , @TODate , @STSNumber , @STSDate , @OwnType , @OwnNumber , @OwnDate , @MO , @GUID_MO , @DATE_MO) SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] , [FirmName] , [Brand] , [OgrnNum] , [OgrnName] , [GRAddress] , [InnDate] , [InnName] , [InnNum] , [Address_Fact] , [Country_Fact] , [PostalCode_Fact] , [Locality_Fact] , [Region_Fact] , [City_Fact] , [Town_Fact] , [Street_Fact] , [House_Fact] , [Building_Fact] , [Structure_Fact] , [Facility_Fact] , [Ownership_Fact] , [Flat_Fact] , [Gps] , [Taxometr] , [TODate] , [STSNumber] , [STSDate] , [OwnType] , [OwnNumber] , [OwnDate] , [MO] , [GUID_MO] , [DATE_MO] FROM [dbo].[License] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@RegNumber", (newentity.RegNumber == null) ? (object)DBNull.Value : newentity.RegNumber);
                 createCommand.Parameters.AddWithValue("@BlankSeries", (newentity.BlankSeries == null) ? (object)DBNull.Value : newentity.BlankSeries);
                 createCommand.Parameters.AddWithValue("@BlankNo", (newentity.BlankNo == null) ? (object)DBNull.Value : newentity.BlankNo);
@@ -299,6 +363,39 @@ namespace TM.SP.BCSModels.Taxi
                 createCommand.Parameters.AddWithValue("@Guid_OD", (newentity.Guid_OD == null) ? (object)DBNull.Value : newentity.Guid_OD);
                 createCommand.Parameters.AddWithValue("@Date_OD", (newentity.Date_OD == null) ? (object)DBNull.Value : newentity.Date_OD);
                 createCommand.Parameters.AddWithValue("@FromPortal", (newentity.FromPortal == null) ? (object)DBNull.Value : newentity.FromPortal);
+                createCommand.Parameters.AddWithValue("@FirmName", (newentity.FirmName == null) ? (object)DBNull.Value : newentity.FirmName);
+                createCommand.Parameters.AddWithValue("@Brand", (newentity.Brand == null) ? (object)DBNull.Value : newentity.Brand);
+                createCommand.Parameters.AddWithValue("@OgrnNum", (newentity.OgrnNum == null) ? (object)DBNull.Value : newentity.OgrnNum);
+                createCommand.Parameters.AddWithValue("@OgrnName", (newentity.OgrnName == null) ? (object)DBNull.Value : newentity.OgrnName);
+                createCommand.Parameters.AddWithValue("@GRAddress", (newentity.GRAddress == null) ? (object)DBNull.Value : newentity.GRAddress);
+                createCommand.Parameters.AddWithValue("@InnDate", (newentity.InnDate == null) ? (object)DBNull.Value : newentity.InnDate);
+                createCommand.Parameters.AddWithValue("@InnName", (newentity.InnName == null) ? (object)DBNull.Value : newentity.InnName);
+                createCommand.Parameters.AddWithValue("@InnNum", (newentity.InnNum == null) ? (object)DBNull.Value : newentity.InnNum);
+                createCommand.Parameters.AddWithValue("@Address_Fact", (newentity.Address_Fact == null) ? (object)DBNull.Value : newentity.Address_Fact);
+                createCommand.Parameters.AddWithValue("@Country_Fact", (newentity.Country_Fact == null) ? (object)DBNull.Value : newentity.Country_Fact);
+                createCommand.Parameters.AddWithValue("@PostalCode_Fact", (newentity.PostalCode_Fact == null) ? (object)DBNull.Value : newentity.PostalCode_Fact);
+                createCommand.Parameters.AddWithValue("@Locality_Fact", (newentity.Locality_Fact == null) ? (object)DBNull.Value : newentity.Locality_Fact);
+                createCommand.Parameters.AddWithValue("@Region_Fact", (newentity.Region_Fact == null) ? (object)DBNull.Value : newentity.Region_Fact);
+                createCommand.Parameters.AddWithValue("@City_Fact", (newentity.City_Fact == null) ? (object)DBNull.Value : newentity.City_Fact);
+                createCommand.Parameters.AddWithValue("@Town_Fact", (newentity.Town_Fact == null) ? (object)DBNull.Value : newentity.Town_Fact);
+                createCommand.Parameters.AddWithValue("@Street_Fact", (newentity.Street_Fact == null) ? (object)DBNull.Value : newentity.Street_Fact);
+                createCommand.Parameters.AddWithValue("@House_Fact", (newentity.House_Fact == null) ? (object)DBNull.Value : newentity.House_Fact);
+                createCommand.Parameters.AddWithValue("@Building_Fact", (newentity.Building_Fact == null) ? (object)DBNull.Value : newentity.Building_Fact);
+                createCommand.Parameters.AddWithValue("@Structure_Fact", (newentity.Structure_Fact == null) ? (object)DBNull.Value : newentity.Structure_Fact);
+                createCommand.Parameters.AddWithValue("@Facility_Fact", (newentity.Facility_Fact == null) ? (object)DBNull.Value : newentity.Facility_Fact);
+                createCommand.Parameters.AddWithValue("@Ownership_Fact", (newentity.Ownership_Fact == null) ? (object)DBNull.Value : newentity.Ownership_Fact);
+                createCommand.Parameters.AddWithValue("@Flat_Fact", (newentity.Flat_Fact == null) ? (object)DBNull.Value : newentity.Flat_Fact);
+                createCommand.Parameters.AddWithValue("@Gps", (newentity.Gps == null) ? (object)DBNull.Value : newentity.Gps);
+                createCommand.Parameters.AddWithValue("@Taxometr", (newentity.Taxometr == null) ? (object)DBNull.Value : newentity.Taxometr);
+                createCommand.Parameters.AddWithValue("@TODate", (newentity.TODate == null) ? (object)DBNull.Value : newentity.TODate);
+                createCommand.Parameters.AddWithValue("@STSNumber", (newentity.STSNumber == null) ? (object)DBNull.Value : newentity.STSNumber);
+                createCommand.Parameters.AddWithValue("@STSDate", (newentity.STSDate == null) ? (object)DBNull.Value : newentity.STSDate);
+                createCommand.Parameters.AddWithValue("@OwnType", (newentity.OwnType == null) ? (object)DBNull.Value : newentity.OwnType);
+                createCommand.Parameters.AddWithValue("@OwnNumber", (newentity.OwnNumber == null) ? (object)DBNull.Value : newentity.OwnNumber);
+                createCommand.Parameters.AddWithValue("@OwnDate", (newentity.OwnDate == null) ? (object)DBNull.Value : newentity.OwnDate);
+                createCommand.Parameters.AddWithValue("@MO", (newentity.MO == null) ? (object)DBNull.Value : newentity.MO);
+                createCommand.Parameters.AddWithValue("@GUID_MO", (newentity.GUID_MO == null) ? (object)DBNull.Value : newentity.GUID_MO);
+                createCommand.Parameters.AddWithValue("@DATE_MO", (newentity.DATE_MO == null) ? (object)DBNull.Value : newentity.DATE_MO);
 
 
                 SqlDataReader thisReader = createCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -364,6 +461,39 @@ namespace TM.SP.BCSModels.Taxi
                     createdEntity.Guid_OD = (thisReader["Guid_OD"] == DBNull.Value) ? null : thisReader["Guid_OD"].ToString();
                     createdEntity.Date_OD = thisReader["Date_OD"] as System.Nullable<System.DateTime>;
                     createdEntity.FromPortal = thisReader["FromPortal"] as System.Nullable<System.Boolean>;
+                    createdEntity.FirmName = (thisReader["FirmName"] == DBNull.Value) ? null : thisReader["FirmName"].ToString();
+                    createdEntity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
+                    createdEntity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
+                    createdEntity.OgrnName = (thisReader["OgrnName"] == DBNull.Value) ? null : thisReader["OgrnName"].ToString();
+                    createdEntity.GRAddress = (thisReader["GRAddress"] == DBNull.Value) ? null : thisReader["GRAddress"].ToString();
+                    createdEntity.InnDate = thisReader["InnDate"] as System.Nullable<System.DateTime>;
+                    createdEntity.InnName = (thisReader["InnName"] == DBNull.Value) ? null : thisReader["InnName"].ToString();
+                    createdEntity.InnNum = (thisReader["InnNum"] == DBNull.Value) ? null : thisReader["InnNum"].ToString();
+                    createdEntity.Address_Fact = (thisReader["Address_Fact"] == DBNull.Value) ? null : thisReader["Address_Fact"].ToString();
+                    createdEntity.Country_Fact = (thisReader["Country_Fact"] == DBNull.Value) ? null : thisReader["Country_Fact"].ToString();
+                    createdEntity.PostalCode_Fact = (thisReader["PostalCode_Fact"] == DBNull.Value) ? null : thisReader["PostalCode_Fact"].ToString();
+                    createdEntity.Locality_Fact = (thisReader["Locality_Fact"] == DBNull.Value) ? null : thisReader["Locality_Fact"].ToString();
+                    createdEntity.Region_Fact = (thisReader["Region_Fact"] == DBNull.Value) ? null : thisReader["Region_Fact"].ToString();
+                    createdEntity.City_Fact = (thisReader["City_Fact"] == DBNull.Value) ? null : thisReader["City_Fact"].ToString();
+                    createdEntity.Town_Fact = (thisReader["Town_Fact"] == DBNull.Value) ? null : thisReader["Town_Fact"].ToString();
+                    createdEntity.Street_Fact = (thisReader["Street_Fact"] == DBNull.Value) ? null : thisReader["Street_Fact"].ToString();
+                    createdEntity.House_Fact = (thisReader["House_Fact"] == DBNull.Value) ? null : thisReader["House_Fact"].ToString();
+                    createdEntity.Building_Fact = (thisReader["Building_Fact"] == DBNull.Value) ? null : thisReader["Building_Fact"].ToString();
+                    createdEntity.Structure_Fact = (thisReader["Structure_Fact"] == DBNull.Value) ? null : thisReader["Structure_Fact"].ToString();
+                    createdEntity.Facility_Fact = (thisReader["Facility_Fact"] == DBNull.Value) ? null : thisReader["Facility_Fact"].ToString();
+                    createdEntity.Ownership_Fact = (thisReader["Ownership_Fact"] == DBNull.Value) ? null : thisReader["Ownership_Fact"].ToString();
+                    createdEntity.Flat_Fact = (thisReader["Flat_Fact"] == DBNull.Value) ? null : thisReader["Flat_Fact"].ToString();
+                    createdEntity.Gps = thisReader["Gps"] as System.Nullable<System.Boolean>;
+                    createdEntity.Taxometr = thisReader["Taxometr"] as System.Nullable<System.Boolean>;
+                    createdEntity.TODate = thisReader["TODate"] as System.Nullable<System.DateTime>;
+                    createdEntity.STSNumber = (thisReader["STSNumber"] == DBNull.Value) ? null : thisReader["STSNumber"].ToString();
+                    createdEntity.STSDate = thisReader["STSDate"] as System.Nullable<System.DateTime>;
+                    createdEntity.OwnType = thisReader["OwnType"] as System.Nullable<System.Int32>;
+                    createdEntity.OwnNumber = (thisReader["OwnNumber"] == DBNull.Value) ? null : thisReader["OwnNumber"].ToString();
+                    createdEntity.OwnDate = thisReader["OwnDate"] as System.Nullable<System.DateTime>;
+                    createdEntity.MO = thisReader["MO"] as System.Nullable<System.Boolean>;
+                    createdEntity.GUID_MO = (thisReader["GUID_MO"] == DBNull.Value) ? null : thisReader["GUID_MO"].ToString();
+                    createdEntity.DATE_MO = thisReader["DATE_MO"] as System.Nullable<System.DateTime>;
                 }
                 else
                 {
@@ -376,7 +506,6 @@ namespace TM.SP.BCSModels.Taxi
                 thisConn.Dispose();
             }
         }
-
         public void DeleteLicense(System.Int32 Id)
         {
             SqlConnection thisConn = null;
@@ -397,8 +526,6 @@ namespace TM.SP.BCSModels.Taxi
             }
 
         }
-
-
         public void UpdateLicense(License updateLicense)
         {
             SqlConnection thisConn = null;
@@ -409,7 +536,7 @@ namespace TM.SP.BCSModels.Taxi
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[License] SET [RegNumber] = @RegNumber , [BlankSeries] = @BlankSeries , [BlankNo] = @BlankNo , [OrgName] = @OrgName , [Ogrn] = @Ogrn , [Inn] = @Inn , [Parent] = @Parent , [RootParent] = @RootParent , [Status] = @Status , [Document] = @Document , [Signature] = @Signature , [TaxiId] = @TaxiId , [Lfb] = @Lfb , [JuridicalAddress] = @JuridicalAddress , [PhoneNumber] = @PhoneNumber , [AddContactData] = @AddContactData , [AccountAbbr] = @AccountAbbr , [TaxiBrand] = @TaxiBrand , [TaxiModel] = @TaxiModel , [TaxiStateNumber] = @TaxiStateNumber , [TaxiYear] = @TaxiYear , [OutputDate] = @OutputDate , [CreationDate] = @CreationDate , [TillDate] = @TillDate , [TillSuspensionDate] = @TillSuspensionDate , [CancellationReason] = @CancellationReason , [SuspensionReason] = @SuspensionReason , [ChangeReason] = @ChangeReason , [InvalidReason] = @InvalidReason , [ShortName] = @ShortName , [LastName] = @LastName , [FirstName] = @FirstName , [SecondName] = @SecondName , [OgrnDate] = @OgrnDate , [Country] = @Country , [PostalCode] = @PostalCode , [Locality] = @Locality , [Region] = @Region , [City] = @City , [Town] = @Town , [Street] = @Street , [House] = @House , [Building] = @Building , [Structure] = @Structure , [Facility] = @Facility , [Ownership] = @Ownership , [Flat] = @Flat , [Fax] = @Fax , [EMail] = @EMail , [TaxiColor] = @TaxiColor , [TaxiNumberColor] = @TaxiNumberColor , [TaxiVin] = @TaxiVin , [ChangeDate] = @ChangeDate , [Guid_OD] = @Guid_OD , [Date_OD] = @Date_OD , [FromPortal] = @FromPortal WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[License] SET [RegNumber] = @RegNumber , [BlankSeries] = @BlankSeries , [BlankNo] = @BlankNo , [OrgName] = @OrgName , [Ogrn] = @Ogrn , [Inn] = @Inn , [Parent] = @Parent , [RootParent] = @RootParent , [Status] = @Status , [Document] = @Document , [Signature] = @Signature , [TaxiId] = @TaxiId , [Lfb] = @Lfb , [JuridicalAddress] = @JuridicalAddress , [PhoneNumber] = @PhoneNumber , [AddContactData] = @AddContactData , [AccountAbbr] = @AccountAbbr , [TaxiBrand] = @TaxiBrand , [TaxiModel] = @TaxiModel , [TaxiStateNumber] = @TaxiStateNumber , [TaxiYear] = @TaxiYear , [OutputDate] = @OutputDate , [CreationDate] = @CreationDate , [TillDate] = @TillDate , [TillSuspensionDate] = @TillSuspensionDate , [CancellationReason] = @CancellationReason , [SuspensionReason] = @SuspensionReason , [ChangeReason] = @ChangeReason , [InvalidReason] = @InvalidReason , [ShortName] = @ShortName , [LastName] = @LastName , [FirstName] = @FirstName , [SecondName] = @SecondName , [OgrnDate] = @OgrnDate , [Country] = @Country , [PostalCode] = @PostalCode , [Locality] = @Locality , [Region] = @Region , [City] = @City , [Town] = @Town , [Street] = @Street , [House] = @House , [Building] = @Building , [Structure] = @Structure , [Facility] = @Facility , [Ownership] = @Ownership , [Flat] = @Flat , [Fax] = @Fax , [EMail] = @EMail , [TaxiColor] = @TaxiColor , [TaxiNumberColor] = @TaxiNumberColor , [TaxiVin] = @TaxiVin , [ChangeDate] = @ChangeDate , [Guid_OD] = @Guid_OD , [Date_OD] = @Date_OD , [FromPortal] = @FromPortal , [FirmName] = @FirmName , [Brand] = @Brand , [OgrnNum] = @OgrnNum , [OgrnName] = @OgrnName , [GRAddress] = @GRAddress , [InnDate] = @InnDate , [InnName] = @InnName , [InnNum] = @InnNum , [Address_Fact] = @Address_Fact , [Country_Fact] = @Country_Fact , [PostalCode_Fact] = @PostalCode_Fact , [Locality_Fact] = @Locality_Fact , [Region_Fact] = @Region_Fact , [City_Fact] = @City_Fact , [Town_Fact] = @Town_Fact , [Street_Fact] = @Street_Fact , [House_Fact] = @House_Fact , [Building_Fact] = @Building_Fact , [Structure_Fact] = @Structure_Fact , [Facility_Fact] = @Facility_Fact , [Ownership_Fact] = @Ownership_Fact , [Flat_Fact] = @Flat_Fact , [Gps] = @Gps , [Taxometr] = @Taxometr , [TODate] = @TODate , [STSNumber] = @STSNumber , [STSDate] = @STSDate , [OwnType] = @OwnType , [OwnNumber] = @OwnNumber , [OwnDate] = @OwnDate , [MO] = @MO , [GUID_MO] = @GUID_MO , [DATE_MO] = @DATE_MO WHERE [Id] = @Id";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@RegNumber", (updateLicense.RegNumber == null) ? (object)DBNull.Value : updateLicense.RegNumber);
@@ -468,6 +595,39 @@ namespace TM.SP.BCSModels.Taxi
                 updateCommand.Parameters.AddWithValue("@Guid_OD", (updateLicense.Guid_OD == null) ? (object)DBNull.Value : updateLicense.Guid_OD);
                 updateCommand.Parameters.AddWithValue("@Date_OD", (updateLicense.Date_OD == null) ? (object)DBNull.Value : updateLicense.Date_OD);
                 updateCommand.Parameters.AddWithValue("@FromPortal", (updateLicense.FromPortal == null) ? (object)DBNull.Value : updateLicense.FromPortal);
+                updateCommand.Parameters.AddWithValue("@FirmName", (updateLicense.FirmName == null) ? (object)DBNull.Value : updateLicense.FirmName);
+                updateCommand.Parameters.AddWithValue("@Brand", (updateLicense.Brand == null) ? (object)DBNull.Value : updateLicense.Brand);
+                updateCommand.Parameters.AddWithValue("@OgrnNum", (updateLicense.OgrnNum == null) ? (object)DBNull.Value : updateLicense.OgrnNum);
+                updateCommand.Parameters.AddWithValue("@OgrnName", (updateLicense.OgrnName == null) ? (object)DBNull.Value : updateLicense.OgrnName);
+                updateCommand.Parameters.AddWithValue("@GRAddress", (updateLicense.GRAddress == null) ? (object)DBNull.Value : updateLicense.GRAddress);
+                updateCommand.Parameters.AddWithValue("@InnDate", (updateLicense.InnDate == null) ? (object)DBNull.Value : updateLicense.InnDate);
+                updateCommand.Parameters.AddWithValue("@InnName", (updateLicense.InnName == null) ? (object)DBNull.Value : updateLicense.InnName);
+                updateCommand.Parameters.AddWithValue("@InnNum", (updateLicense.InnNum == null) ? (object)DBNull.Value : updateLicense.InnNum);
+                updateCommand.Parameters.AddWithValue("@Address_Fact", (updateLicense.Address_Fact == null) ? (object)DBNull.Value : updateLicense.Address_Fact);
+                updateCommand.Parameters.AddWithValue("@Country_Fact", (updateLicense.Country_Fact == null) ? (object)DBNull.Value : updateLicense.Country_Fact);
+                updateCommand.Parameters.AddWithValue("@PostalCode_Fact", (updateLicense.PostalCode_Fact == null) ? (object)DBNull.Value : updateLicense.PostalCode_Fact);
+                updateCommand.Parameters.AddWithValue("@Locality_Fact", (updateLicense.Locality_Fact == null) ? (object)DBNull.Value : updateLicense.Locality_Fact);
+                updateCommand.Parameters.AddWithValue("@Region_Fact", (updateLicense.Region_Fact == null) ? (object)DBNull.Value : updateLicense.Region_Fact);
+                updateCommand.Parameters.AddWithValue("@City_Fact", (updateLicense.City_Fact == null) ? (object)DBNull.Value : updateLicense.City_Fact);
+                updateCommand.Parameters.AddWithValue("@Town_Fact", (updateLicense.Town_Fact == null) ? (object)DBNull.Value : updateLicense.Town_Fact);
+                updateCommand.Parameters.AddWithValue("@Street_Fact", (updateLicense.Street_Fact == null) ? (object)DBNull.Value : updateLicense.Street_Fact);
+                updateCommand.Parameters.AddWithValue("@House_Fact", (updateLicense.House_Fact == null) ? (object)DBNull.Value : updateLicense.House_Fact);
+                updateCommand.Parameters.AddWithValue("@Building_Fact", (updateLicense.Building_Fact == null) ? (object)DBNull.Value : updateLicense.Building_Fact);
+                updateCommand.Parameters.AddWithValue("@Structure_Fact", (updateLicense.Structure_Fact == null) ? (object)DBNull.Value : updateLicense.Structure_Fact);
+                updateCommand.Parameters.AddWithValue("@Facility_Fact", (updateLicense.Facility_Fact == null) ? (object)DBNull.Value : updateLicense.Facility_Fact);
+                updateCommand.Parameters.AddWithValue("@Ownership_Fact", (updateLicense.Ownership_Fact == null) ? (object)DBNull.Value : updateLicense.Ownership_Fact);
+                updateCommand.Parameters.AddWithValue("@Flat_Fact", (updateLicense.Flat_Fact == null) ? (object)DBNull.Value : updateLicense.Flat_Fact);
+                updateCommand.Parameters.AddWithValue("@Gps", (updateLicense.Gps == null) ? (object)DBNull.Value : updateLicense.Gps);
+                updateCommand.Parameters.AddWithValue("@Taxometr", (updateLicense.Taxometr == null) ? (object)DBNull.Value : updateLicense.Taxometr);
+                updateCommand.Parameters.AddWithValue("@TODate", (updateLicense.TODate == null) ? (object)DBNull.Value : updateLicense.TODate);
+                updateCommand.Parameters.AddWithValue("@STSNumber", (updateLicense.STSNumber == null) ? (object)DBNull.Value : updateLicense.STSNumber);
+                updateCommand.Parameters.AddWithValue("@STSDate", (updateLicense.STSDate == null) ? (object)DBNull.Value : updateLicense.STSDate);
+                updateCommand.Parameters.AddWithValue("@OwnType", (updateLicense.OwnType == null) ? (object)DBNull.Value : updateLicense.OwnType);
+                updateCommand.Parameters.AddWithValue("@OwnNumber", (updateLicense.OwnNumber == null) ? (object)DBNull.Value : updateLicense.OwnNumber);
+                updateCommand.Parameters.AddWithValue("@OwnDate", (updateLicense.OwnDate == null) ? (object)DBNull.Value : updateLicense.OwnDate);
+                updateCommand.Parameters.AddWithValue("@MO", (updateLicense.MO == null) ? (object)DBNull.Value : updateLicense.MO);
+                updateCommand.Parameters.AddWithValue("@GUID_MO", (updateLicense.GUID_MO == null) ? (object)DBNull.Value : updateLicense.GUID_MO);
+                updateCommand.Parameters.AddWithValue("@DATE_MO", (updateLicense.DATE_MO == null) ? (object)DBNull.Value : updateLicense.DATE_MO);
 
                 updateCommand.Parameters.AddWithValue("@Id", updateLicense.Id);
 
@@ -487,7 +647,7 @@ namespace TM.SP.BCSModels.Taxi
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] FROM [dbo].[License] WHERE [Parent] = @Parent";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] , [FirmName] , [Brand] , [OgrnNum] , [OgrnName] , [GRAddress] , [InnDate] , [InnName] , [InnNum] , [Address_Fact] , [Country_Fact] , [PostalCode_Fact] , [Locality_Fact] , [Region_Fact] , [City_Fact] , [Town_Fact] , [Street_Fact] , [House_Fact] , [Building_Fact] , [Structure_Fact] , [Facility_Fact] , [Ownership_Fact] , [Flat_Fact] , [Gps] , [Taxometr] , [TODate] , [STSNumber] , [STSDate] , [OwnType] , [OwnNumber] , [OwnDate] , [MO] , [GUID_MO] , [DATE_MO] FROM [dbo].[License] WHERE [Parent] = @Parent";
 
             selectCommand.Parameters.AddWithValue("@Parent", Parent);
 
@@ -554,13 +714,45 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Guid_OD = (thisReader["Guid_OD"] == DBNull.Value) ? null : thisReader["Guid_OD"].ToString();
                 entity.Date_OD = thisReader["Date_OD"] as System.Nullable<System.DateTime>;
                 entity.FromPortal = thisReader["FromPortal"] as System.Nullable<System.Boolean>;
+                entity.FirmName = (thisReader["FirmName"] == DBNull.Value) ? null : thisReader["FirmName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
+                entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
+                entity.OgrnName = (thisReader["OgrnName"] == DBNull.Value) ? null : thisReader["OgrnName"].ToString();
+                entity.GRAddress = (thisReader["GRAddress"] == DBNull.Value) ? null : thisReader["GRAddress"].ToString();
+                entity.InnDate = thisReader["InnDate"] as System.Nullable<System.DateTime>;
+                entity.InnName = (thisReader["InnName"] == DBNull.Value) ? null : thisReader["InnName"].ToString();
+                entity.InnNum = (thisReader["InnNum"] == DBNull.Value) ? null : thisReader["InnNum"].ToString();
+                entity.Address_Fact = (thisReader["Address_Fact"] == DBNull.Value) ? null : thisReader["Address_Fact"].ToString();
+                entity.Country_Fact = (thisReader["Country_Fact"] == DBNull.Value) ? null : thisReader["Country_Fact"].ToString();
+                entity.PostalCode_Fact = (thisReader["PostalCode_Fact"] == DBNull.Value) ? null : thisReader["PostalCode_Fact"].ToString();
+                entity.Locality_Fact = (thisReader["Locality_Fact"] == DBNull.Value) ? null : thisReader["Locality_Fact"].ToString();
+                entity.Region_Fact = (thisReader["Region_Fact"] == DBNull.Value) ? null : thisReader["Region_Fact"].ToString();
+                entity.City_Fact = (thisReader["City_Fact"] == DBNull.Value) ? null : thisReader["City_Fact"].ToString();
+                entity.Town_Fact = (thisReader["Town_Fact"] == DBNull.Value) ? null : thisReader["Town_Fact"].ToString();
+                entity.Street_Fact = (thisReader["Street_Fact"] == DBNull.Value) ? null : thisReader["Street_Fact"].ToString();
+                entity.House_Fact = (thisReader["House_Fact"] == DBNull.Value) ? null : thisReader["House_Fact"].ToString();
+                entity.Building_Fact = (thisReader["Building_Fact"] == DBNull.Value) ? null : thisReader["Building_Fact"].ToString();
+                entity.Structure_Fact = (thisReader["Structure_Fact"] == DBNull.Value) ? null : thisReader["Structure_Fact"].ToString();
+                entity.Facility_Fact = (thisReader["Facility_Fact"] == DBNull.Value) ? null : thisReader["Facility_Fact"].ToString();
+                entity.Ownership_Fact = (thisReader["Ownership_Fact"] == DBNull.Value) ? null : thisReader["Ownership_Fact"].ToString();
+                entity.Flat_Fact = (thisReader["Flat_Fact"] == DBNull.Value) ? null : thisReader["Flat_Fact"].ToString();
+                entity.Gps = thisReader["Gps"] as System.Nullable<System.Boolean>;
+                entity.Taxometr = thisReader["Taxometr"] as System.Nullable<System.Boolean>;
+                entity.TODate = thisReader["TODate"] as System.Nullable<System.DateTime>;
+                entity.STSNumber = (thisReader["STSNumber"] == DBNull.Value) ? null : thisReader["STSNumber"].ToString();
+                entity.STSDate = thisReader["STSDate"] as System.Nullable<System.DateTime>;
+                entity.OwnType = thisReader["OwnType"] as System.Nullable<System.Int32>;
+                entity.OwnNumber = (thisReader["OwnNumber"] == DBNull.Value) ? null : thisReader["OwnNumber"].ToString();
+                entity.OwnDate = thisReader["OwnDate"] as System.Nullable<System.DateTime>;
+                entity.MO = thisReader["MO"] as System.Nullable<System.Boolean>;
+                entity.GUID_MO = (thisReader["GUID_MO"] == DBNull.Value) ? null : thisReader["GUID_MO"].ToString();
+                entity.DATE_MO = thisReader["DATE_MO"] as System.Nullable<System.DateTime>;
 
                 allEntities.Add(entity);
             }
             thisReader.Close();
             return allEntities;
         }
-
         public IList<License> IdOfLicenseToRootParentOfLicense(System.Nullable<System.Int32> RootParent)
         {
             SqlConnection thisConn = null;
@@ -570,7 +762,7 @@ namespace TM.SP.BCSModels.Taxi
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] FROM [dbo].[License] WHERE [RootParent] = @RootParent";
+            selectCommand.CommandText = "SELECT [Id] , [Title] , [RegNumber] , [BlankSeries] , [BlankNo] , [OrgName] , [Ogrn] , [Inn] , [Parent] , [RootParent] , [Status] , [Document] , [Signature] , [TaxiId] , [Lfb] , [JuridicalAddress] , [PhoneNumber] , [AddContactData] , [AccountAbbr] , [TaxiBrand] , [TaxiModel] , [TaxiStateNumber] , [TaxiYear] , [OutputDate] , [CreationDate] , [TillDate] , [TillSuspensionDate] , [CancellationReason] , [SuspensionReason] , [ChangeReason] , [InvalidReason] , [ShortName] , [LastName] , [FirstName] , [SecondName] , [OgrnDate] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [Fax] , [EMail] , [TaxiColor] , [TaxiNumberColor] , [TaxiVin] , [ChangeDate] , [Guid_OD] , [Date_OD] , [FromPortal] , [FirmName] , [Brand] , [OgrnNum] , [OgrnName] , [GRAddress] , [InnDate] , [InnName] , [InnNum] , [Address_Fact] , [Country_Fact] , [PostalCode_Fact] , [Locality_Fact] , [Region_Fact] , [City_Fact] , [Town_Fact] , [Street_Fact] , [House_Fact] , [Building_Fact] , [Structure_Fact] , [Facility_Fact] , [Ownership_Fact] , [Flat_Fact] , [Gps] , [Taxometr] , [TODate] , [STSNumber] , [STSDate] , [OwnType] , [OwnNumber] , [OwnDate] , [MO] , [GUID_MO] , [DATE_MO] FROM [dbo].[License] WHERE [RootParent] = @RootParent";
 
             selectCommand.Parameters.AddWithValue("@RootParent", RootParent);
 
@@ -637,6 +829,39 @@ namespace TM.SP.BCSModels.Taxi
                 entity.Guid_OD = (thisReader["Guid_OD"] == DBNull.Value) ? null : thisReader["Guid_OD"].ToString();
                 entity.Date_OD = thisReader["Date_OD"] as System.Nullable<System.DateTime>;
                 entity.FromPortal = thisReader["FromPortal"] as System.Nullable<System.Boolean>;
+                entity.FirmName = (thisReader["FirmName"] == DBNull.Value) ? null : thisReader["FirmName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
+                entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
+                entity.OgrnName = (thisReader["OgrnName"] == DBNull.Value) ? null : thisReader["OgrnName"].ToString();
+                entity.GRAddress = (thisReader["GRAddress"] == DBNull.Value) ? null : thisReader["GRAddress"].ToString();
+                entity.InnDate = thisReader["InnDate"] as System.Nullable<System.DateTime>;
+                entity.InnName = (thisReader["InnName"] == DBNull.Value) ? null : thisReader["InnName"].ToString();
+                entity.InnNum = (thisReader["InnNum"] == DBNull.Value) ? null : thisReader["InnNum"].ToString();
+                entity.Address_Fact = (thisReader["Address_Fact"] == DBNull.Value) ? null : thisReader["Address_Fact"].ToString();
+                entity.Country_Fact = (thisReader["Country_Fact"] == DBNull.Value) ? null : thisReader["Country_Fact"].ToString();
+                entity.PostalCode_Fact = (thisReader["PostalCode_Fact"] == DBNull.Value) ? null : thisReader["PostalCode_Fact"].ToString();
+                entity.Locality_Fact = (thisReader["Locality_Fact"] == DBNull.Value) ? null : thisReader["Locality_Fact"].ToString();
+                entity.Region_Fact = (thisReader["Region_Fact"] == DBNull.Value) ? null : thisReader["Region_Fact"].ToString();
+                entity.City_Fact = (thisReader["City_Fact"] == DBNull.Value) ? null : thisReader["City_Fact"].ToString();
+                entity.Town_Fact = (thisReader["Town_Fact"] == DBNull.Value) ? null : thisReader["Town_Fact"].ToString();
+                entity.Street_Fact = (thisReader["Street_Fact"] == DBNull.Value) ? null : thisReader["Street_Fact"].ToString();
+                entity.House_Fact = (thisReader["House_Fact"] == DBNull.Value) ? null : thisReader["House_Fact"].ToString();
+                entity.Building_Fact = (thisReader["Building_Fact"] == DBNull.Value) ? null : thisReader["Building_Fact"].ToString();
+                entity.Structure_Fact = (thisReader["Structure_Fact"] == DBNull.Value) ? null : thisReader["Structure_Fact"].ToString();
+                entity.Facility_Fact = (thisReader["Facility_Fact"] == DBNull.Value) ? null : thisReader["Facility_Fact"].ToString();
+                entity.Ownership_Fact = (thisReader["Ownership_Fact"] == DBNull.Value) ? null : thisReader["Ownership_Fact"].ToString();
+                entity.Flat_Fact = (thisReader["Flat_Fact"] == DBNull.Value) ? null : thisReader["Flat_Fact"].ToString();
+                entity.Gps = thisReader["Gps"] as System.Nullable<System.Boolean>;
+                entity.Taxometr = thisReader["Taxometr"] as System.Nullable<System.Boolean>;
+                entity.TODate = thisReader["TODate"] as System.Nullable<System.DateTime>;
+                entity.STSNumber = (thisReader["STSNumber"] == DBNull.Value) ? null : thisReader["STSNumber"].ToString();
+                entity.STSDate = thisReader["STSDate"] as System.Nullable<System.DateTime>;
+                entity.OwnType = thisReader["OwnType"] as System.Nullable<System.Int32>;
+                entity.OwnNumber = (thisReader["OwnNumber"] == DBNull.Value) ? null : thisReader["OwnNumber"].ToString();
+                entity.OwnDate = thisReader["OwnDate"] as System.Nullable<System.DateTime>;
+                entity.MO = thisReader["MO"] as System.Nullable<System.Boolean>;
+                entity.GUID_MO = (thisReader["GUID_MO"] == DBNull.Value) ? null : thisReader["GUID_MO"].ToString();
+                entity.DATE_MO = thisReader["DATE_MO"] as System.Nullable<System.DateTime>;
 
                 allEntities.Add(entity);
             }

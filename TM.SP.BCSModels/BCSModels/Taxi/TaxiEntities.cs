@@ -93,6 +93,39 @@ namespace TM.SP.BCSModels.Taxi
         public DateTime? Date_OD { get; set; }
         [XmlIgnore]
         public bool? FromPortal { get; set; }
+        public System.String FirmName { get; set; }
+        public System.String Brand { get; set; }
+        public System.String OgrnNum { get; set; }
+        public System.String OgrnName { get; set; }
+        public System.String GRAddress { get; set; }
+        public DateTime? InnDate { get; set; }
+        public System.String InnName { get; set; }
+        public System.String InnNum { get; set; }
+        public System.String Address_Fact { get; set; }
+        public System.String Country_Fact { get; set; }
+        public System.String PostalCode_Fact { get; set; }
+        public System.String Locality_Fact { get; set; }
+        public System.String Region_Fact { get; set; }
+        public System.String City_Fact { get; set; }
+        public System.String Town_Fact { get; set; }
+        public System.String Street_Fact { get; set; }
+        public System.String House_Fact { get; set; }
+        public System.String Building_Fact { get; set; }
+        public System.String Structure_Fact { get; set; }
+        public System.String Facility_Fact { get; set; }
+        public System.String Ownership_Fact { get; set; }
+        public System.String Flat_Fact { get; set; }
+        public bool? Gps { get; set; }
+        public bool? Taxometr { get; set; }
+        public DateTime? TODate { get; set; }
+        public System.String STSNumber { get; set; }
+        public DateTime? STSDate { get; set; }
+        public int? OwnType { get; set; }
+        public System.String OwnNumber { get; set; }
+        public DateTime? OwnDate { get; set; }
+        public bool? MO { get; set; }
+        public System.String GUID_MO { get; set; }
+        public DateTime? DATE_MO { get; set; }
         #endregion
 
         #region [methods]
@@ -157,7 +190,40 @@ namespace TM.SP.BCSModels.Taxi
                 ChangeDate         = DateTime.Now,
                 Guid_OD            = Guid_OD,
                 Date_OD            = null,
-                FromPortal         = FromPortal
+                FromPortal         = FromPortal,
+                FirmName           = FirmName,
+                Brand              = Brand,
+                OgrnNum            = OgrnNum,
+                OgrnName           = OgrnName,
+                GRAddress          = GRAddress,
+                InnDate            = InnDate,
+                InnName            = InnName,
+                InnNum             = InnNum,
+                Address_Fact       = Address_Fact,
+                Country_Fact       = Country_Fact,
+                PostalCode_Fact    = PostalCode_Fact,
+                Locality_Fact      = Locality_Fact,
+                Region_Fact        = Region_Fact,
+                City_Fact          = City_Fact,
+                Town_Fact          = Town_Fact,
+                Street_Fact        = Street_Fact,
+                House_Fact         = House_Fact,
+                Building_Fact      = Building_Fact,
+                Structure_Fact     = Structure_Fact,
+                Facility_Fact      = Facility_Fact,
+                Ownership_Fact     = Ownership_Fact,
+                Flat_Fact          = Flat_Fact,
+                Gps                = Gps,
+                Taxometr           = Taxometr,
+                TODate             = TODate,
+                STSNumber          = STSNumber,
+                STSDate            = STSDate,
+                OwnType            = OwnType,
+                OwnNumber          = OwnNumber,
+                OwnDate            = OwnDate,
+                MO                 = MO,
+                GUID_MO            = GUID_MO,
+                DATE_MO            = null
             };
         }
 
