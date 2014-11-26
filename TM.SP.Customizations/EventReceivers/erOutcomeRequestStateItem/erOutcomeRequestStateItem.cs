@@ -36,16 +36,7 @@ namespace TM.SP.Customizations
                         var context = SPServiceContext.GetContext(site);
                         using (new SPServiceContextScope(context))
                         {
-                            web.AllowUnsafeUpdates = true;
-                            try
-                            {
-                                DoItemUpdating(properties, web);
-                            }
-                            finally
-                            {
-                                web.AllowUnsafeUpdates = false;
-                            }
-                            
+                            DoItemUpdating(properties, web);
                         }
                     }
                 });
