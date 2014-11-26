@@ -39,14 +39,15 @@ namespace TM.SP.DataModel
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmPrepareTargetDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
-                    .AddField(Fields.TmRefuseDate)
-                    .AddField(Fields.TmOutputDate,
+                    .AddField(Fields.TmRefuseDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
+                    .AddField(Fields.TmOutputDate)
                     .AddField(Fields.TmErrorDescription)
                     .AddField(Fields.TmTaxiBrand)
                     .AddField(Fields.TmTaxiModel)
                     .AddField(Fields.TmTaxiYear)
-                    .AddField(Fields.TmTaxiLastToDate)
+                    .AddField(Fields.TmTaxiLastToDate,
+                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmTaxiStateNumber)
                     .AddField(Fields.TmTaxiLeasingContractDetails)
                     .AddField(Fields.TmTaxiBodyYellow)
@@ -60,7 +61,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmTaxiBlankNo)
                     .AddField(Fields.TmTaxiInfoOld)
                     .AddField(Fields.TmTaxiPrevLicenseNumber)
-                    .AddField(Fields.TmTaxiPrevLicenseDate)
+                    .AddField(Fields.TmTaxiPrevLicenseDate,
+                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmTaxiStsDetails)
                     .AddField(Fields.TmTaxiOwner)
                     .AddField(Fields.TmTaxiBodyType)
@@ -71,7 +73,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmTaxiDenyComment)
                     .AddField(Fields.TmAttachType)
                     .AddField(Fields.TmAttachDocNumber)
-                    .AddField(Fields.TmAttachDocDate)
+                    .AddField(Fields.TmAttachDocDate,
+                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmAttachDocSerie)
                     .AddField(Fields.TmAttachWhoSigned)
                     .AddField(Fields.TmRenewalReason_AddressCompany)

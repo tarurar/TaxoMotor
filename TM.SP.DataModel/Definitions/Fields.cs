@@ -100,7 +100,7 @@ namespace TM.SP.DataModel
         public static FieldDefinition TmRegNumber = new FieldDefinition()
         {
             Id           = new Guid("{CD4C9A50-D719-44AA-9458-A267A0F53B69}"),
-            Title        = "Регистрационный номер",
+            Title        = "Номер МПГУ",
             InternalName = "Tm_RegNumber",
             FieldType    = BuiltInFieldTypes.Text,
             Group        = ModelConsts.ColumnsDefaultGroup
