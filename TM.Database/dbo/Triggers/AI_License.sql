@@ -1,14 +1,4 @@
-﻿USE [TM.Data]
-GO
-
-/****** Object:  Trigger [dbo].[AI_License]    Script Date: 11/23/2014 11:03:42 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TRIGGER [dbo].[AI_License] ON [dbo].[License]
+﻿CREATE TRIGGER [dbo].[AI_License] ON [dbo].[License]
 AFTER INSERT
 AS
 BEGIN
