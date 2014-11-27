@@ -821,6 +821,11 @@ namespace TM.SP.AppPages
                             taxiItem["Tm_TaxiStatus"] = "Решено положительно";
                             taxiItem.Update();
                             break;
+                        default:
+                            throw new Exception(
+                                String.Format(
+                                    "Не предусмотрено принятие ТС в данном статусе обращения. Код статуса: {0}",
+                                    rStatusCode));
                     }
                 }
             })));
