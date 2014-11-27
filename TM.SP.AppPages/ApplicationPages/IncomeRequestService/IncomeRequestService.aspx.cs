@@ -591,7 +591,7 @@ namespace TM.SP.AppPages
 
                     switch (statusCode)
                     {
-                        case "1020":
+                        case "1010":
                             retValList.Add(docBuilder.NeedPersonVisit
                                 ? docBuilder.RenderDocument(1)
                                 : docBuilder.RenderDocument(2));
@@ -774,7 +774,7 @@ namespace TM.SP.AppPages
                 {
                     switch (rStatusCode)
                     {
-                        case "1020":
+                        case "1010":
                             taxiItem["Tm_TaxiStatus"] = "В работе";
                             taxiItem.Update();
                             break;
