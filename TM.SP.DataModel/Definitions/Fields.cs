@@ -80,6 +80,33 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmFirstName = new FieldDefinition()
+        {
+            Id           = new Guid("{E759C46C-1085-485A-9EBB-8F0004B33358}"),
+            Title        = "Имя",
+            InternalName = "Tm_FirstName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLastName = new FieldDefinition()
+        {
+            Id           = new Guid("{19B9EE8A-AC35-4A59-B3B8-B0D369503643}"),
+            Title        = "Фамилия",
+            InternalName = "Tm_LastName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmSecondName = new FieldDefinition()
+        {
+            Id           = new Guid("{5FF4D0A8-15F8-4B63-B451-D8F9C04C792A}"),
+            Title        = "Отчество",
+            InternalName = "Tm_SecondName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Причина отказа]
@@ -645,6 +672,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmTaxiStsDate = new FieldDefinition()
+        {
+            Id           = new Guid("{8C418A8E-DE9D-4ADF-964D-1CCBD1E48D13}"),
+            Title        = "Дата выдачи СТС",
+            InternalName = "Tm_TaxiStsDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         public static FieldDefinition TmTaxiOwner = new FieldDefinition()
         {
             Id           = new Guid("{684231CA-C50B-4267-9938-4F82F5333B2F}"),
@@ -897,6 +933,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmOrgShortName = new FieldDefinition()
+        {
+            Id           = new Guid("{C029CC68-D4EE-406A-BD1C-7345F913D93A}"),
+            Title        = "Краткое наименование организации",
+            InternalName = "Tm_OrgShortName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         public static FieldDefinition TmOrgOgrn = new FieldDefinition()
         {
             Id           = new Guid("{30A710D1-8ADA-4397-83D0-B276E7ADF870}"),
@@ -911,6 +956,33 @@ namespace TM.SP.DataModel
             Id           = new Guid("{E6620411-C231-46C5-9BCF-2D5BCCAC92F9}"),
             Title        = "ИНН",
             InternalName = "Tm_OrgInn",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOrgInnDate = new FieldDefinition()
+        {
+            Id           = new Guid("{BDDC389B-20B0-4C6C-8EAE-F288A91A1F35}"),
+            Title        = "Дата постановки на учет",
+            InternalName = "Tm_OrgInnDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOrgInnName = new FieldDefinition()
+        {
+            Id           = new Guid("{7FB0A236-00FB-47A2-9279-F900C2274CAD}"),
+            Title        = "Кем выдан ИНН",
+            InternalName = "Tm_OrgInnName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOrgInnNum = new FieldDefinition()
+        {
+            Id           = new Guid("{F3F0E8D1-6A5C-4384-89C9-593D8BF57961}"),
+            Title        = "Серия и номер свидетельства",
+            InternalName = "Tm_OrgInnNum",
             FieldType    = BuiltInFieldTypes.Text,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
@@ -1061,6 +1133,188 @@ namespace TM.SP.DataModel
             new XAttribute("SecondaryFieldsWssStaticNames", SecondaryFieldNamesHelper.Encode(new string[] { "LicenseAllView_IsLast" })),
             new XAttribute("Version", "1")
         );
+
+        public static FieldDefinition TmTransferFirmName = new FieldDefinition()
+        {
+            Id           = new Guid("{A4948AC3-72FC-4D4A-85C8-4D89A8763882}"),
+            Title        = "Фирменное наименование перевозчика",
+            InternalName = "Tm_TransferFirmName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTransferAddress = new FieldDefinition()
+        {
+            Id           = new Guid("{FE7D8697-1674-4B39-85B0-8EBA3B1E5FA5}"),
+            Title        = "Адрес перевозчика",
+            InternalName = "Tm_TransferAddress",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTransferFax = new FieldDefinition()
+        {
+            Id           = new Guid("{04A0FDF0-2F37-4C16-8318-28E475D2DCFA}"),
+            Title        = "Факс перевозчика",
+            InternalName = "Tm_TransferFax",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTransferMail = new FieldDefinition()
+        {
+            Id           = new Guid("{4C1A4F20-6FB1-421E-9DB3-F864F028DE4F}"),
+            Title        = "Почта перевозчика",
+            InternalName = "Tm_TransferMail",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTransferBrandName = new FieldDefinition()
+        {
+            Id           = new Guid("{69338A02-C766-4B59-874A-36183B10B503}"),
+            Title        = "Брэнд перевозчика",
+            InternalName = "Tm_TransferBrandName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOgrnDate = new FieldDefinition()
+        {
+            Id           = new Guid("{6B19A0BD-D567-4BE2-AD83-6921D4459727}"),
+            Title        = "Дата ОГРН",
+            InternalName = "Tm_OgrnDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOgrnNum = new FieldDefinition()
+        {
+            Id           = new Guid("{24C19C70-82BD-4D81-BBCB-8B8EDD5D00CC}"),
+            Title        = "Серия и номер свидетельства",
+            InternalName = "Tm_OgrnNum",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmOgrnName = new FieldDefinition()
+        {
+            Id           = new Guid("{AA713515-DF5D-4F90-990B-CEC764EC58AF}"),
+            Title        = "Кем выдан ОГРН",
+            InternalName = "Tm_OgrnName",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmGrAddress = new FieldDefinition()
+        {
+            Id           = new Guid("{AFBE9294-3F48-40A4-A092-E67E8D9E27AB}"),
+            Title        = "Адрес органа регистрации",
+            InternalName = "Tm_GrAddress",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiStateNumberColor = new FieldDefinition()
+        {
+            Id           = new Guid("{A820C21C-8715-484C-8E8D-93CCB930B4A4}"),
+            Title        = "Цвет номера ТС",
+            InternalName = "Tm_TaxiStateNumberColor",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiOwnType = new FieldDefinition()
+        {
+            Id           = new Guid("{2E4D8C32-6471-478C-9A53-163AB824E641}"),
+            Title        = "Основание владения ТС",
+            InternalName = "Tm_TaxiOwnType",
+            FieldType    = BuiltInFieldTypes.Number,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiOwnNumber = new FieldDefinition()
+        {
+            Id           = new Guid("{F8BBF1C2-2E33-41CF-B6F2-422DD4BC0B52}"),
+            Title        = "Номер документа основания владения ТС",
+            InternalName = "Tm_TaxiOwnNumber",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiOwnDate = new FieldDefinition()
+        {
+            Id           = new Guid("{09672AA3-D662-424C-9048-925825F332A6}"),
+            Title        = "Дата документа основания владения ТС",
+            InternalName = "Tm_TaxiOwnDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmTaxiVin = new FieldDefinition()
+        {
+            Id           = new Guid("{05EA808D-26B4-4FB6-ADE7-A266F091993E}"),
+            Title        = "VIN-код ТС",
+            InternalName = "Tm_TaxiVin",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseGuidOd = new FieldDefinition()
+        {
+            Id           = new Guid("{396A4010-18C8-4C16-A78D-AC0261B3A8DD}"),
+            Title        = "Идентификатор синхронизации ОДОПМ",
+            InternalName = "Tm_LicenseGuidOd",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseDateOd = new FieldDefinition()
+        {
+            Id           = new Guid("{07185448-0D05-4A4E-8634-2002839D7E4A}"),
+            Title        = "Дата синхронизации ОДОПМ",
+            InternalName = "Tm_LicenseDateOd",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseIsMo = new FieldDefinition()
+        {
+            Id           = new Guid("{49304A4A-4855-4656-9D92-76AC42376E0B}"),
+            Title        = "Признак разрешения МО",
+            InternalName = "Tm_LicenseIsMo",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseGuidMo = new FieldDefinition()
+        {
+            Id           = new Guid("{5CF962BB-237B-468F-A01D-A3B4EF6FAC0F}"),
+            Title        = "Идентификатор синхронизации МО",
+            InternalName = "Tm_LicenseGuidMo",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseDateMo = new FieldDefinition()
+        {
+            Id           = new Guid("{31F0BA12-CA40-41E4-B26F-4B279BCF0A28}"),
+            Title        = "Дата синхронизации МО",
+            InternalName = "Tm_LicenseDateMo",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseIsFromPortal = new FieldDefinition()
+        {
+            Id           = new Guid("{EFDB0F8A-77F0-403F-8B24-62666C82A6D3}"),
+            Title        = "Подано с портала МПГУ",
+            InternalName = "Tm_LicenseIsFromPortal",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+
 
         #endregion
     }
