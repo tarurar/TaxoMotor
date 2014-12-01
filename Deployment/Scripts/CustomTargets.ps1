@@ -163,6 +163,8 @@
 		AddConfigurationListEntry -vars $vars -confKey "MessageQueueServiceUrl" -confValue $vars['MessageQueueServiceUrl']
 		AddConfigurationListEntry -vars $vars -confKey "BR2ServiceGuid" -confValue $vars['BR2ServiceGuid']
 		AddConfigurationListEntry -vars $vars -confKey "AsGufServiceGuid" -confValue $vars['AsGufServiceGuid']
+		AddConfigurationListEntry -vars $vars -confKey "SignerName" -confValue $vars['SignerName']
+		AddConfigurationListEntry -vars $vars -confKey "SignerJob" -confValue $vars['SignerJob']
 
      }
 #endregion

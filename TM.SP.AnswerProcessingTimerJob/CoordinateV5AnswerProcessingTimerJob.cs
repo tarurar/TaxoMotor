@@ -145,7 +145,6 @@ namespace TM.SP.AnswerProcessingTimerJob
             {
                 x => (bool)x["Tm_AnswerReceived"] == false,
                 x => (DateTime)x["Created"] > DateTime.Now.AddDays(-15)
-
             };
 
             SPListItemCollection items = list.GetItems(new SPQuery

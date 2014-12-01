@@ -36,6 +36,8 @@
       <Variable Name="MessageQueueServiceUrl">http://77.95.132.133:8082/DataService.svc</Variable>
       <Variable Name="BR2ServiceGuid">df8ff4be-d4ae-e011-91ec-000c29d12628</Variable>
       <Variable Name="AsGufServiceGuid">fee650d8-5048-e311-ba9a-005056802550</Variable>
+      <Variable Name="SignerName">ФИО подписанта</Variable>
+      <Variable Name="SignerJob">Должность подписанта</Variable>
       <!-- End Config Values -->
     </Variables>
     <PreRequisiteSolutions ID="Default" />
