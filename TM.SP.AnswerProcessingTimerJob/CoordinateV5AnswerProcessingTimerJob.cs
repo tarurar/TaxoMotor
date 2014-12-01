@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Xml.Serialization;
 using System.IO;
 using Microsoft.SharePoint;
@@ -60,9 +61,12 @@ namespace TM.SP.AnswerProcessingTimerJob
                             web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
                         {
 
-                            SPListItemCollection requestList = GetOutcomeRequests(web, 5);
+                            SPListItemCollection requestList = GetOutcomeRequests(web, 20);
                             foreach (SPListItem request in requestList)
                             {
+                                request["Tm_LastProcessDate"] = DateTime.Now;
+                                request.Update();
+
                                 CoordinateV5File[] answer = GetAnswerForOutcomeRequest(web, request);
                                 if (answer.Any())
                                 {
@@ -92,7 +96,13 @@ namespace TM.SP.AnswerProcessingTimerJob
         protected virtual MessageQueueService.DataServiceClient GetServiceClientInstance(SPWeb web)
         {
             SPListItem confItem = Config.GetConfigItem(web, "MessageQueueServiceUrl");
-            var binding = new System.ServiceModel.BasicHttpBinding();
+            var binding = new System.ServiceModel.BasicHttpBinding 
+            {
+                MaxReceivedMessageSize = 65536000,
+                                        
+            };
+            binding.ReaderQuotas.MaxStringContentLength = 81920000;
+
             var address = new System.ServiceModel.EndpointAddress(Config.GetConfigValue(confItem).ToString());
 
             return new MessageQueueService.DataServiceClient(binding, address);
@@ -131,9 +141,17 @@ namespace TM.SP.AnswerProcessingTimerJob
         {
             SPList list = web.GetListOrBreak("Lists/OutcomeRequestStateList");
 
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => (bool)x["Tm_AnswerReceived"] == false,
+                x => (DateTime)x["Created"] > DateTime.Now.AddDays(-15)
+
+            };
+
             SPListItemCollection items = list.GetItems(new SPQuery
             {
-                Query = Camlex.Query().Where(x => (bool)x["Tm_AnswerReceived"] == false).ToString(),
+                Query = Camlex.Query().WhereAll(expressions).OrderBy(x => x["Tm_LastProcessDate"] as Camlex.Asc).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'",
                 RowLimit = count
             });
 
