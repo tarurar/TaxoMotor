@@ -107,6 +107,16 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmPriority = new FieldDefinition()
+        {
+            Id           = new Guid("{75FD12F1-249F-445E-84D8-297D78C5D55F}"),
+            Title        = "Приоритет",
+            InternalName = "Tm_Priority",
+            FieldType    = BuiltInFieldTypes.Number,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+
         #endregion
 
         #region [Причина отказа]
@@ -494,6 +504,15 @@ namespace TM.SP.DataModel
             Title        = "Ответ получен",
             InternalName = "Tm_AnswerReceived",
             FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLastProcessDate = new FieldDefinition()
+        {
+            Id           = new Guid("{22FF067B-5162-482A-8FF0-84332F87783F}"),
+            Title        = "Дата последней обработки",
+            InternalName = "Tm_LastProcessDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 

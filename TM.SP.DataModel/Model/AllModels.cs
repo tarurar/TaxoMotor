@@ -23,6 +23,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmServiceCode)
                     .AddField(Fields.TmUsageScopeInteger)
                     .AddField(Fields.TmRegNumber)
+                    .AddField(Fields.TmPriority, f => f.OnProvisioned<Field>(context => context.Object.MakeDefaultValue("0")))
+                    .AddField(Fields.TmLastProcessDate)
                     .AddField(Fields.TmSingleNumber)
                     .AddField(Fields.TmFirstName)
                     .AddField(Fields.TmLastName)
@@ -415,6 +417,8 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmErrorDescription)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                         .AddContentTypeFieldLink(Fields.TmAnswerReceived)
+                        .AddContentTypeFieldLink(Fields.TmPriority)
+                        .AddContentTypeFieldLink(Fields.TmLastProcessDate)
                     )
                     .AddContentType(ContentTypes.TmTaxi, ct => ct
                         .AddContentTypeFieldLink(Fields.TmTaxiBrand)
