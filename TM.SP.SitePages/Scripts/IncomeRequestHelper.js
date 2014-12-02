@@ -855,8 +855,8 @@
                         if (data && data.d) {
                             progress.finishAction(action, 10);
 
-                            action = progress.addAction('Проверяем все ли ТС находятся в статусе "Решено положительно" или "Отказано"');
-                            ir.IsAllTaxiInStatus(incomeRequestId, "Решено положительно;Отказано").success(function(data) {
+                            action = progress.addAction('Проверяем все ли ТС находятся в статусе "Решено положительно" или "Отказано" или "Решено отрицательно"');
+                            ir.IsAllTaxiInStatus(incomeRequestId, "Решено положительно;Отказано;Решено отрицательно").success(function (data) {
                                 if (data && data.d) {
                                     progress.finishAction(action, 20);
 

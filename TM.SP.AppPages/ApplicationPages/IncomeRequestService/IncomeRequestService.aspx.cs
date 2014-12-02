@@ -758,6 +758,8 @@ namespace TM.SP.AppPages
 
                 foreach (var taxiItem in taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
                 {
+                    if (((rStatusCode == "6420") || (rStatusCode == "1050")) && (taxiItem["Tm_TaxiStatus"].ToString() == "Отказано")) continue;
+
                     switch (rStatusCode)
                     {
                         case "1010":
@@ -834,18 +836,33 @@ namespace TM.SP.AppPages
                    Utility.WithSafeUpdate(SPContext.Current.Web, (safeWeb) =>
             {
                 var taxiList = safeWeb.GetListOrBreak("Lists/TaxiList");
+                var rList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                var rItem = rList.GetItemOrBreak(incomeRequestId);
                 var refuseList = safeWeb.GetListOrBreak("Lists/DenyReasonBookList");
                 var refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode",
                     refuseReasonCode.ToString(CultureInfo.InvariantCulture));
 
-                var taxiIdArr = taxiIdList.Split(';');
+                SPListItem rStatus;
+                Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"],
+                    rList.Fields.GetFieldByInternalName("Tm_IncomeRequestStateLookup") as SPFieldLookup, out rStatus);
+                if (rStatus == null)
+                    throw new Exception("У обращения должно быть установлено значение статуса");
+                var rStatusCode = rStatus["Tm_ServiceCode"] != null
+                    ? rStatus["Tm_ServiceCode"].ToString()
+                    : String.Empty;
 
+                var taxiIdArr = taxiIdList.Split(';');
                 foreach (var taxiItem in taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))
                 {
+                    if (((rStatusCode == "6420") || (rStatusCode == "1050")) && (taxiItem["Tm_TaxiStatus"].ToString() == "Отказано")) continue;
+
                     taxiItem["Tm_DenyReasonLookup"] = new SPFieldLookupValue(refuseItem.ID, refuseItem.Title);
                     taxiItem["Tm_TaxiDenyComment"] = refuseComment;
                     taxiItem["Tm_NeedPersonVisit"] = needPersonVisit;
-                    taxiItem["Tm_TaxiStatus"] = "Отказано";
+                    if ((rStatusCode == "6420") || (rStatusCode == "1050"))
+                        taxiItem["Tm_TaxiStatus"] = "Решено отрицательно";
+                    else taxiItem["Tm_TaxiStatus"] = "Отказано";
+
                     taxiItem.Update();
                 }
             }));
