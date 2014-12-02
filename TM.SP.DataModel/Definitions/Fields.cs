@@ -668,7 +668,7 @@ namespace TM.SP.DataModel
         public static FieldDefinition TmTaxiPrevLicenseNumber = new FieldDefinition()
         {
             Id           = new Guid("{11C7D20E-3AC3-4274-8D75-E74D562CEB80}"),
-            Title        = "Номер ранее выд. разрешения",
+            Title        = "Номер разрешения", // in fact, previous license number
             InternalName = "Tm_TaxiPrevLicenseNumber",
             FieldType    = BuiltInFieldTypes.Text,
             Group        = ModelConsts.ColumnsDefaultGroup
