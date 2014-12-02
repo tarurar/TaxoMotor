@@ -116,7 +116,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmTaxiStatus, f => f.OnProvisioned<Field>(
                         context =>
                             context.Object.MakeChoices(new[]
-                            {"В работе", "Решено положительно", "Отказано", "Не получено"})))
+                            {"В работе", "Решено положительно", "Отказано", "Не получено", "Решено отрицательно"})))
                     .AddField(Fields.TmTaxiDenyComment)
                     .AddField(Fields.TmAttachType)
                     .AddField(Fields.TmAttachDocNumber)
