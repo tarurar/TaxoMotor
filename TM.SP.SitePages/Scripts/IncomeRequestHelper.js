@@ -617,7 +617,7 @@
             ir.SignXml = function(xml, onsuccess, onfail) {
 
                 var oCertificate = ir.SelectedCertificate || (cryptoPro && cryptoPro.SelectCertificate(
-                        cryptoPro.StoreLocation.CAPICOM_LOCAL_MACHINE_STORE,
+                        cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                         cryptoPro.StoreNames.CAPICOM_MY_STORE,
                         cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED));
 
@@ -653,7 +653,7 @@
             ir.SignPkcs7 = function (dataToSign, onsuccess, onfail) {
 
                 var oCertificate = ir.SelectedCertificate || (cryptoPro && cryptoPro.SelectCertificate(
-                        cryptoPro.StoreLocation.CAPICOM_LOCAL_MACHINE_STORE,
+                        cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                         cryptoPro.StoreNames.CAPICOM_MY_STORE,
                         cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED));
 
