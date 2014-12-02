@@ -138,7 +138,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmAnswerReceived)
                     .AddField(Fields.TmCentralDocStoreUrl)
                     .AddField(Fields.TmAttachDocSubType)
-                    .AddField(Fields.TmAttachValidityPeriod)
+                    .AddField(Fields.TmAttachValidityPeriod,
+                        f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmAttachListCount)
                     .AddField(Fields.TmAttachCopyCount)
                     .AddField(Fields.TmAttachDivisionCode)
