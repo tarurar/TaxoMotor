@@ -74,6 +74,11 @@ namespace TM.SP.AppPages
             get { return Convert.ToBoolean(_request["Tm_NeedPersonVisit"]); }
         }
 
+        public bool RefuseDocuments
+        {
+            get { return Convert.ToBoolean(_request["Tm_RefuseDocuments"]); }
+        }
+
         public string RegistrationDateText
         {
             get

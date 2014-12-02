@@ -510,11 +510,15 @@
                 }).fail(onfail);
             };
 
-            ir.SetRefuseReasonAndComment = function(incomeRequestId, refuseReasonCode, refuseComment) {
+            ir.SetRefuseReasonAndComment = function (incomeRequestId, refuseReasonCode, refuseComment, needPersonVisit, refuseDocuments) {
                 return $.ajax({
                     type: 'POST',
                     url: ir.ServiceUrl + '/SetRefuseReasonAndComment',
-                    data: '{ incomeRequestId: ' + incomeRequestId + ' , refuseReasonCode: ' + refuseReasonCode + ' , refuseComment: "' + refuseComment + '" }',
+                    data: '{ incomeRequestId: ' + incomeRequestId +
+                            ' , refuseReasonCode: ' + refuseReasonCode +
+                            ' , refuseComment: "' + refuseComment +
+                            '", needPersonVisit: ' + needPersonVisit +
+                            ', refuseDocuments: ' +refuseDocuments + ' }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
                 });
@@ -533,9 +537,11 @@
 
                             var reasonCode = returnValue.SelectedReason.Code;
                             var reasonText = returnValue.ActionComment;
+                            var needPersonVisit = returnValue.NeedPersonVisit;
+                            var refuseDocuments = returnValue.RefuseDocuments;
 
                             // Установка причины отказа и комментария
-                            ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText).success(function() {
+                            ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText, needPersonVisit, refuseDocuments).success(function () {
                                     // Генерация документов отказа
                                     ir.CreateDocumentsWhileRefusing(incomeRequestId).success(function (refuseDocData) {
                                         if (refuseDocData && refuseDocData.d && refuseDocData.d[0]) {

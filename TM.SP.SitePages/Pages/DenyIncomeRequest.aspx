@@ -41,6 +41,18 @@
                 <textarea id="actionComment" style="display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" rows="7" data-bind="value: ActionComment" ></textarea>
             </div>
         </section>
+        <section style="margin-top: 10px;">
+            <div style="float: left; margin-right: 20px; width: 100%;">
+                <p style="display: block;">
+                    Необходим очный визит
+                    <input data-bind="checked: NeedPersonVisit" type="checkbox" id="needPersonVisit" />
+                </p>
+                <p style="display: block;">
+                    Отказ в приеме документов
+                    <input data-bind="checked: RefuseDocuments" type="checkbox" id="refuseDocuments" />
+                </p>                
+            </div>
+        </section>
     </div>
     <div id="buttonPanel">
         <table id="maintable" border="0" cellspacing="0" cellpadding="0" class="ms-propertysheet" width="100%">

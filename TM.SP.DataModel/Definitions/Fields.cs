@@ -251,6 +251,16 @@ namespace TM.SP.DataModel
             FieldType    = BuiltInFieldTypes.DateTime,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
+
+        public static FieldDefinition TmRefuseDocuments = new FieldDefinition()
+        {
+            Id           = new Guid("{CC6C8883-C711-4096-88C7-92E3B38CCA38}"),
+            Title        = "Отказ в приеме документов",
+            InternalName = "Tm_RefuseDocuments",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         /// <summary>
         /// Ссылка на физическое лицо (BCS список)
         /// </summary>
@@ -1334,6 +1344,99 @@ namespace TM.SP.DataModel
         };
 
 
+        #endregion
+
+        #region [Проверка МАДИ]
+
+        public static FieldDefinition TmMadiTranfererName = new FieldDefinition()
+        {
+            Id           = new Guid("{5C4A23BD-7375-48F5-8926-ABB1D5E02B22}"),
+            Title        = "Наименование перевозчика",
+            InternalName = "Tm_MadiTranfererName",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiOgrn = new FieldDefinition()
+        {
+            Id           = new Guid("{3C4176F0-BE48-409B-AC3B-58B59625E7E6}"),
+            Title        = "ОГРН/ОГРНИП ",
+            InternalName = "Tm_MadiOgrn",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiPlannedControl = new FieldDefinition()
+        {
+            Id           = new Guid("{F0D1B192-298E-4613-812F-D93CF67076FD}"),
+            Title        = "Плановая проверка",
+            InternalName = "Tm_MadiPlannedControl",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiControlType = new FieldDefinition()
+        {
+            Id           = new Guid("{E54A54DF-6F65-40FD-8135-C745E73980D6}"),
+            Title        = "Тип проверки",
+            InternalName = "Tm_MadiControlType",
+            FieldType    = BuiltInFieldTypes.Choice,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiControlDate = new FieldDefinition()
+        {
+            Id           = new Guid("{C4A15E28-3F6C-47C6-AA27-295710451D13}"),
+            Title        = "Дата проверки",
+            InternalName = "Tm_MadiControlDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiOrderNumber = new FieldDefinition()
+        {
+            Id           = new Guid("{43A28CEE-89AA-4660-B533-1CB7827C5D93}"),
+            Title        = "Номер распоряжения",
+            InternalName = "Tm_MadiOrderNumber",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiControllerNames = new FieldDefinition()
+        {
+            Id = new Guid("{7F19BA40-7AAF-4A9A-AE56-21F93F20647E}"),
+            Title = "Проводящие проверку",
+            InternalName = "Tm_MadiControllerNames",
+            FieldType = BuiltInFieldTypes.Note,
+            Group = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiControlResult = new FieldDefinition()
+        {
+            Id           = new Guid("{1D45785F-A923-4DEB-AE12-3BBE67A57BDE}"),
+            Title        = "Результат проверки",
+            InternalName = "Tm_MadiControlResult",
+            FieldType    = BuiltInFieldTypes.Choice,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiLicenseNumber = new FieldDefinition()
+        {
+            Id           = new Guid("{C4108BA2-0F89-4850-856A-8EE5507C2A0E}"),
+            Title        = "Номер разрешения",
+            InternalName = "Tm_MadiLicenseNumber",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmMadiStateNumber = new FieldDefinition()
+        {
+            Id           = new Guid("{A65BE180-DFD7-44AC-BC6C-2A75657AF7FA}"),
+            Title        = "Государственный регистрационный знак",
+            InternalName = "Tm_MadiStateNumber",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
 
         #endregion
     }

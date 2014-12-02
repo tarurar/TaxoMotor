@@ -189,5 +189,14 @@ namespace TM.SP.DataModel
             Description         = "Библиотека шаблонов, используемых при генерации документов",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmMadiControlList = new ListDefinition()
+        {
+            Title               = "Проверки МАДИ",
+            Url                 = "MadiControlList",
+            TemplateType        = BuiltInListTemplateTypeId.GenericList,
+            Description         = "Проверки МАДИ",
+            ContentTypesEnabled = true
+        };
     }
 }

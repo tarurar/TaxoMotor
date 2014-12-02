@@ -20,9 +20,21 @@ namespace TM.SP.DataModel
         {
             var model = SPMeta2Model.NewSiteModel(site => site
                 .WithFields(fields => fields
+                    .AddField(Fields.TmMadiTranfererName)
+                    .AddField(Fields.TmMadiOgrn)
+                    .AddField(Fields.TmMadiPlannedControl)
+                    .AddField(Fields.TmMadiControlType, f => f.OnProvisioned<Field>(context => context.Object.MakeChoices(new string[] {"Выездная", "Документарная"})))
+                    .AddField(Fields.TmMadiControlDate,
+                        f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
+                    .AddField(Fields.TmMadiOrderNumber)
+                    .AddField(Fields.TmMadiControllerNames)
+                    .AddField(Fields.TmMadiControlResult, f => f.OnProvisioned<Field>(context => context.Object.MakeChoices(new string[] { "Акт", "Предписание", "Отметка об исполнении предписания" })))
+                    .AddField(Fields.TmMadiLicenseNumber)
+                    .AddField(Fields.TmMadiStateNumber)
                     .AddField(Fields.TmServiceCode)
                     .AddField(Fields.TmUsageScopeInteger)
                     .AddField(Fields.TmRegNumber)
+                    .AddField(Fields.TmRefuseDocuments)
                     .AddField(Fields.TmPriority, f => f.OnProvisioned<Field>(context => context.Object.MakeDefaultValue("0")))
                     .AddField(Fields.TmLastProcessDate)
                     .AddField(Fields.TmSingleNumber)
@@ -295,6 +307,17 @@ namespace TM.SP.DataModel
                             .AddContentTypeFieldLink(Fields.TmXmlValue))
                         .AddContentType(ContentTypes.TmDocumentTemplate, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode))
+                        .AddContentType(ContentTypes.TmMadiControl, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmMadiTranfererName)
+                            .AddContentTypeFieldLink(Fields.TmMadiOgrn)
+                            .AddContentTypeFieldLink(Fields.TmMadiPlannedControl)
+                            .AddContentTypeFieldLink(Fields.TmMadiControlType)
+                            .AddContentTypeFieldLink(Fields.TmMadiControlDate)
+                            .AddContentTypeFieldLink(Fields.TmMadiOrderNumber)
+                            .AddContentTypeFieldLink(Fields.TmMadiControllerNames)
+                            .AddContentTypeFieldLink(Fields.TmMadiControlResult)
+                            .AddContentTypeFieldLink(Fields.TmMadiLicenseNumber)
+                            .AddContentTypeFieldLink(Fields.TmMadiStateNumber))
                 ));
 
             return model;
@@ -337,6 +360,8 @@ namespace TM.SP.DataModel
                             l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestStatusLog))
                         .AddList(Lists.TmDocumentTemplateLib,
                             l => l.AddContentTypeLink(ContentTypes.TmDocumentTemplate))
+                        .AddList(Lists.TmMadiControlList,
+                            l => l.AddContentTypeLink(ContentTypes.TmMadiControl))
                 ));
 
             return model;
@@ -374,6 +399,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestIdentityDocs)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                         .AddContentTypeFieldLink(Fields.TmNeedPersonVisit)
+                        .AddContentTypeFieldLink(Fields.TmRefuseDocuments)
                     )
                     .AddContentType(ContentTypes.TmNewIncomeRequest)
                     .AddContentType(ContentTypes.TmDuplicateIncomeRequest)

@@ -8,9 +8,11 @@
         // ReSharper restore InconsistentNaming
         var self = this;
 
-        self.DenyReason     = ko.observableArray([]);
-        self.selectedReason = ko.observable();
-        self.ActionComment  = ko.observable("");
+        self.DenyReason      = ko.observableArray([]);
+        self.selectedReason  = ko.observable();
+        self.ActionComment   = ko.observable("");
+        self.NeedPersonVisit = ko.observable(false);
+        self.RefuseDocuments = ko.observable(false);
     }
 
     // ReSharper disable InconsistentNaming
@@ -23,7 +25,9 @@
         self.DoAction = function () {
             window.frameElement.commonModalDialogClose(SP.UI.DialogResult.OK, {
                 SelectedReason: self.Params().selectedReason(),
-                ActionComment: self.Params().ActionComment()
+                ActionComment: self.Params().ActionComment(),
+                NeedPersonVisit: self.Params().NeedPersonVisit(),
+                RefuseDocuments: self.Params().RefuseDocuments()
             });
         };
 

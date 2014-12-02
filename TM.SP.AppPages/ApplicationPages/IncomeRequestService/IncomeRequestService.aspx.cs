@@ -498,7 +498,7 @@ namespace TM.SP.AppPages
         /// <param name="refuseReasonCode">Код причины отказа</param>
         /// <param name="refuseComment">Текст комментария к отказу</param>
         [WebMethod]
-        public static void SetRefuseReasonAndComment(int incomeRequestId, int refuseReasonCode, string refuseComment)
+        public static void SetRefuseReasonAndComment(int incomeRequestId, int refuseReasonCode, string refuseComment, bool needPersonVisit, bool refuseDocuments)
         {
             SPWeb web = SPContext.Current.Web;
 
@@ -515,6 +515,8 @@ namespace TM.SP.AppPages
                 item["Tm_Comment"] = refuseComment;
                 item["Tm_RefuseDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
                 item["Tm_PrepareFactDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+                item["Tm_NeedPersonVisit"] = needPersonVisit;
+                item["Tm_RefuseDocuments"] = refuseDocuments;
 
                 item.Update();
             }
@@ -582,26 +584,10 @@ namespace TM.SP.AppPages
 
                 var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
 
-                var status = docBuilder.RequestStatus;
-                if (status != null)
-                {
-                    var statusCode = status["Tm_ServiceCode"] != null
-                        ? status["Tm_ServiceCode"].ToString()
-                        : String.Empty;
-
-                    switch (statusCode)
-                    {
-                        case "1010":
-                            retValList.Add(docBuilder.NeedPersonVisit
-                                ? docBuilder.RenderDocument(1)
-                                : docBuilder.RenderDocument(2));
-                            break;
-                        case "1110":
-                        case "6420":
-                            retValList.Add(docBuilder.RenderDocument(3));
-                            break;
-                    }
-                }
+                if (docBuilder.RefuseDocuments)
+                    retValList.Add(docBuilder.NeedPersonVisit ? docBuilder.RenderDocument(1) : docBuilder.RenderDocument(2));
+                else
+                    retValList.Add(docBuilder.RenderDocument(3));
             });
 
             return retValList.ToArray();

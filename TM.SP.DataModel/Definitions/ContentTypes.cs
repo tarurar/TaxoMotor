@@ -205,6 +205,15 @@ namespace TM.SP.DataModel
             Name                = "Tm_DocumentTemplate"
         };
 
+        public static ContentTypeDefinition TmMadiControl = new ContentTypeDefinition
+        {
+            Id                  = new Guid("{A74CFAD4-0DEB-4E8D-B8BD-FB163299EF05}"),
+            Description         = "Проверка МАДИ",
+            Group               = ModelConsts.ContentTypeDefaultGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name                = "Tm_MadiControl"
+        };
+
         #endregion
     }
 }
