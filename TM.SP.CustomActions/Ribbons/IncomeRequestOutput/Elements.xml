@@ -2,9 +2,9 @@
 <!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
 	<CustomAction
-		Id="Ribbon.TaxoMotor.IncomeRequestClose"
+		Id="Ribbon.TaxoMotor.IncomeRequestOutput"
 		Location="CommandUI.Ribbon.DisplayForm"
-		Title="Завершить работу"
+		Title="Выдать"
 		RegistrationType="List"
 		RegistrationId="{$ListId:Lists/IncomeRequestList;}">
 		<CommandUIExtension>
@@ -12,23 +12,32 @@
 				<CommandUIDefinition
 					Location="Ribbon.ListForm.Display.Actions.Controls._children">
 					<Button
-						Id="Ribbon.TaxoMotor.IncomeRequestClose.Button"
-						Command="TaxoMotor.IncomeRequestClose.ButtonCommand"
-						Sequence="520"
+						Id="Ribbon.TaxoMotor.IncomeRequestOutput.Button"
+						Command="TaxoMotor.IncomeRequestOutput.ButtonCommand"
+						Sequence="530"
 						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
-						Image32by32="/_layouts/15/TM.SP.AppPages/Images/ir-close-32.png"
-						LabelText="Завершить работу"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/ir-output-32.png"
+						LabelText="Выдать"
 						TemplateAlias="o1" />
 				</CommandUIDefinition>
 			</CommandUIDefinitions>
 			<CommandUIHandlers>
 				<CommandUIHandler
-					Command="TaxoMotor.IncomeRequestClose.ButtonCommand"
-					CommandAction="javascript: (function(){          
+					Command="TaxoMotor.IncomeRequestOutput.ButtonCommand"
+					CommandAction="javascript: (function(){
             SP.SOD.executeFunc('sp.js','SP.ClientContext', function() {
 
 	            SP.UI.Status.removeAllStatus(true);
-	            TM.SP.IncomeRequest.Close({ItemId});
+	            TM.SP.IncomeRequest.Output({ItemId}, function() {
+		            var successStatus = SP.UI.Status.addStatus('Выдача осуществлена');
+		            SP.UI.Status.setStatusPriColor(successStatus, 'green');
+		            setTimeout(function() {
+			            SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+		            }, 1500);		
+	            }, function(message) {
+		            var failStatus = SP.UI.Status.addStatus(message);
+		            SP.UI.Status.setStatusPriColor(failStatus, 'red');
+	            });
             });
           })();"
           EnabledScript="javascript: function enabled() { 
@@ -47,14 +56,13 @@
               });
             }
             else {
+              var outputDate = fd.field('Tm_OutputFactDate').control()._el().text().trim();
               result = 
-                TM.SP.IncomeRequest.currentStatusCode == 1050 || 
-                TM.SP.IncomeRequest.currentStatusCode == 6420;
+                (TM.SP.IncomeRequest.currentStatusCode == 1075 || TM.SP.IncomeRequest.currentStatusCode == 1080) &amp;&amp; !outputDate;
             }
             
             return result;
-          } enabled();"
-          />
+          } enabled();" />
 			</CommandUIHandlers>
 		</CommandUIExtension>
 	</CustomAction>

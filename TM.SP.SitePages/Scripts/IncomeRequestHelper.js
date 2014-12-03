@@ -183,6 +183,16 @@
                 });
             };
 
+            ir.OutputRequest = function (incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/Output',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.SendEgripRequest = function (incomeRequestId, onsuccess, onfail) {
                 var url = SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRIPPage.aspx') + '?IsDlg=1&ListId=' +
                     _spPageContextInfo.pageListId + '&Items=' + incomeRequestId + '&Source=' + location.href;
@@ -834,6 +844,12 @@
                     });
                 }, "sp.js");
             }
+
+            ir.Output = function (incomeRequestId, onsuccess, onfail) {
+                ir.OutputRequest(incomeRequestId)
+                    .success(onsuccess)
+                    .fail(onfail);
+            };
 
             ir.Close = function(incomeRequestId, onsuccess, onfail) {
 

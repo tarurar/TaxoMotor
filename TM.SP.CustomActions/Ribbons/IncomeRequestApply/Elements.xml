@@ -16,7 +16,7 @@
 						Command="TaxoMotor.IncomeRequestApply.ButtonCommand"
 						Sequence="500"
 						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
-						Image32by32="/_layouts/15/TM.SP.AppPages/Images/ir-apply-32.jpg"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/ir-apply-32.png"
 						LabelText="Принять в работу"
 						TemplateAlias="o1" />
 				</CommandUIDefinition>

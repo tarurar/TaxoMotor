@@ -196,8 +196,12 @@
     <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\deny-icon-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-apply-32.jpg" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\ir-apply-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-close-32.jpg" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\ir-close-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\ir-output-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.jpg" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\penalty-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\penalty-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\renew-16.png" />

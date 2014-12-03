@@ -1119,7 +1119,11 @@ namespace TM.SP.AppPages
                     }));
         }
 
-
+        /// <summary>
+        /// Получение кода текущего статуса обращения
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns></returns>
         [WebMethod]
         public static dynamic GetCurrentStatusCode(int incomeRequestId)
         {
@@ -1147,6 +1151,61 @@ namespace TM.SP.AppPages
             {
                 Error = errorData,
                 Data = payLoad
+            };
+        }
+
+        /// <summary>
+        /// Выдача
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static dynamic Output(int incomeRequestId)
+        {
+            dynamic innerCatch = null;
+
+            var catchData = Utility.WithCatchExceptionOnWebMethod("Ошибка при выдаче", () =>
+                Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
+                    Utility.WithSafeUpdate(serviceContextWeb, safeWeb =>
+                    {
+                        var rList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                        var rItem = rList.GetItemById(incomeRequestId);
+                        var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
+
+                        rItem["Tm_OutputFactDate"] = DateTime.Now.Date;
+                        rItem.Update();
+
+                        if (ctId == rList.ContentTypes["Аннулирование"].Id)
+                            innerCatch = PromoteLicenseDrafts(incomeRequestId);
+                    })));
+
+            object innerError = null;
+            object innerData = null;
+            var innerDataObj = innerCatch as object;
+            if (innerDataObj != null)
+            {
+                var errorProp = innerDataObj.GetType().GetProperty("Error");
+                var dataProp  = innerDataObj.GetType().GetProperty("Data");
+                innerData     = dataProp != null ? dataProp.GetValue(innerDataObj, null) : null;
+                innerError    = errorProp != null ? errorProp.GetValue(innerDataObj, null) : null;
+            }
+
+            if (innerError != null)
+            {
+                return new
+                {
+                    Error = innerError,
+                    Data = innerData
+                };
+            }
+
+            var catchDataObj = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+            return new
+            {
+                Error = errorData,
+                Data = innerData
             };
         }
     }

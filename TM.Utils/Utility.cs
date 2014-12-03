@@ -9,6 +9,18 @@ namespace TM.Utils
 {
     public static class Utility
     {
+        public static object GetDynamicObjectProperty(dynamic data, string propName)
+        {
+            var dataObj = data as object;
+            if (dataObj != null)
+            {
+                var dataProp = dataObj.GetType().GetProperty(propName);
+                return dataProp != null ? dataProp.GetValue(dataObj, null) : null;
+            }
+
+            return null;
+        }
+
         public static string GetIncomeRequestNewSingleNumber(string serviceCode)
         {
             const string pattern = "{0}-{1}-{2}-{3}/{4}";
