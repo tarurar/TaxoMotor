@@ -1439,5 +1439,18 @@ namespace TM.SP.DataModel
         };
 
         #endregion
+
+        #region [Подтип госуслуги]
+
+        public static FieldDefinition TmTermOfService = new FieldDefinition()
+        {
+            Id           = new Guid("{BFBF4676-906E-4359-A290-D420ED6E04A1}"),
+            Title        = "Срок оказания",
+            InternalName = "Tm_TermOfService",
+            FieldType    = BuiltInFieldTypes.Number,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        #endregion
     }
 }

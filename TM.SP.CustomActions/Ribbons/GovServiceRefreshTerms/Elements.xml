@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.GovServiceRefreshTerms"
+		Location="CommandUI.Ribbon.ListView"
+		Title="Обновить сроки оказания ГУ"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/GovServiceSubTypeBookList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListItem.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.GovServiceRefreshTerms.Button"
+						Command="TaxoMotor.GovServiceRefreshTerms.ButtonCommand"
+						Sequence="500"
+						Image16by16="/_layouts/15/images/STATICREFRESH.GIF"
+						Image32by32="/_layouts/15/images/synchronizationtitle.png"
+						LabelText="Обновить сроки оказания"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.GovServiceRefreshTerms.ButtonCommand"
+					CommandAction="javascript: (function(){
+            SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function() {
+              SP.UI.Status.removeAllStatus(true);
+
+              var serviceUrl = _spPageContextInfo.webAbsoluteUrl + '/' + _spPageContextInfo.layoutsUrl + '/TaxoMotor/CommonService.aspx';
+
+              $.ajax({
+                  type: 'POST',
+                  url: serviceUrl + '/RefreshGovServiceTerms',
+                  contentType: 'application/json; charset=utf-8',
+                  dataType: 'json'
+              }).success(function(data) {
+
+                  var successStatus = SP.UI.Status.addStatus('Выполнено успешно');
+                  SP.UI.Status.setStatusPriColor(successStatus, 'green');
+
+                  setTimeout(function() {
+                      SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+                  }, 1000);
+              }).fail(function(jqXhr, status, error) {
+
+                  var response = $.parseJSON(jqXhr.responseText).d;
+
+                  var failStatus = SP.UI.Status.addStatus(response.Error.UserMessage);
+                  console.error('Exception Message: ' + response.Error.SystemMessage);
+                  console.error('Exception StackTrace: ' + response.Error.StackTrace);
+                  SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+            });
+          })();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

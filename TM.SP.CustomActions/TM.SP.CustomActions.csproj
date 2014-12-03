@@ -80,6 +80,9 @@
     <None Include="Ribbons\CancelLicense\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{72a626b3-41ae-41b1-ba0b-efa3dcbe1af7}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\GovServiceRefreshTerms\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f8aa7e11-16ba-4571-a0c3-8424118f3b70}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\IncomeRequestApply\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{f17c85f5-0a2a-4b0c-aa91-b2a257ba08e2}</SharePointProjectItemId>
     </None>
@@ -128,6 +131,7 @@
       <DependentUpon>TaxoMotor_TaxoMotorCustomActions.feature</DependentUpon>
     </Content>
     <Content Include="Ribbons\CancelLicense\Elements.xml" />
+    <Content Include="Ribbons\GovServiceRefreshTerms\Elements.xml" />
     <Content Include="Ribbons\IncomeRequestApply\Elements.xml">
       <SubType>Designer</SubType>
     </Content>

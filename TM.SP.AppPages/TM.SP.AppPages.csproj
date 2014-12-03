@@ -78,6 +78,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationPages\CommonService\CommonService.aspx.cs">
+      <DependentUpon>CommonService.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\CommonService\CommonService.aspx.designer.cs">
+      <DependentUpon>CommonService.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationPages\DialogLayoutsPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -139,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="3rd\Aspose\Aspose.Total.lic" />
+    <None Include="ApplicationPages\CommonService\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{ae3acb76-aa42-4b73-978b-6865edcea3ff}</SharePointProjectItemId>
+    </None>
     <None Include="ApplicationPages\IncomeRequestService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{bf49c9d8-e24e-40d4-acad-ced08c80037e}</SharePointProjectItemId>
     </None>
@@ -180,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="3rd\Aspose\Aspose.Words.dll" />
+    <Content Include="ApplicationPages\CommonService\CommonService.aspx" />
     <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
     <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />

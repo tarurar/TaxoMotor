@@ -214,6 +214,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmShortName)
                     .AddField(Fields.TmXmlValue)
                     .AddField(Fields.TmNeedPersonVisit)
+                    .AddField(Fields.TmTermOfService)
                 )
                 .WithContentTypes(
                     ctList => ctList
@@ -226,8 +227,9 @@ namespace TM.SP.DataModel
                         .AddContentType(ContentTypes.TmDenyReason, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmUsageScopeInteger))
-                        .AddContentType(ContentTypes.TmGovServiceSubType,
-                            ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
+                        .AddContentType(ContentTypes.TmGovServiceSubType, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmServiceCode)
+                            .AddContentTypeFieldLink(Fields.TmTermOfService))
                         .AddContentType(ContentTypes.TmOutcomeRequestType,
                             ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
                         .AddContentType(ContentTypes.TmPossessionReason,
