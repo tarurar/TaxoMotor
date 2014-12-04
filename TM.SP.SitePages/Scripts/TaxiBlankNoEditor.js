@@ -61,5 +61,6 @@
 
     $(document).ready(function () {
         SP.SOD.executeOrDelayUntilScriptLoaded(sharepointReady, "SP.js");
+        $(':input').inputmask();
     });
 })();

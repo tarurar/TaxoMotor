@@ -175,6 +175,12 @@
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-ui.min-1.11.1.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\knockout-3.2.0.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.date.extensions.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.extensions.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.phone.extensions.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.regex.extensions.js" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorWebAppLevelCustomizations.gif" />
   </ItemGroup>
   <ItemGroup>

@@ -32,7 +32,7 @@
         <section style="margin-top: 10px;">
             <div style="float: left; margin-right: 20px; width: 100%;">
                 <label for="blankNo" style="display: block">Номер</label>
-                <input id="blankNo" data-bind="value: BlankNo" type="text" />
+                <input id="blankNo" data-bind="value: BlankNo" data-inputmask="'mask': '999999'" type="text" placeholder="Только цифры" />
             </div>
         </section>
     </div>
@@ -51,6 +51,7 @@
             </wssuc:ButtonSection>
         </table>
     </div>
-
+    
+    <script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/jquery.inputmask/jquery.inputmask.js"></script>
     <script type="text/javascript" src="/ProjectScripts/TaxiBlankNoEditor.js"></script>
 </asp:Content>
