@@ -205,6 +205,7 @@
     <Content Include="Layouts\TM.SP.AppPages\Images\button_plus.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\cancellation-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\car-taxi-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\deny-icon-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-apply-32.jpg" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-apply-32.png" />

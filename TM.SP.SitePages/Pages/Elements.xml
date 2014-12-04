@@ -29,5 +29,9 @@
       <Property Name="Title" Value="Ход процесса" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\TaxiBlankNoEditor.aspx" Url="TaxiBlankNoEditor.aspx" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE">
+      <Property Name="Title" Value="Редактор бланка" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

@@ -11,5 +11,6 @@
     <File Path="Scripts\DenyIncomeRequest.js" Url="DenyIncomeRequest.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\DenyTaxi.js" Url="DenyTaxi.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
     <File Path="Scripts\ProgressDlg.js" Url="ProgressDlg.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\TaxiBlankNoEditor.js" Url="TaxiBlankNoEditor.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
   </Module>
 </Elements>

@@ -18,9 +18,7 @@
 						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
 						Image16by16Top="-64"
 						Image16by16Left="-192"
-						Image32by32="/_layouts/15/1033/images/formatmap32x32.png"
-						Image32by32Top="0"
-						Image32by32Left="-384"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/car-taxi-32.png"
 						LabelText="Внести номер бланка"
 						TemplateAlias="o1" />
 				</CommandUIDefinition>
@@ -28,7 +26,26 @@
 			<CommandUIHandlers>
 				<CommandUIHandler
 					Command="TaxoMotor.TaxiEditBlankNo.ButtonCommand"
-					CommandAction="javascript:alert('Hello, world');" />
+					CommandAction="javascript: (function(){
+            var url = _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/TaxiBlankNoEditor.aspx?TaxiListId={ListId}&amp;TaxiId={ItemId}';
+            
+            var options = {
+                url: encodeURI(url),
+                title: 'Изменение бланка ТС',
+                allowMaximize: false,
+                showClose: true,
+                dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                    if (result == SP.UI.DialogResult.OK) {
+                        TM.SP.showIconNotification('Данные обновлены', '_layouts/15/images/kpinormal-0.gif', true);
+                        setTimeout(function() {
+                          SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);  
+                        }, 1500);
+                    }
+                })
+            };
+
+            SP.UI.ModalDialog.showModalDialog(options);
+          })();" />
 			</CommandUIHandlers>
 		</CommandUIExtension>
 	</CustomAction>

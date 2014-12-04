@@ -147,6 +147,7 @@
     <Content Include="Scripts\ProgressDlg.js" />
     <Content Include="Scripts\RenewalLicense.js" />
     <Content Include="Scripts\SuspendLicense.js" />
+    <Content Include="Scripts\TaxiBlankNoEditor.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Styles\Elements.xml" />
     <Content Include="Styles\IncomeRequestActions.css" />
@@ -154,6 +155,7 @@
     <Content Include="Styles\licenseSearchModel.css" />
     <Content Include="Styles\ProgressDlg.css" />
     <Content Include="Styles\TaxiActions.css" />
+    <Content Include="Pages\TaxiBlankNoEditor.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
