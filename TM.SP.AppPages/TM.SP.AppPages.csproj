@@ -77,6 +77,10 @@
     <Reference Include="Microsoft.SharePoint" />
     <Reference Include="Microsoft.SharePoint.Security" />
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
+    <Reference Include="WebServiceMO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a665f878afa6f813, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rd\WebServiceMO.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -198,6 +202,8 @@
     <Content Include="3rd\ODOPM.pdb" />
     <Content Include="3rd\Rkis.Rsmev.dll" />
     <Content Include="3rd\Rkis.Rsmev.pdb" />
+    <Content Include="3rd\WebServiceMO.dll" />
+    <Content Include="3rd\WebServiceMO.pdb" />
     <Content Include="ApplicationPages\CommonService\CommonService.aspx" />
     <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
     <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />
@@ -222,6 +228,8 @@
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-output-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.jpg" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\mo-sync-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\odopm-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\penalty-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\penalty-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\renew-16.png" />

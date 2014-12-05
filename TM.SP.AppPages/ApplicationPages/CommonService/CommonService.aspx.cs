@@ -9,6 +9,7 @@ using System.Web.Services;
 using Microsoft.SharePoint;
 using TM.Utils;
 using ODOPM;
+using WebServiceMO;
 
 // ReSharper disable CheckNamespace
 
@@ -121,6 +122,35 @@ namespace TM.SP.AppPages
                     };
 
                     sender.Process(parameters);
+                }));
+        }
+
+        [WebMethod]
+        public static dynamic SendMo()
+        {
+            return Utility.WithCatchExceptionOnWebMethod("Отправка данных в Московскую область", () =>
+                Utility.WithSPServiceContext(SPContext.Current, web =>
+                {
+                    var ssLocalDbAccessAppId =
+                        Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId"))
+                            .ToString();
+
+                    var storeUserId   = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
+                    var storePassword = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
+                    var storeHost     = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
+                    var storeDbName   = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
+                    var moUrl         = Config.GetConfigValue(Config.GetConfigItem(web, "MoServiceUrl")).ToString();
+
+                    var cBuilder = new SqlConnectionStringBuilder
+                    {
+                        DataSource     = storeHost,
+                        InitialCatalog = storeDbName,
+                        UserID         = storeUserId,
+                        Password       = storePassword
+                    };
+
+                    var sender = new ServiceMO();
+                    sender.Process(cBuilder.ConnectionString, moUrl);
                 }));
         }
     }

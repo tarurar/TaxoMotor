@@ -95,6 +95,9 @@
     <None Include="Ribbons\IncomeRequestRefuse\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{0196141a-4301-497c-8a88-c7172af32681}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\LicenseSendMo\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{7c4c60b5-87a2-4f15-b67b-486c6ed256d1}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\LicenseSendOdopm\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{5e939eaa-a4fe-44fa-8564-ce761c47af46}</SharePointProjectItemId>
     </None>
@@ -147,6 +150,7 @@
     <Content Include="Ribbons\IncomeRequestRefuse\Elements.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Ribbons\LicenseSendMo\Elements.xml" />
     <Content Include="Ribbons\LicenseSendOdopm\Elements.xml" />
     <Content Include="Ribbons\RenewLicense\Elements.xml" />
     <Content Include="Ribbons\SendRequestPenalty\Elements.xml" />

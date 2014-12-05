@@ -2,9 +2,9 @@
 <!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
 	<CustomAction
-		Id="Ribbon.TaxoMotor.LicenseSendOdopm"
+		Id="Ribbon.TaxoMotor.LicenseSendMo"
 		Location="CommandUI.Ribbon.ListView"
-		Title="Отправить в ОДОПМ"
+		Title="Отправить в МО"
 		RegistrationType="List"
 		RegistrationId="{$ListId:Lists/LicenseList;}">
 		<CommandUIExtension>
@@ -12,20 +12,20 @@
 				<CommandUIDefinition
 					Location="Ribbon.ListItem.Actions.Controls._children">
 					<Button
-						Id="Ribbon.TaxoMotor.LicenseSendOdopm.Button"
-						Command="TaxoMotor.LicenseSendOdopm.ButtonCommand"
-						Sequence="510"
+						Id="Ribbon.TaxoMotor.LicenseSendMo.Button"
+						Command="TaxoMotor.LicenseSendMo.ButtonCommand"
+						Sequence="520"
 						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
 						Image16by16Top="-64"
 						Image16by16Left="-192"
-						Image32by32="/_layouts/15/TM.SP.AppPages/Images/odopm-32.png"
-						LabelText="Отправить в ОДОПМ"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/mo-sync-32.png"
+						LabelText="Отправить в МО"
 						TemplateAlias="o1" />
 				</CommandUIDefinition>
 			</CommandUIDefinitions>
 			<CommandUIHandlers>
 				<CommandUIHandler
-					Command="TaxoMotor.LicenseSendOdopm.ButtonCommand"
+					Command="TaxoMotor.LicenseSendMo.ButtonCommand"
 					CommandAction="javascript: (function(){
             SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function() {
               SP.UI.Status.removeAllStatus(true);
@@ -34,7 +34,7 @@
 
               $.ajax({
                   type: 'POST',
-                  url: serviceUrl + '/SendOdopm',
+                  url: serviceUrl + '/SendMo',
                   contentType: 'application/json; charset=utf-8',
                   dataType: 'json'
               }).success(function(data) {
