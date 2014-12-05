@@ -294,7 +294,7 @@
                 var url = _spPageContextInfo.webAbsoluteUrl + '/' + _spPageContextInfo.layoutsUrl + '/' + 'TaxoMotor/SendStatus.aspx?ListId=' +
                     _spPageContextInfo.pageListId +
                     '&Items=' + incomeRequestId +
-                    (attachsStr != '' ? '&AttachDocuments=' + attachsStr : '');
+                    (attachsStr ? '&AttachDocuments=' + attachsStr : '');
 
                 return $.ajax({
                     url: encodeURI(url),
