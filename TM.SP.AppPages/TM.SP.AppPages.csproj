@@ -54,6 +54,10 @@
       <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ODOPM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rd\ODOPM.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -190,6 +194,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="3rd\Aspose\Aspose.Words.dll" />
+    <Content Include="3rd\ODOPM.dll" />
+    <Content Include="3rd\ODOPM.pdb" />
+    <Content Include="3rd\Rkis.Rsmev.dll" />
+    <Content Include="3rd\Rkis.Rsmev.pdb" />
     <Content Include="ApplicationPages\CommonService\CommonService.aspx" />
     <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
     <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />

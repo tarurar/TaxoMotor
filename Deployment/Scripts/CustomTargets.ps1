@@ -160,6 +160,7 @@
         UpdateBCSLobSystemProperties  -vars $vars -lobName "Taxi"
         UpdateBCSLobSystemProperties  -vars $vars -lobName "TaxiV2"
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "Utility"
+		# todo: remove adding configuration entries, use TM.DataDeploy project instead
 		AddConfigurationListEntry -vars $vars -confKey "MessageQueueServiceUrl" -confValue $vars['MessageQueueServiceUrl']
 		AddConfigurationListEntry -vars $vars -confKey "BR2ServiceGuid" -confValue $vars['BR2ServiceGuid']
 		AddConfigurationListEntry -vars $vars -confKey "AsGufServiceGuid" -confValue $vars['AsGufServiceGuid']

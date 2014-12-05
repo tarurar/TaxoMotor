@@ -4,9 +4,11 @@
 // <author>SPDOMAIN\dev1</author>
 // <date>2014-12-03 19:54:19Z</date>
 
+using System.Data.SqlClient;
 using System.Web.Services;
 using Microsoft.SharePoint;
 using TM.Utils;
+using ODOPM;
 
 // ReSharper disable CheckNamespace
 
@@ -32,6 +34,10 @@ namespace TM.SP.AppPages
             RightsCheckMode = RightsCheckModes.OnPreInit;
         }
 
+        /// <summary>
+        /// Обновление сроков предоставления государственных услуг
+        /// </summary>
+        /// <returns></returns>
         [WebMethod]
         public static dynamic RefreshGovServiceTerms()
         {
@@ -72,6 +78,50 @@ namespace TM.SP.AppPages
                             spItem.Update();
                         }
                     }));
+        }
+
+        [WebMethod]
+        public static dynamic SendOdopm()
+        {
+            return Utility.WithCatchExceptionOnWebMethod("Отправка данных в ОДОПМ", () =>
+                Utility.WithSPServiceContext(SPContext.Current, web =>
+                {
+                    var ssOdopmAppId =
+                        Config.GetConfigValue(Config.GetConfigItem(web, "OdopmSingleSignOnAppId")).ToString();
+                    var ssLocalDbAccessAppId =
+                        Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId"))
+                            .ToString();
+
+                    var odopmUserId     = Security.GetSecureStoreUserNameCredential(ssOdopmAppId);
+                    var odopmPassword   = Security.GetSecureStorePasswordCredential(ssOdopmAppId);
+                    var odopmUrl        = Config.GetConfigValue(Config.GetConfigItem(web, "OdopmUrl")).ToString();
+                    var odopmClientCert = Config.GetConfigValue(Config.GetConfigItem(web, "OdopmClientCertificate")).ToString();
+                    var storeUserId     = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
+                    var storePassword   = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
+                    var storeHost       = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
+                    var storeDbName     = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
+
+                    var cBuilder = new SqlConnectionStringBuilder
+                    {
+                        DataSource     = storeHost,
+                        InitialCatalog = storeDbName,
+                        UserID         = storeUserId,
+                        Password       = storePassword
+                    };
+
+                    var sender = new ODOPM_Class();
+                    var parameters = new ODOPM_Class.Parametrs
+                    {
+                        UserNameServiceString     = odopmUserId,
+                        UserPasswordServiceString = odopmPassword,
+                        EndPointUrlString         = odopmUrl,
+                        ConnectionString          = cBuilder.ConnectionString,
+                        ClientSertificate         = odopmClientCert,
+                        ServerSertificate         = odopmClientCert
+                    };
+
+                    sender.Process(parameters);
+                }));
         }
     }
 }
