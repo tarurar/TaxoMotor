@@ -72,7 +72,12 @@ namespace TM.SP.DataModel
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmLicenseIsFromPortal)
                     .AddField(Fields.TmRegistrationDate,
-                        f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
+                        f => f.OnProvisioned<Field>(context =>
+                        {
+                            context.Object.MakeDateOnly();
+                            context.Object.MakeRequired();
+
+                        }))
                     .AddField(Fields.TmApplyDate, 
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmComment)
@@ -90,15 +95,15 @@ namespace TM.SP.DataModel
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmOutputDate)
                     .AddField(Fields.TmErrorDescription)
-                    .AddField(Fields.TmTaxiBrand)
-                    .AddField(Fields.TmTaxiModel)
-                    .AddField(Fields.TmTaxiYear)
+                    .AddField(Fields.TmTaxiBrand, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
+                    .AddField(Fields.TmTaxiModel, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
+                    .AddField(Fields.TmTaxiYear, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
                     .AddField(Fields.TmTaxiLastToDate,
                          f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
-                    .AddField(Fields.TmTaxiStateNumber)
+                    .AddField(Fields.TmTaxiStateNumber, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
                     .AddField(Fields.TmTaxiLeasingContractDetails)
                     .AddField(Fields.TmTaxiBodyYellow)
-                    .AddField(Fields.TmTaxiBodyColor)
+                    .AddField(Fields.TmTaxiBodyColor, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
                     .AddField(Fields.TmTaxiBodyColor2)
                     .AddField(Fields.TmTaxiStateNumberYellow)
                     .AddField(Fields.TmTaxiTaxometer)

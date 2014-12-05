@@ -182,7 +182,7 @@ namespace TM.SP.DataModel.Plumsail
             FieldType    = BuiltInFieldTypes.Lookup,
             Group        = ModelConsts.ColumnsDefaultGroup,
             ShowField    = "Title",
-            Required     = false,
+            Required     = true,
             Mult         = false,
             nsShowNew    = true,
             nsNewText    = "Добавить основание"
