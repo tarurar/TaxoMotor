@@ -109,6 +109,34 @@ var TM;
             });
         };
 
+        TMSP.GetContentTypeName = function(ctId, listId, success, fail) {
+            SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+
+                var ctx = SP.ClientContext.get_current();
+                var list = ctx.get_web().get_lists().getById(listId);
+                var ctList = list.get_contentTypes();
+                ctx.load(ctList);
+                ctx.executeQueryAsync(function() {
+
+                    var value = '';
+                    var contentTypeEnumerator = ctList.getEnumerator();
+                    while (contentTypeEnumerator.moveNext()) {
+                        var content = contentTypeEnumerator.get_current();
+                        var contentId = content.get_id().get_stringValue();
+                        
+                        if (contentId == ctId) {
+                            value = content.get_name();
+                            break;
+                        }
+                    };
+
+                    if (value) {
+                        success(value);
+                    } else fail('Тип содержимого с id = ' + ctId + ' не найден');
+                }, fail);
+            }, 'sp.js');
+        };
+
         return TMSP;
     })(TM.SP || (TM.SP = {}));
 

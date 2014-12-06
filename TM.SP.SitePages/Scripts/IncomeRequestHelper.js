@@ -356,7 +356,7 @@
 
             ir.EndingApplyForCancellation = function (incomeRequestId, onsuccess, onfail) {
                 // Запросы ПТС по транспортным средствам обращения
-                ir.SendPTSRequest(incomeRequestId, function () {
+                //ir.SendPTSRequest(incomeRequestId, function () {
                     // Расчет сроков оказания услуги и установка статуса обращения
                     ir.CalculateDatesAndSetStatus(incomeRequestId, 1050).success(function () {
                         // Получение xml для измененного состояния обращения
@@ -373,7 +373,7 @@
                             } else onfail("Не удалось получить статус обращения в виде xml");
                         }).fail(onfail);
                     }).fail(onfail);
-                }, onfail);
+                //}, onfail);
             };
 
             ir.ApplyForNewForJuridicalPerson = function (incomeRequestId, onsuccess, onfail) {
@@ -396,16 +396,16 @@
 
             ir.ApplyForCancellationForPrivateEntrepreneur = function (incomeRequestId, onsuccess, onfail) {
                 // Запрос в ЕГРИП
-                ir.SendEgripRequest(incomeRequestId, function () {
+                //ir.SendEgripRequest(incomeRequestId, function () {
                     ir.EndingApplyForCancellation(incomeRequestId, onsuccess, onfail);
-                }, onfail);
+                //}, onfail);
             };
 
             ir.ApplyForCancellationForJuridicalPerson = function (incomeRequestId, onsuccess, onfail) {
                 // Запрос в ЕГРЮЛ
-                ir.SendEgrulRequest(incomeRequestId, function () {
+                //ir.SendEgrulRequest(incomeRequestId, function () {
                     ir.EndingApplyForCancellation(incomeRequestId, onsuccess, onfail);
-                }, onfail);
+                //}, onfail);
             };
 
             ir.ApplyForNew = function(incomeRequestId, onsuccess, onfail) {

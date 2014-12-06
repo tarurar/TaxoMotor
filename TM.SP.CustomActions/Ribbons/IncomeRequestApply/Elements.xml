@@ -28,18 +28,39 @@
             SP.SOD.executeFunc('sp.js','SP.ClientContext', function() {
 
               SP.UI.Status.removeAllStatus(true);
-              TM.SP.IncomeRequest.ApplyForNew({ItemId}, function ApplyForNewOnSuccess() {
-	              var successStatus = SP.UI.Status.addStatus('Обращение принято в работу');
-	              SP.UI.Status.setStatusPriColor(successStatus, 'green');
-	              setTimeout(function() {
-		              SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
-	              }, 1500);
-              }, function ApplyForNewOnFail(message){
-	              var failStatus = SP.UI.Status.addStatus(message);
-	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              TM.SP.IncomeRequest.GetContentTypeName({ItemId}, function(ctName) {
+
+                  var func;
+                  switch (ctName) {
+                      case 'Новое':
+                          func = TM.SP.IncomeRequest.ApplyForNew;
+                          break;
+                      case 'Аннулирование':
+                          func = TM.SP.IncomeRequest.ApplyForCancellation;
+                          break;
+                      case 'Переоформление':
+                          func = TM.SP.IncomeRequest.ApplyForChange;
+                          break;
+                      case 'Выдача дубликата':
+                          func = TM.SP.IncomeRequest.ApplyForDuplicate;
+                          break;
+                      default:
+                          func = TM.SP.IncomeRequest.ApplyForNew;
+                          break;
+                  }
+                  
+                  func({ItemId}, function() {
+	                  var successStatus = SP.UI.Status.addStatus('Обращение принято в работу');
+	                  SP.UI.Status.setStatusPriColor(successStatus, 'green');
+	                  setTimeout(function() {
+		                  SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+	                  }, 1500);
+                  }, function(message){
+	                  var failStatus = SP.UI.Status.addStatus(message);
+	                  SP.UI.Status.setStatusPriColor(failStatus, 'red');
+                  });
               });
             });
-            
           })();" 
           EnabledScript="javascript: function enabled() { 
             var result = false;
