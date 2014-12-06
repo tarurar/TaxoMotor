@@ -1,4 +1,6 @@
-﻿var TM;
+﻿/// <reference path="jquery-2.1.1.js" />
+
+var TM;
 
 (function (TM) {
 
@@ -23,6 +25,88 @@
                 if (sHref && sHref.indexOf(toFindInLink.toLowerCase()) > 0)
                     oA.attributes["target"].value = "_blank";
             }
+        };
+
+        TMSP.GetBcsFieldIdentityFieldName = function (listId, bcsFieldName, success, fail) {
+
+            var auto = bcsFieldName.startsWith('bdil_');
+            if (auto) {
+                var value = bcsFieldName.replace('bdil_', 'bdilid_');
+                success(value);
+            } else {
+                SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+
+                    var ctx = SP.ClientContext.get_current();
+                    var list = ctx.get_web().get_lists().getById(listId);
+                    var field = list.get_fields().getByInternalNameOrTitle(bcsFieldName);
+                    ctx.load(field);
+                    ctx.executeQueryAsync(function () {
+                        var xml = field.get_schemaXml();
+                        var xmlDoc = $.parseXML(xml);
+                        var fn = $(xmlDoc).find('Field').attr('RelatedFieldWssStaticName');
+
+                        success(fn);
+                    }, fail);
+                }, 'sp.js');
+            }
+        };
+
+        TMSP.GetItemFieldValues = function(listId, itemId, fieldNames, success, fail) {
+            SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+
+                var ctx = SP.ClientContext.get_current();
+                var list = ctx.get_web().get_lists().getById(listId);
+                var item = list.getItemById(itemId);
+                ctx.load(item, fieldNames);
+                ctx.executeQueryAsync(function () {
+                    var values = [];
+                    for (var i = 0; i < fieldNames.length; i++) {
+                        values.push(item.get_item(fieldNames[i]));
+                    }
+
+                    success(values);
+                }, fail);
+            }, 'sp.js');
+        };
+
+        TMSP.GetListDefaultDisplayFormUrl = function(spListTitle, success, fail) {
+            SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+
+                var ctx = SP.ClientContext.get_current();
+                var list = ctx.get_web().get_lists().getByTitle(spListTitle);
+                ctx.load(list, 'DefaultDisplayFormUrl');
+                ctx.executeQueryAsync(function () {
+                    var value = list.get_defaultDisplayFormUrl();
+                    success(value);
+                }, fail);
+            }, 'sp.js');
+        };
+
+        TMSP.MakeBcsFieldControlLinked = function (listId, itemId, field, linkedListName) {
+            var div = $('.fd_field[fd_name=' + field + '] > div[fd_type=BusinessData]');
+            if (!div) return;
+            var text = $(div).text().trim();
+            if (!text) return;
+
+            TMSP.GetBcsFieldIdentityFieldName(listId, field, function(fn) {
+                TMSP.GetItemFieldValues(listId, itemId, [fn], function(fieldValues) {
+
+                    var extItemId = fieldValues[0];
+                    if (!extItemId) return;
+                    TMSP.GetListDefaultDisplayFormUrl(linkedListName, function (url) {
+
+                        var href = url + '?ID=' + extItemId;
+                        var atag = '<a href="' + href + '" target="_blank">' + text + '</a>';
+                        $(div).html(atag);
+                    }, function(sender, args) {
+                        console.error('Не удалось получить адрес формы списка. ' + args.get_message() + '\n' + args.get_stackTrace());
+                    });
+                }, function(sender, args) {
+                    console.error('Не удалось получить значение полей. ' + args.get_message() + '\n' + args.get_stackTrace());
+                });
+            }, function(sender, args) {
+                console.error('Не удалось получить описание поля. ' + args.get_message() + '\n' + args.get_stackTrace());
+            });
         };
 
         return TMSP;
