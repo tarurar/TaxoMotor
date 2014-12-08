@@ -18,9 +18,7 @@
 						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
 						Image16by16Top="-64"
 						Image16by16Left="-192"
-						Image32by32="/_layouts/15/1033/images/formatmap32x32.png"
-						Image32by32Top="0"
-						Image32by32Left="-384"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/taxi-print-32.png"
 						LabelText="Печать разрешения"
 						TemplateAlias="o1" />
 				</CommandUIDefinition>
@@ -28,7 +26,32 @@
 			<CommandUIHandlers>
 				<CommandUIHandler
 					Command="TaxoMotor.TaxiPrintLicense.ButtonCommand"
-					CommandAction="javascript:alert('Hello, world');" />
+					CommandAction="javascript: (function(){
+            __doPostBack('PrintTaxiLicenseAction', {ItemId});
+          })();" 
+          EnabledScript="javascript: function enabled() { 
+            var result = true;
+            
+            // todo
+            /*
+            if (!TM.SP.IncomeRequest.currentStatusCode) {
+              JSRequest.EnsureSetup();
+              var currentItemId = JSRequest.QueryString.ID;
+              
+              TM.SP.IncomeRequest.GetCurrentStatusCode(currentItemId).success(function(data){
+                TM.SP.IncomeRequest.currentStatusCode = data.d.Data;
+                RefreshCommandUI();
+              }).fail(function(){
+                var failStatus = SP.UI.Status.addStatus('Произошла ошибка при запросе статуса обращения');
+	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+            }
+            else {
+              result = TM.SP.IncomeRequest.currentStatusCode == 1010;
+            }*/
+            
+            return result;
+          } enabled();"/>
 			</CommandUIHandlers>
 		</CommandUIExtension>
 	</CustomAction>

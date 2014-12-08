@@ -767,6 +767,7 @@ namespace TM.SP.AppPages
                             taxiItem.Update();
                             break;
                         case "6420":
+                        case "1050":
                             var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
                             var licenseDraft = new License
                             {

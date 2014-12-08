@@ -2,13 +2,16 @@
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="1299c90b-9054-40de-82ee-12688d6d11b9" solutionId="1299c90b-9054-40de-82ee-12688d6d11b9" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.Customizations" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
   <assemblies>
     <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
+    <projectOutputAssembly location="TM.SP.AppPages.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.AppPages\TM.SP.AppPages.csproj" />
   </assemblies>
   <features>
     <featureReference itemId="d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07" />
     <featureReference itemId="104d62e3-828a-4c05-b8dc-25e4fceceb72" />
+    <featureReference itemId="5063c96b-fc67-4fab-b99e-001682bfd6d0" />
   </features>
   <projectItems>
     <projectItemReference itemId="3341b68c-c9a7-4585-9e95-fa91c96d0e5e" />
     <projectItemReference itemId="6dc7c3b5-1577-4f4e-ab27-e62f23bf04e5" />
+    <projectItemReference itemId="e6a23d3a-f6d5-4245-b9c1-f4e80441485b" />
   </projectItems>
 </package>

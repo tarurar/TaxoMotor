@@ -62,6 +62,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CONTROLTEMPLATES\TaxoMotor\LicensePrintControl.ascx.cs">
+      <DependentUpon>LicensePrintControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CONTROLTEMPLATES\TaxoMotor\LicensePrintControl.ascx.designer.cs">
+      <DependentUpon>LicensePrintControl.ascx.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventReceivers\erIncomeRequestItem\erIncomeRequestItem.cs" />
     <Compile Include="EventReceivers\erOutcomeRequestStateItem\erOutcomeRequestStateItem.cs" />
     <Compile Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.EventReceiver.cs">
@@ -73,6 +80,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CONTROLTEMPLATES\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{e6a23d3a-f6d5-4245-b9c1-f4e80441485b}</SharePointProjectItemId>
+    </None>
     <None Include="DelegateControls\jQueryControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e43ba965-efe1-48ea-90fc-16a6caa24ca7}</SharePointProjectItemId>
     </None>
@@ -81,6 +91,9 @@
     </None>
     <None Include="DelegateControls\knockoutjsControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{36bfd42b-f462-4be8-a0b7-6b7393be5e3a}</SharePointProjectItemId>
+    </None>
+    <None Include="DelegateControls\LicensePrintControlElement\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{141c9c26-5e18-49ac-812a-bc4a6494d996}</SharePointProjectItemId>
     </None>
     <None Include="DelegateControls\MasterPageCSSTuneControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{d01ef362-3fff-4564-aaf6-9a38e7089472}</SharePointProjectItemId>
@@ -96,6 +109,9 @@
     </None>
     <None Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.feature">
       <FeatureId>{d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxoMotorSiteLevelCustomizations\TaxoMotor_TaxoMotorSiteLevelCustomizations.feature">
+      <FeatureId>{5063c96b-fc67-4fab-b99e-001682bfd6d0}</FeatureId>
     </None>
     <None Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\TaxoMotor_TaxoMotorWebAppLevelCustomizations.feature">
       <FeatureId>{104d62e3-828a-4c05-b8dc-25e4fceceb72}</FeatureId>
@@ -126,12 +142,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CONTROLTEMPLATES\TaxoMotor\LicensePrintControl.ascx" />
     <Content Include="DelegateControls\jQueryMbBrowser\Elements.xml" />
     <Content Include="DelegateControls\jQueryMbBrowser\jQueryMbBrowser.ascx" />
     <Content Include="DelegateControls\knockoutjsControl\Elements.xml" />
     <Content Include="DelegateControls\knockoutjsControl\knockoutjsControl.ascx" />
+    <Content Include="DelegateControls\LicensePrintControlElement\Elements.xml" />
     <Content Include="EventReceivers\erIncomeRequestItem\Elements.xml" />
     <Content Include="EventReceivers\erOutcomeRequestStateItem\Elements.xml" />
+    <Content Include="Features\TaxoMotor_TaxoMotorSiteLevelCustomizations\TaxoMotor_TaxoMotorSiteLevelCustomizations.Template.xml">
+      <DependentUpon>TaxoMotor_TaxoMotorSiteLevelCustomizations.feature</DependentUpon>
+    </Content>
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.min.js" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\accordion.css" />
@@ -186,6 +207,7 @@
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.regex.extensions.js" />
     <Content Include="Scripts\Elements.xml" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorSiteLevelCustomizations.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorWebAppLevelCustomizations.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +229,10 @@
     <Content Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TM.SP.AppPages\TM.SP.AppPages.csproj">
+      <Project>{b2a464ec-6524-415e-a218-457d4aa37d83}</Project>
+      <Name>TM.SP.AppPages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
       <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
       <Name>TM.Utils</Name>
