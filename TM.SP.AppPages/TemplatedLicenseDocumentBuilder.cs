@@ -89,18 +89,18 @@ namespace TM.SP.AppPages
             };
 
 
-            var currentDate = DateTime.Now.Date;
+            var currentDate = DateTime.Now;
             var scalarValues = new object[]
             {
                 RequestAccountAddress,
                 _existingLicense != null ? _existingLicense["Tm_RegNumber"] : null,
                 _requestItem["Tm_RequestAccountBCSLookup"],
                 _requestItem["Tm_RequestAccountBCSLookup"],
-                currentDate, // todo
+                 currentDate.ToString("dd.MM.yyyy"), // todo
                 _taxiItem["Tm_TaxiBrand"],
                 _taxiItem["Tm_TaxiModel"],
                 _taxiItem["Tm_TaxiStateNumber"],
-                _existingLicense != null ? _existingLicense["Tm_LicenseTillDate"] : currentDate.AddYears(5).AddDays(-1)
+                _existingLicense != null ? _existingLicense["Tm_LicenseTillDate"] : currentDate.AddYears(5).AddDays(-1).ToString("dd.MM.yyyy")
             };
 
             var doc = new Document(tmplItem.File.OpenBinaryStream());
