@@ -772,7 +772,8 @@ namespace TM.SP.AppPages
                             var licenseDraft = new License
                             {
                                 Status = (int)LicenseStatus.Draft,
-                                TaxiId = taxiItem.ID
+                                TaxiId = taxiItem.ID,
+                                MO     = false
                             };
 
                             if (ctId == rList.ContentTypes["Новое"].Id)
