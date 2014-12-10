@@ -209,7 +209,7 @@ namespace TM.SP.DataModel
                             var field = fieldInstance.Context.CastTo<FieldCalculated>(fieldInstance);
 
                             if (field != null)
-                                field.Formula = "=IF([Обновление обращения разрешено], \"1\", \"0\")";
+                                field.Formula = "=ЕСЛИ([Обновление обращения разрешено]; \"1\"; \"0\")";
                         }))
                     .AddField(Fields.TmMessageId,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeHidden(false)))

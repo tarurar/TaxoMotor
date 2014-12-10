@@ -136,7 +136,7 @@ namespace TM.SP.AppPages
                     taxiList = GetTaxiItemsInStatus("Решено положительно");
                     break;
                 case 6:
-                    taxiList = GetTaxiItemsInStatus("Отказано");
+                    taxiList = GetTaxiItemsInStatus("Отказано;Решено отрицательно");
                     break;
             }
 

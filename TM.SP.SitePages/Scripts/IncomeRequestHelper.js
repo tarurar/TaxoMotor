@@ -416,8 +416,8 @@
                         ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
                             if (data && data.d) {
                                 // Провести проверку на дубли разрешений
-                                //ir.CanReleaseNewLicensesForRequest(incomeRequestId).success(function (data) {
-                                    //if (data && data.d.CanRelease) {
+                                ir.CanReleaseNewLicensesForRequest(incomeRequestId).success(function (data) {
+                                    if (data && data.d.CanRelease) {
                                         // Заявитель - индивидуальный предприниматель?
                                         ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
                                             if (data && data.d) {
@@ -426,8 +426,8 @@
                                                 ir.ApplyForNewForJuridicalPerson(incomeRequestId, onsuccess, onfail);
                                             }
                                         }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
-                                    //} else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' уже существует');
-                                //}).fail(onfail);
+                                    } else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' уже существует');
+                                }).fail(onfail);
                             } else onfail('В обращении нет ТС');
                         }).fail(onfail);
                     } else onfail('Не всем ТС проставлен признак');
@@ -896,44 +896,52 @@
                                                             progress.finishAction(action, 70);
                                                             
                                                             action = progress.addAction('Удаление черновиков разрешений');
-                                                            ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, "Отказано").success(function() {
-                                                                progress.finishAction(action, 80);
+                                                            ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, "Отказано").success(function () {
 
-                                                                action = progress.addAction('Установка и отправка статуса обращения в АС ГУФ');
-                                                                ir.SetStatusOnClosing(incomeRequestId).success(function () {
-                                                                    // Получение xml для измененного состояния обращения
-                                                                    ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
-                                                                        //Подписание xml
-                                                                        if (data && data.d) {
-                                                                            ir.SignXml(data.d, function(signedData) {
-                                                                                // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                                                ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                                                    // Отправка статуса обращения по межведомственному взаимодействию
-                                                                                    var attachs = (fileIdList ? fileIdList + ',' : '') + sigFileIdList;
-                                                                                    ir.SendStatus(incomeRequestId, attachs).success(function() {
-                                                                                        progress.finishAction(action, 90);
+                                                                ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, "Решено отрицательно").success(function() {
+                                                                    progress.finishAction(action, 80);
 
-                                                                                        action = progress.addAction('Обновление межведомственных запросов');
-                                                                                        ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function() {
-                                                                                            progress.finishAction(action, 100);
+                                                                    action = progress.addAction('Установка и отправка статуса обращения в АС ГУФ');
+                                                                    ir.SetStatusOnClosing(incomeRequestId).success(function () {
+                                                                        // Получение xml для измененного состояния обращения
+                                                                        ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                                                            //Подписание xml
+                                                                            if (data && data.d) {
+                                                                                ir.SignXml(data.d, function (signedData) {
+                                                                                    // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                                    ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                                                        // Отправка статуса обращения по межведомственному взаимодействию
+                                                                                        var attachs = (fileIdList ? fileIdList + ',' : '') + sigFileIdList;
+                                                                                        ir.SendStatus(incomeRequestId, attachs).success(function () {
+                                                                                            progress.finishAction(action, 90);
+
+                                                                                            action = progress.addAction('Обновление межведомственных запросов');
+                                                                                            ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function () {
+                                                                                                progress.finishAction(action, 100);
+                                                                                            }).fail(function (jqXhr, status, error) {
+                                                                                                progress.errorAction(action, error);
+                                                                                            });
+
                                                                                         }).fail(function (jqXhr, status, error) {
                                                                                             progress.errorAction(action, error);
                                                                                         });
-
                                                                                     }).fail(function (jqXhr, status, error) {
                                                                                         progress.errorAction(action, error);
                                                                                     });
-                                                                                }).fail(function (jqXhr, status, error) {
+                                                                                }, function (jqXhr, status, error) {
                                                                                     progress.errorAction(action, error);
                                                                                 });
-                                                                            }, function (jqXhr, status, error) {
-                                                                                progress.errorAction(action, error);
-                                                                            });
-                                                                        } else {
-                                                                            progress.errorAction(action, "Не удалось получить статус обращения в виде xml");
-                                                                        };
+                                                                            } else {
+                                                                                progress.errorAction(action, "Не удалось получить статус обращения в виде xml");
+                                                                            };
+                                                                        }).fail(function (jqXhr, status, error) {
+                                                                            progress.errorAction(action, error);
+                                                                        });
                                                                     }).fail(function (jqXhr, status, error) {
-                                                                        progress.errorAction(action, error);
+                                                                        var response = $.parseJSON(jqXhr.responseText).d;
+                                                                        console.error("Exception Message: " + response.Error.SystemMessage);
+                                                                        console.error("Exception StackTrace: " + response.Error.StackTrace);
+                                                                        progress.errorAction(action, response.Error.UserMessage);
                                                                     });
                                                                 }).fail(function(jqXhr, status, error) {
                                                                     var response = $.parseJSON(jqXhr.responseText).d;

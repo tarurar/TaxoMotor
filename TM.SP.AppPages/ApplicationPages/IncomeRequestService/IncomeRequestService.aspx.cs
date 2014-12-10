@@ -170,13 +170,21 @@ namespace TM.SP.AppPages
         {
             SPWeb web = SPContext.Current.Web;
             var licenseList = web.GetListOrBreak("Lists/LicenseList");
+            var taxiList    = web.GetListOrBreak("Lists/TaxiList");
+            var taxiItem    = taxiList.GetItemById(taxiId);
+            var taxiStNum  = taxiItem["Tm_TaxiStateNumber"];
+            if (taxiStNum == null) throw new Exception("Необходимо указать гос. рег. знак ТС");
 
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 // IsLast field - checking if license is acting
                 x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+
                 // checking for exactly this taxi license
-                x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) taxiId.ToString(CultureInfo.InvariantCulture),
+                // x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) taxiId.ToString(CultureInfo.InvariantCulture),
+
+                x => (string)x["Tm_TaxiStateNumber"] == taxiStNum.ToString(),
+
                 // license status is not Аннулировано
                 x => x["Tm_LicenseStatus"] != (DataTypes.Choice) "Аннулировано",
                 // we can release new license only if old license expires in < then 45 days
@@ -552,7 +560,7 @@ namespace TM.SP.AppPages
                         ? docBuilder.RenderDocument(4)
                         : docBuilder.RenderDocument(5));
                 }
-                else if (IsAnyTaxiInStatus(incomeRequestId, "Отказано"))
+                else if (IsAnyTaxiInStatus(incomeRequestId, "Отказано;Решено отрицательно"))
                 {
                     retValList.Add(ctId == spList.ContentTypes["Аннулирование"].Id
                         ? docBuilder.RenderDocument(4)
@@ -719,7 +727,7 @@ namespace TM.SP.AppPages
                         var statusList = safeWeb.GetListOrBreak("Lists/IncomeRequestStateBookList");
 
                         SPListItem newStatus = statusList.GetSingleListItemByFieldValue("Tm_ServiceCode",
-                            IsAnyTaxiInStatus(incomeRequestId, "Отказано") ? "1085" : "1075");
+                            IsAnyTaxiInStatus(incomeRequestId, "Отказано;Решено отрицательно") ? "1085" : "1075");
 
                         if (newStatus != null)
                             item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(newStatus.ID, newStatus.Title);
