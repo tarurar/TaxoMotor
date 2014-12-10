@@ -42,7 +42,7 @@ namespace TM.Services.CoordinateV5
             message.ServiceHeader.MessageId             = Guid.NewGuid().ToString("D");
             message.ServiceHeader.RequestDateTime       = DateTime.Now;
             // TaskMessage.Data
-            message.TaskMessage.Data.DocumentTypeCode   = Consts.EgripDocCode;
+            message.TaskMessage.Data.DocumentTypeCode   = Consts.EgrulDocCode;
             message.TaskMessage.Data.IncludeBinaryView  = true;
             message.TaskMessage.Data.IncludeXmlView     = true;
             message.TaskMessage.Data.ParameterTypeCode  = String.Empty;
