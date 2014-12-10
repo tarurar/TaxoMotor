@@ -146,36 +146,16 @@ namespace TM.SP.AppPages
                 ViewAttributes = "Scope='RecursiveAll'"
             });
 
-            if (listName == "LicenseList")
-            {
-                var taxiIdList = (from SPListItem item in docItems
-                    select item["Tm_TaxiLookup"]
-                    into taxiLookup
-                    where taxiLookup != null
-                    select new SPFieldLookupValue(taxiLookup.ToString())
-                    into taxiLookupValue
-                    select taxiLookupValue.LookupId).ToList();
-
-                var taxiList = Web.GetListOrBreak("Lists/TaxiList");
-                docItems = taxiList.GetItems(new SPQuery
+            var retVal = (from SPListItem item in docItems
+                select new PTSRequestItem()
                 {
-                    Query = Camlex.Query().Where(x => taxiIdList.Contains((int)x["ID"])).ToString(),
-                    ViewAttributes = "Scope='RecursiveAll'"
-                });
-            }
-
-            var retVal = new List<PTSRequestItem>();
-            foreach (SPListItem item in docItems)
-            {
-                retVal.Add(new PTSRequestItem()
-                {
-                    Id              = item.ID,
-                    Title           = item.Title,
-                    TaxiStateNumber = item["Tm_TaxiStateNumber"] != null ? item["Tm_TaxiStateNumber"].ToString() : String.Empty,
-                    HasError        = false,
-                    ListName        = "TaxiList"
-                });
-            }
+                    Id = item.ID,
+                    Title = item.Title,
+                    TaxiStateNumber =
+                        item["Tm_TaxiStateNumber"] != null ? item["Tm_TaxiStateNumber"].ToString() : String.Empty,
+                    HasError = false,
+                    ListName = listName
+                }).ToList();
 
             return retVal.Cast<T>().ToList();
         }
@@ -192,9 +172,9 @@ namespace TM.SP.AppPages
 
             foreach (T document in documentList)
             {
-                PTSRequestItem doc = document as PTSRequestItem;
+                var doc = document as PTSRequestItem;
                 #region [Rule#1 - State Number cannot be null]
-                if (String.IsNullOrEmpty(doc.TaxiStateNumber))
+                if (doc !=null && String.IsNullOrEmpty(doc.TaxiStateNumber))
                 {
                     retVal.Add(new ValidationErrorInfo()
                     {
@@ -232,21 +212,12 @@ namespace TM.SP.AppPages
             ErrorList.Visible = errorList.Count() > 0;
             BtnOk.Enabled = !errorList.Any<ValidationErrorInfo>(err => err.Severity == ValidationErrorSeverity.Critical);
         }
-        /// <summary>
-        /// TODO: Add comment
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Arguments of the event</param>
+        
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.EndOperation(0);
         }
 
-        /// <summary>
-        /// TODO: Add comment
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Arguments of the event</param>
         private void BtnOk_Click(object sender, EventArgs e)
         {
             var success = false;
@@ -265,7 +236,7 @@ namespace TM.SP.AppPages
 
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
-            PTSRequestItem doc = document as PTSRequestItem;
+            var doc = document as PTSRequestItem;
             SPListItem configItem = Config.GetConfigItem(this.Web, PTSServiceGuidConfigName);
             var svcGuid = Config.GetConfigValue(configItem);
             var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
@@ -283,13 +254,13 @@ namespace TM.SP.AppPages
             };
         }
 
-        protected XmlElement getTaskParam(SPListItem taxiItem)
+        protected XmlElement GetTaskParam(string stateNumber)
         {
-            XElement el = new XElement("ServiceProperties",
-                            new XAttribute("xmlns", String.Empty),
-                            new XElement("regno", taxiItem["Tm_TaxiStateNumber"]));
+            var el = new XElement("ServiceProperties",
+                new XAttribute("xmlns", String.Empty),
+                new XElement("regno", stateNumber));
 
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(el.CreateReader());
 
             return doc.DocumentElement;
@@ -297,29 +268,51 @@ namespace TM.SP.AppPages
 
         protected virtual CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item) where T : PTSRequestItem
         {
+            const string snPattern = "{0}-{1}-{2}-{3}/{4}";
+
             #region [Getting list instances]
             var irList  = this.Web.GetListOrBreak("Lists/IncomeRequestList");
             var stList  = this.Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
             #endregion
             #region [Getting linked items from lists]
-            // request item (taxi item)
-            SPListItem rItem = Web.GetListOrBreak(String.Format("Lists/{0}", item.ListName)).GetItemOrBreak(item.Id);
-            // income request item (taxi item parent)
-            var irId    = rItem["Tm_IncomeRequestLookup"] == null ? 0 : new SPFieldLookupValue(rItem["Tm_IncomeRequestLookup"].ToString()).LookupId;
-            var irItem  = irList.GetItemOrNull(irId);
-            var irDocId = irItem["Tm_RequestedDocument"] == null ? 0 : new SPFieldLookupValue(irItem["Tm_RequestedDocument"].ToString()).LookupId;
-            var stItem  = stList.GetItemOrNull(irDocId);
-            #endregion
-            #region [Getting needed values for outcome request]
-            // service number
-            var sNumber = irItem["Tm_SingleNumber"] == null ? String.Empty : irItem["Tm_SingleNumber"].ToString();
-            // service code lookup item
-            var sCode   = stItem == null ? String.Empty :
-                (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
-            #endregion
+            string sNumber = null;
+            string sCode = null;
 
+            if (item.ListName == "TaxiList")
+            {
+                SPListItem rItem = Web.GetListOrBreak(String.Format("Lists/{0}", item.ListName)).GetItemOrBreak(item.Id);
+                var irId = rItem["Tm_IncomeRequestLookup"] == null
+                    ? 0
+                    : new SPFieldLookupValue(rItem["Tm_IncomeRequestLookup"].ToString()).LookupId;
+                var irItem = irList.GetItemOrNull(irId);
+                if (irItem != null)
+                {
+                    int irDocId = irItem["Tm_RequestedDocument"] == null
+                        ? 0
+                        : new SPFieldLookupValue(irItem["Tm_RequestedDocument"].ToString()).LookupId;
+                    SPListItem stItem = stList.GetItemOrNull(irDocId);
+
+                    sNumber = irItem["Tm_SingleNumber"] == null ? String.Empty : irItem["Tm_SingleNumber"].ToString();
+                    sCode = stItem == null
+                        ? String.Empty
+                        : (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
+                }
+            }
+                
+            if (String.IsNullOrEmpty(sNumber))
+            {
+                sNumber = String.Format(snPattern, Consts.TaxoMotorDepCode, Consts.TaxoMotorSysCode, "77200101",
+                    String.Format("{0:000000}", 1), DateTime.Now.Year.ToString(CultureInfo.InvariantCulture).Right(2));
+            }
+            if (String.IsNullOrEmpty(sCode))
+            {
+                sCode = "77200101";
+            }
+
+            #endregion
+            
             #region [Building outcome request]
-            var message = Helpers.GetPTSMessageTemplate(getTaskParam(rItem));
+            var message = Helpers.GetPTSMessageTemplate(GetTaskParam(item.TaxiStateNumber));
             message.ServiceHeader.ServiceNumber            = sNumber;
             message.TaskMessage.Task.Responsible.FirstName = String.Empty;
             message.TaskMessage.Task.Responsible.LastName  = this.Web.CurrentUser.Name;
@@ -339,14 +332,20 @@ namespace TM.SP.AppPages
             var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
                 ((int)document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
             var taxiList = Web.GetListOrBreak("Lists/TaxiList");
-            var taxiItem = taxiList.GetItemById(document.Id);
+            var licList = Web.GetListOrBreak("Lists/LicenseList");
+
+            SPListItem taxiItem = null;
+            SPListItem licItem = null;
+            if (document.ListName == "TaxiList") taxiItem = taxiList.GetItemById(document.Id);
+            if (document.ListName == "LicenseList") licItem = licList.GetItemById(document.Id);        
 
             var newItem = trackList.AddItem();
             newItem["Title"] = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
             newItem["Tm_OutputDate"] = DateTime.Now;
-            newItem["Tm_TaxiLookup"] = new SPFieldLookupValue(document.Id, document.Title);
-            newItem["Tm_IncomeRequestLookup"] = taxiItem["Tm_IncomeRequestLookup"];
+            newItem["Tm_TaxiLookup"] = taxiItem != null ? new SPFieldLookupValue(document.Id, document.Title) : null;
+            newItem["Tm_IncomeRequestLookup"] = taxiItem != null ? taxiItem["Tm_IncomeRequestLookup"] : null;
             newItem["Tm_OutputRequestTypeLookup"] = requestTypeItem != null ? new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title) : null;
+            newItem["Tm_LicenseLookup"] = licItem != null ? licItem["Tm_LicenseRtParentLicenseLookup"] : null;
             newItem["Tm_AnswerReceived"] = false;
             newItem["Tm_MessageId"] = requestId;
             newItem.Update();

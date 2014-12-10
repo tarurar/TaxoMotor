@@ -2,9 +2,9 @@
 <!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
 	<CustomAction
-		Id="Ribbon.TaxoMotor.LicenseSendEgrul"
+		Id="Ribbon.TaxoMotor.LicenseSendCombi"
 		Location="CommandUI.Ribbon.ListView"
-		Title="Запрос ЕГРЮЛ"
+		Title="Запрос ЕГРЮЛ/ЕГРИП"
 		RegistrationType="List"
 		RegistrationId="{$ListId:Lists/LicenseList;}">
 		<CommandUIExtension>
@@ -12,20 +12,20 @@
 				<CommandUIDefinition
 					Location="Ribbon.ListItem.Actions.Controls._children">
 					<Button
-						Id="Ribbon.TaxoMotor.LicenseSendEgrul.Button"
-						Command="TaxoMotor.LicenseSendEgrul.ButtonCommand"
+						Id="Ribbon.TaxoMotor.LicenseSendCombi.Button"
+						Command="TaxoMotor.LicenseSendCombi.ButtonCommand"
 						Sequence="530"
 						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
 						Image16by16Top="-64"
 						Image16by16Left="-192"
-						Image32by32="/_layouts/15/TM.SP.AppPages/Images/send-egrul-32.png"
-						LabelText="Запрос ЕГРЮЛ"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/send-egrip-32.png"
+						LabelText="Запрос ЕГРЮЛ/ЕГРИП"
 						TemplateAlias="o1" />
 				</CommandUIDefinition>
 			</CommandUIDefinitions>
 			<CommandUIHandlers>
 				<CommandUIHandler
-					Command="TaxoMotor.LicenseSendEgrul.ButtonCommand"
+					Command="TaxoMotor.LicenseSendCombi.ButtonCommand"
 					CommandAction="javascript: (function() {
             var identities = SP.ListOperation.Selection.getSelectedItems().filter(function (e) {
                 return (e.fsObjType || e.fsObjType == 0);
@@ -34,8 +34,8 @@
             });
 
             var options = {
-                url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRULPage.aspx') + '?IsDlg=1&amp;ListId={ListId}&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
-                title: 'Отправка запроса в Единый Государственный Реестр Юридических Лиц (ЕГРЮЛ)',
+                url: SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestCombi.aspx') + '?IsDlg=1&amp;ListId={ListId}&amp;Items=' + identities.join() + '&amp;Source=' + location.href,
+                title: 'Отправка запросов ЕГРЮЛ/ЕГРИП',
                 allowMaximize: false,
                 showClose: true,
                 width: 800,
@@ -56,7 +56,7 @@
 
             SP.UI.ModalDialog.showModalDialog(options);
             
-          })();" 
+          })();"
           EnabledScript="javascript:function enabled() { var items = SP.ListOperation.Selection.getSelectedItems(); return (items.length > 0); } enabled();"/>
 			</CommandUIHandlers>
 		</CommandUIExtension>

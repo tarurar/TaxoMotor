@@ -110,6 +110,13 @@
     <Compile Include="ApplicationPages\LicenseService\LicenseService.aspx.designer.cs">
       <DependentUpon>LicenseService.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationPages\SendRequestCombi\SendRequestCombi.aspx.cs">
+      <DependentUpon>SendRequestCombi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\SendRequestCombi\SendRequestCombi.aspx.designer.cs">
+      <DependentUpon>SendRequestCombi.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx.cs">
       <DependentUpon>SendRequestEGRIPPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -164,6 +171,9 @@
     <None Include="ApplicationPages\LicenseService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{7845935f-55e5-41c5-bed4-a7b3d4c61baf}</SharePointProjectItemId>
     </None>
+    <None Include="ApplicationPages\SendRequestCombi\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{c89b9a44-f541-459e-b1e8-95892565843e}</SharePointProjectItemId>
+    </None>
     <None Include="ApplicationPages\SendRequestEGRIPPage\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{699f85d2-cff1-41c3-955a-cd5d964ca603}</SharePointProjectItemId>
     </None>
@@ -208,6 +218,7 @@
     <Content Include="ApplicationPages\CommonService\CommonService.aspx" />
     <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
     <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />
+    <Content Include="ApplicationPages\SendRequestCombi\SendRequestCombi.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />
   </ItemGroup>
