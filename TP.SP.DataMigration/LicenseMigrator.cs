@@ -32,11 +32,12 @@ namespace TP.SP.DataMigration
             string yearStr = license.CreationDate.HasValue ? license.CreationDate.Value.Year.ToString(CultureInfo.CurrentCulture) : "noDate";
             string monthstr = license.CreationDate.HasValue ? license.CreationDate.Value.ToString("MMM", CultureInfo.CurrentCulture) : "noDate";
             string num = license.RegNumber;
+            int numInt = Convert.ToInt32(num);
             SPFolder parentFolder = list.RootFolder.CreateSubFolders(new[] { yearStr, monthstr, num });
 
             SPListItem newItem = list.AddItem(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
 
-            newItem["Title"]                          = license.RegNumber;
+            newItem["Title"]                          = String.Format("{0:00000}", numInt);
             newItem["Tm_BlankSeries"]                 = license.BlankSeries;
             newItem["Tm_BlankNo"]                     = license.BlankNo;
             newItem["Tm_OrganizationName"]            = license.OrgName;

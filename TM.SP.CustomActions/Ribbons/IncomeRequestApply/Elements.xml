@@ -4,7 +4,7 @@
 	<CustomAction
 		Id="Ribbon.TaxoMotor.IncomeRequestApply"
 		Location="CommandUI.Ribbon.DisplayForm"
-		Title="Принять в работу"
+		Title="Зарегистрировать"
 		RegistrationType="List"
 		RegistrationId="{$ListId:Lists/IncomeRequestList;}">
 		<CommandUIExtension>
@@ -17,7 +17,7 @@
 						Sequence="500"
 						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
 						Image32by32="/_layouts/15/TM.SP.AppPages/Images/ir-apply-32.png"
-						LabelText="Принять в работу"
+						LabelText="Зарегистрировать"
 						TemplateAlias="o1" />
 				</CommandUIDefinition>
 			</CommandUIDefinitions>
