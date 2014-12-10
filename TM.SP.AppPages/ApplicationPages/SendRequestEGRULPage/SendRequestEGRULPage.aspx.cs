@@ -3,7 +3,11 @@
 // </copyright>
 // <author>SPDEV\developer</author>
 // <date>2014-08-06 17:56:53Z</date>
+
+using System.Globalization;
 // ReSharper disable CheckNamespace
+
+
 namespace TM.SP.AppPages
 // ReSharper restore CheckNamespace
 {
@@ -111,7 +115,7 @@ namespace TM.SP.AppPages
         protected virtual CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item) where T : EGRULRequestItem
         {
             // request item
-            SPListItem rItem = GetList().GetItemOrBreak(item.Id);
+            SPListItem rItem = Web.GetListOrBreak(String.Format("Lists/{0}", item.ListName)).GetItemOrBreak(item.Id);
             var rDocument    = rItem["Tm_RequestedDocument"] == null ? 0 : new SPFieldLookupValue(rItem["Tm_RequestedDocument"].ToString()).LookupId;
             var sNumber      = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
             // request account
@@ -200,6 +204,7 @@ namespace TM.SP.AppPages
         protected override List<T> LoadDocuments<T>()
         {
             SPList docList = GetList();
+            var listName = docList.RootFolder.Name;
             var idList = ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
             
             SPListItemCollection docItems = docList.GetItems(new SPQuery 
@@ -208,6 +213,39 @@ namespace TM.SP.AppPages
                 ViewAttributes = "Scope='RecursiveAll'"
             });
             
+            if (listName == "LicenseList")
+            {
+                var taxiIdList = (from SPListItem item in docItems
+                    select item["Tm_TaxiLookup"]
+                    into taxiLookup
+                    where taxiLookup != null
+                    select new SPFieldLookupValue(taxiLookup.ToString())
+                    into taxiLookupValue
+                    select taxiLookupValue.LookupId).ToList();
+
+                var taxiList = Web.GetListOrBreak("Lists/TaxiList");
+                SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
+                {
+                    Query = Camlex.Query().Where(x => taxiIdList.Contains((int)x["ID"])).ToString(),
+                    ViewAttributes = "Scope='RecursiveAll'"
+                });
+
+                var requestIdList = (from SPListItem item in taxiItems
+                    select item["Tm_IncomeRequestLookup"]
+                    into requestLookup
+                    where requestLookup != null
+                    select new SPFieldLookupValue(requestLookup.ToString())
+                    into requestLookupValue
+                    select requestLookupValue.LookupId).ToList();
+
+                var rList = Web.GetListOrBreak("Lists/IncomeRequestList");
+                docItems = rList.GetItems(new SPQuery
+                {
+                    Query = Camlex.Query().Where(x => requestIdList.Contains((int)x["ID"])).ToString(),
+                    ViewAttributes = "Scope='RecursiveAll'"
+                });
+            }
+
             var retVal = new List<EGRULRequestItem>();
             foreach (SPListItem item in docItems)
             {
@@ -224,7 +262,8 @@ namespace TM.SP.AppPages
                     RequestAccount      = accountStr,
                     RequestAccountId    = accountId != null ? (int)accountId : 0,
                     OrgFormCode         = accountEntity != null ? accountEntity.OrgFormCode : String.Empty,
-                    HasError            = false
+                    HasError            = false,
+                    ListName            = "IncomeRequestList"
                 });
             }
 

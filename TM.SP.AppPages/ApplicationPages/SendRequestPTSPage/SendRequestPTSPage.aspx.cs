@@ -137,6 +137,7 @@ namespace TM.SP.AppPages
         protected override List<T> LoadDocuments<T>()
         {
             SPList docList = GetList();
+            var listName = docList.RootFolder.Name;
             var idList = ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
 
             SPListItemCollection docItems = docList.GetItems(new SPQuery()
@@ -144,6 +145,24 @@ namespace TM.SP.AppPages
                 Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString(),
                 ViewAttributes = "Scope='RecursiveAll'"
             });
+
+            if (listName == "LicenseList")
+            {
+                var taxiIdList = (from SPListItem item in docItems
+                    select item["Tm_TaxiLookup"]
+                    into taxiLookup
+                    where taxiLookup != null
+                    select new SPFieldLookupValue(taxiLookup.ToString())
+                    into taxiLookupValue
+                    select taxiLookupValue.LookupId).ToList();
+
+                var taxiList = Web.GetListOrBreak("Lists/TaxiList");
+                docItems = taxiList.GetItems(new SPQuery
+                {
+                    Query = Camlex.Query().Where(x => taxiIdList.Contains((int)x["ID"])).ToString(),
+                    ViewAttributes = "Scope='RecursiveAll'"
+                });
+            }
 
             var retVal = new List<PTSRequestItem>();
             foreach (SPListItem item in docItems)
@@ -153,7 +172,8 @@ namespace TM.SP.AppPages
                     Id              = item.ID,
                     Title           = item.Title,
                     TaxiStateNumber = item["Tm_TaxiStateNumber"] != null ? item["Tm_TaxiStateNumber"].ToString() : String.Empty,
-                    HasError        = false
+                    HasError        = false,
+                    ListName        = "TaxiList"
                 });
             }
 
@@ -283,7 +303,7 @@ namespace TM.SP.AppPages
             #endregion
             #region [Getting linked items from lists]
             // request item (taxi item)
-            var rItem   = GetList().GetItemOrBreak(item.Id);
+            SPListItem rItem = Web.GetListOrBreak(String.Format("Lists/{0}", item.ListName)).GetItemOrBreak(item.Id);
             // income request item (taxi item parent)
             var irId    = rItem["Tm_IncomeRequestLookup"] == null ? 0 : new SPFieldLookupValue(rItem["Tm_IncomeRequestLookup"].ToString()).LookupId;
             var irItem  = irList.GetItemOrNull(irId);

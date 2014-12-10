@@ -22,6 +22,7 @@ namespace TM.SP.AppPages.ApplicationPages
         public string Title { get; set; }
         public bool HasError {get; set;}
         public OutcomeRequestType RequestTypeCode { get; set; }
+        public string ListName { get; set; }
     }
 
     public enum OutcomeRequestType
