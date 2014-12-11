@@ -102,7 +102,7 @@ namespace TM.SP.DataModel
                          f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmTaxiStateNumber, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
                     .AddField(Fields.TmTaxiLeasingContractDetails)
-                    .AddField(Fields.TmTaxiBodyYellow)
+                    .AddField(Fields.TmTaxiBodyYellow, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
                     .AddField(Fields.TmTaxiBodyColor, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
                     .AddField(Fields.TmTaxiBodyColor2)
                     .AddField(Fields.TmTaxiStateNumberYellow)
@@ -115,7 +115,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmTaxiPrevLicenseNumber)
                     .AddField(Fields.TmTaxiPrevLicenseDate,
                          f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
-                    .AddField(Fields.TmTaxiStsDetails)
+                    .AddField(Fields.TmTaxiStsDetails, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
                     .AddField(Fields.TmTaxiOwner)
                     .AddField(Fields.TmTaxiBodyType)
                     .AddField(Fields.TmTaxiStatus, f => f.OnProvisioned<Field>(
