@@ -68,3 +68,8 @@ a,.ms-link:visited{
 .ms-pivotControl-surfacedOpt, .ms-pivotControl-surfacedOpt-selected {
 	padding: 5px 15px !important;
 }
+
+div[formtype="Display"] div.fd_control {
+    border: 1px #c5c5c5 solid;
+    padding: 2px;
+}
