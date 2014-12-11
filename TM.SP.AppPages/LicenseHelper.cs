@@ -110,11 +110,11 @@ namespace TM.SP.AppPages
             draft.InvalidReason      = "";
             draft.JuridicalAddress   = declarant != null ? declarant.SingleStrPostalAddress : "";
             draft.LastName           = orgHead != null ? orgHead.LastName : "";
-            draft.Lfb                = declarant != null ? declarant.OrgFormCode : "";
+            draft.Lfb                = declarant != null ? declarant.OrgFormCode.Trim() : "";
             draft.Locality           = postalAddress != null ? postalAddress.Locality : "";
             draft.Ogrn               = declarant != null ? declarant.Ogrn : "";
             draft.OgrnDate           = declarant != null ? declarant.OgrnDate : null;
-            draft.OrgName            = declarant != null ? declarant.FullName : "";
+            draft.OrgName            = declarant != null ? (draft.Lfb == "91" ? declarant.Name : declarant.FullName) : "";
             draft.Ownership          = postalAddress != null ? postalAddress.Ownership : "";
             draft.PhoneNumber        = declarant != null ? declarant.Phone : "";
             draft.PostalCode         = postalAddress != null ? postalAddress.PostalCode : "";

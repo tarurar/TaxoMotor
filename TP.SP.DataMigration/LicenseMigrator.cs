@@ -90,7 +90,7 @@ namespace TP.SP.DataMigration
             newItem["Tm_TaxiVin"]                     = license.TaxiVin;
             newItem["Tm_LicenseDateOd"]               = license.Date_OD;
             newItem["Tm_LicenseGuidOd"]               = license.Guid_OD;
-            newItem["Tm_LicenseIsMo"]                 = license.MO;
+            newItem["Tm_LicenseIsMo"]                 = !license.MO.HasValue ? false : license.MO;
             newItem["Tm_LicenseGuidMo"]               = license.GUID_MO;
             newItem["Tm_LicenseDateMo"]               = license.DATE_MO;
             newItem["Tm_LicenseIsFromPortal"]         = license.FromPortal;
