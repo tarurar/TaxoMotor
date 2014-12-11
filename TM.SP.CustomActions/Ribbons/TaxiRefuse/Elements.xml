@@ -32,7 +32,7 @@
 	
 	            $.ajax({
 		            method: 'GET',
-		            url: encodeURI(_spPageContextInfo.webAbsoluteUrl + &quot;/_api/web/lists/getByTitle('Транспортные средства')/items(1)?$select=Tm_IncomeRequestLookup/ID&amp;$expand=Tm_IncomeRequestLookup&quot;),
+		            url: encodeURI(_spPageContextInfo.webAbsoluteUrl + &quot;/_api/web/lists/getByTitle('Транспортные средства')/items({ItemId})?$select=Tm_IncomeRequestLookup/ID&amp;$expand=Tm_IncomeRequestLookup&quot;),
 		            headers: { Accept: 'application/json;odata=verbose' }
 	            }).success(function(data){
 		            var incomeRequestId = data.d.Tm_IncomeRequestLookup.ID;
