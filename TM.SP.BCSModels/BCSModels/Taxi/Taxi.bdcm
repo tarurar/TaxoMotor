@@ -20,7 +20,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.61" EstimatedInstanceCount="100000" DefaultDisplayName="License">
+				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.77" EstimatedInstanceCount="100000" DefaultDisplayName="License">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Taxi.LicenseEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -4711,6 +4711,16 @@
               </Parameters>
               <MethodInstances>
                 <MethodInstance Name="GetLicenseDraftForSPTaxiId" Type="SpecificFinder" ReturnParameterName="returnLicense" DefaultDisplayName="Get License Draft For SPTaxi Id" />
+              </MethodInstances></Method>
+            <Method Name="GetAnyLicenseForSPTaxiId">
+              <Parameters>
+                <Parameter Name="spTaxiId" Direction="In">
+                  <TypeDescriptor Name="spTaxiIdTypeDescriptor" TypeName="System.Int32" /></Parameter>
+                <Parameter Name="returnLicense" Direction="Return">
+                  <TypeDescriptor Name="returnLicenseTypeDescriptor" TypeName="TM.SP.BCSModels.Taxi.License, TM.SP.BCSModels" IsCollection="false" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="GetAnyLicenseForSPTaxiId" Type="SpecificFinder" DefaultDisplayName="Get Any License For SPTaxi Id" ReturnParameterName="returnLicense" />
               </MethodInstances></Method>
 					</Methods>
 					<AssociationGroups>

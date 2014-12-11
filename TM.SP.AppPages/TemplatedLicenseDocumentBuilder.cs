@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using CamlexNET;
+using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
 using Aspose.Words;
 using TM.Utils;
+using TM.SP.BCSModels.Taxi;
 using AsposeLicense = Aspose.Words.License;
+using License = TM.SP.BCSModels.Taxi.License;
 
 namespace TM.SP.AppPages
 {
@@ -20,7 +17,7 @@ namespace TM.SP.AppPages
         private SPWeb _web;
         private SPListItem _taxiItem;
         private SPListItem _requestItem;
-        private SPListItem _existingLicense;
+        private License _existingLicense;
         private SPList _tmplLib;
         private AsposeLicense _asposeLic;
 
@@ -52,27 +49,14 @@ namespace TM.SP.AppPages
             Utility.TryGetListItemFromLookupValue(_taxiItem["Tm_IncomeRequestLookup"],
                 _taxiItem.Fields.GetFieldByInternalName("Tm_IncomeRequestLookup") as SPFieldLookup, out _requestItem);
 
-            var prevLicNumber = _taxiItem["Tm_TaxiPrevLicenseNumber"];
-            if (prevLicNumber != null)
+            _existingLicense = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
             {
-                var licenseList = _web.GetListOrBreak("Lists/LicenseList");
-
-                var expressions = new List<Expression<Func<SPListItem, bool>>>
-                {
-                    // IsLast field - checking if license is acting
-                    x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
-                    // previous license number
-                    x => (string)x["Tm_RegNumber"] == prevLicNumber.ToString()
-                };
-                SPListItemCollection licenseItems = licenseList.GetItems(new SPQuery
-                {
-                    Query = Camlex.Query().WhereAll(expressions).ToString(),
-                    ViewAttributes = "Scope='RecursiveAll'"
-                });
-
-                if (licenseItems.Count > 0)
-                    _existingLicense = licenseItems[0];
-            }
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "GetAnyLicenseForSPTaxiId",
+                methodType  = MethodInstanceType.SpecificFinder
+            }, taxiId);
         }
 
         public MemoryStream RenderDocument(int templateNumber)
@@ -85,29 +69,33 @@ namespace TM.SP.AppPages
             var scalarValueNames = new string[]
             {
                 "RequestAccountAddress", "LicenseNumber", "RequestAccountFullName", "RequestAccountShortName",
-                "LicenseBeginDate", "TaxiMark", "TaxiModel", "TaxiStateNumber", "LicenseTillDate"
+                "LicenseCreationDate", "TaxiMark", "TaxiModel", "TaxiStateNumber", "LicenseOutputDate", 
+                "LicenseChangeDate", "Signer", "SignerPosition"
             };
 
 
-            var currentDate = DateTime.Now;
+            var signerName     = Config.GetConfigValue(Config.GetConfigItem(_web, "SignerName")).ToString();
+            var signerPosition = Config.GetConfigValue(Config.GetConfigItem(_web, "SignerJob")).ToString();
             var scalarValues = new object[]
             {
                 RequestAccountAddress,
-                _existingLicense != null ? _existingLicense["Tm_RegNumber"] : null,
+                String.Format("{0:00000}", Convert.ToInt32(_existingLicense.RegNumber)),
                 _requestItem["Tm_RequestAccountBCSLookup"],
                 _requestItem["Tm_RequestAccountBCSLookup"],
-                 currentDate.ToString("dd.MM.yyyy"), // todo
+                _existingLicense.CreationDate.HasValue ? _existingLicense.CreationDate.Value.ToString("dd.MM.yyyy") : "",
                 _taxiItem["Tm_TaxiBrand"],
                 _taxiItem["Tm_TaxiModel"],
                 _taxiItem["Tm_TaxiStateNumber"],
-                _existingLicense != null ? _existingLicense["Tm_LicenseTillDate"] : currentDate.AddYears(5).AddDays(-1).ToString("dd.MM.yyyy")
+                _existingLicense.OutputDate.HasValue ? _existingLicense.OutputDate.Value.ToString("dd.MM.yyyy") : "",
+                _existingLicense.ChangeDate.HasValue ? _existingLicense.ChangeDate.Value.ToString("dd.MM.yyyy") : "",
+                signerName,
+                signerPosition
             };
 
             var doc = new Document(tmplItem.File.OpenBinaryStream());
-
             doc.MailMerge.Execute(scalarValueNames, scalarValues);
             var ms = new MemoryStream();
-            doc.Save(ms, SaveFormat.Doc);
+            doc.Save(ms, SaveFormat.Pdf);
 
             return ms;
         }

@@ -25,8 +25,8 @@ namespace TM.SP.Customizations.CONTROLTEMPLATES.TaxoMotor
                 var taxiItem = web.GetListOrBreak("Lists/TaxiList").GetItemById(taxiId);
                 var licenseNum = taxiItem["Tm_TaxiPrevLicenseNumber"];
                 var filename = licenseNum == null
-                    ? "Разрешение.doc"
-                    : String.Format("Разрешение №{0}.doc", licenseNum);
+                    ? "Разрешение.pdf"
+                    : String.Format("Разрешение №{0}.pdf", licenseNum);
 
                 var docBuilder = new TemplatedLicenseDocumentBuilder(web, taxiId);
                 var ms = docBuilder.RenderDocument(7);
@@ -34,7 +34,7 @@ namespace TM.SP.Customizations.CONTROLTEMPLATES.TaxoMotor
 
                 response.Clear();
                 response.ClearHeaders();
-                response.ContentType = "application/ms-word";
+                response.ContentType = "application/pdf";
                 response.AddHeader("Content-Disposition", GetContentDisposition(filename));
                 response.AddHeader("Content-Length", ms.Length.ToString(CultureInfo.InvariantCulture));
                 ms.WriteTo(response.OutputStream);
