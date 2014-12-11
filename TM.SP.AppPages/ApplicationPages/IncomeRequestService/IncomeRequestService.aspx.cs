@@ -749,10 +749,11 @@ namespace TM.SP.AppPages
                    Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) => 
                    Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
             {
-                var rList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
-                var rItem = rList.GetItemOrBreak(incomeRequestId);
-                var taxiList = safeWeb.GetListOrBreak("Lists/TaxiList");
-                var taxiIdArr = taxiIdList.Split(';');
+                var rList       = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                var rItem       = rList.GetItemOrBreak(incomeRequestId);
+                var taxiList    = safeWeb.GetListOrBreak("Lists/TaxiList");
+                var licenseList = safeWeb.GetListOrBreak("Lists/LicenseList");
+                var taxiIdArr   = taxiIdList.Split(';');
 
                 SPListItem rStatus;
                 Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"],
@@ -786,6 +787,9 @@ namespace TM.SP.AppPages
 
                             if (ctId == rList.ContentTypes["Новое"].Id)
                             {
+                                licenseDraft.CreationDate = DateTime.Now.Date;
+                                licenseDraft.ChangeDate   = DateTime.Now.Date;
+                                licenseDraft.OutputDate   = DateTime.Now.AddYears(5).AddDays(-1).Date;
                                 var storedLicenseDraft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                                 {
                                     lob         = BCS.LOBTaxiSystemName,
@@ -795,25 +799,55 @@ namespace TM.SP.AppPages
                                     methodType  = MethodInstanceType.Creator
                                 }, licenseDraft);
                                 if (storedLicenseDraft != null)
-                                    taxiItem["Tm_TaxiPrevLicenseNumber"] = storedLicenseDraft.RegNumber;
+                                {
+                                    var num = String.Format("{0:00000}", Convert.ToInt32(storedLicenseDraft.RegNumber));
+                                    taxiItem["Tm_TaxiPrevLicenseNumber"] = num;
+                                }
                             }
                             else
                             {
                                 var regNumber = taxiItem["Tm_TaxiPrevLicenseNumber"];
-                                if (regNumber != null && regNumber.ToString() != String.Empty)
+                                if (regNumber == null || regNumber.ToString() == String.Empty)
+                                    throw new Exception(
+                                        "В транспортном средстве не указан номер ранее выданного разрешения");
+
+                                var numInt = Convert.ToInt32(regNumber.ToString());
+                                // trying to find existing acting license
+                                var expressions = new List<Expression<Func<SPListItem, bool>>>
                                 {
-                                    licenseDraft.RegNumber = regNumber.ToString();
-                                    BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                    {
-                                        lob         = BCS.LOBTaxiSystemName,
-                                        ns          = BCS.LOBTaxiSystemNamespace,
-                                        contentType = "License",
-                                        methodName  = "CreateLicense",
-                                        methodType  = MethodInstanceType.Creator
-                                    }, licenseDraft);
-                                }
-                                else
-                                    throw new Exception("В транспортном средстве не указан номер ранее выданного разрешения");
+                                    // IsLast field - checking if license is acting
+                                    x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                                    // checking for regNumber
+                                    x => (string) x["Tm_RegNumber"] == numInt.ToString(CultureInfo.InvariantCulture)
+                                };
+                                SPListItemCollection licenseItems = licenseList.GetItems(new SPQuery
+                                {
+                                    Query = Camlex.Query().WhereAll(expressions).ToString(),
+                                    ViewAttributes = "Scope='RecursiveAll'"
+                                });
+                                if (licenseItems.Count == 0)
+                                    throw new Exception(String.Format("Не найдено предыдущее действующее разрешение с номером {0}", numInt));
+                                if (licenseItems.Count > 1)
+                                    throw new Exception(String.Format("Найдено {0} действующих разрешения с номером {1}. Ожидается наличие одного.", licenseItems.Count, numInt));
+
+                                var parentLicense = licenseItems[0];
+                                var parentLicenseExt =
+                                    LicenseService.GetLicense(Convert.ToInt32(parentLicense["Tm_LicenseExternalId"]));
+
+                                licenseDraft.RegNumber    = parentLicenseExt.RegNumber;
+                                licenseDraft.CreationDate = parentLicenseExt.CreationDate;
+                                licenseDraft.ChangeDate   = DateTime.Now.Date;
+                                licenseDraft.OutputDate   = parentLicenseExt.OutputDate;
+                                licenseDraft.Parent       = parentLicenseExt.Id;
+                                licenseDraft.RootParent   = parentLicenseExt.RootParent;
+                                BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                                {
+                                    lob         = BCS.LOBTaxiSystemName,
+                                    ns          = BCS.LOBTaxiSystemNamespace,
+                                    contentType = "License",
+                                    methodName  = "CreateLicense",
+                                    methodType  = MethodInstanceType.Creator
+                                }, licenseDraft);
                             }
 
                             taxiItem["Tm_TaxiStatus"] = "Решено положительно";

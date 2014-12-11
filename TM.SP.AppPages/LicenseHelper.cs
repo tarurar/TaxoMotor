@@ -93,43 +93,35 @@ namespace TM.SP.AppPages
             draft.BlankSeries        = taxiItem["Tm_BlankSeries"] != null ? taxiItem["Tm_BlankSeries"].ToString() : String.Empty;
             draft.Building           = postalAddress != null ? postalAddress.Building : "";
             draft.CancellationReason = "";
-            draft.ChangeDate         = DateTime.Now.Date;
             draft.ChangeReason       = GetChangeReasonText(rItem);
             draft.City               = postalAddress != null ? postalAddress.City : "";
             draft.Country            = postalAddress != null ? postalAddress.Country : "";
-
-            draft.CreationDate = ctId == rList.ContentTypes["Новое"].Id
-                ? DateTime.Now.Date
-                : (parent != null ? parent.CreationDate : DateTime.Now.Date);
-
-            draft.CreationDate     = DateTime.Now.Date; // todo
-            draft.Date_OD          = null;
-            draft.Document         = "";
-            draft.EMail            = declarant != null ?  declarant.EMail : "";
-            draft.Facility         = postalAddress != null ? postalAddress.Facility : "";
-            draft.Fax              = declarant != null ? declarant.Fax : "" ;
-            draft.FirstName        = orgHead != null ? orgHead.FirstName : "";
-            draft.Flat             = postalAddress != null ? postalAddress.Flat : "";
-            draft.FromPortal       = rItem["Tm_RegNumber"] != null;
-            draft.Guid_OD          = ctId == rList.ContentTypes["Новое"].Id ? "" : (parent != null ? parent.Guid_OD : "");
-            draft.House            = postalAddress != null ? postalAddress.House : "";
-            draft.Inn              = declarant != null ? declarant.Inn : "";
-            draft.InvalidReason    = "";
-            draft.JuridicalAddress = declarant != null ? declarant.SingleStrPostalAddress : "";
-            draft.LastName         = orgHead != null ? orgHead.LastName : "";
-            draft.Lfb              = declarant != null ? declarant.OrgFormCode : "";
-            draft.Locality         = postalAddress != null ? postalAddress.Locality : "";
-            draft.Ogrn             = declarant != null ? declarant.Ogrn : "";
-            draft.OgrnDate         = declarant != null ? declarant.OgrnDate : null;
-            draft.OrgName          = declarant != null ? declarant.FullName : "";
-            draft.OutputDate       = DateTime.Now.Date;
-            draft.Ownership        = postalAddress != null ? postalAddress.Ownership : "";
-            draft.PhoneNumber      = declarant != null ? declarant.Phone : "";
-            draft.PostalCode       = postalAddress != null ? postalAddress.PostalCode : "";
-            draft.Region           = postalAddress != null ? postalAddress.Region : "";
-            draft.SecondName       = orgHead != null ? orgHead.MiddleName : "";
-            draft.ShortName        = declarant != null ? declarant.Name : "";
-            draft.Signature        = "";
+            draft.Date_OD            = null;
+            draft.Document           = "";
+            draft.EMail              = declarant != null ?  declarant.EMail : "";
+            draft.Facility           = postalAddress != null ? postalAddress.Facility : "";
+            draft.Fax                = declarant != null ? declarant.Fax : "" ;
+            draft.FirstName          = orgHead != null ? orgHead.FirstName : "";
+            draft.Flat               = postalAddress != null ? postalAddress.Flat : "";
+            draft.FromPortal         = rItem["Tm_RegNumber"] != null;
+            draft.Guid_OD            = ctId == rList.ContentTypes["Новое"].Id ? "" : (parent != null ? parent.Guid_OD : "");
+            draft.House              = postalAddress != null ? postalAddress.House : "";
+            draft.Inn                = declarant != null ? declarant.Inn : "";
+            draft.InvalidReason      = "";
+            draft.JuridicalAddress   = declarant != null ? declarant.SingleStrPostalAddress : "";
+            draft.LastName           = orgHead != null ? orgHead.LastName : "";
+            draft.Lfb                = declarant != null ? declarant.OrgFormCode : "";
+            draft.Locality           = postalAddress != null ? postalAddress.Locality : "";
+            draft.Ogrn               = declarant != null ? declarant.Ogrn : "";
+            draft.OgrnDate           = declarant != null ? declarant.OgrnDate : null;
+            draft.OrgName            = declarant != null ? declarant.FullName : "";
+            draft.Ownership          = postalAddress != null ? postalAddress.Ownership : "";
+            draft.PhoneNumber        = declarant != null ? declarant.Phone : "";
+            draft.PostalCode         = postalAddress != null ? postalAddress.PostalCode : "";
+            draft.Region             = postalAddress != null ? postalAddress.Region : "";
+            draft.SecondName         = orgHead != null ? orgHead.MiddleName : "";
+            draft.ShortName          = declarant != null ? declarant.Name : "";
+            draft.Signature          = "";
 
             if (ctId == rList.ContentTypes["Новое"].Id || ctId == rList.ContentTypes["Переоформление"].Id )
             {
