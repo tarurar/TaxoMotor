@@ -164,6 +164,7 @@
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
     <None Include="Snapshots\TM.Database_20140704_12-55-33.dacpac" />
+    <None Include="TM.Database.production.xml" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\110\SqlSchemas\master.dacpac">
