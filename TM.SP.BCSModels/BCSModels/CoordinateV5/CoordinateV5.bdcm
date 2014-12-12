@@ -21,7 +21,10 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="Address" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.52" EstimatedInstanceCount="10000" DefaultDisplayName="Address">
+				<Entity Name="Address" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.56" EstimatedInstanceCount="10000" DefaultDisplayName="Address">
+          <LocalizedDisplayNames>
+            <LocalizedDisplayName LCID="1049">Адрес</LocalizedDisplayName>
+          </LocalizedDisplayNames>
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.AddressEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -40,6 +43,9 @@
 					</Identifiers>
 					<Methods>
 						<Method Name="ReadAddressList" DefaultDisplayName="Read Address List">
+              <LocalizedDisplayNames>
+                <LocalizedDisplayName LCID="1049">Все адреса</LocalizedDisplayName>
+              </LocalizedDisplayNames>
 							<AccessControlList>
 								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
 									<Right BdcRight="Edit" />
@@ -50,11 +56,23 @@
 							</AccessControlList>
 							<Parameters>
 								<Parameter Direction="Return" Name="returnParameter">
+                  <LocalizedDisplayNames>
+                    <LocalizedDisplayName LCID="1049">Все адреса</LocalizedDisplayName>
+                  </LocalizedDisplayNames>
 									<TypeDescriptor TypeName="System.Collections.Generic.IEnumerable`1[[TM.SP.BCSModels.CoordinateV5.Address, TM.SP.BCSModels]]" IsCollection="true" Name="AddressList">
+                    <LocalizedDisplayNames>
+                      <LocalizedDisplayName LCID="1049">Все адреса</LocalizedDisplayName>
+                    </LocalizedDisplayNames>
 										<TypeDescriptors>
 											<TypeDescriptor Name="Address" TypeName="TM.SP.BCSModels.CoordinateV5.Address, TM.SP.BCSModels">
+                        <LocalizedDisplayNames>
+                          <LocalizedDisplayName LCID="1049">Адрес</LocalizedDisplayName>
+                        </LocalizedDisplayNames>
 												<TypeDescriptors>
 													<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+                            <LocalizedDisplayNames>
+                              <LocalizedDisplayName LCID="1049">Название</LocalizedDisplayName>
+                            </LocalizedDisplayNames>
 														<Properties>
 															<Property Name="Size" Type="System.Int32">767</Property>
 															<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
@@ -64,6 +82,9 @@
 														</Interpretation>
 													</TypeDescriptor>
 													<TypeDescriptor Name="Country" DefaultDisplayName="Country" TypeName="System.String">
+                            <LocalizedDisplayNames>
+                              <LocalizedDisplayName LCID="1049">Страна</LocalizedDisplayName>
+                            </LocalizedDisplayNames>
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
 														</Properties>
@@ -72,6 +93,9 @@
 														</Interpretation>
 													</TypeDescriptor>
 													<TypeDescriptor Name="PostalCode" DefaultDisplayName="PostalCode" TypeName="System.String">
+                            <LocalizedDisplayNames>
+                              <LocalizedDisplayName LCID="1049">Индекс</LocalizedDisplayName>
+                            </LocalizedDisplayNames>
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
 														</Properties>
@@ -276,10 +300,17 @@
 								</Parameter>
 							</Parameters>
 							<MethodInstances>
-								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadAddressList" DefaultDisplayName="Read Address List" />
+								<MethodInstance Type="Finder" ReturnParameterName="returnParameter" Default="true" Name="ReadAddressList" DefaultDisplayName="Read Address List">
+                  <LocalizedDisplayNames>
+                    <LocalizedDisplayName LCID="1049">Все адреса</LocalizedDisplayName>
+                  </LocalizedDisplayNames>
+                </MethodInstance>
 							</MethodInstances>
 						</Method>
 						<Method Name="ReadAddressItem">
+              <LocalizedDisplayNames>
+                <LocalizedDisplayName LCID="1049">Адрес</LocalizedDisplayName>
+              </LocalizedDisplayNames>
 							<AccessControlList>
 								<AccessControlEntry Principal="NT AUTHORITY\Authenticated Users">
 									<Right BdcRight="Edit" />
@@ -290,12 +321,28 @@
 							</AccessControlList>
 							<Parameters>
 								<Parameter Direction="In" Name="@Id">
-									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5"></TypeDescriptor>
+                  <LocalizedDisplayNames>
+                    <LocalizedDisplayName LCID="1049">Идентификатор</LocalizedDisplayName>
+                  </LocalizedDisplayNames>
+									<TypeDescriptor Name="Id" DefaultDisplayName="Id" TypeName="System.Int32" IdentifierName="Id" IdentifierEntityName="Address" IdentifierEntityNamespace="TM.SP.BCSModels.CoordinateV5">
+                    <LocalizedDisplayNames>
+                      <LocalizedDisplayName LCID="1049">Идентификатор</LocalizedDisplayName>
+                    </LocalizedDisplayNames>
+                  </TypeDescriptor>
 								</Parameter>
 								<Parameter Direction="Return" Name="returnParameter">
+                  <LocalizedDisplayNames>
+                    <LocalizedDisplayName LCID="1049">Адрес</LocalizedDisplayName>
+                  </LocalizedDisplayNames>
 									<TypeDescriptor TypeName="TM.SP.BCSModels.CoordinateV5.Address, TM.SP.BCSModels" Name="returnAddress">
+                    <LocalizedDisplayNames>
+                      <LocalizedDisplayName LCID="1049">Адрес</LocalizedDisplayName>
+                    </LocalizedDisplayNames>
 										<TypeDescriptors>
 											<TypeDescriptor Name="Title" DefaultDisplayName="Title" TypeName="System.String">
+                        <LocalizedDisplayNames>
+                          <LocalizedDisplayName LCID="1049">Название</LocalizedDisplayName>
+                        </LocalizedDisplayNames>
 												<Properties>
 													<Property Name="Size" Type="System.Int32">767</Property>
 													<Property Name="RequiredInForms" Type="System.Boolean">true</Property>
@@ -305,6 +352,9 @@
 												</Interpretation>
 											</TypeDescriptor>
 											<TypeDescriptor Name="Country" DefaultDisplayName="Country" TypeName="System.String">
+                        <LocalizedDisplayNames>
+                          <LocalizedDisplayName LCID="1049">Страна</LocalizedDisplayName>
+                        </LocalizedDisplayNames>
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
 												</Properties>
@@ -313,6 +363,9 @@
 												</Interpretation>
 											</TypeDescriptor>
 											<TypeDescriptor Name="PostalCode" DefaultDisplayName="PostalCode" TypeName="System.String">
+                        <LocalizedDisplayNames>
+                          <LocalizedDisplayName LCID="1049">Индекс</LocalizedDisplayName>
+                        </LocalizedDisplayNames>
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
 												</Properties>

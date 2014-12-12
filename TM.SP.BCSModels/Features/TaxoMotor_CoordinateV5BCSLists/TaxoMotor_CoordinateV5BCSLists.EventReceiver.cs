@@ -27,7 +27,7 @@ namespace TM.SP.BCSModels.Features.TaxoMotor_CoordinateV5BCSLists
             var web = properties.Feature.Parent as SPWeb;
             if (web == null) return;
 
-            var sitePages = web.Folders["SitePages"];
+            var sitePages = web.Folders["Pages"];
             if (sitePages != null)
             {
                 WebPart.RemoveWebPartDuplicatesOnPage(web, sitePages, "ViewFileContentPage.aspx");
