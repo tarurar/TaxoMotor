@@ -70,6 +70,9 @@ namespace TM.SP.Search
 
         private static readonly string FeatureId = "{3bf96d98-8209-463c-959c-6161cc16095d}";
 
+        public static readonly string TaxiListsFeatureId = "{fd2daa37-e95d-4e98-b360-2f8390c3f2ba}";
+        public static readonly string TaxiV2ListsFeatureId = "{38cd390b-fda5-434c-8f3b-2810dee6c8a1}";
+
         private static readonly string UpdateIncomeRequestItemErrorFmt = GetFeatureLocalizedResource("UpdateItemErrorFmt");
 
         #endregion
@@ -99,17 +102,23 @@ namespace TM.SP.Search
             foreach (SPSite siteCollection in webApp.Sites)
             {
                 SPWeb web = siteCollection.RootWeb;
-                try
+
+                if (web.Features[new Guid(TaxiListsFeatureId)] != null &&
+                    web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
                 {
-                    var context = SPServiceContext.GetContext(siteCollection);
-                    using (var scope = new SPServiceContextScope(context))
+                    try
                     {
-                        ProcessCalculation(web);
+                        var context = SPServiceContext.GetContext(siteCollection);
+                        using (var scope = new SPServiceContextScope(context))
+                        {
+                            ProcessCalculation(web);
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(String.Format(GetFeatureLocalizedResource("GeneralErrorFmt"), ex.Message, web.Title));
+                    catch (Exception ex)
+                    {
+                        throw new Exception(String.Format(GetFeatureLocalizedResource("GeneralErrorFmt"), ex.Message,
+                            web.Title));
+                    }
                 }
             }
         }
@@ -211,6 +220,9 @@ namespace TM.SP.Search
             var name    = new SPFieldMultiChoiceValue();
             var address = new SPFieldMultiChoiceValue();
             var inn     = new SPFieldMultiChoiceValue();
+            var fname   = new SPFieldMultiChoiceValue();
+            var ogrn    = new SPFieldMultiChoiceValue();
+            var orgCode = new SPFieldMultiChoiceValue();
 
             if (id != null)
             {
@@ -229,11 +241,20 @@ namespace TM.SP.Search
                     address.Add(entity.SingleStrFactAddress);
                 if (!String.IsNullOrEmpty(entity.Inn))
                     inn.Add(entity.Inn);
+                if (!String.IsNullOrEmpty(entity.FullName))
+                    fname.Add(entity.FullName);
+                if (!String.IsNullOrEmpty(entity.Ogrn))
+                    ogrn.Add(entity.Ogrn);
+                if (!String.IsNullOrEmpty(entity.OrgFormCode))
+                    orgCode.Add(entity.OrgFormCode);
             }
 
             item["Tm_IncomeRequestDeclarantNames"]   = name;
             item["Tm_IncomeRequestDeclarantAddress"] = address;
             item["Tm_IncomeRequestDeclarantINNs"]    = inn;
+            item["Tm_IncomeRequestDeclarantFNames"]  = fname;
+            item["Tm_IncomeRequestDeclarantOgrns"]   = ogrn;
+            item["Tm_IncomeRequestOrgFormCodes"]     = orgCode;
         }
 
         private void DoCalculateTaxiSearchFields(SPListItem item, SPWeb web)

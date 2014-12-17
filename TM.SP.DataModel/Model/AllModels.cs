@@ -188,6 +188,12 @@ namespace TM.SP.DataModel
                         context => context.Object.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestDeclarantNames, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestDeclarantFullNames, f => f.OnProvisioned<Field>(
+                        context => context.Object.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestDeclarantOgrns, f => f.OnProvisioned<Field>(
+                        context => context.Object.MakeFillInChoice()))
+                    .AddField(Fields.TmIncomeRequestOrgFormCodes, f => f.OnProvisioned<Field>(
+                        context => context.Object.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestDeclarantAddresses, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestDeclarantINNs, f => f.OnProvisioned<Field>(
@@ -207,9 +213,9 @@ namespace TM.SP.DataModel
                         {
                             var fieldInstance = context.Object;
                             var field = fieldInstance.Context.CastTo<FieldCalculated>(fieldInstance);
-
+                            
                             if (field != null)
-                                field.Formula = "=ЕСЛИ([Обновление обращения разрешено]; \"1\"; \"0\")";
+                                field.Formula = "=ЕСЛИ([Обновление обращения разрешено];\"1\";\"0\")";
                         }))
                     .AddField(Fields.TmMessageId,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeHidden(false)))
@@ -399,6 +405,9 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiYears)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiLastToDates)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantNames)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantFullNames)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantOgrns)
+                        .AddContentTypeFieldLink(Fields.TmIncomeRequestOrgFormCodes)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantAddresses)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestDeclarantINNs)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTrusteeNames)

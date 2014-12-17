@@ -406,6 +406,33 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsCalcGroup
         };
 
+        public static FieldDefinition TmIncomeRequestDeclarantFullNames = new FieldDefinition()
+        {
+            Id           = new Guid("{811B1981-6975-4F5A-9A37-5F0755AEB72F}"),
+            Title        = "Заявитель (полное имя)",
+            InternalName = "Tm_IncomeRequestDeclarantFNames",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestDeclarantOgrns = new FieldDefinition()
+        {
+            Id           = new Guid("{E4228AA8-E280-4EF0-876B-76B6A27D1183}"),
+            Title        = "ОГРН заявителя",
+            InternalName = "Tm_IncomeRequestDeclarantOgrns",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
+        public static FieldDefinition TmIncomeRequestOrgFormCodes = new FieldDefinition()
+        {
+            Id           = new Guid("{1172577D-B599-4E46-BB68-7C8EC049B672}"),
+            Title        = "Код ОПФ заявителя",
+            InternalName = "Tm_IncomeRequestOrgFormCodes",
+            FieldType    = BuiltInFieldTypes.MultiChoice,
+            Group        = ModelConsts.ColumnsCalcGroup
+        };
+
         #endregion
 
         #region [Обращение - Переоформление разрешения]

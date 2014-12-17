@@ -67,7 +67,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttachListReceiver\AttachListReceiver.cs" />
+    <Compile Include="EventReceivers\erAttachList\erAttachList.cs" />
     <Compile Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\IncomeRequestSearchFieldsCalc.EventReceiver.cs">
       <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalc.feature</DependentUpon>
     </Compile>
@@ -75,14 +75,14 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AttachListReceiver\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{ae7d0ced-5203-4247-bafd-9c5e029ae794}</SharePointProjectItemId>
-    </None>
-    <None Include="Features\TaxoMotor_AttachListReceiver\TaxoMotor_AttachListReceiver.feature">
-      <FeatureId>{6d4ae3c4-56ec-40ac-b8b5-87d41fa05de4}</FeatureId>
+    <None Include="EventReceivers\erAttachList\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{5714fe3f-a184-4bac-b19a-224e8813c499}</SharePointProjectItemId>
     </None>
     <None Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\TaxoMotor_IncomeRequestSearchFieldsCalc.feature">
       <FeatureId>{aaeb0801-07a7-4f0e-8995-6b9f997edaf0}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxoMotorAttachListReceiver\TaxoMotor_TaxoMotorAttachListReceiver.feature">
+      <FeatureId>{5e1d98cd-71d2-4e42-8c9a-c6bb4ee6074e}</FeatureId>
     </None>
     <None Include="key.snk" />
     <None Include="packages.config" />
@@ -107,14 +107,15 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AttachListReceiver\Elements.xml" />
-    <Content Include="Features\TaxoMotor_AttachListReceiver\TaxoMotor_AttachListReceiver.Template.xml">
-      <DependentUpon>TaxoMotor_AttachListReceiver.feature</DependentUpon>
-    </Content>
+    <Content Include="EventReceivers\erAttachList\Elements.xml" />
     <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\TaxoMotor_IncomeRequestSearchFieldsCalc.Template.xml">
       <DependentUpon>TaxoMotor_IncomeRequestSearchFieldsCalc.feature</DependentUpon>
     </Content>
+    <Content Include="Features\TaxoMotor_TaxoMotorAttachListReceiver\TaxoMotor_TaxoMotorAttachListReceiver.Template.xml">
+      <DependentUpon>TaxoMotor_TaxoMotorAttachListReceiver.feature</DependentUpon>
+    </Content>
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_IncomeRequestSearchFieldsCalc.gif" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorAttachListReceiver.gif" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\TaxoMotor_IncomeRequestSearchFieldsCalc\Resources.resx" />

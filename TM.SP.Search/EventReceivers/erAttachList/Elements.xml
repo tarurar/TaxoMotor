@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<Receivers
+		ListUrl="Lists/IncomeRequestList"
+		Scope="Web">
+		<Receiver>
+			<Name>erAttachListItemAdding</Name>
+			<Type>ItemAdding</Type>
+			<SequenceNumber>100</SequenceNumber>
+			<Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+			<Class>TM.SP.Search.erAttachList</Class>
+			<Data></Data>
+			<Filter></Filter>
+			<Synchronization>Synchronous</Synchronization>
+		</Receiver>
+		<Receiver>
+			<Name>erAttachListItemUpdating</Name>
+			<Type>ItemUpdating</Type>
+			<SequenceNumber>100</SequenceNumber>
+			<Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+			<Class>TM.SP.Search.erAttachList</Class>
+			<Data></Data>
+			<Filter></Filter>
+			<Synchronization>Synchronous</Synchronization>
+		</Receiver>
+	</Receivers>
+</Elements>

@@ -1,18 +1,25 @@
-﻿using System;
-using System.Security.Permissions;
-using Microsoft.SharePoint;
-using Microsoft.SharePoint.Utilities;
-using Microsoft.SharePoint.Workflow;
-using Microsoft.SharePoint.Security;
+// <copyright file="erAttachList.cs" company="Armd">
+// Copyright Armd. All rights reserved.
+// </copyright>
+// <author>SPDOMAIN\dev1</author>
+// <date>2014-12-08 17:54:00Z</date>
+
 using CamlexNET;
 using TM.Utils;
 
-namespace TM.SP.Search.AttachListReceiver
+namespace TM.SP.Search
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Security.Permissions;
+    using System.Text;
+    using Microsoft.SharePoint;
+    using Microsoft.SharePoint.Security;
+
     /// <summary>
-    /// List Item Events
+    /// TODO: Add comment for erAttachList
     /// </summary>
-    public class AttachListReceiver : SPItemEventReceiver
+    public class erAttachList : SPItemEventReceiver
     {
         private static SPListItem GetIdentityDocTypeListItem(string serviceCode, SPWeb web)
         {
@@ -84,6 +91,6 @@ namespace TM.SP.Search.AttachListReceiver
                 EventFiringEnabled = true;
             }
         }
-
     }
 }
+

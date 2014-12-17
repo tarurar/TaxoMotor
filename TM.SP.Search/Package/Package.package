@@ -6,8 +6,8 @@
     <customAssembly location="Camlex.NET.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll" />
   </assemblies>
   <features>
-    <featureReference itemId="6d4ae3c4-56ec-40ac-b8b5-87d41fa05de4" />
     <featureReference itemId="aaeb0801-07a7-4f0e-8995-6b9f997edaf0" />
+    <featureReference itemId="5e1d98cd-71d2-4e42-8c9a-c6bb4ee6074e" />
   </features>
   <projectItems>
     <projectItemReference itemId="c46e85a1-f03a-4842-917b-f6771cf907d6" />
