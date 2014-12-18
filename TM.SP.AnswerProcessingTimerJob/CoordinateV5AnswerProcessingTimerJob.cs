@@ -67,10 +67,26 @@ namespace TM.SP.AnswerProcessingTimerJob
                                 request["Tm_LastProcessDate"] = DateTime.Now;
                                 request.Update();
 
-                                CoordinateV5File[] answer = GetAnswerForOutcomeRequest(web, request);
-                                if (answer.Any())
+                                string customAttributes;
+                                string resultCode;
+                                CoordinateV5File[] files = GetAnswerForOutcomeRequest(web, request, out customAttributes, out resultCode);
+                                if (files.Any())
                                 {
-                                    UpdateOutcomeRequestWithAnswer(request, answer);
+                                    UpdateOutcomeRequestWithFiles(request, files);
+                                    request["Tm_AnswerReceived"] = true;
+                                    request.Update();
+                                }
+                                if (!String.IsNullOrEmpty(customAttributes))
+                                {
+                                    request["Tm_XmlValue"] = customAttributes;
+                                    request["Tm_AnswerReceived"] = true;
+                                    request.Update();
+                                }
+                                if (!String.IsNullOrEmpty(resultCode))
+                                {
+                                    request["Tm_ResultCode"] = resultCode;
+                                    request["Tm_AnswerReceived"] = true;
+                                    request.Update();
                                 }
                             }
                         }
@@ -83,14 +99,16 @@ namespace TM.SP.AnswerProcessingTimerJob
 	        }
         }
 
-        private void UpdateOutcomeRequestWithAnswer(SPListItem request, CoordinateV5File[] answer)
+        private void UpdateOutcomeRequestWithFiles(SPListItem request, CoordinateV5File[] answer)
         {
             foreach (CoordinateV5File file in answer)
             {
-                request.Attachments.Add(file.FileName, file.FileContent);
+                var docNumber = request.Attachments.Count + 1;
+                var fileExt = Path.GetExtension(file.FileName);
+                var filename = String.Format("document{0}{1}", docNumber, fileExt);
+
+                request.Attachments.Add(filename, file.FileContent);
             }
-            request["Tm_AnswerReceived"] = true;
-            request.Update();
         }
 
         protected virtual MessageQueueService.DataServiceClient GetServiceClientInstance(SPWeb web)
@@ -108,12 +126,14 @@ namespace TM.SP.AnswerProcessingTimerJob
             return new MessageQueueService.DataServiceClient(binding, address);
         }
 
-        private CoordinateV5File[] GetAnswerForOutcomeRequest(SPWeb web, SPListItem request)
+        private CoordinateV5File[] GetAnswerForOutcomeRequest(SPWeb web, SPListItem request, out string customAttributesXml, out string resultCode)
         {
             var svcClient = GetServiceClientInstance(web);
             List<CoordinateV5File> retVal = new List<CoordinateV5File>();
             MessageQueueService.Message[] messageList =
                 svcClient.GetMessageList(new Guid(request["Tm_MessageId"].ToString()), 1);
+            customAttributesXml = String.Empty;
+            resultCode = String.Empty;
 
             foreach (MessageQueueService.Message message in messageList)
             {
@@ -124,8 +144,22 @@ namespace TM.SP.AnswerProcessingTimerJob
                     csMessage = (CoordinateStatusMessage)serializer.Deserialize(reader);
                 }
 
-                var fileList = csMessage.StatusMessage.Documents.SelectMany(x => x.DocFiles);
-                retVal.AddRange(fileList);
+                if (csMessage.StatusMessage.Documents != null && csMessage.StatusMessage.Documents.Any())
+                {
+                    var fileList = csMessage.StatusMessage.Documents.SelectMany(x => x.DocFiles);
+                    retVal.AddRange(fileList);
+
+                    var firstDoc = csMessage.StatusMessage.Documents.First();
+                    if (firstDoc.CustomAttributes != null)
+                    {
+                        customAttributesXml = firstDoc.CustomAttributes.OuterXml;
+                    }
+                }
+
+                if (csMessage.StatusMessage.Result != null)
+                {
+                    resultCode = csMessage.StatusMessage.Result.ResultCode;
+                }
             }
 
             return retVal.ToArray();

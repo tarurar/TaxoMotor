@@ -37,6 +37,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmRefuseDocuments)
                     .AddField(Fields.TmPriority, f => f.OnProvisioned<Field>(context => context.Object.MakeDefaultValue("0")))
                     .AddField(Fields.TmLastProcessDate)
+                    .AddField(Fields.TmResultCode)
                     .AddField(Fields.TmSingleNumber)
                     .AddField(Fields.TmFirstName)
                     .AddField(Fields.TmLastName)
@@ -169,6 +170,8 @@ namespace TM.SP.DataModel
                         context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmLicenseTillDate, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeDateOnly()))
+                    .AddField(Fields.TmLicenseFromDate, f => f.OnProvisioned<Field>(
+                        context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmLicenseTillSuspensionDate, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmLicenseCancellationReason)
@@ -208,7 +211,7 @@ namespace TM.SP.DataModel
                         context => context.Object.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeDefaultValue("FALSE")))
-                    .AddField(Fields.TmIncomeRequestSysUpdAvailText, f => f.OnProvisioned<Field>(
+                    /*.AddField(Fields.TmIncomeRequestSysUpdAvailText, f => f.OnProvisioned<Field>(
                         context =>
                         {
                             var fieldInstance = context.Object;
@@ -216,7 +219,7 @@ namespace TM.SP.DataModel
                             
                             if (field != null)
                                 field.Formula = "=ЕСЛИ([Обновление обращения разрешено];\"1\";\"0\")";
-                        }))
+                        }))*/
                     .AddField(Fields.TmMessageId,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -308,6 +311,7 @@ namespace TM.SP.DataModel
                             .AddContentTypeFieldLink(Fields.TmTaxiStateNumber)
                             .AddContentTypeFieldLink(Fields.TmLicenseOutputDate)
                             .AddContentTypeFieldLink(Fields.TmLicenseTillDate)
+                            .AddContentTypeFieldLink(Fields.TmLicenseFromDate)
                             .AddContentTypeFieldLink(Fields.TmLicenseTillSuspensionDate)
                             .AddContentTypeFieldLink(Fields.TmLicenseCancellationReason)
                             .AddContentTypeFieldLink(Fields.TmLicenseSuspensionReason)
@@ -462,6 +466,8 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmAnswerReceived)
                         .AddContentTypeFieldLink(Fields.TmPriority)
                         .AddContentTypeFieldLink(Fields.TmLastProcessDate)
+                        .AddContentTypeFieldLink(Fields.TmXmlValue)
+                        .AddContentTypeFieldLink(Fields.TmResultCode)
                     )
                     .AddContentType(ContentTypes.TmTaxi, ct => ct
                         .AddContentTypeFieldLink(Fields.TmTaxiBrand)

@@ -553,6 +553,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmResultCode = new FieldDefinition()
+        {
+            Id           = new Guid("{DC02229A-DF2C-402B-9EDF-C456F4FA05B0}"),
+            Title        = "Код результата",
+            InternalName = "Tm_ResultCode",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Транспортное средство]
@@ -1102,6 +1111,15 @@ namespace TM.SP.DataModel
             Id           = new Guid("{78CF58D5-9825-4650-8B81-75A008889171}"),
             Title        = "Срок действия (до)",
             InternalName = "Tm_LicenseTillDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmLicenseFromDate = new FieldDefinition()
+        {
+            Id           = new Guid("{457387ED-0187-4367-BC6C-EA9847144888}"),
+            Title        = "Срок действия (c)",
+            InternalName = "Tm_LicenseFromDate",
             FieldType    = BuiltInFieldTypes.DateTime,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
