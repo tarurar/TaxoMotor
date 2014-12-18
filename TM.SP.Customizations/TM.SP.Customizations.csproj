@@ -155,6 +155,7 @@
     </Content>
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.min.js" />
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\json-to-table.js" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\accordion.css" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\all.css" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\autocomplete.css" />

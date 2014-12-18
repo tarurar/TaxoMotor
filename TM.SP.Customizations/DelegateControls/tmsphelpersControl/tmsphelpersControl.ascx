@@ -4,3 +4,4 @@
 <%@ Import Namespace="Microsoft.SharePoint" %>
 
 <script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/tm.sp.js"></script>
+<script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/json-to-table.js"></script>
