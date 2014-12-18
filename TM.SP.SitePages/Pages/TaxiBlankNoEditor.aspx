@@ -52,6 +52,5 @@
         </table>
     </div>
     
-    <script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/jquery.inputmask/jquery.inputmask.js"></script>
     <script type="text/javascript" src="/ProjectScripts/TaxiBlankNoEditor.js"></script>
 </asp:Content>
