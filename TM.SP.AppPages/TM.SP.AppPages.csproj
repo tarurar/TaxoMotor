@@ -208,6 +208,8 @@
     <Folder Include="Features\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="3rd\AppLog.dll" />
+    <Content Include="3rd\AppLog.pdb" />
     <Content Include="3rd\Aspose\Aspose.Words.dll" />
     <Content Include="3rd\ODOPM.dll" />
     <Content Include="3rd\ODOPM.pdb" />

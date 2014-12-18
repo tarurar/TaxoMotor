@@ -11,6 +11,7 @@
     <customAssembly location="ODOPM.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\ODOPM.dll" />
     <customAssembly location="WebServiceMO.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\WebServiceMO.dll" />
     <customAssembly location="Rkis.Rsmev.ForODOPM.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\Rkis.Rsmev.ForODOPM.dll" />
+    <customAssembly location="AppLog.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\AppLog.dll" />
   </assemblies>
   <projectItems>
     <projectItemReference itemId="14185da8-fbda-40a5-8617-6ddc41f38626" />
