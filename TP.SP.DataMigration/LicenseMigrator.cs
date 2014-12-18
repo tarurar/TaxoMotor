@@ -48,6 +48,7 @@ namespace TP.SP.DataMigration
             newItem["Tm_PhoneNumber"]                 = license.PhoneNumber;
             newItem["Tm_AddContactData"]              = license.AddContactData;
             newItem["Tm_JuridicalPersonAbbreviation"] = license.AccountAbbr;
+            newItem["Tm_LicenseFromDate"]             = license.CreationDate;
             newItem["Tm_LicenseOutputDate"]           = license.OutputDate;
             newItem["Tm_LicenseTillDate"]             = license.TillDate;
             newItem["Tm_LicenseTillSuspensionDate"]   = license.TillSuspensionDate;
