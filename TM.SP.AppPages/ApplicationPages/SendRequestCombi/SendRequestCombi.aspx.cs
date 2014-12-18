@@ -320,7 +320,10 @@ namespace TM.SP.AppPages
             newItem["Tm_OutputRequestTypeLookup"] = requestTypeItem != null
                 ? new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title)
                 : null;
-            newItem["Tm_LicenseLookup"] = licItem != null ? licItem["Tm_LicenseRtParentLicenseLookup"] : null;
+            newItem["Tm_LicenseLookup"] = licItem != null ? new SPFieldLookupValue(licItem.ID, licItem.Title) : null;
+            newItem["Tm_LicenseRtParentLicenseLookup"] = licItem != null
+                ? licItem["Tm_LicenseRtParentLicenseLookup"]
+                : null;
             newItem["Tm_AnswerReceived"] = false;
             newItem["Tm_MessageId"] = requestId;
             newItem.Update();

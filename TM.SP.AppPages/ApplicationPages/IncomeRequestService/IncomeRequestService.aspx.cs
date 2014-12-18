@@ -1155,7 +1155,8 @@ namespace TM.SP.AppPages
                                 // setting links for all outcome requests that we have found
                                 foreach (SPListItem outRequestItem in outRequests)
                                 {
-                                    outRequestItem["Tm_LicenseLookup"] = licRootParent;
+                                    outRequestItem["Tm_LicenseLookup"] = new SPFieldLookupValue(lic.ID, lic.Title);
+                                    outRequestItem["Tm_LicenseRtParentLicenseLookup"] = licRootParent;
                                     outRequestItem.SystemUpdate();
                                 }
                             }
