@@ -298,7 +298,8 @@ namespace TM.SP.AppPages
             Utility.TryGetListItemFromLookupValue(licItem["Tm_TaxiLookup"],
                 licItem.Fields.GetFieldByInternalName("Tm_TaxiLookup") as SPFieldLookup, out taxiItem);
 
-            var newItem = trackList.AddItem();
+            var pFolder = CreateOutcomeRequestFolder(trackList);
+            var newItem = trackList.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
             newItem["Title"]                           = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
             newItem["Tm_OutputDate"]                   = DateTime.Now;
             newItem["Tm_TaxiLookup"]                   = licItem["Tm_TaxiLookup"];

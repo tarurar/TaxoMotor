@@ -184,7 +184,8 @@ namespace TM.SP.AppPages.ApplicationPages
             var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
                 ((int) document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
 
-            var newItem = trackList.AddItem();
+            var pFolder = CreateOutcomeRequestFolder(trackList);
+            var newItem = trackList.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
             newItem["Title"]                        = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
             newItem["Tm_OutputDate"]                = DateTime.Now;
             newItem["Tm_IncomeRequestLookup"]       = new SPFieldLookupValue(document.Id, document.Title);
@@ -195,6 +196,17 @@ namespace TM.SP.AppPages.ApplicationPages
 
             return newItem;
         }
+
+        protected virtual SPFolder CreateOutcomeRequestFolder(SPList list)
+        {
+            string yearStr  = DateTime.Now.ToString("yyyy");
+            string monthstr = DateTime.Now.ToString("MMMM");
+            string dayStr   = DateTime.Now.ToString("dd");
+            string hourStr  = DateTime.Now.ToString("hh");
+
+            return list.RootFolder.CreateSubFolders(new[] {yearStr, monthstr, dayStr, hourStr});
+        }
+
         /// <summary>
         /// Sending all requests
         /// </summary>

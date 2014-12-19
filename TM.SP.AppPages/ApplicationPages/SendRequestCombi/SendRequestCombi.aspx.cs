@@ -311,9 +311,10 @@ namespace TM.SP.AppPages
             SPListItem rItem = null;
             SPListItem licItem = null;
             if (document.ListName == "IncomeRequestList") rItem = requestList.GetItemById(document.Id);
-            if (document.ListName == "LicenseList") licItem = licList.GetItemById(document.Id);        
+            if (document.ListName == "LicenseList") licItem = licList.GetItemById(document.Id);
 
-            var newItem = trackList.AddItem();
+            var pFolder = CreateOutcomeRequestFolder(trackList);
+            var newItem = trackList.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
             newItem["Title"] = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
             newItem["Tm_OutputDate"] = DateTime.Now;
             newItem["Tm_IncomeRequestLookup"] = rItem != null ? new SPFieldLookupValue(rItem.ID, rItem.Title) : null;

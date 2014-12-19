@@ -57,7 +57,12 @@ namespace TP.SP.DataMigration
             }, request.Service);
 
             SPList list = web.GetListOrBreak("Lists/IncomeRequestList");
-            SPListItem newItem = list.AddItem();
+
+            var yearStr  = DateTime.Now.ToString("yyyy");
+            var monthstr = DateTime.Now.ToString("MMMM");
+            var pFolder  = list.RootFolder.CreateSubFolders(new[] { yearStr, monthstr });
+
+            SPListItem newItem = list.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
 
             switch (svc.ServiceTypeCode)
             {
@@ -224,7 +229,12 @@ namespace TP.SP.DataMigration
         {
             SPList list = web.GetListOrBreak("Lists/TaxiList");
             SPList possessionReasonList = web.GetListOrBreak("Lists/PossessionReasonBookList");
-            SPListItem newItem = list.AddItem();
+
+            var yearStr  = DateTime.Now.ToString("yyyy");
+            var monthstr = DateTime.Now.ToString("MMMM");
+            var pFolder  = list.RootFolder.CreateSubFolders(new[] { yearStr, monthstr, parent.Title });
+
+            SPListItem newItem = list.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
             // assign values
             newItem["Tm_TaxiBrand"]              = taxiInfo.brand;
             newItem["Tm_TaxiModel"]              = taxiInfo.model;
@@ -280,7 +290,11 @@ namespace TP.SP.DataMigration
             var taxiItem = taxiItems.Count == 1 ? taxiItems[0] : null;
             // getting taxi link - end
 
-            SPListItem newAttach = list.AddItem();
+            var yearStr  = DateTime.Now.ToString("yyyy");
+            var monthstr = DateTime.Now.ToString("MMMM");
+            var pFolder  = list.RootFolder.CreateSubFolders(new[] { yearStr, monthstr, parent.Title });
+
+            SPListItem newAttach = list.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
             DateTime validityPeriod;
             // assign values
             newAttach["Title"]              = "Б/Н";

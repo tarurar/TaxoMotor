@@ -91,7 +91,8 @@ namespace TM.SP.Customizations
                                     x =>
                                         x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)rItem.ID.ToString(CultureInfo.InvariantCulture) &&
                                         (bool)x["Tm_AnswerReceived"] == false)
-                                .ToString()
+                                .ToString(),
+                        ViewAttributes = "Scope='RecursiveAll'"
                     });
                     // the current item hasn't been updated yet so we have to concern about it
                     if (uncompleteRequests.Count <= 1)
