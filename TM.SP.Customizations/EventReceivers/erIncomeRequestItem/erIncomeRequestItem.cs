@@ -25,28 +25,33 @@ namespace TM.SP.Customizations
         [SharePointPermission(SecurityAction.LinkDemand, ObjectModel = true)]
         public override void ItemAdding(SPItemEventProperties properties)
         {
-            EventFiringEnabled = false;
-            try
+            var currentCtId = new SPContentTypeId(properties.AfterProperties["ContentTypeId"].ToString());
+            var folderCtId = properties.List.ContentTypes.BestMatch(new SPContentTypeId("0x0120"));
+            if (currentCtId != folderCtId)
             {
-                SPSecurity.RunWithElevatedPrivileges(() =>
+                EventFiringEnabled = false;
+                try
                 {
-                    SPSite siteCollection = properties.Site;
-                    SPServiceContext context = SPServiceContext.GetContext(siteCollection);
-                    using (new SPServiceContextScope(context))
+                    SPSecurity.RunWithElevatedPrivileges(() =>
                     {
-                        DoItemAdding(properties);
-                    }
-                });
-            }
-            catch(Exception ex)
-            {
-                properties.Status = SPEventReceiverStatus.CancelWithError;
-                properties.ErrorMessage = ex.Message;
-                return;
-            }
-            finally
-            {
-                EventFiringEnabled = true;                
+                        SPSite siteCollection = properties.Site;
+                        SPServiceContext context = SPServiceContext.GetContext(siteCollection);
+                        using (new SPServiceContextScope(context))
+                        {
+                            DoItemAdding(properties);
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    properties.Status = SPEventReceiverStatus.CancelWithError;
+                    properties.ErrorMessage = ex.Message;
+                    return;
+                }
+                finally
+                {
+                    EventFiringEnabled = true;
+                }
             }
 
             base.ItemAdding(properties);
