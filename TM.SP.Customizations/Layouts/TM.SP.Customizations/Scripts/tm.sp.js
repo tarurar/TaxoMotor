@@ -137,6 +137,20 @@ var TM;
             }, 'sp.js');
         };
 
+        TM.SP.GetListItemsByFieldValueEq = function (listName, fieldName, fieldValue, success, fail) {
+
+            var filterUrlPart = "$filter=" + fieldName + " eq '" + fieldValue + "'";
+            var url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('" + listName + "')/items?" + filterUrlPart;
+
+            $.ajax({
+                url: encodeURI(url),
+                method: "GET",
+                headers: { "Accept": "application/json; odata=verbose" },
+                success: success,
+                error: fail
+            });
+        };
+
         return TMSP;
     })(TM.SP || (TM.SP = {}));
 
