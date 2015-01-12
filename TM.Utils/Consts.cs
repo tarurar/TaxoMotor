@@ -22,6 +22,7 @@ namespace TM.Utils
         #endregion
         #region [Government Department Codes]
         public static readonly string TaxoMotorDepCode       = "200903";
+        public static readonly string TransportDepCode       = "2009";
         #endregion
         #region [Document Codes]
         public static readonly string EgrulDocCode           = "4020";

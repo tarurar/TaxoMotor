@@ -135,6 +135,7 @@
     <Content Include="Scripts\DenyIncomeRequest.js" />
     <Content Include="Scripts\DenyTaxi.js" />
     <Content Include="Scripts\Elements.xml" />
+    <Content Include="Scripts\IncomeRequestBcsFields.js" />
     <Content Include="Scripts\IncomeRequestHelper.js" />
     <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />

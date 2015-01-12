@@ -193,6 +193,16 @@
                 });
             };
 
+            ir.SendToAsguf = function (incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/SendToAsguf',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.SendEgripRequest = function (incomeRequestId, onsuccess, onfail) {
                 var url = SP.Utilities.Utility.getLayoutsPageUrl('TaxoMotor/SendRequestEGRIPPage.aspx') + '?IsDlg=1&ListId=' +
                     _spPageContextInfo.pageListId + '&Items=' + incomeRequestId + '&Source=' + location.href;
@@ -344,6 +354,8 @@
                                 ir.SignXml(data.d, function (signedData) {
                                     // Сохранение факта изменения статуса обращения в историю изменения статусов
                                     ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                        // Отправка обращения в АСГУФ
+                                        ir.SendToAsguf(incomeRequestId);
                                         // Отправка статуса обращения по межведомственному взаимодействию
                                         ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
                                     }).fail(onfail);
@@ -366,6 +378,8 @@
                                 ir.SignXml(data.d, function (signedData) {
                                     // Сохранение факта изменения статуса обращения в историю изменения статусов
                                     ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                        // Отправка обращения в АСГУФ
+                                        ir.SendToAsguf(incomeRequestId);
                                         // Отправка статуса обращения по межведомственному взаимодействию
                                         ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
                                     }).fail(onfail);
@@ -453,6 +467,8 @@
                                                     ir.SignXml(data.d, function (signedData) {
                                                         // Сохранение факта изменения статуса обращения в историю изменения статусов
                                                         ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                            // Отправка обращения в АСГУФ
+                                                            ir.SendToAsguf(incomeRequestId);
                                                             // Отправка статуса обращения по межведомственному взаимодействию
                                                             ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
                                                         }).fail(onfail);

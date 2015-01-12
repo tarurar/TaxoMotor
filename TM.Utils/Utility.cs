@@ -25,7 +25,7 @@ namespace TM.Utils
         {
             const string pattern = "{0}-{1}-{2}-{3}/{4}";
 
-            var orgCode = Consts.TaxoMotorDepCode;
+            var orgCode = Consts.TransportDepCode;
             var sysCode = Consts.TaxoMotorSysCode;
             var service = serviceCode;
             var year    = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture).Right(2);

@@ -13,5 +13,6 @@
     <ProjectItemFile Source="DenyTaxi.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="ProgressDlg.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="TaxiBlankNoEditor.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="IncomeRequestBcsFields.js" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

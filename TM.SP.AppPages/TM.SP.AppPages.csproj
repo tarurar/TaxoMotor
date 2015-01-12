@@ -152,6 +152,7 @@
     <Compile Include="ApplicationPages\SendStatus\SendStatus.aspx.designer.cs">
       <DependentUpon>SendStatus.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="IncomeRequestBuilder.cs" />
     <Compile Include="LicenseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApplicationPages\SendRequestDialogBase.cs">

@@ -29,6 +29,7 @@ using Address = TM.SP.BCSModels.CoordinateV5.Address;
 using License = TM.SP.BCSModels.Taxi.License;
 using AsposeLicense = Aspose.Words.License;
 using RequestContact = TM.SP.BCSModels.CoordinateV5.RequestContact;
+using MessageQueueService = TM.ServiceClients.MessageQueue;
 
 // ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
@@ -394,19 +395,50 @@ namespace TM.SP.AppPages
                 {
                     item["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
 
-                    if (ctId == list.ContentTypes["Аннулирование"].Id)
+                    // ---------------------------------- temporary ----------------------------------------//
+
+                    if (DateTime.Now.Day == 26 && DateTime.Now.Month == 12)
                     {
-                        item["Tm_PrepareTargetDate"] =
-                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(1).Date);
-                        item["Tm_OutputTargetDate"] =
-                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(2).Date);
+                        if (ctId == list.ContentTypes["Аннулирование"].Id)
+                        {
+                            item["Tm_PrepareTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 29));
+                            item["Tm_OutputTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 30));
+                        }
+                        else if (ctId == list.ContentTypes["Новое"].Id || ctId == list.ContentTypes["Переоформление"].Id)
+                        {
+                            item["Tm_PrepareTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 20));
+                            item["Tm_OutputTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 21));
+                        }
+                        else
+                        {
+                            item["Tm_PrepareTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 13));
+                            item["Tm_OutputTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 14));
+                        }
                     }
                     else
+
+                        // -------------------------------------------------------------------------------------//
                     {
-                        item["Tm_PrepareTargetDate"] =
-                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(14).Date);
-                        item["Tm_OutputTargetDate"] =
-                            SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(15).Date);
+                        if (ctId == list.ContentTypes["Аннулирование"].Id)
+                        {
+                            item["Tm_PrepareTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(1).Date);
+                            item["Tm_OutputTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(2).Date);
+                        }
+                        else
+                        {
+                            item["Tm_PrepareTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(14).Date);
+                            item["Tm_OutputTargetDate"] =
+                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(15).Date);
+                        }
                     }
                 }
                 if (statusItem != null)
@@ -1252,6 +1284,47 @@ namespace TM.SP.AppPages
                 Error = errorData,
                 Data = innerData
             };
+        }
+
+        [WebMethod]
+        public static dynamic SendToAsguf(int incomeRequestId)
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при отправке обращения в АСГУФ", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
+                        Utility.WithSafeUpdate(serviceContextWeb, safeWeb =>
+                        {
+                            // send request only for local items
+                            var rList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                            var rItem = rList.GetItemById(incomeRequestId);
+                            var regNumber = rItem["Tm_RegNumber"];
+                            if (regNumber != null && regNumber.ToString() != "") return;
+
+                            // getting V5 message
+                            var builder = new IncomeRequestMessageBuilder(safeWeb, incomeRequestId);
+                            var internalMessage = builder.SynthesizeV5();
+                            // getting config values and queue service client
+                            var confItem  = Config.GetConfigItem(safeWeb, "MessageQueueServiceUrl");
+                            var binding   = new System.ServiceModel.BasicHttpBinding();
+                            var address   = new System.ServiceModel.EndpointAddress(Config.GetConfigValue(confItem).ToString());
+                            var svcClient = new MessageQueueService.DataServiceClient(binding, address);
+                            confItem      = Config.GetConfigItem(safeWeb, "AsGufServiceGuid");
+                            var svcGuid   = Config.GetConfigValue(confItem);
+                            var svc       = svcClient.GetService(new Guid(svcGuid.ToString()));
+                            //getting queue service message
+                            var message =  new MessageQueueService.Message
+                            {
+                                Service       = svc,
+                                MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
+                                MessageType   = 2,
+                                MessageMethod = 1,
+                                MessageDate   = DateTime.Now,
+                                MessageText   = internalMessage.ToXElement<CoordinateMessage>().ToString()
+                            };
+
+                            bool sent = svcClient.AddMessage(message);
+                            if (!sent) throw new Exception("Сообщение не было отправлено");
+                        })));
         }
     }
 }

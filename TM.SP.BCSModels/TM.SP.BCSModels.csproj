@@ -68,6 +68,8 @@
     <Compile Include="BCSModels\CoordinateV5\MigratingRequest.cs" />
     <Compile Include="BCSModels\CoordinateV5\RequestAccountDataService.cs" />
     <Compile Include="BCSModels\CoordinateV5\FileEntityService.cs" />
+    <Compile Include="BCSModels\CoordinateV5\RequestAccountEntityService.cs" />
+    <Compile Include="BCSModels\CoordinateV5\RequestContactEntityService.cs" />
     <Compile Include="BCSModels\CoordinateV5\RequestEntityService.cs" />
     <Compile Include="BCSModels\LicenseStatus.cs" />
     <Compile Include="BCSModels\MigratingStatus.cs" />

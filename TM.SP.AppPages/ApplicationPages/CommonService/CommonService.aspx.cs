@@ -13,7 +13,9 @@ using System.Linq.Expressions;
 using System.Web.Services;
 using System.Xml.Linq;
 using CamlexNET;
+using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
+using TM.SP.BCSModels.CoordinateV5;
 using TM.Utils;
 using ODOPM;
 using WebServiceMO;
@@ -409,6 +411,75 @@ namespace TM.SP.AppPages
                     return "Нет перевода для элемента";
             }
         }
+
+        [WebMethod]
+        public static dynamic GetLatestRequestAccountId()
+        {
+            int payLoad = 0;
+
+            var catchData =
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при получении идентификатора последнего добавленного юридического лица", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
+                        Utility.WithSafeUpdate(serviceContextWeb, safeWeb =>
+                        {
+                            var item = BCS.ExecuteBcsMethod<RequestAccount>(new BcsMethodExecutionInfo
+                            {
+                                lob         = BCS.LOBRequestSystemName,
+                                ns          = BCS.LOBRequestSystemNamespace,
+                                contentType = "RequestAccount",
+                                methodName  = "GetLatest",
+                                methodType  = MethodInstanceType.Scalar
+                            }, null);
+
+                            if (item != null)
+                                payLoad = item.Id;
+                        })));
+
+            var catchDataObj = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+
+            return new
+            {
+                Error = errorData,
+                Data = payLoad
+            };
+        }
+
+        [WebMethod]
+        public static dynamic GetLatestRequestContactId()
+        {
+            int payLoad = 0;
+
+            var catchData =
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при получении идентификатора последнего добавленного физического лица", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
+                        Utility.WithSafeUpdate(serviceContextWeb, safeWeb =>
+                        {
+                            var item = BCS.ExecuteBcsMethod<RequestContact>(new BcsMethodExecutionInfo
+                            {
+                                lob         = BCS.LOBRequestSystemName,
+                                ns          = BCS.LOBRequestSystemNamespace,
+                                contentType = "RequestContact",
+                                methodName  = "GetLatest",
+                                methodType  = MethodInstanceType.Scalar
+                            }, null);
+
+                            if (item != null)
+                                payLoad = item.Id_Auto;
+                        })));
+
+            var catchDataObj = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+
+            return new
+            {
+                Error = errorData,
+                Data = payLoad
+            };
+        }
+
     }
 }
 

@@ -82,6 +82,32 @@ var TM;
             }, 'sp.js');
         };
 
+        TMSP.GetListDefaultNewFormUrl = function (spListTitle, success, fail) {
+            SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+
+                var ctx = SP.ClientContext.get_current();
+                var list = ctx.get_web().get_lists().getByTitle(spListTitle);
+                ctx.load(list, 'DefaultNewFormUrl');
+                ctx.executeQueryAsync(function () {
+                    var value = list.get_defaultNewFormUrl();
+                    success(value);
+                }, fail);
+            }, 'sp.js');
+        };
+
+        TMSP.GetListDefaultEditFormUrl = function (spListTitle, success, fail) {
+            SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+
+                var ctx = SP.ClientContext.get_current();
+                var list = ctx.get_web().get_lists().getByTitle(spListTitle);
+                ctx.load(list, 'DefaultEditFormUrl');
+                ctx.executeQueryAsync(function () {
+                    var value = list.get_defaultEditFormUrl();
+                    success(value);
+                }, fail);
+            }, 'sp.js');
+        };
+
         TMSP.MakeBcsFieldControlLinked = function (listId, itemId, field, linkedListName) {
             var div = $('.fd_field[fd_name=' + field + '] > div[fd_type=BusinessData]');
             if (!div) return;

@@ -3417,7 +3417,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="RequestAccount" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.62" EstimatedInstanceCount="10000" DefaultDisplayName="RequestAccount">
+				<Entity Name="RequestAccount" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.79" EstimatedInstanceCount="10000" DefaultDisplayName="RequestAccount">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestAccountEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -4698,6 +4698,14 @@
 								</Association>
 							</MethodInstances>
 						</Method>
+            <Method Name="GetLatest">
+              <Parameters>
+                <Parameter Name="returnParameter" Direction="Return">
+                  <TypeDescriptor Name="returnParameterTypeDescriptor" TypeName="TM.SP.BCSModels.CoordinateV5.RequestAccount, TM.SP.BCSModels" IsCollection="false" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="GetLatest" Type="Scalar" DefaultDisplayName="Get Latest" ReturnParameterName="returnParameter" />
+              </MethodInstances></Method>
 					</Methods>
 					<AssociationGroups>
 						<AssociationGroup Name="IdOfAddressToPostalAddressOfRequestAccountAssociation" DefaultDisplayName="Address to RequestAccount(PostalAddress)">
@@ -4711,7 +4719,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="RequestContact" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.71" EstimatedInstanceCount="10000" DefaultDisplayName="RequestContact">
+				<Entity Name="RequestContact" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.83" EstimatedInstanceCount="10000" DefaultDisplayName="RequestContact">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestContactEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -6243,6 +6251,14 @@
 								</Association>
 							</MethodInstances>
 						</Method>
+            <Method Name="GetLatest">
+              <Parameters>
+                <Parameter Name="returnParameter" Direction="Return">
+                  <TypeDescriptor Name="returnParameterTypeDescriptor" TypeName="TM.SP.BCSModels.CoordinateV5.RequestContact, CoordinateV5" IsCollection="false" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="GetLatest" Type="Scalar" DefaultDisplayName="Get Latest" ReturnParameterName="returnParameter" />
+              </MethodInstances></Method>
 					</Methods>
 					<AssociationGroups>
 						<AssociationGroup Name="IdOfAddressToRegAddressOfRequestContactAssociation" DefaultDisplayName="Address to RequestContact(RegAddress)">
