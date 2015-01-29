@@ -161,6 +161,9 @@
     <Build Include="dbo\Tables\RequestCounter.sql" />
     <Build Include="dbo\Triggers\AI_License.sql" />
     <Build Include="dbo\Tables\AppLog.sql" />
+    <Build Include="dbo\Tables\Report.sql" />
+    <Build Include="dbo\Tables\ReportData.sql" />
+    <Build Include="dbo\Tables\ReportSession.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />

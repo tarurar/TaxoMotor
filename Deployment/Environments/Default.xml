@@ -38,6 +38,7 @@
       <Variable Name="AsGufServiceGuid">fee650d8-5048-e311-ba9a-005056802550</Variable>
       <Variable Name="SignerName">ФИО подписанта</Variable>
       <Variable Name="SignerJob">Должность подписанта</Variable>
+      <Variable Name="RatingsSSOAppId">RatingsAccess</Variable>
       <!-- End Config Values -->
     </Variables>
     <PreRequisiteSolutions ID="Default" />
@@ -70,6 +71,9 @@
         <SiteCollection Url="$(WebAppUrl)" />
       </Solution>
       <Solution Name="TM.SP.BdcColumnUpdateTimerJob.wsp" Force="true" Overwrite="true">
+        <WebApplication Url="$(WebAppUrl)" />
+      </Solution>
+      <Solution Name="TM.SP.Ratings.wsp" Force="true" Overwrite="true">
         <WebApplication Url="$(WebAppUrl)" />
       </Solution>
     </Solutions>

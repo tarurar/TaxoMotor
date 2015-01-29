@@ -4,17 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F9732410-2D3D-4FA6-8A4C-A33C03C86955}</ProjectGuid>
+    <ProjectGuid>{4604D411-C7DB-448C-8DF0-E858E60669BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TM.SP.DeveloperBCSModels</RootNamespace>
-    <AssemblyName>TM.SP.DeveloperBCSModels</AssemblyName>
+    <RootNamespace>TM.SP.Ratings</RootNamespace>
+    <AssemblyName>TM.SP.Ratings</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetOfficeVersion>15.0</TargetOfficeVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SandboxedSolution>False</SandboxedSolution>
-    <IncludeAssemblyInPackage>True</IncludeAssemblyInPackage>
+    <PostDeploymentCommand>net stop "SharePoint Timer Service"
+net start "SharePoint Timer Service"</PostDeploymentCommand>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,10 +43,6 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.BusinessData, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -56,47 +53,41 @@
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BCSModels\DeveloperData\DeveloperDataEntities.cs" />
-    <Compile Include="BCSModels\DeveloperData\DeveloperDataEntityServices.cs" />
+    <Compile Include="Cache\Cacher.cs" />
+    <Compile Include="Features\TaxoMotor_RatingsTimerJobs\TaxoMotor_RatingsTimerJobs.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_RatingsTimerJobs.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\BaseReport.cs" />
+    <Compile Include="Reports\SPReport.cs" />
+    <Compile Include="Reports\SqlReport.cs" />
+    <Compile Include="Schedule\ScheduleFactory.cs" />
+    <Compile Include="Timers\RatingBaseFeatureReceiver.cs" />
+    <Compile Include="Timers\RatingBaseJobDefinition.cs" />
+    <Compile Include="Timers\RatingCarrierActingLicences.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BCSModels\DeveloperData\DeveloperData.bdcm" />
-    <None Include="BCSModels\DeveloperData\DeveloperData.bdcm.diagram">
-      <DependentUpon>DeveloperData.bdcm</DependentUpon>
-    </None>
-    <None Include="BCSModels\DeveloperData\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{7f27da57-ca0f-4432-9cf1-de6ebfdf3c35}</SharePointProjectItemId>
-    </None>
-    <None Include="Features\TaxoMotor_DeveloperBCSLists\TaxoMotor_DeveloperBCSLists.feature">
-      <FeatureId>{094ca2de-300b-40ca-b8ca-4dc4826b2be7}</FeatureId>
-    </None>
-    <None Include="Features\TaxoMotor_DeveloperBCSModel\TaxoMotor_DeveloperBCSModel.feature">
-      <FeatureId>{e23b5814-ad2c-41ba-a961-ed641916ec2e}</FeatureId>
+    <None Include="Features\TaxoMotor_RatingsTimerJobs\TaxoMotor_RatingsTimerJobs.feature">
+      <FeatureId>{51084cff-a697-4455-be82-0850eddd0d74}</FeatureId>
     </None>
     <None Include="key.snk" />
-    <None Include="ListInstances\DebugDataBCSList\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{3cf47da4-fb7b-44fa-a054-d9c3a1b32ba8}</SharePointProjectItemId>
-    </None>
-    <None Include="ListInstances\ErrorDataBCSList\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{e543cfe9-ec14-4d8a-bac0-d23f24c61533}</SharePointProjectItemId>
-    </None>
     <None Include="Package\Package.package">
-      <PackageId>{b3af8725-48ae-4dac-857f-8e053f936aef}</PackageId>
+      <PackageId>{c5fb70e6-fc78-4946-a013-03cd9367ce7a}</PackageId>
     </None>
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="Features\TaxoMotor_DeveloperBCSLists\TaxoMotor_DeveloperBCSLists.Template.xml">
-      <DependentUpon>TaxoMotor_DeveloperBCSLists.feature</DependentUpon>
+    <Content Include="Features\TaxoMotor_RatingsTimerJobs\TaxoMotor_RatingsTimerJobs.Template.xml">
+      <DependentUpon>TaxoMotor_RatingsTimerJobs.feature</DependentUpon>
     </Content>
-    <Content Include="Features\TaxoMotor_DeveloperBCSModel\TaxoMotor_DeveloperBCSModel.Template.xml">
-      <DependentUpon>TaxoMotor_DeveloperBCSModel.feature</DependentUpon>
-    </Content>
-    <Content Include="ListInstances\DebugDataBCSList\Elements.xml" />
-    <Content Include="ListInstances\ErrorDataBCSList\Elements.xml" />
+    <EmbeddedResource Include="SQL\NewReportSession.sql" />
+    <EmbeddedResource Include="SQL\ReportIdByGuid.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\TaxoMotor_RatingsTimerJobs\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
@@ -110,8 +101,4 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(SolutionDir)\SPSF.targets" Condition="!Exists('$(MSBuildProjectDirectory)\..\SPSF.targets')" />
-  <Import Project="$(MSBuildProjectDirectory)\..\SPSF.targets" Condition="Exists('$(MSBuildProjectDirectory)\..\SPSF.targets')" />
-  <Target Name="BeforeBuild" DependsOnTargets="$(BeforeBuildDependsOn)" />
-  <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)" />
 </Project>

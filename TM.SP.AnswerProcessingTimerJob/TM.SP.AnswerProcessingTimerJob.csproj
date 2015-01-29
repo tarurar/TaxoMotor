@@ -21,6 +21,7 @@
     <RestorePackages>true</RestorePackages>
     <PostDeploymentCommand>net stop "SharePoint Timer Service"
 net start "SharePoint Timer Service"</PostDeploymentCommand>
+    <IncludeAssemblyInPackage>True</IncludeAssemblyInPackage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

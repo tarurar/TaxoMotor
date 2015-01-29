@@ -87,6 +87,24 @@ namespace TM.Utils
             });
         }
 
+        public static void WithSPServiceContext(SPWeb web, Action<SPWeb> action)
+        {
+            SPSite curSite = web.Site;
+
+            SPSecurity.RunWithElevatedPrivileges(() =>
+            {
+                using (var oSite = new SPSite(curSite.ID))
+                using (var oWeb = oSite.OpenWeb(web.ID))
+                {
+                    var context = SPServiceContext.GetContext(oSite);
+                    using (new SPServiceContextScope(context))
+                    {
+                        action(oWeb);
+                    }
+                }
+            });
+        }
+
         public static dynamic WithCatchExceptionOnWebMethod(string ifExceptionMessage, Action action)
         {
             try

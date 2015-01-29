@@ -1,0 +1,1 @@
+﻿SELECT TOP 1 [Id] FROM [dbo].[Report] WHERE [Guid] = @Guid ORDER BY [Id] DESC;

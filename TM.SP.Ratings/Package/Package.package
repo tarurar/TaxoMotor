@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="c5fb70e6-fc78-4946-a013-03cd9367ce7a" solutionId="c5fb70e6-fc78-4946-a013-03cd9367ce7a" resetWebServer="false" sharePointProductVersion="15.0" name="TM.SP.Ratings" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
+  </assemblies>
+  <features>
+    <featureReference itemId="51084cff-a697-4455-be82-0850eddd0d74" />
+  </features>
+</package>

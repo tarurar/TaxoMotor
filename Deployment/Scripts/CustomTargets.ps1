@@ -166,6 +166,7 @@
 		AddConfigurationListEntry -vars $vars -confKey "AsGufServiceGuid" -confValue $vars['AsGufServiceGuid']
 		AddConfigurationListEntry -vars $vars -confKey "SignerName" -confValue $vars['SignerName']
 		AddConfigurationListEntry -vars $vars -confKey "SignerJob" -confValue $vars['SignerJob']
+		AddConfigurationListEntry -vars $vars -confKey "RatingsSSOAppId" -confValue $vars['RatingsSSOAppId']
 
      }
 #endregion

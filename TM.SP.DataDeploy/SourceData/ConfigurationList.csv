@@ -11,3 +11,4 @@ LocalDBName;TM.Data
 OdopmSingleSignOnAppId;ODOPM
 LocalDBWriterAccessSingleSignOnAppId;LocalDBWriterAccess
 MoServiceUrl;http://lvserv.ru:50503/service_tax_mo/service/
+RatingsSSOAppId;RatingsAccess
