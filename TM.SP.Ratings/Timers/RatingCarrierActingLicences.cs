@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using Microsoft.SharePoint.Administration;
+using TM.SP.Ratings.Helpers;
 
 namespace TM.SP.Ratings.Timers
 {
@@ -42,7 +43,7 @@ namespace TM.SP.Ratings.Timers
         {
             DataTable data = null;
 
-            using (var conn = new SqlConnection(GetConnectionString(web)))
+            using (var conn = new SqlConnection(SqlHelper.GetConnectionString(web)))
             {
                 conn.Open();
 

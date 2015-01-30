@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Reflection;
+using TM.SP.Ratings.Helpers;
 
 namespace TM.SP.Ratings.Cache
 {
@@ -17,25 +18,6 @@ namespace TM.SP.Ratings.Cache
     public class Cacher : ICacher
     {
         #region [methods]
-        private int GetReportIdByGuid(Guid guid, SqlConnection conn)
-        {
-            string sqlText = LoadSQLStatement("ReportIdByGuid.sql");
-            using (SqlCommand cmd = new SqlCommand(sqlText, conn))
-            {
-                cmd.Parameters.AddWithValue("@Guid", guid);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
-        }
-        private int NewReportSession(int reportId, SqlConnection conn)
-        {
-            string sqlText = LoadSQLStatement("NewReportSession.sql");
-            using (SqlCommand cmd = new SqlCommand(sqlText, conn))
-            {
-                cmd.Parameters.AddWithValue("@ReportId", reportId);
-                cmd.Parameters.AddWithValue("@Date", DateTime.Now);
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
-        }
         private string GetDumpingColumns(DataTable table)
         {
             string columnsStr = "[ReportSessionId]";
@@ -72,30 +54,13 @@ namespace TM.SP.Ratings.Cache
 
             return paramsStr;
         }
-        public static string LoadSQLStatement(string statementName)
-        {
-            string sqlStatement = string.Empty;
-
-            string namespacePart = "TM.SP.Ratings.SQL";
-            string resourceName = namespacePart + "." + statementName;
-
-            using (Stream stm = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
-            {
-                if (stm != null)
-                {
-                    sqlStatement = new StreamReader(stm).ReadToEnd();
-                }
-            }
-
-            return sqlStatement;
-        }
         private void DoDump(DataTable table, Guid reportGuid, SqlConnection conn)
         {
-            int reportId = GetReportIdByGuid(reportGuid, conn);
+            int reportId = SqlHelper.GetReportIdByGuid(reportGuid, conn);
 
             if (reportId != 0)
             {
-                int sessionId = NewReportSession(reportId, conn);
+                int sessionId = SqlHelper.NewReportSession(reportId, conn);
 
                 if (sessionId != 0)
                 {

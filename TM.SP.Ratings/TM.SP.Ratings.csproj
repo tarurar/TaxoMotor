@@ -43,10 +43,12 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SharePoint.Security, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.SharePoint" />
@@ -57,18 +59,31 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Features\TaxoMotor_RatingsTimerJobs\TaxoMotor_RatingsTimerJobs.EventReceiver.cs">
       <DependentUpon>TaxoMotor_RatingsTimerJobs.feature</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SPFeatureHelper.cs" />
+    <Compile Include="Helpers\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\BaseReport.cs" />
-    <Compile Include="Reports\SPReport.cs" />
-    <Compile Include="Reports\SqlReport.cs" />
     <Compile Include="Schedule\ScheduleFactory.cs" />
     <Compile Include="Timers\RatingBaseFeatureReceiver.cs" />
     <Compile Include="Timers\RatingBaseJobDefinition.cs" />
     <Compile Include="Timers\RatingCarrierActingLicences.cs" />
+    <Compile Include="WebParts\RatingsWP\RatingsWP.cs" />
+    <Compile Include="WebParts\RatingsWP\RatingsWPUserControl.ascx.cs">
+      <DependentUpon>RatingsWPUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebParts\RatingsWP\RatingsWPUserControl.ascx.designer.cs">
+      <DependentUpon>RatingsWPUserControl.ascx.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="SQL\GetLatestReportData.sql" />
+    <Content Include="WebParts\RatingsWP\RatingsWPUserControl.ascx" />
+    <Content Include="WebParts\RatingsWP\WebPartIcon_RatingsWP.gif" />
     <None Include="Features\TaxoMotor_RatingsTimerJobs\TaxoMotor_RatingsTimerJobs.feature">
       <FeatureId>{51084cff-a697-4455-be82-0850eddd0d74}</FeatureId>
+    </None>
+    <None Include="Features\TaxoMotor_TaxoMotorRatingsWebParts\TaxoMotor_TaxoMotorRatingsWebParts.feature">
+      <FeatureId>{f03f0267-ad8f-4952-bb21-83fb0c2f99b4}</FeatureId>
     </None>
     <None Include="key.snk" />
     <None Include="Package\Package.package">
@@ -77,12 +92,25 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
+    <None Include="Template\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{0bb04bcb-05e8-4165-95cc-f0ba2cae714f}</SharePointProjectItemId>
+    </None>
+    <Content Include="WebParts\RatingsWP\RatingsWP.webpart" />
+    <None Include="WebParts\RatingsWP\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{12b08257-9980-44b4-a560-42404775f5d5}</SharePointProjectItemId>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <Content Include="Features\TaxoMotor_RatingsTimerJobs\TaxoMotor_RatingsTimerJobs.Template.xml">
       <DependentUpon>TaxoMotor_RatingsTimerJobs.feature</DependentUpon>
     </Content>
+    <Content Include="Features\TaxoMotor_TaxoMotorRatingsWebParts\TaxoMotor_TaxoMotorRatingsWebParts.Template.xml">
+      <DependentUpon>TaxoMotor_TaxoMotorRatingsWebParts.feature</DependentUpon>
+    </Content>
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorRatingsWebParts.gif" />
+    <Content Include="WebParts\RatingsWP\Elements.xml" />
+    <Content Include="Features\TaxoMotor_TaxoMotorRatingsWebParts\Resources.resx" />
     <EmbeddedResource Include="SQL\NewReportSession.sql" />
     <EmbeddedResource Include="SQL\ReportIdByGuid.sql" />
   </ItemGroup>

@@ -6,7 +6,6 @@ using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
 using TM.SP.Ratings.Timers;
 using TM.SP.Ratings.Schedule;
-using TM.SP.Ratings.Reports;
 
 namespace TM.SP.Ratings.Features.TaxoMotor_RatingsTimerJobs
 {

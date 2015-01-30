@@ -10,6 +10,7 @@ using Microsoft.SharePoint.Utilities;
 using Microsoft.SharePoint.Administration;
 using TM.Utils;
 using TM.SP.Ratings.Cache;
+using TM.SP.Ratings.Helpers;
 
 namespace TM.SP.Ratings.Timers
 {
@@ -84,7 +85,7 @@ namespace TM.SP.Ratings.Timers
                         {
                             DataTable data = WebExecuteJob(web);
                             ICacher cacher = new Cacher();
-                            cacher.Dump(data, GetGuid(), GetConnectionString(web));
+                            cacher.Dump(data, GetGuid(), SqlHelper.GetConnectionString(web));
                         }
                     }
                 }
@@ -98,29 +99,6 @@ namespace TM.SP.Ratings.Timers
         protected virtual DataTable WebExecuteJob(SPWeb web)
         {
             throw new NotImplementedException();
-        }
-
-        protected string GetConnectionString(SPWeb web)
-        {
-            // getting db
-            var dbHost = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
-            var dbName = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
-            // getting credentials
-            var credentialsAppId = Config.GetConfigValue(Config.GetConfigItem(web, "RatingsSSOAppId")).ToString();
-
-            var cBuilder = new SqlConnectionStringBuilder()
-            {
-                DataSource = dbHost,
-                InitialCatalog = dbName
-            };
-
-            Utility.WithSPServiceContext(web, serviceContextWeb =>
-            {
-                cBuilder.UserID = Security.GetSecureStoreUserNameCredential(credentialsAppId);
-                cBuilder.Password = Security.GetSecureStorePasswordCredential(credentialsAppId);
-            });
-
-            return cBuilder.ConnectionString;
         }
 
         public void Register()
@@ -146,7 +124,7 @@ namespace TM.SP.Ratings.Timers
             SqlConnection conn = null;
             try
             {
-                conn = new SqlConnection(GetConnectionString(web));
+                conn = new SqlConnection(SqlHelper.GetConnectionString(web));
                 conn.Open();
 
                 SqlCommand insertCmd = new SqlCommand
@@ -204,7 +182,7 @@ namespace TM.SP.Ratings.Timers
             SqlConnection conn = null;
             try
             {
-                conn = new SqlConnection(GetConnectionString(web));
+                conn = new SqlConnection(SqlHelper.GetConnectionString(web));
                 conn.Open();
 
                 SqlCommand insertCmd = new SqlCommand

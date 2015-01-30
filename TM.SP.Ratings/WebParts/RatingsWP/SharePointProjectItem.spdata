@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.WebPart" DefaultFile="Elements.xml" SupportedTrustLevels="All" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="RatingsWP\" Type="ElementManifest" />
+    <ProjectItemFile Source="RatingsWP.webpart" Target="RatingsWP\" Type="ElementFile" />
+    <ProjectItemFile Source="WebPartIcon_RatingsWP.gif" Target="Images\TaxoMotor\" Type="TemplateFile" />
+    <ProjectItemFile Source="RatingsWPUserControl.ascx" Target="CONTROLTEMPLATES\TaxoMotor\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="TM.SP.Ratings" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+	<webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+		<metaData>
+			<type name="TM.SP.Ratings.RatingsWP, TM.SP.Ratings, Version=1.0.0.0, Culture=neutral, PublicKeyToken=97107c5c4be107a3" />
+			<importErrorMessage>Не удалось импортировать веб часть отображения рейтингов</importErrorMessage>
+		</metaData>
+		<data>
+			<properties>
+				<property name="Title" type="string">Рейтинг</property>
+				<property name="Description" type="string">Отображение рейтингов</property>
+				<property name="CatalogIconImageUrl" type="string">/_layouts/15/images/TaxoMotor/WebPartIcon_RatingsWP.gif</property>
+				<property name="TitleIconImageUrl" type="string">/_layouts/15/images/TaxoMotor/WebPartIcon_RatingsWP.gif</property>
+        <property name="_ItemCount" type="int">5</property>
+        <property name="_Header" type="string">Рейтинг</property>
+			</properties>
+		</data>
+	</webPart>
+</webParts>

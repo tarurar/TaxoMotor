@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<!--
+    ************************************************************************
+       Application: TaxoMotor
+      Created date: 2015-01-29 18:16:19Z
+        Created by: TAXOMOTOR\Developer
+              Name: RatingsWP
+       Description: RatingsWP Description          
+    ************************************************************************
+    -->
+	<Module
+		Name="RatingsWP"
+		List="113"
+		Url="_catalogs/wp">
+		<File
+			Path="RatingsWP\RatingsWP.webpart"
+			Url="RatingsWP.webpart"
+			Type="GhostableInLibrary">
+			<Property
+				Name="Group"
+				Value="TaxoMotor Webparts" />
+			<Property
+				Name="QuickAddGroups"
+				Value="TaxoMotor QuickAdd Webparts" />
+		</File>
+	</Module>
+</Elements>
