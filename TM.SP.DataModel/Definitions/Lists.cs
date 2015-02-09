@@ -198,5 +198,14 @@ namespace TM.SP.DataModel
             Description         = "Проверки МАДИ",
             ContentTypesEnabled = true
         };
+
+        public static ListDefinition TmProdCalendarList = new ListDefinition()
+        {
+            Title               = "Производственный календарь",
+            Url                 = "ProdCalendarList",
+            TemplateType        = BuiltInListTemplateTypeId.Events,
+            Description         = "Производственный календарь",
+            ContentTypesEnabled = true
+        };
     }
 }

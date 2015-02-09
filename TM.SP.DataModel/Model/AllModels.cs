@@ -160,7 +160,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmLicenseStatus, f => f.OnProvisioned<Field>(
                         context =>
                             context.Object.MakeChoices(new[]
-                            {"Оригинал", "Дубль", "Приостановлено", "Аннулировано", "С изменениями"})))
+                            {"Первичное", "Выдан дубликат", "Приостановлено", "Аннулировано", "Переоформлено"})))
                     .AddField(Fields.TmOrgLfb)
                     .AddField(Fields.TmJuridicalAddress)
                     .AddField(Fields.TmPhoneNumber)
@@ -380,6 +380,7 @@ namespace TM.SP.DataModel
                             l => l.AddContentTypeLink(ContentTypes.TmDocumentTemplate))
                         .AddList(Lists.TmMadiControlList,
                             l => l.AddContentTypeLink(ContentTypes.TmMadiControl))
+                        .AddList(Lists.TmProdCalendarList)
                 ));
 
             return model;

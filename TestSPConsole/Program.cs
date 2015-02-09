@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using TM.Utils;
-
-using TM.Utils;
+using CamlexNET;
 
 namespace TestSPConsole
 {
@@ -97,19 +96,28 @@ namespace TestSPConsole
         }
         static void Main(string[] args)
         {
-            using (SPSite site = new SPSite("http://win-snu4u1n6vq1"))
+            using (SPSite site = new SPSite("http://77.95.132.133"))
             using (SPWeb web = site.OpenWeb())
             {
                 var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
-                    var list = web.GetListOrBreak("Lists/LicenseList");
-                    SPListItem item = list.GetItemById(46);
+                    var list = web.GetListOrBreak("Lists/List");
+                    
+                    var day = new DateTime(2015, 2, 11);
+                    var caml = Camlex.Query().Where(x => (DateTime)x["EventDate"] <= day && (DateTime)x["EndDate"] >= day).ToString();
 
-                    Console.OutputEncoding = System.Text.Encoding.Unicode; //_x0421__x0441__x044b__x043b__x04
-                    foreach (SPField f in item.Fields) //SecondaryFieldNamesHelper.Encode(new string[] { "LicenseAllView_IsLast" })
+                    var items = list.GetItems(new SPQuery
                     {
-                        Console.WriteLine(f.Title + " * " + f.StaticName + " * " + f.InternalName);
+                        Query = caml
+                    });
+
+                    Console.OutputEncoding = System.Text.Encoding.Unicode;
+                    foreach (SPListItem item in items)
+                    {
+                        Console.WriteLine(item.ID + ": " + item.Title);
+                        Console.WriteLine(item["EventDate"].ToString());
+                        Console.WriteLine(item["EndDate"].ToString());
                     }
 
                     Console.ReadKey();

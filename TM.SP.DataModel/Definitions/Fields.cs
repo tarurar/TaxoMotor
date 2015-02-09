@@ -1172,7 +1172,7 @@ namespace TM.SP.DataModel
         public static  FieldDefinition TmLicenseStatus = new FieldDefinition()
         {
             Id           = new Guid("{2E1509C3-D5AC-4181-8520-D48C2FAC91C9}"),
-            Title        = "Статус",
+            Title        = "Сведения",
             InternalName = "Tm_LicenseStatus",
             FieldType    = BuiltInFieldTypes.Choice,
             Group        = ModelConsts.ColumnsDefaultGroup
