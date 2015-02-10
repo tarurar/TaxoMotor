@@ -102,25 +102,9 @@ namespace TestSPConsole
                 var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
-                    var list = web.GetListOrBreak("Lists/List");
+                    var finishDate = Calendar.CalcFinishDate(web, DateTime.Now, 3);
                     
-                    var day = new DateTime(2015, 2, 11);
-                    var caml = Camlex.Query().Where(x => (DateTime)x["EventDate"] <= day && (DateTime)x["EndDate"] >= day).ToString();
-
-                    var items = list.GetItems(new SPQuery
-                    {
-                        Query = caml
-                    });
-
-                    Console.OutputEncoding = System.Text.Encoding.Unicode;
-                    foreach (SPListItem item in items)
-                    {
-                        Console.WriteLine(item.ID + ": " + item.Title);
-                        Console.WriteLine(item["EventDate"].ToString());
-                        Console.WriteLine(item["EndDate"].ToString());
-                    }
-
-                    Console.ReadKey();
+                    Console.WriteLine(finishDate);
                 }
             }
         }

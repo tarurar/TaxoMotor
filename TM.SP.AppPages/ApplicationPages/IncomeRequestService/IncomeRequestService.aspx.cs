@@ -393,53 +393,27 @@ namespace TM.SP.AppPages
                 // В случае отказа сроки предоставления услуги не рассчитываем
                 if (statusCode != 1080)
                 {
-                    item["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+                    DateTime prepDate, outpDate, applyDate = DateTime.Now.Date;
 
-                    // ---------------------------------- temporary ----------------------------------------//
-
-                    if (DateTime.Now.Day == 26 && DateTime.Now.Month == 12)
+                    if (ctId == list.ContentTypes["Аннулирование"].Id)
                     {
-                        if (ctId == list.ContentTypes["Аннулирование"].Id)
-                        {
-                            item["Tm_PrepareTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 29));
-                            item["Tm_OutputTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 30));
-                        }
-                        else if (ctId == list.ContentTypes["Новое"].Id || ctId == list.ContentTypes["Переоформление"].Id)
-                        {
-                            item["Tm_PrepareTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 20));
-                            item["Tm_OutputTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 21));
-                        }
-                        else
-                        {
-                            item["Tm_PrepareTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 13));
-                            item["Tm_OutputTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(new DateTime(2015, 1, 14));
-                        }
+                        prepDate = Calendar.CalcFinishDate(web, applyDate, 1);
+                        outpDate = Calendar.CalcFinishDate(web, applyDate, 2);
+                    }
+                    else if (ctId == list.ContentTypes["Выдача дубликата"].Id)
+                    {
+                        prepDate = Calendar.CalcFinishDate(web, applyDate, 5);
+                        outpDate = Calendar.CalcFinishDate(web, applyDate, 6);
                     }
                     else
-
-                        // -------------------------------------------------------------------------------------//
                     {
-                        if (ctId == list.ContentTypes["Аннулирование"].Id)
-                        {
-                            item["Tm_PrepareTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(1).Date);
-                            item["Tm_OutputTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(2).Date);
-                        }
-                        else
-                        {
-                            item["Tm_PrepareTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(14).Date);
-                            item["Tm_OutputTargetDate"] =
-                                SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.AddDays(15).Date);
-                        }
+                        prepDate = Calendar.CalcFinishDate(web, applyDate, 10);
+                        outpDate = Calendar.CalcFinishDate(web, applyDate, 11);
                     }
+
+                    item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(prepDate);
+                    item["Tm_OutputTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(outpDate);
+                    item["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(applyDate);
                 }
                 if (statusItem != null)
                     item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(statusItem.ID, statusItem.Title);
