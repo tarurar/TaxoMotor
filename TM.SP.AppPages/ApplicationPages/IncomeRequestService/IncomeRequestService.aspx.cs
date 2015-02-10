@@ -394,21 +394,22 @@ namespace TM.SP.AppPages
                 if (statusCode != 1080)
                 {
                     DateTime prepDate, outpDate, applyDate = DateTime.Now.Date;
+                    DateTime beginWorkDate = applyDate.AddDays(1);
 
                     if (ctId == list.ContentTypes["Аннулирование"].Id)
                     {
-                        prepDate = Calendar.CalcFinishDate(web, applyDate, 1);
-                        outpDate = Calendar.CalcFinishDate(web, applyDate, 2);
+                        prepDate = Calendar.CalcFinishDate(web, beginWorkDate, 1);
+                        outpDate = Calendar.CalcFinishDate(web, beginWorkDate, 2);
                     }
                     else if (ctId == list.ContentTypes["Выдача дубликата"].Id)
                     {
-                        prepDate = Calendar.CalcFinishDate(web, applyDate, 5);
-                        outpDate = Calendar.CalcFinishDate(web, applyDate, 6);
+                        prepDate = Calendar.CalcFinishDate(web, beginWorkDate, 5);
+                        outpDate = Calendar.CalcFinishDate(web, beginWorkDate, 6);
                     }
                     else
                     {
-                        prepDate = Calendar.CalcFinishDate(web, applyDate, 10);
-                        outpDate = Calendar.CalcFinishDate(web, applyDate, 11);
+                        prepDate = Calendar.CalcFinishDate(web, beginWorkDate, 10);
+                        outpDate = Calendar.CalcFinishDate(web, beginWorkDate, 11);
                     }
 
                     item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(prepDate);
