@@ -101,10 +101,10 @@ namespace TP.SP.DataMigration
             switch (license.Status)
             {
                 case 0:
-                    status = "Оригинал";
+                    status = "Первичное";
                     break;
                 case 1:
-                    status = "Дубль";
+                    status = "Выдан дубликат";
                     break;
                 case 2:
                     status = "Приостановлено";
@@ -113,7 +113,7 @@ namespace TP.SP.DataMigration
                     status = "Аннулировано";
                     break;
                 default:
-                    status = "Оригинал";
+                    status = "Первичное";
                     break;
             }
             newItem["Tm_LicenseStatus"] = status;

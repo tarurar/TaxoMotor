@@ -105,7 +105,7 @@
                     <option value="1">Действующие</option>
                     <option value="2">Приостановленные</option>
                     <option value="3">Аннулированные</option>
-                    <option value="4">С изменениями</option>
+                    <option value="4">Переоформлено</option>
                 </select>
             </div>
         </div>
