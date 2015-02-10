@@ -570,10 +570,10 @@
                             ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText, needPersonVisit, refuseDocuments).success(function () {
                                     // Генерация документов отказа
                                     ir.CreateDocumentsWhileRefusing(incomeRequestId).success(function (refuseDocData) {
-                                        if (refuseDocData && refuseDocData.d && refuseDocData.d[0]) {
-                                            var refuseFileId = refuseDocData.d[0].DocumentId;
+                                        if (refuseDocData && refuseDocData.d && refuseDocData.d.Data && refuseDocData.d.Data[0]) {
+                                            var refuseFileId = refuseDocData.d.Data[0].DocumentId;
                                             // Подписание документа отказа
-                                            ir.SignDocumentContent(refuseDocData.d[0].DocumentUrl, function (signedRefuseDoc) {
+                                            ir.SignDocumentContent(refuseDocData.d.Data[0].DocumentUrl, function (signedRefuseDoc) {
                                                 // Сохранение подписи документа отказа
                                                 ir.SaveDocumentDetachedSignature(refuseFileId, signedRefuseDoc).success(function (sigFileData) {
                                                     if (sigFileData && sigFileData.d) {
@@ -611,7 +611,12 @@
                                                 }).fail(onfail);
                                             }, onfail);
                                         } else onfail("Не удалось создать документ-уведомление");
-                                    }).fail(onfail);
+                                    }).fail(function (jqXhr, status, error) {
+                                        var response = $.parseJSON(jqXhr.responseText).d;
+                                        console.error("Exception Message: " + response.Error.SystemMessage);
+                                        console.error("Exception StackTrace: " + response.Error.StackTrace);
+                                        onfail(response.Error.UserMessage);
+                                    });
                             }).fail(onfail);
                         }
                     })

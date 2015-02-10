@@ -584,27 +584,40 @@ namespace TM.SP.AppPages
         /// <param name="incomeRequestId">Идентификатор обращения</param>
         /// <returns>Массив структур DocumentMetaData</returns>
         [WebMethod]
-        public static DocumentMetaData[] CreateDocumentsWhileRefusing(int incomeRequestId)
+        public static dynamic CreateDocumentsWhileRefusing(int incomeRequestId)
         {
+            DocumentMetaData[] payLoad;
             SPWeb web = SPContext.Current.Web;
             var retValList = new List<DocumentMetaData>();
 
-            Utility.WithSafeUpdate(web, (safeWeb) =>
+            var catchData = 
+                Utility.WithCatchExceptionOnWebMethod("Ошибка генерации документов при отказе", () =>
+                Utility.WithSafeUpdate(web, (safeWeb) =>
+                {
+                    // getting data
+                    var spList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                    var spItem = spList.GetItemOrBreak(incomeRequestId);
+                    var ctId = new SPContentTypeId(spItem["ContentTypeId"].ToString());
+
+                    var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
+
+                    if (docBuilder.RefuseDocuments)
+                        retValList.Add(docBuilder.NeedPersonVisit ? docBuilder.RenderDocument(1) : docBuilder.RenderDocument(2));
+                    else
+                        retValList.Add(docBuilder.RenderDocument(3));
+                }));
+
+            payLoad = retValList.ToArray();
+
+            var catchDataObj = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+
+            return new
             {
-                // getting data
-                var spList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
-                var spItem = spList.GetItemOrBreak(incomeRequestId);
-                var ctId = new SPContentTypeId(spItem["ContentTypeId"].ToString());
-
-                var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
-
-                if (docBuilder.RefuseDocuments)
-                    retValList.Add(docBuilder.NeedPersonVisit ? docBuilder.RenderDocument(1) : docBuilder.RenderDocument(2));
-                else
-                    retValList.Add(docBuilder.RenderDocument(3));
-            });
-
-            return retValList.ToArray();
+                Error = errorData,
+                Data = payLoad
+            };
         }
 
 
