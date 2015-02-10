@@ -14,42 +14,52 @@
     .top-1 td{
         width:100%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-2 td{
         width:50%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-3 td{
         width:33.33%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-4 td{
         width:25%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-5 td{
 	    width:20%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-6 td{
         width:16.65%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-7 td{
         width:14.28%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-8 td{
         width:12.5%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-9 td{
         width:11.11%;
 	    text-align:center;
+        vertical-align:text-top;
     }
     .top-10 td{
         width:10%;
 	    text-align:center;
+        vertical-align:text-top;
     }
 
     .top-1-div, .top-2-div, .top-3-div, .top-4-div, .top-5-div, .top-6-div, .top-7-div, .top-8-div, .top-9-div, .top-10-div{
