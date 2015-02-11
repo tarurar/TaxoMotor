@@ -71,7 +71,7 @@ namespace TM.SP.Customizations
             if (afterProps["Tm_IncomeRequestStateLookup"] == null || (string) afterProps["Tm_IncomeRequestStateLookup"] == String.Empty)
             {
                 var stateList = properties.Web.GetListOrBreak("Lists/IncomeRequestStateBookList");
-                var stateItem = stateList.GetSingleListItemByFieldValue("Tm_ServiceCode", "1010");
+                var stateItem = stateList.GetSingleListItemByFieldValue("Tm_ServiceCode", "1040");
                 if (stateItem != null)
                     afterProps["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(stateItem.ID, stateItem.Title);
             }

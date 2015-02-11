@@ -346,7 +346,7 @@
                 // Запросы ПТС по транспортным средствам обращения
                 ir.SendPTSRequest(incomeRequestId, function () {
                     // Расчет сроков оказания услуги и установка статуса обращения
-                    ir.CalculateDatesAndSetStatus(incomeRequestId, 1110).success(function () {
+                    ir.CalculateDatesAndSetStatus(incomeRequestId, 1020).success(function () {
                         // Получение xml для измененного состояния обращения
                         ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
                             //Подписывание xml
@@ -583,7 +583,7 @@
                                                             // В зависимости от текущего статуса устанавливаем новый
                                                             ir.GetCurrentStatusCode(incomeRequestId).success(function (data) {
                                                                 var currStatus = data.d.Data;
-                                                                var newStatus = currStatus == 1010 ? 1030 : 1080;
+                                                                var newStatus = currStatus == 1040 ? 1030 : 1080;
                                                                 // Установка статуса обращения
                                                                 ir.CalculateDatesAndSetStatus(incomeRequestId, newStatus).success(function () {
                                                                     // Получение xml для измененного состояния обращения

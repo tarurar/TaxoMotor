@@ -47,7 +47,7 @@
               });
             }
             else {
-              result = TM.SP.IncomeRequest.currentStatusCode == 1010;
+              result = TM.SP.IncomeRequest.currentStatusCode == 1040;
             }*/
             
             return result;

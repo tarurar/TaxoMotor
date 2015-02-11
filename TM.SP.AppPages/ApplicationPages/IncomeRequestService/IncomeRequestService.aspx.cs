@@ -791,7 +791,7 @@ namespace TM.SP.AppPages
 
                     switch (rStatusCode)
                     {
-                        case "1010":
+                        case "1040":
                             taxiItem["Tm_TaxiStatus"] = "В работе";
                             taxiItem.Update();
                             break;
