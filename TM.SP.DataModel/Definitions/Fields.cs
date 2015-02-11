@@ -1208,6 +1208,26 @@ namespace TM.SP.DataModel
         );
 
         /// <summary>
+        /// Вычислимое поле номер разрешения
+        /// </summary>
+        public static XElement TmLicenseCalcNumber = new XElement("Field",
+            new XAttribute("Type", "Calculated"),
+            new XAttribute("Name", "Tm_LicenseCalcNumber"),
+            new XAttribute("StaticName", "Tm_LicenseCalcNumber"),
+            new XAttribute("DisplayName", "Номер разрешения"),
+            new XAttribute("Indexed", "FALSE"),
+            new XAttribute("ResultType", "Text"),
+            new XAttribute("ReadOnly", "TRUE"),
+            new XAttribute("ID", "{533BE3BB-205D-4007-81B1-3BFB0FD01BBA}"),
+            new XAttribute("Required", "FALSE"),
+            new XAttribute("Version", "1"),
+            new XElement("Formula", "=[Название]"),
+            new XElement("FieldRefs",
+                new XElement("FieldRef",
+                    new XAttribute("Name", "Название")))
+        );
+
+        /// <summary>
         /// Ссылка на разрешение (BCS список)
         /// </summary>
         public static XElement TmLicenseAllViewBcsLookupXml = new XElement("Field",
