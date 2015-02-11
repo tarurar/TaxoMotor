@@ -226,8 +226,6 @@ namespace TM.SP.DataModel
             #region [Adding fields]
             ListHelpers.AddFieldAsXmlToList(licenseList, Fields.TmLicenseCalcState,
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes, true);
-            ListHelpers.AddFieldAsXmlToList(licenseList, Fields.TmLicenseCalcNumber,
-                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes, true);
             #endregion
         }
 
