@@ -211,6 +211,7 @@ namespace TM.SP.DataModel
                         context => context.Object.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeDefaultValue("FALSE")))
+                    // todo: add field to the list itself, not to the site columns
                     /*.AddField(Fields.TmIncomeRequestSysUpdAvailText, f => f.OnProvisioned<Field>(
                         context =>
                         {

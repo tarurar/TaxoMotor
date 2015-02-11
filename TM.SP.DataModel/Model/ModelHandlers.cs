@@ -215,6 +215,20 @@ namespace TM.SP.DataModel
             #endregion
         }
 
+        public static void CreateListOnlyFields(ClientContext ctx)
+        {
+            #region [Getting lists]
+            Guid webId = WebHelpers.GetWebId(ctx);
+            IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
+            List licenseList = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
+            #endregion
+
+            #region [Adding fields]
+            ListHelpers.AddFieldAsXmlToList(licenseList, Fields.TmLicenseCalcState,
+                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes, true);
+            #endregion
+        }
+
         #endregion
     }
 }

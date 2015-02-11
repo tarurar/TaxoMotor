@@ -1188,6 +1188,26 @@ namespace TM.SP.DataModel
         };
 
         /// <summary>
+        /// Вычислимое поле действующее/архивное разрешение
+        /// </summary>
+        public static XElement TmLicenseCalcState = new XElement("Field",
+            new XAttribute("Type", "Calculated"),
+            new XAttribute("Name", "Tm_LicenseState"),
+            new XAttribute("StaticName", "Tm_LicenseState"),
+            new XAttribute("DisplayName", "Статус"),
+            new XAttribute("Indexed", "FALSE"),
+            new XAttribute("ResultType", "Text"),
+            new XAttribute("ReadOnly", "TRUE"),
+            new XAttribute("ID", "{A5918B37-EF27-4B80-8121-40532F987FF8}"),
+            new XAttribute("Required", "FALSE"),
+            new XAttribute("Version", "1"),
+            new XElement("Formula", "=IF([Ссылка на внешний список: IsLast]=1,\"Действующее\",\"Архивное\")"),
+            new XElement("FieldRefs", 
+                new XElement("FieldRef", 
+                    new XAttribute("Name", "Ссылка на внешний список: IsLast")))
+        );
+
+        /// <summary>
         /// Ссылка на разрешение (BCS список)
         /// </summary>
         public static XElement TmLicenseAllViewBcsLookupXml = new XElement("Field",
