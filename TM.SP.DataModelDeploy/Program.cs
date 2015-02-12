@@ -95,7 +95,6 @@ namespace TM.SP.DataModelDeploy
                 ModelHandlers.MakeContentTypesDefault(ctx);
                 ModelHandlers.CreateBcsFields(ctx);
                 ModelHandlers.CreatePlumsailFields(ctx);
-                ModelHandlers.CreateListOnlyFields(ctx);
             }
         }
 

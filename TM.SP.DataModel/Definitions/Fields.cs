@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using SPMeta2.Definitions;
+using SPMeta2.Definitions.Fields;
 using SPMeta2.Enumerations;
 
 using TM.ClientUtils.Bcs;
@@ -1187,25 +1189,27 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
-        /// <summary>
-        /// Вычислимое поле действующее/архивное разрешение
-        /// </summary>
-        public static XElement TmLicenseCalcState = new XElement("Field",
-            new XAttribute("Type", "Calculated"),
-            new XAttribute("Name", "Tm_LicenseState"),
-            new XAttribute("StaticName", "Tm_LicenseState"),
-            new XAttribute("DisplayName", "Статус"),
-            new XAttribute("Indexed", "FALSE"),
-            new XAttribute("ResultType", "Text"),
-            new XAttribute("ReadOnly", "TRUE"),
-            new XAttribute("ID", "{A5918B37-EF27-4B80-8121-40532F987FF8}"),
-            new XAttribute("Required", "FALSE"),
-            new XAttribute("Version", "1"),
-            new XElement("Formula", "=IF([Ссылка на внешний список: IsLast]=1,\"Действующее\",\"Архивное\")"),
-            new XElement("FieldRefs", 
-                new XElement("FieldRef", 
-                    new XAttribute("Name", "Ссылка на внешний список: IsLast")))
-        );
+        public static FieldDefinition TmLicenseTitle = new FieldDefinition
+        {
+            Id           = BuiltInFieldId.Title,
+            Title        = "Номер",
+            InternalName = BuiltInInternalFieldNames.Title,
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+        };
+
+        public static FieldDefinition TmLicenseCalcState = new CalculatedFieldDefinition
+        {
+            Id                = new Guid("{4D6CF9EB-EA7C-4C34-9CC5-1AD2B30353B7}"),
+            Title             = "Статус",
+            InternalName      = "Tm_LicenseCalcState",
+            Group             = ModelConsts.ColumnsCalcGroup,
+            Formula           = "=IF([Ссылка на внешний список: IsLast]=1,\"Действующее\",\"Архивное\")",
+            OutputType        = BuiltInFieldTypes.Text,
+            FieldReferences   = new Collection<string> { "Ссылка на внешний список: IsLast" },
+            DateFormat        = BuiltInDateTimeFieldFormatType.DateOnly,
+            CurrencyLocaleId  = 1049
+        };
 
         /// <summary>
         /// Ссылка на разрешение (BCS список)

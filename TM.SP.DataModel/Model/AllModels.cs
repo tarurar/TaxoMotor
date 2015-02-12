@@ -372,6 +372,8 @@ namespace TM.SP.DataModel
                         {
                             l.AddContentTypeLink(ContentTypes.TmLicense);
                             l.OnProvisioned<List>(context => context.Object.MakeFolderCreationAvailable(true));
+                            l.AddField(Fields.TmLicenseTitle);
+                            l.AddField(Fields.TmLicenseCalcState);
                         })
                         .AddList(Lists.TmDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmDocumentType))
