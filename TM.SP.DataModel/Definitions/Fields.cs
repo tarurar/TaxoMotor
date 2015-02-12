@@ -960,13 +960,17 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
-        public static FieldDefinition TmIncomeRequestSysUpdAvailText = new FieldDefinition()
+        public static FieldDefinition TmIncomeRequestSysUpdAvailCalc = new CalculatedFieldDefinition
         {
-            Id           = new Guid("{EC3A867E-5EE2-4C58-A1F0-CED6217289B4}"),
-            Title        = "Обновление обращения разрешено (выч.)",
-            InternalName = "Tm_IncomeRequestSysUpdAvailText",
-            FieldType    = BuiltInFieldTypes.Calculated,
-            Group        = ModelConsts.ColumnsCalcGroup
+            Id               = new Guid("{EC3A867E-5EE2-4C58-A1F0-CED6217289B4}"),
+            Title            = "Обновление обращения разрешено (выч.)",
+            InternalName     = "Tm_IncomeRequestSysUpdAvailText",
+            Group            = ModelConsts.ColumnsCalcGroup,
+            Formula          = "=IF([Обновление обращения разрешено],\"1\",\"0\")",
+            OutputType       = BuiltInFieldTypes.Text,
+            FieldReferences  = new Collection<string> { "Обновление обращения разрешено" },
+            DateFormat       = BuiltInDateTimeFieldFormatType.DateOnly,
+            CurrencyLocaleId = 1049
         };
 
         #endregion

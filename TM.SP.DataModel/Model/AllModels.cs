@@ -211,16 +211,6 @@ namespace TM.SP.DataModel
                         context => context.Object.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeDefaultValue("FALSE")))
-                    // todo: add field to the list itself, not to the site columns
-                    /*.AddField(Fields.TmIncomeRequestSysUpdAvailText, f => f.OnProvisioned<Field>(
-                        context =>
-                        {
-                            var fieldInstance = context.Object;
-                            var field = fieldInstance.Context.CastTo<FieldCalculated>(fieldInstance);
-                            
-                            if (field != null)
-                                field.Formula = "=ЕСЛИ([Обновление обращения разрешено];\"1\";\"0\")";
-                        }))*/
                     .AddField(Fields.TmMessageId,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -235,8 +225,7 @@ namespace TM.SP.DataModel
                     ctList => ctList
                         .AddContentType(ContentTypes.TmIncomeRequestState, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
-                            .AddContentTypeFieldLink(Fields.TmIncomeRequestSystemUpdateAvailable)
-                            .AddContentTypeFieldLink(Fields.TmIncomeRequestSysUpdAvailText))
+                            .AddContentTypeFieldLink(Fields.TmIncomeRequestSystemUpdateAvailable))
                         .AddContentType(ContentTypes.TmIncomeRequestStateInternal,
                             ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
                         .AddContentType(ContentTypes.TmDenyReason, ct => ct
@@ -347,8 +336,11 @@ namespace TM.SP.DataModel
             var model = SPMeta2Model.NewWebModel(web => web
                 .WithLists(
                     lists => lists
-                        .AddList(Lists.TmIncomeRequestStateBookList,
-                            l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestState))
+                        .AddList(Lists.TmIncomeRequestStateBookList, l => 
+                        { 
+                            l.AddContentTypeLink(ContentTypes.TmIncomeRequestState);
+                            l.AddField(Fields.TmIncomeRequestSysUpdAvailCalc);
+                        })
                         .AddList(Lists.TmIncomeRequestStateInternalBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIncomeRequestStateInternal))
                         .AddList(Lists.TmDenyReasonBookList,
