@@ -9,6 +9,8 @@ using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using TM.Utils;
 using CamlexNET;
+using System.Net.Http;
+using System.Net;
 
 namespace TestSPConsole
 {
@@ -102,9 +104,33 @@ namespace TestSPConsole
                 var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
-                    var finishDate = Calendar.CalcFinishDate(web, DateTime.Now, 3);
-                    
-                    Console.WriteLine(finishDate);
+                    /*using (var client = new HttpClient())
+                    {*/
+                        var list = web.GetListOrBreak("Lists/IncomeRequestList");
+                        var request = list.GetItemById(3);
+
+                        var url = SPUtility.ConcatUrls(SPUtility.GetWebLayoutsFolder(web), "TaxoMotor/SendStatus.aspx");
+                        var uriBuilder = new UriBuilder(url);
+                        uriBuilder.Port = -1;
+                        var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                        query["ListId"] = request.ParentList.ID.ToString("B");
+                        query["Items"] = request.ID.ToString();
+                        uriBuilder.Query = query.ToString();
+                        url = uriBuilder.ToString();
+
+                        var wrequest = WebRequest.Create(url);
+                        wrequest.Method = "POST";
+                        wrequest.ContentLength = 0;
+                        wrequest.UseDefaultCredentials = true;
+                        var response = wrequest.GetResponse();
+
+                        /*var response = client.PostAsync(url, new StringContent(String.Empty)).Result;
+
+                        if (response.IsSuccessStatusCode)
+                        {
+
+                        }
+                    }*/
                 }
             }
         }

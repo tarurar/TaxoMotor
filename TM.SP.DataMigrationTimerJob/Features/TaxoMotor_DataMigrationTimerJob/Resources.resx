@@ -180,6 +180,9 @@
   <data name="RequestTitleFmt" xml:space="preserve">
     <value>Обращение №{0} от {1}</value>
   </data>
+  <data name="SendWebRequestErrorFmt" xml:space="preserve">
+    <value>Error sending web request (url = {0})</value>
+  </data>
   <data name="ServiceDocumentEntityName" xml:space="preserve">
     <value>ServiceDocument</value>
   </data>

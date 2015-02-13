@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Http;
+using System.Web;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
 using Microsoft.SharePoint.Utilities;
@@ -6,7 +8,9 @@ using TM.Utils;
 using TM.SP.BCSModels.CoordinateV5;
 using TM.SP.BCSModels.Taxi;
 using TP.SP.DataMigration;
+using TM.SP.AppPages;
 using CoordinateV5File = TM.SP.BCSModels.CoordinateV5.File;
+using System.Net;
 
 namespace TM.SP.DataMigrationTimerJob
 {
@@ -48,11 +52,41 @@ namespace TM.SP.DataMigrationTimerJob
             Title = GetFeatureLocalizedResource("JobTitle");
         }
 
+        private void NotifyAboutItemStatus(SPListItem spItem)
+        {
+            var web = spItem.ParentList.ParentWeb;
+
+            var url = SPUtility.ConcatUrls(SPUtility.GetWebLayoutsFolder(web), "TaxoMotor/SendStatus.aspx");
+            var uriBuilder = new UriBuilder(url) { Port = -1 };
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["ListId"] = spItem.ParentList.ID.ToString("B");
+            query["Items"] = spItem.ID.ToString();
+            uriBuilder.Query = query.ToString();
+            url = uriBuilder.ToString();
+
+            var request = WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentLength = 0;
+            request.UseDefaultCredentials = true;
+            var response = (HttpWebResponse)request.GetResponse();
+
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new Exception(String.Format(GetFeatureLocalizedResource("SendWebRequestErrorFmt"), url));
+        }
+
         private void MigrateIncomingRequest(SPWeb web)
         {
             var manager = new MigrationManager<Request, MigratingRequest>(BCS.LOBRequestSystemName,
                 BCS.LOBRequestSystemNamespace);
-            manager.Process(0, RequestCt, ReadRequestItem, web, IncomeRequestMigrator.Execute);
+            var request = manager.Process(0, RequestCt, ReadRequestItem, web, IncomeRequestMigrator.Execute);
+            if (request != null)
+            {
+                // saving income request status change history
+                var statusXml = IncomeRequestService.GetIncomeRequestCoordinateV5StatusMessage(request.ID);
+                IncomeRequestService.SaveIncomeRequestStatusLog(request.ID, statusXml);
+                // sending income request status
+                NotifyAboutItemStatus(request);
+            }
         }
         private void MigrateLicense(SPWeb web)
         {
