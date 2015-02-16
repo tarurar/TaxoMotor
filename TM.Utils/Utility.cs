@@ -55,6 +55,19 @@ namespace TM.Utils
             return true;
         }
 
+        public static string TryGetServiceCodeFromLookupValue(object fieldValue, SPFieldLookup field)
+        {
+            SPListItem lookupItem;
+            TryGetListItemFromLookupValue(fieldValue, field, out lookupItem);
+
+            if (lookupItem != null)
+            {
+                var serviceCode = lookupItem["Tm_ServiceCode"] != null ? lookupItem["Tm_ServiceCode"].ToString() : String.Empty;
+                return serviceCode;
+            }
+            else return String.Empty;
+        }
+
         public static void WithSafeUpdate(SPWeb web, Action<SPWeb> action)
         {
             web.AllowUnsafeUpdates = true;

@@ -77,5 +77,32 @@ namespace TM.Utils {
                 return ResourceManager.GetString("CalendarWorkHours", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has not been initialized properly.
+        /// </summary>
+        internal static string EntityInitErrorFmt {
+            get {
+                return ResourceManager.GetString("EntityInitErrorFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is empty.
+        /// </summary>
+        internal static string ParamEmptyErrorFmt {
+            get {
+                return ResourceManager.GetString("ParamEmptyErrorFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM [{0}].[{1}] WHERE 1 = 0.
+        /// </summary>
+        internal static string SqlFakeSelectMetadataFmt {
+            get {
+                return ResourceManager.GetString("SqlFakeSelectMetadataFmt", resourceCulture);
+            }
+        }
     }
 }

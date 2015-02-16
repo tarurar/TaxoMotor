@@ -123,4 +123,13 @@
   <data name="CalendarWorkHours" xml:space="preserve">
     <value>Рабочие часы</value>
   </data>
+  <data name="EntityInitErrorFmt" xml:space="preserve">
+    <value>{0} has not been initialized properly</value>
+  </data>
+  <data name="ParamEmptyErrorFmt" xml:space="preserve">
+    <value>{0} is empty</value>
+  </data>
+  <data name="SqlFakeSelectMetadataFmt" xml:space="preserve">
+    <value>SELECT * FROM [{0}].[{1}] WHERE 1 = 0</value>
+  </data>
 </root>
