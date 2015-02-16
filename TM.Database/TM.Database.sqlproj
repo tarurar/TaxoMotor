@@ -164,6 +164,7 @@
     <Build Include="dbo\Tables\Report.sql" />
     <Build Include="dbo\Tables\ReportData.sql" />
     <Build Include="dbo\Tables\ReportSession.sql" />
+    <Build Include="dbo\Tables\GibddPenaltyV5.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />

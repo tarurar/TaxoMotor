@@ -10,9 +10,11 @@ using Microsoft.SharePoint.Administration;
 using CamlexNET;
 
 using TM.Utils;
+using TM.Utils.Sql;
 using TM.Services.CoordinateV5;
 using MessageQueueService = TM.ServiceClients.MessageQueue;
 using CoordinateV5File = TM.Services.CoordinateV5.File;
+using System.Data.SqlClient;
 
 namespace TM.SP.AnswerProcessingTimerJob
 {
@@ -46,6 +48,28 @@ namespace TM.SP.AnswerProcessingTimerJob
             Title = GetFeatureLocalizedResource("JobTitle");
         }
 
+        private void ProcessCustomAttributes(SPListItem item)
+        {
+            var list = item.ParentList;
+            var web = list.ParentWeb;
+            var customAttrs = item["Tm_XmlValue"].ToString();
+
+            var requestTypeField = list.Fields.GetFieldByInternalName("Tm_OutputRequestTypeLookup") as SPFieldLookup;
+            var requestTypeCode = Utility.TryGetServiceCodeFromLookupValue(item["Tm_OutputRequestTypeLookup"], requestTypeField);
+
+            switch (requestTypeCode)
+            {
+                case "4":
+                    // штрафы ГИБДД
+                    var connectionString = SqlHelper.GetConnectionString(web);
+                    var worker = XmlToSql.GetForPenaltyV5(connectionString);
+                    worker.Transfer(customAttrs, null);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public override void Execute(Guid targetInstanceId)
         {
             try
@@ -60,7 +84,6 @@ namespace TM.SP.AnswerProcessingTimerJob
                         if (web.Features[new Guid(TaxiListsFeatureId)] != null &&
                             web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
                         {
-
                             SPListItemCollection requestList = GetOutcomeRequests(web, 20);
                             foreach (SPListItem request in requestList)
                             {
@@ -81,6 +104,7 @@ namespace TM.SP.AnswerProcessingTimerJob
                                     request["Tm_XmlValue"] = customAttributes;
                                     request["Tm_AnswerReceived"] = true;
                                     request.Update();
+                                    ProcessCustomAttributes(request);
                                 }
                                 if (!String.IsNullOrEmpty(resultCode))
                                 {
