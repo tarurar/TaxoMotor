@@ -153,6 +153,7 @@
     <Content Include="Features\TaxoMotor_TaxoMotorSiteLevelCustomizations\TaxoMotor_TaxoMotorSiteLevelCustomizations.Template.xml">
       <DependentUpon>TaxoMotor_TaxoMotorSiteLevelCustomizations.feature</DependentUpon>
     </Content>
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.copycss.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.min.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\json-to-table.js" />

@@ -6,4 +6,5 @@
 <script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/jquery-ui.min-1.11.1.js"></script>
 <script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/jquery.inputmask/jquery.inputmask.js"></script>
+<script type="text/javascript" src="/_layouts/15/TM.SP.Customizations/Scripts/jquery.copycss.js"></script>
 
