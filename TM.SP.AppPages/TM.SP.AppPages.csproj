@@ -161,9 +161,20 @@
     </Compile>
     <Compile Include="TemplatedDocumentBuilder.cs" />
     <Compile Include="TemplatedLicenseDocumentBuilder.cs" />
+    <Compile Include="Validators\StringsRes.Designer.cs">
+      <DependentUpon>StringsRes.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Validators\TaxiDuplicateValidator.cs" />
+    <Compile Include="Validators\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="3rd\Aspose\Aspose.Total.lic" />
+    <EmbeddedResource Include="Validators\StringsRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringsRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="ApplicationPages\CommonService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{ae3acb76-aa42-4b73-978b-6865edcea3ff}</SharePointProjectItemId>
     </None>

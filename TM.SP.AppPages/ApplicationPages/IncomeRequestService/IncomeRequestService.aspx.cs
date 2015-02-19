@@ -30,6 +30,7 @@ using License = TM.SP.BCSModels.Taxi.License;
 using AsposeLicense = Aspose.Words.License;
 using RequestContact = TM.SP.BCSModels.CoordinateV5.RequestContact;
 using MessageQueueService = TM.ServiceClients.MessageQueue;
+using TM.SP.AppPages.Validators;
 
 // ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
@@ -159,6 +160,67 @@ namespace TM.SP.AppPages
             });
 
             return licenseItems.Count > 0;
+        }
+
+        /// <summary>
+        /// Выборка действующих разрещений (на практике должно быть одно) для указанного транспортного средства (проверяется номер ТС)
+        /// </summary>
+        /// <param name="taxiId">Идентификатор транспортного средства</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static SPListItemCollection GetTaxiNumberActingLicenses(int taxiId)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var licenseList = web.GetListOrBreak("Lists/LicenseList");
+            var taxiList = web.GetListOrBreak("Lists/TaxiList");
+            var taxiItem = taxiList.GetItemById(taxiId);
+            var stateNumber = taxiItem["Tm_TaxiStateNumber"].ToString();
+
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            {
+                // IsLast field - checking if license is acting
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                // checking for exactly this taxi
+                x => (string)x["Tm_TaxiStateNumber"] == stateNumber
+            };
+            SPListItemCollection licenseItems = licenseList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            return licenseItems;
+        }
+
+        /// <summary>
+        /// Получение списка всех обращений в указанных статусах
+        /// </summary>
+        /// <param name="statuses">Список кодов статусов через точку с запятой</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static SPListItemCollection GetAllIncomeRequestInStatus(string statuses)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var requestList = web.GetListOrBreak("Lists/IncomeRequestList");
+            var arrStatuses = statuses.Split(';');
+
+            var statusConditions = new List<Expression<Func<SPListItem, bool>>>();
+            foreach (string t in arrStatuses)
+            {
+                string token = t;
+                statusConditions.Add(x => (string)x["_x0421__x043e__x0441__x0442__x04"] == t);
+            }
+
+            var statusExpr = ExpressionsHelper.CombineOr(statusConditions);
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { statusExpr };
+
+            SPListItemCollection requestItems = requestList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            return requestItems;
         }
 
         /// <summary>
@@ -330,6 +392,63 @@ namespace TM.SP.AppPages
                 CanRelease = failedTaxiNumber == String.Empty,
                 TaxiNumber = failedTaxiNumber
             };
+        }
+
+
+        /// <summary>
+        /// Проверка наличия ТС с указанным номером в обращении
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// /// <param name="taxiStateNumber">Гос номер ТС</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static bool HasRequestTaxiStateNumber(int incomeRequestId, string taxiStateNumber)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var taxiList = web.GetListOrBreak("Lists/TaxiList");
+
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString(),
+                x => (string)x["Tm_TaxiStateNumber"] == taxiStateNumber
+            };
+
+            SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            return taxiItems.Count > 0;
+
+        }
+
+        /// <summary>
+        /// Проверка наличия ТС с указанным номером ранее выданного разрешения в обращении
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// /// <param name="taxiLicNumber">Номер ранее выданного разрешения в формате [00000]</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static bool HasRequestTaxiLicenseNumber(int incomeRequestId, string taxiLicNumber)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var taxiList = web.GetListOrBreak("Lists/TaxiList");
+
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString(),
+                x => (string)x["Tm_TaxiPrevLicenseNumber"] == taxiLicNumber
+            };
+
+            SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            return taxiItems.Count > 0;
+
         }
 
         /// <summary>
@@ -791,10 +910,17 @@ namespace TM.SP.AppPages
 
                     switch (rStatusCode)
                     {
+                        #region [1040]
                         case "1040":
-                            taxiItem["Tm_TaxiStatus"] = "В работе";
-                            taxiItem.Update();
+                            var validator = new TaxiDuplicateValidator(safeWeb, incomeRequestId, taxiItem.ID);
+                            if (validator.Execute(null))
+                            {
+                                taxiItem["Tm_TaxiStatus"] = "В работе";
+                                taxiItem.Update();
+                            }
                             break;
+                        #endregion
+                        #region [1050 and 6420]
                         case "6420":
                         case "1050":
                             var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
@@ -873,6 +999,7 @@ namespace TM.SP.AppPages
                             taxiItem["Tm_TaxiStatus"] = "Решено положительно";
                             taxiItem.Update();
                             break;
+                        #endregion
                         default:
                             throw new Exception(
                                 String.Format(
