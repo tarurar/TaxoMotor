@@ -82,6 +82,15 @@ namespace TM.SP.DataModel
             ContentTypesEnabled = true
         };
 
+        public static ListDefinition TmLegalFormOfBusinessBookList = new ListDefinition()
+        {
+            Title               = "Организационно-правовые формы (справочник)",
+            Url                 = "LegalFormOfBusinessBookList",
+            TemplateType        = BuiltInListTemplateTypeId.GenericList,
+            Description         = "Справочник кодов организационно-правовых форм",
+            ContentTypesEnabled = true
+        };
+
         public static ListDefinition TmOutcomeRequestStateList = new ListDefinition()
         {
             Title               = "Состояние межвед. запросов",

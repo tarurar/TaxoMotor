@@ -169,6 +169,15 @@ namespace TM.SP.DataModel
             Name                = "Tm_IdentityDocumentType"
         };
 
+        public static ContentTypeDefinition TmLegalFormOfBusinessCode = new ContentTypeDefinition
+        {
+            Id                  = new Guid("{F7EB87F9-0CF6-428E-A99A-C9D2FACB658B}"),
+            Description         = "Код организационно-правовой формы",
+            Group               = ModelConsts.ServiceContentTypeGroup,
+            ParentContentTypeId = BuiltInContentTypeId.Item,
+            Name                = "Tm_LegalFormOfBusinessCode"
+        };
+
         public static ContentTypeDefinition TmLicense = new ContentTypeDefinition
         {
             Id                  = new Guid("{932BA366-BEA9-45D2-85C8-F69ACD4D9DC7}"),

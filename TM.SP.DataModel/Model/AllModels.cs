@@ -249,6 +249,8 @@ namespace TM.SP.DataModel
                         .AddContentType(ContentTypes.TmIdentityDocumentType, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmIdentityDocTypeComment))
+                        .AddContentType(ContentTypes.TmLegalFormOfBusinessCode, ct => ct
+                            .AddContentTypeFieldLink(Fields.TmServiceCode))
                         .AddContentType(ContentTypes.TmLicense, ct => ct
                             .AddContentTypeFieldLink(Fields.TmRegNumber)
                             .AddContentTypeFieldLink(Fields.TmBlankSeries)
@@ -359,6 +361,8 @@ namespace TM.SP.DataModel
                             l => l.AddContentTypeLink(ContentTypes.TmAttachDoc))
                         .AddList(Lists.TmIdentityDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmIdentityDocumentType))
+                        .AddList(Lists.TmLegalFormOfBusinessBookList, 
+                            l => l.AddContentTypeLink(ContentTypes.TmLegalFormOfBusinessCode))
                         .AddList(Lists.TmProjectScripts)
                         .AddList(Lists.TmLicenseList, l =>
                         {

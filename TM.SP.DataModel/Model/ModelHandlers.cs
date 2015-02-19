@@ -64,6 +64,8 @@ namespace TM.SP.DataModel
                 ContentTypes.TmDocumentTemplate.Name);
             ListHelpers.MakeContentTypeDefault(ctx, Lists.TmMadiControlList.Url,
                 ContentTypes.TmMadiControl.Name);
+            ListHelpers.MakeContentTypeDefault(ctx, Lists.TmLegalFormOfBusinessBookList.Url,
+                ContentTypes.TmLegalFormOfBusinessCode.Name);
         }
 
         public static void CreateBcsFields(ClientContext ctx)
