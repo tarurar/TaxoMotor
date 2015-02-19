@@ -13,5 +13,6 @@
     <File Path="Scripts\ProgressDlg.js" Url="ProgressDlg.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\TaxiBlankNoEditor.js" Url="TaxiBlankNoEditor.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\IncomeRequestBcsFields.js" Url="IncomeRequestBcsFields.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\RequestAccountRendering.js" Url="RequestAccountRendering.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
   </Module>
 </Elements>

@@ -148,6 +148,7 @@
     <Content Include="Scripts\licenseSearchModel.js" />
     <Content Include="Scripts\ProgressDlg.js" />
     <Content Include="Scripts\RenewalLicense.js" />
+    <Content Include="Scripts\RequestAccountRendering.js" />
     <Content Include="Scripts\SuspendLicense.js" />
     <Content Include="Scripts\TaxiBlankNoEditor.js" />
     <Content Include="Scripts\_references.js" />
