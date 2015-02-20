@@ -13,3 +13,5 @@ LocalDBWriterAccessSingleSignOnAppId;LocalDBWriterAccess
 MoServiceUrl;http://lvserv.ru:50503/service_tax_mo/service/
 RatingsSSOAppId;RatingsAccess
 ProductionCalendarListUrl;Lists/ProdCalendarList
+MigrateIncomeRequestCountPerJob;1
+MigrateLicenseCountPerJob;1

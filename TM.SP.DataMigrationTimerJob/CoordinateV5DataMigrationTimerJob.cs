@@ -76,23 +76,34 @@ namespace TM.SP.DataMigrationTimerJob
 
         private void MigrateIncomingRequest(SPWeb web)
         {
+            int repeat = Config.GetConfigValueOrDefault<Int32>(web, "MigrateIncomeRequestCountPerJob");
+
             var manager = new MigrationManager<Request, MigratingRequest>(BCS.LOBRequestSystemName,
                 BCS.LOBRequestSystemNamespace);
-            var request = manager.Process(0, RequestCt, ReadRequestItem, web, IncomeRequestMigrator.Execute);
-            if (request != null)
+
+            for (int i = 0; i < repeat; i++)
             {
-                // saving income request status change history
-                var statusXml = IncomeRequestService.GetIncomeRequestCoordinateV5StatusMessage(request.ID);
-                IncomeRequestService.SaveIncomeRequestStatusLog(request.ID, statusXml);
-                // sending income request status
-                NotifyAboutItemStatus(request);
+                var request = manager.Process(0, RequestCt, ReadRequestItem, web, IncomeRequestMigrator.Execute);
+                if (request != null)
+                {
+                    // saving income request status change history
+                    var statusXml = IncomeRequestService.GetIncomeRequestCoordinateV5StatusMessage(request.ID);
+                    IncomeRequestService.SaveIncomeRequestStatusLog(request.ID, statusXml);
+                    // sending income request status
+                    NotifyAboutItemStatus(request);
+                }                
             }
         }
         private void MigrateLicense(SPWeb web)
         {
+            int repeat = Config.GetConfigValueOrDefault<Int32>(web, "MigrateLicenseCountPerJob");
+
             var manager = new MigrationManager<License, MigratingLicense>(BCS.LOBTaxiSystemName,
                 BCS.LOBTaxiSystemNamespace);
-            manager.Process(0, LicenseCt, ReadLicenseItem, web, LicenseMigrator.Execute);
+            for (int i = 0; i < repeat; i++)
+            {
+                manager.Process(0, LicenseCt, ReadLicenseItem, web, LicenseMigrator.Execute);
+            }
         }
 
         private void ProcessMigration(SPWeb web)

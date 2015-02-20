@@ -37,5 +37,22 @@ namespace TM.Utils
         {
             return configItem["Tm_ConfigurationValue"];
         }
+
+        public static T GetConfigValueOrDefault<T>(SPWeb web, string keyValue)
+        {
+            object value;
+
+            try
+            {
+                var item = GetConfigItem(web, keyValue);
+                value = GetConfigValue(item);
+            }
+            catch (Exception)
+            {
+                return default(T);
+            }
+
+            return (T) Convert.ChangeType(value, typeof(T));
+        }
     }
 }
