@@ -28,7 +28,7 @@ namespace TM.SP.Ratings
     {
         private const string ASCXPATH = @"/_CONTROLTEMPLATES/15/TaxoMotor/RatingsWPUserControl.ascx";
 
-        private UserControl userControl;
+        private RatingsWPUserControl userControl;
 
         public enum Quality
         {
@@ -49,9 +49,12 @@ namespace TM.SP.Ratings
 
         protected override void CreateChildControls()
         {
-            userControl = (UserControl)this.Page.LoadControl(ASCXPATH);
-
-            Controls.Add(userControl);
+            userControl = (RatingsWPUserControl)this.Page.LoadControl(ASCXPATH);
+            if (userControl != null)
+            {
+                userControl.WebPart = this;
+                Controls.Add(userControl);
+            }
 
             base.CreateChildControls();
         }
@@ -61,53 +64,34 @@ namespace TM.SP.Ratings
             this.RenderContents(writer);
         }
 
-        public static int ItemCount;
         [WebBrowsable(true)]
         [WebDisplayName("Количество элементов для отображения (от 1 до 10)")]
         [WebDescription("Количество элементов рейтинга с утетом очередности отбора")]
         [Personalizable(PersonalizationScope.Shared)]
         [Category("Рейтинг")]
-        public int _ItemCount 
-        {
-            get { return ItemCount; }
-            set { ItemCount = value; } 
-        }
+        [DefaultValue(5)]
+        public int _ItemCount { get; set; }
 
-        public static Quality QualityDropDown;
         [WebBrowsable(true)]
         [WebDisplayName("Очередность отбора")]
         [WebDescription("Выборка лучших или худших показателей")]
         [Personalizable(PersonalizationScope.Shared)]
         [Category("Рейтинг")]
-        public Quality _QualityDropDown
-        {
-            get { return QualityDropDown; }
-            set { QualityDropDown = value; }
-        }
+        public Quality _QualityDropDown { get; set; }
 
-        public static Rating RatingDropDown;
         [WebBrowsable(true)]
         [WebDisplayName("Шаблон рейтинга")]
         [WebDescription("Выбор из списка доступных рейтингов")]
         [Personalizable(PersonalizationScope.Shared)]
         [Category("Рейтинг")]
-        public Rating _RatingDropDown
-        {
-            get { return RatingDropDown; }
-            set { RatingDropDown = value; }
-        }
+        public Rating _RatingDropDown { get; set; }
 
-        public static string Header;
         [WebBrowsable(true)]
         [WebDisplayName("Заголовок")]
         [WebDescription("Название рейтинга, отображаемое в заголовке веб части")]
         [Personalizable(PersonalizationScope.Shared)]
         [Category("Рейтинг")]
-        public string _Header
-        {
-            get { return Header; }
-            set { Header = value; }
-        }
+        public string _Header { get; set; }
     }
 }
 

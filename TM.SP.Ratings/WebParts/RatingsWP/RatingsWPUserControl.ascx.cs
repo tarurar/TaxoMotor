@@ -26,18 +26,19 @@ namespace TM.SP.Ratings
         #endregion
 
         #region [properties]
+        public RatingsWP WebPart { get; set; }
         public int ItemsToDisplay
         {
             get
             {
-                return RatingsWP.ItemCount;
+                return WebPart._ItemCount;
             }
         }
         public RatingsWP.Quality Quality
         {
             get
             {
-                return RatingsWP.QualityDropDown;
+                return WebPart._QualityDropDown;
             }
         }
         private int? _reportId = null;
@@ -48,7 +49,7 @@ namespace TM.SP.Ratings
                 if (_reportId == null)
                 {
                     var connectionString = SqlHelper.GetConnectionString(SPContext.Current.Web);
-                    var guidStr = StringEnum.GetStringValue(RatingsWP.RatingDropDown);
+                    var guidStr = StringEnum.GetStringValue(WebPart._RatingDropDown);
                     using (var conn = new SqlConnection(connectionString))
                     {
                         conn.Open();
@@ -67,7 +68,7 @@ namespace TM.SP.Ratings
         }
         public string Header
         {
-            get { return RatingsWP.Header; }
+            get { return WebPart._Header; }
         }
         #endregion
 
