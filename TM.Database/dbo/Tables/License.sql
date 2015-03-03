@@ -2,7 +2,8 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Title] as [RegNumber],
-    [RegNumber] NVARCHAR(64) NULL, 
+    [RegNumber] NVARCHAR(64) NULL,
+	[RegNumberInt] as CAST([RegNumber] as INT) PERSISTED,
     [BlankSeries] NVARCHAR(12) NULL, 
     [BlankNo] NVARCHAR(12) NULL, 
     [OrgName] NVARCHAR(255) NULL, 

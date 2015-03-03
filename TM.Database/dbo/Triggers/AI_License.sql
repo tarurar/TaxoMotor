@@ -18,19 +18,17 @@ BEGIN
 	IF (@RegNumber IS NULL)
 	BEGIN
 		UPDATE [dbo].[License]
-		SET [RegNumber] = CAST((
-					SELECT TOP 1 IntRegNumber
-					FROM (
-						SELECT COALESCE(CAST(RegNumber AS INT) + 1, 1) AS IntRegNumber
-						FROM [dbo].[License]
-						) ii
-					WHERE IntRegNumber NOT IN (
-							SELECT CAST(RegNumber AS INT)
-							FROM [dbo].[License]
-							WHERE RegNumber IS NOT NULL
-							)
-					ORDER BY IntRegNumber
-					) AS NVARCHAR(64))
+		SET [RegNumber] = (
+				SELECT TOP 1 [l1].[RegNumberInt] + 1
+				FROM [dbo].[License] l1
+				WHERE NOT EXISTS (
+						SELECT NULL
+						FROM [dbo].[License] l2
+						WHERE [l2].[RegNumberInt] = [l1].[RegNumberInt] + 1
+						)
+					AND ([l1].[RegNumberInt] IS NOT NULL)
+				ORDER BY [l1].[RegNumberInt]
+				)
 		WHERE Id = @Id;
 	END
 
