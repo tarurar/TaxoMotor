@@ -1,7 +1,9 @@
-﻿--SET QUOTED_IDENTIFIER ON
+﻿--USE [TM.Data]
+--GO
+--/****** Object:  StoredProcedure [dbo].[LisencesWSgetTaxiInfosSelect]    Script Date: 05.03.2015 10:55:54 ******/
 --SET ANSI_NULLS ON
 --GO
---IF OBJECT_ID('dbo.LisencesWSgetTaxiInfosSelect') IS NOT NULL DROP PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
+--SET QUOTED_IDENTIFIER ON
 --GO
 --=================================================================
 --  Автор       achernenko
@@ -9,7 +11,7 @@
 --  Описание    Получение выборки для сервиса TaxiServices.TaxiLicenses.TaxiLicenses метод getTaxiInfos
 --				в виде XML
 --=================================================================
-CREATE PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
+CREATE PROCEDURE [dbo].[LisencesWSgetTaxiInfosSelect]
 	@LicenseNum NVARCHAR(64) = NULL --RegNumber
 	,@LicenseDate DATETIME = NULL-- CreationDate
 	,@Name NVARCHAR(32) = NULL-- ShortName
@@ -18,7 +20,7 @@ CREATE PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
 	,@Brand NVARCHAR(64) = NULL-- TaxiBrand
 	,@Model NVARCHAR(64) = NULL --TaxiModel
 	,@RegNum NVARCHAR(24) = NULL--TaxiStateNumber
-	,@SortOrder NVARCHAR(30) = NULL
+	,@SortOrder NVARCHAR(300) = NULL
 	,@PageNumber INT = 1
 	,@Count INT = 10
 AS
@@ -32,13 +34,25 @@ SELECT
 	@RegNumberInt = CAST(CAST(@LicenseNum AS INT) AS NVARCHAR(64))
 	,@FETCH = @Count
 	,@OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE (@PageNumber - 1) * @Count END
-	,@SortOrder = ISNULL(@SortOrder, 'LicenseNum')
+	,@SortOrder = REPLACE(ISNULL(@SortOrder, N'LicenseNum'), N';', N', ')
+
+SET @SortOrder = REPLACE(@SortOrder, N'RegNum',N'L1.TaxiStateNumber')
+SET @SortOrder = REPLACE(@SortOrder, N'LicenseNum',N'L1.RegNumber')
+SET @SortOrder = REPLACE(@SortOrder, N'LicenseDate',N'L1.CreationDate')
+SET @SortOrder = REPLACE(@SortOrder, N'Name',N'L1.ShortName')
+SET @SortOrder = REPLACE(@SortOrder, N'OgrnNum',N'L1.Ogrn')
+SET @SortOrder = REPLACE(@SortOrder, N'OgrnDate',N'L1.OgrnDate')
+SET @SortOrder = REPLACE(@SortOrder, N'Brand',N'L1.TaxiBrand')
+SET @SortOrder = REPLACE(@SortOrder, N'Model',N'L1.TaxiModel')
 
 SELECT 
 	@LicenseNum = RIGHT('00000'+@LicenseNum, 5)
 
+
+
+DECLARE @sqlcmd NVARCHAR(max) = N'
 SELECT 
-	License.Signature as 'TaxiInfo'
+	License.Signature as ''TaxiInfo''
 FROM
 	License
 	INNER JOIN 
@@ -62,26 +76,28 @@ FROM
 				AND (@Model IS NULL OR L1.TaxiModel = @Model)
 				AND (@RegNum IS NULL OR L1.TaxiStateNumber = @RegNum)
 		
-			ORDER BY 
-				CASE @SortOrder
-						WHEN 'LicenseNum' THEN L1.RegNumber
-						WHEN 'Name' THEN L1.ShortName
-						WHEN 'OgrnNum' THEN L1.Ogrn
-						WHEN 'Brand' THEN L1.TaxiBrand
-						WHEN 'TaxiModel' THEN L1.TaxiModel
-						WHEN 'RegNum' THEN L1.TaxiStateNumber
-						WHEN NULL THEN NULL 
-				END,
-				CASE @SortOrder			
-						WHEN 'LicenseDate' THEN L1.CreationDate            
-						WHEN 'OgrnDate' THEN L1.OgrnDate
-						WHEN NULL THEN NULL 
-				END	
+			ORDER BY '+ @SortOrder + N'
 			OFFSET @OFFSET ROWS FETCH NEXT @FETCH ROWS ONLY
 		) AS X
 			ON License.Id = X.Id
-FOR XML PATH(''), ROOT ('ArrayOfTaxiInfo')
+FOR XML PATH(''''), ROOT (''ArrayOfTaxiInfo'')'
 
+DECLARE @ParmDefinition NVARCHAR(max) = N'@LicenseNum NVARCHAR(64), @RegNumberInt NVARCHAR(64), @LicenseDate DATETIME, @Name NVARCHAR(32), @OgrnNum  NVARCHAR(255), @OgrnDate DATETIME, @Brand NVARCHAR(64), @Model NVARCHAR(64), @RegNum NVARCHAR(24), @OFFSET INT, @FETCH INT';
+
+EXECUTE sp_executesql 
+	@sqlcmd, 
+	@ParmDefinition, 
+	@LicenseNum = @LicenseNum, 
+	@RegNumberInt = @RegNumberInt, 
+	@LicenseDate = @LicenseDate ,
+	@Name = @Name,
+	@OgrnNum = @OgrnNum,
+	@OgrnDate = @OgrnDate,
+	@Brand = @Brand,
+	@Model = @Model,
+	@RegNum = @RegNum, 
+	@OFFSET = @OFFSET,
+	@FETCH = @FETCH
 
 SELECT
 	COUNT(*) as TotalRow
@@ -101,4 +117,3 @@ WHERE
 	AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
 	AND (@Model IS NULL OR L1.TaxiModel = @Model)
 	AND (@RegNum IS NULL OR L1.TaxiStateNumber = @RegNum)
-GO
