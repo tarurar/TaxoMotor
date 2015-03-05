@@ -1,7 +1,4 @@
-﻿--USE [TM.Data]
---GO
---/****** Object:  StoredProcedure [dbo].[LisencesWSgetTaxiInfosSelect]    Script Date: 05.03.2015 10:55:54 ******/
---SET ANSI_NULLS ON
+﻿--SET ANSI_NULLS ON
 --GO
 --SET QUOTED_IDENTIFIER ON
 --GO
@@ -44,6 +41,8 @@ SET @SortOrder = REPLACE(@SortOrder, N'OgrnNum',N'L1.Ogrn')
 SET @SortOrder = REPLACE(@SortOrder, N'OgrnDate',N'L1.OgrnDate')
 SET @SortOrder = REPLACE(@SortOrder, N'Brand',N'L1.TaxiBrand')
 SET @SortOrder = REPLACE(@SortOrder, N'Model',N'L1.TaxiModel')
+SET @SortOrder = REPLACE(@SortOrder, N'Condition',N'L1.Status')
+
 
 SELECT 
 	@LicenseNum = RIGHT('00000'+@LicenseNum, 5)
