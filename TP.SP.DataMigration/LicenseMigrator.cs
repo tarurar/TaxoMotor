@@ -101,7 +101,7 @@ namespace TP.SP.DataMigration
             switch (license.Status)
             {
                 case 0:
-                    status = "Первичное";
+                    status = license.Parent.HasValue ? "Переоформлено" : "Первичное";
                     break;
                 case 1:
                     status = "Выдан дубликат";
