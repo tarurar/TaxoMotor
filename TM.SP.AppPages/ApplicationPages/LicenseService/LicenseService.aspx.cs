@@ -50,7 +50,7 @@ namespace TM.SP.AppPages
             var refresher = new BusinessDataColumnUpdater(list, "Tm_LicenseAllViewBcsLookup");
             if (item != null)
             {
-                refresher.UpdateColumnUsingBatch(item.ID);
+                refresher.UpdateColumnUsingBatch(null, item.ID);
             }
             else
             {
@@ -63,7 +63,7 @@ namespace TM.SP.AppPages
                 // updating items's external fields
                 if (items.Count > 0)
                 {
-                    refresher.UpdateColumnUsingBatch(items[0].ID);
+                    refresher.UpdateColumnUsingBatch(null, items[0].ID);
                 }
             }
         }
@@ -144,9 +144,10 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.CreationDate       = dateFrom;
+                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom; ;
                 l.TillSuspensionDate = dateTo.IsJavascriptNullDate() ? (DateTime?)null : dateTo;
                 l.SuspensionReason   = reason;
+                l.Status             = 2;
             });
         }
 
@@ -157,6 +158,7 @@ namespace TM.SP.AppPages
             {
                 l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.CancellationReason = reason;
+                l.Status             = 3;
             });
         }
 
@@ -167,15 +169,27 @@ namespace TM.SP.AppPages
             {
                 l.CreationDate = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.ChangeReason = reason;
+                // setting status
+                var parent     = GetLicense(l.Parent);
+                var grandpa    = GetLicense(parent.Parent);
+                l.Status       = grandpa.Status;
             });
         }
 
+        /// <summary>
+        /// Приостановка разрешения
+        /// </summary>
+        /// <param name="licenseId"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <param name="reason"></param>
+        /// <param name="signature"></param>
         [WebMethod]
         public static void SaveSignedSuspension(int licenseId, DateTime dateFrom, DateTime dateTo, string reason, string signature)
         {
             SaveSigned(licenseId, l =>
             {
-                l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.TillSuspensionDate = dateTo.IsJavascriptNullDate() ? (DateTime?)null : dateTo;
                 l.SuspensionReason   = reason;
                 l.Signature          = Uri.UnescapeDataString(signature);
