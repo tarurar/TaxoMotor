@@ -23,15 +23,16 @@ CREATE PROCEDURE [dbo].[LisencesWSgetTaxiInfosSelect]
 AS
 
 DECLARE 	
-	@OFFSET INT = 0
+	@OFFSET INT
 	,@FETCH INT
 	,@RegNumberInt NVARCHAR(64)	
 	
 SELECT 
 	@RegNumberInt = CAST(CAST(@LicenseNum AS INT) AS NVARCHAR(64))
-	,@FETCH = @Count
-	,@OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE (@PageNumber - 1) * @Count END
 	,@SortOrder = REPLACE(ISNULL(@SortOrder, N'LicenseNum'), N';', N', ')
+
+SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE (@PageNumber - 1) * @Count END
+SET	@FETCH = @OFFSET + @Count
 
 SET @SortOrder = REPLACE(@SortOrder, N'RegNum',N'L1.TaxiStateNumber')
 SET @SortOrder = REPLACE(@SortOrder, N'LicenseNum',N'L1.RegNumber')
@@ -51,13 +52,14 @@ SELECT
 
 DECLARE @sqlcmd NVARCHAR(max) = N'
 SELECT 
-	License.Signature as ''TaxiInfo''
+	L1.Signature as ''TaxiInfo''
 FROM
-	License
+	License AS L1
 	INNER JOIN 
 		(
 			SELECT
-				L1.Id
+				L1.Id,
+				ROW_NUMBER() OVER (ORDER BY '+ @SortOrder + N') AS NN
 			FROM 
 				License L1
 				LEFT JOIN License L2 
@@ -74,11 +76,11 @@ FROM
 				AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
 				AND (@Model IS NULL OR L1.TaxiModel = @Model)
 				AND (@RegNum IS NULL OR L1.TaxiStateNumber = @RegNum)
-		
-			ORDER BY '+ @SortOrder + N'
-			OFFSET @OFFSET ROWS FETCH NEXT @FETCH ROWS ONLY
 		) AS X
-			ON License.Id = X.Id
+			ON L1.Id = X.Id
+WHERE 
+	X.NN BETWEEN @OFFSET AND @FETCH
+ORDER BY '+ @SortOrder + N'
 FOR XML PATH(''''), ROOT (''ArrayOfTaxiInfo'')'
 
 DECLARE @ParmDefinition NVARCHAR(max) = N'@LicenseNum NVARCHAR(64), @RegNumberInt NVARCHAR(64), @LicenseDate DATETIME, @Name NVARCHAR(32), @OgrnNum  NVARCHAR(255), @OgrnDate DATETIME, @Brand NVARCHAR(64), @Model NVARCHAR(64), @RegNum NVARCHAR(24), @OFFSET INT, @FETCH INT';
