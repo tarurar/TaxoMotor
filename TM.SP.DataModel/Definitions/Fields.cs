@@ -145,6 +145,16 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmInternalRegNumber = new FieldDefinition()
+        {
+            Id           = new Guid("{3D22D3B0-6543-47D6-A985-A54E8B034C90}"),
+            Title        = "Рег. номер",
+            InternalName = "Tm_InternalRegNumber",
+            Description  = "Внутренний регистрационный номер ОИВ",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         public static FieldDefinition TmSingleNumber = new FieldDefinition()
         {
             Id           = new Guid("{3EC39AEB-1885-4BF8-835E-27D73A5F0C3A}"),
@@ -1200,19 +1210,6 @@ namespace TM.SP.DataModel
             InternalName = BuiltInInternalFieldNames.Title,
             FieldType    = BuiltInFieldTypes.Text,
             Group        = ModelConsts.ColumnsDefaultGroup,
-        };
-
-        public static FieldDefinition TmLicenseCalcState = new CalculatedFieldDefinition
-        {
-            Id                = new Guid("{4D6CF9EB-EA7C-4C34-9CC5-1AD2B30353B7}"),
-            Title             = "Статус",
-            InternalName      = "Tm_LicenseCalcState",
-            Group             = ModelConsts.ColumnsCalcGroup,
-            Formula           = "=IF([Ссылка на внешний список: IsLast]=1,\"Действующее\",\"Архивное\")",
-            OutputType        = BuiltInFieldTypes.Text,
-            FieldReferences   = new Collection<string> { "Ссылка на внешний список: IsLast" },
-            DateFormat        = BuiltInDateTimeFieldFormatType.DateOnly,
-            CurrencyLocaleId  = 1049
         };
 
         /// <summary>

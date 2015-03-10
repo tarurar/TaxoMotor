@@ -23,7 +23,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmMadiTranfererName)
                     .AddField(Fields.TmMadiOgrn)
                     .AddField(Fields.TmMadiPlannedControl)
-                    .AddField(Fields.TmMadiControlType, f => f.OnProvisioned<Field>(context => context.Object.MakeChoices(new string[] {"Выездная", "Документарная"})))
+                    .AddField(Fields.TmMadiControlType, f => f.OnProvisioned<Field>(context => context.Object.MakeChoices(new string[] { "Выездная", "Документарная" })))
                     .AddField(Fields.TmMadiControlDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmMadiOrderNumber)
@@ -33,6 +33,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmMadiStateNumber)
                     .AddField(Fields.TmServiceCode)
                     .AddField(Fields.TmUsageScopeInteger)
+                    .AddField(Fields.TmInternalRegNumber)
                     .AddField(Fields.TmRegNumber)
                     .AddField(Fields.TmRefuseDocuments)
                     .AddField(Fields.TmPriority, f => f.OnProvisioned<Field>(context => context.Object.MakeDefaultValue("0")))
@@ -44,12 +45,12 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmSecondName)
                     .AddField(Fields.TmTransferFirmName)
                     .AddField(Fields.TmTransferBrandName)
-                    .AddField(Fields.TmOgrnDate, 
+                    .AddField(Fields.TmOgrnDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmOgrnNum)
                     .AddField(Fields.TmOgrnName)
                     .AddField(Fields.TmGrAddress)
-                    .AddField(Fields.TmOrgInnDate, 
+                    .AddField(Fields.TmOrgInnDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmOrgInnName)
                     .AddField(Fields.TmOrgInnNum)
@@ -79,7 +80,7 @@ namespace TM.SP.DataModel
                             context.Object.MakeRequired();
 
                         }))
-                    .AddField(Fields.TmApplyDate, 
+                    .AddField(Fields.TmApplyDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmComment)
                     .AddField(Fields.TmInstanceCounter)
@@ -121,8 +122,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmTaxiBodyType)
                     .AddField(Fields.TmTaxiStatus, f => f.OnProvisioned<Field>(
                         context =>
-                            context.Object.MakeChoices(new[]
-                            {"В работе", "Решено положительно", "Отказано", "Не получено", "Решено отрицательно"})))
+                            context.Object.MakeChoices(new[] { "В работе", "Решено положительно", "Отказано", "Не получено", "Решено отрицательно" })))
                     .AddField(Fields.TmTaxiDenyComment)
                     .AddField(Fields.TmAttachType)
                     .AddField(Fields.TmAttachDocNumber)
@@ -159,8 +159,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmOrgInn)
                     .AddField(Fields.TmLicenseStatus, f => f.OnProvisioned<Field>(
                         context =>
-                            context.Object.MakeChoices(new[]
-                            {"Первичное", "Выдан дубликат", "Приостановлено", "Аннулировано", "Переоформлено"})))
+                            context.Object.MakeChoices(new[] { "Первичное", "Выдан дубликат", "Приостановлено", "Аннулировано", "Переоформлено" })))
                     .AddField(Fields.TmOrgLfb)
                     .AddField(Fields.TmJuridicalAddress)
                     .AddField(Fields.TmPhoneNumber)
@@ -215,7 +214,7 @@ namespace TM.SP.DataModel
                         f => f.OnProvisioned<Field>(context => context.Object.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
                         f => f.OnProvisioned<Field>(context =>
-                            context.Object.MakeChoices(new[] {"Портал госуслуг", "Очный визит"})))
+                            context.Object.MakeChoices(new[] { "Портал госуслуг", "Очный визит" })))
                     .AddField(Fields.TmShortName)
                     .AddField(Fields.TmXmlValue)
                     .AddField(Fields.TmNeedPersonVisit)
@@ -364,13 +363,29 @@ namespace TM.SP.DataModel
                         .AddList(Lists.TmLegalFormOfBusinessBookList, 
                             l => l.AddContentTypeLink(ContentTypes.TmLegalFormOfBusinessCode))
                         .AddList(Lists.TmProjectScripts)
-                        .AddList(Lists.TmLicenseList, l =>
-                        {
-                            l.AddContentTypeLink(ContentTypes.TmLicense);
-                            l.OnProvisioned<List>(context => context.Object.MakeFolderCreationAvailable(true));
-                            l.AddField(Fields.TmLicenseTitle);
-                            l.AddField(Fields.TmLicenseCalcState);
-                        })
+                        .AddList(Lists.TmLicenseList, l => l
+                            .AddContentTypeLink(ContentTypes.TmLicense)
+                            .AddField(Fields.TmLicenseTitle)
+                            .OnProvisioned<List>(context => context.Object.MakeFolderCreationAvailable(true))
+                            .AddListView(ListViews.TmLicenseListDefaultView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListAllView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListCancelledView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListPausedView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListArchiveView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListSearchView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListDuplicateView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListMOView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListMoscowView, lv => lv
+                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                        )
                         .AddList(Lists.TmDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmDocumentType))
                         .AddList(Lists.TmIncomeRequestStatusLogList,
@@ -390,6 +405,7 @@ namespace TM.SP.DataModel
             var model = SPMeta2Model.NewSiteModel(site => site
                 .WithContentTypes(ctList => ctList
                     .AddContentType(ContentTypes.TmIncomeRequest, ct => ct
+                        .AddContentTypeFieldLink(Fields.TmInternalRegNumber)
                         .AddContentTypeFieldLink(Fields.TmRegNumber)
                         .AddContentTypeFieldLink(Fields.TmSingleNumber)
                         .AddContentTypeFieldLink(Fields.TmRegistrationDate)
@@ -538,32 +554,49 @@ namespace TM.SP.DataModel
                     lists => lists
                         .AddList(Lists.TmProjectSitePages, list =>
                         {
-                            list.AddWebPartPage(Pages.IncomeRequestSearch, page =>
-                            {
-                                if (!WebHelpers.CheckFeatureActivation(ctx,
-                                    new Guid(ModelConsts.SPListViewFilter20FeatureId), FeatureScope.Site))
-                                    throw new Exception(String.Format("Feature with id = {0} must be activated",
-                                        ModelConsts.SPListViewFilter20FeatureId));
-                                string wpXml;
-                                // adding SPListViewFilter web part
-                                WebParts.SPListViewFilter.WebpartXmlTemplate =
-                                    WebPartHelpers.SetWebPartV3PropertyNode("Title", WebParts.SPListViewFilter.Title,
-                                        WebParts.SPListViewFilter.WebpartXmlTemplate);
-                                page.AddWebPart(WebParts.SPListViewFilter);
-                                // adding XsltListViewWebPart for income requests to be filtered
-                                IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
-                                List incomeRequestList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
+                            list
+                                .AddWebPartPage(Pages.IncomeRequestSearch, page =>
+                                {
+                                    if (!WebHelpers.CheckFeatureActivation(ctx,
+                                        new Guid(ModelConsts.SPListViewFilter20FeatureId), FeatureScope.Site))
+                                        throw new Exception(String.Format("Feature with id = {0} must be activated",
+                                            ModelConsts.SPListViewFilter20FeatureId));
+                                    string wpXml;
+                                    // adding SPListViewFilter web part
+                                    WebParts.SPListViewFilter.WebpartXmlTemplate =
+                                        WebPartHelpers.SetWebPartV3PropertyNode("Title", WebParts.SPListViewFilter.Title,
+                                            WebParts.SPListViewFilter.WebpartXmlTemplate);
+                                    page.AddWebPart(WebParts.SPListViewFilter);
+                                    // adding XsltListViewWebPart for income requests to be filtered
+                                    IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
+                                    List incomeRequestList = ListHelpers.GetList(allLists, Lists.TmIncomeRequestList.Url);
 
-                                wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListId",
-                                    incomeRequestList.Id.ToString("D"),
-                                    WebParts.IncomeRequestListView.WebpartXmlTemplate);
-                                wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListName",
-                                    incomeRequestList.Id.ToString("B"), wpXml);
-                                wpXml = WebPartHelpers.SetWebPartV3PropertyNode("Title",
-                                    WebParts.IncomeRequestListView.Title, wpXml);
-                                WebParts.IncomeRequestListView.WebpartXmlTemplate = wpXml;
-                                page.AddWebPart(WebParts.IncomeRequestListView);
-                            });
+                                    wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListId",
+                                        incomeRequestList.Id.ToString("D"),
+                                        WebParts.IncomeRequestListView.WebpartXmlTemplate);
+                                    wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListName",
+                                        incomeRequestList.Id.ToString("B"), wpXml);
+                                    wpXml = WebPartHelpers.SetWebPartV3PropertyNode("Title",
+                                        WebParts.IncomeRequestListView.Title, wpXml);
+                                    WebParts.IncomeRequestListView.WebpartXmlTemplate = wpXml;
+                                    page.AddWebPart(WebParts.IncomeRequestListView);
+                                })
+                                .AddWebPartPage(Pages.LicenseMo, page => 
+                                {
+                                    IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
+                                    List licenseList = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
+
+                                    string wpXml;
+                                    wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListId",
+                                        licenseList.Id.ToString("D"),
+                                        WebParts.LicenseMoListView.WebpartXmlTemplate);
+                                    wpXml = WebPartHelpers.SetWebPartV3PropertyNode("ListName",
+                                        licenseList.Id.ToString("B"), wpXml);
+                                    wpXml = WebPartHelpers.SetWebPartV3PropertyNode("Title",
+                                        WebParts.LicenseMoListView.Title, wpXml);
+                                    WebParts.LicenseMoListView.WebpartXmlTemplate = wpXml;
+                                    page.AddWebPart(WebParts.LicenseMoListView);
+                                });
                         })
                 ));
 

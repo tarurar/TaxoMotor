@@ -22,6 +22,14 @@ namespace TM.SP.DataModel
             PageLayoutTemplate   = BuiltInWebPartPageTemplates.spstd1
         };
 
+        public static WebPartPageDefinition LicenseMo = new WebPartPageDefinition
+        {
+            FileName           = "LicenseMo.aspx",
+            Title              = "Разрешения МО",
+            NeedOverride       = true,
+            PageLayoutTemplate = BuiltInWebPartPageTemplates.spstd1
+        };
+
         #endregion
     }
 }
