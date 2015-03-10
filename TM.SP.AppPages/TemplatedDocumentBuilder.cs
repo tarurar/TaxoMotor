@@ -183,7 +183,7 @@ namespace TM.SP.AppPages
                 RegistrationDateText,
                 _request["Tm_SingleNumber"] ?? "",
                 RequestedDocument != null ? RequestedDocument.Title : "",
-                DenyReason != null ? DenyReason.Title : "",
+                DenyReason != null ? DenyReason["Tm_PrintTitle"].ToString() : "",
                 _request["Tm_Comment"] ?? "",
                 OperatorDepartment,
                 _web.CurrentUser.Name,
