@@ -82,61 +82,76 @@
             if (dlg) dlg.autoSize();
         };
 
-        self.DoAction = function() {
+        self.DoAction = function () {
+            // client validation logic
             self.Validate();
 
             if (self.Errors().length > 0) return;
 
+            // server validation logic
             $.ajax({
                 type: 'POST',
-                url: self.RequestUrl + '/SuspensionGetXml',
+                url: self.RequestUrl + '/SuspensionValidate',
                 data: self.BuildGetXmlJson(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (data) {
-                    if (data.d) {
-                        var dataToSign = data.d;
+                    $.ajax({
+                        type: 'POST',
+                        url: self.RequestUrl + '/SuspensionGetXml',
+                        data: self.BuildGetXmlJson(),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.d) {
+                                var dataToSign = data.d;
 
-                        var oCertificate = cryptoPro.SelectCertificate(
-                            cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
-                            cryptoPro.StoreNames.CAPICOM_MY_STORE,
-                            cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+                                var oCertificate = cryptoPro.SelectCertificate(
+                                    cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
+                                    cryptoPro.StoreNames.CAPICOM_MY_STORE,
+                                    cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
 
-                        if (oCertificate) {
-                            dataToSign =
-                                "<?xml version=\"1.0\"?>\n" +
-                                    "<Envelope xmlns=\"urn:envelope\">\n" +
-                                    dataToSign +
-                                    " \n" +
-                                    "</Envelope>";
+                                if (oCertificate) {
+                                    dataToSign =
+                                        "<?xml version=\"1.0\"?>\n" +
+                                            "<Envelope xmlns=\"urn:envelope\">\n" +
+                                            dataToSign +
+                                            " \n" +
+                                            "</Envelope>";
 
-                            var signedData;
-                            try {
-                                signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
-                            } catch(e) {
-                                self.AddError(new ErrorMessage("Ошибка при формировании подписи: " + e.message));
-                            }
+                                    var signedData;
+                                    try {
+                                        signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
+                                    } catch (e) {
+                                        self.AddError(new ErrorMessage("Ошибка при формировании подписи: " + e.message));
+                                    }
 
-                            if (typeof signedData === 'undefined' || !signedData) return;
-                            
-                            $.ajax({
-                                type: 'POST',
-                                url: self.RequestUrl + '/SaveSignedSuspension',
-                                data: self.BuildSaveSignedJson(signedData),
-                                contentType: 'application/json; charset=utf-8',
-                                dataType: 'json',
-                                success: function() {
-                                    window.frameElement.commonModalDialogClose(1, null);
-                                },
-                                error: function (xhr, ajaxOptions, thrownError) {
-                                    self.AddError(new ErrorMessage("Ошибка сохранения подписанного документа: " + xhr.status + ", " + thrownError));
+                                    if (typeof signedData === 'undefined' || !signedData) return;
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: self.RequestUrl + '/SaveSignedSuspension',
+                                        data: self.BuildSaveSignedJson(signedData),
+                                        contentType: 'application/json; charset=utf-8',
+                                        dataType: 'json',
+                                        success: function () {
+                                            window.frameElement.commonModalDialogClose(1, null);
+                                        },
+                                        error: function (xhr, ajaxOptions, thrownError) {
+                                            self.AddError(new ErrorMessage("Ошибка сохранения подписанного документа: " + xhr.status + ", " + thrownError));
+                                        }
+                                    });
                                 }
-                            });
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            self.AddError(new ErrorMessage("Ошибка получения xml для подписи: " + xhr.status + ", " + thrownError));
                         }
-                    }
+                    });
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    self.AddError(new ErrorMessage("Ошибка получения xml для подписи: " + xhr.status + ", " + thrownError));
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var response = $.parseJSON(xhr.responseText).d;
+                    self.AddError(new ErrorMessage(response.Error.SystemMessage));
                 }
             });
         };
@@ -199,30 +214,35 @@
         }
     };
 
-    $(document).ready(function() {
-        SP.SOD.executeOrDelayUntilScriptLoaded(sharepointReady, "SP.js");
+    function init() {
+        $.datepicker.regional.ru = {
+            closeText: 'Закрыть',
+            prevText: '&#x3c;Пред',
+            nextText: 'След&#x3e;',
+            currentText: 'Сегодня',
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+                'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+            dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+            dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+            dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+            weekHeader: 'Не',
+            dateFormat: 'dd.mm.yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional.ru);
 
-        jQuery(function($) {
-            $.datepicker.regional.ru = {
-                closeText: 'Закрыть',
-                prevText: '&#x3c;Пред',
-                nextText: 'След&#x3e;',
-                currentText: 'Сегодня',
-                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-                    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
-                    'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-                dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-                dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
-                dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                weekHeader: 'Не',
-                dateFormat: 'dd.mm.yy',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: ''
-            };
-            $.datepicker.setDefaults($.datepicker.regional.ru);
-        });
-    });
+        SP.SOD.executeOrDelayUntilScriptLoaded(sharepointReady, "SP.js");
+    }
+
+    if (!_spBodyOnLoadCalled) {
+        _spBodyOnLoadFunctions.push(init);
+    } else {
+        init();
+    }
+
 })(cryptoPro);
