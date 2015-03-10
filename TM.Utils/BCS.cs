@@ -90,7 +90,7 @@ namespace TM.Utils
         /* Note: This is the public method that you should call in a production
          * environment. 
          * */
-        public virtual void UpdateColumnUsingBatch(int itemId = 0)
+        public virtual void UpdateColumnUsingBatch(Action<int> updateProgress, int itemId = 0)
         {
             if (_enableTracing && _traceMessages.Length > 0)
                 _traceMessages = new StringBuilder();
@@ -164,6 +164,7 @@ namespace TM.Utils
             {
                 _items = _list.GetItems(query);
                 _methodBuilder = new StringBuilder();
+                var lastItemId = 0;
                 //loop through list items in list and try to update/refresh with latest BDC value
                 foreach (SPListItem item in _items)
                 {
@@ -173,6 +174,8 @@ namespace TM.Utils
                         BuildListItemBatchUpdateCAML(item, bizDataField, _lobSysInst, _entity,
                            _specificFinderView, secondaryFieldsNames, secondaryWssFieldNames);
                     }
+
+                    lastItemId = item.ID;
                 } //end foreach
 
                 // Put the pieces together.
@@ -191,6 +194,13 @@ namespace TM.Utils
 
                 // set the position cursor for the next iteration
                 query.ListItemCollectionPosition = _items.ListItemCollectionPosition;
+
+                // updating progress
+                if (updateProgress != null)
+                {
+                    var complete = lastItemId * 100 / _list.ItemCount;
+                    updateProgress(complete);
+                }
             } while (query.ListItemCollectionPosition != null);
 
         } //end method
