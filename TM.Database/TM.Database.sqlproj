@@ -113,6 +113,7 @@
     <Folder Include="Snapshots" />
     <Folder Include="dbo\Triggers" />
     <Folder Include="dbo\Views" />
+    <Folder Include="dbo\Indexes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\File.sql" />
@@ -165,6 +166,9 @@
     <Build Include="dbo\Tables\ReportData.sql" />
     <Build Include="dbo\Tables\ReportSession.sql" />
     <Build Include="dbo\Tables\GibddPenaltyV5.sql" />
+    <Build Include="dbo\Procedures\LisencesWSgetTaxiInfosSelect.sql" />
+    <Build Include="dbo\Indexes\IX_Licenses_ForWS.sql" />
+    <Build Include="dbo\Indexes\IX_Licenses_ID_Signature.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
