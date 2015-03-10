@@ -132,6 +132,15 @@ namespace TM.SP.DataModel
             Group        =  ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmPrintTitle = new FieldDefinition()
+        {
+            Id           = new Guid("{11A02F64-5574-44AC-92D8-44DBCB4BEC94}"),
+            Title        = "Название (для печати)",
+            InternalName = "Tm_PrintTitle",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Обращение - Общие поля]
@@ -1209,6 +1218,24 @@ namespace TM.SP.DataModel
             Title        = "Номер",
             InternalName = BuiltInInternalFieldNames.Title,
             FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+        };
+
+        public static FieldDefinition TmLicenseObsolete = new FieldDefinition
+        {
+            Id           = new Guid("{0C937295-C2A7-4591-8DF0-EEAF340A48C4}"),
+            Title        = "Устаревшие данные",
+            InternalName = "Tm_LicenseObsolete",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+        };
+
+        public static FieldDefinition TmLicenseDisableGibdd = new FieldDefinition
+        {
+            Id           = new Guid("{BCD1ED03-D4F2-4D4D-96AF-579FAB9FDD16}"),
+            Title        = "Не отправлять в ГИБДД",
+            InternalName = "Tm_LicenseDisableGibdd",
+            FieldType    = BuiltInFieldTypes.Boolean,
             Group        = ModelConsts.ColumnsDefaultGroup,
         };
 

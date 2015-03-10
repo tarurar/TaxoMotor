@@ -33,6 +33,7 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmMadiStateNumber)
                     .AddField(Fields.TmServiceCode)
                     .AddField(Fields.TmUsageScopeInteger)
+                    .AddField(Fields.TmPrintTitle)
                     .AddField(Fields.TmInternalRegNumber)
                     .AddField(Fields.TmRegNumber)
                     .AddField(Fields.TmRefuseDocuments)
@@ -160,6 +161,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmLicenseStatus, f => f.OnProvisioned<Field>(
                         context =>
                             context.Object.MakeChoices(new[] { "Первичное", "Выдан дубликат", "Приостановлено", "Аннулировано", "Переоформлено" })))
+                    .AddField(Fields.TmLicenseObsolete)
+                    .AddField(Fields.TmLicenseDisableGibdd)
                     .AddField(Fields.TmOrgLfb)
                     .AddField(Fields.TmJuridicalAddress)
                     .AddField(Fields.TmPhoneNumber)
@@ -229,7 +232,8 @@ namespace TM.SP.DataModel
                             ct => ct.AddContentTypeFieldLink(Fields.TmServiceCode))
                         .AddContentType(ContentTypes.TmDenyReason, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
-                            .AddContentTypeFieldLink(Fields.TmUsageScopeInteger))
+                            .AddContentTypeFieldLink(Fields.TmUsageScopeInteger)
+                            .AddContentTypeFieldLink(Fields.TmPrintTitle))
                         .AddContentType(ContentTypes.TmGovServiceSubType, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmTermOfService))
@@ -308,7 +312,9 @@ namespace TM.SP.DataModel
                             .AddContentTypeFieldLink(Fields.TmLicenseSuspensionReason)
                             .AddContentTypeFieldLink(Fields.TmLicenseChangeReason)
                             .AddContentTypeFieldLink(Fields.TmLicenseInvalidReason)
-                            .AddContentTypeFieldLink(Fields.TmLicenseExternalId))
+                            .AddContentTypeFieldLink(Fields.TmLicenseExternalId)
+                            .AddContentTypeFieldLink(Fields.TmLicenseObsolete)
+                            .AddContentTypeFieldLink(Fields.TmLicenseDisableGibdd))
                         .AddContentType(ContentTypes.TmDocumentType, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmShortName))
