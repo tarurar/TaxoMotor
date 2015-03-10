@@ -223,6 +223,94 @@ namespace TM.SP.AppPages
                 l.Status       = grandpa.Status;
             });
         }
+
+        /// <summary>
+        /// Проверка на значения полей при приостановке
+        /// </summary>
+        /// <param name="licenseId"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <param name="reason"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static dynamic SuspensionValidate(int licenseId, DateTime dateFrom, DateTime dateTo, string reason)
+        {
+            return 
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при проверке данных", () => {
+                    SPWeb web         = SPContext.Current.Web;
+                    SPList spList     = web.GetListOrBreak("Lists/LicenseList");
+                    SPListItem spItem = spList.GetItemOrBreak(licenseId);
+
+                    var licCreationDate   = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
+                    var licTillDate       = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
+                    var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
+                    var dateToCondition   = (dateTo >= licCreationDate && dateTo <= licTillDate);
+                    var reasonCondition   = !String.IsNullOrEmpty(reason);
+
+                    if (!dateFromCondition || !dateToCondition)
+                        throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
+                    if (!reasonCondition)
+                        throw new Exception("Необходимо указать причину");
+                });
+        }
+
+        /// <summary>
+        /// Проверка на значения полей при аннулировании
+        /// </summary>
+        /// <param name="licenseId"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="reason"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static dynamic CancellationValidate(int licenseId, DateTime dateFrom, string reason)
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при проверке данных", () =>
+                {
+                    SPWeb web = SPContext.Current.Web;
+                    SPList spList = web.GetListOrBreak("Lists/LicenseList");
+                    SPListItem spItem = spList.GetItemOrBreak(licenseId);
+
+                    var licCreationDate = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
+                    var licTillDate = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
+                    var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
+                    var reasonCondition = !String.IsNullOrEmpty(reason);
+
+                    if (!dateFromCondition)
+                        throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
+                    if (!reasonCondition)
+                        throw new Exception("Необходимо указать причину");
+                });
+        }
+
+        /// <summary>
+        /// Проверка на значения полей при возобновлении
+        /// </summary>
+        /// <param name="licenseId"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="reason"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static dynamic RenewalValidate(int licenseId, DateTime dateFrom, string reason)
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при проверке данных", () =>
+                {
+                    SPWeb web = SPContext.Current.Web;
+                    SPList spList = web.GetListOrBreak("Lists/LicenseList");
+                    SPListItem spItem = spList.GetItemOrBreak(licenseId);
+
+                    var licCreationDate = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
+                    var licTillDate = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
+                    var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
+                    var reasonCondition = !String.IsNullOrEmpty(reason);
+
+                    if (!dateFromCondition)
+                        throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
+                    if (!reasonCondition)
+                        throw new Exception("Необходимо указать причину");
+                });
+        }
     }
 }
 

@@ -146,19 +146,6 @@ namespace TM.SP.AppPages
             draft.TillSuspensionDate = null;
             draft.Town               = postalAddress != null ? postalAddress.Town : "";
 
-            var newLicenseDate = DateTime.Now.AddYears(5).AddDays(-1).Date;
-            if (ctId == rList.ContentTypes["Новое"].Id)
-            {
-                draft.TillDate = newLicenseDate;
-            } else if (ctId == rList.ContentTypes["Аннулирование"].Id)
-            {
-                draft.TillDate = DateTime.Now.Date;
-            } else if (ctId == rList.ContentTypes["Выдача дубликата"].Id ||
-                        ctId == rList.ContentTypes["Переоформление"].Id)
-            {
-                draft.TillDate = parent != null ? parent.TillDate : newLicenseDate;
-            }
-
             BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
             {
                 lob         = BCS.LOBTaxiSystemName,

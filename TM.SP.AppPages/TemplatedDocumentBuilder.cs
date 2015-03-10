@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using CamlexNET;
 using Microsoft.SharePoint;
+using Microsoft.SharePoint.Administration;
+using Microsoft.Office.Server;
+using Microsoft.Office.Server.UserProfiles;
 using TM.Utils;
 using Aspose.Words;
 using AsposeLicense = Aspose.Words.License;
@@ -89,6 +92,33 @@ namespace TM.SP.AppPages
             }
         }
 
+        public string ApplyDateText
+        {
+            get
+            {
+                return _request["Tm_ApplyDate"] != null
+                    ? DateTime.Parse(_request["Tm_ApplyDate"].ToString()).ToString("dd.MM.yyyy")
+                    : "Дата принятия в работу не указана";
+            }
+        }
+
+        public string OperatorDepartment
+        {
+            get
+            {
+                var pManager  = new UserProfileManager(SPServiceContext.Current);
+                var cuLogin   = SPContext.Current.Web.CurrentUser.LoginName;
+                var cuProfile = pManager.GetUserProfile(cuLogin);
+                
+                if (cuProfile != null)
+                {
+                    var department = cuProfile[PropertyConstants.Department].Value;
+                    return (string)department;
+                }
+                else return String.Empty;
+            }
+        }
+
         #endregion
 
         #region [methods]
@@ -143,7 +173,8 @@ namespace TM.SP.AppPages
             var scalarValueNames = new string[]
             {
                 "DeclarantName", "CreationDate", "SingleNumber", "SubServiceName",
-                "RefuseReasonTitle", "RefuseReasonText", "OperatorDepartment", "OperatorName"
+                "RefuseReasonTitle", "RefuseReasonText", "OperatorDepartment", "OperatorName", 
+                "ApplyDate", "InternalRegNumber"
             };
 
             var scalarValues = new object[]
@@ -154,8 +185,10 @@ namespace TM.SP.AppPages
                 RequestedDocument != null ? RequestedDocument.Title : "",
                 DenyReason != null ? DenyReason.Title : "",
                 _request["Tm_Comment"] ?? "",
-                "",
-                _web.CurrentUser.Name
+                OperatorDepartment,
+                _web.CurrentUser.Name,
+                ApplyDateText,
+                _request["Tm_InternalRegNumber"] ?? ""
             };
 
             var doc = new Document(tmplItem.File.OpenBinaryStream());
