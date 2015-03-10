@@ -82,7 +82,15 @@
 </style>
 
 <div class="data-cont">
-    <div class="data-title"><span><%= Header %></span></div>
+    <div class="data-title">
+        <span>
+            <% if (String.IsNullOrEmpty(TitleUrl)) { %>
+                <%= Header %>
+            <% } else { %>
+                <a href="<%= TitleUrl %>"><%= Header %></a>
+            <% } %>
+        </span>
+    </div>
     <asp:Label ID="ErrorMessage" runat="server" CssClass="error-message" Text="Here will be information about error"></asp:Label>
     <asp:Table runat="server" ID="DataTable"></asp:Table>
 </div>
