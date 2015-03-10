@@ -257,6 +257,10 @@
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-output-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.jpg" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-gibdd-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-gibdd-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-make-obsolete-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-make-obsolete-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\mo-sync-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\odopm-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\penalty-16.png" />
