@@ -69,7 +69,10 @@ namespace TM.SP.BdcColumnUpdateTimerJob
             {
                 var licenseList = web.GetListOrBreak("Lists/LicenseList");
                 var refresher = new BusinessDataColumnUpdater(licenseList, "Tm_LicenseAllViewBcsLookup");
-                refresher.UpdateColumnUsingBatch(0);
+                refresher.UpdateColumnUsingBatch(complete => {
+                    System.Threading.Thread.Sleep(10);
+                    UpdateProgress(complete);
+                }, 0);
             }
         }
 
