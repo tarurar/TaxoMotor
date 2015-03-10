@@ -42,6 +42,24 @@ namespace TM.Utils
             return String.Format(pattern, orgCode, sysCode, service, formattedNumber, year);
         }
 
+        public static string GetIncomeRequestInternalRegNumber(string serviceCode)
+        {
+            const string pattern = "{0}-{1}";
+
+            var year = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture).Right(4);
+            var number = BCS.ExecuteBcsMethod<int>(new BcsMethodExecutionInfo
+            {
+                lob = BCS.LOBUtilitySystemName,
+                ns = BCS.LOBUtilitySystemNamespace,
+                contentType = "RequestCounter",
+                methodName = "GetNextNumberInstance",
+                methodType = MethodInstanceType.Scalar
+            }, serviceCode);
+            var formattedNumber = String.Format("{0:000000}", number);
+
+            return String.Format(pattern, formattedNumber, year);
+        }
+
         public static bool TryGetListItemFromLookupValue(object fieldValue, SPFieldLookup field, out SPListItem item)
         {
             item = null;
