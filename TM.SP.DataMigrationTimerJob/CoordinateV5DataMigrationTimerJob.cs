@@ -91,18 +91,32 @@ namespace TM.SP.DataMigrationTimerJob
                     IncomeRequestService.SaveIncomeRequestStatusLog(request.ID, statusXml);
                     // sending income request status
                     NotifyAboutItemStatus(request);
-                }                
+                }
+                else break;
             }
         }
         private void MigrateLicense(SPWeb web)
         {
             int repeat = Config.GetConfigValueOrDefault<Int32>(web, "MigrateLicenseCountPerJob");
+            SPList licList = web.GetListOrBreak("Lists/LicenseList");
 
             var manager = new MigrationManager<License, MigratingLicense>(BCS.LOBTaxiSystemName,
                 BCS.LOBTaxiSystemNamespace);
+            var refresher = new BusinessDataColumnUpdater(licList, "Tm_LicenseAllViewBcsLookup");
             for (int i = 0; i < repeat; i++)
             {
-                manager.Process(0, LicenseCt, ReadLicenseItem, web, LicenseMigrator.Execute);
+                var item = manager.Process(0, LicenseCt, ReadLicenseItem, web, LicenseMigrator.Execute);
+                if (item != null)
+                {
+                    refresher.UpdateColumnUsingBatch(null, item.ID);
+                    var parentLookup = item["Tm_LicenseParentLicenseLookup"];
+                    if (parentLookup != null)
+                    {
+                        var parentId = new SPFieldLookupValue(parentLookup.ToString()).LookupId;
+                        refresher.UpdateColumnUsingBatch(null, parentId);
+                    }
+                }
+                else break;
             }
         }
 
