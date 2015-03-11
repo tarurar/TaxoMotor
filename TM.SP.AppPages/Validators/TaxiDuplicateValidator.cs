@@ -11,6 +11,9 @@ using CamlexNET;
 
 namespace TM.SP.AppPages.Validators
 {
+    /// <summary>
+    /// Проверки на дубли при принятии в работу транспортного средства
+    /// </summary>
     public class TaxiDuplicateValidator : Validator
     {
         #region [fields]
@@ -33,13 +36,19 @@ namespace TM.SP.AppPages.Validators
         private bool ExecuteForNew()
         {
             #region [first condition check]
+            // выбираем все действующие разрешения
             var actingLicenses = IncomeRequestService.GetTaxiNumberActingLicenses(taxiItem.ID).Cast<SPListItem>();
 
+            // нет действующих разрешений - ок
             var noActingLicenses = !actingLicenses.Any();
+            // есть, но аннулированные - ок
             var onlyCancelledLicenses = actingLicenses.All(i => (string)i["Tm_LicenseStatus"] == StringsRes.LicenseStatusCancellation);
+            // есть, но такие, которые вскоре прекращают свое действие - ок
             var onlySoonExpired = actingLicenses.All(i => (DateTime)i["Tm_LicenseTillDate"] <= DateTime.Now.AddDays(40));
+            // есть, но с установленным признаком "Устаревшие данные" - ок
+            var onlyObsolete = actingLicenses.All(i => (bool)i["Tm_LicenseObsolete"] == true);
 
-            var firstCondition = noActingLicenses || onlyCancelledLicenses || onlySoonExpired;
+            var firstCondition = noActingLicenses || onlyCancelledLicenses || onlySoonExpired || onlyObsolete;
             if (!firstCondition) throw new Exception(StringsRes.actingLicensesError);
             #endregion
 
