@@ -169,6 +169,7 @@
     <Build Include="dbo\Procedures\LisencesWSgetTaxiInfosSelect.sql" />
     <Build Include="dbo\Indexes\IX_Licenses_ForWS.sql" />
     <Build Include="dbo\Indexes\IX_Licenses_ID_Signature.sql" />
+    <Build Include="dbo\Procedures\LisencesWSgetTaxiLicenseCommonSelect.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
