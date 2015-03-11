@@ -1,14 +1,15 @@
-﻿--SET ANSI_NULLS ON
---GO
---SET QUOTED_IDENTIFIER ON
---GO
+﻿--IF OBJECT_ID(N'dbo.LisencesWSgetTaxiInfosSelect') IS NOT NULL DROP PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
+GO
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
 --=================================================================
 --  Автор       achernenko
 --  Дата        03.03.2015
 --  Описание    Получение выборки для сервиса TaxiServices.TaxiLicenses.TaxiLicenses метод getTaxiInfos
 --				в виде XML
 --=================================================================
-CREATE PROCEDURE [dbo].[LisencesWSgetTaxiInfosSelect]
+CREATE PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
 	@LicenseNum NVARCHAR(64) = NULL --RegNumber
 	,@LicenseDate DATETIME = NULL-- CreationDate
 	,@Name NVARCHAR(32) = NULL-- ShortName
