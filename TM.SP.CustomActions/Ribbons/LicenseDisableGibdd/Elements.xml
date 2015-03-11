@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.LicenseDisableGibdd"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Отправка в ГИБДД"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/LicenseList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.LicenseDisableGibdd.Button"
+						Command="TaxoMotor.LicenseDisableGibdd.ButtonCommand"
+						Sequence="110"
+						Image16by16="/_layouts/15/TM.SP.AppPages/Images/license-gibdd-16.png"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/license-gibdd-32.png"
+						LabelText="Отправка в ГИБДД"
+						ToolTipTitle="Установка/снятие признака 'Отправлять в ГИБДД'"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.LicenseDisableGibdd.ButtonCommand"
+					CommandAction="javascript:alert('Отправка в ГИБДД (признак)');" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

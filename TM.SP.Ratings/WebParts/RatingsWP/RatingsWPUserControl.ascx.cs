@@ -70,6 +70,10 @@ namespace TM.SP.Ratings
         {
             get { return WebPart._Header; }
         }
+
+        public string TitleUrl {
+            get { return WebPart._TitleUrl; }                
+        }
         #endregion
 
         #region [methods]

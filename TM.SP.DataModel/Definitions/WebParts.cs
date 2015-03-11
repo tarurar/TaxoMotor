@@ -27,5 +27,14 @@ namespace TM.SP.DataModel.Definitions
             ZoneId             = "Main",
             ZoneIndex          = 1
         };
+
+        public static WebPartDefinition LicenseMoListView = new WebPartDefinition()
+        {
+            Id                 = "licenseMoListView",
+            WebpartXmlTemplate = WebPartsRes.LicenseMoListViewXml,
+            Title              = "Разрешения Московской области",
+            ZoneId             = "Main",
+            ZoneIndex          = 1
+        };
     }
 }

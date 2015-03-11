@@ -27,5 +27,16 @@ namespace TM.SP.Ratings.Schedule
                 EndMinute = 59
             };
         }
+
+        public static SPDailySchedule GetDaily(int beginHour, int endHour)
+        {
+            return new SPDailySchedule
+            {
+                BeginHour   = beginHour,
+                BeginMinute = 0,
+                EndHour     = endHour,
+                EndMinute   = 0
+            };
+        }
     }
 }

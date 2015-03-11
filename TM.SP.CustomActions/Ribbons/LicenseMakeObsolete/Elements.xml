@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.LicenseMakeObsolete"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Устаревшие данные"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/LicenseList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.LicenseMakeObsolete.Button"
+						Command="TaxoMotor.LicenseMakeObsolete.ButtonCommand"
+						Sequence="100"
+						Image16by16="/_layouts/15/TM.SP.AppPages/Images/license-make-obsolete-16.png"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/license-make-obsolete-32.png"
+						LabelText="Устаревшие данные"
+						ToolTipTitle="Установить/снять признак 'Устаревшие данные'"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.LicenseMakeObsolete.ButtonCommand"
+					CommandAction="javascript:alert('Устаревшие данные');" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

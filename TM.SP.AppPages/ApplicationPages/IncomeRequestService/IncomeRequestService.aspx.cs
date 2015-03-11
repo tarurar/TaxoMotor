@@ -490,7 +490,7 @@ namespace TM.SP.AppPages
         }
 
         /// <summary>
-        ///  Вычисление и установка сроков предоставления гос услуги, а также установка нового статуса
+        ///  Вычисление и установка сроков предоставления гос услуги, а также установка нового статуса, генерация внутреннего регистрационного номера
         ///  Сроки вычисляются для всех ситуаций кроме Отказа
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
@@ -498,16 +498,14 @@ namespace TM.SP.AppPages
         [WebMethod]
         public static void CalculateDatesAndSetStatus(int incomeRequestId, int statusCode)
         {
-            SPWeb web = SPContext.Current.Web;
-
-            web.AllowUnsafeUpdates = true;
-            try
+            Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
+            Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
             {
-                var list       = web.GetListOrBreak("Lists/IncomeRequestList");
-                var statusList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
-                var item       = list.GetItemById(incomeRequestId);
+                var list = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                var statusList = safeWeb.GetListOrBreak("Lists/IncomeRequestStateBookList");
+                var item = list.GetItemById(incomeRequestId);
                 var statusItem = statusList.GetSingleListItemByFieldValue("Tm_ServiceCode", statusCode.ToString(CultureInfo.InvariantCulture));
-                var ctId       = new SPContentTypeId(item["ContentTypeId"].ToString());
+                var ctId = new SPContentTypeId(item["ContentTypeId"].ToString());
 
                 // В случае отказа сроки предоставления услуги не рассчитываем
                 if (statusCode != 1080)
@@ -517,18 +515,18 @@ namespace TM.SP.AppPages
 
                     if (ctId == list.ContentTypes["Аннулирование"].Id)
                     {
-                        prepDate = Calendar.CalcFinishDate(web, beginWorkDate, 1);
-                        outpDate = Calendar.CalcFinishDate(web, beginWorkDate, 2);
+                        prepDate = Calendar.CalcFinishDate(safeWeb, beginWorkDate, 1);
+                        outpDate = Calendar.CalcFinishDate(safeWeb, beginWorkDate, 2);
                     }
                     else if (ctId == list.ContentTypes["Выдача дубликата"].Id)
                     {
-                        prepDate = Calendar.CalcFinishDate(web, beginWorkDate, 5);
-                        outpDate = Calendar.CalcFinishDate(web, beginWorkDate, 6);
+                        prepDate = Calendar.CalcFinishDate(safeWeb, beginWorkDate, 5);
+                        outpDate = Calendar.CalcFinishDate(safeWeb, beginWorkDate, 6);
                     }
                     else
                     {
-                        prepDate = Calendar.CalcFinishDate(web, beginWorkDate, 10);
-                        outpDate = Calendar.CalcFinishDate(web, beginWorkDate, 11);
+                        prepDate = Calendar.CalcFinishDate(safeWeb, beginWorkDate, 10);
+                        outpDate = Calendar.CalcFinishDate(safeWeb, beginWorkDate, 11);
                     }
 
                     item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(prepDate);
@@ -537,13 +535,11 @@ namespace TM.SP.AppPages
                 }
                 if (statusItem != null)
                     item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(statusItem.ID, statusItem.Title);
+                // Присвоение внутреннего регистрационного номера
+                item["Tm_InternalRegNumber"] = Utility.GetIncomeRequestInternalRegNumber("InternalRegNumber");
 
-                item.Update();
-            }
-            finally
-            {
-                web.AllowUnsafeUpdates = false;
-            }
+                item.Update();                            
+            }));
         }
 
         /// <summary>
@@ -930,12 +926,13 @@ namespace TM.SP.AppPages
                                 TaxiId = taxiItem.ID,
                                 MO     = false
                             };
-
+                            #region [Черновик для нового разрешения]
                             if (ctId == rList.ContentTypes["Новое"].Id)
                             {
                                 licenseDraft.CreationDate = DateTime.Now.Date;
                                 licenseDraft.ChangeDate   = DateTime.Now.Date;
-                                licenseDraft.OutputDate   = DateTime.Now.AddYears(5).AddDays(-1).Date;
+                                licenseDraft.OutputDate   = DateTime.Now.Date;
+                                licenseDraft.TillDate     = DateTime.Now.AddYears(5).AddDays(-1).Date;
                                 var storedLicenseDraft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                                 {
                                     lob         = BCS.LOBTaxiSystemName,
@@ -950,6 +947,8 @@ namespace TM.SP.AppPages
                                     taxiItem["Tm_TaxiPrevLicenseNumber"] = num;
                                 }
                             }
+                            #endregion
+                            #region [Черновик для всех остальных]
                             else
                             {
                                 var regNumber = taxiItem["Tm_TaxiPrevLicenseNumber"];
@@ -983,9 +982,22 @@ namespace TM.SP.AppPages
                                 licenseDraft.RegNumber    = parentLicenseExt.RegNumber;
                                 licenseDraft.CreationDate = parentLicenseExt.CreationDate;
                                 licenseDraft.ChangeDate   = DateTime.Now.Date;
-                                licenseDraft.OutputDate   = parentLicenseExt.OutputDate;
+                                licenseDraft.OutputDate   = DateTime.Now.Date;
                                 licenseDraft.Parent       = parentLicenseExt.Id;
                                 licenseDraft.RootParent   = parentLicenseExt.RootParent;
+
+                                #region [TillDate]
+                                if (ctId == rList.ContentTypes["Аннулирование"].Id)
+                                {
+                                    licenseDraft.TillDate = DateTime.Now.Date;
+                                }
+                                else if (ctId == rList.ContentTypes["Выдача дубликата"].Id ||
+                                          ctId == rList.ContentTypes["Переоформление"].Id)
+                                {
+                                    licenseDraft.TillDate = parentLicenseExt != null ? parentLicenseExt.TillDate : DateTime.Now.AddYears(5).AddDays(-1).Date;
+                                }
+                                #endregion
+
                                 BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                                 {
                                     lob         = BCS.LOBTaxiSystemName,
@@ -995,6 +1007,7 @@ namespace TM.SP.AppPages
                                     methodType  = MethodInstanceType.Creator
                                 }, licenseDraft);
                             }
+                            #endregion
 
                             taxiItem["Tm_TaxiStatus"] = "Решено положительно";
                             taxiItem.Update();
@@ -1440,6 +1453,34 @@ namespace TM.SP.AppPages
                             bool sent = svcClient.AddMessage(message);
                             if (!sent) throw new Exception("Сообщение не было отправлено");
                         })));
+        }
+
+        /// <summary>
+        /// Получение идентификатора документа заявителя, удостоверяющего его личность
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns>Идентификатор документа, удостоверяющего личность в списке IncomeRequestAttachList</returns>
+        [WebMethod]
+        public static int GetDeclarantIdentityId(int incomeRequestId)
+        {
+            var web = SPContext.Current.Web;
+
+            var docList = web.GetListOrBreak("Lists/IncomeRequestAttachList");
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            { 
+                x => (int)x["Tm_AttachType"] >= 20001 && (int)x["Tm_AttachType"] <= 20014,
+                x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId) incomeRequestId.ToString()
+            };
+
+            SPListItemCollection docs = docList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            var doc = docs.Cast<SPListItem>().FirstOrDefault();
+
+            return doc != null ? doc.ID : 0;
         }
     }
 }

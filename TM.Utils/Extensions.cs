@@ -259,5 +259,40 @@ namespace TM.Utils
 
             return hsa.SetEquals(hsb);
         }
+
+        public static T TryGetValue<T>(this SPListItem listItem, string fieldInternalName)
+        {
+            if (!String.IsNullOrEmpty(fieldInternalName) && 
+                listItem != null && 
+                listItem.Fields.ContainsField(fieldInternalName))
+            {
+                object value = listItem[fieldInternalName];
+                if (value != null)
+                    return (T)value;
+            }
+
+            return default(T);
+        }
+
+        public static bool TrySetValue<T>(this SPListItem listItem, string fieldInternalName, T value)
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(fieldInternalName) &&
+                listItem != null &&
+                listItem.Fields.ContainsField(fieldInternalName))
+                {
+                    listItem[fieldInternalName] = value;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
     }
 }

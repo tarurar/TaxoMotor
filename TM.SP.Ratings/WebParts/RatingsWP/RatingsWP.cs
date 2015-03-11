@@ -92,6 +92,13 @@ namespace TM.SP.Ratings
         [Personalizable(PersonalizationScope.Shared)]
         [Category("Рейтинг")]
         public string _Header { get; set; }
+
+        [WebBrowsable(true)]
+        [WebDisplayName("Url заголовка")]
+        [WebDescription("Ссылка, на которую будет указывать заголовок веб части")]
+        [Personalizable(PersonalizationScope.Shared)]
+        [Category("Рейтинг")]
+        public string _TitleUrl { get; set; }
     }
 }
 

@@ -65,6 +65,7 @@
     <Compile Include="Definitions\ContentTypes.cs" />
     <Compile Include="Definitions\Fields.cs" />
     <Compile Include="Definitions\Lists.cs" />
+    <Compile Include="Definitions\ListViews.cs" />
     <Compile Include="Definitions\Pages.cs" />
     <Compile Include="Definitions\Plumsail\Fields.cs" />
     <Compile Include="Definitions\WebParts.cs" />

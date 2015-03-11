@@ -55,6 +55,8 @@
       <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Server, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Server.UserProfiles, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
     <Reference Include="ODOPM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rd\ODOPM.dll</HintPath>
@@ -255,6 +257,10 @@
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-output-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.jpg" />
     <Content Include="Layouts\TM.SP.AppPages\Images\ir-refuse-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-gibdd-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-gibdd-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-make-obsolete-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-make-obsolete-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\mo-sync-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\odopm-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\penalty-16.png" />

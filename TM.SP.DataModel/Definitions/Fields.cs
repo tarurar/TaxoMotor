@@ -132,6 +132,15 @@ namespace TM.SP.DataModel
             Group        =  ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmPrintTitle = new FieldDefinition()
+        {
+            Id           = new Guid("{11A02F64-5574-44AC-92D8-44DBCB4BEC94}"),
+            Title        = "Название (для печати)",
+            InternalName = "Tm_PrintTitle",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Обращение - Общие поля]
@@ -141,6 +150,16 @@ namespace TM.SP.DataModel
             Id           = new Guid("{CD4C9A50-D719-44AA-9458-A267A0F53B69}"),
             Title        = "Номер МПГУ",
             InternalName = "Tm_RegNumber",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmInternalRegNumber = new FieldDefinition()
+        {
+            Id           = new Guid("{3D22D3B0-6543-47D6-A985-A54E8B034C90}"),
+            Title        = "Рег. номер",
+            InternalName = "Tm_InternalRegNumber",
+            Description  = "Внутренний регистрационный номер ОИВ",
             FieldType    = BuiltInFieldTypes.Text,
             Group        = ModelConsts.ColumnsDefaultGroup
         };
@@ -1202,17 +1221,22 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup,
         };
 
-        public static FieldDefinition TmLicenseCalcState = new CalculatedFieldDefinition
+        public static FieldDefinition TmLicenseObsolete = new FieldDefinition
         {
-            Id                = new Guid("{4D6CF9EB-EA7C-4C34-9CC5-1AD2B30353B7}"),
-            Title             = "Статус",
-            InternalName      = "Tm_LicenseCalcState",
-            Group             = ModelConsts.ColumnsCalcGroup,
-            Formula           = "=IF([Ссылка на внешний список: IsLast]=1,\"Действующее\",\"Архивное\")",
-            OutputType        = BuiltInFieldTypes.Text,
-            FieldReferences   = new Collection<string> { "Ссылка на внешний список: IsLast" },
-            DateFormat        = BuiltInDateTimeFieldFormatType.DateOnly,
-            CurrencyLocaleId  = 1049
+            Id           = new Guid("{0C937295-C2A7-4591-8DF0-EEAF340A48C4}"),
+            Title        = "Устаревшие данные",
+            InternalName = "Tm_LicenseObsolete",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+        };
+
+        public static FieldDefinition TmLicenseDisableGibdd = new FieldDefinition
+        {
+            Id           = new Guid("{BCD1ED03-D4F2-4D4D-96AF-579FAB9FDD16}"),
+            Title        = "Не отправлять в ГИБДД",
+            InternalName = "Tm_LicenseDisableGibdd",
+            FieldType    = BuiltInFieldTypes.Boolean,
+            Group        = ModelConsts.ColumnsDefaultGroup,
         };
 
         /// <summary>
