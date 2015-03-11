@@ -87,6 +87,7 @@
     <Compile Include="Features\TaxoMotor_CoordinateV5BCSLists\TaxoMotor_CoordinateV5BCSLists.EventReceiver.cs">
       <DependentUpon>TaxoMotor_CoordinateV5BCSLists.feature</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +258,20 @@
     <Content Include="ListInstances\TaxiInfoBCSList\Elements.xml" />
     <Content Include="Modules\Pages\Elements.xml" />
     <Content Include="Modules\Pages\ViewFileContentPage.aspx" />
+    <EmbeddedResource Include="SQL\License-ReadAllItems.sql" />
+    <EmbeddedResource Include="SQL\License-ReadItem.sql" />
+    <EmbeddedResource Include="SQL\License-CreateItem.sql" />
+    <EmbeddedResource Include="SQL\License-DeletItem.sql" />
+    <EmbeddedResource Include="SQL\License-UpdateItem.sql" />
+    <EmbeddedResource Include="SQL\License-ReadItemsByParent.sql" />
+    <EmbeddedResource Include="SQL\License-ReadItemsByRootParent.sql" />
+    <EmbeddedResource Include="SQL\License-TakeAnyItemForMigration.sql" />
+    <EmbeddedResource Include="SQL\License-TakeItemForMigration.sql" />
+    <EmbeddedResource Include="SQL\License-FinishMigration.sql" />
+    <EmbeddedResource Include="SQL\License-UpdateMigrationStatus.sql" />
+    <EmbeddedResource Include="SQL\License-DeleteDraftForTaxi.sql" />
+    <EmbeddedResource Include="SQL\License-ReadDraftForTaxi.sql" />
+    <EmbeddedResource Include="SQL\License-ReadAnyForTaxi.sql" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSLists.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSModel.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxiBCSLists.gif" />
@@ -272,6 +287,7 @@
       <Name>TM.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -25,7 +25,42 @@
 			<CommandUIHandlers>
 				<CommandUIHandler
 					Command="TaxoMotor.LicenseMakeObsolete.ButtonCommand"
-					CommandAction="javascript:alert('Устаревшие данные');" />
+					CommandAction="javascript:(function(){
+            JSRequest.EnsureSetup();
+            var id = JSRequest.QueryString.ID;
+            
+            var curValue = TM.SP.License.CurrentItem.get_item('Tm_LicenseObsolete');
+            var newValue = !curValue;
+          
+            SP.UI.Status.removeAllStatus(true);
+          
+            TM.SP.License.ChangeObsoleteAttribute(id, newValue, function(){
+              var successMsgPart = newValue ? 'установлен' : 'снят';
+              var successStatus = SP.UI.Status.addStatus('Признак &quot;Устаревшие данные&quot; успешно ' + successMsgPart);
+	            SP.UI.Status.setStatusPriColor(successStatus, 'green');
+              
+	            setTimeout(function() {
+		            var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
+                if (gobackBtn) {
+                  gobackBtn.click();
+                }
+	            }, 2000);
+            }, function(err){
+              var failStatus = SP.UI.Status.addStatus(err);
+	            SP.UI.Status.setStatusPriColor(failStatus, 'red');
+            });
+          
+          })();" 
+          EnabledScript="javascript: function enabled() { 
+            var result = false;
+            
+            if (TM.SP.License.CurrentItem) {
+              var isLast = TM.SP.License.CurrentItem.get_item('_x0421__x0441__x044b__x043b__x04');
+              result = isLast;
+            }
+            
+            return result;
+          } enabled();"/>
 			</CommandUIHandlers>
 		</CommandUIExtension>
 	</CustomAction>

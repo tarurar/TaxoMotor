@@ -27,20 +27,15 @@ namespace TM.SP.AppPages
     using Microsoft.BusinessData.MetadataModel;
     using CamlexNET;
 
-    /// <summary>
-    /// Service page for serving requests
-    /// </summary>
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class LicenseService : LayoutsPageBase
     {
-        /// <summary>
-        /// Initializes a new instance of the LicenseService class
-        /// </summary>
         protected LicenseService()
         {
             RightsCheckMode = RightsCheckModes.OnPreInit;
         }
 
+        #region [common methods]
         public static void MigrateItem(SPList list, License license)
         {
             var migrationManager = new MigrationManager<License, MigratingLicense>(BCS.LOBTaxiSystemName, BCS.LOBTaxiSystemNamespace);
@@ -67,7 +62,6 @@ namespace TM.SP.AppPages
                 }
             }
         }
-
         private static void SaveSigned(int licenseId, Action<License> contextAction)
         {
             SPWeb web         = SPContext.Current.Web;
@@ -99,7 +93,6 @@ namespace TM.SP.AppPages
                 web.AllowUnsafeUpdates = false;                    
             }
         }
-
         private static string GetLicenseXml(int licenseId, Action<License> contextAction)
         {
             SPWeb web         = SPContext.Current.Web;
@@ -121,7 +114,6 @@ namespace TM.SP.AppPages
             
             return intWriter.ToString();
         }
-
         public static License GetLicense(int? id)
         {
             if (id == null || id == 0)
@@ -138,7 +130,9 @@ namespace TM.SP.AppPages
 
             return item;
         }
+        #endregion
 
+        #region [getting xml methods]
         [WebMethod]
         public static string SuspensionGetXml(int licenseId, DateTime dateFrom, DateTime dateTo, string reason)
         {
@@ -150,7 +144,6 @@ namespace TM.SP.AppPages
                 l.Status             = 2;
             });
         }
-
         [WebMethod]
         public static string CancellationGetXml(int licenseId, DateTime dateFrom, string reason)
         {
@@ -161,7 +154,6 @@ namespace TM.SP.AppPages
                 l.Status             = 3;
             });
         }
-
         [WebMethod]
         public static string RenewalGetXml(int licenseId, DateTime dateFrom, string reason)
         {
@@ -175,7 +167,25 @@ namespace TM.SP.AppPages
                 l.Status       = grandpa.Status;
             });
         }
+        [WebMethod]
+        public static string MakeObsoleteGetXml(int licenseId, bool obsolete)
+        {
+            return GetLicenseXml(licenseId, l =>
+            {
+                l.Obsolete = obsolete;
+            });
+        }
+        [WebMethod]
+        public static string DisableGibddGetXml(int licenseId, bool disabled)
+        {
+            return GetLicenseXml(licenseId, l =>
+            {
+                l.DisableGibddSend = disabled;
+            });
+        }
+        #endregion
 
+        #region [save signed methods]
         /// <summary>
         /// Приостановка разрешения
         /// </summary>
@@ -196,7 +206,6 @@ namespace TM.SP.AppPages
                 l.Status             = 2;
             });
         }
-
         [WebMethod]
         public static void SaveSignedCancellation(int licenseId, DateTime dateFrom, string reason, string signature)
         {
@@ -208,7 +217,6 @@ namespace TM.SP.AppPages
                 l.Status             = 3;
             });
         }
-
         [WebMethod]
         public static void SaveSignedRenewal(int licenseId, DateTime dateFrom, string reason, string signature)
         {
@@ -223,7 +231,27 @@ namespace TM.SP.AppPages
                 l.Status       = grandpa.Status;
             });
         }
+        [WebMethod]
+        public static void SaveSignedMakeObsolete(int licenseId, bool obsolete, string signature)
+        {
+            SaveSigned(licenseId, l =>
+            {
+                l.Obsolete  = obsolete;
+                l.Signature = Uri.UnescapeDataString(signature);
+            });
+        }
+        [WebMethod]
+        public static void SaveSignedDisableGibdd(int licenseId, bool disabled, string signature)
+        {
+            SaveSigned(licenseId, l =>
+            {
+                l.DisableGibddSend = disabled;
+                l.Signature = Uri.EscapeDataString(signature);
+            });
+        }
+        #endregion
 
+        #region [validation methods]
         /// <summary>
         /// Проверка на значения полей при приостановке
         /// </summary>
@@ -253,7 +281,6 @@ namespace TM.SP.AppPages
                         throw new Exception("Необходимо указать причину");
                 });
         }
-
         /// <summary>
         /// Проверка на значения полей при аннулировании
         /// </summary>
@@ -282,7 +309,6 @@ namespace TM.SP.AppPages
                         throw new Exception("Необходимо указать причину");
                 });
         }
-
         /// <summary>
         /// Проверка на значения полей при возобновлении
         /// </summary>
@@ -311,6 +337,7 @@ namespace TM.SP.AppPages
                         throw new Exception("Необходимо указать причину");
                 });
         }
+        #endregion
     }
 }
 

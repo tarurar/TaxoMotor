@@ -33,7 +33,7 @@
     [ChangeReason] NVARCHAR(MAX) NULL, 
     [InvalidReason] NVARCHAR(MAX) NULL,  
 	-- краткое наименование перевозчика
-	[ShortName] NVARCHAR(32) NULL,
+	[ShortName] NVARCHAR(64) NULL,
 	-- фамилия ИП
 	[LastName] NVARCHAR(64) NULL,
 	-- имя ИП
@@ -151,7 +151,11 @@
 	-- GUID сообщения из МО
 	[GUID_MO] NVARCHAR(64) NULL,
 	-- Признак (дата) загрузки в систему МО
-	[DATE_MO] DATETIME NULL
+	[DATE_MO] DATETIME NULL,
+	-- Признак устаревших данных
+	[Obsolete] BIT NULL,
+	-- Признак отмены отправки данных в ГИБДД
+	[DisableGibddSend] BIT NULL
     CONSTRAINT [FK_License_ToLicense_Parent] FOREIGN KEY ([Parent]) REFERENCES [dbo].[License]([Id]),
 	CONSTRAINT [FK_License_ToLicense_RootParent] FOREIGN KEY ([RootParent]) REFERENCES [dbo].[License]([Id]) 
 )

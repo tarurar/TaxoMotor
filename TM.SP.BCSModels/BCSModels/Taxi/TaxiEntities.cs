@@ -126,6 +126,10 @@ namespace TM.SP.BCSModels.Taxi
         public bool? MO { get; set; }
         public System.String GUID_MO { get; set; }
         public DateTime? DATE_MO { get; set; }
+        [XmlIgnore]
+        public bool? Obsolete { get; set; }
+        [XmlIgnore]
+        public bool? DisableGibddSend { get; set; }
         #endregion
 
         #region [methods]
@@ -223,7 +227,9 @@ namespace TM.SP.BCSModels.Taxi
                 OwnDate            = OwnDate,
                 MO                 = MO,
                 GUID_MO            = GUID_MO,
-                DATE_MO            = null
+                DATE_MO            = null,
+                Obsolete           = Obsolete,
+                DisableGibddSend   = DisableGibddSend
             };
         }
 

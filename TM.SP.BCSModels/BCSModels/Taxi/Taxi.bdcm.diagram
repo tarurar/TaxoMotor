@@ -2,11 +2,11 @@
 <minimalLanguageDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Taxi">
   <modelRootMoniker Name="/Taxi" />
   <nestedChildShapes>
-    <entityShape Id="61ae7e76-304c-4dde-b507-b24c397a74a4" absoluteBounds="2, 1, 3.875, 3.7109993489583326">
+    <entityShape Id="61ae7e76-304c-4dde-b507-b24c397a74a4" absoluteBounds="2, 1, 3.875, 3.2357796223958326">
       <entityMoniker name="TM.SP.BCSModels.Taxi.License" />
       <nestedChildShapes>
-        <elementListCompartment Id="d32b32a2-ca93-45e0-bf7c-b21f8a3a8652" absoluteBounds="2.015, 1.4100000000000001, 3.8449999999999998, 0.44169108072916663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
-        <elementListCompartment Id="f3962e27-7260-4557-91a3-af40a1a86003" absoluteBounds="2.015, 1.8616910807291667, 3.8449999999999998, 2.7493082682291665" name="Methods" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d32b32a2-ca93-45e0-bf7c-b21f8a3a8652" absoluteBounds="2.015, 1.4100000000000001, 3.8449999999999998, 0.37180582682291663" name="Identifiers" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f3962e27-7260-4557-91a3-af40a1a86003" absoluteBounds="2.015, 1.7918058268229167, 3.8449999999999998, 2.3439737955729161" name="Methods" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </entityShape>
     <associationGroupConnector edgePoints="[(3.37148537409856 : 4.71099934895833); (3.37148537409856 : 4.96099934895833); (4.53046770332532 : 4.96099934895833); (4.53046770332532 : 4.71099934895833)]" fixedFrom="NotFixed" fixedTo="NotFixed">

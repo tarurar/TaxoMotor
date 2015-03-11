@@ -95,6 +95,8 @@ namespace TP.SP.DataMigration
             newItem["Tm_LicenseGuidMo"]               = license.GUID_MO;
             newItem["Tm_LicenseDateMo"]               = license.DATE_MO;
             newItem["Tm_LicenseIsFromPortal"]         = license.FromPortal;
+            newItem["Tm_LicenseObsolete"]             = license.Obsolete;
+            newItem["Tm_LicenseDisableGibdd"]         = license.DisableGibddSend;
 
             // license status
             string status;

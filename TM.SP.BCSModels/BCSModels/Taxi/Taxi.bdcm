@@ -20,7 +20,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.77" EstimatedInstanceCount="100000" DefaultDisplayName="License">
+				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.78" EstimatedInstanceCount="100000" DefaultDisplayName="License">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Taxi.LicenseEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -253,7 +253,7 @@
 													</TypeDescriptor>
                           <TypeDescriptor Name="ShortName" DefaultDisplayName="ShortName" TypeName="System.String">
                             <Properties>
-                              <Property Name="Size" Type="System.Int32">32</Property>
+                              <Property Name="Size" Type="System.Int32">64</Property>
                             </Properties>
                             <Interpretation>
                               <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
@@ -672,6 +672,8 @@
                               <NormalizeDateTime LobDateTimeMode="UTC" />
                             </Interpretation>
                           </TypeDescriptor>
+                          <TypeDescriptor Name="Obsolete" DefaultDisplayName="Obsolete" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+													<TypeDescriptor Name="DisableGibddSend" DefaultDisplayName="DisableGibddSend" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
 												</TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
@@ -898,7 +900,7 @@
 											</TypeDescriptor>
                       <TypeDescriptor Name="ShortName" DefaultDisplayName="ShortName" TypeName="System.String">
                         <Properties>
-                          <Property Name="Size" Type="System.Int32">32</Property>
+                          <Property Name="Size" Type="System.Int32">64</Property>
                         </Properties>
                         <Interpretation>
                           <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
@@ -1317,6 +1319,8 @@
                           <NormalizeDateTime LobDateTimeMode="UTC" />
                         </Interpretation>
                       </TypeDescriptor>
+                      <TypeDescriptor Name="Obsolete" DefaultDisplayName="Obsolete" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="DisableGibddSend" DefaultDisplayName="DisableGibddSend" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -1533,7 +1537,7 @@
 											</TypeDescriptor>
                       <TypeDescriptor Name="ShortName" DefaultDisplayName="ShortName" TypeName="System.String" CreatorField="true">
                         <Properties>
-                          <Property Name="Size" Type="System.Int32">32</Property>
+                          <Property Name="Size" Type="System.Int32">64</Property>
                         </Properties>
                         <Interpretation>
                           <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
@@ -1952,6 +1956,8 @@
                           <NormalizeDateTime LobDateTimeMode="UTC" />
                         </Interpretation>
                       </TypeDescriptor>
+                      <TypeDescriptor Name="Obsolete" DefaultDisplayName="Obsolete" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="DisableGibddSend" DefaultDisplayName="DisableGibddSend" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -2158,7 +2164,7 @@
 											</TypeDescriptor>
                       <TypeDescriptor Name="ShortName" DefaultDisplayName="ShortName" TypeName="System.String">
                         <Properties>
-                          <Property Name="Size" Type="System.Int32">32</Property>
+                          <Property Name="Size" Type="System.Int32">64</Property>
                         </Properties>
                         <Interpretation>
                           <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
@@ -2577,6 +2583,8 @@
                           <NormalizeDateTime LobDateTimeMode="UTC" />
                         </Interpretation>
                       </TypeDescriptor>
+                      <TypeDescriptor Name="Obsolete" DefaultDisplayName="Obsolete" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="DisableGibddSend" DefaultDisplayName="DisableGibddSend" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -2812,7 +2820,7 @@
 											</TypeDescriptor>
                       <TypeDescriptor Name="ShortName" DefaultDisplayName="ShortName" TypeName="System.String" UpdaterField="true">
                         <Properties>
-                          <Property Name="Size" Type="System.Int32">32</Property>
+                          <Property Name="Size" Type="System.Int32">64</Property>
                         </Properties>
                         <Interpretation>
                           <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
@@ -3231,6 +3239,8 @@
                           <NormalizeDateTime LobDateTimeMode="UTC" />
                         </Interpretation>
                       </TypeDescriptor>
+                      <TypeDescriptor Name="Obsolete" DefaultDisplayName="Obsolete" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                      <TypeDescriptor Name="DisableGibddSend" DefaultDisplayName="DisableGibddSend" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
 										</TypeDescriptors>
 									</TypeDescriptor>
 								</Parameter>
@@ -3457,7 +3467,7 @@
 													</TypeDescriptor>
                           <TypeDescriptor Name="ShortName" DefaultDisplayName="ShortName" TypeName="System.String">
                             <Properties>
-                              <Property Name="Size" Type="System.Int32">32</Property>
+                              <Property Name="Size" Type="System.Int32">64</Property>
                             </Properties>
                             <Interpretation>
                               <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
@@ -3876,6 +3886,8 @@
                               <NormalizeDateTime LobDateTimeMode="UTC" />
                             </Interpretation>
                           </TypeDescriptor>
+                          <TypeDescriptor Name="Obsolete" DefaultDisplayName="Obsolete" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="DisableGibddSend" DefaultDisplayName="DisableGibddSend" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
 												</TypeDescriptors>
 											</TypeDescriptor>
 										</TypeDescriptors>
@@ -4261,7 +4273,7 @@
                           </TypeDescriptor>
                           <TypeDescriptor Name="ShortName" DefaultDisplayName="ShortName" TypeName="System.String">
                             <Properties>
-                              <Property Name="Size" Type="System.Int32">32</Property>
+                              <Property Name="Size" Type="System.Int32">64</Property>
                             </Properties>
                             <Interpretation>
                               <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
@@ -4680,6 +4692,8 @@
                               <NormalizeDateTime LobDateTimeMode="UTC" />
                             </Interpretation>
                           </TypeDescriptor>
+                          <TypeDescriptor Name="Obsolete" DefaultDisplayName="Obsolete" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
+                          <TypeDescriptor Name="DisableGibddSend" DefaultDisplayName="DisableGibddSend" TypeName="System.Nullable`1[[System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"></TypeDescriptor>
                         </TypeDescriptors>
                       </TypeDescriptor>
                     </TypeDescriptors>
