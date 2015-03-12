@@ -71,7 +71,11 @@ a,.ms-link:visited{
 	padding: 5px 15px !important;
 }
 
-div[formtype="Display"] div.fd_control {
+
+/*
+    borders for controls
+*/
+div[formtype="Display"] div.fd_control:not(:empty) {
     border: 1px #c5c5c5 solid;
     padding: 2px;
 }
