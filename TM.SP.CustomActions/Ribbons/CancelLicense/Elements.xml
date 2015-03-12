@@ -61,11 +61,16 @@
       EnabledScript="javascript: function enabled() { 
             var result = false;
             
-            if (TM.SP.License.CurrentItem) {
+            if (TM &amp;&amp; TM.SP &amp;&amp; TM.SP.License &amp;&amp; TM.SP.License.CurrentItem) {
               var isLast = TM.SP.License.CurrentItem.get_item('_x0421__x0441__x044b__x043b__x04');
               var status = TM.SP.License.CurrentItem.get_item('Tm_LicenseStatus');
               
               result = isLast &amp;&amp; status &amp;&amp; status != 'Аннулировано';
+            }
+            else {
+              SP.SOD.executeOrDelayUntilScriptLoaded(function() {
+                RefreshCommandUI();
+              }, 'LicenseHelper.js');
             }
             
             return result;

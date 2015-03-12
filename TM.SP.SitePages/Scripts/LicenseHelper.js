@@ -2,6 +2,8 @@
 
 (function (tm) {
 
+    var deferreds = [];
+
     tm.SP = (function (tmsp) {
 
         tmsp.License = (function (lic) {
@@ -34,10 +36,14 @@
                 }
             };
 
+            var currentItemDef = $.Deferred();
+            deferreds.push(currentItemDef);
             lic.GetCurrentItem(function (item) {
                 lic.CurrentItem = item;
+                currentItemDef.resolve();
             }, function () {
                 console.error('Не удалось получить текущий объект разрешения');
+                currentItemDef.reject();
             });
 
             lic.MakeObsoleteGetXml = function (licenseId, obsolete) {
@@ -151,6 +157,12 @@
                     fail("Ошибка при получении xml для разрешения");
                 });
             };
+
+            $.when.apply($, deferreds).always(function () {
+                if (SP && SP.SOD) {
+                    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs('LicenseHelper.js');
+                }
+            });
 
             return lic;
         })(tmsp.License || (tmsp.License = {}));
