@@ -79,41 +79,49 @@ namespace TM.SP.AnswerProcessingTimerJob
                 {
                     foreach (SPSite siteCollection in webApp.Sites)
                     {
-                        SPWeb web = siteCollection.RootWeb;
-
-                        if (web.Features[new Guid(TaxiListsFeatureId)] != null &&
-                            web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
+                        try
                         {
-                            SPListItemCollection requestList = GetOutcomeRequests(web, 20);
-                            foreach (SPListItem request in requestList)
-                            {
-                                request["Tm_LastProcessDate"] = DateTime.Now;
-                                request.Update();
+                            SPWeb web = siteCollection.RootWeb;
 
-                                string customAttributes;
-                                string resultCode;
-                                CoordinateV5File[] files = GetAnswerForOutcomeRequest(web, request, out customAttributes, out resultCode);
-                                if (files.Any())
+                            if (web.Features[new Guid(TaxiListsFeatureId)] != null &&
+                                web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
+                            {
+                                SPListItemCollection requestList = GetOutcomeRequests(web, 20);
+                                foreach (SPListItem request in requestList)
                                 {
-                                    UpdateOutcomeRequestWithFiles(request, files);
-                                    request["Tm_AnswerReceived"] = true;
+                                    request["Tm_LastProcessDate"] = DateTime.Now;
                                     request.Update();
-                                }
-                                if (!String.IsNullOrEmpty(customAttributes))
-                                {
-                                    request["Tm_XmlValue"] = customAttributes;
-                                    request["Tm_AnswerReceived"] = true;
-                                    request.Update();
-                                    ProcessCustomAttributes(request);
-                                }
-                                if (!String.IsNullOrEmpty(resultCode))
-                                {
-                                    request["Tm_ResultCode"] = resultCode;
-                                    request["Tm_AnswerReceived"] = true;
-                                    request.Update();
+
+                                    string customAttributes;
+                                    string resultCode;
+                                    CoordinateV5File[] files = GetAnswerForOutcomeRequest(web, request, out customAttributes, out resultCode);
+                                    if (files.Any())
+                                    {
+                                        UpdateOutcomeRequestWithFiles(request, files);
+                                        request["Tm_AnswerReceived"] = true;
+                                        request.Update();
+                                    }
+                                    if (!String.IsNullOrEmpty(customAttributes))
+                                    {
+                                        request["Tm_XmlValue"] = customAttributes;
+                                        request["Tm_AnswerReceived"] = true;
+                                        request.Update();
+                                        ProcessCustomAttributes(request);
+                                    }
+                                    if (!String.IsNullOrEmpty(resultCode))
+                                    {
+                                        request["Tm_ResultCode"] = resultCode;
+                                        request["Tm_AnswerReceived"] = true;
+                                        request.Update();
+                                    }
                                 }
                             }
                         }
+                        finally
+                        {
+                            siteCollection.Dispose();
+                        }
+                        
                     }
                 }
             }

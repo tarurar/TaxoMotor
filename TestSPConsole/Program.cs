@@ -13,7 +13,6 @@ using CamlexNET;
 using System.Net.Http;
 using System.Net;
 
-using TaxoMotor.BusinessLogic.Validators;
 using TM.SP.AppPages;
 
 namespace TestSPConsole

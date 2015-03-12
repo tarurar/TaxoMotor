@@ -124,7 +124,7 @@ namespace TM.Utils
                 if (!newFolder.Exists)
                 {
                     SPList parentList = web.Lists.GetList(parentFolder.ParentListId, false);
-                    SPListItem newFolderItem = parentList.Items.Add(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.Folder);
+                    SPListItem newFolderItem = parentList.AddItem(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.Folder);
                     newFolderItem["Title"] = correctPath;
                     newFolderItem.Update();
                     newFolder = newFolderItem.Folder;

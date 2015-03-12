@@ -85,7 +85,7 @@
   <Import Condition="'$(BuildingInsideVisualStudio)'=='true' AND Exists('$(BaseDir)SPDisposeChecker.targets')" Project="$(BaseDir)SPDisposeChecker.targets" />
   
   <!-- The following section contains a fix for a known problem with CAS policies in Visual Studio SharePoint Tools. See http://support.microsoft.com/kb/2022463 for more information -->
-  <UsingTask TaskName="FixPackageManifestTask" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+  <UsingTask TaskName="FixPackageManifestTask" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
     <ParameterGroup>
       <Manifest ParameterType="Microsoft.Build.Framework.ITaskItem" Required="true" />
     </ParameterGroup>

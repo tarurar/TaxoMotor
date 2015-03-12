@@ -6,7 +6,11 @@
 
         tmsp.IncomeRequest = (function(ir) {
 
-            ir.ServiceUrl = _spPageContextInfo.webAbsoluteUrl + '/' + _spPageContextInfo.layoutsUrl + '/TaxoMotor/IncomeRequestService.aspx';
+            SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+                var layoutsUrl = SP.ScriptHelpers.urlCombine(_spPageContextInfo.webAbsoluteUrl, _spPageContextInfo.layoutsUrl);
+                var tmUrl      = SP.ScriptHelpers.urlCombine(layoutsUrl, 'TaxoMotor');
+                ir.ServiceUrl  = SP.ScriptHelpers.urlCombine(tmUrl, 'IncomeRequestService.aspx');
+            }, 'sp.init.js');
 
             ir.IsAllTaxiInStatus = function (incomeRequestId, statuses) {
                 return $.ajax({
