@@ -20,7 +20,7 @@
 </asp:Content>
 
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
-    <div id="needIE" data-bind="ifnot: $.browser.msie">
+    <div id="needIE" data-bind="ifnot: bis.ie">
         <div style="background-color: bisque; padding: 10px;">
             <span>
                 Для выполнения этого действия понадобится электронно-цифровая подпись, которая поддерживается только в браузерах Internet Explorer.

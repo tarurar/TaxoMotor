@@ -86,9 +86,6 @@
     <None Include="DelegateControls\jQueryControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e43ba965-efe1-48ea-90fc-16a6caa24ca7}</SharePointProjectItemId>
     </None>
-    <None Include="DelegateControls\jQueryMbBrowser\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{4488fe81-7e94-4d2d-adf6-dd598bba30ec}</SharePointProjectItemId>
-    </None>
     <None Include="DelegateControls\knockoutjsControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{36bfd42b-f462-4be8-a0b7-6b7393be5e3a}</SharePointProjectItemId>
     </None>
@@ -123,9 +120,6 @@
     <None Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.min.js.map">
       <DependentUpon>jquery-2.1.1.min.js</DependentUpon>
     </None>
-    <None Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.min.js.map">
-      <DependentUpon>jquery.mb.browser.min.js</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Package\Package.package">
       <PackageId>{1299C90B-9054-40DE-82EE-12688D6D11B9}</PackageId>
@@ -143,8 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CONTROLTEMPLATES\TaxoMotor\LicensePrintControl.ascx" />
-    <Content Include="DelegateControls\jQueryMbBrowser\Elements.xml" />
-    <Content Include="DelegateControls\jQueryMbBrowser\jQueryMbBrowser.ascx" />
     <Content Include="DelegateControls\knockoutjsControl\Elements.xml" />
     <Content Include="DelegateControls\knockoutjsControl\knockoutjsControl.ascx" />
     <Content Include="DelegateControls\LicensePrintControlElement\Elements.xml" />
@@ -154,8 +146,6 @@
       <DependentUpon>TaxoMotor_TaxoMotorSiteLevelCustomizations.feature</DependentUpon>
     </Content>
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.copycss.js" />
-    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.js" />
-    <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.mb.browser.min.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\json-to-table.js" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\accordion.css" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\all.css" />
