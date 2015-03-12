@@ -89,6 +89,8 @@
 	,[MO]
 	,[GUID_MO]
 	,[DATE_MO]
+	,[Obsolete]
+	,[DisableGibddSend]
 FROM [dbo].[License]
 WHERE [TaxiId] = @TaxiId
 ORDER BY [Id] DESC
