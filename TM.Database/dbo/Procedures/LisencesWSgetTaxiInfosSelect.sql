@@ -1,8 +1,8 @@
 ﻿--IF OBJECT_ID(N'dbo.LisencesWSgetTaxiInfosSelect') IS NOT NULL DROP PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
-GO
-SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER ON
-GO
+--GO
+--SET ANSI_NULLS ON
+--SET QUOTED_IDENTIFIER ON
+--GO
 --=================================================================
 --  Автор       achernenko
 --  Дата        03.03.2015
