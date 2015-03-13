@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using SPMeta2.Models;
 using SPMeta2.Syntax.Default;
@@ -518,6 +519,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmTaxiDenyComment)
                         .AddContentTypeFieldLink(Fields.TmMessageId)
                         .AddContentTypeFieldLink(Fields.TmNeedPersonVisit)
+                        .AddContentTypeFieldLink(Fields.TmTaxiVin)
                     )
                     .AddContentType(ContentTypes.TmAttach, ct => ct
                         .AddContentTypeFieldLink(Fields.TmAttachType)
