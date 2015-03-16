@@ -46,7 +46,7 @@ namespace TM.SP.AppPages.Validators
             // есть, но такие, которые вскоре прекращают свое действие - ок
             var onlySoonExpired = actingLicenses.All(i => (DateTime)i["Tm_LicenseTillDate"] <= DateTime.Now.AddDays(40));
             // есть, но с установленным признаком "Устаревшие данные" - ок
-            var onlyObsolete = actingLicenses.All(i => (bool)i["Tm_LicenseObsolete"] == true);
+            var onlyObsolete = actingLicenses.All(i => (bool?)i["Tm_LicenseObsolete"] == true);
 
             var firstCondition = noActingLicenses || onlyCancelledLicenses || onlySoonExpired || onlyObsolete;
             if (!firstCondition) throw new Exception(StringsRes.actingLicensesError);
