@@ -28,9 +28,11 @@ namespace TM.SP.BdcColumnUpdateTimerJob
             try
             {
                 BcsColumnUpdateTimerJob job = new BcsColumnUpdateTimerJob(jobName, site);
-                SPHourlySchedule schedule = new SPHourlySchedule()
+                SPDailySchedule schedule = new SPDailySchedule
                 {
+                    BeginHour   = 1,
                     BeginMinute = 0,
+                    EndHour     = 2,
                     EndMinute   = 59
                 };
                 job.Schedule = schedule;

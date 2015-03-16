@@ -28,7 +28,7 @@ namespace TM.SP.Ratings.Features.TaxoMotor_RatingsTimerJobs
                     {
                         IRatingReport report = (IRatingReport)Activator.CreateInstance(reportType);
                         DeleteExistingJob(report.GetName(), webApp);
-                        CreateJob(webApp, report.GetName(), report.GetTitle(), ScheduleFactory.GetMinute(), typeof(RatingCarrierActingLicences));
+                        CreateJob(webApp, report.GetName(), report.GetTitle(), ScheduleFactory.GetDaily(2, 6), typeof(RatingCarrierActingLicences));
                     }
                 }
             });
