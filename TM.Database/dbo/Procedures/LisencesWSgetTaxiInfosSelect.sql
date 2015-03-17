@@ -32,7 +32,7 @@ SELECT
 	@RegNumberInt = CAST(CAST(@LicenseNum AS INT) AS NVARCHAR(64))
 	,@SortOrder = REPLACE(ISNULL(@SortOrder, N'LicenseNum'), N';', N', ')
 
-SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE (@PageNumber - 1) * @Count END
+SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE ((@PageNumber - 1) * @Count) + 1 END
 SET	@FETCH = @OFFSET + @Count
 
 SET @SortOrder = REPLACE(@SortOrder, N'RegNum',N'L1.TaxiStateNumber')
