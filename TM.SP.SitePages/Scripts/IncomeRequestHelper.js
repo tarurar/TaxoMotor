@@ -434,8 +434,8 @@
                         ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
                             if (data && data.d) {
                                 // Провести проверку на дубли разрешений
-                                ir.CanReleaseNewLicensesForRequest(incomeRequestId).success(function (data) {
-                                    if (data && data.d.CanRelease) {
+                                //ir.CanReleaseNewLicensesForRequest(incomeRequestId).success(function (data) {
+                                    //if (data && data.d.CanRelease) {
                                         // Заявитель - индивидуальный предприниматель?
                                         ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
                                             if (data && data.d) {
@@ -444,8 +444,8 @@
                                                 ir.ApplyForNewForJuridicalPerson(incomeRequestId, onsuccess, onfail);
                                             }
                                         }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
-                                    } else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' уже существует');
-                                }).fail(onfail);
+                                    //} else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' уже существует');
+                                //}).fail(onfail);
                             } else onfail('В обращении нет ТС');
                         }).fail(onfail);
                     } else onfail('Не всем ТС проставлен признак');
