@@ -274,6 +274,20 @@ namespace TM.Utils
             return default(T);
         }
 
+        public static Nullable<T> TryGetValueOrNull<T>(this SPListItem listItem, string fieldInternalName) where T : struct
+        {
+            if (!String.IsNullOrEmpty(fieldInternalName) &&
+                listItem != null &&
+                listItem.Fields.ContainsField(fieldInternalName))
+            {
+                object value = listItem[fieldInternalName];
+                if (value != null)
+                    return (T)value;
+            }
+
+            return null;
+        }
+
         public static bool TrySetValue<T>(this SPListItem listItem, string fieldInternalName, T value)
         {
             try

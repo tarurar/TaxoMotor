@@ -151,7 +151,7 @@ namespace TM.SP.AppPages
                 var docSerie = docItem.TryGetValue<string>("Tm_AttachDocSerie");
                 var docNumber = docItem.TryGetValue<string>("Tm_AttachDocNumber");
                 ownNumber = String.Format("{0} {1}", docSerie, docNumber).Trim();
-                ownDate = docItem.TryGetValue<DateTime>("Tm_AttachDocDate");
+                ownDate = docItem.TryGetValueOrNull<DateTime>("Tm_AttachDocDate");
             }
             #endregion
 
@@ -204,7 +204,7 @@ namespace TM.SP.AppPages
             #region [setting values from taxi item]
             draft.Gps                = taxiItem.TryGetValue<bool>("Tm_TaxiGps");
             draft.Taxometr           = taxiItem.TryGetValue<bool>("Tm_TaxiTaxometer");
-            draft.TODate             = taxiItem.TryGetValue<DateTime>("Tm_TaxiLastToDate");
+            draft.TODate             = taxiItem.TryGetValueOrNull<DateTime>("Tm_TaxiLastToDate");
             draft.STSNumber          = taxiItem.TryGetValue<string>("Tm_TaxiStsDetails");
             draft.STSDate            = null;
             draft.BlankNo            = taxiItem.TryGetValue<string>("Tm_BlankNo");
@@ -212,7 +212,7 @@ namespace TM.SP.AppPages
             draft.TaxiBrand          = taxiItem.TryGetValue<string>("Tm_TaxiBrand");
             draft.TaxiColor          = taxiItem.TryGetValue<string>("Tm_TaxiBodyColor");
             draft.TaxiModel          = taxiItem.TryGetValue<string>("Tm_TaxiModel");
-            draft.TaxiNumberColor    = taxiItem.TryGetValue<string>("Tm_TaxiStateNumberYellow");
+            draft.TaxiNumberColor    = taxiItem.TryGetValue<bool>("Tm_TaxiStateNumberYellow") ? "1" : "0";
             draft.TaxiStateNumber    = taxiItem.TryGetValue<string>("Tm_TaxiStateNumber");
             draft.TaxiYear           = taxiItem.TryGetValue<int>("Tm_TaxiYear");
             draft.TaxiVin            = taxiItem.TryGetValue<string>("Tm_TaxiVin");
