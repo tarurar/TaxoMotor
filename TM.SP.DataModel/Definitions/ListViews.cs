@@ -16,7 +16,7 @@ namespace TM.SP.DataModel.Definitions
             Url       = "Default",
             IsDefault = true,
             RowLimit  = 20,
-            Query     = "<OrderBy><FieldRef Name='Title' Ascending='TRUE' /></OrderBy><Where><And><Neq><FieldRef Name='Tm_LicenseStatus' /><Value Type='Text'>Аннулировано</Value></Neq><Eq><FieldRef Name='_x0421__x0441__x044b__x043b__x04' /><Value Type='Number'>1</Value></Eq></And></Where>",
+            Query     = "<OrderBy><FieldRef Name='Title' Ascending='TRUE' /></OrderBy><Where><And><And><And><Geq><FieldRef Name='Tm_LicenseOutputDate' /><Value Type='DateTime'><Today OffsetDays='-30' /></Value></Geq><Eq><FieldRef Name='Tm_LicenseIsMo' /><Value Type='Boolean'>0</Value></Eq></And><Neq><FieldRef Name='Tm_LicenseStatus' /><Value Type='Text'>Аннулировано</Value></Neq></And><Eq><FieldRef Name='_x0421__x0441__x044b__x043b__x04' /><Value Type='Number'>1</Value></Eq></And></Where>",
             JSLink    = String.Format("clienttemplates.js | ~site/{0}/LicenseViewCSR.js", Lists.TmProjectScripts.Url),
             Fields    = new System.Collections.ObjectModel.Collection<string> 
             { 
