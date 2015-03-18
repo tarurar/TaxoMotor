@@ -147,7 +147,7 @@ namespace TM.SP.AppPages
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
                 // checking for exactly this taxi license
                 x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) taxiId.ToString(CultureInfo.InvariantCulture),
                 // license status is not Аннулировано
@@ -179,7 +179,7 @@ namespace TM.SP.AppPages
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
                 // checking for exactly this taxi
                 x => (string)x["Tm_TaxiStateNumber"] == stateNumber
             };
@@ -241,7 +241,7 @@ namespace TM.SP.AppPages
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
 
                 // checking for exactly this taxi license
                 // x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) taxiId.ToString(CultureInfo.InvariantCulture),
@@ -961,7 +961,7 @@ namespace TM.SP.AppPages
                                 var expressions = new List<Expression<Func<SPListItem, bool>>>
                                 {
                                     // IsLast field - checking if license is acting
-                                    x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                                    x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
                                     // checking for regNumber
                                     x => (string) x["Tm_RegNumber"] == numInt.ToString(CultureInfo.InvariantCulture)
                                 };

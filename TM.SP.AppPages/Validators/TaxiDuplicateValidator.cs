@@ -127,7 +127,7 @@ namespace TM.SP.AppPages.Validators
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
                 x => (string)x["Tm_RegNumber"] == prevLicNumber
             };
 
@@ -240,7 +240,7 @@ namespace TM.SP.AppPages.Validators
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
                 x => (string)x["Tm_RegNumber"] == prevLicNumber
             };
 
@@ -358,7 +358,7 @@ namespace TM.SP.AppPages.Validators
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
                 // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Integer) "1",
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
                 x => (string)x["Tm_RegNumber"] == prevLicNumber
             };
 
