@@ -670,24 +670,47 @@ namespace TM.SP.AppPages
             Utility.WithSafeUpdate(web, (safeWeb) =>
             {
                 // getting data
-                var spList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
-                var spItem = spList.GetItemOrBreak(incomeRequestId);
-                var ctId   = new SPContentTypeId(spItem["ContentTypeId"].ToString());
+                var spList    = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                var attachLib = safeWeb.GetListOrBreak("AttachLib");
+                var spItem    = spList.GetItemOrBreak(incomeRequestId);
+                var ctId      = new SPContentTypeId(spItem["ContentTypeId"].ToString());
 
-                var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
-
-                if (IsAllTaxiInStatus(incomeRequestId, "Решено положительно"))
+                var attachItems = attachLib.GetItems(new SPQuery
                 {
-                    retValList.Add(ctId == spList.ContentTypes["Аннулирование"].Id
-                        ? docBuilder.RenderDocument(4)
-                        : docBuilder.RenderDocument(5));
+                    Query =
+                        Camlex.Query()
+                            .Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString())
+                            .ToString(),
+                    ViewAttributes = "Scope='Recursive'"
+                }).Cast<SPListItem>();
+
+                if (attachItems.Any())
+                {
+                    var existantItems = attachItems.Select(x =>
+                        new DocumentMetaData
+                        {
+                            DocumentId = x.ID,
+                            DocumentUrl = x.File.ServerRelativeUrl
+                        });
+                    retValList.AddRange(existantItems);
                 }
-                else if (IsAnyTaxiInStatus(incomeRequestId, "Отказано;Решено отрицательно"))
+                else
                 {
-                    retValList.Add(ctId == spList.ContentTypes["Аннулирование"].Id
-                        ? docBuilder.RenderDocument(4)
-                        : docBuilder.RenderDocument(5));
-                    retValList.Add(docBuilder.RenderDocument(6));
+                    var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
+
+                    if (IsAllTaxiInStatus(incomeRequestId, "Решено положительно"))
+                    {
+                        retValList.Add(ctId == spList.ContentTypes["Аннулирование"].Id
+                            ? docBuilder.RenderDocument(4)
+                            : docBuilder.RenderDocument(5));
+                    }
+                    else if (IsAnyTaxiInStatus(incomeRequestId, "Отказано;Решено отрицательно"))
+                    {
+                        retValList.Add(ctId == spList.ContentTypes["Аннулирование"].Id
+                            ? docBuilder.RenderDocument(4)
+                            : docBuilder.RenderDocument(5));
+                        retValList.Add(docBuilder.RenderDocument(6));
+                    }
                 }
             });
 
@@ -711,16 +734,40 @@ namespace TM.SP.AppPages
                 Utility.WithSafeUpdate(web, (safeWeb) =>
                 {
                     // getting data
-                    var spList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
-                    var spItem = spList.GetItemOrBreak(incomeRequestId);
-                    var ctId = new SPContentTypeId(spItem["ContentTypeId"].ToString());
+                    var spList    = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                    var attachLib = safeWeb.GetListOrBreak("AttachLib");
+                    var spItem    = spList.GetItemOrBreak(incomeRequestId);
+                    var ctId      = new SPContentTypeId(spItem["ContentTypeId"].ToString());
 
-                    var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
+                    var attachItems = attachLib.GetItems(new SPQuery
+                    {
+                        Query =
+                            Camlex.Query()
+                                .Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString())
+                                .ToString(),
+                        ViewAttributes = "Scope='Recursive'"
+                    }).Cast<SPListItem>();
 
-                    if (docBuilder.RefuseDocuments)
-                        retValList.Add(docBuilder.NeedPersonVisit ? docBuilder.RenderDocument(1) : docBuilder.RenderDocument(2));
+                    if (attachItems.Any())
+                    {
+                        var existantItems = attachItems.Select(x =>
+                            new DocumentMetaData
+                            {
+                                DocumentId = x.ID,
+                                DocumentUrl = x.File.ServerRelativeUrl
+                            });
+                        retValList.AddRange(existantItems);
+                    }
                     else
-                        retValList.Add(docBuilder.RenderDocument(3));
+                    {
+
+                        var docBuilder = new TemplatedDocumentBuilder(safeWeb, incomeRequestId);
+
+                        if (docBuilder.RefuseDocuments)
+                            retValList.Add(docBuilder.NeedPersonVisit ? docBuilder.RenderDocument(1) : docBuilder.RenderDocument(2));
+                        else
+                            retValList.Add(docBuilder.RenderDocument(3));
+                    }
                 }));
 
             payLoad = retValList.ToArray();
