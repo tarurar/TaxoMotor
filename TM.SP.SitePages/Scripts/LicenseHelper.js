@@ -89,7 +89,6 @@
             lic.ChangeObsoleteAttribute = function (licenseId, obsolete, success, fail) {
                 lic.MakeObsoleteGetXml(licenseId, obsolete).success(function (data) {
                     var dataToSign = data.d;
-                    debugger;
                     var oCertificate = cryptoPro.SelectCertificate(
                         cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                         cryptoPro.StoreNames.CAPICOM_MY_STORE,

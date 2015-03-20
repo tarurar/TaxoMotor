@@ -75,10 +75,19 @@
     <None Include="Pages\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e1f1de0f-c193-4d1b-b439-8f6b576bc08b}</SharePointProjectItemId>
     </None>
+    <None Include="Scripts\CryptoProTs.js.map">
+      <DependentUpon>CryptoProTs.ts</DependentUpon>
+    </None>
+    <None Include="Scripts\EntityHelper.js.map">
+      <DependentUpon>EntityHelper.ts</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-2.1.1.min.js.map">
       <DependentUpon>jquery-2.1.1.min.js</DependentUpon>
     </None>
     <None Include="Scripts\jquery-2.1.1.min.map" />
+    <None Include="Scripts\LicenseEntityHelper.js.map">
+      <DependentUpon>LicenseEntityHelper.ts</DependentUpon>
+    </None>
     <None Include="Scripts\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{18a9959a-66d3-4d1f-8fa9-cf4fd18ce2ad}</SharePointProjectItemId>
     </None>
@@ -132,10 +141,15 @@
     <Content Include="Pages\RenewalLicense.aspx" />
     <Content Include="Pages\SuspendLicense.aspx" />
     <Content Include="Scripts\CancellationLicense.js" />
-    <Content Include="Scripts\CryptoPro.js" />
+    <Content Include="Scripts\CryptoProTs.js">
+      <DependentUpon>CryptoProTs.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\DenyIncomeRequest.js" />
     <Content Include="Scripts\DenyTaxi.js" />
     <Content Include="Scripts\Elements.xml" />
+    <Content Include="Scripts\EntityHelper.js">
+      <DependentUpon>EntityHelper.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\IncomeRequestBcsFields.js" />
     <Content Include="Scripts\IncomeRequestHelper.js" />
     <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
@@ -145,6 +159,9 @@
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
+    <Content Include="Scripts\LicenseEntityHelper.js">
+      <DependentUpon>LicenseEntityHelper.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\LicenseHelper.js" />
     <Content Include="Scripts\licenseSearchModel.js" />
     <Content Include="Scripts\LicenseViewCSR.js" />
@@ -162,6 +179,13 @@
     <Content Include="Styles\TaxiActions.css" />
     <Content Include="Pages\TaxiBlankNoEditor.aspx" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\CryptoProTs.ts" />
+    <TypeScriptCompile Include="Scripts\EntityHelper.ts" />
+    <TypeScriptCompile Include="Scripts\LicenseEntityHelper.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\sharepoint\SharePoint.d.ts" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
@@ -173,10 +197,14 @@
   <Target Name="BeforeBuild" DependsOnTargets="$(BeforeBuildDependsOn)" />
   <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
 </Project>

@@ -14,7 +14,7 @@
     <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/core.css" />
     <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/datepicker.css" />
     <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/theme.css" />
-    <script type="text/javascript" src="/ProjectScripts/CryptoPro.js"></script>
+    <script type="text/javascript" src="/ProjectScripts/CryptoProTs.js"></script>
 
     <object id="cadesplugin" type="application/x-cades" class="hiddenObject"></object>
     <object id='certEnrollClassFactory' classid='clsid:884e2049-217d-11da-b2a4-000e7bbb2b09' class="hiddenObject"></object>

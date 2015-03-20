@@ -4,7 +4,6 @@
     <ProjectItemFile Source="Elements.xml" Target="Scripts\" Type="ElementManifest" />
     <ProjectItemFile Source="licenseSearchModel.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="SuspendLicense.js" Target="Scripts\" Type="ElementFile" />
-    <ProjectItemFile Source="CryptoPro.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CancellationLicense.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="RenewalLicense.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="jquery-2.1.1.min.js.map" Target="Scripts\" Type="ElementFile" />
@@ -17,5 +16,11 @@
     <ProjectItemFile Source="RequestAccountRendering.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="LicenseViewCSR.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="LicenseHelper.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="EntityHelper.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="EntityHelper.js.map" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseEntityHelper.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseEntityHelper.js.map" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CryptoProTs.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CryptoProTs.js.map" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

@@ -3,7 +3,6 @@
   <Module Name="Scripts" Url="ProjectScripts">
     <File Path="Scripts\licenseSearchModel.js" Url="licenseSearchModel.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
     <File Path="Scripts\SuspendLicense.js" Url="SuspendLicense.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
-    <File Path="Scripts\CryptoPro.js" Url="CryptoPro.js" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" Type="GhostableInLibrary" />
     <File Path="Scripts\CancellationLicense.js" Url="CancellationLicense.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\RenewalLicense.js" Url="RenewalLicense.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\jquery-2.1.1.min.js.map" Url="jquery-2.1.1.min.js.map" />
@@ -16,5 +15,11 @@
     <File Path="Scripts\RequestAccountRendering.js" Url="RequestAccountRendering.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\LicenseViewCSR.js" Url="LicenseViewCSR.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\LicenseHelper.js" Url="LicenseHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
+    <File Path="Scripts\EntityHelper.js" Url="EntityHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\EntityHelper.js.map" Url="EntityHelper.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\LicenseEntityHelper.js" Url="LicenseEntityHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\LicenseEntityHelper.js.map" Url="LicenseEntityHelper.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\CryptoProTs.js" Url="CryptoProTs.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\CryptoProTs.js.map" Url="CryptoProTs.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
   </Module>
 </Elements>
