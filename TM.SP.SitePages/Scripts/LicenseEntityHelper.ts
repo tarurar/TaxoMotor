@@ -13,7 +13,7 @@ module TM.SP_ {
             constructor(entity: LicenseEntityHelper) {
                 super();
 
-                this.licenseId = entity.CurrentItem.get_id();
+                this.licenseId = entity.currentItem.get_id();
             }
         }
 
@@ -82,7 +82,7 @@ module TM.SP_ {
                     cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                     cryptoPro.StoreNames.CAPICOM_MY_STORE,
                     cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
-
+                
                 if (oCertificate) {
                     dataToSign =
                     "<?xml version=\"1.0\"?>\n" +
@@ -144,4 +144,8 @@ module TM.SP_ {
             });
         }
     }
+}
+
+if (SP && SP.SOD) {
+    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("LicenseEntityHelper.js");        
 }

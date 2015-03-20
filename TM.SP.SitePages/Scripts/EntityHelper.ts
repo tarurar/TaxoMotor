@@ -23,24 +23,29 @@ module TM.SP_ {
 
     export class EntityHelper {
             
-        //private _loaded: JQueryDeferred<void>[];    
         private _serviceUrl: string;
-        public CurrentItem: SP.ListItem;
+        private _currentItem: SP.ListItem;
 
-        constructor(listGuid: SP.Guid, itemId: number) {
-            
-            var ctx = SP.ClientContext.get_current();
-            var web = ctx.get_web();
+        public get currentItem(): SP.ListItem {
+            return this._currentItem;
+        }
+
+        public static Create(listGuid: SP.Guid, itemId: number,
+            succeededCallback: (entity: EntityHelper) => void,
+            failedCallback?: (sender: any, args: SP.ClientRequestFailedEventArgs) => void) {
+
+            var ctx  = SP.ClientContext.get_current();
+            var web  = ctx.get_web();
             var list = web.get_lists().getById(listGuid);
-            this.CurrentItem = list.getItemById(itemId);
+            var item = list.getItemById(itemId);
 
-            ctx.load(this.CurrentItem);
+            ctx.load(item);
+            ctx.executeQueryAsync((sender, args) => {
+                var newEntity = new EntityHelper();
+                newEntity._currentItem = item;
+                succeededCallback(newEntity);
+            }, failedCallback);
 
-            /*var def = $.Deferred<void>();
-            this._loaded.push(def);
-            ctx.executeQueryAsync(def.resolve, def.reject);
-            */
-            ctx.executeQueryAsync();
         }
 
         public getServiceUrl(): string {
@@ -54,9 +59,10 @@ module TM.SP_ {
             return this._serviceUrl;
         }
 
-        /*public loaded(): JQueryPromise<JQueryDeferred<void>[]> {
-            return $.when(this._loaded).always();
-        }*/
     }
 
+}
+
+if (SP && SP.SOD) {
+    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("EntityHelper.js");
 }

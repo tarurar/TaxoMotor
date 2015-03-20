@@ -27,18 +27,27 @@ var TM;
             RequestMethods.MakePostRequest = MakePostRequest;
         })(RequestMethods = SP_.RequestMethods || (SP_.RequestMethods = {}));
         var EntityHelper = (function () {
-            function EntityHelper(listGuid, itemId) {
+            function EntityHelper() {
+            }
+            Object.defineProperty(EntityHelper.prototype, "currentItem", {
+                get: function () {
+                    return this._currentItem;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            EntityHelper.Create = function (listGuid, itemId, succeededCallback, failedCallback) {
                 var ctx = SP.ClientContext.get_current();
                 var web = ctx.get_web();
                 var list = web.get_lists().getById(listGuid);
-                this.CurrentItem = list.getItemById(itemId);
-                ctx.load(this.CurrentItem);
-                /*var def = $.Deferred<void>();
-                this._loaded.push(def);
-                ctx.executeQueryAsync(def.resolve, def.reject);
-                */
-                ctx.executeQueryAsync();
-            }
+                var item = list.getItemById(itemId);
+                ctx.load(item);
+                ctx.executeQueryAsync(function (sender, args) {
+                    var newEntity = new EntityHelper();
+                    newEntity._currentItem = item;
+                    succeededCallback(newEntity);
+                }, failedCallback);
+            };
             EntityHelper.prototype.getServiceUrl = function () {
                 if (!this._serviceUrl) {
                     var layoutsUrl = SP.ScriptHelpers.urlCombine(_spPageContextInfo.webAbsoluteUrl, _spPageContextInfo.layoutsUrl);
@@ -52,3 +61,7 @@ var TM;
         SP_.EntityHelper = EntityHelper;
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+if (SP && SP.SOD) {
+    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("EntityHelper.js");
+}
+//# sourceMappingURL=EntityHelper.js.map

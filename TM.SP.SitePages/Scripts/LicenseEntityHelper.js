@@ -18,7 +18,7 @@ var TM;
                 __extends(LicenseCommonParam, _super);
                 function LicenseCommonParam(entity) {
                     _super.call(this);
-                    this.licenseId = entity.CurrentItem.get_id();
+                    this.licenseId = entity.currentItem.get_id();
                 }
                 return LicenseCommonParam;
             })(RequestParams.CommonParam);
@@ -91,7 +91,7 @@ var TM;
                 var _this = this;
                 this.MakeObsoleteGetXml(obsolete).done(function (xml) {
                     var dataToSign = xml.d;
-                    var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                    var oCertificate = cryptoPro.SelectCertificate(cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE, cryptoPro.StoreNames.CAPICOM_MY_STORE, cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
                     if (oCertificate) {
                         dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
                         var signedData;
@@ -114,7 +114,7 @@ var TM;
                 var _this = this;
                 this.DisableGibddGetXml(disabled).done(function (xml) {
                     var dataToSign = xml.d;
-                    var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                    var oCertificate = cryptoPro.SelectCertificate(cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE, cryptoPro.StoreNames.CAPICOM_MY_STORE, cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
                     if (oCertificate) {
                         dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
                         var signedData;
@@ -137,3 +137,7 @@ var TM;
         SP_.LicenseEntityHelper = LicenseEntityHelper;
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+if (SP && SP.SOD) {
+    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("LicenseEntityHelper.js");
+}
+//# sourceMappingURL=LicenseEntityHelper.js.map
