@@ -22,7 +22,27 @@
     #       this target allows you to add your custom addins or other prerequisites to prepare the environment e.g. setting up SCVMM.
     #       on failure throw and exception to abort the rest of the script.
     function RunCustomPrerequisites($vars){
-        #    Log "Run prerequisite (Custom Event)" -Type $SPSD.LogTypes.Normal -Indent
+		$webApp = Get-SPWebApplication $vars["WebAppUrl"];
+
+        Log "Run prerequisite (Web Application Browser File Handling)" -Type $SPSD.LogTypes.Normal -Indent
+		if ($webApp.BrowserFileHandling -ne [Microsoft.SharePoint.SPBrowserFileHandling]::Strict)
+		{
+			$webApp.BrowserFileHandling = [Microsoft.SharePoint.SPBrowserFileHandling]::Strict;
+			$webApp.Update();
+			Log "Web Application BrowserFileHandling property was set to 'Strict'" -Type $SPSD.LogTypes.Success -NoIndent
+		}
+
+		$DisabledMimeTypeList = $vars["DisabledMimeTypes"].Split(";");
+		ForEach ($mimeType in $DisabledMimeTypeList)
+		{
+			if ($webApp.AllowedInlineDownloadedMimeTypes.Contains($mimeType))
+			{
+				$webApp.AllowedInlineDownloadedMimeTypes.Remove($mimeType) | Out-Null
+				$webApp.Update();
+				Log "Mime type " + $mimeType + " was removed from trusted" -Type $SPSD.LogTypes.Success -NoIndent
+			}
+		}
+
         #    Log "Run my custom prerequisite..." -Type $SPSD.LogTypes.Normal -NoNewline
         #    if(MyCustomPrecondition -eq $true){
         #    	Log "Ok" -Type $SPSD.LogTypes.Success -NoIndent

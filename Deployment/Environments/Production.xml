@@ -32,6 +32,7 @@
       <Variable Name="BCS_Requests_DBName">ProductionDBName</Variable>
       <Variable Name="BCS_Requests_CredentialsSecureStoreAppId">ProductionSecureStoreApplicationId</Variable>
       <Variable Name="ConfigListUrl">/Lists/ConfigurationList</Variable>
+      <Variable Name="DisabledMimeTypes">image/jpeg;image/png;image/tiff;image/bmp;application/pdf;application/zip;application/x-gzip;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/msword;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.ms-excel</Variable>
       <!-- Config Values -->
       <Variable Name="MessageQueueServiceUrl">http://77.95.132.133:8082/DataService.svc</Variable>
       <Variable Name="BR2ServiceGuid">df8ff4be-d4ae-e011-91ec-000c29d12628</Variable>
