@@ -157,7 +157,8 @@ namespace TM.SP.Search
 
             SPListItemCollection items = docList.GetItems(new SPQuery()
             {
-                Query = Camlex.Query().Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)item["ID"].ToString()).ToString()
+                Query = Camlex.Query().Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)item["ID"].ToString()).ToString(),
+                ViewAttributes = "Scope='Recursive'"
             });
 
             var idDocuments = new SPFieldMultiChoiceValue();
@@ -168,7 +169,8 @@ namespace TM.SP.Search
                 {
                     SPListItemCollection docTypes = docTypeList.GetItems(new SPQuery()
                     {
-                        Query = Camlex.Query().Where(x => (int)x["Tm_ServiceCode"] == (int)docItem["Tm_AttachType"]).ToString()
+                        Query = Camlex.Query().Where(x => (int)x["Tm_ServiceCode"] == (int)docItem["Tm_AttachType"]).ToString(),
+                        ViewAttributes = "Scope='Recursive'"
                     });
 
                     if ((docTypes.Count > 0) && docItem["Tm_AttachSingleStrDocName"] != null)
@@ -184,9 +186,9 @@ namespace TM.SP.Search
         private void DoCalculateTrusteeSearchFields(SPListItem item, SPWeb web)
         {
             var id = item["Tm_RequestContactBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestContactBCSLookup") : null;
-            var name = new SPFieldMultiChoiceValue();
+            var name    = new SPFieldMultiChoiceValue();
             var address = new SPFieldMultiChoiceValue();
-            var inn = new SPFieldMultiChoiceValue();
+            var inn     = new SPFieldMultiChoiceValue();
 
             if (id != null)
             {
@@ -263,7 +265,8 @@ namespace TM.SP.Search
 
             SPListItemCollection items = taxiList.GetItems(new SPQuery()
             {
-                Query = Camlex.Query().Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)item["ID"].ToString()).ToString()
+                Query = Camlex.Query().Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)item["ID"].ToString()).ToString(),
+                ViewAttributes = "Scope='Recursive'"
             });
 
             var models       = new SPFieldMultiChoiceValue();
@@ -308,7 +311,8 @@ namespace TM.SP.Search
                 Joins           = StaticCaml.JoinClause(),
                 ProjectedFields = StaticCaml.ProjectedFieldsClause(),
                 ViewFields      = StaticCaml.ViewFieldsClause(),
-                Query           = StaticCaml.QueryClause()
+                Query           = StaticCaml.QueryClause(),
+                ViewAttributes  = "Scope='Recursive'"
             };
         }
 

@@ -108,14 +108,37 @@ namespace TestSPConsole
                 var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
+                    //var items = GetAvailableIncomeRequests(web);
+                    var query = new SPQuery();
+
+                    query.Joins = Camlex.Query().Joins()
+                        .Left(x => x["Tm_IncomeRequestStateLookup"].ForeignList("IncomeRequestStateBookList")).ToString();
+                    query.ProjectedFields = Camlex.Query().ProjectedFields()
+                        .Field(x => x["LookupState"].List("IncomeRequestStateBookList").ShowField("Tm_IncomeRequestSysUpdAvailText")).ToString();
+                    query.ViewFields = Camlex.Query().ViewFields(x => new[] {
+                        x["Title"], 
+                        x["LookupState"], 
+                        x["Tm_IncomeRequestIdentityDocs"],
+                        x["Tm_IncomeRequestTrusteeNames"],
+                        x["Tm_IncomeRequestTrusteeAddresses"],
+                        x["Tm_IncomeRequestTrusteeINNs"],
+                        x["Tm_RequestAccountBCSLookup"],
+                        x["Tm_RequestContactBCSLookup"],
+                        x["Tm_IncomeRequestDeclarantNames"],
+                        x["Tm_IncomeRequestDeclarantAddress"],
+                        x["Tm_IncomeRequestDeclarantINNs"],
+                        x["Tm_IncomeRequestTaxiModels"],
+                        x["Tm_IncomeRequestTaxiBrands"],
+                        x["Tm_IncomeRequestTaxiStateNumbers"],
+                        x["Tm_IncomeRequestTaxiYears"],
+                        x["Tm_IncomeRequestTaxiLastToDates"],});
+
+                    query.Query = Camlex.Query().Where(x => (string)x["LookupState"] == "1").ToString();
+                    query.ViewAttributes = "Scope='Recursive'";
+
                     var list = web.GetListOrBreak("Lists/IncomeRequestList");
-                    var requestItem = list.GetItemById(3);
-
-
-                    /*var v = new TaxiDuplicateValidator(web, 3, 4);
-                    v.Execute(null);*/
-
-                   
+                    var items = list.GetItems(query);
+                    Console.WriteLine(items.Count);
                 }
             }
 
