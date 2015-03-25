@@ -39,7 +39,7 @@ BEGIN
                     -2 AS '@field_id',
                     N'INTEGER' AS '@type',
                     N'true' AS '@pk',
-                    l.RootParent AS 'values/value/@occurrence',
+                    ISNULL(l.RootParent, l.Id) AS 'values/value/@occurrence',
                     ISNULL(NULLIF(l.GUID_OD,N''), N'-2') AS 'values/value'
                     FOR XML PATH('attribute'), TYPE
                 ),
