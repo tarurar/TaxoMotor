@@ -22,5 +22,6 @@
     <ProjectItemFile Source="LicenseEntityHelper.js.map" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CryptoProTs.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CryptoProTs.js.map" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CurrentLicense.ts" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

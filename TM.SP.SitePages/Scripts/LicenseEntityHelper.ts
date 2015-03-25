@@ -3,11 +3,11 @@
 /// <reference path="EntityHelper.ts" />
 /// <reference path="CryptoProTs.ts" />
 
-module TM.SP_ {
+module TM.SP_.License {
 
     export module RequestParams {
 
-        export class LicenseCommonParam extends CommonParam {
+        export class LicenseCommonParam extends TM.SP_.RequestParams.CommonParam {
             public licenseId: number;
 
             constructor(entity: LicenseEntityHelper) {
@@ -144,8 +144,4 @@ module TM.SP_ {
             });
         }
     }
-}
-
-if (SP && SP.SOD) {
-    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("LicenseEntityHelper.js");        
 }

@@ -21,5 +21,6 @@
     <File Path="Scripts\LicenseEntityHelper.js.map" Url="LicenseEntityHelper.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\CryptoProTs.js" Url="CryptoProTs.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\CryptoProTs.js.map" Url="CryptoProTs.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\CurrentLicense.ts" Url="Scripts/CurrentLicense.ts" />
   </Module>
 </Elements>

@@ -61,7 +61,3 @@ var TM;
         SP_.EntityHelper = EntityHelper;
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
-if (SP && SP.SOD) {
-    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("EntityHelper.js");
-}
-//# sourceMappingURL=EntityHelper.js.map

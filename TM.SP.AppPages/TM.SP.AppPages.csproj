@@ -157,12 +157,14 @@
     </Compile>
     <Compile Include="IncomeRequestBuilder.cs" />
     <Compile Include="LicenseHelper.cs" />
+    <Compile Include="Print\TemplatedBaseLicenseDocumentBuilder.cs" />
+    <Compile Include="Print\TemplatedMultiLicenseDocumentBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApplicationPages\SendRequestDialogBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TemplatedDocumentBuilder.cs" />
-    <Compile Include="TemplatedLicenseDocumentBuilder.cs" />
+    <Compile Include="Print\TemplatedDocumentBuilder.cs" />
+    <Compile Include="Print\TemplatedLicenseDocumentBuilder.cs" />
     <Compile Include="Validators\StringsRes.Designer.cs">
       <DependentUpon>StringsRes.resx</DependentUpon>
       <AutoGen>True</AutoGen>

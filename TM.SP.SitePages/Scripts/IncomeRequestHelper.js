@@ -42,6 +42,26 @@
                 });
             };
 
+            ir.IsAllTaxiInStatusHasLicenseNumber = function (incomeRequestId, status) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/IsAllTaxiInStatusHasLicenseNumber',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ', status: "' + status + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
+            ir.GetAllTaxiInRequestByStatus = function (incomeRequestId, status) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/GetAllTaxiInRequestByStatus',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ', status: "' + status + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.GetAllWorkingTaxiInRequest = function (incomeRequestId) {
                 return $.ajax({
                     type: 'POST',
@@ -1036,6 +1056,40 @@
                 }
 
                 return dictSelRet;
+            };
+
+            ir.GetTaxiToPrintLicenseMultiple = function (incomeRequestId) {
+
+                var errors = {
+                    isAllTaxiInStatus: "Формирование разрешений невозможно. Не по всем ТС принято решение",
+                    isAnyTaxiInStatus: "Отсутствуют данные для формирования разрешений. В обращении отсутствуют ТС, по которым принято положительное решение",
+                    isAllTaxiInStatusHasLicenseNumber: "Формирование разрешений невозможно. Не всем ТС присвоен номер разрешения",
+                    requestError: "Ошибка выполнения запроса на сервер"
+                };
+
+                var deferred = new $.Deferred();
+                var requestErrorHandler = Function.createDelegate(this, function() {
+                    deferred.reject(errors.requestError);
+                });
+
+                var condition1 = ir.IsAllTaxiInStatus(incomeRequestId, "Решено положительно;Отказано;Решено отрицательно");
+                var condition2 = ir.IsAnyTaxiInStatus(incomeRequestId, "Решено положительно");
+                var condition3 = ir.IsAllTaxiInStatusHasLicenseNumber(incomeRequestId, "Решено положительно");
+
+                $.when(condition1, condition2, condition3).done(function (v1, v2, v3) {
+                    if (!v1[0].d) { deferred.reject(errors.isAllTaxiInStatus) };
+                    if (!v2[0].d) { deferred.reject(errors.isAnyTaxiInStatus) };
+                    if (!v3[0].d) { deferred.reject(errors.isAllTaxiInStatusHasLicenseNumber) };
+
+                    if (deferred.state() != "rejected") {
+                        var action = ir.GetAllTaxiInRequestByStatus(incomeRequestId, "Решено положительно");
+                        action.done(function (data) {
+                            deferred.resolve(data.d);
+                        }).fail(requestErrorHandler)
+                    }
+                }).fail(requestErrorHandler);
+
+                return deferred.promise();
             };
 
             return ir;

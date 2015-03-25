@@ -62,7 +62,3 @@ module TM.SP_ {
     }
 
 }
-
-if (SP && SP.SOD) {
-    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("EntityHelper.js");
-}

@@ -64,6 +64,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="MimeTypeMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection.cs" />
     <Compile Include="Security.cs" />

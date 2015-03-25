@@ -93,6 +93,9 @@
     <None Include="Ribbons\IncomeRequestOutput\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{91a25f66-39d4-4690-b64d-b5399f8f058d}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\IncomeRequestPrintLicenses\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{4c86260e-0fae-452d-a746-ad0c1c6e5c6e}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\IncomeRequestRefuse\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{0196141a-4301-497c-8a88-c7172af32681}</SharePointProjectItemId>
     </None>
@@ -158,6 +161,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Ribbons\IncomeRequestOutput\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Ribbons\IncomeRequestPrintLicenses\Elements.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Ribbons\IncomeRequestRefuse\Elements.xml">

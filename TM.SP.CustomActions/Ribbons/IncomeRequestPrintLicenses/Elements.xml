@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.IncomeRequestPrintLicenses"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Печать разрешений"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/IncomeRequestList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.IncomeRequestPrintLicenses.Button"
+						Command="TaxoMotor.IncomeRequestPrintLicenses.ButtonCommand"
+						Sequence="540"
+						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
+						Image16by16Top="-64"
+						Image16by16Left="-192"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/taxi-print-32.png"
+						LabelText="Печать разрешений"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.IncomeRequestPrintLicenses.ButtonCommand"
+					CommandAction="javascript: (function(){
+            SP.SOD.executeFunc('sp.js','SP.ClientContext', function() {
+
+              SP.UI.Status.removeAllStatus(true);
+              
+              var promise = TM.SP.IncomeRequest.GetTaxiToPrintLicenseMultiple({ItemId});
+              promise.done(function (taxiList) {
+                __doPostBack('PrintTaxiLicenseMultipleAction', taxiList);
+              });
+              promise.fail(function (errorMessage) {
+                var failStatus = SP.UI.Status.addStatus(errorMessage);
+	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+            });
+          })();"
+          EnabledScript="javascript: function enabled() { 
+            var result = false;
+            
+            if (!TM.SP.IncomeRequest.currentStatusCode) {
+              JSRequest.EnsureSetup();
+              var currentItemId = JSRequest.QueryString.ID;
+              
+              TM.SP.IncomeRequest.GetCurrentStatusCode(currentItemId).success(function(data){
+                TM.SP.IncomeRequest.currentStatusCode = data.d.Data;
+                RefreshCommandUI();
+              }).fail(function(){
+                var failStatus = SP.UI.Status.addStatus('Произошла ошибка при запросе статуса обращения');
+	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+            }
+            else {
+              result = TM.SP.IncomeRequest.currentStatusCode == 1075 ||
+                       TM.SP.IncomeRequest.currentStatusCode == 1085 ||
+                       TM.SP.IncomeRequest.currentStatusCode == 6420 ||
+                       TM.SP.IncomeRequest.currentStatusCode == 1050;
+            }
+            
+            return result;
+          } enabled();"/>
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

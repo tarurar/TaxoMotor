@@ -354,7 +354,3 @@ module cryptoPro {
         }
     };
 }
-
-if (SP && SP.SOD) {
-    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("CryptoProTs.js");
-}

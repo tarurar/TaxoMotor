@@ -293,7 +293,8 @@ namespace TM.SP.AppPages
         /// Получение списка всех транспортных средств обращения в указанном статусе
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
-        /// <returns>Статус ТС</returns>
+        /// <param name="status">Статус ТС</param>
+        /// <returns>Строка с перечислением идентификаторов транпортных средств через точку с запятой</returns>
         [WebMethod]
         public static string GetAllTaxiInRequestByStatus(int incomeRequestId, string status)
         {
@@ -308,7 +309,7 @@ namespace TM.SP.AppPages
             SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
             {
                 Query = Camlex.Query().WhereAll(expressions).ToString(),
-                ViewAttributes = "Scope='RecursiveAll'"
+                ViewAttributes = "Scope='Recursive'"
             });
 
             return taxiItems.Cast<SPListItem>().Aggregate(String.Empty,
@@ -1152,6 +1153,48 @@ namespace TM.SP.AppPages
             };
             var blankExpr = ExpressionsHelper.CombineOr(blankNoCondition);
             var expressions = new List<Expression<Func<SPListItem, bool>>> { choicesExpr, parentExpr, blankExpr };
+
+            SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='RecursiveAll'"
+            });
+
+            return taxiItems.Count == 0;
+        }
+
+        /// <summary>
+        /// Все ли транспортные средства обращения, находящиеся в указанном статусе, имеют указанный номер разрешения
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <param name="status">Статус ТС</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static bool IsAllTaxiInStatusHasLicenseNumber(int incomeRequestId, string status)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var taxiList = web.GetListOrBreak("Lists/TaxiList");
+
+            var choicesCondition = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_TaxiStatus"] == (DataTypes.Choice)status
+            };
+            var choicesExpr = ExpressionsHelper.CombineOr(choicesCondition);
+
+            var parentCondition = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x =>
+                    x["Tm_IncomeRequestLookup"] ==
+                    (DataTypes.LookupId) incomeRequestId.ToString(CultureInfo.InvariantCulture)
+            };
+            var parentExpr = ExpressionsHelper.CombineOr(parentCondition);
+
+            var licNoCondition = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_TaxiPrevLicenseNumber"] == null
+            };
+            var licExpr = ExpressionsHelper.CombineOr(licNoCondition);
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { choicesExpr, parentExpr, licExpr };
 
             SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
             {

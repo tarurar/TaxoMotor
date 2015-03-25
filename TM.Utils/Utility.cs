@@ -2,8 +2,10 @@
 using System.Globalization;
 using System.Net;
 using System.Web;
+using System.Linq;
 using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
+using System.IO;
 
 namespace TM.Utils
 {
@@ -158,6 +160,18 @@ namespace TM.Utils
             }
 
             return new {};
+        }
+
+        public static string MakeFileNameSharePointCompatible(string fileName)
+        {
+            var invalidChars = Path.GetInvalidFileNameChars();
+            var additionalInvalidSharePointChars = new char[7] { '~', '#', '%', '&', '{', '}', '+' };
+            invalidChars = invalidChars.Concat(additionalInvalidSharePointChars.AsEnumerable()).ToArray();
+
+            Array.ForEach(invalidChars, specChar => fileName = fileName.Replace(specChar, '_'));
+            fileName = fileName.Replace(' ', '_');
+
+            return fileName;
         }
     }
 }
