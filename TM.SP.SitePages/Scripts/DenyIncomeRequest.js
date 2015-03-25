@@ -39,6 +39,7 @@
         JSRequest.EnsureSetup();
         self.RequestUrl = _spPageContextInfo.webAbsoluteUrl + '/' + _spPageContextInfo.layoutsUrl + '/TaxoMotor/IncomeRequestService.aspx';
         // load reasons list
+        self.Params().DenyReason.push({ id: 0, Title: "<Без указания причины>", Code: 0 });
         $.ajax({
             type: "GET",
             url: encodeURI(_spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getByTitle('Причины отказа (справочник)')/items?$select=ID, Title, Tm_ServiceCode"),

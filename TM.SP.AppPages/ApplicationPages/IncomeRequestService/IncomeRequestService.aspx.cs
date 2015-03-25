@@ -639,10 +639,14 @@ namespace TM.SP.AppPages
                 var list = web.GetListOrBreak("Lists/IncomeRequestList");
                 var refuseList = web.GetListOrBreak("Lists/DenyReasonBookList");
                 var item = list.GetItemById(incomeRequestId);
-                var refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode", refuseReasonCode.ToString(CultureInfo.InvariantCulture));
+                SPListItem refuseItem = null;
+                if (refuseReasonCode != 0)
+                {
+                    refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode", 
+                        refuseReasonCode.ToString(CultureInfo.InvariantCulture));
+                }
 
-                if (refuseItem != null)
-                    item["Tm_DenyReasonLookup"] = new SPFieldLookupValue(refuseItem.ID, refuseItem.Title);
+                item["Tm_DenyReasonLookup"] = refuseItem != null ? new SPFieldLookupValue(refuseItem.ID, refuseItem.Title) : null;
                 item["Tm_Comment"] = refuseComment;
                 item["Tm_RefuseDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
                 item["Tm_PrepareFactDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
@@ -1091,8 +1095,12 @@ namespace TM.SP.AppPages
                 var rList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
                 var rItem = rList.GetItemOrBreak(incomeRequestId);
                 var refuseList = safeWeb.GetListOrBreak("Lists/DenyReasonBookList");
-                var refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode",
-                    refuseReasonCode.ToString(CultureInfo.InvariantCulture));
+                SPListItem refuseItem = null;
+                if (refuseReasonCode != 0)
+                {
+                    refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode",
+                        refuseReasonCode.ToString(CultureInfo.InvariantCulture));
+                }
 
                 SPListItem rStatus;
                 Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"],
@@ -1108,7 +1116,7 @@ namespace TM.SP.AppPages
                 {
                     if (((rStatusCode == "6420") || (rStatusCode == "1050")) && (taxiItem["Tm_TaxiStatus"].ToString() == "Отказано")) continue;
 
-                    taxiItem["Tm_DenyReasonLookup"] = new SPFieldLookupValue(refuseItem.ID, refuseItem.Title);
+                    taxiItem["Tm_DenyReasonLookup"] = refuseItem != null ? new SPFieldLookupValue(refuseItem.ID, refuseItem.Title) : null;
                     taxiItem["Tm_TaxiDenyComment"] = refuseComment;
                     taxiItem["Tm_NeedPersonVisit"] = needPersonVisit;
                     if ((rStatusCode == "6420") || (rStatusCode == "1050"))
