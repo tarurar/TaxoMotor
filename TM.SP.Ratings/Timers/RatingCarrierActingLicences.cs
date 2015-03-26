@@ -54,6 +54,7 @@ namespace TM.SP.Ratings.Timers
 	                                [OrgName] as Indicator, 
 	                                COUNT(*) as IntValue1 
                                 FROM [dbo].[LicenseActing] 
+                                WHERE (MO IS NULL) OR (MO = 0)
                                 GROUP BY [OrgName]"
                 };
                 
