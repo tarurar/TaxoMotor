@@ -137,6 +137,16 @@
                 });
             };
 
+            ir.GetDocumentsForSendStatus = function (incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/GetDocumentsForSendStatus',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             ir.PromoteLicenseDrafts = function(incomeRequestId) {
                 return $.ajax({
                     type: 'POST',
@@ -617,9 +627,13 @@
                                                                             ir.SignXml(data.d, function (signedData) {
                                                                                 // Сохранение факта изменения статуса обращения в историю изменения статусов
                                                                                 ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                                                    var attachs = refuseFileId + ', ' + sigFileId;
                                                                                     // Отправка статуса обращения по межведомственному взаимодействию
-                                                                                    ir.SendStatus(incomeRequestId, attachs).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                                                    ir.GetDocumentsForSendStatus(incomeRequestId).success(function (docs) {
+                                                                                        var attachs = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
+                                                                                        ir.SendStatus(incomeRequestId, attachs)
+                                                                                            .success(onsuccess)
+                                                                                            .fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                                                    }).fail(onfail);
                                                                                 }).fail(onfail);
                                                                             }, onfail);
                                                                         } else onfail("Не удалось получить статус обращения в виде xml");
@@ -930,10 +944,10 @@
                                             ir.CreateDocumentsWhileClosing(incomeRequestId).success(function (docs) {
                                                 if (docs && docs.d) {
 
-                                                    var fileIdList = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
+                                                    //var fileIdList = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
                                                     ir.SignDocumentSaveSignatureMultiple(docs.d, function () {
 
-                                                        var sigFileIdList = Array.prototype.slice.call(arguments).join(',');
+                                                        //var sigFileIdList = Array.prototype.slice.call(arguments).join(',');
                                                         progress.finishAction(action, 50);
                                                         // Для всех услуг кроме аннулирование подписываем разрешения
                                                         action = progress.addAction('Подписание разрешений');
@@ -956,17 +970,22 @@
                                                                                     // Сохранение факта изменения статуса обращения в историю изменения статусов
                                                                                     ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
                                                                                         // Отправка статуса обращения по межведомственному взаимодействию
-                                                                                        var attachs = (fileIdList ? fileIdList + ',' : '') + sigFileIdList;
-                                                                                        ir.SendStatus(incomeRequestId, attachs).success(function () {
-                                                                                            progress.finishAction(action, 90);
+                                                                                        // сначала получим список документов, которые необходимо прикрепить
+                                                                                        ir.GetDocumentsForSendStatus(incomeRequestId).success(function (docs) {
+                                                                                            var attachs = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
+                                                                                            ir.SendStatus(incomeRequestId, attachs).success(function () {
+                                                                                                progress.finishAction(action, 90);
 
-                                                                                            action = progress.addAction('Обновление межведомственных запросов');
-                                                                                            ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function () {
-                                                                                                progress.finishAction(action, 100);
+                                                                                                action = progress.addAction('Обновление межведомственных запросов');
+                                                                                                ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function () {
+                                                                                                    progress.finishAction(action, 100);
+                                                                                                }).fail(function (jqXhr, status, error) {
+                                                                                                    progress.errorAction(action, error);
+                                                                                                });
+
                                                                                             }).fail(function (jqXhr, status, error) {
                                                                                                 progress.errorAction(action, error);
                                                                                             });
-
                                                                                         }).fail(function (jqXhr, status, error) {
                                                                                             progress.errorAction(action, error);
                                                                                         });

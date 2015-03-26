@@ -680,14 +680,17 @@ namespace TM.SP.AppPages
                 var spItem    = spList.GetItemOrBreak(incomeRequestId);
                 var ctId      = new SPContentTypeId(spItem["ContentTypeId"].ToString());
 
+                // если у документа уже есть вложения в итоговых документах - используем их и ничего не создаем
+                // файлы подписей, которые могут быть, исключаем
                 var attachItems = attachLib.GetItems(new SPQuery
                 {
                     Query =
                         Camlex.Query()
-                            .Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString())
+                            .Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString() 
+                                     && x["Tm_IncomeRequestAttachLookup"] == null)
                             .ToString(),
                     ViewAttributes = "Scope='Recursive'"
-                }).Cast<SPListItem>();
+                }).Cast<SPListItem>().Where(x => !x.File.Name.EndsWith(".sig"));
 
                 if (attachItems.Any())
                 {
@@ -723,6 +726,42 @@ namespace TM.SP.AppPages
         }
 
         /// <summary>
+        /// Получение перечня документов, которые необходимо отправить при оповещении о статусе обращения
+        /// </summary>
+        /// <param name="incomeRequestId">Идентификатор обращения</param>
+        /// <returns>Массив структур DocumentMetaData</returns>
+        [WebMethod]
+        public static DocumentMetaData[] GetDocumentsForSendStatus(int incomeRequestId)
+        {
+            SPWeb web = SPContext.Current.Web;
+            var retValList = new List<DocumentMetaData>();
+
+            var attachLib = web.GetListOrBreak("AttachLib");
+            var attachItems = attachLib.GetItems(new SPQuery
+            {
+                Query =
+                    Camlex.Query()
+                        .Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString()
+                                    && x["Tm_IncomeRequestAttachLookup"] == null)
+                        .ToString(),
+                ViewAttributes = "Scope='Recursive'"
+            }).Cast<SPListItem>();
+
+            if (attachItems.Any())
+            {
+                var existantItems = attachItems.Select(x =>
+                    new DocumentMetaData
+                    {
+                        DocumentId = x.ID,
+                        DocumentUrl = x.File.ServerRelativeUrl
+                    });
+                retValList.AddRange(existantItems);
+            }
+
+            return retValList.ToArray();
+        }
+
+        /// <summary>
         /// Генерация документов по обращению при отказе
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
@@ -744,14 +783,17 @@ namespace TM.SP.AppPages
                     var spItem    = spList.GetItemOrBreak(incomeRequestId);
                     var ctId      = new SPContentTypeId(spItem["ContentTypeId"].ToString());
 
+                    // если у документа уже есть вложения в итоговых документах - используем их и ничего не создаем
+                    // файлы подписей, которые могут быть, исключаем
                     var attachItems = attachLib.GetItems(new SPQuery
                     {
                         Query =
                             Camlex.Query()
-                                .Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString())
+                                .Where(x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId)incomeRequestId.ToString()
+                                         && x["Tm_IncomeRequestAttachLookup"] == null)
                                 .ToString(),
                         ViewAttributes = "Scope='Recursive'"
-                    }).Cast<SPListItem>();
+                    }).Cast<SPListItem>().Where(x => !x.File.Name.EndsWith(".sig"));
 
                     if (attachItems.Any())
                     {
@@ -805,11 +847,13 @@ namespace TM.SP.AppPages
             try
             {
                 // getting data
-                var attachLib   = web.GetListOrBreak("AttachLib");
-                var attachItem  = attachLib.GetItemById(documentId);
-                var sigFileName = attachItem.File.Name + ".sig";
-
-                var uplFolder = attachItem.File.ParentFolder;
+                var attachLib      = web.GetListOrBreak("AttachLib");
+                var attachItem     = attachLib.GetItemById(documentId);
+                var sigFileId      = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=');
+                var sourceFileName = Path.GetFileNameWithoutExtension(attachItem.File.Name);
+                var sigFileName    = String.Format("Подпись для {0} {1}.sig", sourceFileName, sigFileId);
+                sigFileName        = Utility.MakeFileNameSharePointCompatible(sigFileName);
+                var uplFolder      = attachItem.File.ParentFolder;
 
                 SPFile sigFile = uplFolder.Files.Add(sigFileName, Convert.FromBase64String(signature));
                 uplFolder.Update();
