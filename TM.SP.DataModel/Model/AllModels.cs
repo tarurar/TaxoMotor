@@ -97,6 +97,8 @@ namespace TM.SP.DataModel
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmRefuseDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
+                    .AddField(Fields.TmPlannedWorkInDate,
+                        f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmOutputDate)
                     .AddField(Fields.TmErrorDescription)
                     .AddField(Fields.TmTaxiBrand, f => f.OnProvisioned<Field>(context => context.Object.MakeRequired()))
@@ -426,6 +428,7 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmPrepareFactDate)
                         .AddContentTypeFieldLink(Fields.TmPrepareTargetDate)
                         .AddContentTypeFieldLink(Fields.TmRefuseDate)
+                        .AddContentTypeFieldLink(Fields.TmPlannedWorkInDate)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiModels)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiBrands)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestTaxiStateNumbers)

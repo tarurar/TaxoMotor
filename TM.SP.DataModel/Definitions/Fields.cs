@@ -273,6 +273,16 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmPlannedWorkInDate = new FieldDefinition()
+        {
+            Id           = new Guid("{4AD43064-8EA1-4FC8-9BB4-58AA19FD0259}"),
+            Title        = "Плановый срок приема в работу",
+            InternalName = "Tm_PlannedWorkInDate",
+            FieldType    = BuiltInFieldTypes.DateTime,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+
         public static FieldDefinition TmRefuseDocuments = new FieldDefinition()
         {
             Id           = new Guid("{CC6C8883-C711-4096-88C7-92E3B38CCA38}"),

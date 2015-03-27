@@ -107,6 +107,12 @@ namespace TM.SP.Customizations
                 if (govServiceItem != null)
                     afterProps["Tm_RequestedDocument"] = new SPFieldLookupValue(govServiceItem.ID, govServiceItem.Title);
             }
+
+            if (afterProps["Tm_PlannedWorkInDate"] == null || (string) afterProps["Tm_PlannedWorkInDate"] == String.Empty)
+            {
+                var plannedDate = Calendar.CalcFinishDate(properties.Web, DateTime.Now.AddDays(1), 3);
+                afterProps["Tm_PlannedWorkInDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(plannedDate);
+            }
         }
     }
 }
