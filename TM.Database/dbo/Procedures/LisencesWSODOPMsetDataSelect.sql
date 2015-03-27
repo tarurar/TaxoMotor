@@ -1,12 +1,14 @@
-﻿--SET QUOTED_IDENTIFIER ON
+﻿
 --SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
 --GO
 --=================================================================
 --  Автор       achernenko
 --  Дата        25.03.2015
 --  Описание    Посыл данных в сервис ODOPM
 --=================================================================
-CREATE PROCEDURE dbo.LisencesWSODOPMsetDataSelect
+CREATE PROCEDURE [dbo].[LisencesWSODOPMsetDataSelect]
     @Flag INT,
     @CatalogName NVARCHAR(MAX) = NULL,
     @LicenseId INT = NULL,
@@ -33,14 +35,26 @@ BEGIN
         N'nameHierarchy' AS 'catalog/item/categories/category/@nameHier',
         188 AS 'catalog/item/categories/category',
         (
-            SELECT 
+            SELECT
+                CASE WHEN NULLIF(l.GUID_OD,N'') IS NOT NULL
+                THEN
+                      (
+                            SELECT 
+                            -1 AS '@field_id',
+                            N'INTEGER' AS '@type',
+                            N'true' AS '@pk',
+                            0 AS 'values/value/@occurrence',
+                            l.GUID_OD AS 'values/value'
+                            FOR XML PATH('attribute'), TYPE
+                        )  
+                END,             
                 (
                     SELECT 
                     -2 AS '@field_id',
                     N'INTEGER' AS '@type',
                     N'true' AS '@pk',
-                    ISNULL(l.RootParent, l.Id) AS 'values/value/@occurrence',
-                    ISNULL(NULLIF(l.GUID_OD,N''), N'-2') AS 'values/value'
+                    0 AS 'values/value/@occurrence',
+                    ISNULL(l.RootParent, l.id) AS 'values/value'
                     FOR XML PATH('attribute'), TYPE
                 ),
                 (
