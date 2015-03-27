@@ -14,6 +14,7 @@ using Microsoft.Office.Server.UserProfiles;
 using TM.Utils;
 using Aspose.Words;
 using AsposeLicense = Aspose.Words.License;
+using CamlexNET.Impl.Helpers;
 
 namespace TM.SP.AppPages
 {
@@ -134,15 +135,26 @@ namespace TM.SP.AppPages
             _asposeLic.SetLicense("Aspose.Total.lic");
         }
 
-        private SPListItemCollection GetTaxiItemsInStatus(string statusChoiceValue)
+        private SPListItemCollection GetTaxiItemsInStatus(string statuses)
         {
-            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            var arrStatuses = statuses.Split(';');
+
+            var statusConditions = new List<Expression<Func<SPListItem, bool>>>();
+            foreach (string t in arrStatuses)
             {
-                x => x["Tm_TaxiStatus"] == (DataTypes.Choice) statusChoiceValue,
+                string token = t;
+                statusConditions.Add(x => x["Tm_TaxiStatus"] == (DataTypes.Choice)t);
+            }
+            var statusExpr = ExpressionsHelper.CombineOr(statusConditions);
+
+            var parentConditions = new List<Expression<Func<SPListItem, bool>>>
+            {
                 x =>
                     x["Tm_IncomeRequestLookup"] ==
                     (DataTypes.LookupId) _request.ID.ToString(CultureInfo.InvariantCulture)
             };
+            var parentExpr = ExpressionsHelper.CombineOr(parentConditions);
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { statusExpr, parentExpr };
 
             return _taxiList.GetItems(new SPQuery
             {
@@ -165,6 +177,9 @@ namespace TM.SP.AppPages
                 case 5:
                     taxiList = GetTaxiItemsInStatus("Решено положительно");
                     break;
+                case 1:
+                case 2:
+                case 3:
                 case 6:
                     taxiList = GetTaxiItemsInStatus("Отказано;Решено отрицательно");
                     break;
