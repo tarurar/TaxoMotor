@@ -14,13 +14,13 @@
     <File Path="Scripts\IncomeRequestBcsFields.js" Url="IncomeRequestBcsFields.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\RequestAccountRendering.js" Url="RequestAccountRendering.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\LicenseViewCSR.js" Url="LicenseViewCSR.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
-    <File Path="Scripts\LicenseHelper.js" Url="LicenseHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE"/>
     <File Path="Scripts\EntityHelper.js" Url="EntityHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\EntityHelper.js.map" Url="EntityHelper.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\LicenseEntityHelper.js" Url="LicenseEntityHelper.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\LicenseEntityHelper.js.map" Url="LicenseEntityHelper.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\CryptoProTs.js" Url="CryptoProTs.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
     <File Path="Scripts\CryptoProTs.js.map" Url="CryptoProTs.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
-    <File Path="Scripts\CurrentLicense.ts" Url="Scripts/CurrentLicense.ts" />
+    <File Path="Scripts\CurrentLicense.js" Url="CurrentLicense.js" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
+    <File Path="Scripts\CurrentLicense.js.map" Url="CurrentLicense.js.map" Type="GhostableInLibrary" IgnoreIfAlreadyExists="TRUE" ReplaceContent="TRUE" />
   </Module>
 </Elements>

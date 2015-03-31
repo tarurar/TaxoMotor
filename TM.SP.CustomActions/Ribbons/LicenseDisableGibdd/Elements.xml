@@ -55,14 +55,14 @@
           EnabledScript="javascript: function enabled() { 
             var result = false;
             
-            if (TM &amp;&amp; TM.SP &amp;&amp; TM.SP.License &amp;&amp; TM.SP.License.CurrentItem) {
-              var isLast = TM.SP.License.CurrentItem.get_item('_x0421__x0441__x044b__x043b__x04');
+            if (TM &amp;&amp; TM.SP_ &amp;&amp; TM.SP_.License &amp;&amp; TM.SP_.License.getCurrent &amp;&amp; TM.SP_.License.getCurrent()) {
+              var isLast = TM.SP_.License.getCurrent().get_item('_x0421__x0441__x044b__x043b__x04');
               result = isLast;
             }
             else {
               SP.SOD.executeOrDelayUntilScriptLoaded(function() {
                 RefreshCommandUI();
-              }, 'LicenseHelper.js');
+              }, 'CurrentLicense.js');
             }
             
             return result;

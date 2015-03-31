@@ -78,6 +78,9 @@
     <None Include="Scripts\CryptoProTs.js.map">
       <DependentUpon>CryptoProTs.ts</DependentUpon>
     </None>
+    <None Include="Scripts\CurrentLicense.js.map">
+      <DependentUpon>CurrentLicense.ts</DependentUpon>
+    </None>
     <None Include="Scripts\EntityHelper.js.map">
       <DependentUpon>EntityHelper.ts</DependentUpon>
     </None>
@@ -144,6 +147,9 @@
     <Content Include="Scripts\CryptoProTs.js">
       <DependentUpon>CryptoProTs.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\CurrentLicense.js">
+      <DependentUpon>CurrentLicense.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\DenyIncomeRequest.js" />
     <Content Include="Scripts\DenyTaxi.js" />
     <Content Include="Scripts\Elements.xml" />
@@ -162,7 +168,6 @@
     <Content Include="Scripts\LicenseEntityHelper.js">
       <DependentUpon>LicenseEntityHelper.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\LicenseHelper.js" />
     <Content Include="Scripts\licenseSearchModel.js" />
     <Content Include="Scripts\LicenseViewCSR.js" />
     <Content Include="Scripts\ProgressDlg.js" />

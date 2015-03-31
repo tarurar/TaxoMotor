@@ -15,13 +15,13 @@
     <ProjectItemFile Source="IncomeRequestBcsFields.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="RequestAccountRendering.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="LicenseViewCSR.js" Target="Scripts\" Type="ElementFile" />
-    <ProjectItemFile Source="LicenseHelper.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="EntityHelper.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="EntityHelper.js.map" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="LicenseEntityHelper.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="LicenseEntityHelper.js.map" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CryptoProTs.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CryptoProTs.js.map" Target="Scripts\" Type="ElementFile" />
-    <ProjectItemFile Source="CurrentLicense.ts" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CurrentLicense.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CurrentLicense.js.map" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

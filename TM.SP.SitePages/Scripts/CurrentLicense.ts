@@ -6,26 +6,28 @@ module TM.SP_.License {
 
     var _current: SP.ListItem = null;
 
-    export function Current() {
-
-
-
+    export function getCurrent(): SP.ListItem {
+        return _current;
     }
 
-    var def = $.Deferred();
+    SP.SOD.loadMultiple(["sp.js", "sp.init.js"], () => {
+        var def = $.Deferred();
+        JSRequest.EnsureSetup();
+        var listId = decodeURIComponent(JSRequest.QueryString["List"]);
+        var itemId = parseInt(decodeURIComponent(JSRequest.QueryString["ID"]));
 
-    JSRequest.EnsureSetup();
-    var listId = JSRequest.QueryString["List"];
-    var itemId = parseInt(JSRequest.QueryString["ID"]);
-
-    if (listId && itemId) {
-        var listGuid = new SP.Guid(listId);
-        var helper = LicenseEntityHelper.Create(listGuid, itemId, (license) => {
-            def.resolve();
-        },(sender, args) => {
+        if (listId && itemId) {
+            var listGuid = new SP.Guid(listId);
+            var helper = LicenseEntityHelper.Create(listGuid, itemId,(license) => {
+                _current = license.currentItem;
+                def.resolve();
+            }, def.reject);
+        } else {
             def.reject();
+        }
+
+        def.always(() => {
+            SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("CurrentLicense.js");
         });
-    } else {
-        def.reject();
-    }
+    });
 }
