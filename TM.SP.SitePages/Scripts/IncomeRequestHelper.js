@@ -228,7 +228,7 @@
             ir.OutputRequest = function (incomeRequestId) {
                 return $.ajax({
                     type: 'POST',
-                    url: ir.ServiceUrl + '/Output',
+                    url: ir.ServiceUrl + '/MakeOutput',
                     data: '{ incomeRequestId: ' + incomeRequestId + ' }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
