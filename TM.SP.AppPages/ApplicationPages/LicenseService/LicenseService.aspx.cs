@@ -5,6 +5,7 @@
 // <date>2014-10-16 19:53:14Z</date>
 
 using System.Web;
+using System.Linq;
 // ReSharper disable CheckNamespace
 
 
@@ -43,22 +44,27 @@ namespace TM.SP.AppPages
 
             // updating external fields in sp list
             var refresher = new BusinessDataColumnUpdater(list, "Tm_LicenseAllViewBcsLookup");
-            if (item != null)
+            SPListItem itemToUpdate = item;
+
+            if (itemToUpdate == null)
             {
-                refresher.UpdateColumnUsingBatch(null, item.ID);
-            }
-            else
-            {
-                // getting sp item
                 SPListItemCollection items = list.GetItems(new SPQuery
                 {
                     Query = Camlex.Query().Where(x => (int)x["Tm_LicenseExternalId"] == license.Id).ToString(),
-                    ViewAttributes = "Scope='RecursiveAll'"
+                    ViewAttributes = "Scope='Recursive'"
                 });
-                // updating items's external fields
-                if (items.Count > 0)
+
+                itemToUpdate = items.Cast<SPListItem>().FirstOrDefault();
+            }
+
+            if (itemToUpdate != null)
+            {
+                refresher.UpdateColumnUsingBatch(null, itemToUpdate.ID);
+                var parentLookup = itemToUpdate["Tm_LicenseParentLicenseLookup"];
+                if (parentLookup != null)
                 {
-                    refresher.UpdateColumnUsingBatch(null, items[0].ID);
+                    var parentId = new SPFieldLookupValue(parentLookup.ToString()).LookupId;
+                    refresher.UpdateColumnUsingBatch(null, parentId);
                 }
             }
         }
