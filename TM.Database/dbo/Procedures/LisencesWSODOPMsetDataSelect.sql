@@ -22,7 +22,7 @@ BEGIN
         License.Id AS ID,
         (
             SELECT
-                0 AS 'id',
+                ISNULL(l.RootParent, l.id) AS 'id',
                 @CatalogName AS 'catalog/@name',
                 CASE WHEN NULLIF(l.GUID_OD,'') IS NULL THEN N'ADDED' ELSE N'MODIFIED' END AS 'catalog/item/@action', 
                 N'nameHierarchy' AS 'catalog/item/categories/category/@nameHier',
