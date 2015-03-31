@@ -273,4 +273,7 @@
   <data name="CombiRequest_DlgRequestListHeader2" xml:space="preserve">
     <value>Информация о заявителе</value>
   </data>
+  <data name="DeleteListItems_CommentText" xml:space="preserve">
+    <value>Примечание: Список не удаляется. Для удаления элементов списка используется запланированное задание. На этой же странице можно будет отслеживать его статус.</value>
+  </data>
 </root>

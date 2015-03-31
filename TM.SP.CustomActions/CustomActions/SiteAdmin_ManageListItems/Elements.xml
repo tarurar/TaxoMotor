@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="TaxoMotor.SiteAdmin_ManageListItems"
+		Location="Microsoft.SharePoint.SiteSettings"
+		GroupId="SiteAdministration"
+		Title="ТаксоМотор: Удаление элементов списков"
+		Description="Удаление элементов списков"
+		Sequence="1000">
+		<UrlAction
+			Url="~site/_layouts/15/TaxoMotor/DeleteListItems.aspx" />
+	</CustomAction>
+</Elements>

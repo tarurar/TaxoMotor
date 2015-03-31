@@ -58,7 +58,7 @@
             else {
               var outputDate = fd.field('Tm_OutputFactDate').control()._el().text().trim();
               result = 
-                (TM.SP.IncomeRequest.currentStatusCode == 1075 || TM.SP.IncomeRequest.currentStatusCode == 1080) &amp;&amp; !outputDate;
+                (TM.SP.IncomeRequest.currentStatusCode == 1075 || TM.SP.IncomeRequest.currentStatusCode == 1085) &amp;&amp; !outputDate;
             }
             
             return result;
