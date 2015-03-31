@@ -207,8 +207,18 @@ namespace TM.SP.AppPages
             draft.TODate             = taxiItem.TryGetValueOrNull<DateTime>("Tm_TaxiLastToDate");
             draft.STSNumber          = taxiItem.TryGetValue<string>("Tm_TaxiStsDetails");
             draft.STSDate            = null;
-            draft.BlankNo            = taxiItem.TryGetValue<string>("Tm_BlankNo");
-            draft.BlankSeries        = taxiItem.TryGetValue<string>("Tm_BlankSeries");
+
+            if (ctId == rList.ContentTypes["Аннулирование"].Id)
+            {
+                draft.BlankNo = parent != null ? parent.BlankNo : String.Empty;
+                draft.BlankSeries = parent != null ? parent.BlankSeries : String.Empty;
+            }
+            else
+            {
+                draft.BlankNo = taxiItem.TryGetValue<string>("Tm_BlankNo");
+                draft.BlankSeries = taxiItem.TryGetValue<string>("Tm_BlankSeries");
+            }
+
             draft.TaxiBrand          = taxiItem.TryGetValue<string>("Tm_TaxiBrand");
             draft.TaxiColor          = taxiItem.TryGetValue<string>("Tm_TaxiBodyColor");
             draft.TaxiModel          = taxiItem.TryGetValue<string>("Tm_TaxiModel");
