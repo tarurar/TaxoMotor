@@ -26,7 +26,7 @@ namespace TM.SP.AppPages.Print
         protected string _signerName;
         protected string _signerPosition;
 
-        protected static readonly string _dateFormat = "dd MMMM yyyy";
+        protected static readonly string _dateFormat = @"\""dd\"" MMMM yyyy г.";
         #endregion
 
         #region [properties]
