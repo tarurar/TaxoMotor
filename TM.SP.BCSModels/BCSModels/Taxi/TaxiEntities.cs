@@ -29,17 +29,17 @@ namespace TM.SP.BCSModels.Taxi
         public Int32 Id { get; set; }
         [XmlIgnore]
         public String Title { get; set; }
-        [XmlAttribute("regnumber")]
+        [XmlElement("regnumber")]
         public String RegNumber { get; set; }
-        [XmlAttribute("blankseries")]
+        [XmlElement("blankseries")]
         public String BlankSeries { get; set; }
-        [XmlAttribute("blankno")]
+        [XmlElement("blankno")]
         public String BlankNo { get; set; }
-        [XmlAttribute("orgname")]
+        [XmlElement("orgname")]
         public String OrgName { get; set; }
-        [XmlAttribute("ogrn")]
+        [XmlElement("ogrn")]
         public String Ogrn { get; set; }
-        [XmlAttribute("inn")]
+        [XmlElement("inn")]
         public String Inn { get; set; }
         [XmlIgnore]
         public int? Parent { get; set; }
@@ -49,7 +49,7 @@ namespace TM.SP.BCSModels.Taxi
         #region [status]
         [XmlIgnore]
         public int? Status { get; set; }
-        [XmlAttribute("status")]
+        [XmlElement("status")]
         public int XmlStatus { get { return Status.Value; } set { Status = value; } }
         public bool XmlStatusSpecified { get { return Status.HasValue; } }
         #endregion
@@ -60,27 +60,27 @@ namespace TM.SP.BCSModels.Taxi
         public String Signature { get; set; }
         [XmlIgnore]
         public int? TaxiId { get; set; }
-        [XmlAttribute("lfb")]
+        [XmlElement("lfb")]
         public String Lfb { get; set; }
-        [XmlAttribute("juridicaladdress")]
+        [XmlElement("juridicaladdress")]
         public String JuridicalAddress { get; set; }
-        [XmlAttribute("phonenumber")]
+        [XmlElement("phonenumber")]
         public String PhoneNumber { get; set; }
-        [XmlAttribute("addcontactdata")]
+        [XmlElement("addcontactdata")]
         public String AddContactData { get; set; }
-        [XmlAttribute("accountabbr")]
+        [XmlElement("accountabbr")]
         public String AccountAbbr { get; set; }
-        [XmlAttribute("taxibrand")]
+        [XmlElement("taxibrand")]
         public String TaxiBrand { get; set; }
-        [XmlAttribute("taximodel")]
+        [XmlElement("taximodel")]
         public String TaxiModel { get; set; }
-        [XmlAttribute("taxistatenumber")]
+        [XmlElement("taxistatenumber")]
         public String TaxiStateNumber { get; set; }
 
         #region [TaxiYear]
         [XmlIgnore]
         public int? TaxiYear { get; set; }
-        [XmlAttribute("taxiyear")]
+        [XmlElement("taxiyear")]
         public int XmlTaxiYear { get { return TaxiYear.Value; } set { TaxiYear = value; } }
         public bool XmlTaxiYearSpecified { get { return TaxiYear.HasValue; } }
         #endregion
@@ -88,7 +88,7 @@ namespace TM.SP.BCSModels.Taxi
         #region [OutputDate]
         [XmlIgnore]
         public DateTime? OutputDate { get; set; }
-        [XmlAttribute("outputdate")]
+        [XmlElement("outputdate")]
         public DateTime XmlOutputDate { get { return OutputDate.Value; } set { OutputDate = value; } }
         public bool XmlOutputDateSpecified { get { return OutputDate.HasValue; } }
         #endregion
@@ -96,7 +96,7 @@ namespace TM.SP.BCSModels.Taxi
         #region [CreationDate]
         [XmlIgnore]
         public DateTime? CreationDate { get; set; }
-        [XmlAttribute("creationdate")]
+        [XmlElement("creationdate")]
         public DateTime XmlCreationDate { get { return CreationDate.Value; } set { CreationDate = value; } }
         public bool XmlCreationDateSpecified { get { return CreationDate.HasValue; } }
         #endregion
@@ -104,7 +104,7 @@ namespace TM.SP.BCSModels.Taxi
         #region [TillDate]
         [XmlIgnore]
         public DateTime? TillDate { get; set; }
-        [XmlAttribute("tilldate")]
+        [XmlElement("tilldate")]
         public DateTime XmlTillDate { get { return TillDate.Value; } set { TillDate = value; } }
         public bool XmlTillDateSpecified { get { return TillDate.HasValue; } }
         #endregion
@@ -112,78 +112,78 @@ namespace TM.SP.BCSModels.Taxi
         #region [TillSuspensionDate]
         [XmlIgnore]
         public DateTime? TillSuspensionDate { get; set; }
-        [XmlAttribute("tillsuspensiondate")]
+        [XmlElement("tillsuspensiondate")]
         public DateTime XmlTillSuspensionDate { get { return TillSuspensionDate.Value; } set { TillSuspensionDate = value; } }
         public bool XmlTillSuspensionDateSpecified { get { return TillSuspensionDate.HasValue; } }
         #endregion
 
-        [XmlAttribute("cancellationreason")]
+        [XmlElement("cancellationreason")]
         public String CancellationReason { get; set; }
-        [XmlAttribute("suspensionreason")]
+        [XmlElement("suspensionreason")]
         public String SuspensionReason { get; set; }
-        [XmlAttribute("changereason")]
+        [XmlElement("changereason")]
         public String ChangeReason { get; set; }
-        [XmlAttribute("invalidreason")]
+        [XmlElement("invalidreason")]
         public String InvalidReason { get; set; }
-        [XmlAttribute("shortname")]
+        [XmlElement("shortname")]
         public String ShortName { get; set; }
-        [XmlAttribute("lastname")]
+        [XmlElement("lastname")]
         public String LastName { get; set; }
-        [XmlAttribute("firstname")]
+        [XmlElement("firstname")]
         public String FirstName { get; set; }
-        [XmlAttribute("secondname")]
+        [XmlElement("secondname")]
         public String SecondName { get; set; }
 
         #region [OgrnDate]
         [XmlIgnore]
         public DateTime? OgrnDate { get; set; }
-        [XmlAttribute("ogrndate")]
+        [XmlElement("ogrndate")]
         public DateTime XmlOgrnDate { get { return OgrnDate.Value; } set { OgrnDate = value; } }
         public bool XmlOgrnDateSpecified { get { return OgrnDate.HasValue; } }
         #endregion
 
 
-        [XmlAttribute("country")]
+        [XmlElement("country")]
         public String Country { get; set; }
-        [XmlAttribute("postalcode")]
+        [XmlElement("postalcode")]
         public String PostalCode { get; set; }
-        [XmlAttribute("locality")]
+        [XmlElement("locality")]
         public String Locality { get; set; }
-        [XmlAttribute("region")]
+        [XmlElement("region")]
         public String Region { get; set; }
-        [XmlAttribute("city")]
+        [XmlElement("city")]
         public String City { get; set; }
-        [XmlAttribute("town")]
+        [XmlElement("town")]
         public String Town { get; set; }
-        [XmlAttribute("street")]
+        [XmlElement("street")]
         public String Street { get; set; }
-        [XmlAttribute("house")]
+        [XmlElement("house")]
         public String House { get; set; }
-        [XmlAttribute("building")]
+        [XmlElement("building")]
         public String Building { get; set; }
-        [XmlAttribute("structure")]
+        [XmlElement("structure")]
         public String Structure { get; set; }
-        [XmlAttribute("facility")]
+        [XmlElement("facility")]
         public String Facility { get; set; }
-        [XmlAttribute("ownership")]
+        [XmlElement("ownership")]
         public String Ownership { get; set; }
-        [XmlAttribute("flat")]
+        [XmlElement("flat")]
         public String Flat { get; set; }
-        [XmlAttribute("fax")]
+        [XmlElement("fax")]
         public String Fax { get; set; }
-        [XmlAttribute("email")]
+        [XmlElement("email")]
         public String EMail { get; set; }
-        [XmlAttribute("taxocolor")]
+        [XmlElement("taxocolor")]
         public String TaxiColor { get; set; }
-        [XmlAttribute("taxinumbercolor")]
+        [XmlElement("taxinumbercolor")]
         public String TaxiNumberColor { get; set; }
-        [XmlAttribute("taxivin")]
+        [XmlElement("taxivin")]
         public String TaxiVin { get; set; }
 
         #region [ChangeDate]
         [XmlIgnore]
         public DateTime? ChangeDate { get; set; }
-        [XmlAttribute("changedate")]
+        [XmlElement("changedate")]
         public DateTime XmlChangeDate { get { return ChangeDate.Value; } set { ChangeDate = value; } }
         public bool XmlChangeDateSpecified { get { return ChangeDate.HasValue; } }
         #endregion
@@ -194,62 +194,62 @@ namespace TM.SP.BCSModels.Taxi
         public DateTime? Date_OD { get; set; }
         [XmlIgnore]
         public bool? FromPortal { get; set; }
-        [XmlAttribute("firmname")]
+        [XmlElement("firmname")]
         public System.String FirmName { get; set; }
-        [XmlAttribute("brand")]
+        [XmlElement("brand")]
         public System.String Brand { get; set; }
-        [XmlAttribute("ogrnnum")]
+        [XmlElement("ogrnnum")]
         public System.String OgrnNum { get; set; }
-        [XmlAttribute("ogrnname")]
+        [XmlElement("ogrnname")]
         public System.String OgrnName { get; set; }
-        [XmlAttribute("graaddress")]
+        [XmlElement("graaddress")]
         public System.String GRAddress { get; set; }
 
         #region [InnDate]
         [XmlIgnore]
         public DateTime? InnDate { get; set; }
-        [XmlAttribute("inndate")]
+        [XmlElement("inndate")]
         public DateTime XmlInnDate { get { return InnDate.Value; } set { InnDate = value; } }
         public bool XmlInnDateSpecified { get { return InnDate.HasValue; } }
         #endregion
 
-        [XmlAttribute("innname")]
+        [XmlElement("innname")]
         public System.String InnName { get; set; }
-        [XmlAttribute("innnum")]
+        [XmlElement("innnum")]
         public System.String InnNum { get; set; }
-        [XmlAttribute("address_fact")]
+        [XmlElement("address_fact")]
         public System.String Address_Fact { get; set; }
-        [XmlAttribute("country_fact")]
+        [XmlElement("country_fact")]
         public System.String Country_Fact { get; set; }
-        [XmlAttribute("postalCode_fact")]
+        [XmlElement("postalCode_fact")]
         public System.String PostalCode_Fact { get; set; }
-        [XmlAttribute("locality_fact")]
+        [XmlElement("locality_fact")]
         public System.String Locality_Fact { get; set; }
-        [XmlAttribute("region_fact")]
+        [XmlElement("region_fact")]
         public System.String Region_Fact { get; set; }
-        [XmlAttribute("city_fact")]
+        [XmlElement("city_fact")]
         public System.String City_Fact { get; set; }
-        [XmlAttribute("town_fact")]
+        [XmlElement("town_fact")]
         public System.String Town_Fact { get; set; }
-        [XmlAttribute("street_fact")]
+        [XmlElement("street_fact")]
         public System.String Street_Fact { get; set; }
-        [XmlAttribute("house_fact")]
+        [XmlElement("house_fact")]
         public System.String House_Fact { get; set; }
-        [XmlAttribute("building_fact")]
+        [XmlElement("building_fact")]
         public System.String Building_Fact { get; set; }
-        [XmlAttribute("structure_fact")]
+        [XmlElement("structure_fact")]
         public System.String Structure_Fact { get; set; }
-        [XmlAttribute("facility_fact")]
+        [XmlElement("facility_fact")]
         public System.String Facility_Fact { get; set; }
-        [XmlAttribute("ownership_fact")]
+        [XmlElement("ownership_fact")]
         public System.String Ownership_Fact { get; set; }
-        [XmlAttribute("flat_fact")]
+        [XmlElement("flat_fact")]
         public System.String Flat_Fact { get; set; }
 
         #region [Gps]
         [XmlIgnore]
         public bool? Gps { get; set; }
-        [XmlAttribute("gps")]
+        [XmlElement("gps")]
         public bool XmlGps { get { return Gps.Value; } set { Gps = value; } }
         public bool XmlGpsSpecified { get { return Gps.HasValue; } }
         #endregion
@@ -257,7 +257,7 @@ namespace TM.SP.BCSModels.Taxi
         #region [Taxometr]
         [XmlIgnore]
         public bool? Taxometr { get; set; }
-        [XmlAttribute("taxometr")]
+        [XmlElement("taxometr")]
         public bool XmlTaxometr { get { return Taxometr.Value; } set { Taxometr = value; } }
         public bool XmlTaxometrSpecified { get { return Taxometr.HasValue; } }
         #endregion
@@ -265,18 +265,18 @@ namespace TM.SP.BCSModels.Taxi
         #region [TODate]
         [XmlIgnore]
         public DateTime? TODate { get; set; }
-        [XmlAttribute("todate")]
+        [XmlElement("todate")]
         public DateTime XmlTODate { get { return TODate.Value; } set { TODate = value; } }
         public bool XmlTODateSpecified { get { return TODate.HasValue; } }
         #endregion
 
-        [XmlAttribute("stsnumber")]
+        [XmlElement("stsnumber")]
         public System.String STSNumber { get; set; }
 
         #region [STSDate]
         [XmlIgnore]
         public DateTime? STSDate { get; set; }
-        [XmlAttribute("stsdate")]
+        [XmlElement("stsdate")]
         public DateTime XmlSTSDate { get { return STSDate.Value; } set { STSDate = value; } }
         public bool XmlSTSDateSpecified { get { return STSDate.HasValue; } }
         #endregion
@@ -284,18 +284,18 @@ namespace TM.SP.BCSModels.Taxi
         #region [OwnType]
         [XmlIgnore]
         public int? OwnType { get; set; }
-        [XmlAttribute("owntype")]
+        [XmlElement("owntype")]
         public int XmlOwnType { get { return OwnType.Value; } set { OwnType = value; } }
         public bool XmlOwnTypeSpecified { get { return OwnType.HasValue; } }
         #endregion
 
-        [XmlAttribute("ownnumber")]
+        [XmlElement("ownnumber")]
         public System.String OwnNumber { get; set; }
 
         #region [OwnDate]
         [XmlIgnore]
         public DateTime? OwnDate { get; set; }
-        [XmlAttribute("owndate")]
+        [XmlElement("owndate")]
         public DateTime XmlOwnDate { get { return OwnDate.Value; } set { OwnDate = value; } }
         public bool XmlOwnDateSpecified { get { return OwnDate.HasValue; } }
         #endregion
@@ -303,18 +303,18 @@ namespace TM.SP.BCSModels.Taxi
         #region [MO]
         [XmlIgnore]
         public bool? MO { get; set; }
-        [XmlAttribute("mo")]
+        [XmlElement("mo")]
         public bool XmlMO { get { return MO.Value; } set { MO = value; } }
         public bool XmlMOSpecified { get { return MO.HasValue; } }
         #endregion
 
-        [XmlAttribute("guid_mo")]
+        [XmlElement("guid_mo")]
         public System.String GUID_MO { get; set; }
 
         #region [DATE_MO]
         [XmlIgnore]
         public DateTime? DATE_MO { get; set; }
-        [XmlAttribute("date_mo")]
+        [XmlElement("date_mo")]
         public DateTime XmlDATE_MO { get { return DATE_MO.Value; } set { DATE_MO = value; } }
         public bool XmlDATE_MOSpecified { get { return DATE_MO.HasValue; } }
         #endregion
