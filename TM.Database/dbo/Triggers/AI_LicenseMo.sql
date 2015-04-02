@@ -1,4 +1,4 @@
-﻿CREATE TRIGGER [dbo].[AI_LicenseMo] ON [dbo].[LicenseMo]
+﻿CREATE TRIGGER [dbo].[AI_LicenseMO] ON [dbo].[LicenseMO]
 AFTER INSERT
 AS
 BEGIN
@@ -17,13 +17,13 @@ BEGIN
 
     IF (@RegNumber IS NULL)
     BEGIN
-        UPDATE [dbo].[LicenseMo]
+        UPDATE [dbo].[LicenseMO]
         SET [RegNumber] = (
                 SELECT TOP 1 [l1].[RegNumberInt] + 1
-                FROM [dbo].[LicenseMo] l1
+                FROM [dbo].[LicenseMO] l1
                 WHERE NOT EXISTS (
                         SELECT NULL
-                        FROM [dbo].[LicenseMo] l2
+                        FROM [dbo].[LicenseMO] l2
                         WHERE [l2].[RegNumberInt] = [l1].[RegNumberInt] + 1
                         )
                     AND ([l1].[RegNumberInt] IS NOT NULL)
@@ -39,7 +39,7 @@ BEGIN
             AND @RootParent IS NULL
             )
     BEGIN
-        UPDATE [dbo].[LicenseMo]
+        UPDATE [dbo].[LicenseMO]
         SET [RootParent] = @Id
         WHERE Id = @Id;
     END
@@ -92,13 +92,12 @@ BEGIN
                 LicenseMO.TODate AS 'License/todate',
                 LicenseMO.STSNumber AS 'License/stsnumber',
                 LicenseMO.OwnType AS 'License/owntype',
-                LicenseMO.MO AS 'License/mo'
+                LicenseMO.MO AS 'License/mo',
+                LicenseMO.Fax AS 'License/fax'
             FROM 
                 LicenseMO
             WHERE LicenseMO.Id = @Id
-            FOR XML PATH('Data'), ROOT ('Envelope'), ELEMENTS XSINIL
+            FOR XML PATH('Data'), ROOT ('Envelope')
             ), '<Envelope', '<Envelope xmlns="urn:envelope"')
     WHERE Id = @Id;
 END
-GO
-
