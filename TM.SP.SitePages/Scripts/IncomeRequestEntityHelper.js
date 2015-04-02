@@ -13,6 +13,7 @@ var TM;
     (function (SP_) {
         var IncomeRequest;
         (function (IncomeRequest) {
+            "use strict";
             var RequestParams;
             (function (RequestParams) {
                 var IncomeRequestCommonParam = (function (_super) {
@@ -43,3 +44,4 @@ var TM;
         })(IncomeRequest = SP_.IncomeRequest || (SP_.IncomeRequest = {}));
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+//# sourceMappingURL=IncomeRequestEntityHelper.js.map

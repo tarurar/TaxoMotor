@@ -7,6 +7,7 @@ var TM;
     (function (SP_) {
         var License;
         (function (License) {
+            "use strict";
             var _current = null;
             function getCurrent() {
                 return _current;
@@ -16,11 +17,11 @@ var TM;
                 var def = $.Deferred();
                 JSRequest.EnsureSetup();
                 var listId = decodeURIComponent(JSRequest.QueryString["List"]);
-                var itemId = parseInt(decodeURIComponent(JSRequest.QueryString["ID"]));
+                var itemId = parseInt(decodeURIComponent(JSRequest.QueryString["ID"]), 10);
                 if (listId && itemId) {
                     var listGuid = new SP.Guid(listId);
-                    var helper = License.LicenseEntityHelper.Create(License.LicenseEntityHelper, listGuid, itemId, function (license) {
-                        _current = license.currentItem;
+                    License.LicenseEntityHelper.Create(License.LicenseEntityHelper, listGuid, itemId, function (helper) {
+                        _current = helper.currentItem;
                         def.resolve();
                     }, def.reject);
                 }
@@ -34,3 +35,4 @@ var TM;
         })(License = SP_.License || (SP_.License = {}));
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+//# sourceMappingURL=CurrentLicense.js.map

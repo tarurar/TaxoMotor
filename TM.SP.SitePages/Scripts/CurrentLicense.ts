@@ -3,6 +3,7 @@
 /// <reference path="LicenseEntityHelper.ts" />
 
 module TM.SP_.License {
+    "use strict";
 
     var _current: SP.ListItem = null;
 
@@ -14,12 +15,12 @@ module TM.SP_.License {
         var def = $.Deferred();
         JSRequest.EnsureSetup();
         var listId = decodeURIComponent(JSRequest.QueryString["List"]);
-        var itemId = parseInt(decodeURIComponent(JSRequest.QueryString["ID"]));
+        var itemId = parseInt(decodeURIComponent(JSRequest.QueryString["ID"]), 10);
 
         if (listId && itemId) {
             var listGuid = new SP.Guid(listId);
-            var helper = LicenseEntityHelper.Create<LicenseEntityHelper>(LicenseEntityHelper, listGuid, itemId,(license) => {
-                _current = license.currentItem;
+            LicenseEntityHelper.Create<LicenseEntityHelper>(LicenseEntityHelper, listGuid, itemId, (helper: LicenseEntityHelper) => {
+                _current = helper.currentItem;
                 def.resolve();
             }, def.reject);
         } else {

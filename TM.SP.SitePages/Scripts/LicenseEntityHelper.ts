@@ -4,6 +4,7 @@
 /// <reference path="CryptoProTs.ts" />
 
 module TM.SP_.License {
+    "use strict";
 
     export module RequestParams {
 
@@ -54,7 +55,7 @@ module TM.SP_.License {
             param.obsolete  = obsolete;
             param.signature = encodeURIComponent(signature);
             var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedMakeObsolete");
-                
+
             return RequestMethods.MakePostRequest(param, url);
         }
 
@@ -71,7 +72,7 @@ module TM.SP_.License {
             param.disabled  = disabled;
             param.signature = encodeURIComponent(signature);
             var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedDisableGibdd");
-                
+
             return RequestMethods.MakePostRequest(param, url);
         }
 
@@ -84,7 +85,7 @@ module TM.SP_.License {
                     cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                     cryptoPro.StoreNames.CAPICOM_MY_STORE,
                     cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
-                
+
                 if (oCertificate) {
                     dataToSign =
                     "<?xml version=\"1.0\"?>\n" +
@@ -100,7 +101,7 @@ module TM.SP_.License {
                         fail("Ошибка при формировании подписи: " + e.message);
                     }
 
-                    if (typeof signedData === 'undefined' || !signedData) {
+                    if (typeof signedData === "undefined" || !signedData) {
                         fail("Ошибка при формировании подписи");
                     }
 
@@ -113,7 +114,7 @@ module TM.SP_.License {
 
         public ChangeDisableGibddAttribute(disabled: boolean, success: () => void, fail: (msg: string) => void): void
         {
-            this.DisableGibddGetXml(disabled).done((xml) => {
+            this.DisableGibddGetXml(disabled).done((xml: any) => {
                 var dataToSign: string = xml.d;
 
                 var oCertificate = cryptoPro.SelectCertificate(
@@ -136,8 +137,9 @@ module TM.SP_.License {
                         fail("Ошибка при формировании подписи: " + e.message);
                     }
 
-                    if (typeof signedData === 'undefined' || !signedData)
+                    if (typeof signedData === "undefined" || !signedData) {
                         fail("Ошибка при формировании подписи");
+                    }
 
                     this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
                 }

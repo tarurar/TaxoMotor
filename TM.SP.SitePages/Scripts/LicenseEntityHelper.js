@@ -14,6 +14,7 @@ var TM;
     (function (SP_) {
         var License;
         (function (License) {
+            "use strict";
             var RequestParams;
             (function (RequestParams) {
                 var LicenseCommonParam = (function (_super) {
@@ -100,7 +101,7 @@ var TM;
                     var _this = this;
                     this.MakeObsoleteGetXml(obsolete).done(function (xml) {
                         var dataToSign = xml.d;
-                        var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                        var oCertificate = cryptoPro.SelectCertificate(cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE, cryptoPro.StoreNames.CAPICOM_MY_STORE, cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
                         if (oCertificate) {
                             dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
                             var signedData;
@@ -110,7 +111,7 @@ var TM;
                             catch (e) {
                                 fail("Ошибка при формировании подписи: " + e.message);
                             }
-                            if (typeof signedData === 'undefined' || !signedData) {
+                            if (typeof signedData === "undefined" || !signedData) {
                                 fail("Ошибка при формировании подписи");
                             }
                             _this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
@@ -123,7 +124,7 @@ var TM;
                     var _this = this;
                     this.DisableGibddGetXml(disabled).done(function (xml) {
                         var dataToSign = xml.d;
-                        var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                        var oCertificate = cryptoPro.SelectCertificate(cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE, cryptoPro.StoreNames.CAPICOM_MY_STORE, cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
                         if (oCertificate) {
                             dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
                             var signedData;
@@ -133,8 +134,9 @@ var TM;
                             catch (e) {
                                 fail("Ошибка при формировании подписи: " + e.message);
                             }
-                            if (typeof signedData === 'undefined' || !signedData)
+                            if (typeof signedData === "undefined" || !signedData) {
                                 fail("Ошибка при формировании подписи");
+                            }
                             _this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
                         }
                     }).fail(function () {
@@ -147,3 +149,4 @@ var TM;
         })(License = SP_.License || (SP_.License = {}));
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+//# sourceMappingURL=LicenseEntityHelper.js.map

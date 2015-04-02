@@ -2,8 +2,9 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="EntityHelper.ts" />
 
-module TM.SP_.IncomeRequest
-{
+module TM.SP_.IncomeRequest {
+    "use strict";
+
     export module RequestParams {
 
         export class IncomeRequestCommonParam extends TM.SP_.RequestParams.EntityCommonParam {

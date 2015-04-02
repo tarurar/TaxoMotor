@@ -10,6 +10,7 @@ var TM;
 (function (TM) {
     var SP_;
     (function (SP_) {
+        "use strict";
         var RequestParams;
         (function (RequestParams) {
             var CommonParam = (function () {
@@ -79,3 +80,4 @@ var TM;
         SP_.EntityHelper = EntityHelper;
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+//# sourceMappingURL=EntityHelper.js.map

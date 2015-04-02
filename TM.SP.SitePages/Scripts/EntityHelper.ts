@@ -2,6 +2,7 @@
  /// <reference path="typings/jquery/jquery.d.ts" />
 
 module TM.SP_ {
+    "use strict";
 
     export module RequestParams {
         export class CommonParam {
@@ -34,7 +35,6 @@ module TM.SP_ {
     }
 
     export class EntityHelper {
-            
         private _serviceUrl: string;
         private _currentItem: SP.ListItem;
 
@@ -51,8 +51,8 @@ module TM.SP_ {
             var list = web.get_lists().getById(listGuid);
             var item = list.getItemById(itemId);
 
-            ctx.load(item); 
-            ctx.executeQueryAsync((sender, args) => {
+            ctx.load(item);
+            ctx.executeQueryAsync((sender: any, args: SP.ClientRequestSucceededEventArgs) => {
                 var newEntity = new t();
                 newEntity._currentItem = item;
                 succeededCallback(newEntity);
