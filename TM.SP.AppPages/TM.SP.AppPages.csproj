@@ -96,6 +96,13 @@
     <Compile Include="ApplicationPages\CommonService\CommonService.aspx.designer.cs">
       <DependentUpon>CommonService.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationPages\DeleteListItems\DeleteListItems.aspx.cs">
+      <DependentUpon>DeleteListItems.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApplicationPages\DeleteListItems\DeleteListItems.aspx.designer.cs">
+      <DependentUpon>DeleteListItems.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationPages\DialogLayoutsPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -179,8 +186,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringsRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="ApplicationPages\CommonService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{ae3acb76-aa42-4b73-978b-6865edcea3ff}</SharePointProjectItemId>
+    </None>
+    <None Include="ApplicationPages\DeleteListItems\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{74e09627-c78d-4bcc-8623-109f75463030}</SharePointProjectItemId>
     </None>
     <None Include="ApplicationPages\IncomeRequestService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{bf49c9d8-e24e-40d4-acad-ced08c80037e}</SharePointProjectItemId>
@@ -235,6 +246,7 @@
     <Content Include="3rd\WebServiceMO.dll" />
     <Content Include="3rd\WebServiceMO.pdb" />
     <Content Include="ApplicationPages\CommonService\CommonService.aspx" />
+    <Content Include="ApplicationPages\DeleteListItems\DeleteListItems.aspx" />
     <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
     <Content Include="ApplicationPages\LicenseService\LicenseService.aspx" />
     <Content Include="ApplicationPages\SendRequestCombi\SendRequestCombi.aspx" />

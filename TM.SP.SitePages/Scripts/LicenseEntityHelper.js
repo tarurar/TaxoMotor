@@ -14,16 +14,20 @@ var TM;
     (function (SP_) {
         var License;
         (function (License) {
+            "use strict";
             var RequestParams;
             (function (RequestParams) {
                 var LicenseCommonParam = (function (_super) {
                     __extends(LicenseCommonParam, _super);
-                    function LicenseCommonParam(entity) {
-                        _super.call(this);
-                        this.licenseId = entity.currentItem.get_id();
+                    function LicenseCommonParam() {
+                        _super.apply(this, arguments);
                     }
+                    LicenseCommonParam.prototype.Stringify = function () {
+                        var str = _super.prototype.Stringify.call(this);
+                        return str.replace("EntityId", "licenseId");
+                    };
                     return LicenseCommonParam;
-                })(TM.SP_.RequestParams.CommonParam);
+                })(TM.SP_.RequestParams.EntityCommonParam);
                 RequestParams.LicenseCommonParam = LicenseCommonParam;
                 var MakeObsoleteParam = (function (_super) {
                     __extends(MakeObsoleteParam, _super);
@@ -70,24 +74,28 @@ var TM;
                 LicenseEntityHelper.prototype.MakeObsoleteGetXml = function (obsolete) {
                     var param = new RequestParams.MakeObsoleteParam(this);
                     param.obsolete = obsolete;
-                    return SP_.RequestMethods.MakePostRequest(param, "MakeObsoleteGetXml");
+                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "MakeObsoleteGetXml");
+                    return SP_.RequestMethods.MakePostRequest(param, url);
                 };
                 LicenseEntityHelper.prototype.MakeObsoleteSaveSigned = function (obsolete, signature) {
                     var param = new RequestParams.MakeObsoleteSignedParam(this);
                     param.obsolete = obsolete;
                     param.signature = encodeURIComponent(signature);
-                    return SP_.RequestMethods.MakePostRequest(param, "SaveSignedMakeObsolete");
+                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedMakeObsolete");
+                    return SP_.RequestMethods.MakePostRequest(param, url);
                 };
                 LicenseEntityHelper.prototype.DisableGibddGetXml = function (disabled) {
                     var param = new RequestParams.DisableGibddParam(this);
                     param.disabled = disabled;
-                    return SP_.RequestMethods.MakePostRequest(param, "DisableGibddGetXml");
+                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "DisableGibddGetXml");
+                    return SP_.RequestMethods.MakePostRequest(param, url);
                 };
                 LicenseEntityHelper.prototype.DisabledGibddSaveSigned = function (disabled, signature) {
                     var param = new RequestParams.DisableGibddSignedParam(this);
                     param.disabled = disabled;
-                    param.signature = signature;
-                    return SP_.RequestMethods.MakePostRequest(param, "SaveSignedDisableGibdd");
+                    param.signature = encodeURIComponent(signature);
+                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedDisableGibdd");
+                    return SP_.RequestMethods.MakePostRequest(param, url);
                 };
                 LicenseEntityHelper.prototype.ChangeObsoleteAttribute = function (obsolete, success, fail) {
                     var _this = this;
@@ -103,7 +111,7 @@ var TM;
                             catch (e) {
                                 fail("Ошибка при формировании подписи: " + e.message);
                             }
-                            if (typeof signedData === 'undefined' || !signedData) {
+                            if (typeof signedData === "undefined" || !signedData) {
                                 fail("Ошибка при формировании подписи");
                             }
                             _this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
@@ -126,8 +134,9 @@ var TM;
                             catch (e) {
                                 fail("Ошибка при формировании подписи: " + e.message);
                             }
-                            if (typeof signedData === 'undefined' || !signedData)
+                            if (typeof signedData === "undefined" || !signedData) {
                                 fail("Ошибка при формировании подписи");
+                            }
                             _this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
                         }
                     }).fail(function () {
@@ -140,3 +149,4 @@ var TM;
         })(License = SP_.License || (SP_.License = {}));
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+//# sourceMappingURL=LicenseEntityHelper.js.map

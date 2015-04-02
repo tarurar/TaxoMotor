@@ -1507,7 +1507,7 @@ namespace TM.SP.AppPages
         /// <param name="incomeRequestId">Идентификатор обращения</param>
         /// <returns></returns>
         [WebMethod]
-        public static dynamic Output(int incomeRequestId)
+        public static dynamic MakeOutput(int incomeRequestId)
         {
             dynamic innerCatch = null;
 

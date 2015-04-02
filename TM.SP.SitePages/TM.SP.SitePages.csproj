@@ -78,8 +78,14 @@
     <None Include="Scripts\CryptoProTs.js.map">
       <DependentUpon>CryptoProTs.ts</DependentUpon>
     </None>
+    <None Include="Scripts\CurrentLicense.js.map">
+      <DependentUpon>CurrentLicense.ts</DependentUpon>
+    </None>
     <None Include="Scripts\EntityHelper.js.map">
       <DependentUpon>EntityHelper.ts</DependentUpon>
+    </None>
+    <None Include="Scripts\IncomeRequestEntityHelper.js.map">
+      <DependentUpon>IncomeRequestEntityHelper.ts</DependentUpon>
     </None>
     <None Include="Scripts\jquery-2.1.1.min.js.map">
       <DependentUpon>jquery-2.1.1.min.js</DependentUpon>
@@ -144,6 +150,9 @@
     <Content Include="Scripts\CryptoProTs.js">
       <DependentUpon>CryptoProTs.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\CurrentLicense.js">
+      <DependentUpon>CurrentLicense.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\DenyIncomeRequest.js" />
     <Content Include="Scripts\DenyTaxi.js" />
     <Content Include="Scripts\Elements.xml" />
@@ -151,6 +160,9 @@
       <DependentUpon>EntityHelper.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\IncomeRequestBcsFields.js" />
+    <Content Include="Scripts\IncomeRequestEntityHelper.js">
+      <DependentUpon>IncomeRequestEntityHelper.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\IncomeRequestHelper.js" />
     <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -162,7 +174,6 @@
     <Content Include="Scripts\LicenseEntityHelper.js">
       <DependentUpon>LicenseEntityHelper.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\LicenseHelper.js" />
     <Content Include="Scripts\licenseSearchModel.js" />
     <Content Include="Scripts\LicenseViewCSR.js" />
     <Content Include="Scripts\ProgressDlg.js" />
@@ -183,6 +194,7 @@
     <TypeScriptCompile Include="Scripts\CryptoProTs.ts" />
     <TypeScriptCompile Include="Scripts\CurrentLicense.ts" />
     <TypeScriptCompile Include="Scripts\EntityHelper.ts" />
+    <TypeScriptCompile Include="Scripts\IncomeRequestEntityHelper.ts" />
     <TypeScriptCompile Include="Scripts\LicenseEntityHelper.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\sharepoint\SharePoint.d.ts" />
@@ -200,6 +212,11 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -208,7 +225,4 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <PropertyGroup>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
-  </PropertyGroup>
 </Project>

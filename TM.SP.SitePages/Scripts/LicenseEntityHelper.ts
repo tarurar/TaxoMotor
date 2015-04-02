@@ -4,16 +4,15 @@
 /// <reference path="CryptoProTs.ts" />
 
 module TM.SP_.License {
+    "use strict";
 
     export module RequestParams {
 
-        export class LicenseCommonParam extends TM.SP_.RequestParams.CommonParam {
-            public licenseId: number;
+        export class LicenseCommonParam extends TM.SP_.RequestParams.EntityCommonParam {
 
-            constructor(entity: LicenseEntityHelper) {
-                super();
-
-                this.licenseId = entity.currentItem.get_id();
+            public Stringify(): string {
+                var str = super.Stringify();
+                return str.replace("EntityId", "licenseId");
             }
         }
 
@@ -45,8 +44,9 @@ module TM.SP_.License {
 
             var param = new RequestParams.MakeObsoleteParam(this);
             param.obsolete = obsolete;
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "MakeObsoleteGetXml");
 
-            return RequestMethods.MakePostRequest(param, "MakeObsoleteGetXml");
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public MakeObsoleteSaveSigned(obsolete: boolean, signature: string): JQueryXHR {
@@ -54,23 +54,26 @@ module TM.SP_.License {
             var param       = new RequestParams.MakeObsoleteSignedParam(this);
             param.obsolete  = obsolete;
             param.signature = encodeURIComponent(signature);
-                
-            return RequestMethods.MakePostRequest(param, "SaveSignedMakeObsolete");
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedMakeObsolete");
+
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public DisableGibddGetXml(disabled: boolean): JQueryXHR {
             var param = new RequestParams.DisableGibddParam(this);
             param.disabled = disabled;
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "DisableGibddGetXml");
 
-            return RequestMethods.MakePostRequest(param, "DisableGibddGetXml");
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public DisabledGibddSaveSigned(disabled: boolean, signature: string): JQueryXHR {
             var param       = new RequestParams.DisableGibddSignedParam(this);
             param.disabled  = disabled;
-            param.signature = signature;
-                
-            return RequestMethods.MakePostRequest(param, "SaveSignedDisableGibdd");
+            param.signature = encodeURIComponent(signature);
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedDisableGibdd");
+
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public ChangeObsoleteAttribute(obsolete: boolean, success: () => void, fail: (msg: string) => void): void
@@ -82,7 +85,7 @@ module TM.SP_.License {
                     cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                     cryptoPro.StoreNames.CAPICOM_MY_STORE,
                     cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
-                
+
                 if (oCertificate) {
                     dataToSign =
                     "<?xml version=\"1.0\"?>\n" +
@@ -98,7 +101,7 @@ module TM.SP_.License {
                         fail("Ошибка при формировании подписи: " + e.message);
                     }
 
-                    if (typeof signedData === 'undefined' || !signedData) {
+                    if (typeof signedData === "undefined" || !signedData) {
                         fail("Ошибка при формировании подписи");
                     }
 
@@ -111,7 +114,7 @@ module TM.SP_.License {
 
         public ChangeDisableGibddAttribute(disabled: boolean, success: () => void, fail: (msg: string) => void): void
         {
-            this.DisableGibddGetXml(disabled).done((xml) => {
+            this.DisableGibddGetXml(disabled).done((xml: any) => {
                 var dataToSign: string = xml.d;
 
                 var oCertificate = cryptoPro.SelectCertificate(
@@ -134,8 +137,9 @@ module TM.SP_.License {
                         fail("Ошибка при формировании подписи: " + e.message);
                     }
 
-                    if (typeof signedData === 'undefined' || !signedData)
+                    if (typeof signedData === "undefined" || !signedData) {
                         fail("Ошибка при формировании подписи");
+                    }
 
                     this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
                 }

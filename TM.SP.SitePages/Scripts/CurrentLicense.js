@@ -7,25 +7,32 @@ var TM;
     (function (SP_) {
         var License;
         (function (License) {
+            "use strict";
             var _current = null;
-            function Current() {
+            function getCurrent() {
+                return _current;
             }
-            License.Current = Current;
-            var def = $.Deferred();
-            JSRequest.EnsureSetup();
-            var listId = JSRequest.QueryString["List"];
-            var itemId = parseInt(JSRequest.QueryString["ID"]);
-            if (listId && itemId) {
-                var listGuid = new SP.Guid(listId);
-                var helper = License.LicenseEntityHelper.Create(listGuid, itemId, function (license) {
-                    def.resolve();
-                }, function (sender, args) {
+            License.getCurrent = getCurrent;
+            SP.SOD.loadMultiple(["sp.js", "sp.init.js"], function () {
+                var def = $.Deferred();
+                JSRequest.EnsureSetup();
+                var listId = decodeURIComponent(JSRequest.QueryString["List"]);
+                var itemId = parseInt(decodeURIComponent(JSRequest.QueryString["ID"]), 10);
+                if (listId && itemId) {
+                    var listGuid = new SP.Guid(listId);
+                    License.LicenseEntityHelper.Create(License.LicenseEntityHelper, listGuid, itemId, function (helper) {
+                        _current = helper.currentItem;
+                        def.resolve();
+                    }, def.reject);
+                }
+                else {
                     def.reject();
+                }
+                def.always(function () {
+                    SP.SOD.notifyScriptLoadedAndExecuteWaitingJobs("CurrentLicense.js");
                 });
-            }
-            else {
-                def.reject();
-            }
+            });
         })(License = SP_.License || (SP_.License = {}));
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));
+//# sourceMappingURL=CurrentLicense.js.map

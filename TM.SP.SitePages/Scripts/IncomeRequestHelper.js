@@ -12,6 +12,14 @@
                 ir.ServiceUrl  = SP.ScriptHelpers.urlCombine(tmUrl, 'IncomeRequestService.aspx');
             }, 'sp.init.js');
 
+            ir.TaxiStatus = {
+                InWork     : "В работе",
+                Success    : "Решено положительно",
+                Refused    : "Отказано",
+                Fail       : "Решено отрицательно",
+                NotReceived: "Не получено"
+            }
+
             ir.IsAllTaxiInStatus = function (incomeRequestId, statuses) {
                 return $.ajax({
                     type: 'POST',
@@ -220,7 +228,7 @@
             ir.OutputRequest = function (incomeRequestId) {
                 return $.ajax({
                     type: 'POST',
-                    url: ir.ServiceUrl + '/Output',
+                    url: ir.ServiceUrl + '/MakeOutput',
                     data: '{ incomeRequestId: ' + incomeRequestId + ' }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
@@ -910,7 +918,18 @@
                     .fail(onfail);
             };
 
-            ir.Close = function(incomeRequestId, onsuccess, onfail) {
+            ir.Close = function (incomeRequestId, onsuccess, onfail) {
+
+                var actions = {
+                    taxiPositiveExists      : 'Проверка на наличие ТС со статусом "Решено положительно"',
+                    taxiAllInStatuses       : 'Проверяем все ли ТС находятся в статусе "Решено положительно" или "Отказано" или "Решено отрицательно"',
+                    taxiAllHasBlankNo       : 'Проверяем у всех ли ТС со статусом "Решено положительно" заполнены номер и серия бланка разрешения',
+                    signCreateNotifications : 'Формирование и подписание уведомлений',
+                    signCreateLicenses      : 'Подписание разрешений',
+                    deleteDrafts            : 'Удаление черновиков разрешений',
+                    sendStatus              : 'Установка и отправка статуса обращения в АС ГУФ',
+                    updateOutRequestStatuses: 'Обновление межведомственных запросов'
+                }
 
                 var options = {
                     url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/ProgressDlg.aspx',
@@ -925,113 +944,125 @@
 
                 TM.SP.registeredProgressDlgConsumer = function(progress) {
                     
-                    var action = progress.addAction('Проверка на наличие ТС со статусом "Решено положительно"');
-                    ir.IsAnyTaxiInStatus(incomeRequestId, "Решено положительно").success(function(data) {
+                    var action = progress.addAction(actions.taxiPositiveExists);
+                    ir.IsAnyTaxiInStatus(incomeRequestId, ir.TaxiStatus.Success).success(function(data) {
                         if (data && data.d) {
                             progress.finishAction(action, 10);
 
-                            action = progress.addAction('Проверяем все ли ТС находятся в статусе "Решено положительно" или "Отказано" или "Решено отрицательно"');
-                            ir.IsAllTaxiInStatus(incomeRequestId, "Решено положительно;Отказано;Решено отрицательно").success(function (data) {
+                            action = progress.addAction(actions.taxiAllInStatuses);
+                            var isAllTaxiInStatus = [ir.TaxiStatus.Success, ir.TaxiStatus.Refused, ir.TaxiStatus.Fail].join(";");
+                            ir.IsAllTaxiInStatus(incomeRequestId, isAllTaxiInStatus).success(function (data) {
                                 if (data && data.d) {
                                     progress.finishAction(action, 20);
 
-                                    action = progress.addAction('Проверяем у всех ли ТС со статусом "Решено положительно" заполнены номер и серия бланка разрешения');
-                                    ir.IsAllTaxiInStatusHasBlankNo(incomeRequestId, "Решено положительно").success(function (data) {
-                                        if (data && data.d) {
-                                            progress.finishAction(action, 30);
+                                    var ctDef = $.Deferred();
+                                    ir.GetContentTypeName(incomeRequestId, function (ctName) {
+                                        if (ctName == "Аннулирование") {
+                                            ctDef.resolve();
+                                        } else {
+                                            action = progress.addAction(actions.taxiAllHasBlankNo);
+                                            ir.IsAllTaxiInStatusHasBlankNo(incomeRequestId, ir.TaxiStatus.Success)
+                                                .success(function (data) {
+                                                    if (data && data.d) {
+                                                        progress.finishAction(action, 30);
+                                                        ctDef.resolve();
+                                                    } else {
+                                                        progress.errorAction(action);
+                                                        ctDef.reject();
+                                                    }
+                                                }).fail(function (jqXhr, status, error) {
+                                                    progress.errorAction(action, error.message);
+                                                    ctDef.reject();
+                                                });
+                                        }
+                                    });
 
-                                            action = progress.addAction('Формирование и подписание уведомлений');
-                                            ir.CreateDocumentsWhileClosing(incomeRequestId).success(function (docs) {
-                                                if (docs && docs.d) {
+                                    ctDef.done(function () {
+                                        action = progress.addAction(actions.signCreateNotifications);
+                                        ir.CreateDocumentsWhileClosing(incomeRequestId).success(function (docs) {
+                                            if (docs && docs.d) {
+                                                ir.SignDocumentSaveSignatureMultiple(docs.d, function () {
+                                                    progress.finishAction(action, 50);
+                                                    // Для всех услуг кроме аннулирование подписываем разрешения
+                                                    action = progress.addAction(actions.signCreateLicenses);
+                                                    ir.PromoteLicenseDraftsAndSign(incomeRequestId).done(function () {
+                                                        progress.finishAction(action, 70);
 
-                                                    //var fileIdList = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
-                                                    ir.SignDocumentSaveSignatureMultiple(docs.d, function () {
+                                                        action = progress.addAction(actions.deleteDrafts);
+                                                        ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, ir.TaxiStatus.Refused).success(function () {
 
-                                                        //var sigFileIdList = Array.prototype.slice.call(arguments).join(',');
-                                                        progress.finishAction(action, 50);
-                                                        // Для всех услуг кроме аннулирование подписываем разрешения
-                                                        action = progress.addAction('Подписание разрешений');
-                                                        ir.PromoteLicenseDraftsAndSign(incomeRequestId).done(function () {
-                                                            progress.finishAction(action, 70);
-                                                            
-                                                            action = progress.addAction('Удаление черновиков разрешений');
-                                                            ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, "Отказано").success(function () {
+                                                            ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, ir.TaxiStatus.Fail).success(function () {
+                                                                progress.finishAction(action, 80);
 
-                                                                ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, "Решено отрицательно").success(function() {
-                                                                    progress.finishAction(action, 80);
+                                                                action = progress.addAction(actions.sendStatus);
+                                                                ir.SetStatusOnClosing(incomeRequestId).success(function () {
+                                                                    // Получение xml для измененного состояния обращения
+                                                                    ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                                                        //Подписание xml
+                                                                        if (data && data.d) {
+                                                                            ir.SignXml(data.d, function (signedData) {
+                                                                                // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                                ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                                                    // Отправка статуса обращения по межведомственному взаимодействию
+                                                                                    // сначала получим список документов, которые необходимо прикрепить
+                                                                                    ir.GetDocumentsForSendStatus(incomeRequestId).success(function (docs) {
+                                                                                        var attachs = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
+                                                                                        ir.SendStatus(incomeRequestId, attachs).success(function () {
+                                                                                            progress.finishAction(action, 90);
 
-                                                                    action = progress.addAction('Установка и отправка статуса обращения в АС ГУФ');
-                                                                    ir.SetStatusOnClosing(incomeRequestId).success(function () {
-                                                                        // Получение xml для измененного состояния обращения
-                                                                        ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
-                                                                            //Подписание xml
-                                                                            if (data && data.d) {
-                                                                                ir.SignXml(data.d, function (signedData) {
-                                                                                    // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                                                    ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                                                        // Отправка статуса обращения по межведомственному взаимодействию
-                                                                                        // сначала получим список документов, которые необходимо прикрепить
-                                                                                        ir.GetDocumentsForSendStatus(incomeRequestId).success(function (docs) {
-                                                                                            var attachs = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
-                                                                                            ir.SendStatus(incomeRequestId, attachs).success(function () {
-                                                                                                progress.finishAction(action, 90);
-
-                                                                                                action = progress.addAction('Обновление межведомственных запросов');
-                                                                                                ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function () {
-                                                                                                    progress.finishAction(action, 100);
-                                                                                                }).fail(function (jqXhr, status, error) {
-                                                                                                    progress.errorAction(action, error);
-                                                                                                });
-
+                                                                                            action = progress.addAction(actions.updateOutRequestStatuses);
+                                                                                            ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function () {
+                                                                                                progress.finishAction(action, 100);
                                                                                             }).fail(function (jqXhr, status, error) {
                                                                                                 progress.errorAction(action, error);
                                                                                             });
+
                                                                                         }).fail(function (jqXhr, status, error) {
                                                                                             progress.errorAction(action, error);
                                                                                         });
                                                                                     }).fail(function (jqXhr, status, error) {
                                                                                         progress.errorAction(action, error);
                                                                                     });
-                                                                                }, function (jqXhr, status, error) {
+                                                                                }).fail(function (jqXhr, status, error) {
                                                                                     progress.errorAction(action, error);
                                                                                 });
-                                                                            } else {
-                                                                                progress.errorAction(action, "Не удалось получить статус обращения в виде xml");
-                                                                            };
-                                                                        }).fail(function (jqXhr, status, error) {
-                                                                            progress.errorAction(action, error);
-                                                                        });
+                                                                            }, function (jqXhr, status, error) {
+                                                                                progress.errorAction(action, error);
+                                                                            });
+                                                                        } else {
+                                                                            progress.errorAction(action, "Не удалось получить статус обращения в виде xml");
+                                                                        };
                                                                     }).fail(function (jqXhr, status, error) {
-                                                                        var response = $.parseJSON(jqXhr.responseText).d;
-                                                                        console.error("Exception Message: " + response.Error.SystemMessage);
-                                                                        console.error("Exception StackTrace: " + response.Error.StackTrace);
-                                                                        progress.errorAction(action, response.Error.UserMessage);
+                                                                        progress.errorAction(action, error);
                                                                     });
-                                                                }).fail(function(jqXhr, status, error) {
+                                                                }).fail(function (jqXhr, status, error) {
                                                                     var response = $.parseJSON(jqXhr.responseText).d;
                                                                     console.error("Exception Message: " + response.Error.SystemMessage);
                                                                     console.error("Exception StackTrace: " + response.Error.StackTrace);
                                                                     progress.errorAction(action, response.Error.UserMessage);
                                                                 });
-                                                            }).fail(function(jqXhr, status, error) {
+                                                            }).fail(function (jqXhr, status, error) {
                                                                 var response = $.parseJSON(jqXhr.responseText).d;
                                                                 console.error("Exception Message: " + response.Error.SystemMessage);
                                                                 console.error("Exception StackTrace: " + response.Error.StackTrace);
                                                                 progress.errorAction(action, response.Error.UserMessage);
                                                             });
-                                                        }).fail(function(err) {
-                                                            progress.errorAction(action, err);
+                                                        }).fail(function (jqXhr, status, error) {
+                                                            var response = $.parseJSON(jqXhr.responseText).d;
+                                                            console.error("Exception Message: " + response.Error.SystemMessage);
+                                                            console.error("Exception StackTrace: " + response.Error.StackTrace);
+                                                            progress.errorAction(action, response.Error.UserMessage);
                                                         });
-                                                    }, function(err) {
+                                                    }).fail(function (err) {
                                                         progress.errorAction(action, err);
                                                     });
-                                                } else progress.errorAction(action);
-                                            }).fail(function(jqXhr, status, error) {
-                                                progress.errorAction(action, error.message);
-                                            });
-                                        } else progress.errorAction(action);
-                                    }).fail(function (jqXhr, status, error) {
-                                        progress.errorAction(action, error.message);
+                                                }, function (err) {
+                                                    progress.errorAction(action, err);
+                                                });
+                                            } else progress.errorAction(action);
+                                        }).fail(function (jqXhr, status, error) {
+                                            progress.errorAction(action, error.message);
+                                        });
                                     });
                                 } else progress.errorAction(action);
                             }).fail(function (jqXhr, status, error) {
