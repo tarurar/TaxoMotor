@@ -24,5 +24,10 @@
     <File Path="Scripts\CurrentLicense.js.map" Url="CurrentLicense.js.map" Type="GhostableInLibrary" ReplaceContent="TRUE" />
     <File Path="Scripts\IncomeRequestEntityHelper.js" Url="IncomeRequestEntityHelper.js" Type="GhostableInLibrary" ReplaceContent="TRUE" />
     <File Path="Scripts\IncomeRequestEntityHelper.js.map" Url="IncomeRequestEntityHelper.js.map" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\CryptoProTs.ts" Url="CryptoProTs.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\CurrentLicense.ts" Url="CurrentLicense.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\EntityHelper.ts" Url="EntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\IncomeRequestEntityHelper.ts" Url="IncomeRequestEntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\LicenseEntityHelper.ts" Url="LicenseEntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
   </Module>
 </Elements>

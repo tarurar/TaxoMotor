@@ -25,5 +25,10 @@
     <ProjectItemFile Source="CurrentLicense.js.map" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="IncomeRequestEntityHelper.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="IncomeRequestEntityHelper.js.map" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CryptoProTs.ts" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="CurrentLicense.ts" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="EntityHelper.ts" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="IncomeRequestEntityHelper.ts" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseEntityHelper.ts" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>
