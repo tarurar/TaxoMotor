@@ -16,6 +16,7 @@ using Aspose.Words;
 using AsposeLicense = Aspose.Words.License;
 using RequestAccount = TM.SP.BCSModels.CoordinateV5.RequestAccount;
 using CamlexNET.Impl.Helpers;
+using System.Data;
 
 namespace TM.SP.AppPages
 {
@@ -233,9 +234,9 @@ namespace TM.SP.AppPages
             var doc = new Document(tmplItem.File.OpenBinaryStream());
 
             doc.MailMerge.Execute(scalarValueNames, scalarValues);
-            if (taxiList != null && taxiList.Count > 0)
+            if (taxiList != null)
             {
-                var dt = taxiList.GetDataTable();
+                var dt = taxiList.GetDataTable() ?? new DataTable();
                 dt.TableName = "TaxiList";
                 doc.MailMerge.ExecuteWithRegions(dt);
             }
