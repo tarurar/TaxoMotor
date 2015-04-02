@@ -1,14 +1,9 @@
-﻿--IF OBJECT_ID(N'dbo.LisencesWSgetTaxiLicenseCommonSelect') IS NOT NULL DROP PROCEDURE dbo.LisencesWSgetTaxiLicenseCommonSelect
---GO
---SET ANSI_NULLS ON
---SET QUOTED_IDENTIFIER ON
---GO
---=================================================================
+﻿--=================================================================
 --  Автор       achernenko
 --  Дата        06.03.2015
 --  Описание    Получение данных для сервиса TaxiLisenses метода getTaxiLicenseСommon
 --=================================================================
-CREATE PROCEDURE dbo.LisencesWSgetTaxiLicenseCommonSelect
+CREATE PROCEDURE [dbo].[LisencesWSgetTaxiLicenseCommonSelect] --255
     @PageNumber INT = 1 
     ,@Count INT = 10
     ,@LicenseNum NVARCHAR(64) = NULL -- RegNumber
@@ -43,83 +38,114 @@ SET	@RegNumberInt = CAST(CAST(@LicenseNum AS INT) AS NVARCHAR(64))
 SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE (@PageNumber - 1) * @Count END
 SET	@FETCH = @OFFSET + @Count
 SET @LicenseNum = RIGHT('00000'+@LicenseNum, 5)
-    
 
-SELECT 
-    --CAST(License.Signature AS VARBINARY(MAX)) AS 'InfoTaxiData',
-    --CAST(License.Signature AS VARCHAR(MAX)) AS 'InfoTaxiData',
-    License.Signature AS 'InfoTaxiData',
-    License.Id AS 'ID',
-    x.Status AS 'Status'
+
+SELECT
+    *
+    ,ROW_NUMBER() OVER (ORDER BY R.MO, R.ID) AS NN
+INTO #ids
 FROM
-    License
-    INNER JOIN 
-        (
-            SELECT 
-                License.Id,
-                CASE WHEN child.Id IS NULL THEN 0 ELSE 1 END AS [Status],
-                ROW_NUMBER() OVER (ORDER BY License.Status) AS NN
-            FROM
-                License
-                LEFT OUTER JOIN License AS child
-                    ON License.Id = child.Parent
-            WHERE
-                (NULLIF(@Condition, 1) IS NULL OR (@Condition = 0 AND child.Id IS NULL))
-                AND (License.Status <> 4 AND (NULLIF(@Status, 5) IS NULL OR License.Status = @Status))
-                AND (@LicenseNum IS NULL OR (License.RegNumber = @LicenseNum OR License.RegNumber = @RegNumberInt))
-                AND (@LicenseDate_Begin IS NULL OR License.CreationDate >= @LicenseDate_Begin)
-                AND (@LicenseDate_End IS NULL OR License.CreationDate <= @LicenseDate_End)
-                AND (@Date_Begin IS NULL OR License.ChangeDate >= @Date_Begin)
-                AND (@Date_End IS NULL OR License.ChangeDate <= @Date_End)
-                AND (@TillDate_Begin IS NULL OR License.TillDate >= @TillDate_Begin)
-                AND (@TillDate_End IS NULL OR License.TillDate <= @TillDate_End)
-                AND (NULLIF(@MO, 2) IS NULL OR License.MO = @MO)
-                AND (@Name IS NULL OR License.ShortName = @Name)
-                AND (@OgrnNum IS NULL OR License.Ogrn = @OgrnNum)
-                AND (@INN IS NULL OR License.Inn = @INN)
-                AND (@Lfb IS NULL OR License.Lfb = @Lfb)
-                AND (@Brand IS NULL OR License.TaxiBrand = @Brand)
-                AND (@Model IS NULL OR License.TaxiModel = @Model)
-                AND (@RegNum IS NULL OR License.TaxiStateNumber = @RegNum)
-                AND (@TaxiColor IS NULL OR License.TaxiColor = @TaxiColor)
-                AND (@TaxiNumberColor IS NULL 
-                    OR (License.TaxiNumberColor = N'1' AND @TaxiNumberColor = N'1') 
-                    OR (ISNULL(License.TaxiNumberColor,N'') <> N'1' AND @TaxiNumberColor <> N'1')
-                    )
-                AND (@TaxiYear IS NULL OR License.TaxiYear = @TaxiYear)
-        ) AS X
-            ON License.id = x.id
-WHERE X.NN BETWEEN @OFFSET AND @FETCH
+    (
+        SELECT
+            License.Id, 
+            0 AS MO,
+            CASE WHEN child.Id IS NULL THEN 0 ELSE 1 END AS [Status]
+        FROM 
+            License
+            LEFT OUTER JOIN License AS child
+                ON child.Parent = License.Id
+        WHERE
+            (NULLIF(@Condition, 1) IS NULL OR (@Condition = 0 AND child.Id IS NULL))
+            AND (License.Status <> 4 AND (NULLIF(@Status, 5) IS NULL OR License.Status = @Status))
+            AND (@LicenseNum IS NULL OR (License.RegNumber = @LicenseNum OR License.RegNumber = @RegNumberInt))
+            AND (@LicenseDate_Begin IS NULL OR License.CreationDate >= @LicenseDate_Begin)
+            AND (@LicenseDate_End IS NULL OR License.CreationDate <= @LicenseDate_End)
+            AND (@Date_Begin IS NULL OR License.ChangeDate >= @Date_Begin)
+            AND (@Date_End IS NULL OR License.ChangeDate <= @Date_End)
+            AND (@TillDate_Begin IS NULL OR License.TillDate >= @TillDate_Begin)
+            AND (@TillDate_End IS NULL OR License.TillDate <= @TillDate_End)
+            AND (NULLIF(@MO, 2) IS NULL OR @MO = 0)
+            AND (@Name IS NULL OR License.ShortName = @Name)
+            AND (@OgrnNum IS NULL OR License.Ogrn = @OgrnNum)
+            AND (@INN IS NULL OR License.Inn = @INN)
+            AND (@Lfb IS NULL OR License.Lfb = @Lfb)
+            AND (@Brand IS NULL OR License.TaxiBrand = @Brand)
+            AND (@Model IS NULL OR License.TaxiModel = @Model)
+            AND (@RegNum IS NULL OR License.TaxiStateNumber = @RegNum)
+            AND (@TaxiColor IS NULL OR License.TaxiColor = @TaxiColor)
+            AND (@TaxiNumberColor IS NULL 
+                OR (License.TaxiNumberColor = N'1' AND @TaxiNumberColor = N'1') 
+                OR (ISNULL(License.TaxiNumberColor,N'') <> N'1' AND @TaxiNumberColor <> N'1')
+                )
+            AND (@TaxiYear IS NULL OR License.TaxiYear = @TaxiYear)
+        UNION ALL
+        SELECT
+            LicenseMO.Id,
+            1 AS MO,
+            CASE WHEN child.Id IS NULL THEN 0 ELSE 1 END AS [Status]
+        FROM 
+            LicenseMO
+            LEFT OUTER JOIN LicenseMO AS child
+                ON child.Parent = LicenseMO.Id
+        WHERE
+            (NULLIF(@Condition, 1) IS NULL OR (@Condition = 0 AND child.Id IS NULL))
+            AND (LicenseMO.Status <> 4 AND (NULLIF(@Status, 5) IS NULL OR LicenseMO.Status = @Status))
+            AND (@LicenseNum IS NULL OR (LicenseMO.RegNumber = @LicenseNum OR LicenseMO.RegNumber = @RegNumberInt))
+            AND (@LicenseDate_Begin IS NULL OR LicenseMO.CreationDate >= @LicenseDate_Begin)
+            AND (@LicenseDate_End IS NULL OR LicenseMO.CreationDate <= @LicenseDate_End)
+            AND (@Date_Begin IS NULL OR LicenseMO.ChangeDate >= @Date_Begin)
+            AND (@Date_End IS NULL OR LicenseMO.ChangeDate <= @Date_End)
+            AND (@TillDate_Begin IS NULL OR LicenseMO.TillDate >= @TillDate_Begin)
+            AND (@TillDate_End IS NULL OR LicenseMO.TillDate <= @TillDate_End)
+            AND (NULLIF(@MO, 2) IS NULL OR @MO = 1)
+            AND (@Name IS NULL OR LicenseMO.ShortName = @Name)
+            AND (@OgrnNum IS NULL OR LicenseMO.Ogrn = @OgrnNum)
+            AND (@INN IS NULL OR LicenseMO.Inn = @INN)
+            AND (@Lfb IS NULL OR LicenseMO.Lfb = @Lfb)
+            AND (@Brand IS NULL OR LicenseMO.TaxiBrand = @Brand)
+            AND (@Model IS NULL OR LicenseMO.TaxiModel = @Model)
+            AND (@RegNum IS NULL OR LicenseMO.TaxiStateNumber = @RegNum)
+            AND (@TaxiColor IS NULL OR LicenseMO.TaxiColor = @TaxiColor)
+            AND (@TaxiNumberColor IS NULL 
+                OR (LicenseMO.TaxiNumberColor = N'1' AND @TaxiNumberColor = N'1') 
+                OR (ISNULL(LicenseMO.TaxiNumberColor,N'') <> N'1' AND @TaxiNumberColor <> N'1')
+                )
+            AND (@TaxiYear IS NULL OR LicenseMO.TaxiYear = @TaxiYear)
+    ) AS R
+
+SELECT
+    X.Signature AS 'InfoTaxiData',
+    X.ID AS 'ID',
+    x.Status AS 'Status'
+FROM 
+    (
+        SELECT
+            License.Signature,
+            'MO=0' + CAST(License.Id AS NVARCHAR(MAX)) AS ID,
+            #ids.Status
+        FROM 
+            License
+            INNER JOIN #ids
+                ON License.Id = #ids.Id
+                    AND #ids.MO = 0
+                    AND #ids.NN BETWEEN @OFFSET AND @FETCH
+        UNION ALL
+        SELECT
+            LicenseMO.Signature,
+            'MO=1' + CAST(LicenseMO.Id AS NVARCHAR(MAX)) AS ID,
+            #ids.Status
+        FROM 
+            LicenseMO
+            INNER JOIN #ids
+                ON LicenseMO.Id = #ids.Id
+                    AND #ids.MO = 1
+                    AND #ids.NN BETWEEN @OFFSET AND @FETCH
+    ) AS X
 FOR XML PATH('InfoTaxiArray'), ROOT('ArrayOfInfoTaxiArray'), BINARY BASE64
-    
 
 SELECT 
     COUNT(*) AS CountRow
 FROM
-    License
-    LEFT OUTER JOIN License AS child
-        ON License.Id = child.Parent
-WHERE
-    (NULLIF(@Condition, 1) IS NULL OR (@Condition = 0 AND child.Id IS NULL))
-    AND (License.Status <> 4 AND (NULLIF(@Status, 5) IS NULL OR License.Status = @Status))
-    AND (@LicenseNum IS NULL OR (License.RegNumber = @LicenseNum OR License.RegNumber = @RegNumberInt))
-    AND (@LicenseDate_Begin IS NULL OR License.CreationDate >= @LicenseDate_Begin)
-    AND (@LicenseDate_End IS NULL OR License.CreationDate <= @LicenseDate_End)
-    AND (@Date_Begin IS NULL OR License.ChangeDate >= @Date_Begin)
-    AND (@Date_End IS NULL OR License.ChangeDate <= @Date_End)
-    AND (@TillDate_Begin IS NULL OR License.TillDate >= @TillDate_Begin)
-    AND (@TillDate_End IS NULL OR License.TillDate <= @TillDate_End)
-    AND (NULLIF(@MO, 2) IS NULL OR License.MO = @MO)
-    AND (@Name IS NULL OR License.ShortName = @Name)
-    AND (@OgrnNum IS NULL OR License.Ogrn = @OgrnNum)
-    AND (@INN IS NULL OR License.Inn = @INN)
-    AND (@Lfb IS NULL OR License.Lfb = @Lfb)
-    AND (@Brand IS NULL OR License.TaxiBrand = @Brand)
-    AND (@Model IS NULL OR License.TaxiModel = @Model)
-    AND (@RegNum IS NULL OR License.TaxiStateNumber = @RegNum)
-    AND (@TaxiColor IS NULL OR License.TaxiColor = @TaxiColor)
-    AND (@TaxiNumberColor IS NULL 
-        OR (License.TaxiNumberColor = N'1' AND @TaxiNumberColor = N'1') 
-        OR (ISNULL(License.TaxiNumberColor,N'') <> N'1' AND @TaxiNumberColor <> N'1')
-        )
-    AND (@TaxiYear IS NULL OR License.TaxiYear = @TaxiYear)
+    #ids
+
+DROP TABLE #ids
