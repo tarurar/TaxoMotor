@@ -29,24 +29,34 @@
             JSRequest.EnsureSetup();
             var id = JSRequest.QueryString.ID;
             
-            var curValue = TM.SP.License.CurrentItem.get_item('Tm_LicenseDisableGibdd');
+            var curValue = TM.SP_.License.getCurrent().get_item('Tm_LicenseDisableGibdd');
             var newValue = !curValue;
           
             SP.UI.Status.removeAllStatus(true);
-          
-            TM.SP.License.ChangeDisableGibddAttribute(id, newValue, function(){
-              var successMsgPart = newValue ? 'установлен' : 'снят';
-              var successStatus = SP.UI.Status.addStatus('Признак запрета отправки в ГИБДД успешно ' + successMsgPart);
-	            SP.UI.Status.setStatusPriColor(successStatus, 'green');
+            
+            var listId = decodeURIComponent(JSRequest.QueryString['List']);
+            var itemId = decodeURIComponent(JSRequest.QueryString['ID']);
+            
+            TM.SP_.License.LicenseEntityHelper.Create(TM.SP_.License.LicenseEntityHelper, listId, itemId, function(helper) {
               
-	            setTimeout(function() {
-		            var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
-                if (gobackBtn) {
-                  gobackBtn.click();
-                }
-	            }, 2000);
-            }, function(err){
-              var failStatus = SP.UI.Status.addStatus(err);
+              helper.ChangeDisableGibddAttribute(newValue, function() {
+                var successMsgPart = newValue ? 'установлен' : 'снят';
+                var successStatus = SP.UI.Status.addStatus('Признак запрета отправки в ГИБДД успешно ' + successMsgPart);
+	              SP.UI.Status.setStatusPriColor(successStatus, 'green');
+              
+	              setTimeout(function() {
+		              var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
+                  if (gobackBtn) {
+                    gobackBtn.click();
+                  }
+	              }, 2000);
+              }, function(err) {
+                var failStatus = SP.UI.Status.addStatus(err);
+	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+          
+            }, function() {
+              var failStatus = SP.UI.Status.addStatus('Ошибка при создании сервисного объекта LicenseEntityHelper');
 	            SP.UI.Status.setStatusPriColor(failStatus, 'red');
             });
           

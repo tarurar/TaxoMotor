@@ -5,16 +5,28 @@ module TM.SP_ {
 
     export module RequestParams {
         export class CommonParam {
+            public Stringify(): string {
+                return JSON.stringify(this);
+            }
+        }
 
+        export class EntityCommonParam extends CommonParam {
+            public EntityId: number;
+
+            constructor(entity: EntityHelper) {
+                super();
+
+                this.EntityId = entity.currentItem.get_id();
+            }
         }
     }
 
     export module RequestMethods {
-        export function MakePostRequest(param: RequestParams.CommonParam, method: string): JQueryXHR {
+        export function MakePostRequest(param: RequestParams.CommonParam, methodUrl: string): JQueryXHR {
             return $.ajax({
                 type       : "POST",
-                url        : SP.ScriptHelpers.urlCombine(this.getServiceUrl(), method),
-                data       : JSON.stringify(param),
+                url        : methodUrl,
+                data       : param.Stringify(),
                 contentType: "application/json; charset=utf-8",
                 dataType   : "json"
             });
@@ -30,8 +42,8 @@ module TM.SP_ {
             return this._currentItem;
         }
 
-        public static Create(listGuid: SP.Guid, itemId: number,
-            succeededCallback: (entity: EntityHelper) => void,
+        public static Create<T extends EntityHelper>(t: { new (): T;}, listGuid: SP.Guid, itemId: number,
+            succeededCallback: (entity: T) => void,
             failedCallback?: (sender: any, args: SP.ClientRequestFailedEventArgs) => void) {
 
             var ctx  = SP.ClientContext.get_current();
@@ -39,9 +51,9 @@ module TM.SP_ {
             var list = web.get_lists().getById(listGuid);
             var item = list.getItemById(itemId);
 
-            ctx.load(item);
+            ctx.load(item); 
             ctx.executeQueryAsync((sender, args) => {
-                var newEntity = new EntityHelper();
+                var newEntity = new t();
                 newEntity._currentItem = item;
                 succeededCallback(newEntity);
             }, failedCallback);
@@ -58,7 +70,6 @@ module TM.SP_ {
             }
             return this._serviceUrl;
         }
-
     }
 
 }

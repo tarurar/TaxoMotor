@@ -23,5 +23,7 @@
     <ProjectItemFile Source="CryptoProTs.js.map" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CurrentLicense.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="CurrentLicense.js.map" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="IncomeRequestEntityHelper.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="IncomeRequestEntityHelper.js.map" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

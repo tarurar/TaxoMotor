@@ -18,7 +18,7 @@ module TM.SP_.License {
 
         if (listId && itemId) {
             var listGuid = new SP.Guid(listId);
-            var helper = LicenseEntityHelper.Create(listGuid, itemId,(license) => {
+            var helper = LicenseEntityHelper.Create<LicenseEntityHelper>(LicenseEntityHelper, listGuid, itemId,(license) => {
                 _current = license.currentItem;
                 def.resolve();
             }, def.reject);

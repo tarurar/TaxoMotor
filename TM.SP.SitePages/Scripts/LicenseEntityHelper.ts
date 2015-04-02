@@ -7,13 +7,11 @@ module TM.SP_.License {
 
     export module RequestParams {
 
-        export class LicenseCommonParam extends TM.SP_.RequestParams.CommonParam {
-            public licenseId: number;
+        export class LicenseCommonParam extends TM.SP_.RequestParams.EntityCommonParam {
 
-            constructor(entity: LicenseEntityHelper) {
-                super();
-
-                this.licenseId = entity.currentItem.get_id();
+            public Stringify(): string {
+                var str = super.Stringify();
+                return str.replace("EntityId", "licenseId");
             }
         }
 
@@ -45,8 +43,9 @@ module TM.SP_.License {
 
             var param = new RequestParams.MakeObsoleteParam(this);
             param.obsolete = obsolete;
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "MakeObsoleteGetXml");
 
-            return RequestMethods.MakePostRequest(param, "MakeObsoleteGetXml");
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public MakeObsoleteSaveSigned(obsolete: boolean, signature: string): JQueryXHR {
@@ -54,23 +53,26 @@ module TM.SP_.License {
             var param       = new RequestParams.MakeObsoleteSignedParam(this);
             param.obsolete  = obsolete;
             param.signature = encodeURIComponent(signature);
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedMakeObsolete");
                 
-            return RequestMethods.MakePostRequest(param, "SaveSignedMakeObsolete");
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public DisableGibddGetXml(disabled: boolean): JQueryXHR {
             var param = new RequestParams.DisableGibddParam(this);
             param.disabled = disabled;
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "DisableGibddGetXml");
 
-            return RequestMethods.MakePostRequest(param, "DisableGibddGetXml");
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public DisabledGibddSaveSigned(disabled: boolean, signature: string): JQueryXHR {
             var param       = new RequestParams.DisableGibddSignedParam(this);
             param.disabled  = disabled;
-            param.signature = signature;
+            param.signature = encodeURIComponent(signature);
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedDisableGibdd");
                 
-            return RequestMethods.MakePostRequest(param, "SaveSignedDisableGibdd");
+            return RequestMethods.MakePostRequest(param, url);
         }
 
         public ChangeObsoleteAttribute(obsolete: boolean, success: () => void, fail: (msg: string) => void): void

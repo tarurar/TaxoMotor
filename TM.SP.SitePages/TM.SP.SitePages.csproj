@@ -84,6 +84,9 @@
     <None Include="Scripts\EntityHelper.js.map">
       <DependentUpon>EntityHelper.ts</DependentUpon>
     </None>
+    <None Include="Scripts\IncomeRequestEntityHelper.js.map">
+      <DependentUpon>IncomeRequestEntityHelper.ts</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-2.1.1.min.js.map">
       <DependentUpon>jquery-2.1.1.min.js</DependentUpon>
     </None>
@@ -157,6 +160,9 @@
       <DependentUpon>EntityHelper.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\IncomeRequestBcsFields.js" />
+    <Content Include="Scripts\IncomeRequestEntityHelper.js">
+      <DependentUpon>IncomeRequestEntityHelper.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\IncomeRequestHelper.js" />
     <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -188,6 +194,7 @@
     <TypeScriptCompile Include="Scripts\CryptoProTs.ts" />
     <TypeScriptCompile Include="Scripts\CurrentLicense.ts" />
     <TypeScriptCompile Include="Scripts\EntityHelper.ts" />
+    <TypeScriptCompile Include="Scripts\IncomeRequestEntityHelper.ts" />
     <TypeScriptCompile Include="Scripts\LicenseEntityHelper.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\sharepoint\SharePoint.d.ts" />

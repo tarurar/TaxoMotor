@@ -252,7 +252,7 @@ namespace TM.SP.AppPages
             SaveSigned(licenseId, l =>
             {
                 l.DisableGibddSend = disabled;
-                l.Signature = Uri.EscapeDataString(signature);
+                l.Signature = Uri.UnescapeDataString(signature);
             });
         }
         #endregion

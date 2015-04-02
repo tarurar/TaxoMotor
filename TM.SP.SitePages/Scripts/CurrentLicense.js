@@ -19,7 +19,7 @@ var TM;
                 var itemId = parseInt(decodeURIComponent(JSRequest.QueryString["ID"]));
                 if (listId && itemId) {
                     var listGuid = new SP.Guid(listId);
-                    var helper = License.LicenseEntityHelper.Create(listGuid, itemId, function (license) {
+                    var helper = License.LicenseEntityHelper.Create(License.LicenseEntityHelper, listGuid, itemId, function (license) {
                         _current = license.currentItem;
                         def.resolve();
                     }, def.reject);
