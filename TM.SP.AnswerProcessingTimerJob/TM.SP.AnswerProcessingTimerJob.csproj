@@ -73,6 +73,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Features\TaxoMotor_AnswerProcessingTimerJob\TaxoMotor_AnswerProcessingTimerJob.feature">
       <FeatureId>{6012f233-1f2c-4daa-ac27-4681a161a0a0}</FeatureId>
     </None>

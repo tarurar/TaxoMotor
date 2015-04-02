@@ -186,6 +186,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StringsRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="ApplicationPages\CommonService\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{ae3acb76-aa42-4b73-978b-6865edcea3ff}</SharePointProjectItemId>
     </None>
