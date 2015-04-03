@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="b6d5e33f-94f3-4675-8daf-97fb913fb932" solutionId="b6d5e33f-94f3-4675-8daf-97fb913fb932" resetWebServer="false" sharePointProductVersion="15.0" name="SP.PlumsailFormsBackup" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="7d72ef2b-3a44-4062-bcf4-86b845e43349" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="d31de18b-0745-401b-8946-707760701835" />
+  </projectItems>
+</package>
