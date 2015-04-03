@@ -60,7 +60,7 @@ module TM.SP_ {
 
         }
 
-        public getServiceUrl(): string {
+        public ServiceUrl(): string {
             if (!this._serviceUrl) {
                 var layoutsUrl = SP.ScriptHelpers.urlCombine(
                     _spPageContextInfo.webAbsoluteUrl,
@@ -69,6 +69,11 @@ module TM.SP_ {
                 this._serviceUrl = tmUrl;
             }
             return this._serviceUrl;
+        }
+
+        public BuildMethodUrl(methodName: string): string {
+            var rootUrl = this.ServiceUrl();
+            return SP.ScriptHelpers.urlCombine(rootUrl, methodName);
         }
     }
 

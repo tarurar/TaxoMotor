@@ -67,13 +67,17 @@ var TM;
                     succeededCallback(newEntity);
                 }, failedCallback);
             };
-            EntityHelper.prototype.getServiceUrl = function () {
+            EntityHelper.prototype.ServiceUrl = function () {
                 if (!this._serviceUrl) {
                     var layoutsUrl = SP.ScriptHelpers.urlCombine(_spPageContextInfo.webAbsoluteUrl, _spPageContextInfo.layoutsUrl);
                     var tmUrl = SP.ScriptHelpers.urlCombine(layoutsUrl, "TaxoMotor");
                     this._serviceUrl = tmUrl;
                 }
                 return this._serviceUrl;
+            };
+            EntityHelper.prototype.BuildMethodUrl = function (methodName) {
+                var rootUrl = this.ServiceUrl();
+                return SP.ScriptHelpers.urlCombine(rootUrl, methodName);
             };
             return EntityHelper;
         })();

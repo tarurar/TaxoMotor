@@ -35,7 +35,7 @@ var TM;
                     _super.apply(this, arguments);
                 }
                 IncomeRequestEntityHelper.prototype.ServiceUrl = function () {
-                    var rootUrl = _super.prototype.getServiceUrl.call(this);
+                    var rootUrl = _super.prototype.ServiceUrl.call(this);
                     return SP.ScriptHelpers.urlCombine(rootUrl, "IncomeRequestService.aspx");
                 };
                 return IncomeRequestEntityHelper;

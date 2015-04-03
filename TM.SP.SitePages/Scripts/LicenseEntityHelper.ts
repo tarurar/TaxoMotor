@@ -36,7 +36,7 @@ module TM.SP_.License {
     export class LicenseEntityHelper extends EntityHelper {
 
         public ServiceUrl(): string {
-            var rootUrl = super.getServiceUrl();
+            var rootUrl = super.ServiceUrl();
             return SP.ScriptHelpers.urlCombine(rootUrl, "LicenseService.aspx");
         }
 
@@ -44,9 +44,8 @@ module TM.SP_.License {
 
             var param = new RequestParams.MakeObsoleteParam(this);
             param.obsolete = obsolete;
-            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "MakeObsoleteGetXml");
 
-            return RequestMethods.MakePostRequest(param, url);
+            return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("MakeObsoleteGetXml"));
         }
 
         public MakeObsoleteSaveSigned(obsolete: boolean, signature: string): JQueryXHR {
@@ -54,26 +53,23 @@ module TM.SP_.License {
             var param       = new RequestParams.MakeObsoleteSignedParam(this);
             param.obsolete  = obsolete;
             param.signature = encodeURIComponent(signature);
-            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedMakeObsolete");
 
-            return RequestMethods.MakePostRequest(param, url);
+            return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedMakeObsolete"));
         }
 
         public DisableGibddGetXml(disabled: boolean): JQueryXHR {
             var param = new RequestParams.DisableGibddParam(this);
             param.disabled = disabled;
-            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "DisableGibddGetXml");
 
-            return RequestMethods.MakePostRequest(param, url);
+            return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("DisableGibddGetXml"));
         }
 
         public DisabledGibddSaveSigned(disabled: boolean, signature: string): JQueryXHR {
             var param       = new RequestParams.DisableGibddSignedParam(this);
             param.disabled  = disabled;
             param.signature = encodeURIComponent(signature);
-            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedDisableGibdd");
 
-            return RequestMethods.MakePostRequest(param, url);
+            return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedDisableGibdd"));
         }
 
         public ChangeObsoleteAttribute(obsolete: boolean, success: () => void, fail: (msg: string) => void): void

@@ -1,5 +1,6 @@
 var cryptoPro;
 (function (cryptoPro) {
+    "use strict";
     // CAPICOM_STORE_LOCATION enumeration
     (function (StoreLocation) {
         StoreLocation[StoreLocation["CAPICOM_MEMORY_STORE"] = 0] = "CAPICOM_MEMORY_STORE";
@@ -141,6 +142,7 @@ var cryptoPro;
             return oAbout;
         }
         catch (err) {
+            console.error("Ошибка при создании объекта CAdESCOM.About. Вероятно, Browser Plugin CryptoPro не установлен");
         }
         return false;
     }
@@ -166,18 +168,20 @@ var cryptoPro;
             var oStore = CreateObject("CAPICOM.Store");
             oStore.Open(storeLocation, storeName, storeOpenMode);
             var oCertificates = oStore.Certificates;
-            if (oCertificates.Count == 0) {
-                alert('В хранилище нет ни одного сертификата');
+            if (oCertificates.Count === 0) {
+                alert("В хранилище нет ни одного сертификата");
             }
             else {
                 // Не рассматриваются сертификаты, в которых отсутствует закрытый ключ
-                if (oCertificates.Count > 0)
+                if (oCertificates.Count > 0) {
                     oCertificates = oCertificates.Find(6 /* CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY */, 2 /* CAPICOM_PROPID_KEY_PROV_INFO */);
+                }
                 // Выбираются только сертификаты, действительные в настоящее время
                 var today = new Date();
                 var date = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
-                if (oCertificates.Count > 0)
+                if (oCertificates.Count > 0) {
                     oCertificates = oCertificates.Find(9 /* CAPICOM_CERTIFICATE_FIND_TIME_VALID */, date);
+                }
                 if (oCertificates.Count > 1) {
                     oCertificates = oCertificates.Select("Выбор сертификата для подписи", "АИС ТаксоМотор", false);
                 }
@@ -187,8 +191,9 @@ var cryptoPro;
             return oCertificate;
         }
         catch (e) {
-            if (e.number !== -2138568446)
+            if (e.number !== -2138568446) {
                 alert("Ошибка выбора сертификата: " + getErrorMessage(e));
+            }
             return false;
         }
     }
@@ -296,10 +301,10 @@ var cryptoPro;
                 r = (o & 15) << 4 | u >> 2;
                 i = (u & 3) << 6 | a;
                 t = t + String.fromCharCode(n);
-                if (u != 64) {
+                if (u !== 64) {
                     t = t + String.fromCharCode(r);
                 }
-                if (a != 64) {
+                if (a !== 64) {
                     t = t + String.fromCharCode(i);
                 }
             }
@@ -329,7 +334,7 @@ var cryptoPro;
         Base64._utf8_decode = function (e) {
             var t = "";
             var n = 0;
-            var r = 0, c1 = 0, c2 = 0, c3 = 0;
+            var r = 0, c2 = 0, c3 = 0;
             while (n < e.length) {
                 r = e.charCodeAt(n);
                 if (r < 128) {

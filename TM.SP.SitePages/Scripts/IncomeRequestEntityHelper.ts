@@ -18,7 +18,7 @@ module TM.SP_.IncomeRequest {
 
     export class IncomeRequestEntityHelper extends EntityHelper {
         public ServiceUrl(): string {
-            var rootUrl = super.getServiceUrl();
+            var rootUrl = super.ServiceUrl();
             return SP.ScriptHelpers.urlCombine(rootUrl, "IncomeRequestService.aspx");
         }
     }

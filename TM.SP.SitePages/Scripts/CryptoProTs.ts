@@ -3,6 +3,7 @@
 }
 
 module cryptoPro {
+    "use strict";
 
     // CAPICOM_STORE_LOCATION enumeration
     export enum StoreLocation {
@@ -121,7 +122,7 @@ module cryptoPro {
         public static XmlDsigGost3411Url: string = "urn:ietf:params:xml:ns:cpxmlsec:algorithms:gostr3411";
     }
 
-    function getErrorMessage(e) {
+    function getErrorMessage(e: any) {
         var err = e.message;
         if (!err) {
             err = e;
@@ -138,6 +139,7 @@ module cryptoPro {
             // установленного КриптоПро ЭЦП Browser plug-in
             return oAbout;
         } catch (err) {
+            console.error("Ошибка при создании объекта CAdESCOM.About. Вероятно, Browser Plugin CryptoPro не установлен");
         }
         return false;
     };
@@ -162,18 +164,21 @@ module cryptoPro {
             oStore.Open(storeLocation, storeName, storeOpenMode);
 
             var oCertificates = oStore.Certificates;
-            if (oCertificates.Count == 0) {
-                alert('В хранилище нет ни одного сертификата');
+            if (oCertificates.Count === 0) {
+                alert("В хранилище нет ни одного сертификата");
             } else {
                 // Не рассматриваются сертификаты, в которых отсутствует закрытый ключ
-                if (oCertificates.Count > 0)
-                    oCertificates = oCertificates.Find(CertFindType.CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY, PropId.CAPICOM_PROPID_KEY_PROV_INFO);
+                if (oCertificates.Count > 0) {
+                    oCertificates = oCertificates.Find(CertFindType.CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY,
+                        PropId.CAPICOM_PROPID_KEY_PROV_INFO);
+                }
 
                 // Выбираются только сертификаты, действительные в настоящее время
                 var today = new Date();
                 var date = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
-                if (oCertificates.Count > 0)
+                if (oCertificates.Count > 0) {
                     oCertificates = oCertificates.Find(CertFindType.CAPICOM_CERTIFICATE_FIND_TIME_VALID, date);
+                }
 
                 if (oCertificates.Count > 1) {
                     oCertificates = oCertificates.Select("Выбор сертификата для подписи", "АИС ТаксоМотор", false);
@@ -187,8 +192,9 @@ module cryptoPro {
             return oCertificate;
 
         } catch (e) {
-            if (e.number !== -2138568446) // отказ от выбора сертификата
+            if (e.number !== -2138568446) {// отказ от выбора сертификата
                 alert("Ошибка выбора сертификата: " + getErrorMessage(e));
+            }
             return false;
         }
     };
@@ -300,10 +306,10 @@ module cryptoPro {
                 r = (o & 15) << 4 | u >> 2;
                 i = (u & 3) << 6 | a;
                 t = t + String.fromCharCode(n);
-                if (u != 64) {
+                if (u !== 64) {
                     t = t + String.fromCharCode(r);
                 }
-                if (a != 64) {
+                if (a !== 64) {
                     t = t + String.fromCharCode(i);
                 }
             }
@@ -333,7 +339,7 @@ module cryptoPro {
         private static _utf8_decode (e: string): string {
             var t = "";
             var n = 0;
-            var r = 0, c1 = 0, c2 = 0, c3 = 0;
+            var r = 0, c2 = 0, c3 = 0;
             while (n < e.length) {
                 r = e.charCodeAt(n);
                 if (r < 128) {
