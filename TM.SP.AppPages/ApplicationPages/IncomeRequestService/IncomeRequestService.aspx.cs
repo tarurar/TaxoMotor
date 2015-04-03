@@ -50,6 +50,7 @@ namespace TM.SP.AppPages
         public string Xml;
     }
 
+    // interface class for client scripts
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class IncomeRequestService : LayoutsPageBase
     {
@@ -552,35 +553,7 @@ namespace TM.SP.AppPages
         public static string GetIncomeRequestCoordinateV5StatusMessage(int incomeRequestId)
         {
             SPWeb web = SPContext.Current.Web;
-            var rList = web.GetListOrBreak("Lists/IncomeRequestList");
-            // request item
-            SPListItem rItem = rList.GetItemOrBreak(incomeRequestId);
-            var sNumber = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
-            // status lookup item
-            var stList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
-            var stItemId = rItem["Tm_IncomeRequestStateLookup"] != null ? new SPFieldLookupValue(rItem["Tm_IncomeRequestStateLookup"].ToString()).LookupId : 0;
-            var stItem = stList.GetItemOrNull(stItemId);
-            var stCode = stItem == null ? String.Empty :
-                (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
-
-            var message = new CoordinateStatusMessage
-            {
-                ServiceHeader = new Headers
-                {
-                    FromOrgCode     = Consts.TaxoMotorDepCode,
-                    ToOrgCode       = Consts.AsgufSysCode,
-                    MessageId       = Guid.NewGuid().ToString("D"),
-                    RequestDateTime = DateTime.Now,
-                    ServiceNumber   = sNumber
-                },
-                StatusMessage = new CoordinateStatusData
-                {
-                    ServiceNumber = sNumber,
-                    StatusCode    = Convert.ToInt32(stCode),
-                }
-            };
-
-            return message.ToXElement<CoordinateStatusMessage>().ToString();
+            return IncomeRequestHelper.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId, web);
         }
 
         /// <summary>
@@ -591,35 +564,8 @@ namespace TM.SP.AppPages
         [WebMethod]
         public static void SaveIncomeRequestStatusLog(int incomeRequestId, string signature)
         {
-            SPWeb web         = SPContext.Current.Web;
-            SPList spList     = web.GetListOrBreak("Lists/IncomeRequestList");
-            SPList logList    = web.GetListOrBreak("Lists/IncomeRequestStatusLogList");
-            SPListItem spItem = spList.GetItemOrBreak(incomeRequestId);
-
-            if (spItem["Tm_IncomeRequestStateLookup"] == null)
-                throw new Exception("SaveIncomeRequestStatusLog: Income request state not defined");
-
-            web.AllowUnsafeUpdates = true;
-            try
-            {
-                string yearStr  = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture);
-                string monthstr = DateTime.Now.ToString("MMM", CultureInfo.CurrentCulture);
-                string num      = spItem.Title.ToString(CultureInfo.InvariantCulture);
-
-                SPFolder parentFolder = logList.RootFolder.CreateSubFolders(new[] { yearStr, monthstr, num });
-                SPListItem newLogItem = logList.AddItem(parentFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
-
-                newLogItem["Title"] = new SPFieldLookupValue(spItem["Tm_IncomeRequestStateLookup"].ToString()).LookupValue;
-                newLogItem["Tm_IncomeRequestLookup"] = new SPFieldLookupValue(spItem.ID, spItem.Title);
-                newLogItem["Tm_IncomeRequestStateLookup"] = spItem["Tm_IncomeRequestStateLookup"];
-                newLogItem["Tm_XmlValue"] = Uri.UnescapeDataString(signature);
-                newLogItem.Update();
-            }
-            finally
-            {
-                web.AllowUnsafeUpdates = false;
-            }
-
+            SPWeb web = SPContext.Current.Web;
+            IncomeRequestHelper.SaveIncomeRequestStatusLog(incomeRequestId, signature, web);
         }
 
         /// <summary>

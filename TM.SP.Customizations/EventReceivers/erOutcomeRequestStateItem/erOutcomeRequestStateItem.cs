@@ -16,6 +16,7 @@ namespace TM.SP.Customizations
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
     using Utils;
+    using TM.SP.AppPages;
 
 // ReSharper disable InconsistentNaming
     public class erOutcomeRequestStateItem : SPItemEventReceiver
@@ -104,6 +105,11 @@ namespace TM.SP.Customizations
                             rItem["Tm_IncomeRequestStateLookup"] =
                                 new SPFieldLookupValue(rCompletedStatusItem.ID, rCompletedStatusItem.Title);
                             rItem.SystemUpdate();
+                            // saving income request status change history
+                            var statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV5StatusMessage(rItem.ID, web);
+                            IncomeRequestHelper.SaveIncomeRequestStatusLog(rItem.ID, statusXml, web);
+                            // sending income request status
+                            IncomeRequestHelper.NotifyAboutItemStatus(rItem.ID, web);
                         }
                     }
                 }
