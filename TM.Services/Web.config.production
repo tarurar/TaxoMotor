@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <configuration>
   <configSections>
     <section name="databaseFactory.config" type="TM.Services.DatabaseFactorySectionHandler, TM.Services, Version=1.0.0.0, Culture=neutral, PulicKeyToken=null" />
@@ -14,38 +14,38 @@
     <httpRuntime targetFramework="4.5" />
   </system.web>
   <system.diagnostics>
-    <sources>
-      <source name="System.ServiceModel.MessageLogging" switchValue="All">
-        <listeners>
-          <add type="System.Diagnostics.DefaultTraceListener" name="Default">
-            <filter type="" />
-          </add>
-          <add name="ServiceModelMessageLoggingListener">
-            <filter type="" />
-          </add>
-        </listeners>
-      </source>
-      <source name="System.ServiceModel" switchValue="All" propagateActivity="false">
-        <listeners>
-          <add type="System.Diagnostics.DefaultTraceListener" name="Default">
-            <filter type="" />
-          </add>
-          <add name="ServiceModelTraceListener">
-            <filter type="" />
-          </add>
-        </listeners>
-      </source>
-    </sources>
-    <sharedListeners>
-      <add initializeData="C:\log\Web_messages.svclog" type="System.Diagnostics.XmlWriterTraceListener, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="ServiceModelMessageLoggingListener" traceOutputOptions="Timestamp">
-        <filter type="" />
-      </add>
-      <add initializeData="C:\log\Web_tracelog.svclog" type="System.Diagnostics.XmlWriterTraceListener, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="ServiceModelTraceListener" traceOutputOptions="DateTime, Timestamp">
-        <filter type="" />
-      </add>
-    </sharedListeners>
-    <trace autoflush="true" />
-  </system.diagnostics>
+  <sources>
+   <source name="System.ServiceModel.MessageLogging" switchValue="All">
+    <listeners>
+     <add type="System.Diagnostics.DefaultTraceListener" name="Default">
+      <filter type="" />
+     </add>
+     <add name="ServiceModelMessageLoggingListener">
+      <filter type="" />
+     </add>
+    </listeners>
+   </source>
+   <source name="System.ServiceModel" switchValue="All" propagateActivity="false">
+    <listeners>
+     <add type="System.Diagnostics.DefaultTraceListener" name="Default">
+      <filter type="" />
+     </add>
+     <add name="ServiceModelTraceListener">
+      <filter type="" />
+     </add>
+    </listeners>
+   </source>
+  </sources>
+  <sharedListeners>
+   <add initializeData="C:\log\Web_messages.svclog" type="System.Diagnostics.XmlWriterTraceListener, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="ServiceModelMessageLoggingListener" traceOutputOptions="Timestamp">
+    <filter type="" />
+   </add>
+   <add initializeData="C:\log\Web_tracelog.svclog" type="System.Diagnostics.XmlWriterTraceListener, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="ServiceModelTraceListener" traceOutputOptions="DateTime, Timestamp">
+    <filter type="" />
+   </add>
+  </sharedListeners>
+  <trace autoflush="true" />
+ </system.diagnostics>
   <system.serviceModel>
     <client>
       <endpoint name="ASGUF" address="http://10.127.37.12/CoordinateV5/Service.svc" binding="customBinding" bindingConfiguration="customBindingCoordinateV4Obsolete" contract="TM.Services.CoordinateV5.ICoordinateV5Service" behaviorConfiguration="ASGUF">
@@ -54,16 +54,16 @@
         </identity>
       </endpoint>
     </client>
-    <extensions>
-      <bindingElementExtensions>
-        <add name="RSmevActorMessageEncoding" type="Rkis.RSmev.RSmevActorMessageEncodingElement, Rkis.RSmev, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2b3b604558f3f5fa" />
-      </bindingElementExtensions>
+      <extensions>
+        <bindingElementExtensions>
+          <add name="RSmevActorMessageEncoding" type="Rkis.RSmev.RSmevActorMessageEncodingElement, Rkis.RSmev, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2b3b604558f3f5fa" />
+        </bindingElementExtensions>
     </extensions>
-    <diagnostics wmiProviderEnabled="true" performanceCounters="Off">
-      <messageLogging logEntireMessage="true" logMalformedMessages="true"
-     logMessagesAtServiceLevel="true" logMessagesAtTransportLevel="true"
-     maxMessagesToLog="3000" maxSizeOfMessageToLog="20000000" />
-    </diagnostics>
+	<diagnostics wmiProviderEnabled="true" performanceCounters="Off">
+	   <messageLogging logEntireMessage="true" logMalformedMessages="true"
+		logMessagesAtServiceLevel="true" logMessagesAtTransportLevel="true"
+		maxMessagesToLog="3000" maxSizeOfMessageToLog="20000000" />
+	</diagnostics>
     <bindings>
       <customBinding>
         <binding name="customBindingCoordinateV4Obsolete">
@@ -75,8 +75,8 @@
           <RSmevActorMessageEncoding>
             <readerQuotas maxDepth="32" maxStringContentLength="81920000" maxArrayLength="16384000" maxBytesPerRead="4096" maxNameTableCharCount="16384000" />
           </RSmevActorMessageEncoding>
-          <httpTransport manualAddressing="false" maxBufferPoolSize="5242880" maxReceivedMessageSize="2147483647" allowCookies="false" authenticationScheme="Anonymous"
-		  bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard" keepAliveEnabled="true" maxBufferSize="2147483647" proxyAuthenticationScheme="Anonymous"
+          <httpTransport manualAddressing="false" maxBufferPoolSize="5242880" maxReceivedMessageSize="2147483647" allowCookies="false" authenticationScheme="Anonymous" 
+		  bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard" keepAliveEnabled="true" maxBufferSize="2147483647" proxyAuthenticationScheme="Anonymous" 
 		  realm="" transferMode="Buffered" unsafeConnectionNtlmAuthentication="false" useDefaultWebProxy="true"/>
         </binding>
       </customBinding>
@@ -123,8 +123,8 @@
       </endpointBehaviors>
     </behaviors>
     <protocolMapping>
-      <add binding="basicHttpsBinding" scheme="https" />
-    </protocolMapping>
+        <add binding="basicHttpsBinding" scheme="https" />
+    </protocolMapping>    
     <serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true" />
   </system.serviceModel>
   <system.webServer>

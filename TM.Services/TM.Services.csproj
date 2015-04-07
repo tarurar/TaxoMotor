@@ -119,6 +119,7 @@
     </None>
     <None Include="Properties\PublishProfiles\LocalServer.pubxml" />
     <None Include="Properties\PublishProfiles\TM Production.pubxml" />
+    <Content Include="Web.config.production" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
