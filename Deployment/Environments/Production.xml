@@ -80,6 +80,9 @@
       <Solution Name="TM.SP.Ratings.wsp" Force="true" Overwrite="true">
         <WebApplication Url="$(WebAppUrl)" />
       </Solution>
+      <Solution Name="SP.PlumsailFormsBackup.wsp" Force="true" Overwrite="true">
+        <WebApplication Url="$(WebAppUrl)" />
+      </Solution>
     </Solutions>
   </Environment>
 </SPSD>

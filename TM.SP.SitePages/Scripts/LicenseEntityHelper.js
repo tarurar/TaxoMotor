@@ -68,34 +68,30 @@ var TM;
                     _super.apply(this, arguments);
                 }
                 LicenseEntityHelper.prototype.ServiceUrl = function () {
-                    var rootUrl = _super.prototype.getServiceUrl.call(this);
+                    var rootUrl = _super.prototype.ServiceUrl.call(this);
                     return SP.ScriptHelpers.urlCombine(rootUrl, "LicenseService.aspx");
                 };
                 LicenseEntityHelper.prototype.MakeObsoleteGetXml = function (obsolete) {
                     var param = new RequestParams.MakeObsoleteParam(this);
                     param.obsolete = obsolete;
-                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "MakeObsoleteGetXml");
-                    return SP_.RequestMethods.MakePostRequest(param, url);
+                    return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("MakeObsoleteGetXml"));
                 };
                 LicenseEntityHelper.prototype.MakeObsoleteSaveSigned = function (obsolete, signature) {
                     var param = new RequestParams.MakeObsoleteSignedParam(this);
                     param.obsolete = obsolete;
                     param.signature = encodeURIComponent(signature);
-                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedMakeObsolete");
-                    return SP_.RequestMethods.MakePostRequest(param, url);
+                    return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedMakeObsolete"));
                 };
                 LicenseEntityHelper.prototype.DisableGibddGetXml = function (disabled) {
                     var param = new RequestParams.DisableGibddParam(this);
                     param.disabled = disabled;
-                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "DisableGibddGetXml");
-                    return SP_.RequestMethods.MakePostRequest(param, url);
+                    return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("DisableGibddGetXml"));
                 };
                 LicenseEntityHelper.prototype.DisabledGibddSaveSigned = function (disabled, signature) {
                     var param = new RequestParams.DisableGibddSignedParam(this);
                     param.disabled = disabled;
                     param.signature = encodeURIComponent(signature);
-                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SaveSignedDisableGibdd");
-                    return SP_.RequestMethods.MakePostRequest(param, url);
+                    return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedDisableGibdd"));
                 };
                 LicenseEntityHelper.prototype.ChangeObsoleteAttribute = function (obsolete, success, fail) {
                     var _this = this;

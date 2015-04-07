@@ -26,7 +26,7 @@ namespace TM.SP.AppPages.Print
         protected string _signerName;
         protected string _signerPosition;
 
-        protected static readonly string _dateFormat = @"\""dd\"" MMMM yyyy г.";
+        protected static readonly string _dateFormat = @"«dd» MMMM yyyy г.";
         #endregion
 
         #region [properties]
@@ -77,7 +77,7 @@ namespace TM.SP.AppPages.Print
         {
             var values = new Dictionary<string, string>();
 
-            bool isPrvtEntrprnr = _declarant.OrgFormCode.Equals("91");
+            bool isPrvtEntrprnr = _declarant.OrgFormCode.Equals(SendRequestEGRULPage.PrivateEntrepreneurCode);
             var applyDate = _requestItem.TryGetValueOrNull<DateTime>("Tm_ApplyDate");
             var applyDateText = applyDate.HasValue ? applyDate.Value.ToString(_dateFormat)
                 : "Дата принятия в работу обращения не указана";
@@ -85,7 +85,8 @@ namespace TM.SP.AppPages.Print
             values.Add("RequestAccountAddress", isPrvtEntrprnr ? String.Empty : _declarant.SingleStrPostalAddress);
             values.Add("LicenseNumber", String.Format("{0:00000}", Convert.ToInt32(exLicense.RegNumber)));
             values.Add("RequestAccountFullName", _declarant.FullName);
-            values.Add("RequestAccountShortName", _declarant.Name);
+            values.Add("DeclarantNamePE", isPrvtEntrprnr ? _declarant.Name : String.Empty);
+            values.Add("DeclarantNameJP", isPrvtEntrprnr ? String.Empty : String.Format("({0})", _declarant.Name));
             values.Add("LicenseCreationDate", exLicense.CreationDate.HasValue ? exLicense.CreationDate.Value.ToString(_dateFormat) : "");
             values.Add("TaxiMark", taxiItem.TryGetValue<string>("Tm_TaxiBrand"));
             values.Add("TaxiModel", taxiItem.TryGetValue<string>("Tm_TaxiModel"));

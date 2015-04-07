@@ -95,12 +95,9 @@ namespace TM.SP.AppPages.Print
             var tmplItem = ValidateTemplate(templateNumber);
 
             var doc = new Document(tmplItem.File.OpenBinaryStream());
-            if (_taxiItems.Count() > 0)
-            {
-                var dt = CreateDataTable();
-                FillDataTable(dt);
-                doc.MailMerge.ExecuteWithRegions(dt);
-            }
+            var dt = CreateDataTable();
+            FillDataTable(dt);
+            doc.MailMerge.ExecuteWithRegions(dt);
 
             var ms = new MemoryStream();
             doc.Save(ms, SaveFormat.Doc);

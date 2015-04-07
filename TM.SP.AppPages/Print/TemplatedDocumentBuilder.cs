@@ -14,7 +14,9 @@ using Microsoft.Office.Server.UserProfiles;
 using TM.Utils;
 using Aspose.Words;
 using AsposeLicense = Aspose.Words.License;
+using RequestAccount = TM.SP.BCSModels.CoordinateV5.RequestAccount;
 using CamlexNET.Impl.Helpers;
+using System.Data;
 
 namespace TM.SP.AppPages
 {
@@ -33,6 +35,7 @@ namespace TM.SP.AppPages
         private SPList _attachLib;
         private AsposeLicense _asposeLic;
         private SPList _taxiList;
+        private RequestAccount _declarant;
 
         public SPListItem RequestedDocument
         {
@@ -133,9 +136,12 @@ namespace TM.SP.AppPages
             _taxiList  = _web.GetListOrBreak("Lists/TaxiList");
             _asposeLic = new AsposeLicense();
             _asposeLic.SetLicense("Aspose.Total.lic");
+
+            var declarantId = BCS.GetBCSFieldLookupId(_request, "Tm_RequestAccountBCSLookup");
+            this._declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
         }
 
-        private SPListItemCollection GetTaxiItemsInStatus(string statuses)
+        private SPListItemCollection GetTaxiItemsInStatus(string statuses, List<Expression<Func<SPListItem, bool>>> additionalExprAnd)
         {
             var arrStatuses = statuses.Split(';');
 
@@ -154,7 +160,17 @@ namespace TM.SP.AppPages
                     (DataTypes.LookupId) _request.ID.ToString(CultureInfo.InvariantCulture)
             };
             var parentExpr = ExpressionsHelper.CombineOr(parentConditions);
+
+            Expression<Func<SPListItem, bool>> additionalExpr = null;
+            if (additionalExprAnd != null) {
+                additionalExpr = ExpressionsHelper.CombineAnd(additionalExprAnd);
+            }
+
             var expressions = new List<Expression<Func<SPListItem, bool>>> { statusExpr, parentExpr };
+            if (additionalExpr != null)
+            {
+                expressions.Add(additionalExpr);
+            }
 
             return _taxiList.GetItems(new SPQuery
             {
@@ -175,26 +191,35 @@ namespace TM.SP.AppPages
             {
                 case 4:
                 case 5:
-                    taxiList = GetTaxiItemsInStatus("Решено положительно");
+                    taxiList = GetTaxiItemsInStatus("Решено положительно", null);
                     break;
                 case 1:
                 case 2:
                 case 3:
                 case 6:
-                    taxiList = GetTaxiItemsInStatus("Отказано;Решено отрицательно");
+                    // выводим только те ТС у которых действительно указана причина отказа
+                    var addConditions = new List<Expression<Func<SPListItem, bool>>>() 
+                    {
+                        x => x["Tm_DenyReasonLookup"] != null
+                    };
+
+                    taxiList = GetTaxiItemsInStatus("Отказано;Решено отрицательно", addConditions);
                     break;
             }
 
             var scalarValueNames = new string[]
             {
-                "DeclarantName", "CreationDate", "SingleNumber", "SubServiceName",
+                "DeclarantNamePE", "DeclarantNameJP", "CeoText", "CreationDate", "SingleNumber", "SubServiceName",
                 "RefuseReasonTitle", "RefuseReasonText", "OperatorDepartment", "OperatorName", 
                 "ApplyDate", "InternalRegNumber"
             };
 
+            bool isPrvtEntrprnr = _declarant.OrgFormCode.Equals(SendRequestEGRULPage.PrivateEntrepreneurCode);
             var scalarValues = new object[]
             {
-                _request["Tm_RequestAccountBCSLookup"] ?? "",
+                isPrvtEntrprnr ? _request["Tm_RequestAccountBCSLookup"] : String.Empty,
+                isPrvtEntrprnr ? String.Empty : _request["Tm_RequestAccountBCSLookup"],
+                isPrvtEntrprnr ? String.Empty : "Генеральному директору",
                 RegistrationDateText,
                 _request["Tm_SingleNumber"] ?? "",
                 RequestedDocument != null ? RequestedDocument.Title : "",
@@ -209,9 +234,9 @@ namespace TM.SP.AppPages
             var doc = new Document(tmplItem.File.OpenBinaryStream());
 
             doc.MailMerge.Execute(scalarValueNames, scalarValues);
-            if (taxiList != null && taxiList.Count > 0)
+            if (taxiList != null)
             {
-                var dt = taxiList.GetDataTable();
+                var dt = taxiList.GetDataTable() ?? new DataTable();
                 dt.TableName = "TaxiList";
                 doc.MailMerge.ExecuteWithRegions(dt);
             }

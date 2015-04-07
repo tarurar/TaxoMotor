@@ -66,9 +66,9 @@ namespace TM.SP.BCSModels.Taxi
         public String JuridicalAddress { get; set; }
         [XmlElement("phonenumber")]
         public String PhoneNumber { get; set; }
-        [XmlElement("addcontactdata")]
+        [XmlIgnore]
         public String AddContactData { get; set; }
-        [XmlElement("accountabbr")]
+        [XmlIgnore]
         public String AccountAbbr { get; set; }
         [XmlElement("taxibrand")]
         public String TaxiBrand { get; set; }
@@ -123,7 +123,7 @@ namespace TM.SP.BCSModels.Taxi
         public String SuspensionReason { get; set; }
         [XmlElement("changereason")]
         public String ChangeReason { get; set; }
-        [XmlElement("invalidreason")]
+        [XmlIgnore]
         public String InvalidReason { get; set; }
         [XmlElement("shortname")]
         public String ShortName { get; set; }
@@ -300,24 +300,14 @@ namespace TM.SP.BCSModels.Taxi
         public bool XmlOwnDateSpecified { get { return OwnDate.HasValue; } }
         #endregion
 
-        #region [MO]
         [XmlIgnore]
         public bool? MO { get; set; }
-        [XmlElement("mo")]
-        public bool XmlMO { get { return MO.Value; } set { MO = value; } }
-        public bool XmlMOSpecified { get { return MO.HasValue; } }
-        #endregion
 
-        [XmlElement("guid_mo")]
+        [XmlIgnore]
         public System.String GUID_MO { get; set; }
 
-        #region [DATE_MO]
         [XmlIgnore]
         public DateTime? DATE_MO { get; set; }
-        [XmlElement("date_mo")]
-        public DateTime XmlDATE_MO { get { return DATE_MO.Value; } set { DATE_MO = value; } }
-        public bool XmlDATE_MOSpecified { get { return DATE_MO.HasValue; } }
-        #endregion
 
         [XmlIgnore]
         public bool? Obsolete { get; set; }

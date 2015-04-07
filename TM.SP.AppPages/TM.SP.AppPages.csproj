@@ -163,6 +163,7 @@
       <DependentUpon>SendStatus.aspx.cs</DependentUpon>
     </Compile>
     <Compile Include="IncomeRequestBuilder.cs" />
+    <Compile Include="IncomeRequestHelper.cs" />
     <Compile Include="LicenseHelper.cs" />
     <Compile Include="Print\TemplatedBaseLicenseDocumentBuilder.cs" />
     <Compile Include="Print\TemplatedMultiLicenseDocumentBuilder.cs" />
