@@ -1,15 +1,10 @@
-﻿--IF OBJECT_ID(N'dbo.LisencesWSgetTaxiInfosSelect') IS NOT NULL DROP PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
---GO
---SET ANSI_NULLS ON
---SET QUOTED_IDENTIFIER ON
---GO
---=================================================================
+﻿--=================================================================
 --  Автор       achernenko
 --  Дата        03.03.2015
 --  Описание    Получение выборки для сервиса TaxiServices.TaxiLicenses.TaxiLicenses метод getTaxiInfos
 --				в виде XML
 --=================================================================
-CREATE PROCEDURE dbo.LisencesWSgetTaxiInfosSelect
+CREATE PROCEDURE [dbo].[LisencesWSgetTaxiInfosSelect]
 	@LicenseNum NVARCHAR(64) = NULL --RegNumber
 	,@LicenseDate DATETIME = NULL-- CreationDate
 	,@Name NVARCHAR(32) = NULL-- ShortName
@@ -26,10 +21,11 @@ AS
 DECLARE 	
 	@OFFSET INT
 	,@FETCH INT
-	,@RegNumberInt NVARCHAR(64)	
+	,@RegNumberInt INT
+
 	
 SELECT 
-	@RegNumberInt = CAST(CAST(@LicenseNum AS INT) AS NVARCHAR(64))
+	@RegNumberInt = CAST(RIGHT(@LicenseNum, 5) AS INT)
 	,@SortOrder = REPLACE(ISNULL(@SortOrder, N'LicenseNum'), N';', N', ')
 
 SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE ((@PageNumber - 1) * @Count) + 1 END
@@ -44,11 +40,6 @@ SET @SortOrder = REPLACE(@SortOrder, N'OgrnDate',N'L1.OgrnDate')
 SET @SortOrder = REPLACE(@SortOrder, N'Brand',N'L1.TaxiBrand')
 SET @SortOrder = REPLACE(@SortOrder, N'Model',N'L1.TaxiModel')
 SET @SortOrder = REPLACE(@SortOrder, N'Condition',N'L1.Status')
-
-
-SELECT 
-	@LicenseNum = RIGHT('00000'+@LicenseNum, 5)
-
 
 
 DECLARE @sqlcmd NVARCHAR(max) = N'
@@ -69,7 +60,7 @@ FROM
 				L2.Id IS NULL
 				AND L1.Status <> 4 
 				AND (L1.MO IS NULL OR L1.MO = 0)
-				AND (@LicenseNum IS NULL OR (L1.RegNumber = @LicenseNum OR L1.RegNumber = @RegNumberInt))
+				AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
 				AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
 				AND (@Name IS NULL OR L1.ShortName = @Name)
 				AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
@@ -84,12 +75,11 @@ WHERE
 ORDER BY '+ @SortOrder + N'
 FOR XML PATH(''''), ROOT (''ArrayOfTaxiInfo'')'
 
-DECLARE @ParmDefinition NVARCHAR(max) = N'@LicenseNum NVARCHAR(64), @RegNumberInt NVARCHAR(64), @LicenseDate DATETIME, @Name NVARCHAR(32), @OgrnNum  NVARCHAR(255), @OgrnDate DATETIME, @Brand NVARCHAR(64), @Model NVARCHAR(64), @RegNum NVARCHAR(24), @OFFSET INT, @FETCH INT';
+DECLARE @ParmDefinition NVARCHAR(max) = N'@RegNumberInt INT, @LicenseDate DATETIME, @Name NVARCHAR(32), @OgrnNum  NVARCHAR(255), @OgrnDate DATETIME, @Brand NVARCHAR(64), @Model NVARCHAR(64), @RegNum NVARCHAR(24), @OFFSET INT, @FETCH INT';
 
 EXECUTE sp_executesql 
 	@sqlcmd, 
-	@ParmDefinition, 
-	@LicenseNum = @LicenseNum, 
+	@ParmDefinition,
 	@RegNumberInt = @RegNumberInt, 
 	@LicenseDate = @LicenseDate ,
 	@Name = @Name,
@@ -111,7 +101,7 @@ WHERE
 	L2.Id IS NULL
 	AND L1.Status <> 4 
 	AND (L1.MO IS NULL OR L1.MO = 0)
-	AND (@LicenseNum IS NULL OR (L1.RegNumber = @LicenseNum OR L1.RegNumber = @RegNumberInt))
+	AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
 	AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
 	AND (@Name IS NULL OR L1.ShortName = @Name)
 	AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
