@@ -1,10 +1,4 @@
-﻿--=================================================================
---  Автор       achernenko
---  Дата        03.03.2015
---  Описание    Получение выборки для сервиса TaxiServices.TaxiLicenses.TaxiLicenses метод getTaxiInfos
---				в виде XML
---=================================================================
-CREATE PROCEDURE [dbo].[LisencesWSgetTaxiInfosSelect]
+﻿CREATE PROCEDURE [dbo].[LisencesWSgetTaxiInfosSelect]
 	@LicenseNum NVARCHAR(64) = NULL --RegNumber
 	,@LicenseDate DATETIME = NULL-- CreationDate
 	,@Name NVARCHAR(32) = NULL-- ShortName
@@ -32,7 +26,7 @@ SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE ((@PageNumber - 1) * @Count)
 SET	@FETCH = @OFFSET + @Count
 
 SET @SortOrder = REPLACE(@SortOrder, N'RegNum',N'L1.TaxiStateNumber')
-SET @SortOrder = REPLACE(@SortOrder, N'LicenseNum',N'L1.RegNumber')
+SET @SortOrder = REPLACE(@SortOrder, N'LicenseNum',N'L1.RegNumberInt')
 SET @SortOrder = REPLACE(@SortOrder, N'LicenseDate',N'L1.CreationDate')
 SET @SortOrder = REPLACE(@SortOrder, N'Name',N'L1.ShortName')
 SET @SortOrder = REPLACE(@SortOrder, N'OgrnNum',N'L1.Ogrn')

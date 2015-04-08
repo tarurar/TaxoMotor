@@ -1,14 +1,14 @@
-﻿CREATE NONCLUSTERED INDEX [IX_LicensesMo_ForWS] ON [dbo].[LicenseMo]
+﻿CREATE NONCLUSTERED INDEX [IX_LicensesMO_ForWS] ON [dbo].[LicenseMO]
 (
-	[Status],
-	[MO],
-	[RegNumber],
-	[CreationDate],
-	[ShortName],
-	[OgrnNum],
-	[OgrnDate],
-	[TaxiBrand],
-	[TaxiModel],
-	[TaxiStateNumber],
-	[Id]
+	[Status] ASC,
+	[MO] ASC,
+	[RegNumberInt] ASC,
+	[CreationDate] ASC,
+	[ShortName] ASC,
+	[OgrnNum] ASC,
+	[OgrnDate] ASC,
+	[TaxiBrand] ASC,
+	[TaxiModel] ASC,
+	[TaxiStateNumber] ASC,
+	[Id] ASC
 )
