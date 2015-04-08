@@ -75,6 +75,24 @@ module TM.SP_ {
             var rootUrl = this.ServiceUrl();
             return SP.ScriptHelpers.urlCombine(rootUrl, methodName);
         }
+
+        public PostWebMethod<T extends RequestParams.EntityCommonParam>(t: { new (entity: EntityHelper): T }, updateParam: (param: T) => void, methodName: string): JQueryXHR {
+            var param = new t(this);
+            if (updateParam) {
+                updateParam(param);
+            }
+
+            return RequestMethods.MakePostRequest(param, this.BuildMethodUrl(methodName));
+        }
+
+        public PostNonEntityWebMethod<T extends RequestParams.CommonParam>(t: { new (): T }, updateParam: (param: T) => void, methodName: string): JQueryXHR {
+            var param = new t();
+            if (updateParam) {
+                updateParam(param);
+            }
+
+            return RequestMethods.MakePostRequest(param, this.BuildMethodUrl(methodName));
+        }
     }
 
 }

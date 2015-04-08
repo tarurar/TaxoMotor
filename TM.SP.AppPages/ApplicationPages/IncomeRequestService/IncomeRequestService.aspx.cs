@@ -509,10 +509,11 @@ namespace TM.SP.AppPages
                 var statusItem = statusList.GetSingleListItemByFieldValue("Tm_ServiceCode", statusCode.ToString(CultureInfo.InvariantCulture));
                 var ctId = new SPContentTypeId(item["ContentTypeId"].ToString());
 
+                DateTime applyDate = DateTime.Now.Date;
                 // В случае отказа сроки предоставления услуги не рассчитываем
                 if (statusCode != 1080)
                 {
-                    DateTime prepDate, outpDate, applyDate = DateTime.Now.Date;
+                    DateTime prepDate, outpDate;
                     DateTime beginWorkDate = applyDate.AddDays(1);
 
                     if (ctId == list.ContentTypes["Аннулирование"].Id)
@@ -533,12 +534,21 @@ namespace TM.SP.AppPages
 
                     item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(prepDate);
                     item["Tm_OutputTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(outpDate);
-                    item["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(applyDate);
                 }
                 if (statusItem != null)
                     item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(statusItem.ID, statusItem.Title);
-                // Присвоение внутреннего регистрационного номера
-                item["Tm_InternalRegNumber"] = Utility.GetIncomeRequestInternalRegNumber("InternalRegNumber");
+                // Присвоение внутреннего регистрационного номера только если он еще не задан
+                var number = item.TryGetValue<string>("Tm_InternalRegNumber");
+                if (String.IsNullOrEmpty(number))
+                {
+                    item["Tm_InternalRegNumber"] = Utility.GetIncomeRequestInternalRegNumber("InternalRegNumber");
+                }
+                // дату регистрации указываем только если она еще не задана
+                var regDate = item.TryGetValueOrNull<DateTime>("Tm_ApplyDate");
+                if (regDate == null)
+                {
+                    item["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(applyDate);
+                }
 
                 item.Update();                            
             }));
@@ -1569,6 +1579,31 @@ namespace TM.SP.AppPages
             var doc = docs.Cast<SPListItem>().FirstOrDefault();
 
             return doc != null ? doc.ID : 0;
+        }
+
+        [WebMethod]
+        public static dynamic AssignInternalRegNumber(int incomeRequestId)
+        {
+            var web = SPContext.Current.Web;
+
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при проставлении внутреннего номера обращения", () =>
+                    Utility.WithSafeUpdate(web, safeWeb =>
+                    {
+                        var rList   = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
+                        var rItem   = rList.GetItemById(incomeRequestId);
+                        var number  = rItem.TryGetValue<string>("Tm_InternalRegNumber");
+                        var regDate = rItem.TryGetValueOrNull<DateTime>("Tm_ApplyDate");
+
+                        if (!String.IsNullOrEmpty(number))
+                            throw new Exception("Внутренний регистрационный номер обращения уже задан");
+                        if (regDate != null)
+                            throw new Exception("Дата регистрации обращения уже задана");
+                        
+                        rItem["Tm_InternalRegNumber"] = Utility.GetIncomeRequestInternalRegNumber("InternalRegNumber");
+                        rItem["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+                        rItem.Update();
+                    }));
         }
     }
 }

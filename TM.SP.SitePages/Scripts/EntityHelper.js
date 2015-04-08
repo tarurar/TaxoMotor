@@ -79,6 +79,20 @@ var TM;
                 var rootUrl = this.ServiceUrl();
                 return SP.ScriptHelpers.urlCombine(rootUrl, methodName);
             };
+            EntityHelper.prototype.PostWebMethod = function (t, updateParam, methodName) {
+                var param = new t(this);
+                if (updateParam) {
+                    updateParam(param);
+                }
+                return RequestMethods.MakePostRequest(param, this.BuildMethodUrl(methodName));
+            };
+            EntityHelper.prototype.PostNonEntityWebMethod = function (t, updateParam, methodName) {
+                var param = new t();
+                if (updateParam) {
+                    updateParam(param);
+                }
+                return RequestMethods.MakePostRequest(param, this.BuildMethodUrl(methodName));
+            };
             return EntityHelper;
         })();
         SP_.EntityHelper = EntityHelper;

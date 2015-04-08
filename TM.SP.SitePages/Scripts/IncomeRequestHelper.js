@@ -1142,6 +1142,16 @@
                 return deferred.promise();
             };
 
+            ir.AssignInternalRegNumber = function (incomeRequestId) {
+                return $.ajax({
+                    type: 'POST',
+                    url: ir.ServiceUrl + '/AssignInternalRegNumber',
+                    data: '{ incomeRequestId: ' + incomeRequestId + ' }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+            };
+
             return ir;
         })(tmsp.IncomeRequest || (tmsp.IncomeRequest = {}));
 
