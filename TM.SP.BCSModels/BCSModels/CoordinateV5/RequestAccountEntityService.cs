@@ -17,7 +17,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn = getSqlConnection();
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
-            selectCommand.CommandText = "SELECT TOP 1 [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] ORDER BY [Id] DESC";
+            selectCommand.CommandText = "SELECT TOP 1 [Title] , [FullName] , [Name] , [BrandName] , [Brand] , [Ogrn] , [OgrnAuthority] , [OgrnAuthorityAddress] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] ORDER BY [Id] DESC";
 
             selectCommand.Connection = thisConn;
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -27,8 +27,10 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.FullName = (thisReader["FullName"] == DBNull.Value) ? null : thisReader["FullName"].ToString();
                 entity.Name = (thisReader["Name"] == DBNull.Value) ? null : thisReader["Name"].ToString();
                 entity.BrandName = (thisReader["BrandName"] == DBNull.Value) ? null : thisReader["BrandName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.OgrnAuthority = (thisReader["OgrnAuthority"] == DBNull.Value) ? null : thisReader["OgrnAuthority"].ToString();
+                entity.OgrnAuthorityAddress = (thisReader["OgrnAuthorityAddress"] == DBNull.Value) ? null : thisReader["OgrnAuthorityAddress"].ToString();
                 entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
                 entity.OgrnDate = thisReader["OgrnDate"] as System.Nullable<System.DateTime>;
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();

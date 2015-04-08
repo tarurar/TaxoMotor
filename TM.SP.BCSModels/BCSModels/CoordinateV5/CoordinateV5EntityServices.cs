@@ -333,7 +333,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [PostalAddress] = @PostalAddress";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Brand] , [Ogrn] , [OgrnAuthority] , [OgrnAuthorityAddress] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [PostalAddress] = @PostalAddress";
 
             selectCommand.Parameters.AddWithValue("@PostalAddress", PostalAddress);
 
@@ -346,8 +346,10 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.FullName = (thisReader["FullName"] == DBNull.Value) ? null : thisReader["FullName"].ToString();
                 entity.Name = (thisReader["Name"] == DBNull.Value) ? null : thisReader["Name"].ToString();
                 entity.BrandName = (thisReader["BrandName"] == DBNull.Value) ? null : thisReader["BrandName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.OgrnAuthority = (thisReader["OgrnAuthority"] == DBNull.Value) ? null : thisReader["OgrnAuthority"].ToString();
+                entity.OgrnAuthorityAddress = (thisReader["OgrnAuthorityAddress"] == DBNull.Value) ? null : thisReader["OgrnAuthorityAddress"].ToString();
                 entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
                 entity.OgrnDate = thisReader["OgrnDate"] as System.Nullable<System.DateTime>;
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
@@ -389,7 +391,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [FactAddress] = @FactAddress";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Brand] , [Ogrn] , [OgrnAuthority] , [OgrnAuthorityAddress] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [FactAddress] = @FactAddress";
 
             selectCommand.Parameters.AddWithValue("@FactAddress", FactAddress);
 
@@ -402,8 +404,10 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.FullName = (thisReader["FullName"] == DBNull.Value) ? null : thisReader["FullName"].ToString();
                 entity.Name = (thisReader["Name"] == DBNull.Value) ? null : thisReader["Name"].ToString();
                 entity.BrandName = (thisReader["BrandName"] == DBNull.Value) ? null : thisReader["BrandName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.OgrnAuthority = (thisReader["OgrnAuthority"] == DBNull.Value) ? null : thisReader["OgrnAuthority"].ToString();
+                entity.OgrnAuthorityAddress = (thisReader["OgrnAuthorityAddress"] == DBNull.Value) ? null : thisReader["OgrnAuthorityAddress"].ToString();
                 entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
                 entity.OgrnDate = thisReader["OgrnDate"] as System.Nullable<System.DateTime>;
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
@@ -972,7 +976,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn = getSqlConnection();
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = @Id";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Brand] , [Ogrn] , [OgrnAuthority] , [OgrnAuthorityAddress] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = @Id";
             selectCommand.Parameters.AddWithValue("@Id", Id);
 
             selectCommand.Connection = thisConn;
@@ -983,8 +987,10 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.FullName = (thisReader["FullName"] == DBNull.Value) ? null : thisReader["FullName"].ToString();
                 entity.Name = (thisReader["Name"] == DBNull.Value) ? null : thisReader["Name"].ToString();
                 entity.BrandName = (thisReader["BrandName"] == DBNull.Value) ? null : thisReader["BrandName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.OgrnAuthority = (thisReader["OgrnAuthority"] == DBNull.Value) ? null : thisReader["OgrnAuthority"].ToString();
+                entity.OgrnAuthorityAddress = (thisReader["OgrnAuthorityAddress"] == DBNull.Value) ? null : thisReader["OgrnAuthorityAddress"].ToString();
                 entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
                 entity.OgrnDate = thisReader["OgrnDate"] as System.Nullable<System.DateTime>;
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
@@ -1029,7 +1035,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount]";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Brand] , [Ogrn] , [OgrnAuthority] , [OgrnAuthorityAddress] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount]";
             SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             while (thisReader.Read())
             {
@@ -1039,8 +1045,10 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.FullName = (thisReader["FullName"] == DBNull.Value) ? null : thisReader["FullName"].ToString();
                 entity.Name = (thisReader["Name"] == DBNull.Value) ? null : thisReader["Name"].ToString();
                 entity.BrandName = (thisReader["BrandName"] == DBNull.Value) ? null : thisReader["BrandName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.OgrnAuthority = (thisReader["OgrnAuthority"] == DBNull.Value) ? null : thisReader["OgrnAuthority"].ToString();
+                entity.OgrnAuthorityAddress = (thisReader["OgrnAuthorityAddress"] == DBNull.Value) ? null : thisReader["OgrnAuthorityAddress"].ToString();
                 entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
                 entity.OgrnDate = thisReader["OgrnDate"] as System.Nullable<System.DateTime>;
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
@@ -1085,12 +1093,14 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[RequestAccount] ([FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact]) VALUES (@FullName , @Name , @BrandName , @Ogrn , @OgrnAuthority , @OgrnNum , @OgrnDate , @Inn , @InnAuthority , @InnNum , @InnDate , @Kpp , @Okpo , @OrgFormCode , @Okved , @Okfs , @BankName , @BankBik , @CorrAccount , @SetAccount , @Phone , @Fax , @EMail , @WebSite , @MessageId , @PostalAddress , @FactAddress , @RequestContact) SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[RequestAccount] ([FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [Brand], [OgrnAuthorityAddress]) VALUES (@FullName , @Name , @BrandName , @Ogrn , @OgrnAuthority , @OgrnNum , @OgrnDate , @Inn , @InnAuthority , @InnNum , @InnDate , @Kpp , @Okpo , @OrgFormCode , @Okved , @Okfs , @BankName , @BankBik , @CorrAccount , @SetAccount , @Phone , @Fax , @EMail , @WebSite , @MessageId , @PostalAddress , @FactAddress , @RequestContact, @Brand, @OgrnAuthorityAddress) SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [Brand], [OgrnAuthorityAddress], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@FullName", (newentity.FullName == null) ? (object)DBNull.Value : newentity.FullName);
                 createCommand.Parameters.AddWithValue("@Name", (newentity.Name == null) ? (object)DBNull.Value : newentity.Name);
                 createCommand.Parameters.AddWithValue("@BrandName", (newentity.BrandName == null) ? (object)DBNull.Value : newentity.BrandName);
+                createCommand.Parameters.AddWithValue("@Brande", (newentity.Brand == null) ? (object)DBNull.Value : newentity.Brand);
                 createCommand.Parameters.AddWithValue("@Ogrn", (newentity.Ogrn == null) ? (object)DBNull.Value : newentity.Ogrn);
                 createCommand.Parameters.AddWithValue("@OgrnAuthority", (newentity.OgrnAuthority == null) ? (object)DBNull.Value : newentity.OgrnAuthority);
+                createCommand.Parameters.AddWithValue("@OgrnAuthorityAddress", (newentity.OgrnAuthorityAddress == null) ? (object)DBNull.Value : newentity.OgrnAuthorityAddress);
                 createCommand.Parameters.AddWithValue("@OgrnNum", (newentity.OgrnNum == null) ? (object)DBNull.Value : newentity.OgrnNum);
                 createCommand.Parameters.AddWithValue("@OgrnDate", (newentity.OgrnDate == null) ? (object)DBNull.Value : newentity.OgrnDate);
                 createCommand.Parameters.AddWithValue("@Inn", (newentity.Inn == null) ? (object)DBNull.Value : newentity.Inn);
@@ -1126,8 +1136,10 @@ namespace TM.SP.BCSModels.CoordinateV5
                     createdEntity.FullName = (thisReader["FullName"] == DBNull.Value) ? null : thisReader["FullName"].ToString();
                     createdEntity.Name = (thisReader["Name"] == DBNull.Value) ? null : thisReader["Name"].ToString();
                     createdEntity.BrandName = (thisReader["BrandName"] == DBNull.Value) ? null : thisReader["BrandName"].ToString();
+                    createdEntity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
                     createdEntity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                     createdEntity.OgrnAuthority = (thisReader["OgrnAuthority"] == DBNull.Value) ? null : thisReader["OgrnAuthority"].ToString();
+                    createdEntity.OgrnAuthorityAddress = (thisReader["OgrnAuthorityAddress"] == DBNull.Value) ? null : thisReader["OgrnAuthorityAddress"].ToString();
                     createdEntity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
                     createdEntity.OgrnDate = thisReader["OgrnDate"] as System.Nullable<System.DateTime>;
                     createdEntity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();
@@ -1199,14 +1211,16 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[RequestAccount] SET [FullName] = @FullName , [Name] = @Name , [BrandName] = @BrandName , [Ogrn] = @Ogrn , [OgrnAuthority] = @OgrnAuthority , [OgrnNum] = @OgrnNum , [OgrnDate] = @OgrnDate , [Inn] = @Inn , [InnAuthority] = @InnAuthority , [InnNum] = @InnNum , [InnDate] = @InnDate , [Kpp] = @Kpp , [Okpo] = @Okpo , [OrgFormCode] = @OrgFormCode , [Okved] = @Okved , [Okfs] = @Okfs , [BankName] = @BankName , [BankBik] = @BankBik , [CorrAccount] = @CorrAccount , [SetAccount] = @SetAccount , [Phone] = @Phone , [Fax] = @Fax , [EMail] = @EMail , [WebSite] = @WebSite , [MessageId] = @MessageId , [PostalAddress] = @PostalAddress , [FactAddress] = @FactAddress , [RequestContact] = @RequestContact WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[RequestAccount] SET [FullName] = @FullName , [Name] = @Name , [BrandName] = @BrandName , [Ogrn] = @Ogrn , [OgrnAuthority] = @OgrnAuthority , [OgrnNum] = @OgrnNum , [OgrnDate] = @OgrnDate , [Inn] = @Inn , [InnAuthority] = @InnAuthority , [InnNum] = @InnNum , [InnDate] = @InnDate , [Kpp] = @Kpp , [Okpo] = @Okpo , [OrgFormCode] = @OrgFormCode , [Okved] = @Okved , [Okfs] = @Okfs , [BankName] = @BankName , [BankBik] = @BankBik , [CorrAccount] = @CorrAccount , [SetAccount] = @SetAccount , [Phone] = @Phone , [Fax] = @Fax , [EMail] = @EMail , [WebSite] = @WebSite , [MessageId] = @MessageId , [PostalAddress] = @PostalAddress , [FactAddress] = @FactAddress , [RequestContact] = @RequestContact , [Brand] = @Brand , [OgrnAuthorityAddress] = @OgrnAuthorityAddress WHERE [Id] = @Id";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@FullName", (updateRequestAccount.FullName == null) ? (object)DBNull.Value : updateRequestAccount.FullName);
                 updateCommand.Parameters.AddWithValue("@Name", (updateRequestAccount.Name == null) ? (object)DBNull.Value : updateRequestAccount.Name);
                 updateCommand.Parameters.AddWithValue("@BrandName", (updateRequestAccount.BrandName == null) ? (object)DBNull.Value : updateRequestAccount.BrandName);
+                updateCommand.Parameters.AddWithValue("@Brand", (updateRequestAccount.Brand == null) ? (object)DBNull.Value : updateRequestAccount.Brand);
                 updateCommand.Parameters.AddWithValue("@Ogrn", (updateRequestAccount.Ogrn == null) ? (object)DBNull.Value : updateRequestAccount.Ogrn);
                 updateCommand.Parameters.AddWithValue("@OgrnAuthority", (updateRequestAccount.OgrnAuthority == null) ? (object)DBNull.Value : updateRequestAccount.OgrnAuthority);
+                updateCommand.Parameters.AddWithValue("@OgrnAuthorityAddress", (updateRequestAccount.OgrnAuthorityAddress == null) ? (object)DBNull.Value : updateRequestAccount.OgrnAuthorityAddress);
                 updateCommand.Parameters.AddWithValue("@OgrnNum", (updateRequestAccount.OgrnNum == null) ? (object)DBNull.Value : updateRequestAccount.OgrnNum);
                 updateCommand.Parameters.AddWithValue("@OgrnDate", (updateRequestAccount.OgrnDate == null) ? (object)DBNull.Value : updateRequestAccount.OgrnDate);
                 updateCommand.Parameters.AddWithValue("@Inn", (updateRequestAccount.Inn == null) ? (object)DBNull.Value : updateRequestAccount.Inn);
@@ -1621,7 +1635,7 @@ namespace TM.SP.BCSModels.CoordinateV5
             thisConn.Open();
             SqlCommand selectCommand = new SqlCommand();
             selectCommand.Connection = thisConn;
-            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [RequestContact] = @RequestContact";
+            selectCommand.CommandText = "SELECT [Title] , [FullName] , [Name] , [BrandName] , [Brand] , [Ogrn] , [OgrnAuthority] , [OgrnAuthorityAddress] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [RequestContact] = @RequestContact";
 
             selectCommand.Parameters.AddWithValue("@RequestContact", RequestContact);
 
@@ -1634,8 +1648,10 @@ namespace TM.SP.BCSModels.CoordinateV5
                 entity.FullName = (thisReader["FullName"] == DBNull.Value) ? null : thisReader["FullName"].ToString();
                 entity.Name = (thisReader["Name"] == DBNull.Value) ? null : thisReader["Name"].ToString();
                 entity.BrandName = (thisReader["BrandName"] == DBNull.Value) ? null : thisReader["BrandName"].ToString();
+                entity.Brand = (thisReader["Brand"] == DBNull.Value) ? null : thisReader["Brand"].ToString();
                 entity.Ogrn = (thisReader["Ogrn"] == DBNull.Value) ? null : thisReader["Ogrn"].ToString();
                 entity.OgrnAuthority = (thisReader["OgrnAuthority"] == DBNull.Value) ? null : thisReader["OgrnAuthority"].ToString();
+                entity.OgrnAuthorityAddress = (thisReader["OgrnAuthorityAddress"] == DBNull.Value) ? null : thisReader["OgrnAuthorityAddress"].ToString();
                 entity.OgrnNum = (thisReader["OgrnNum"] == DBNull.Value) ? null : thisReader["OgrnNum"].ToString();
                 entity.OgrnDate = thisReader["OgrnDate"] as System.Nullable<System.DateTime>;
                 entity.Inn = (thisReader["Inn"] == DBNull.Value) ? null : thisReader["Inn"].ToString();

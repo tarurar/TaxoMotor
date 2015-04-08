@@ -401,6 +401,10 @@ namespace TM.Services.CoordinateV5
 
         [XmlElement(Order = 26)]
         public string WebSite { get; set; }
+        [XmlElement(Order = 27)]
+        public string Brand { get; set; }
+        [XmlElement(Order = 28)]
+        public string OgrnAuthorityAddress { get; set; }
     }
 
     [DataContract]

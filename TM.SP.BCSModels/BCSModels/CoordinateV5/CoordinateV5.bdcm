@@ -21,7 +21,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="Address" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.56" EstimatedInstanceCount="10000" DefaultDisplayName="Address">
+				<Entity Name="Address" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.57" EstimatedInstanceCount="10000" DefaultDisplayName="Address">
           <LocalizedDisplayNames>
             <LocalizedDisplayName LCID="1049">Адрес</LocalizedDisplayName>
           </LocalizedDisplayNames>
@@ -1319,6 +1319,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -1335,6 +1343,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -1576,6 +1592,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -1592,6 +1616,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -2499,7 +2531,7 @@
 						</Method>
 					</Methods>
 				</Entity>
-				<Entity Name="File" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.19" EstimatedInstanceCount="10000" DefaultDisplayName="File">
+				<Entity Name="File" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.20" EstimatedInstanceCount="10000" DefaultDisplayName="File">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.FileEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -2974,7 +3006,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="Request" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.32" EstimatedInstanceCount="10000" DefaultDisplayName="Request">
+				<Entity Name="Request" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.33" EstimatedInstanceCount="10000" DefaultDisplayName="Request">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -3417,7 +3449,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="RequestAccount" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.79" EstimatedInstanceCount="10000" DefaultDisplayName="RequestAccount">
+				<Entity Name="RequestAccount" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.80" EstimatedInstanceCount="10000" DefaultDisplayName="RequestAccount">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestAccountEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -3482,6 +3514,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -3498,6 +3538,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -3726,6 +3774,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -3742,6 +3798,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -3965,6 +4029,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String" CreatorField="true">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -3981,6 +4053,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String" CreatorField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String" CreatorField="true">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -4176,6 +4256,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -4192,6 +4280,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -4425,6 +4521,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String" UpdaterField="true">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -4441,6 +4545,14 @@
 													<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 												</Interpretation>
 											</TypeDescriptor>
+                      <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String" UpdaterField="true">
+                        <Properties>
+                          <Property Name="Size" Type="System.Int32">255</Property>
+                        </Properties>
+                        <Interpretation>
+                          <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                        </Interpretation>
+                      </TypeDescriptor>
 											<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String" UpdaterField="true">
 												<Properties>
 													<Property Name="Size" Type="System.Int32">255</Property>
@@ -4719,7 +4831,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-				<Entity Name="RequestContact" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.83" EstimatedInstanceCount="10000" DefaultDisplayName="RequestContact">
+				<Entity Name="RequestContact" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.84" EstimatedInstanceCount="10000" DefaultDisplayName="RequestContact">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestContactEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -6044,6 +6156,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="Brand" DefaultDisplayName="Brand" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="Ogrn" DefaultDisplayName="Ogrn" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -6060,6 +6180,14 @@
 															<NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
 														</Interpretation>
 													</TypeDescriptor>
+                          <TypeDescriptor Name="OgrnAuthorityAddress" DefaultDisplayName="OgrnAuthorityAddress" TypeName="System.String">
+                            <Properties>
+                              <Property Name="Size" Type="System.Int32">255</Property>
+                            </Properties>
+                            <Interpretation>
+                              <NormalizeString FromLOB="NormalizeToNull" ToLOB="NormalizeToNull" />
+                            </Interpretation>
+                          </TypeDescriptor>
 													<TypeDescriptor Name="OgrnNum" DefaultDisplayName="OgrnNum" TypeName="System.String">
 														<Properties>
 															<Property Name="Size" Type="System.Int32">255</Property>
@@ -9944,7 +10072,7 @@
 						</AssociationGroup>
 					</AssociationGroups>
 				</Entity>
-        <Entity Name="RequestAccountData" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.41" DefaultDisplayName="Request Account Data" EstimatedInstanceCount="10000">
+        <Entity Name="RequestAccountData" Namespace="TM.SP.BCSModels.CoordinateV5" Version="1.0.0.42" DefaultDisplayName="Request Account Data" EstimatedInstanceCount="10000">
           <Properties>
             <Property Name="Class" Type="System.String">TM.SP.BCSModels.CoordinateV5.RequestAccountDataService, CoordinateV5</Property>
           </Properties>

@@ -108,8 +108,10 @@ namespace TM.SP.BCSModels.CoordinateV5
         public System.String FullName { get; set; }
         public System.String Name { get; set; }
         public System.String BrandName { get; set; }
+        public System.String Brand { get; set; }
         public System.String Ogrn { get; set; }
         public System.String OgrnAuthority { get; set; }
+        public System.String OgrnAuthorityAddress { get; set; }
         public System.String OgrnNum { get; set; }
         public System.Nullable<System.DateTime> OgrnDate { get; set; }
         public System.String Inn { get; set; }
