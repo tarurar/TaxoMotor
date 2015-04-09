@@ -69,6 +69,7 @@
     <Compile Include="CONTROLTEMPLATES\TaxoMotor\LicensePrintControl.ascx.designer.cs">
       <DependentUpon>LicensePrintControl.ascx.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventReceivers\erAttachLibItem\erAttachLibItem.cs" />
     <Compile Include="EventReceivers\erIncomeRequestItem\erIncomeRequestItem.cs" />
     <Compile Include="EventReceivers\erOutcomeRequestStateItem\erOutcomeRequestStateItem.cs" />
     <Compile Include="Features\TaxoMotor_TaxoMotorCustomizations\TaxoMotor_TaxoMotorCustomizations.EventReceiver.cs">
@@ -97,6 +98,9 @@
     </None>
     <None Include="DelegateControls\tmsphelpersControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{86f2695d-b209-4bf7-ae3d-23fc0ab68482}</SharePointProjectItemId>
+    </None>
+    <None Include="EventReceivers\erAttachLibItem\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f11a86bb-ebc2-4071-bbff-2a558830b35f}</SharePointProjectItemId>
     </None>
     <None Include="EventReceivers\erIncomeRequestItem\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{307d1fff-015a-4e4f-a551-9bcf4e473ef7}</SharePointProjectItemId>
@@ -140,6 +144,7 @@
     <Content Include="DelegateControls\knockoutjsControl\Elements.xml" />
     <Content Include="DelegateControls\knockoutjsControl\knockoutjsControl.ascx" />
     <Content Include="DelegateControls\LicensePrintControlElement\Elements.xml" />
+    <Content Include="EventReceivers\erAttachLibItem\Elements.xml" />
     <Content Include="EventReceivers\erIncomeRequestItem\Elements.xml" />
     <Content Include="EventReceivers\erOutcomeRequestStateItem\Elements.xml" />
     <Content Include="Features\TaxoMotor_TaxoMotorSiteLevelCustomizations\TaxoMotor_TaxoMotorSiteLevelCustomizations.Template.xml">
