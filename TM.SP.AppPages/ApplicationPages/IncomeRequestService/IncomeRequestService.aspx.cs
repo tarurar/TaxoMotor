@@ -1041,7 +1041,7 @@ namespace TM.SP.AppPages
                                 #region [TillDate]
                                 if (ctId == rList.ContentTypes["Аннулирование"].Id)
                                 {
-                                    licenseDraft.TillDate = DateTime.Now.Date;
+                                    licenseDraft.TillDate = parentLicenseExt != null ? parentLicenseExt.TillDate : DateTime.Now.Date;
                                 }
                                 else if (ctId == rList.ContentTypes["Выдача дубликата"].Id ||
                                           ctId == rList.ContentTypes["Переоформление"].Id)
