@@ -35,20 +35,22 @@ namespace TM.SP.AppPages
             var stCode = stItem == null ? String.Empty :
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
 
+            var stCodeInt = Convert.ToInt32(stCode);
             var message = new CoordinateStatusMessage
             {
                 ServiceHeader = new Headers
                 {
-                    FromOrgCode     = Consts.TaxoMotorDepCode,
-                    ToOrgCode       = Consts.AsgufSysCode,
-                    MessageId       = Guid.NewGuid().ToString("D"),
+                    FromOrgCode = Consts.TaxoMotorDepCode,
+                    ToOrgCode = Consts.AsgufSysCode,
+                    MessageId = Guid.NewGuid().ToString("D"),
                     RequestDateTime = DateTime.Now,
-                    ServiceNumber   = sNumber
+                    ServiceNumber = sNumber
                 },
                 StatusMessage = new CoordinateStatusData
                 {
                     ServiceNumber = sNumber,
-                    StatusCode = Convert.ToInt32(stCode),
+                    StatusCode = stCodeInt,
+                    Result = GetResultObjectForCoordinateStatusMessage(stCodeInt)
                 }
             };
 
@@ -119,6 +121,33 @@ namespace TM.SP.AppPages
 
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new Exception(String.Format("Error sending web request (url = {0})", url));
+        }
+
+        public static RequestResult GetResultObjectForCoordinateStatusMessage(int incomeRequestStatusCode)
+        {
+            int resultCode;
+            switch(incomeRequestStatusCode)
+            {
+                case 1075: 
+                    resultCode = 1;
+                    break;
+                case 1085:
+                    resultCode = 1;
+                    break;
+                case 1080:
+                    resultCode = 3;
+                    break;
+                case 1030:
+                    resultCode = 3;
+                    break;
+                default:
+                    resultCode = 0;
+                    break;
+            }
+
+            if (resultCode == 0) return null;
+
+            return new RequestResult() { ResultCode = resultCode.ToString() };
         }
     }
 }

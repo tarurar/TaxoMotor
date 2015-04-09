@@ -221,6 +221,7 @@ namespace TM.SP.AppPages
                 };
             }
 
+            var stCodeInt = Convert.ToInt32(stCode);
             var message = new CoordinateStatusMessage()
             {
                 ServiceHeader = new Headers()
@@ -234,8 +235,9 @@ namespace TM.SP.AppPages
                 StatusMessage = new CoordinateStatusData()
                 {
                     ServiceNumber = sNumber,
-                    StatusCode    = Convert.ToInt32(stCode),
-                    Documents     = attachs != null ? new ServiceDocument[] { attachs } : null
+                    StatusCode    = stCodeInt,
+                    Documents     = attachs != null ? new ServiceDocument[] { attachs } : null,
+                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateStatusMessage(stCodeInt)
                 }
             };
            
