@@ -42,6 +42,8 @@ namespace TM.SP.AppPages.Print
 
             dt.Columns.Add("RequestAccountAddress",   typeof(string));
             dt.Columns.Add("LicenseNumber",           typeof(string));
+            dt.Columns.Add("DeclarantNamePE",         typeof(string));
+            dt.Columns.Add("DeclarantNameJP",         typeof(string));
             dt.Columns.Add("RequestAccountFullName",  typeof(string));
             dt.Columns.Add("RequestAccountShortName", typeof(string));
             dt.Columns.Add("LicenseCreationDate",     typeof(string));
