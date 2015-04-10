@@ -56,6 +56,11 @@
           <dns value="ДТиРДТИ" />
         </identity>
       </endpoint>
+      <endpoint name="InputQueue" address="http://10.176.205.11:8080/InputService/Service.svc" binding="customBinding" bindingConfiguration="customBindingCoordinateV4Obsolete" contract="TM.Services.CoordinateV5.ICoordinateV5Service" behaviorConfiguration="ASGUF">
+        <identity>
+          <dns value="ДТиРДТИ" />
+        </identity>
+      </endpoint>
     </client>
       <extensions>
         <bindingElementExtensions>
