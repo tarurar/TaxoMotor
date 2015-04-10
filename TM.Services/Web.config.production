@@ -137,4 +137,11 @@
   </system.webServer>
 
   <databaseFactory.config Name="TM.Database" ConnectionStringName="TaxoMotor.Database.ConnectionString" />
+  <applicationSettings>
+    <TM.Services.Properties.Settings>
+      <setting name="InputMessageQueueUrl" serializeAs="String">
+        <value>http://10.176.205.11:8080/InputService/Service.svc</value>
+      </setting>
+    </TM.Services.Properties.Settings>
+  </applicationSettings>
 </configuration>
