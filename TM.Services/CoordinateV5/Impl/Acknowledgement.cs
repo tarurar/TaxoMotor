@@ -11,7 +11,14 @@ namespace TM.Services.CoordinateV5
             var binding   = new System.ServiceModel.BasicHttpBinding();
             var address   = new System.ServiceModel.EndpointAddress(queueUrl);
             var client = new CoordinateV5Client(binding, address);
-            client.Acknowledgement(request.ServiceHeader, request.Error);
+            try
+            {
+                client.Acknowledgement(request.ServiceHeader, request.Error);
+            }
+            finally
+            {
+                client.Close();
+            }
         }
     }
 }
