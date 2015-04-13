@@ -1,9 +1,4 @@
-﻿/****** Object:  StoredProcedure [dbo].[LisencesWSODOPMsetDataSelect]    Script Date: 30.03.2015 14:02:00 ******/
---SET ANSI_NULLS ON
---GO
---SET QUOTED_IDENTIFIER ON
---GO
---=================================================================
+﻿--=================================================================
 --  Автор       achernenko
 --  Дата        25.03.2015
 --  Описание    Посыл данных в сервис ODOPM

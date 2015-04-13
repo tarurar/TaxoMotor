@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[LisencesWSgetTaxiInfosSelect]
-	@LicenseNum NVARCHAR(64) = NULL --RegNumber
+    @Flag INT = 1 -- флаг хранимки
+	,@LicenseNum NVARCHAR(64) = NULL --RegNumber
 	,@LicenseDate DATETIME = NULL-- CreationDate
 	,@Name NVARCHAR(32) = NULL-- ShortName
 	,@OgrnNum  NVARCHAR(255) = NULL--Ogrn
@@ -11,6 +12,7 @@
 	,@PageNumber INT = 1
 	,@Count INT = 10
 AS
+
 
 DECLARE 	
 	@OFFSET INT
@@ -35,71 +37,82 @@ SET @SortOrder = REPLACE(@SortOrder, N'Brand',N'L1.TaxiBrand')
 SET @SortOrder = REPLACE(@SortOrder, N'Model',N'L1.TaxiModel')
 SET @SortOrder = REPLACE(@SortOrder, N'Condition',N'L1.Status')
 
+DECLARE @sqlcmd NVARCHAR(max)
 
-DECLARE @sqlcmd NVARCHAR(max) = N'
+SET @sqlcmd = N'SELECT
+	L1.Id,
+    ROW_NUMBER() OVER (ORDER BY '+ @SortOrder + N') AS NN
+INTO #ids
+FROM 
+	(
+        SELECT
+	        L1.Id,
+            L1.TaxiStateNumber,
+            L1.RegNumberInt,
+            L1.CreationDate,
+            L1.ShortName,
+            L1.Ogrn,
+            L1.OgrnDate,
+            L1.TaxiBrand,
+            L1.TaxiModel,
+            L1.Status,
+            ROW_NUMBER() OVER (PARTITION BY L1.RegNumberInt ORDER BY L1.OutputDate DESC) AS NN
+        FROM 
+	        License L1 (NOLOCK)
+        WHERE
+            L1.Status <> 4 
+	        AND (L1.MO IS NULL OR L1.MO = 0)
+	        AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
+	        AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
+	        AND (@Name IS NULL OR L1.ShortName = @Name)
+	        AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
+	        AND (@OgrnDate IS NULL OR L1.OgrnDate = @OgrnDate)
+	        AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
+	        AND (@Model IS NULL OR L1.TaxiModel = @Model)
+	        AND (@RegNum IS NULL OR L1.TaxiStateNumber = @RegNum)
+        ) AS L1
+WHERE L1.NN = 1
+
 SELECT 
 	L1.Signature as ''TaxiInfo''
 FROM
-	License AS L1
-	INNER JOIN 
-		(
-			SELECT
-				L1.Id,
-				ROW_NUMBER() OVER (ORDER BY '+ @SortOrder + N') AS NN
-			FROM 
-				License L1
-				LEFT JOIN License L2 
-					ON L1.Id = L2.Parent
-			WHERE 
-				L2.Id IS NULL
-				AND L1.Status <> 4 
-				AND (L1.MO IS NULL OR L1.MO = 0)
-				AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
-				AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
-				AND (@Name IS NULL OR L1.ShortName = @Name)
-				AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
-				AND (@OgrnDate IS NULL OR L1.OgrnDate = @OgrnDate)
-				AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
-				AND (@Model IS NULL OR L1.TaxiModel = @Model)
-				AND (@RegNum IS NULL OR L1.TaxiStateNumber = @RegNum)
-		) AS X
-			ON L1.Id = X.Id
-WHERE 
-	X.NN BETWEEN @OFFSET AND @FETCH
-ORDER BY '+ @SortOrder + N'
-FOR XML PATH(''''), ROOT (''ArrayOfTaxiInfo'')'
+	License AS L1 (NOLOCK)
+    INNER JOIN #ids
+        ON #ids.Id = L1.Id
+            AND #ids.NN BETWEEN @OFFSET AND @FETCH
+ORDER BY #ids.NN
+FOR XML PATH(''''), ROOT (''ArrayOfTaxiInfo'')
+
+SELECT
+	COUNT(*)
+FROM 
+	#ids
+
+DROP TABLE #ids'
 
 DECLARE @ParmDefinition NVARCHAR(max) = N'@RegNumberInt INT, @LicenseDate DATETIME, @Name NVARCHAR(32), @OgrnNum  NVARCHAR(255), @OgrnDate DATETIME, @Brand NVARCHAR(64), @Model NVARCHAR(64), @RegNum NVARCHAR(24), @OFFSET INT, @FETCH INT';
 
-EXECUTE sp_executesql 
-	@sqlcmd, 
-	@ParmDefinition,
-	@RegNumberInt = @RegNumberInt, 
-	@LicenseDate = @LicenseDate ,
-	@Name = @Name,
-	@OgrnNum = @OgrnNum,
-	@OgrnDate = @OgrnDate,
-	@Brand = @Brand,
-	@Model = @Model,
-	@RegNum = @RegNum, 
-	@OFFSET = @OFFSET,
-	@FETCH = @FETCH
 
-SELECT
-	COUNT(*) as TotalRow
-FROM 
-	License L1
-	LEFT JOIN License L2 
-		ON L1.Id = L2.Parent
-WHERE 
-	L2.Id IS NULL
-	AND L1.Status <> 4 
-	AND (L1.MO IS NULL OR L1.MO = 0)
-	AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
-	AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
-	AND (@Name IS NULL OR L1.ShortName = @Name)
-	AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
-	AND (@OgrnDate IS NULL OR L1.OgrnDate = @OgrnDate)
-	AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
-	AND (@Model IS NULL OR L1.TaxiModel = @Model)
-	AND (@RegNum IS NULL OR L1.TaxiStateNumber = @RegNum)
+IF @Flag = 1
+    EXECUTE sp_executesql 
+	    @sqlcmd, 
+	    @ParmDefinition,
+	    @RegNumberInt = @RegNumberInt, 
+	    @LicenseDate = @LicenseDate ,
+	    @Name = @Name,
+	    @OgrnNum = @OgrnNum,
+	    @OgrnDate = @OgrnDate,
+	    @Brand = @Brand,
+	    @Model = @Model,
+	    @RegNum = @RegNum, 
+	    @OFFSET = @OFFSET,
+	    @FETCH = @FETCH
+
+IF @Flag = 2
+    SELECT TOP 1
+        License.Signature,
+        License.Parent
+    FROM 
+        License
+    WHERE License.Status <> 4 AND License.RegNumberInt = @RegNumberInt
+    ORDER BY License.OutputDate DESC

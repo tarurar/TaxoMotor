@@ -32,13 +32,11 @@ AS
 DECLARE 	
     @OFFSET INT
     ,@FETCH INT
-    ,@RegNumberInt NVARCHAR(64)	
+    ,@RegNumberInt INT
     
-SET	@RegNumberInt = CAST(CAST(@LicenseNum AS INT) AS NVARCHAR(64))
+SET	@RegNumberInt = CAST(RIGHT(@LicenseNum, 5) AS INT)
 SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE (@PageNumber - 1) * @Count END
 SET	@FETCH = @OFFSET + @Count
-SET @LicenseNum = RIGHT('00000'+@LicenseNum, 5)
-
 
 SELECT
     *
@@ -51,13 +49,14 @@ FROM
             0 AS MO,
             CASE WHEN child.Id IS NULL THEN 0 ELSE 1 END AS [Status]
         FROM 
-            License
-            LEFT OUTER JOIN License AS child
+            License (NOLOCK)
+            LEFT OUTER JOIN License AS child (NOLOCK)
                 ON child.Parent = License.Id
+                    AND child.Status <> 4
         WHERE
             (NULLIF(@Condition, 1) IS NULL OR (@Condition = 0 AND child.Id IS NULL))
             AND (License.Status <> 4 AND (NULLIF(@Status, 5) IS NULL OR License.Status = @Status))
-            AND (@LicenseNum IS NULL OR (License.RegNumber = @LicenseNum OR License.RegNumber = @RegNumberInt))
+            AND (@RegNumberInt IS NULL OR License.RegNumberInt = @RegNumberInt)
             AND (@LicenseDate_Begin IS NULL OR License.CreationDate >= @LicenseDate_Begin)
             AND (@LicenseDate_End IS NULL OR License.CreationDate <= @LicenseDate_End)
             AND (@Date_Begin IS NULL OR License.ChangeDate >= @Date_Begin)
@@ -84,13 +83,14 @@ FROM
             1 AS MO,
             CASE WHEN child.Id IS NULL THEN 0 ELSE 1 END AS [Status]
         FROM 
-            LicenseMO
-            LEFT OUTER JOIN LicenseMO AS child
+            LicenseMO (NOLOCK)
+            LEFT OUTER JOIN LicenseMO AS child (NOLOCK)
                 ON child.Parent = LicenseMO.Id
+                    AND child.Status <> 4
         WHERE
             (NULLIF(@Condition, 1) IS NULL OR (@Condition = 0 AND child.Id IS NULL))
             AND (LicenseMO.Status <> 4 AND (NULLIF(@Status, 5) IS NULL OR LicenseMO.Status = @Status))
-            AND (@LicenseNum IS NULL OR (LicenseMO.RegNumber = @LicenseNum OR LicenseMO.RegNumber = @RegNumberInt))
+            AND (@RegNumberInt IS NULL OR LicenseMO.RegNumberInt = @RegNumberInt)
             AND (@LicenseDate_Begin IS NULL OR LicenseMO.CreationDate >= @LicenseDate_Begin)
             AND (@LicenseDate_End IS NULL OR LicenseMO.CreationDate <= @LicenseDate_End)
             AND (@Date_Begin IS NULL OR LicenseMO.ChangeDate >= @Date_Begin)
@@ -124,7 +124,7 @@ FROM
             'MO=0' + CAST(License.Id AS NVARCHAR(MAX)) AS ID,
             #ids.Status
         FROM 
-            License
+            License (NOLOCK)
             INNER JOIN #ids
                 ON License.Id = #ids.Id
                     AND #ids.MO = 0
@@ -135,13 +135,13 @@ FROM
             'MO=1' + CAST(LicenseMO.Id AS NVARCHAR(MAX)) AS ID,
             #ids.Status
         FROM 
-            LicenseMO
+            LicenseMO (NOLOCK)
             INNER JOIN #ids
                 ON LicenseMO.Id = #ids.Id
                     AND #ids.MO = 1
                     AND #ids.NN BETWEEN @OFFSET AND @FETCH
     ) AS X
-FOR XML PATH('InfoTaxiArray'), ROOT('ArrayOfInfoTaxiArray'), BINARY BASE64
+FOR XML PATH('InfoTaxiArray'), ROOT('ArrayOfInfoTaxiArray')
 
 SELECT 
     COUNT(*) AS CountRow
