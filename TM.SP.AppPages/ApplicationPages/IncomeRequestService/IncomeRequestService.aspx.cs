@@ -609,6 +609,19 @@ namespace TM.SP.AppPages
                 item["Tm_NeedPersonVisit"] = needPersonVisit;
                 item["Tm_RefuseDocuments"] = refuseDocuments;
 
+                // Присвоение внутреннего регистрационного номера только если он еще не задан
+                var number = item.TryGetValue<string>("Tm_InternalRegNumber");
+                if (String.IsNullOrEmpty(number))
+                {
+                    item["Tm_InternalRegNumber"] = Utility.GetIncomeRequestInternalRegNumber("InternalRegNumber");
+                }
+                // дату регистрации указываем только если она еще не задана
+                var regDate = item.TryGetValueOrNull<DateTime>("Tm_ApplyDate");
+                if (regDate == null)
+                {
+                    item["Tm_ApplyDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+                }
+
                 item.Update();
             }
             finally
