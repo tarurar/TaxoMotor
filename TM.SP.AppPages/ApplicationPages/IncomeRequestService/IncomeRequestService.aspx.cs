@@ -493,7 +493,7 @@ namespace TM.SP.AppPages
 
         /// <summary>
         ///  Вычисление и установка сроков предоставления гос услуги, а также установка нового статуса, генерация внутреннего регистрационного номера
-        ///  Сроки вычисляются для всех ситуаций кроме Отказа
+        ///  Сроки вычисляются для всех ситуаций, отдельно вычисляются некоторые даты при Отказе
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>
         /// <param name="statusCode">Новый статус</param>
@@ -535,6 +535,12 @@ namespace TM.SP.AppPages
                     item["Tm_PrepareTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(prepDate);
                     item["Tm_OutputTargetDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(outpDate);
                 }
+                // при отказе указываем Дата фактической выдачи
+                if ((statusCode == 1030) || (statusCode == 1080))
+                {
+                    item["Tm_OutputFactDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
+                }
+
                 if (statusItem != null)
                     item["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(statusItem.ID, statusItem.Title);
                 // Присвоение внутреннего регистрационного номера только если он еще не задан
