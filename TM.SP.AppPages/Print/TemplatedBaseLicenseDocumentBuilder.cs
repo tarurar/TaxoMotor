@@ -87,6 +87,7 @@ namespace TM.SP.AppPages.Print
             values.Add("RequestAccountFullName", _declarant.FullName);
             values.Add("DeclarantNamePE", isPrvtEntrprnr ? _declarant.Name : String.Empty);
             values.Add("DeclarantNameJP", isPrvtEntrprnr ? String.Empty : String.Format("({0})", _declarant.Name));
+            values.Add("DeclarantBrandName", _declarant.BrandName);
             values.Add("LicenseCreationDate", exLicense.CreationDate.HasValue ? exLicense.CreationDate.Value.ToString(_dateFormat) : "");
             values.Add("TaxiMark", taxiItem.TryGetValue<string>("Tm_TaxiBrand"));
             values.Add("TaxiModel", taxiItem.TryGetValue<string>("Tm_TaxiModel"));

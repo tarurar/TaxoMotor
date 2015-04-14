@@ -59,6 +59,7 @@ namespace TM.SP.AppPages.Print
             dt.Columns.Add("PE_Caption",              typeof(string));
             dt.Columns.Add("PE_Passport",             typeof(string));
             dt.Columns.Add("PE_Address",              typeof(string));
+            dt.Columns.Add("DeclarantBrandName",      typeof(string));
 
             return dt;
         }
