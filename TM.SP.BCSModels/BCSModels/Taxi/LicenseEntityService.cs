@@ -5,6 +5,8 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using TM.SP.BCSModels.Helpers;
+using TM.SP.BCSModels.Taxi.Exceptions;
+
 namespace TM.SP.BCSModels.Taxi
 {
     public partial class LicenseEntityService
@@ -135,7 +137,7 @@ namespace TM.SP.BCSModels.Taxi
             }
             else
             {
-                throw new Exception("Data not found");
+                throw new DraftNotFoundException();
             }
             thisReader.Close();
             return entity;
