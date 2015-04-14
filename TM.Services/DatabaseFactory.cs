@@ -22,6 +22,12 @@ namespace TM.Services
             get { return (string) base["ConnectionStringName"]; }
         }
 
+        [ConfigurationProperty("CommandTimeout")]
+        public string CommandTimeout
+        {
+            get { return (string)base["CommandTimeout"]; }
+        }
+
         public string ConnectionString
         {
             get
@@ -54,6 +60,16 @@ namespace TM.Services
             }
 
             return new SqlConnection(sectionHandler.ConnectionString);
+        }
+
+        public static int GetCommandTimeout()
+        {
+            if (sectionHandler == null)
+            {
+                throw new Exception(String.Format("There is no {0} section in web.config", SectionName));
+            }
+
+            return Convert.ToInt32(sectionHandler.CommandTimeout);
         }
     }
 }

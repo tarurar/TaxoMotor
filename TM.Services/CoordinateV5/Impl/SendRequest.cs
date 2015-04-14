@@ -23,38 +23,42 @@ namespace TM.Services.CoordinateV5
     {
         public static void SendRequest(CoordinateMessage request)
         {
-            TM_DatabaseDataContext ctx = new TM_DatabaseDataContext(DatabaseFactory.CreateConnection());
-            IncomingRequestXML newRequest = new IncomingRequestXML()
+            using (TM_DatabaseDataContext ctx = new TM_DatabaseDataContext(DatabaseFactory.CreateConnection()))
             {
-                InDate      = DateTime.Now,
-                RequestBody = request.ToXElement<CoordinateMessage>(),
-                Source      = "CoordinateV5Service"
-            };
-            ctx.IncomingRequestXMLs.InsertOnSubmit(newRequest);
+                ctx.CommandTimeout = DatabaseFactory.GetCommandTimeout();
 
-            var sendAck = false;
-            try
-            {
-                ctx.SubmitChanges();
-                sendAck = true;
-            }
-            catch (SqlException ex)
-            {
-                if (newRequest.hasDuplicateMessageError(ex))
+                IncomingRequestXML newRequest = new IncomingRequestXML()
                 {
+                    InDate = DateTime.Now,
+                    RequestBody = request.ToXElement<CoordinateMessage>(),
+                    Source = "CoordinateV5Service"
+                };
+                ctx.IncomingRequestXMLs.InsertOnSubmit(newRequest);
+
+                var sendAck = false;
+                try
+                {
+                    ctx.SubmitChanges();
                     sendAck = true;
                 }
-                else
+                catch (SqlException ex)
                 {
-                    throw;
+                    if (newRequest.hasDuplicateMessageError(ex))
+                    {
+                        sendAck = true;
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-            }
-            finally
-            {
-                if (sendAck)
+                finally
                 {
-                    var worker = new AcknowledgementWorker(request.ServiceHeader.Invert(), "ASGUF");
-                    new Thread(worker.Work) {IsBackground = false}.Start();
+                    if (sendAck)
+                    {
+                        var worker = new AcknowledgementWorker(request.ServiceHeader.Invert(), "ASGUF");
+                        new Thread(worker.Work) { IsBackground = false }.Start();
+                    }
                 }
             }
         }

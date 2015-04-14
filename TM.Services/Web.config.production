@@ -144,7 +144,7 @@
     <directoryBrowse enabled="true" />
   </system.webServer>
 
-  <databaseFactory.config Name="TM.Database" ConnectionStringName="TaxoMotor.Database.ConnectionString" />
+  <databaseFactory.config Name="TM.Database" ConnectionStringName="TaxoMotor.Database.ConnectionString" CommandTimeout="120" />
   <applicationSettings>
     <TM.Services.Properties.Settings>
       <setting name="InputMessageQueueUrl" serializeAs="String">
