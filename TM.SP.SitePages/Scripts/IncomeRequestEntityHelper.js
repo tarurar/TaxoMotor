@@ -29,7 +29,8 @@ var TM;
                 function RequestStrings() {
                 }
                 RequestStrings.EgripDlgTitle = "Отправка запроса в Единый Государственный Реестр Индивидуальных Предпринимателей (ЕГРИП)";
-                RequestStrings.EgrulDlgTitle = "";
+                RequestStrings.EgrulDlgTitle = "Отправка запроса в Единый Государственный Реестр Юридических Лиц (ЕГРЮЛ)";
+                RequestStrings.PtsDlgTitle = "Запрос сведений о транспортных средствах и владельцах";
                 return RequestStrings;
             })();
             IncomeRequest.RequestStrings = RequestStrings;
@@ -37,9 +38,20 @@ var TM;
                 function RequestErrStrings() {
                 }
                 RequestErrStrings.EgripDlg = "При отправке запроса в ЕГРИП возникли ошибки";
+                RequestErrStrings.EgrulDlg = "При отправке запроса в ЕГРЮЛ возникли ошибки";
+                RequestErrStrings.PtsDlg = "При отправке запросов по транспортным средствам возникли ошибки";
+                RequestErrStrings.SignXml = "Ошибка при формировании подписи: ";
+                RequestErrStrings.SignNoCert = "При формировании ЭЦП не удалось обнаружить сертификат";
                 return RequestErrStrings;
             })();
             IncomeRequest.RequestErrStrings = RequestErrStrings;
+            var ListTitles = (function () {
+                function ListTitles() {
+                }
+                ListTitles.Taxi = "Транспортные средства";
+                return ListTitles;
+            })();
+            IncomeRequest.ListTitles = ListTitles;
             var RequestParams;
             (function (RequestParams) {
                 var IncomeRequestCommonParam = (function (_super) {
@@ -82,6 +94,22 @@ var TM;
                     return StatusParam;
                 })(IncomeRequestCommonParam);
                 RequestParams.StatusParam = StatusParam;
+                var SignatureParam = (function (_super) {
+                    __extends(SignatureParam, _super);
+                    function SignatureParam() {
+                        _super.apply(this, arguments);
+                    }
+                    return SignatureParam;
+                })(IncomeRequestCommonParam);
+                RequestParams.SignatureParam = SignatureParam;
+                var RefuseParam = (function (_super) {
+                    __extends(RefuseParam, _super);
+                    function RefuseParam() {
+                        _super.apply(this, arguments);
+                    }
+                    return RefuseParam;
+                })(IncomeRequestCommonParam);
+                RequestParams.RefuseParam = RefuseParam;
                 var TaxiListParam = (function (_super) {
                     __extends(TaxiListParam, _super);
                     function TaxiListParam() {
@@ -122,6 +150,22 @@ var TM;
                     return LicenseSignatureParam;
                 })(LicenseParam);
                 RequestParams.LicenseSignatureParam = LicenseSignatureParam;
+                var StatusCodeParam = (function (_super) {
+                    __extends(StatusCodeParam, _super);
+                    function StatusCodeParam() {
+                        _super.apply(this, arguments);
+                    }
+                    return StatusCodeParam;
+                })(IncomeRequestCommonParam);
+                RequestParams.StatusCodeParam = StatusCodeParam;
+                var DocumentSignatureParam = (function (_super) {
+                    __extends(DocumentSignatureParam, _super);
+                    function DocumentSignatureParam() {
+                        _super.apply(this, arguments);
+                    }
+                    return DocumentSignatureParam;
+                })(TM.SP_.RequestParams.CommonParam);
+                RequestParams.DocumentSignatureParam = DocumentSignatureParam;
             })(RequestParams = IncomeRequest.RequestParams || (IncomeRequest.RequestParams = {}));
             var IncomeRequestEntityHelper = (function (_super) {
                 __extends(IncomeRequestEntityHelper, _super);
@@ -169,7 +213,7 @@ var TM;
                     return this.PostWebMethod(RequestParams.RefuseTaxiParam, function (param) {
                         param.taxiIdList = taxiIdList;
                         param.refuseReasonCode = refuseReasonCode;
-                        param.refuseComment = refuseComment;
+                        param.refuseComment = encodeURIComponent(refuseComment);
                         param.needPersonVisit = needPersonVisit;
                     }, "RefuseTaxi");
                 };
@@ -222,11 +266,11 @@ var TM;
                 IncomeRequestEntityHelper.prototype.SendToAsguf = function () {
                     return this.PostWebMethod(RequestParams.IncomeRequestCommonParam, null, "SendToAsguf");
                 };
-                IncomeRequestEntityHelper.prototype.SendEgripRequest = function (incomeRequestId, onsuccess, onfail) {
+                IncomeRequestEntityHelper.prototype.SendEgripRequest = function (onsuccess, onfail) {
                     var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SendRequestEGRIPPage.aspx");
                     var urlParams = "IsDlg=1";
                     urlParams += ("&ListId=" + _spPageContextInfo.pageListId);
-                    urlParams += ("&Items=" + incomeRequestId);
+                    urlParams += ("&Items=" + this.currentItem.get_id());
                     urlParams += ("&Source=" + location.href);
                     url += ("?" + urlParams);
                     var options = {
@@ -249,6 +293,143 @@ var TM;
                         }
                     };
                     SP.UI.ModalDialog.showModalDialog(options);
+                };
+                IncomeRequestEntityHelper.prototype.SendEgrulRequest = function (onsuccess, onfail) {
+                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SendRequestEGRULPage.aspx");
+                    var urlParams = "IsDlg=1";
+                    urlParams += ("&ListId=" + _spPageContextInfo.pageListId);
+                    urlParams += ("&Items=" + this.currentItem.get_id());
+                    urlParams += ("&Source=" + location.href);
+                    url += ("?" + urlParams);
+                    var options = {
+                        url: encodeURI(url),
+                        title: RequestStrings.EgrulDlgTitle,
+                        allowMaximize: false,
+                        showClose: true,
+                        width: 800,
+                        dialogReturnValueCallback: function (result, returnValue) {
+                            if (result == SP.UI.DialogResult.OK) {
+                                if (onsuccess) {
+                                    onsuccess();
+                                }
+                            }
+                            else if (result == -1) {
+                                if (onfail) {
+                                    onfail(RequestErrStrings.EgrulDlg);
+                                }
+                            }
+                        }
+                    };
+                    SP.UI.ModalDialog.showModalDialog(options);
+                };
+                IncomeRequestEntityHelper.prototype.SendPTSRequest = function (onsuccess, onfail) {
+                    var _this = this;
+                    var jqxhr = this.GetAllWorkingTaxiInRequest();
+                    jqxhr.done(function (data) {
+                        if (!data || !data.d) {
+                            onfail();
+                        }
+                        var ctx = SP.ClientContext.get_current();
+                        var taxiList = ctx.get_web().get_lists().getByTitle(ListTitles.Taxi);
+                        ctx.load(taxiList);
+                        ctx.executeQueryAsync(function (sender, args) {
+                            var taxiItems = data.d.replace(/\;/g, ',');
+                            var url = SP.ScriptHelpers.urlCombine(_this.ServiceUrl(), "SendRequestPTSPage.aspx");
+                            var urlParams = "IsDlg=1";
+                            urlParams += ("&ListId=" + taxiList.get_id());
+                            urlParams += ("&Items=" + taxiItems);
+                            urlParams += ("&Source=" + location.href);
+                            url += ("?" + urlParams);
+                            var options = {
+                                url: encodeURI(url),
+                                title: RequestStrings.PtsDlgTitle,
+                                allowMaximize: false,
+                                showClose: true,
+                                width: 800,
+                                dialogReturnValueCallback: function (result, returnValue) {
+                                    if (result == SP.UI.DialogResult.OK) {
+                                        if (onsuccess) {
+                                            onsuccess();
+                                        }
+                                    }
+                                    else if (result == -1) {
+                                        if (onfail) {
+                                            onfail(RequestErrStrings.PtsDlg);
+                                        }
+                                    }
+                                }
+                            };
+                            SP.UI.ModalDialog.showModalDialog(options);
+                        }, onfail);
+                    });
+                    jqxhr.fail(onfail);
+                };
+                IncomeRequestEntityHelper.prototype.SendStatus = function (attachsStr) {
+                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SendStatus.aspx");
+                    var urlParams = ("ListId=" + _spPageContextInfo.pageListId);
+                    urlParams += ("&Items=" + this.currentItem.get_id());
+                    urlParams += attachsStr ? ("&AttachDocuments=" + attachsStr) : "";
+                    url += ("?" + urlParams);
+                    return $.ajax({
+                        url: encodeURI(url),
+                        method: 'POST'
+                    });
+                };
+                IncomeRequestEntityHelper.prototype.CalculateDatesAndSetStatus = function (statusCode) {
+                    return this.PostWebMethod(RequestParams.StatusCodeParam, function (param) {
+                        param.statusCode = statusCode;
+                    }, "CalculateDatesAndSetStatus");
+                };
+                IncomeRequestEntityHelper.prototype.GetIncomeRequestCoordinateV5StatusMessage = function () {
+                    return this.PostWebMethod(RequestParams.IncomeRequestCommonParam, null, "GetIncomeRequestCoordinateV5StatusMessage");
+                };
+                IncomeRequestEntityHelper.prototype.SaveIncomeRequestStatusLog = function (signature) {
+                    return this.PostWebMethod(RequestParams.SignatureParam, function (param) {
+                        param.signature = encodeURIComponent(signature);
+                    }, "SaveIncomeRequestStatusLog");
+                };
+                IncomeRequestEntityHelper.prototype.SetRefuseReasonAndComment = function (refuseReasonCode, refuseComment, needPersonVisit, refuseDocuments) {
+                    return this.PostWebMethod(RequestParams.RefuseParam, function (param) {
+                        param.refuseReasonCode = refuseReasonCode;
+                        param.refuseComment = encodeURIComponent(refuseComment);
+                        param.needPersonVisit = needPersonVisit;
+                        param.refuseDocuments = refuseDocuments;
+                    }, "SetRefuseReasonAndComment");
+                };
+                IncomeRequestEntityHelper.prototype.IsRequestDeclarantPrivateEntrepreneur = function () {
+                    return this.PostWebMethod(RequestParams.IncomeRequestCommonParam, null, "IsRequestDeclarantPrivateEntrepreneur");
+                };
+                IncomeRequestEntityHelper.prototype.SaveDocumentDetachedSignature = function (documentId, signature) {
+                    return this.PostNonEntityWebMethod(RequestParams.DocumentSignatureParam, function (param) {
+                        param.documentId = documentId;
+                        param.signature = encodeURIComponent(signature);
+                    }, "SaveDocumentDetachedSignature");
+                };
+                IncomeRequestEntityHelper.prototype.SignXml = function (xml, onsuccess, onfail) {
+                    var oCertificate = this.SelectedCertificate || (cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */));
+                    this.SelectedCertificate = this.SelectedCertificate || oCertificate;
+                    if (oCertificate) {
+                        xml = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + xml + " \n" + "</Envelope>";
+                        var signedData;
+                        var errorMsg;
+                        try {
+                            signedData = cryptoPro.SignXMLCreate(oCertificate, xml);
+                        }
+                        catch (e) {
+                            errorMsg = RequestErrStrings.SignXml + e.message;
+                        }
+                        if (errorMsg) {
+                            if (onfail)
+                                onfail(errorMsg);
+                        }
+                        else {
+                            onsuccess(signedData);
+                        }
+                    }
+                    else {
+                        if (onfail)
+                            onfail(RequestErrStrings.SignNoCert);
+                    }
                 };
                 return IncomeRequestEntityHelper;
             })(SP_.EntityHelper);

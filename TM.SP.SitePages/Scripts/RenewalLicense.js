@@ -50,7 +50,7 @@
             return '{' +
                 'licenseId: ' + itemId + ', ' +
                 'dateFrom: "\\\/Date(' + dateFrom + ')\\\/", ' +
-                'reason: "' + reason + '"' +
+                'reason: "' + encodeURIComponent(reason) + '"' +
                 '}';
         };
 
@@ -62,7 +62,7 @@
             return '{' +
                 'licenseId: ' + itemId + ', ' +
                 'dateFrom: "\\\/Date(' + dateFrom + ')\\\/", ' +
-                'reason: "' + reason + '", ' +
+                'reason: "' + encodeURIComponent(reason) + '", ' +
                 'signature: "' + encodeURIComponent(signatureValue) + '"' +
                 '}';
         };

@@ -15,11 +15,20 @@ module TM.SP_.IncomeRequest {
 
     export class RequestStrings {
         static EgripDlgTitle = "Отправка запроса в Единый Государственный Реестр Индивидуальных Предпринимателей (ЕГРИП)";
-        static EgrulDlgTitle = "";
+        static EgrulDlgTitle = "Отправка запроса в Единый Государственный Реестр Юридических Лиц (ЕГРЮЛ)";
+        static PtsDlgTitle = "Запрос сведений о транспортных средствах и владельцах";
     }
 
     export class RequestErrStrings {
         static EgripDlg = "При отправке запроса в ЕГРИП возникли ошибки";
+        static EgrulDlg = "При отправке запроса в ЕГРЮЛ возникли ошибки";
+        static PtsDlg = "При отправке запросов по транспортным средствам возникли ошибки";
+        static SignXml = "Ошибка при формировании подписи: ";
+        static SignNoCert = "При формировании ЭЦП не удалось обнаружить сертификат";
+    }
+
+    export class ListTitles {
+        static Taxi = "Транспортные средства";
     }
 
     export module RequestParams {
@@ -47,6 +56,17 @@ module TM.SP_.IncomeRequest {
             public status: string;
         }
 
+        export class SignatureParam extends IncomeRequestCommonParam {
+            public signature: string;
+        }
+
+        export class RefuseParam extends IncomeRequestCommonParam {
+            public refuseReasonCode: number;
+            public refuseComment: string;
+            public needPersonVisit: boolean;
+            public refuseDocuments: string;
+        }
+
         export class TaxiListParam extends IncomeRequestCommonParam {
             public taxiIdList: string;
         }
@@ -68,9 +88,21 @@ module TM.SP_.IncomeRequest {
         export class LicenseSignatureParam extends LicenseParam {
             public signature: string;
         }
+
+        export class StatusCodeParam extends IncomeRequestCommonParam {
+            public statusCode: string;
+        }
+
+        export class DocumentSignatureParam extends TM.SP_.RequestParams.CommonParam {
+            public documentId: number;
+            public signature: string;
+        }
     }
 
     export class IncomeRequestEntityHelper extends EntityHelper {
+
+        public SelectedCertificate: any;
+
         public ServiceUrl(): string {
             var rootUrl = super.ServiceUrl();
             return SP.ScriptHelpers.urlCombine(rootUrl, "IncomeRequestService.aspx");
@@ -121,7 +153,7 @@ module TM.SP_.IncomeRequest {
             return this.PostWebMethod<RequestParams.RefuseTaxiParam>(RequestParams.RefuseTaxiParam,(param) => {
                 param.taxiIdList       = taxiIdList;
                 param.refuseReasonCode = refuseReasonCode;
-                param.refuseComment    = refuseComment;
+                param.refuseComment    = encodeURIComponent(refuseComment);
                 param.needPersonVisit  = needPersonVisit;
             }, "RefuseTaxi");
         }
@@ -200,11 +232,11 @@ module TM.SP_.IncomeRequest {
                 RequestParams.IncomeRequestCommonParam, null, "SendToAsguf");
         }
 
-        public SendEgripRequest(incomeRequestId: number, onsuccess: () => void, onfail: (err: string) => void): void {
+        public SendEgripRequest(onsuccess: () => void, onfail: (err: string) => void): void {
             var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SendRequestEGRIPPage.aspx");
             var urlParams = "IsDlg=1";
             urlParams += ("&ListId=" + _spPageContextInfo.pageListId);
-            urlParams += ("&Items=" + incomeRequestId);
+            urlParams += ("&Items=" + this.currentItem.get_id());
             urlParams += ("&Source=" + location.href);
             url += ("?" + urlParams);
             
@@ -228,6 +260,171 @@ module TM.SP_.IncomeRequest {
             };
 
             SP.UI.ModalDialog.showModalDialog(options);
+        }
+
+        public SendEgrulRequest(onsuccess: () => void, onfail: (err: string) => void): void {
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SendRequestEGRULPage.aspx");
+            var urlParams = "IsDlg=1";
+            urlParams += ("&ListId=" + _spPageContextInfo.pageListId);
+            urlParams += ("&Items=" + this.currentItem.get_id());
+            urlParams += ("&Source=" + location.href);
+            url += ("?" + urlParams);
+
+            var options = {
+                url: encodeURI(url),
+                title: RequestStrings.EgrulDlgTitle,
+                allowMaximize: false,
+                showClose: true,
+                width: 800,
+                dialogReturnValueCallback: function (result, returnValue) {
+                    if (result == SP.UI.DialogResult.OK) {
+                        if (onsuccess) {
+                            onsuccess();
+                        }
+                    }
+                    else if (result == -1) {
+                        if (onfail) {
+                            onfail(RequestErrStrings.EgrulDlg);
+                        }
+                    }
+                }
+            };
+
+            SP.UI.ModalDialog.showModalDialog(options);
+        }
+
+        public SendPTSRequest(onsuccess: () => void, onfail: (err?: string) => void): void {
+            var jqxhr = this.GetAllWorkingTaxiInRequest();
+
+            jqxhr.done((data: any) => {
+                if (!data || !data.d) { onfail(); }
+
+                var ctx = SP.ClientContext.get_current();
+                var taxiList = ctx.get_web().get_lists().getByTitle(ListTitles.Taxi);
+                ctx.load(taxiList);
+                ctx.executeQueryAsync((sender: any, args: SP.ClientRequestSucceededEventArgs) => {
+
+                    var taxiItems = data.d.replace(/\;/g, ',');
+
+                    var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SendRequestPTSPage.aspx");
+                    var urlParams = "IsDlg=1";
+                    urlParams += ("&ListId=" + taxiList.get_id());
+                    urlParams += ("&Items=" + taxiItems);
+                    urlParams += ("&Source=" + location.href);
+                    url += ("?" + urlParams);
+
+                    var options = {
+                        url: encodeURI(url),
+                        title: RequestStrings.PtsDlgTitle,
+                        allowMaximize: false,
+                        showClose: true,
+                        width: 800,
+                        dialogReturnValueCallback: function (result, returnValue) {
+                            if (result == SP.UI.DialogResult.OK) {
+                                if (onsuccess) {
+                                    onsuccess();
+                                }
+                            }
+                            else if (result == -1) {
+                                if (onfail) {
+                                    onfail(RequestErrStrings.PtsDlg);
+                                }
+                            }
+                        }
+                    };
+
+                    SP.UI.ModalDialog.showModalDialog(options);
+
+                }, onfail);
+            });
+
+            jqxhr.fail(onfail);
+        }
+
+        public SendStatus(attachsStr: string): JQueryXHR {
+            var url = SP.ScriptHelpers.urlCombine(this.ServiceUrl(), "SendStatus.aspx");
+            var urlParams = ("ListId=" + _spPageContextInfo.pageListId);
+            urlParams += ("&Items=" + this.currentItem.get_id());
+            urlParams += attachsStr ? ("&AttachDocuments=" + attachsStr) : "";
+            url += ("?" + urlParams);
+
+            return $.ajax({
+                url: encodeURI(url),
+                method: 'POST'
+            });
+        }
+
+        public CalculateDatesAndSetStatus(statusCode: string): JQueryXHR {
+            return this.PostWebMethod<RequestParams.StatusCodeParam>(RequestParams.StatusCodeParam,(param) => {
+                param.statusCode = statusCode;
+            }, "CalculateDatesAndSetStatus");
+        }
+
+        public GetIncomeRequestCoordinateV5StatusMessage(): JQueryXHR {
+            return this.PostWebMethod<RequestParams.IncomeRequestCommonParam>(
+                RequestParams.IncomeRequestCommonParam, null, "GetIncomeRequestCoordinateV5StatusMessage");
+        }
+
+        public SaveIncomeRequestStatusLog(signature: string): JQueryXHR {
+            return this.PostWebMethod<RequestParams.SignatureParam>(RequestParams.SignatureParam,(param) => {
+                param.signature = encodeURIComponent(signature);
+            }, "SaveIncomeRequestStatusLog");
+        }
+
+        public SetRefuseReasonAndComment(refuseReasonCode: number, refuseComment: string, needPersonVisit: boolean, refuseDocuments: string): JQueryXHR {
+            return this.PostWebMethod<RequestParams.RefuseParam>(RequestParams.RefuseParam,(param) => {
+                param.refuseReasonCode = refuseReasonCode;
+                param.refuseComment    = encodeURIComponent(refuseComment);
+                param.needPersonVisit  = needPersonVisit;
+                param.refuseDocuments  = refuseDocuments;
+            }, "SetRefuseReasonAndComment");
+        }
+
+        public IsRequestDeclarantPrivateEntrepreneur(): JQueryXHR {
+            return this.PostWebMethod<RequestParams.IncomeRequestCommonParam>(
+                RequestParams.IncomeRequestCommonParam, null, "IsRequestDeclarantPrivateEntrepreneur");
+        }
+
+        public SaveDocumentDetachedSignature(documentId: number, signature: string): JQueryXHR {
+            return this.PostNonEntityWebMethod<RequestParams.DocumentSignatureParam>(RequestParams.DocumentSignatureParam,(param) => {
+                param.documentId = documentId;
+                param.signature = encodeURIComponent(signature);
+            }, "SaveDocumentDetachedSignature");
+        }
+
+        public SignXml(xml: string, onsuccess: (data: string) => void, onfail: (msg: string) => void): void {
+            var oCertificate = this.SelectedCertificate || (cryptoPro.SelectCertificate(
+                cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
+                cryptoPro.StoreNames.CAPICOM_MY_STORE,
+                cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED));
+
+            this.SelectedCertificate = this.SelectedCertificate || oCertificate;
+
+            if (oCertificate) {
+                xml =
+                "<?xml version=\"1.0\"?>\n" +
+                "<Envelope xmlns=\"urn:envelope\">\n" +
+                xml +
+                " \n" +
+                "</Envelope>";
+
+                var signedData;
+                var errorMsg;
+                try {
+                    signedData = cryptoPro.SignXMLCreate(oCertificate, xml);
+                } catch (e) {
+                    errorMsg = RequestErrStrings.SignXml + e.message;
+                }
+
+                if (errorMsg) {
+                    if (onfail) onfail(errorMsg);
+                } else {
+                    onsuccess(signedData);
+                }
+
+            } else {
+                if (onfail) onfail(RequestErrStrings.SignNoCert);
+            }
         }
     }
 }

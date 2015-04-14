@@ -146,7 +146,7 @@ namespace TM.SP.AppPages
             {
                 l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom; ;
                 l.TillSuspensionDate = dateTo.IsJavascriptNullDate() ? (DateTime?)null : dateTo;
-                l.SuspensionReason   = reason;
+                l.SuspensionReason   = Uri.UnescapeDataString(reason);
                 l.Status             = 2;
             });
         }
@@ -156,7 +156,7 @@ namespace TM.SP.AppPages
             return GetLicenseXml(licenseId, l =>
             {
                 l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
-                l.CancellationReason = reason;
+                l.CancellationReason = Uri.UnescapeDataString(reason);
                 l.Status             = 3;
             });
         }
@@ -166,7 +166,7 @@ namespace TM.SP.AppPages
             return GetLicenseXml(licenseId, l =>
             {
                 l.CreationDate = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
-                l.ChangeReason = reason;
+                l.ChangeReason = Uri.UnescapeDataString(reason);
                 // setting status
                 var parent     = GetLicense(l.Parent);
                 var grandpa    = GetLicense(parent.Parent);
@@ -207,7 +207,7 @@ namespace TM.SP.AppPages
             {
                 l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.TillSuspensionDate = dateTo.IsJavascriptNullDate() ? (DateTime?)null : dateTo;
-                l.SuspensionReason   = reason;
+                l.SuspensionReason   = Uri.UnescapeDataString(reason);
                 l.Signature          = Uri.UnescapeDataString(signature);
                 l.Status             = 2;
             });
@@ -218,7 +218,7 @@ namespace TM.SP.AppPages
             SaveSigned(licenseId, l =>
             {
                 l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
-                l.CancellationReason = reason;
+                l.CancellationReason = Uri.UnescapeDataString(reason);
                 l.Signature          = Uri.UnescapeDataString(signature);
                 l.Status             = 3;
             });
@@ -229,7 +229,7 @@ namespace TM.SP.AppPages
             SaveSigned(licenseId, l =>
             {
                 l.CreationDate = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
-                l.ChangeReason = reason;
+                l.ChangeReason = Uri.UnescapeDataString(reason);
                 l.Signature    = Uri.UnescapeDataString(signature);
                 // setting status
                 var parent     = GetLicense(l.Parent);
@@ -279,7 +279,7 @@ namespace TM.SP.AppPages
                     var licTillDate       = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
                     var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
                     var dateToCondition   = (dateTo >= licCreationDate && dateTo <= licTillDate);
-                    var reasonCondition   = !String.IsNullOrEmpty(reason);
+                    var reasonCondition   = !String.IsNullOrEmpty(Uri.UnescapeDataString(reason));
 
                     if (!dateFromCondition || !dateToCondition)
                         throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
@@ -307,7 +307,7 @@ namespace TM.SP.AppPages
                     var licCreationDate = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
                     var licTillDate = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
                     var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
-                    var reasonCondition = !String.IsNullOrEmpty(reason);
+                    var reasonCondition = !String.IsNullOrEmpty(Uri.UnescapeDataString(reason));
 
                     if (!dateFromCondition)
                         throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
@@ -335,7 +335,7 @@ namespace TM.SP.AppPages
                     var licCreationDate = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
                     var licTillDate = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
                     var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
-                    var reasonCondition = !String.IsNullOrEmpty(reason);
+                    var reasonCondition = !String.IsNullOrEmpty(Uri.UnescapeDataString(reason));
 
                     if (!dateFromCondition)
                         throw new Exception("Указанные даты не попадают в диапазон дат разрешения");

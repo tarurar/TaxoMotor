@@ -98,7 +98,7 @@
                     data: '{ incomeRequestId: ' + incomeRequestId +
                           ' , taxiIdList: "' + taxiIdList + '"' +
                           ' , refuseReasonCode: ' + refuseReasonCode +
-                          ' , refuseComment: "' + refuseComment + '"' +
+                          ' , refuseComment: "' + encodeURIComponent(refuseComment) + '"' +
                           ' , needPersonVisit: ' + needPersonVisit + ' }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
@@ -584,7 +584,7 @@
                     url: ir.ServiceUrl + '/SetRefuseReasonAndComment',
                     data: '{ incomeRequestId: ' + incomeRequestId +
                             ' , refuseReasonCode: ' + refuseReasonCode +
-                            ' , refuseComment: "' + refuseComment +
+                            ' , refuseComment: "' + encodeURIComponent(refuseComment) +
                             '", needPersonVisit: ' + needPersonVisit +
                             ', refuseDocuments: ' +refuseDocuments + ' }',
                     contentType: 'application/json; charset=utf-8',

@@ -56,7 +56,7 @@
                 'licenseId: ' + itemId + ', ' +
                 'dateFrom: "\\\/Date(' + dateFrom + ')\\\/", ' +
                 'dateTo: "\\\/Date(' + dateTill + ')\\\/", ' +
-                'reason: "' + reason + '"' +
+                'reason: "' + encodeURIComponent(reason) + '"' +
                 '}';
         };
 
@@ -70,7 +70,7 @@
                 'licenseId: ' + itemId + ', ' +
                 'dateFrom: "\\\/Date(' + dateFrom + ')\\\/", ' +
                 'dateTo: "\\\/Date(' + dateTill + ')\\\/", ' +
-                'reason: "' + reason + '", ' +
+                'reason: "' + encodeURIComponent(reason) + '", ' +
                 'signature: "' + encodeURIComponent(signatureValue) + '"' +
                 '}';
         };
