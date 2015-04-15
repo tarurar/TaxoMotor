@@ -1002,8 +1002,10 @@ namespace TM.SP.AppPages
                                     methodType  = MethodInstanceType.SpecificFinder
                                 }, taxiItem.ID);
                             }
-                            catch (TM.SP.BCSModels.Taxi.Exceptions.DraftNotFoundException)
+                            catch (Exception ex)
                             {
+                                if (!ex.Message.Contains("DraftNotFoundException")) throw;
+
                                 var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
                                 var licenseDraft = new License
                                 {
