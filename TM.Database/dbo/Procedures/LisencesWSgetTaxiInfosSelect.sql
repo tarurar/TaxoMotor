@@ -13,7 +13,6 @@
 	,@Count INT = 10
 AS
 
-
 DECLARE 	
 	@OFFSET INT
 	,@FETCH INT
@@ -25,7 +24,7 @@ SELECT
 	,@SortOrder = REPLACE(ISNULL(@SortOrder, N'LicenseNum'), N';', N', ')
 
 SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE ((@PageNumber - 1) * @Count) + 1 END
-SET	@FETCH = @OFFSET + @Count
+SET	@FETCH = CASE WHEN @PageNumber = 1 THEN @Count ELSE @OFFSET + @Count - 1 END
 
 SET @SortOrder = REPLACE(@SortOrder, N'RegNum',N'L1.TaxiStateNumber')
 SET @SortOrder = REPLACE(@SortOrder, N'LicenseNum',N'L1.RegNumberInt')
