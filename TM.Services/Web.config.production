@@ -61,6 +61,16 @@
           <dns value="ДТиРДТИ" />
         </identity>
       </endpoint>
+      <endpoint name="ASGUFV52" address="http://10.127.37.12/CoordinateV5/Service.svc" binding="customBinding" bindingConfiguration="customBindingCoordinateV4Obsolete" contract="TM.Services.CoordinateV52.ICoordinateV52Service" behaviorConfiguration="ASGUF">
+        <identity>
+          <dns value="ДТиРДТИ" />
+        </identity>
+      </endpoint>
+      <endpoint name="InputQueueV52" address="http://10.176.205.11:8080/InputService/Service.svc" binding="customBinding" bindingConfiguration="customBindingCoordinateV4Obsolete" contract="TM.Services.CoordinateV52.ICoordinateV52Service" behaviorConfiguration="ASGUF">
+        <identity>
+          <dns value="ДТиРДТИ" />
+        </identity>
+      </endpoint>
     </client>
       <extensions>
         <bindingElementExtensions>
@@ -93,11 +103,10 @@
       <service behaviorConfiguration="V4Cert" name="TM.Services.CoordinateV5.CoordinateV5Service">
         <endpoint address="" binding="customBinding" bindingConfiguration="customBindingCoordinateV4Obsolete" bindingName="" bindingNamespace="http://asguf.mos.ru/rkis_gu/coordinate/v5/" contract="TM.Services.CoordinateV5.ICoordinateV5Service" />
         <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
-        <host>
-          <baseAddresses>
-            <add baseAddress="http://localhost/Rkis.Services/CoordinateV5/Service.svc" />
-          </baseAddresses>
-        </host>
+      </service>
+      <service behaviorConfiguration="V4Cert" name="TM.Services.CoordinateV52.CoordinateV52Service">
+        <endpoint address="" binding="customBinding" bindingConfiguration="customBindingCoordinateV4Obsolete" bindingName="" bindingNamespace="http://asguf.mos.ru/rkis_gu/coordinate/v5_2/" contract="TM.Services.CoordinateV52.ICoordinateV52Service" />
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
       </service>
     </services>
     <behaviors>
