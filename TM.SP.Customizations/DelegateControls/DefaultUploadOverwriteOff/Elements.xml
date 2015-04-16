@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<Control
+		ControlSrc="~/_controltemplates/15/TaxoMotor/DefaultUploadOverwriteOff.ascx"
+		Id="AdditionalPageHead"
+		Sequence="120">
+		<!-- <Property Name="ReflectionProperty">Enter text</Property> -->
+	</Control>
+</Elements>

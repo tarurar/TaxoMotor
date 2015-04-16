@@ -84,6 +84,9 @@
     <None Include="CONTROLTEMPLATES\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e6a23d3a-f6d5-4245-b9c1-f4e80441485b}</SharePointProjectItemId>
     </None>
+    <None Include="DelegateControls\DefaultUploadOverwriteOff\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{247dc97a-9da5-4312-a251-1b339a3b2aec}</SharePointProjectItemId>
+    </None>
     <None Include="DelegateControls\jQueryControl\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e43ba965-efe1-48ea-90fc-16a6caa24ca7}</SharePointProjectItemId>
     </None>
@@ -141,6 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CONTROLTEMPLATES\TaxoMotor\LicensePrintControl.ascx" />
+    <Content Include="DelegateControls\DefaultUploadOverwriteOff\DefaultUploadOverwriteOff.ascx" />
+    <Content Include="DelegateControls\DefaultUploadOverwriteOff\Elements.xml" />
     <Content Include="DelegateControls\knockoutjsControl\Elements.xml" />
     <Content Include="DelegateControls\knockoutjsControl\knockoutjsControl.ascx" />
     <Content Include="DelegateControls\LicensePrintControlElement\Elements.xml" />
@@ -150,6 +155,7 @@
     <Content Include="Features\TaxoMotor_TaxoMotorSiteLevelCustomizations\TaxoMotor_TaxoMotorSiteLevelCustomizations.Template.xml">
       <DependentUpon>TaxoMotor_TaxoMotorSiteLevelCustomizations.feature</DependentUpon>
     </Content>
+    <Content Include="Layouts\TM.SP.Customizations\Scripts\DefaultUploadOverwriteOff.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.copycss.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\json-to-table.js" />
     <Content Include="Layouts\TM.SP.Customizations\Styles\themes\base\accordion.css" />
@@ -226,6 +232,10 @@
     <Content Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TM.Services\TM.Services.csproj">
+      <Project>{56ae0cad-ee3d-4cc5-a69b-ef56391d1bc7}</Project>
+      <Name>TM.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TM.SP.AppPages\TM.SP.AppPages.csproj">
       <Project>{b2a464ec-6524-415e-a218-457d4aa37d83}</Project>
       <Name>TM.SP.AppPages</Name>

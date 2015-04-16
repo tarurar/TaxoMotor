@@ -3,6 +3,7 @@
   <assemblies>
     <projectOutputAssembly location="TM.Utils.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Utils\TM.Utils.csproj" />
     <projectOutputAssembly location="TM.SP.AppPages.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.AppPages\TM.SP.AppPages.csproj" />
+    <projectOutputAssembly location="TM.Services.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Services\TM.Services.csproj" />
   </assemblies>
   <features>
     <featureReference itemId="d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07" />
