@@ -11,6 +11,7 @@ using TP.SP.DataMigration;
 using TM.SP.AppPages;
 using CoordinateV5File = TM.SP.BCSModels.CoordinateV5.File;
 using System.Net;
+using TM.Services;
 
 namespace TM.SP.DataMigrationTimerJob
 {
@@ -65,7 +66,20 @@ namespace TM.SP.DataMigrationTimerJob
                 if (request != null)
                 {
                     // saving income request status change history
-                    var statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV5StatusMessage(request.ID, web);
+                    string statusXml = "";
+                    var svcGuid = Config.GetConfigValueOrDefault<string>(web, "AsGufServiceGuid");
+                    if (svcGuid == TM.Services.MessageQueueServices.V5Guid)
+                    {
+                        statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV5StatusMessage(request.ID, web);
+                    }
+                    else if (svcGuid == TM.Services.MessageQueueServices.V52Guid)
+                    {
+                        statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV52StatusMessage(request.ID, web);
+                    }
+                    else
+                    {
+                        statusXml = "В конфигурации указан Guid сервиса очереди, который невозможно сопоставить с версией протокола (V5, V5.2 ...)";
+                    }
                     IncomeRequestHelper.SaveIncomeRequestStatusLog(request.ID, statusXml, web);
                     // sending income request status
                     IncomeRequestHelper.NotifyAboutItemStatus(request.ID, web);

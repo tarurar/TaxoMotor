@@ -92,6 +92,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TM.Services\TM.Services.csproj">
+      <Project>{56ae0cad-ee3d-4cc5-a69b-ef56391d1bc7}</Project>
+      <Name>TM.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TM.SP.AppPages\TM.SP.AppPages.csproj">
       <Project>{b2a464ec-6524-415e-a218-457d4aa37d83}</Project>
       <Name>TM.SP.AppPages</Name>

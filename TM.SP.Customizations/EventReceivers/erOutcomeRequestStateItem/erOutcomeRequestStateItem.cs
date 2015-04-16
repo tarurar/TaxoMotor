@@ -17,6 +17,7 @@ namespace TM.SP.Customizations
     using Microsoft.SharePoint.Security;
     using Utils;
     using TM.SP.AppPages;
+    using TM.Services;
 
 // ReSharper disable InconsistentNaming
     public class erOutcomeRequestStateItem : SPItemEventReceiver
@@ -106,7 +107,19 @@ namespace TM.SP.Customizations
                                 new SPFieldLookupValue(rCompletedStatusItem.ID, rCompletedStatusItem.Title);
                             rItem.SystemUpdate();
                             // saving income request status change history
-                            var statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV5StatusMessage(rItem.ID, web);
+                            string statusXml = "";
+                            var svcGuid = Config.GetConfigValueOrDefault<string>(web, "AsGufServiceGuid");
+                            if (svcGuid == TM.Services.MessageQueueServices.V5Guid)
+                            {
+                                statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV5StatusMessage(rItem.ID, web);
+                            }
+                            else if (svcGuid == TM.Services.MessageQueueServices.V52Guid)
+                            {
+                                statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV52StatusMessage(rItem.ID, web);
+                            }
+                            else {
+                                statusXml = "¬ конфигурации указан Guid сервиса очереди, который невозможно сопоставить с версией протокола (V5, V5.2 ...)";
+                            }
                             IncomeRequestHelper.SaveIncomeRequestStatusLog(rItem.ID, statusXml, web);
                             // sending income request status
                             IncomeRequestHelper.NotifyAboutItemStatus(rItem.ID, web);

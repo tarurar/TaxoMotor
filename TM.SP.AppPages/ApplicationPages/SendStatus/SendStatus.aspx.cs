@@ -16,7 +16,8 @@ namespace TM.SP.AppPages
     using TM.SP.AppPages.ApplicationPages;
     using CamlexNET;
     using TM.Utils;
-    using TM.Services.CoordinateV5;
+    using CV5 = TM.Services.CoordinateV5;
+    using CV52 = TM.Services.CoordinateV52;
     using MessageQueueService = TM.ServiceClients.MessageQueue;
 
     [Serializable]
@@ -167,28 +168,47 @@ namespace TM.SP.AppPages
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
             SendStatusRequestItem doc = document as SendStatusRequestItem;
-            SPListItem configItem = Config.GetConfigItem(this.Web, ServiceGuidConfigName);
-            var svcGuid = Config.GetConfigValue(configItem);
+            var svcGuid = Config.GetConfigValueOrDefault<string>(this.Web, ServiceGuidConfigName);
             var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
-            var internalMessage = GetRelevantCoordinateStatusMessage(doc);
 
-            return new MessageQueueService.Message()
+            if (svcGuid == TM.Services.MessageQueueServices.V5Guid)
             {
-                Service       = svc,
-                MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
-                MessageType   = 2,
-                MessageMethod = 3,
-                MessageDate   = DateTime.Now,
-                MessageText   = internalMessage.ToXElement<CoordinateStatusMessage>().ToString()
-            };
+                CV5.CoordinateStatusMessage internalMessage = GetCoordinateV5StatusMessage(doc);
+
+                return new MessageQueueService.Message()
+                {
+                    Service       = svc,
+                    MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
+                    MessageType   = 2,
+                    MessageMethod = 3,
+                    MessageDate   = DateTime.Now,
+                    MessageText   = internalMessage.ToXElement<CV5.CoordinateStatusMessage>().ToString()
+                };
+            }
+            else if (svcGuid == TM.Services.MessageQueueServices.V52Guid)
+            {
+                CV52.CoordinateStatusMessage internalMessage = GetCoordinateV52StatusMessage(doc);
+
+                return new MessageQueueService.Message()
+                {
+                    Service       = svc,
+                    MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
+                    MessageType   = 2,
+                    MessageMethod = 3,
+                    MessageDate   = DateTime.Now,
+                    MessageText   = internalMessage.ToXElement<CV52.CoordinateStatusMessage>().ToString()
+                };
+            }
+
+            return null;
         }
 
         /// <summary>
-        ///  Building CoordinateStatusMessage
+        ///  Building CoordinateStatusMessage V5
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        protected virtual CoordinateStatusMessage GetRelevantCoordinateStatusMessage<T>(T item) where T : SendStatusRequestItem
+        protected virtual CV5.CoordinateStatusMessage GetCoordinateV5StatusMessage<T>(T item) where T : SendStatusRequestItem
         {
             // request item
             SPListItem rItem = GetList().GetItemOrBreak(item.Id);
@@ -199,12 +219,12 @@ namespace TM.SP.AppPages
             var stCode = stItem == null ? String.Empty :
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
             // attachs
-            ServiceDocument attachs = null;
+            CV5.ServiceDocument attachs = null;
             if (item.AttachDocumentList != null && item.AttachDocumentList.Count > 0)
             {
                 var attachLib = Web.GetListOrBreak("AttachLib");
 
-                attachs = new ServiceDocument
+                attachs = new CV5.ServiceDocument
                 {
                     DocCode   = "10004",
                     DocDate   = DateTime.Now,
@@ -213,7 +233,7 @@ namespace TM.SP.AppPages
                                 select attachLib.GetItemById(attachId)
                                 into spItem
                                 let content = spItem.File.OpenBinary()
-                                select new File
+                                select new CV5.File
                                 {
                                     FileContent = content,
                                     FileName    = spItem.File.Name,
@@ -222,9 +242,9 @@ namespace TM.SP.AppPages
             }
 
             var stCodeInt = Convert.ToInt32(stCode);
-            var message = new CoordinateStatusMessage()
+            var message = new CV5.CoordinateStatusMessage()
             {
-                ServiceHeader = new Headers()
+                ServiceHeader = new CV5.Headers()
                 {
                     FromOrgCode     = Consts.TaxoMotorDepCode,
                     ToOrgCode       = Consts.AsgufSysCode,
@@ -232,15 +252,77 @@ namespace TM.SP.AppPages
                     RequestDateTime = DateTime.Now,
                     ServiceNumber   = sNumber
                 },
-                StatusMessage = new CoordinateStatusData()
+                StatusMessage = new CV5.CoordinateStatusData()
                 {
                     ServiceNumber = sNumber,
                     StatusCode    = stCodeInt,
-                    Documents     = attachs != null ? new ServiceDocument[] { attachs } : null,
-                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateStatusMessage(stCodeInt)
+                    Documents = attachs != null ? new CV5.ServiceDocument[] { attachs } : null,
+                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateV5StatusMessage(stCodeInt)
                 }
             };
            
+            return message;
+        }
+
+        /// <summary>
+        ///  Building CoordinateStatusMessage V5.2
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        protected virtual CV52.CoordinateStatusMessage GetCoordinateV52StatusMessage<T>(T item) where T : SendStatusRequestItem
+        {
+            // request item
+            SPListItem rItem = GetList().GetItemOrBreak(item.Id);
+            var sNumber = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
+            // status lookup item
+            var stList = this.Web.GetListOrBreak("Lists/IncomeRequestStateBookList");
+            var stItem = stList.GetItemOrNull(item.StatusLookupId);
+            var stCode = stItem == null ? String.Empty :
+                (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
+            // attachs
+            CV52.ServiceDocument attachs = null;
+            if (item.AttachDocumentList != null && item.AttachDocumentList.Count > 0)
+            {
+                var attachLib = Web.GetListOrBreak("AttachLib");
+
+                attachs = new CV52.ServiceDocument
+                {
+                    DocCode = "10004",
+                    DocDate = DateTime.Now,
+                    DocNumber = "БН",
+                    DocFiles = (from attachId in item.AttachDocumentList
+                                select attachLib.GetItemById(attachId)
+                                    into spItem
+                                    let content = spItem.File.OpenBinary()
+                                    select new CV52.File
+                                    {
+                                        FileContent = content,
+                                        FileName = spItem.File.Name,
+                                    }).ToArray()
+                };
+            }
+
+            var stCodeInt = Convert.ToInt32(stCode);
+            var message = new CV52.CoordinateStatusMessage()
+            {
+                ServiceHeader = new CV52.Headers()
+                {
+                    FromOrgCode     = Consts.TaxoMotorDepCode,
+                    ToOrgCode       = Consts.AsgufSysCode,
+                    MessageId       = Guid.NewGuid().ToString("D"),
+                    RequestDateTime = DateTime.Now,
+                    ServiceNumber   = sNumber
+                },
+                StatusMessage = new CV52.CoordinateStatusData()
+                {
+                    ServiceNumber = sNumber,
+                    StatusCode    = stCodeInt,
+                    Documents     = attachs != null ? new CV52.ServiceDocument[] { attachs } : null,
+                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateV52StatusMessage(stCodeInt),
+                    StatusDate    = DateTime.Now
+                }
+            };
+
             return message;
         }
     }

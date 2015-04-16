@@ -6,6 +6,7 @@
     <customAssembly location="Camlex.NET.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll" />
     <projectOutputAssembly location="TP.SP.DataMigration.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TP.SP.DataMigration\TP.SP.DataMigration.csproj" />
     <projectOutputAssembly location="TM.SP.AppPages.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.SP.AppPages\TM.SP.AppPages.csproj" />
+    <projectOutputAssembly location="TM.Services.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TM.Services\TM.Services.csproj" />
   </assemblies>
   <features>
     <featureReference itemId="75992db9-551a-4b0f-a39e-dff89ad60ff2" />

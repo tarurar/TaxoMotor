@@ -573,6 +573,18 @@ namespace TM.SP.AppPages
         }
 
         /// <summary>
+        ///  Получение xml сообщения статуса обращения по V5.2
+        /// </summary>
+        /// <param name="incomeRequestId">Идентифифкатор обращения</param>
+        /// <returns>Сообщение в виде xml</returns>
+        [WebMethod]
+        public static string GetIncomeRequestCoordinateV52StatusMessage(int incomeRequestId)
+        {
+            SPWeb web = SPContext.Current.Web;
+            return IncomeRequestHelper.GetIncomeRequestCoordinateV52StatusMessage(incomeRequestId, web);
+        }
+
+        /// <summary>
         ///  Сохранение подписанного состояния обращения в список IncomeRequestStatusLogList
         /// </summary>
         /// <param name="incomeRequestId">Идентификатор обращения</param>

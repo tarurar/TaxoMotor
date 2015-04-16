@@ -8,7 +8,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using TM.Services.CoordinateV5;
+using CV5 = TM.Services.CoordinateV5;
+using CV52 = TM.Services.CoordinateV52;
 using TM.Utils;
 
 namespace TM.SP.AppPages
@@ -36,25 +37,67 @@ namespace TM.SP.AppPages
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
 
             var stCodeInt = Convert.ToInt32(stCode);
-            var message = new CoordinateStatusMessage
+            var message = new CV5.CoordinateStatusMessage
             {
-                ServiceHeader = new Headers
+                ServiceHeader = new CV5.Headers
                 {
-                    FromOrgCode = Consts.TaxoMotorDepCode,
-                    ToOrgCode = Consts.AsgufSysCode,
-                    MessageId = Guid.NewGuid().ToString("D"),
+                    FromOrgCode     = Consts.TaxoMotorDepCode,
+                    ToOrgCode       = Consts.AsgufSysCode,
+                    MessageId       = Guid.NewGuid().ToString("D"),
                     RequestDateTime = DateTime.Now,
-                    ServiceNumber = sNumber
+                    ServiceNumber   = sNumber
                 },
-                StatusMessage = new CoordinateStatusData
+                StatusMessage = new CV5.CoordinateStatusData
                 {
                     ServiceNumber = sNumber,
-                    StatusCode = stCodeInt,
-                    Result = GetResultObjectForCoordinateStatusMessage(stCodeInt)
+                    StatusCode    = stCodeInt,
+                    Result        = GetResultObjectForCoordinateV5StatusMessage(stCodeInt)
                 }
             };
 
-            return message.ToXElement<CoordinateStatusMessage>().ToString();
+            return message.ToXElement<CV5.CoordinateStatusMessage>().ToString();
+        }
+
+        /// <summary>
+        ///  Получение xml сообщения статуса обращения по V5.2
+        /// </summary>
+        /// <param name="incomeRequestId">Идентифифкатор обращения</param>
+        /// <param name="web">Объект SPWeb</param>
+        /// <returns>Сообщение в виде xml</returns>
+        public static string GetIncomeRequestCoordinateV52StatusMessage(int incomeRequestId, SPWeb web)
+        {
+            var rList = web.GetListOrBreak("Lists/IncomeRequestList");
+            // request item
+            SPListItem rItem = rList.GetItemOrBreak(incomeRequestId);
+            var sNumber = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
+            // status lookup item
+            var stList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
+            var stItemId = rItem["Tm_IncomeRequestStateLookup"] != null ? new SPFieldLookupValue(rItem["Tm_IncomeRequestStateLookup"].ToString()).LookupId : 0;
+            var stItem = stList.GetItemOrNull(stItemId);
+            var stCode = stItem == null ? String.Empty :
+                (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
+
+            var stCodeInt = Convert.ToInt32(stCode);
+            var message = new CV52.CoordinateStatusMessage
+            {
+                ServiceHeader = new CV52.Headers
+                {
+                    FromOrgCode     = Consts.TaxoMotorDepCode,
+                    ToOrgCode       = Consts.AsgufSysCode,
+                    MessageId       = Guid.NewGuid().ToString("D"),
+                    RequestDateTime = DateTime.Now,
+                    ServiceNumber   = sNumber
+                },
+                StatusMessage = new CV52.CoordinateStatusData
+                {
+                    ServiceNumber = sNumber,
+                    StatusCode    = stCodeInt,
+                    Result        = GetResultObjectForCoordinateV52StatusMessage(stCodeInt),
+                    StatusDate    = DateTime.Now
+                }
+            };
+
+            return message.ToXElement<CV52.CoordinateStatusMessage>().ToString();
         }
 
         /// <summary>
@@ -123,7 +166,7 @@ namespace TM.SP.AppPages
                 throw new Exception(String.Format("Error sending web request (url = {0})", url));
         }
 
-        public static RequestResult GetResultObjectForCoordinateStatusMessage(int incomeRequestStatusCode)
+        public static CV5.RequestResult GetResultObjectForCoordinateV5StatusMessage(int incomeRequestStatusCode)
         {
             int resultCode;
             switch(incomeRequestStatusCode)
@@ -147,7 +190,34 @@ namespace TM.SP.AppPages
 
             if (resultCode == 0) return null;
 
-            return new RequestResult() { ResultCode = resultCode.ToString() };
+            return new CV5.RequestResult() { ResultCode = resultCode.ToString() };
+        }
+
+        public static CV52.RequestResult GetResultObjectForCoordinateV52StatusMessage(int incomeRequestStatusCode)
+        {
+            int resultCode;
+            switch (incomeRequestStatusCode)
+            {
+                case 1075:
+                    resultCode = 1;
+                    break;
+                case 1085:
+                    resultCode = 1;
+                    break;
+                case 1080:
+                    resultCode = 3;
+                    break;
+                case 1030:
+                    resultCode = 3;
+                    break;
+                default:
+                    resultCode = 0;
+                    break;
+            }
+
+            if (resultCode == 0) return null;
+
+            return new CV52.RequestResult() { ResultCode = resultCode.ToString() };
         }
     }
 }
