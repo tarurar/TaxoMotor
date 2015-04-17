@@ -291,6 +291,7 @@
     <Content Include="Layouts\TM.SP.AppPages\Images\suspend-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\suspend-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\taxi-print-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\vin-edit-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Scripts\SendRequestDialog.js" />
     <Content Include="Layouts\TM.SP.AppPages\Styles\dialog-lists.css" />
     <Content Include="Resources\Resources\TM.SP.AppPages.resx" />

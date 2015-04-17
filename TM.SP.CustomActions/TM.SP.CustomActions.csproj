@@ -141,6 +141,9 @@
     <None Include="Ribbons\TaxiEditBlankNo\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{21ef43c8-05d2-44a6-a5a9-972d6919edce}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\TaxiEditVin\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{c96b314b-a83c-4496-8762-f32b01fe2620}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\TaxiPrintLicense\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{15498d58-19e3-43e6-9da5-61e9849d723b}</SharePointProjectItemId>
     </None>
@@ -195,6 +198,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Ribbons\TaxiEditBlankNo\Elements.xml" />
+    <Content Include="Ribbons\TaxiEditVin\Elements.xml" />
     <Content Include="Ribbons\TaxiPrintLicense\Elements.xml" />
     <Content Include="Ribbons\TaxiRefuse\Elements.xml">
       <SubType>Designer</SubType>

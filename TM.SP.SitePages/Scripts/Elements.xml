@@ -29,5 +29,6 @@
     <File Path="Scripts\EntityHelper.ts" Url="EntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
     <File Path="Scripts\IncomeRequestEntityHelper.ts" Url="IncomeRequestEntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
     <File Path="Scripts\LicenseEntityHelper.ts" Url="LicenseEntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\TaxiVinEditor.js" Url="TaxiVinEditor.js" Type="GhostableInLibrary" ReplaceContent="TRUE" />
   </Module>
 </Elements>

@@ -146,6 +146,7 @@
     <Content Include="Pages\ProgressDlg.aspx" />
     <Content Include="Pages\RenewalLicense.aspx" />
     <Content Include="Pages\SuspendLicense.aspx" />
+    <Content Include="Pages\TaxiVinEditor.aspx" />
     <Content Include="Scripts\CancellationLicense.js" />
     <Content Include="Scripts\CryptoProTs.js">
       <DependentUpon>CryptoProTs.ts</DependentUpon>
@@ -181,6 +182,7 @@
     <Content Include="Scripts\RequestAccountRendering.js" />
     <Content Include="Scripts\SuspendLicense.js" />
     <Content Include="Scripts\TaxiBlankNoEditor.js" />
+    <Content Include="Scripts\TaxiVinEditor.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Styles\Elements.xml" />
     <Content Include="Styles\IncomeRequestActions.css" />

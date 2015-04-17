@@ -33,5 +33,9 @@
       <Property Name="Title" Value="Редактор бланка" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\TaxiVinEditor.aspx" Url="TaxiVinEditor.aspx" Type="GhostableInLibrary" ReplaceContent="TRUE">
+      <Property Name="Title" Value="Редактор VIN номера" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>
