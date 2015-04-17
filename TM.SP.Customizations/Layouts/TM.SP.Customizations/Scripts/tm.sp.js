@@ -108,13 +108,15 @@ var TM;
             }, 'sp.js');
         };
 
-        TMSP.MakeBcsFieldControlLinked = function (listId, itemId, field, linkedListName) {
-            var div = $('.fd_field[fd_name=' + field + '] > div[fd_type=BusinessData]');
+        TMSP.MakeBcsFieldControlLinked = function (listId, itemId, fieldToGetDataFrom, linkedListName, fieldToLink) {
+            
+            var fieldToDisplay = fieldToLink ? fieldToLink : fieldToGetDataFrom;
+            var div = $('.fd_field[fd_name=' + fieldToDisplay + '] > div.fd_control');
             if (!div) return;
             var text = $(div).text().trim();
             if (!text) return;
 
-            TMSP.GetBcsFieldIdentityFieldName(listId, field, function(fn) {
+            TMSP.GetBcsFieldIdentityFieldName(listId, fieldToGetDataFrom, function (fn) {
                 TMSP.GetItemFieldValues(listId, itemId, [fn], function(fieldValues) {
 
                     var extItemId = fieldValues[0];
