@@ -114,7 +114,6 @@ namespace TM.Utils
             if (parentFolder.DocumentLibrary != null)
             {
                 newFolder = parentFolder.SubFolders.Add(correctPath);
-                parentFolder.Update();
             }
             else
             {
