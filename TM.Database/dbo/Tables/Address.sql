@@ -26,5 +26,6 @@
 	[Type] NVARCHAR(255) NULL,
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1),
 	[MessageId] VARCHAR(36) NOT NULL,
+	[Author] NVARCHAR(255) NULL
 	CONSTRAINT [CK_Address_Type] CHECK (([Type] IN ('RegAddress', 'FactAddress', 'BirthAddress', 'PostalAddress')))
 	);

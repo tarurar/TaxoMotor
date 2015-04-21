@@ -33,6 +33,7 @@
 	[RequestContact] INT NULL,
 	[SingleStrPostalAddress] AS ([dbo].[fn_BuildAddressSingleString](PostalAddress)),
 	[SingleStrFactAddress] AS ([dbo].[fn_BuildAddressSingleString](FactAddress)),
+	[Author] NVARCHAR(255) NULL
 	CONSTRAINT [FK_RequestAccount_PostalAddress] FOREIGN KEY ([PostalAddress]) REFERENCES [dbo].[Address]([Id]),
 	CONSTRAINT [FK_RequestAccount_FactAddress] FOREIGN KEY ([FactAddress]) REFERENCES [dbo].[Address]([Id]),
 	CONSTRAINT [FK_RequestAccount_RequestContact] FOREIGN KEY ([RequestContact]) REFERENCES [dbo].[RequestContact]([Id_Auto])

@@ -375,7 +375,11 @@ namespace TM.SP.DataModel
                         .AddList(Lists.TmLicenseList, l => l
                             .AddContentTypeLink(ContentTypes.TmLicense)
                             .AddField(Fields.TmLicenseTitle)
-                            .OnProvisioned<List>(context => context.Object.MakeFolderCreationAvailable(true))
+                            .OnProvisioned<List>(context => 
+                            { 
+                                context.Object.MakeFolderCreationAvailable(true);
+                                context.Object.EnableVersioning = true;
+                            })
                             .AddListView(ListViews.TmLicenseListDefaultView, lv => lv
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
                             .AddListView(ListViews.TmLicenseListAllView, lv => lv
@@ -476,6 +480,10 @@ namespace TM.SP.DataModel
                         .AddContentTypeLink(ContentTypes.TmDuplicateIncomeRequest)
                         .AddContentTypeLink(ContentTypes.TmCancelIncomeRequest)
                         .AddContentTypeLink(ContentTypes.TmRenewIncomeRequest)
+                        .OnProvisioned<List>(context =>
+                        {
+                            context.Object.EnableVersioning = true;
+                        })
                     )));
 
             return model;
@@ -549,10 +557,14 @@ namespace TM.SP.DataModel
                 .WithLists(lists => lists
                     .AddList(Lists.TmOutcomeRequestStateList, l =>
                         l.AddContentTypeLink(ContentTypes.TmOutcomeRequestState))
-                    .AddList(Lists.TmTaxiList, l =>
-                        l.AddContentTypeLink(ContentTypes.TmTaxi))
-                    .AddList(Lists.TmIncomeRequestAttachList, l =>
-                        l.AddContentTypeLink(ContentTypes.TmAttach))
+                    .AddList(Lists.TmTaxiList, l => l
+                        .AddContentTypeLink(ContentTypes.TmTaxi)
+                        .OnProvisioned<List>(context => { context.Object.EnableVersioning = true; }))
+                    .AddList(Lists.TmIncomeRequestAttachList, l => l
+                        .AddContentTypeLink(ContentTypes.TmAttach)
+                        .OnProvisioned<List>(context => {
+                            context.Object.EnableVersioning = true;
+                        }))
                 ));
 
             return model;

@@ -114,6 +114,7 @@
     <Folder Include="dbo\Triggers" />
     <Folder Include="dbo\Views" />
     <Folder Include="dbo\Indexes" />
+    <Folder Include="dbo\Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\File.sql" />
@@ -180,6 +181,8 @@
     <None Include="TM.Database.publish.xml" />
     <None Include="Snapshots\TM.Database_20140704_12-55-33.dacpac" />
     <None Include="TM.Database.production.xml" />
+    <None Include="dbo\Scripts\EnableCDC.sql" />
+    <None Include="Sample\CDC_getData.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\110\SqlSchemas\master.dacpac">

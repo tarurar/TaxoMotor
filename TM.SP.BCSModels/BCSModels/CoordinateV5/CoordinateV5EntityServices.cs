@@ -20,6 +20,7 @@ namespace TM.SP.BCSModels.CoordinateV5
     using System.Runtime.InteropServices;
     using Microsoft.BusinessData;
     using Microsoft.BusinessData.SystemSpecific;
+    using Microsoft.SharePoint;
     using TM.Utils;
 
     // Base class to share connection string retrieval for all entities
@@ -178,7 +179,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[Address] ([Title] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [MessageId]) VALUES (@Title , @Country , @PostalCode , @Locality , @Region , @City , @Town , @Street , @House , @Building , @Structure , @Facility , @Ownership , @Flat , @POBox , @Okato , @KladrCode , @KladrStreetCode , @OMKDistrictCode , @OMKRegionCode , @OMKTownCode , @OMKStreetCode , @BTIStreetCode , @BTIBuildingCode , @Type , @MessageId) SELECT [Title] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [Id] , [MessageId] FROM [dbo].[Address] WHERE [Id] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[Address] ([Title] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [MessageId] , [Author]) VALUES (@Title , @Country , @PostalCode , @Locality , @Region , @City , @Town , @Street , @House , @Building , @Structure , @Facility , @Ownership , @Flat , @POBox , @Okato , @KladrCode , @KladrStreetCode , @OMKDistrictCode , @OMKRegionCode , @OMKTownCode , @OMKStreetCode , @BTIStreetCode , @BTIBuildingCode , @Type , @MessageId , @Author) SELECT [Title] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [Id] , [MessageId] FROM [dbo].[Address] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@Title", newentity.Title);
                 createCommand.Parameters.AddWithValue("@Country", (newentity.Country == null) ? (object)DBNull.Value : newentity.Country);
                 createCommand.Parameters.AddWithValue("@PostalCode", (newentity.PostalCode == null) ? (object)DBNull.Value : newentity.PostalCode);
@@ -206,6 +207,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@Type", (newentity.Type == null) ? (object)DBNull.Value : newentity.Type);
                 createCommand.Parameters.AddWithValue("@Id", newentity.Id);
                 createCommand.Parameters.AddWithValue("@MessageId", newentity.MessageId);
+                createCommand.Parameters.AddWithValue("@Author", SPContext.Current != null ? SPContext.Current.Web.CurrentUser.LoginName : (object)DBNull.Value);
 
 
                 SqlDataReader thisReader = createCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -285,7 +287,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[Address] SET [Title] = @Title , [Country] = @Country , [PostalCode] = @PostalCode , [Locality] = @Locality , [Region] = @Region , [City] = @City , [Town] = @Town , [Street] = @Street , [House] = @House , [Building] = @Building , [Structure] = @Structure , [Facility] = @Facility , [Ownership] = @Ownership , [Flat] = @Flat , [POBox] = @POBox , [Okato] = @Okato , [KladrCode] = @KladrCode , [KladrStreetCode] = @KladrStreetCode , [OMKDistrictCode] = @OMKDistrictCode , [OMKRegionCode] = @OMKRegionCode , [OMKTownCode] = @OMKTownCode , [OMKStreetCode] = @OMKStreetCode , [BTIStreetCode] = @BTIStreetCode , [BTIBuildingCode] = @BTIBuildingCode , [Type] = @Type , [MessageId] = @MessageId WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[Address] SET [Title] = @Title , [Country] = @Country , [PostalCode] = @PostalCode , [Locality] = @Locality , [Region] = @Region , [City] = @City , [Town] = @Town , [Street] = @Street , [House] = @House , [Building] = @Building , [Structure] = @Structure , [Facility] = @Facility , [Ownership] = @Ownership , [Flat] = @Flat , [POBox] = @POBox , [Okato] = @Okato , [KladrCode] = @KladrCode , [KladrStreetCode] = @KladrStreetCode , [OMKDistrictCode] = @OMKDistrictCode , [OMKRegionCode] = @OMKRegionCode , [OMKTownCode] = @OMKTownCode , [OMKStreetCode] = @OMKStreetCode , [BTIStreetCode] = @BTIStreetCode , [BTIBuildingCode] = @BTIBuildingCode , [Type] = @Type , [MessageId] = @MessageId , [Author] = @Author WHERE [Id] = @Id";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@Title", updateAddress.Title);
@@ -314,6 +316,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 updateCommand.Parameters.AddWithValue("@BTIBuildingCode", (updateAddress.BTIBuildingCode == null) ? (object)DBNull.Value : updateAddress.BTIBuildingCode);
                 updateCommand.Parameters.AddWithValue("@Type", (updateAddress.Type == null) ? (object)DBNull.Value : updateAddress.Type);
                 updateCommand.Parameters.AddWithValue("@MessageId", updateAddress.MessageId);
+                updateCommand.Parameters.AddWithValue("@Author", SPContext.Current != null ? SPContext.Current.Web.CurrentUser.LoginName : (object)DBNull.Value);
 
                 updateCommand.Parameters.AddWithValue("@Id", updateAddress.Id);
 
@@ -1093,7 +1096,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[RequestAccount] ([FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [Brand], [OgrnAuthorityAddress]) VALUES (@FullName , @Name , @BrandName , @Ogrn , @OgrnAuthority , @OgrnNum , @OgrnDate , @Inn , @InnAuthority , @InnNum , @InnDate , @Kpp , @Okpo , @OrgFormCode , @Okved , @Okfs , @BankName , @BankBik , @CorrAccount , @SetAccount , @Phone , @Fax , @EMail , @WebSite , @MessageId , @PostalAddress , @FactAddress , @RequestContact, @Brand, @OgrnAuthorityAddress) SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [Brand], [OgrnAuthorityAddress], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[RequestAccount] ([FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [Brand], [OgrnAuthorityAddress], [Author]) VALUES (@FullName , @Name , @BrandName , @Ogrn , @OgrnAuthority , @OgrnNum , @OgrnDate , @Inn , @InnAuthority , @InnNum , @InnDate , @Kpp , @Okpo , @OrgFormCode , @Okved , @Okfs , @BankName , @BankBik , @CorrAccount , @SetAccount , @Phone , @Fax , @EMail , @WebSite , @MessageId , @PostalAddress , @FactAddress , @RequestContact, @Brand, @OgrnAuthorityAddress, @Author) SELECT [Title] , [FullName] , [Name] , [BrandName] , [Ogrn] , [OgrnAuthority] , [OgrnNum] , [OgrnDate] , [Inn] , [InnAuthority] , [InnNum] , [InnDate] , [Kpp] , [Okpo] , [OrgFormCode] , [Okved] , [Okfs] , [BankName] , [BankBik] , [CorrAccount] , [SetAccount] , [Phone] , [Fax] , [EMail] , [WebSite] , [Id] , [MessageId] , [PostalAddress] , [FactAddress] , [RequestContact], [Brand], [OgrnAuthorityAddress], [SingleStrPostalAddress], [SingleStrFactAddress] FROM [dbo].[RequestAccount] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@FullName", (newentity.FullName == null) ? (object)DBNull.Value : newentity.FullName);
                 createCommand.Parameters.AddWithValue("@Name", (newentity.Name == null) ? (object)DBNull.Value : newentity.Name);
                 createCommand.Parameters.AddWithValue("@BrandName", (newentity.BrandName == null) ? (object)DBNull.Value : newentity.BrandName);
@@ -1125,6 +1128,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@PostalAddress", (newentity.PostalAddress == null) ? (object)DBNull.Value : newentity.PostalAddress);
                 createCommand.Parameters.AddWithValue("@FactAddress", (newentity.FactAddress == null) ? (object)DBNull.Value : newentity.FactAddress);
                 createCommand.Parameters.AddWithValue("@RequestContact", (newentity.RequestContact == null) ? (object)DBNull.Value : newentity.RequestContact);
+                createCommand.Parameters.AddWithValue("@Author", SPContext.Current != null ? SPContext.Current.Web.CurrentUser.LoginName : (object)DBNull.Value);
 
 
                 SqlDataReader thisReader = createCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -1211,7 +1215,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[RequestAccount] SET [FullName] = @FullName , [Name] = @Name , [BrandName] = @BrandName , [Ogrn] = @Ogrn , [OgrnAuthority] = @OgrnAuthority , [OgrnNum] = @OgrnNum , [OgrnDate] = @OgrnDate , [Inn] = @Inn , [InnAuthority] = @InnAuthority , [InnNum] = @InnNum , [InnDate] = @InnDate , [Kpp] = @Kpp , [Okpo] = @Okpo , [OrgFormCode] = @OrgFormCode , [Okved] = @Okved , [Okfs] = @Okfs , [BankName] = @BankName , [BankBik] = @BankBik , [CorrAccount] = @CorrAccount , [SetAccount] = @SetAccount , [Phone] = @Phone , [Fax] = @Fax , [EMail] = @EMail , [WebSite] = @WebSite , [MessageId] = @MessageId , [PostalAddress] = @PostalAddress , [FactAddress] = @FactAddress , [RequestContact] = @RequestContact , [Brand] = @Brand , [OgrnAuthorityAddress] = @OgrnAuthorityAddress WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[RequestAccount] SET [FullName] = @FullName , [Name] = @Name , [BrandName] = @BrandName , [Ogrn] = @Ogrn , [OgrnAuthority] = @OgrnAuthority , [OgrnNum] = @OgrnNum , [OgrnDate] = @OgrnDate , [Inn] = @Inn , [InnAuthority] = @InnAuthority , [InnNum] = @InnNum , [InnDate] = @InnDate , [Kpp] = @Kpp , [Okpo] = @Okpo , [OrgFormCode] = @OrgFormCode , [Okved] = @Okved , [Okfs] = @Okfs , [BankName] = @BankName , [BankBik] = @BankBik , [CorrAccount] = @CorrAccount , [SetAccount] = @SetAccount , [Phone] = @Phone , [Fax] = @Fax , [EMail] = @EMail , [WebSite] = @WebSite , [MessageId] = @MessageId , [PostalAddress] = @PostalAddress , [FactAddress] = @FactAddress , [RequestContact] = @RequestContact , [Brand] = @Brand , [OgrnAuthorityAddress] = @OgrnAuthorityAddress , [Author] = @Author WHERE [Id] = @Id";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@FullName", (updateRequestAccount.FullName == null) ? (object)DBNull.Value : updateRequestAccount.FullName);
@@ -1244,6 +1248,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 updateCommand.Parameters.AddWithValue("@PostalAddress", (updateRequestAccount.PostalAddress == null) ? (object)DBNull.Value : updateRequestAccount.PostalAddress);
                 updateCommand.Parameters.AddWithValue("@FactAddress", (updateRequestAccount.FactAddress == null) ? (object)DBNull.Value : updateRequestAccount.FactAddress);
                 updateCommand.Parameters.AddWithValue("@RequestContact", (updateRequestAccount.RequestContact == null) ? (object)DBNull.Value : updateRequestAccount.RequestContact);
+                updateCommand.Parameters.AddWithValue("@Author", SPContext.Current != null ? SPContext.Current.Web.CurrentUser.LoginName : (object)DBNull.Value);
 
                 updateCommand.Parameters.AddWithValue("@Id", updateRequestAccount.Id);
 
@@ -1413,7 +1418,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[RequestContact] ([Id] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress]) VALUES (@Id , @LastName , @FirstName , @MiddleName , @Gender , @BirthDate , @Snils , @Inn , @MobilePhone , @WorkPhone , @HomePhone , @EMail , @Nation , @Citizenship , @CitizenshipType , @JobTitle , @OMSNum , @OMSDate , @OMSCompany , @OMSValidityPeriod , @IsiId , @MessageId , @RegAddress , @FactAddress , @BirthAddress) SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[RequestContact] ([Id] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] , [Author]) VALUES (@Id , @LastName , @FirstName , @MiddleName , @Gender , @BirthDate , @Snils , @Inn , @MobilePhone , @WorkPhone , @HomePhone , @EMail , @Nation , @Citizenship , @CitizenshipType , @JobTitle , @OMSNum , @OMSDate , @OMSCompany , @OMSValidityPeriod , @IsiId , @MessageId , @RegAddress , @FactAddress , @BirthAddress , @Author) SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@Id", (newentity.Id == null) ? (object)DBNull.Value : newentity.Id);
                 createCommand.Parameters.AddWithValue("@LastName", (newentity.LastName == null) ? (object)DBNull.Value : newentity.LastName);
                 createCommand.Parameters.AddWithValue("@FirstName", (newentity.FirstName == null) ? (object)DBNull.Value : newentity.FirstName);
@@ -1440,6 +1445,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@RegAddress", (newentity.RegAddress == null) ? (object)DBNull.Value : newentity.RegAddress);
                 createCommand.Parameters.AddWithValue("@FactAddress", (newentity.FactAddress == null) ? (object)DBNull.Value : newentity.FactAddress);
                 createCommand.Parameters.AddWithValue("@BirthAddress", (newentity.BirthAddress == null) ? (object)DBNull.Value : newentity.BirthAddress);
+                createCommand.Parameters.AddWithValue("@Author", SPContext.Current != null ? SPContext.Current.Web.CurrentUser.LoginName : (object)DBNull.Value);
 
 
                 SqlDataReader thisReader = createCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -1522,7 +1528,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[RequestContact] SET [Id] = @Id , [LastName] = @LastName , [FirstName] = @FirstName , [MiddleName] = @MiddleName , [Gender] = @Gender , [BirthDate] = @BirthDate , [Snils] = @Snils , [Inn] = @Inn , [MobilePhone] = @MobilePhone , [WorkPhone] = @WorkPhone , [HomePhone] = @HomePhone , [EMail] = @EMail , [Nation] = @Nation , [Citizenship] = @Citizenship , [CitizenshipType] = @CitizenshipType , [JobTitle] = @JobTitle , [OMSNum] = @OMSNum , [OMSDate] = @OMSDate , [OMSCompany] = @OMSCompany , [OMSValidityPeriod] = @OMSValidityPeriod , [IsiId] = @IsiId , [MessageId] = @MessageId , [RegAddress] = @RegAddress , [FactAddress] = @FactAddress , [BirthAddress] = @BirthAddress WHERE [Id_Auto] = @Id_Auto";
+                updateCommand.CommandText = "UPDATE [dbo].[RequestContact] SET [Id] = @Id , [LastName] = @LastName , [FirstName] = @FirstName , [MiddleName] = @MiddleName , [Gender] = @Gender , [BirthDate] = @BirthDate , [Snils] = @Snils , [Inn] = @Inn , [MobilePhone] = @MobilePhone , [WorkPhone] = @WorkPhone , [HomePhone] = @HomePhone , [EMail] = @EMail , [Nation] = @Nation , [Citizenship] = @Citizenship , [CitizenshipType] = @CitizenshipType , [JobTitle] = @JobTitle , [OMSNum] = @OMSNum , [OMSDate] = @OMSDate , [OMSCompany] = @OMSCompany , [OMSValidityPeriod] = @OMSValidityPeriod , [IsiId] = @IsiId , [MessageId] = @MessageId , [RegAddress] = @RegAddress , [FactAddress] = @FactAddress , [BirthAddress] = @BirthAddress , [Author] = @Author WHERE [Id_Auto] = @Id_Auto";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@Id", (updateRequestContact.Id == null) ? (object)DBNull.Value : updateRequestContact.Id);
@@ -1550,6 +1556,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 updateCommand.Parameters.AddWithValue("@RegAddress", (updateRequestContact.RegAddress == null) ? (object)DBNull.Value : updateRequestContact.RegAddress);
                 updateCommand.Parameters.AddWithValue("@FactAddress", (updateRequestContact.FactAddress == null) ? (object)DBNull.Value : updateRequestContact.FactAddress);
                 updateCommand.Parameters.AddWithValue("@BirthAddress", (updateRequestContact.BirthAddress == null) ? (object)DBNull.Value : updateRequestContact.BirthAddress);
+                updateCommand.Parameters.AddWithValue("@Author", SPContext.Current != null ? SPContext.Current.Web.CurrentUser.LoginName : (object)DBNull.Value);
 
                 updateCommand.Parameters.AddWithValue("@Id_Auto", updateRequestContact.Id_Auto);
 
