@@ -133,7 +133,7 @@ namespace TM.SP.Search
                 CalculateIncomeRequestSearchFields(updateItem, web);
                 try
                 {
-                    updateItem.SystemUpdate();
+                    updateItem.SystemUpdate(false);
                 }
                 catch (Exception ex)
                 {
