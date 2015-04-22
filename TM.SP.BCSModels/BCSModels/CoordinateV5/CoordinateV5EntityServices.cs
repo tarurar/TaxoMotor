@@ -179,8 +179,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[Address] ([Title] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [MessageId] , [Author]) VALUES (@Title , @Country , @PostalCode , @Locality , @Region , @City , @Town , @Street , @House , @Building , @Structure , @Facility , @Ownership , @Flat , @POBox , @Okato , @KladrCode , @KladrStreetCode , @OMKDistrictCode , @OMKRegionCode , @OMKTownCode , @OMKStreetCode , @BTIStreetCode , @BTIBuildingCode , @Type , @MessageId , @Author) SELECT [Title] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [Id] , [MessageId] FROM [dbo].[Address] WHERE [Id] = SCOPE_IDENTITY()";
-                createCommand.Parameters.AddWithValue("@Title", newentity.Title);
+                createCommand.CommandText = "INSERT INTO [dbo].[Address] ([Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [MessageId] , [Author]) VALUES (@Country , @PostalCode , @Locality , @Region , @City , @Town , @Street , @House , @Building , @Structure , @Facility , @Ownership , @Flat , @POBox , @Okato , @KladrCode , @KladrStreetCode , @OMKDistrictCode , @OMKRegionCode , @OMKTownCode , @OMKStreetCode , @BTIStreetCode , @BTIBuildingCode , @Type , @MessageId , @Author) SELECT [Title] , [Country] , [PostalCode] , [Locality] , [Region] , [City] , [Town] , [Street] , [House] , [Building] , [Structure] , [Facility] , [Ownership] , [Flat] , [POBox] , [Okato] , [KladrCode] , [KladrStreetCode] , [OMKDistrictCode] , [OMKRegionCode] , [OMKTownCode] , [OMKStreetCode] , [BTIStreetCode] , [BTIBuildingCode] , [Type] , [Id] , [MessageId] FROM [dbo].[Address] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@Country", (newentity.Country == null) ? (object)DBNull.Value : newentity.Country);
                 createCommand.Parameters.AddWithValue("@PostalCode", (newentity.PostalCode == null) ? (object)DBNull.Value : newentity.PostalCode);
                 createCommand.Parameters.AddWithValue("@Locality", (newentity.Locality == null) ? (object)DBNull.Value : newentity.Locality);
@@ -287,10 +286,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[Address] SET [Title] = @Title , [Country] = @Country , [PostalCode] = @PostalCode , [Locality] = @Locality , [Region] = @Region , [City] = @City , [Town] = @Town , [Street] = @Street , [House] = @House , [Building] = @Building , [Structure] = @Structure , [Facility] = @Facility , [Ownership] = @Ownership , [Flat] = @Flat , [POBox] = @POBox , [Okato] = @Okato , [KladrCode] = @KladrCode , [KladrStreetCode] = @KladrStreetCode , [OMKDistrictCode] = @OMKDistrictCode , [OMKRegionCode] = @OMKRegionCode , [OMKTownCode] = @OMKTownCode , [OMKStreetCode] = @OMKStreetCode , [BTIStreetCode] = @BTIStreetCode , [BTIBuildingCode] = @BTIBuildingCode , [Type] = @Type , [MessageId] = @MessageId , [Author] = @Author WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[Address] SET [Country] = @Country , [PostalCode] = @PostalCode , [Locality] = @Locality , [Region] = @Region , [City] = @City , [Town] = @Town , [Street] = @Street , [House] = @House , [Building] = @Building , [Structure] = @Structure , [Facility] = @Facility , [Ownership] = @Ownership , [Flat] = @Flat , [POBox] = @POBox , [Okato] = @Okato , [KladrCode] = @KladrCode , [KladrStreetCode] = @KladrStreetCode , [OMKDistrictCode] = @OMKDistrictCode , [OMKRegionCode] = @OMKRegionCode , [OMKTownCode] = @OMKTownCode , [OMKStreetCode] = @OMKStreetCode , [BTIStreetCode] = @BTIStreetCode , [BTIBuildingCode] = @BTIBuildingCode , [Type] = @Type , [MessageId] = @MessageId , [Author] = @Author WHERE [Id] = @Id";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Title", updateAddress.Title);
                 updateCommand.Parameters.AddWithValue("@Country", (updateAddress.Country == null) ? (object)DBNull.Value : updateAddress.Country);
                 updateCommand.Parameters.AddWithValue("@PostalCode", (updateAddress.PostalCode == null) ? (object)DBNull.Value : updateAddress.PostalCode);
                 updateCommand.Parameters.AddWithValue("@Locality", (updateAddress.Locality == null) ? (object)DBNull.Value : updateAddress.Locality);
@@ -870,9 +868,8 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[Request] ([Title] , [MessageId] , [DeclarantRequestAccount] , [DeclarantRequestContact] , [TrusteeRequestContact] , [ServiceProperties] , [Service] , [ServiceHeader]) VALUES (@Title , @MessageId , @DeclarantRequestAccount , @DeclarantRequestContact , @TrusteeRequestContact , @ServiceProperties , @Service , @ServiceHeader) SELECT [Id] , [Title] , [MessageId] , [DeclarantRequestAccount] , [DeclarantRequestContact] , [TrusteeRequestContact] , [ServiceProperties] , [Service] , [ServiceHeader] FROM [dbo].[Request] WHERE [Id] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[Request] ([MessageId] , [DeclarantRequestAccount] , [DeclarantRequestContact] , [TrusteeRequestContact] , [ServiceProperties] , [Service] , [ServiceHeader]) VALUES (@MessageId , @DeclarantRequestAccount , @DeclarantRequestContact , @TrusteeRequestContact , @ServiceProperties , @Service , @ServiceHeader) SELECT [Id] , [Title] , [MessageId] , [DeclarantRequestAccount] , [DeclarantRequestContact] , [TrusteeRequestContact] , [ServiceProperties] , [Service] , [ServiceHeader] FROM [dbo].[Request] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@Id", newentity.Id);
-                createCommand.Parameters.AddWithValue("@Title", newentity.Title);
                 createCommand.Parameters.AddWithValue("@MessageId", newentity.MessageId);
                 createCommand.Parameters.AddWithValue("@DeclarantRequestAccount", (newentity.DeclarantRequestAccount == null) ? (object)DBNull.Value : newentity.DeclarantRequestAccount);
                 createCommand.Parameters.AddWithValue("@DeclarantRequestContact", (newentity.DeclarantRequestContact == null) ? (object)DBNull.Value : newentity.DeclarantRequestContact);
@@ -941,10 +938,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[Request] SET [Title] = @Title , [MessageId] = @MessageId , [DeclarantRequestAccount] = @DeclarantRequestAccount , [DeclarantRequestContact] = @DeclarantRequestContact , [TrusteeRequestContact] = @TrusteeRequestContact , [ServiceProperties] = @ServiceProperties , [Service] = @Service , [ServiceHeader] = @ServiceHeader WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[Request] SET [MessageId] = @MessageId , [DeclarantRequestAccount] = @DeclarantRequestAccount , [DeclarantRequestContact] = @DeclarantRequestContact , [TrusteeRequestContact] = @TrusteeRequestContact , [ServiceProperties] = @ServiceProperties , [Service] = @Service , [ServiceHeader] = @ServiceHeader WHERE [Id] = @Id";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Title", updateRequest.Title);
                 updateCommand.Parameters.AddWithValue("@MessageId", updateRequest.MessageId);
                 updateCommand.Parameters.AddWithValue("@DeclarantRequestAccount", (updateRequest.DeclarantRequestAccount == null) ? (object)DBNull.Value : updateRequest.DeclarantRequestAccount);
                 updateCommand.Parameters.AddWithValue("@DeclarantRequestContact", (updateRequest.DeclarantRequestContact == null) ? (object)DBNull.Value : updateRequest.DeclarantRequestContact);
@@ -1418,8 +1414,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[RequestContact] ([Id] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] , [Author]) VALUES (@Id , @LastName , @FirstName , @MiddleName , @Gender , @BirthDate , @Snils , @Inn , @MobilePhone , @WorkPhone , @HomePhone , @EMail , @Nation , @Citizenship , @CitizenshipType , @JobTitle , @OMSNum , @OMSDate , @OMSCompany , @OMSValidityPeriod , @IsiId , @MessageId , @RegAddress , @FactAddress , @BirthAddress , @Author) SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = SCOPE_IDENTITY()";
-                createCommand.Parameters.AddWithValue("@Id", (newentity.Id == null) ? (object)DBNull.Value : newentity.Id);
+                createCommand.CommandText = "INSERT INTO [dbo].[RequestContact] ([LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress] , [Author]) VALUES (@LastName , @FirstName , @MiddleName , @Gender , @BirthDate , @Snils , @Inn , @MobilePhone , @WorkPhone , @HomePhone , @EMail , @Nation , @Citizenship , @CitizenshipType , @JobTitle , @OMSNum , @OMSDate , @OMSCompany , @OMSValidityPeriod , @IsiId , @MessageId , @RegAddress , @FactAddress , @BirthAddress , @Author) SELECT [Id] , [Title] , [LastName] , [FirstName] , [MiddleName] , [Gender] , [BirthDate] , [Snils] , [Inn] , [MobilePhone] , [WorkPhone] , [HomePhone] , [EMail] , [Nation] , [Citizenship] , [CitizenshipType] , [JobTitle] , [OMSNum] , [OMSDate] , [OMSCompany] , [OMSValidityPeriod] , [IsiId] , [Id_Auto] , [MessageId] , [RegAddress] , [FactAddress] , [BirthAddress], [SingleStrRegAddress], [SingleStrFactAddress], [SingleStrBirthAddress] FROM [dbo].[RequestContact] WHERE [Id_Auto] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@LastName", (newentity.LastName == null) ? (object)DBNull.Value : newentity.LastName);
                 createCommand.Parameters.AddWithValue("@FirstName", (newentity.FirstName == null) ? (object)DBNull.Value : newentity.FirstName);
                 createCommand.Parameters.AddWithValue("@MiddleName", (newentity.MiddleName == null) ? (object)DBNull.Value : newentity.MiddleName);
@@ -1528,10 +1523,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[RequestContact] SET [Id] = @Id , [LastName] = @LastName , [FirstName] = @FirstName , [MiddleName] = @MiddleName , [Gender] = @Gender , [BirthDate] = @BirthDate , [Snils] = @Snils , [Inn] = @Inn , [MobilePhone] = @MobilePhone , [WorkPhone] = @WorkPhone , [HomePhone] = @HomePhone , [EMail] = @EMail , [Nation] = @Nation , [Citizenship] = @Citizenship , [CitizenshipType] = @CitizenshipType , [JobTitle] = @JobTitle , [OMSNum] = @OMSNum , [OMSDate] = @OMSDate , [OMSCompany] = @OMSCompany , [OMSValidityPeriod] = @OMSValidityPeriod , [IsiId] = @IsiId , [MessageId] = @MessageId , [RegAddress] = @RegAddress , [FactAddress] = @FactAddress , [BirthAddress] = @BirthAddress , [Author] = @Author WHERE [Id_Auto] = @Id_Auto";
+                updateCommand.CommandText = "UPDATE [dbo].[RequestContact] SET [LastName] = @LastName , [FirstName] = @FirstName , [MiddleName] = @MiddleName , [Gender] = @Gender , [BirthDate] = @BirthDate , [Snils] = @Snils , [Inn] = @Inn , [MobilePhone] = @MobilePhone , [WorkPhone] = @WorkPhone , [HomePhone] = @HomePhone , [EMail] = @EMail , [Nation] = @Nation , [Citizenship] = @Citizenship , [CitizenshipType] = @CitizenshipType , [JobTitle] = @JobTitle , [OMSNum] = @OMSNum , [OMSDate] = @OMSDate , [OMSCompany] = @OMSCompany , [OMSValidityPeriod] = @OMSValidityPeriod , [IsiId] = @IsiId , [MessageId] = @MessageId , [RegAddress] = @RegAddress , [FactAddress] = @FactAddress , [BirthAddress] = @BirthAddress , [Author] = @Author WHERE [Id_Auto] = @Id_Auto";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Id", (updateRequestContact.Id == null) ? (object)DBNull.Value : updateRequestContact.Id);
                 updateCommand.Parameters.AddWithValue("@LastName", (updateRequestContact.LastName == null) ? (object)DBNull.Value : updateRequestContact.LastName);
                 updateCommand.Parameters.AddWithValue("@FirstName", (updateRequestContact.FirstName == null) ? (object)DBNull.Value : updateRequestContact.FirstName);
                 updateCommand.Parameters.AddWithValue("@MiddleName", (updateRequestContact.MiddleName == null) ? (object)DBNull.Value : updateRequestContact.MiddleName);
@@ -1783,8 +1777,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[Service] ([Title] , [RegNum] , [RegDate] , [ServiceNumber] , [ServiceTypeCode] , [ServicePrice] , [PrepareTargetDate] , [OutputTargetDate] , [Copies] , [PrepareFactDate] , [OutputFactDate] , [MessageId]) VALUES (@Title , @RegNum , @RegDate , @ServiceNumber , @ServiceTypeCode , @ServicePrice , @PrepareTargetDate , @OutputTargetDate , @Copies , @PrepareFactDate , @OutputFactDate , @MessageId) SELECT [Title] , [RegNum] , [RegDate] , [ServiceNumber] , [ServiceTypeCode] , [ServicePrice] , [PrepareTargetDate] , [OutputTargetDate] , [Copies] , [PrepareFactDate] , [OutputFactDate] , [Id] , [MessageId] FROM [dbo].[Service] WHERE [Id] = SCOPE_IDENTITY()";
-                createCommand.Parameters.AddWithValue("@Title", (newentity.Title == null) ? (object)DBNull.Value : newentity.Title);
+                createCommand.CommandText = "INSERT INTO [dbo].[Service] ([RegNum] , [RegDate] , [ServiceNumber] , [ServiceTypeCode] , [ServicePrice] , [PrepareTargetDate] , [OutputTargetDate] , [Copies] , [PrepareFactDate] , [OutputFactDate] , [MessageId]) VALUES (@RegNum , @RegDate , @ServiceNumber , @ServiceTypeCode , @ServicePrice , @PrepareTargetDate , @OutputTargetDate , @Copies , @PrepareFactDate , @OutputFactDate , @MessageId) SELECT [Title] , [RegNum] , [RegDate] , [ServiceNumber] , [ServiceTypeCode] , [ServicePrice] , [PrepareTargetDate] , [OutputTargetDate] , [Copies] , [PrepareFactDate] , [OutputFactDate] , [Id] , [MessageId] FROM [dbo].[Service] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@RegNum", (newentity.RegNum == null) ? (object)DBNull.Value : newentity.RegNum);
                 createCommand.Parameters.AddWithValue("@RegDate", (newentity.RegDate == null) ? (object)DBNull.Value : newentity.RegDate);
                 createCommand.Parameters.AddWithValue("@ServiceNumber", (newentity.ServiceNumber == null) ? (object)DBNull.Value : newentity.ServiceNumber);
@@ -1795,7 +1788,6 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@Copies", (newentity.Copies == null) ? (object)DBNull.Value : newentity.Copies);
                 createCommand.Parameters.AddWithValue("@PrepareFactDate", (newentity.PrepareFactDate == null) ? (object)DBNull.Value : newentity.PrepareFactDate);
                 createCommand.Parameters.AddWithValue("@OutputFactDate", (newentity.OutputFactDate == null) ? (object)DBNull.Value : newentity.OutputFactDate);
-                createCommand.Parameters.AddWithValue("@Id", newentity.Id);
                 createCommand.Parameters.AddWithValue("@MessageId", newentity.MessageId);
 
 
@@ -1862,10 +1854,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[Service] SET [Title] = @Title , [RegNum] = @RegNum , [RegDate] = @RegDate , [ServiceNumber] = @ServiceNumber , [ServiceTypeCode] = @ServiceTypeCode , [ServicePrice] = @ServicePrice , [PrepareTargetDate] = @PrepareTargetDate , [OutputTargetDate] = @OutputTargetDate , [Copies] = @Copies , [PrepareFactDate] = @PrepareFactDate , [OutputFactDate] = @OutputFactDate , [MessageId] = @MessageId WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[Service] SET [RegNum] = @RegNum , [RegDate] = @RegDate , [ServiceNumber] = @ServiceNumber , [ServiceTypeCode] = @ServiceTypeCode , [ServicePrice] = @ServicePrice , [PrepareTargetDate] = @PrepareTargetDate , [OutputTargetDate] = @OutputTargetDate , [Copies] = @Copies , [PrepareFactDate] = @PrepareFactDate , [OutputFactDate] = @OutputFactDate , [MessageId] = @MessageId WHERE [Id] = @Id";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Title", (updateService.Title == null) ? (object)DBNull.Value : updateService.Title);
                 updateCommand.Parameters.AddWithValue("@RegNum", (updateService.RegNum == null) ? (object)DBNull.Value : updateService.RegNum);
                 updateCommand.Parameters.AddWithValue("@RegDate", (updateService.RegDate == null) ? (object)DBNull.Value : updateService.RegDate);
                 updateCommand.Parameters.AddWithValue("@ServiceNumber", (updateService.ServiceNumber == null) ? (object)DBNull.Value : updateService.ServiceNumber);
@@ -2058,9 +2049,8 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[ServiceDocument] ([Id] , [Title] , [DocCode] , [DocSubType] , [DocPerson] , [DocSerie] , [DocNumber] , [DocDate] , [ValidityPeriod] , [WhoSign] , [ListCount] , [CopyCount] , [DivisionCode] , [MessageId] , [Service]) VALUES (@Id , @Title , @DocCode , @DocSubType , @DocPerson , @DocSerie , @DocNumber , @DocDate , @ValidityPeriod , @WhoSign , @ListCount , @CopyCount , @DivisionCode , @MessageId , @Service) SELECT [Id] , [Title] , [DocCode] , [DocSubType] , [DocPerson] , [DocSerie] , [DocNumber] , [DocDate] , [ValidityPeriod] , [WhoSign] , [ListCount] , [CopyCount] , [DivisionCode] , [Id_Auto] , [MessageId] , [Service] FROM [dbo].[ServiceDocument] WHERE [Id_Auto] = SCOPE_IDENTITY()";
+                createCommand.CommandText = "INSERT INTO [dbo].[ServiceDocument] ([Id] , [DocCode] , [DocSubType] , [DocPerson] , [DocSerie] , [DocNumber] , [DocDate] , [ValidityPeriod] , [WhoSign] , [ListCount] , [CopyCount] , [DivisionCode] , [MessageId] , [Service]) VALUES (@Id , @DocCode , @DocSubType , @DocPerson , @DocSerie , @DocNumber , @DocDate , @ValidityPeriod , @WhoSign , @ListCount , @CopyCount , @DivisionCode , @MessageId , @Service) SELECT [Id] , [Title] , [DocCode] , [DocSubType] , [DocPerson] , [DocSerie] , [DocNumber] , [DocDate] , [ValidityPeriod] , [WhoSign] , [ListCount] , [CopyCount] , [DivisionCode] , [Id_Auto] , [MessageId] , [Service] FROM [dbo].[ServiceDocument] WHERE [Id_Auto] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@Id", (newentity.Id == null) ? (object)DBNull.Value : newentity.Id);
-                createCommand.Parameters.AddWithValue("@Title", (newentity.Title == null) ? (object)DBNull.Value : newentity.Title);
                 createCommand.Parameters.AddWithValue("@DocCode", (newentity.DocCode == null) ? (object)DBNull.Value : newentity.DocCode);
                 createCommand.Parameters.AddWithValue("@DocSubType", (newentity.DocSubType == null) ? (object)DBNull.Value : newentity.DocSubType);
                 createCommand.Parameters.AddWithValue("@DocPerson", (newentity.DocPerson == null) ? (object)DBNull.Value : newentity.DocPerson);
@@ -2072,7 +2062,6 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@ListCount", (newentity.ListCount == null) ? (object)DBNull.Value : newentity.ListCount);
                 createCommand.Parameters.AddWithValue("@CopyCount", (newentity.CopyCount == null) ? (object)DBNull.Value : newentity.CopyCount);
                 createCommand.Parameters.AddWithValue("@DivisionCode", (newentity.DivisionCode == null) ? (object)DBNull.Value : newentity.DivisionCode);
-                createCommand.Parameters.AddWithValue("@Id_Auto", newentity.Id_Auto);
                 createCommand.Parameters.AddWithValue("@MessageId", newentity.MessageId);
                 createCommand.Parameters.AddWithValue("@Service", newentity.Service);
 
@@ -2143,11 +2132,10 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[ServiceDocument] SET [Id] = @Id , [Title] = @Title , [DocCode] = @DocCode , [DocSubType] = @DocSubType , [DocPerson] = @DocPerson , [DocSerie] = @DocSerie , [DocNumber] = @DocNumber , [DocDate] = @DocDate , [ValidityPeriod] = @ValidityPeriod , [WhoSign] = @WhoSign , [ListCount] = @ListCount , [CopyCount] = @CopyCount , [DivisionCode] = @DivisionCode , [MessageId] = @MessageId , [Service] = @Service WHERE [Id_Auto] = @Id_Auto";
+                updateCommand.CommandText = "UPDATE [dbo].[ServiceDocument] SET [Id] = @Id , [DocCode] = @DocCode , [DocSubType] = @DocSubType , [DocPerson] = @DocPerson , [DocSerie] = @DocSerie , [DocNumber] = @DocNumber , [DocDate] = @DocDate , [ValidityPeriod] = @ValidityPeriod , [WhoSign] = @WhoSign , [ListCount] = @ListCount , [CopyCount] = @CopyCount , [DivisionCode] = @DivisionCode , [MessageId] = @MessageId , [Service] = @Service WHERE [Id_Auto] = @Id_Auto";
 
                 //add new field values
                 updateCommand.Parameters.AddWithValue("@Id", (updateServiceDocument.Id == null) ? (object)DBNull.Value : updateServiceDocument.Id);
-                updateCommand.Parameters.AddWithValue("@Title", (updateServiceDocument.Title == null) ? (object)DBNull.Value : updateServiceDocument.Title);
                 updateCommand.Parameters.AddWithValue("@DocCode", (updateServiceDocument.DocCode == null) ? (object)DBNull.Value : updateServiceDocument.DocCode);
                 updateCommand.Parameters.AddWithValue("@DocSubType", (updateServiceDocument.DocSubType == null) ? (object)DBNull.Value : updateServiceDocument.DocSubType);
                 updateCommand.Parameters.AddWithValue("@DocPerson", (updateServiceDocument.DocPerson == null) ? (object)DBNull.Value : updateServiceDocument.DocPerson);
@@ -2287,15 +2275,13 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[ServiceHeader] ([Title] , [FromOrgCode] , [ToOrgCode] , [MessageId] , [RelatesTo] , [ServiceNumber] , [RequestDateTime]) VALUES (@Title , @FromOrgCode , @ToOrgCode , @MessageId , @RelatesTo , @ServiceNumber , @RequestDateTime) SELECT [Title] , [FromOrgCode] , [ToOrgCode] , [MessageId] , [RelatesTo] , [ServiceNumber] , [RequestDateTime] , [Id] FROM [dbo].[ServiceHeader] WHERE [Id] = SCOPE_IDENTITY()";
-                createCommand.Parameters.AddWithValue("@Title", (newentity.Title == null) ? (object)DBNull.Value : newentity.Title);
+                createCommand.CommandText = "INSERT INTO [dbo].[ServiceHeader] ([FromOrgCode] , [ToOrgCode] , [MessageId] , [RelatesTo] , [ServiceNumber] , [RequestDateTime]) VALUES (@FromOrgCode , @ToOrgCode , @MessageId , @RelatesTo , @ServiceNumber , @RequestDateTime) SELECT [Title] , [FromOrgCode] , [ToOrgCode] , [MessageId] , [RelatesTo] , [ServiceNumber] , [RequestDateTime] , [Id] FROM [dbo].[ServiceHeader] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@FromOrgCode", (newentity.FromOrgCode == null) ? (object)DBNull.Value : newentity.FromOrgCode);
                 createCommand.Parameters.AddWithValue("@ToOrgCode", (newentity.ToOrgCode == null) ? (object)DBNull.Value : newentity.ToOrgCode);
                 createCommand.Parameters.AddWithValue("@MessageId", newentity.MessageId);
                 createCommand.Parameters.AddWithValue("@RelatesTo", (newentity.RelatesTo == null) ? (object)DBNull.Value : newentity.RelatesTo);
                 createCommand.Parameters.AddWithValue("@ServiceNumber", (newentity.ServiceNumber == null) ? (object)DBNull.Value : newentity.ServiceNumber);
                 createCommand.Parameters.AddWithValue("@RequestDateTime", newentity.RequestDateTime);
-                createCommand.Parameters.AddWithValue("@Id", newentity.Id);
 
 
                 SqlDataReader thisReader = createCommand.ExecuteReader(CommandBehavior.CloseConnection);
@@ -2356,10 +2342,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[ServiceHeader] SET [Title] = @Title , [FromOrgCode] = @FromOrgCode , [ToOrgCode] = @ToOrgCode , [MessageId] = @MessageId , [RelatesTo] = @RelatesTo , [ServiceNumber] = @ServiceNumber , [RequestDateTime] = @RequestDateTime WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[ServiceHeader] SET [FromOrgCode] = @FromOrgCode , [ToOrgCode] = @ToOrgCode , [MessageId] = @MessageId , [RelatesTo] = @RelatesTo , [ServiceNumber] = @ServiceNumber , [RequestDateTime] = @RequestDateTime WHERE [Id] = @Id";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Title", (updateServiceHeader.Title == null) ? (object)DBNull.Value : updateServiceHeader.Title);
                 updateCommand.Parameters.AddWithValue("@FromOrgCode", (updateServiceHeader.FromOrgCode == null) ? (object)DBNull.Value : updateServiceHeader.FromOrgCode);
                 updateCommand.Parameters.AddWithValue("@ToOrgCode", (updateServiceHeader.ToOrgCode == null) ? (object)DBNull.Value : updateServiceHeader.ToOrgCode);
                 updateCommand.Parameters.AddWithValue("@MessageId", updateServiceHeader.MessageId);
@@ -2501,8 +2486,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[ServiceProperties] ([Title] , [delete] , [name] , [other] , [pr_pereoformlenie] , [pr_pereoformlenie_2] , [pr_pereoformlenie_3] , [pr_pereoformlenie_4] , [pr_pereoformlenie_5] , [pr_pereoformlenie_6] , [pr_pereoformlenie_7] , [MessageId]) VALUES (@Title , @delete , @name , @other , @pr_pereoformlenie , @pr_pereoformlenie_2 , @pr_pereoformlenie_3 , @pr_pereoformlenie_4 , @pr_pereoformlenie_5 , @pr_pereoformlenie_6 , @pr_pereoformlenie_7 , @MessageId) SELECT [Title] , [delete] , [name] , [other] , [pr_pereoformlenie] , [pr_pereoformlenie_2] , [pr_pereoformlenie_3] , [pr_pereoformlenie_4] , [pr_pereoformlenie_5] , [pr_pereoformlenie_6] , [pr_pereoformlenie_7] , [Id] , [MessageId] FROM [dbo].[ServiceProperties] WHERE [Id] = SCOPE_IDENTITY()";
-                createCommand.Parameters.AddWithValue("@Title", newentity.Title);
+                createCommand.CommandText = "INSERT INTO [dbo].[ServiceProperties] ([delete] , [name] , [other] , [pr_pereoformlenie] , [pr_pereoformlenie_2] , [pr_pereoformlenie_3] , [pr_pereoformlenie_4] , [pr_pereoformlenie_5] , [pr_pereoformlenie_6] , [pr_pereoformlenie_7] , [MessageId]) VALUES (@delete , @name , @other , @pr_pereoformlenie , @pr_pereoformlenie_2 , @pr_pereoformlenie_3 , @pr_pereoformlenie_4 , @pr_pereoformlenie_5 , @pr_pereoformlenie_6 , @pr_pereoformlenie_7 , @MessageId) SELECT [Title] , [delete] , [name] , [other] , [pr_pereoformlenie] , [pr_pereoformlenie_2] , [pr_pereoformlenie_3] , [pr_pereoformlenie_4] , [pr_pereoformlenie_5] , [pr_pereoformlenie_6] , [pr_pereoformlenie_7] , [Id] , [MessageId] FROM [dbo].[ServiceProperties] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@delete", (newentity.delete == null) ? (object)DBNull.Value : newentity.delete);
                 createCommand.Parameters.AddWithValue("@name", (newentity.name == null) ? (object)DBNull.Value : newentity.name);
                 createCommand.Parameters.AddWithValue("@other", (newentity.other == null) ? (object)DBNull.Value : newentity.other);
@@ -2513,7 +2497,6 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@pr_pereoformlenie_5", (newentity.pr_pereoformlenie_5 == null) ? (object)DBNull.Value : newentity.pr_pereoformlenie_5);
                 createCommand.Parameters.AddWithValue("@pr_pereoformlenie_6", (newentity.pr_pereoformlenie_6 == null) ? (object)DBNull.Value : newentity.pr_pereoformlenie_6);
                 createCommand.Parameters.AddWithValue("@pr_pereoformlenie_7", (newentity.pr_pereoformlenie_7 == null) ? (object)DBNull.Value : newentity.pr_pereoformlenie_7);
-                createCommand.Parameters.AddWithValue("@Id", newentity.Id);
                 createCommand.Parameters.AddWithValue("@MessageId", newentity.MessageId);
 
 
@@ -2580,10 +2563,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[ServiceProperties] SET [Title] = @Title , [delete] = @delete , [name] = @name , [other] = @other , [pr_pereoformlenie] = @pr_pereoformlenie , [pr_pereoformlenie_2] = @pr_pereoformlenie_2 , [pr_pereoformlenie_3] = @pr_pereoformlenie_3 , [pr_pereoformlenie_4] = @pr_pereoformlenie_4 , [pr_pereoformlenie_5] = @pr_pereoformlenie_5 , [pr_pereoformlenie_6] = @pr_pereoformlenie_6 , [pr_pereoformlenie_7] = @pr_pereoformlenie_7 , [MessageId] = @MessageId WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[ServiceProperties] SET [delete] = @delete , [name] = @name , [other] = @other , [pr_pereoformlenie] = @pr_pereoformlenie , [pr_pereoformlenie_2] = @pr_pereoformlenie_2 , [pr_pereoformlenie_3] = @pr_pereoformlenie_3 , [pr_pereoformlenie_4] = @pr_pereoformlenie_4 , [pr_pereoformlenie_5] = @pr_pereoformlenie_5 , [pr_pereoformlenie_6] = @pr_pereoformlenie_6 , [pr_pereoformlenie_7] = @pr_pereoformlenie_7 , [MessageId] = @MessageId WHERE [Id] = @Id";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Title", updateServiceProperties.Title);
                 updateCommand.Parameters.AddWithValue("@delete", (updateServiceProperties.delete == null) ? (object)DBNull.Value : updateServiceProperties.delete);
                 updateCommand.Parameters.AddWithValue("@name", (updateServiceProperties.name == null) ? (object)DBNull.Value : updateServiceProperties.name);
                 updateCommand.Parameters.AddWithValue("@other", (updateServiceProperties.other == null) ? (object)DBNull.Value : updateServiceProperties.other);
@@ -2821,8 +2803,7 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand createCommand = new SqlCommand();
                 createCommand.Connection = thisConn;
-                createCommand.CommandText = "INSERT INTO [dbo].[taxi_info] ([Title] , [blankno] , [brand] , [brandname] , [color] , [color_2] , [color_number] , [color_yellow] , [condition] , [date_ran] , [decision] , [declinereason] , [details] , [doc] , [gps] , [licensedate] , [licensenum] , [lizdetails] , [model] , [name] , [num] , [num2] , [number_ran] , [owner] , [taxi_info_old] , [taxometr] , [todate] , [year] , [MessageId] , [ServiceProperties]) VALUES (@Title , @blankno , @brand , @brandname , @color , @color_2 , @color_number , @color_yellow , @condition , @date_ran , @decision , @declinereason , @details , @doc , @gps , @licensedate , @licensenum , @lizdetails , @model , @name , @num , @num2 , @number_ran , @owner , @taxi_info_old , @taxometr , @todate , @year , @MessageId , @ServiceProperties) SELECT [Title] , [blankno] , [brand] , [brandname] , [color] , [color_2] , [color_number] , [color_yellow] , [condition] , [date_ran] , [decision] , [declinereason] , [details] , [doc] , [gps] , [licensedate] , [licensenum] , [lizdetails] , [model] , [name] , [num] , [num2] , [number_ran] , [owner] , [taxi_info_old] , [taxometr] , [todate] , [year] , [Id] , [MessageId] , [ServiceProperties] FROM [dbo].[taxi_info] WHERE [Id] = SCOPE_IDENTITY()";
-                createCommand.Parameters.AddWithValue("@Title", (newentity.Title == null) ? (object)DBNull.Value : newentity.Title);
+                createCommand.CommandText = "INSERT INTO [dbo].[taxi_info] ([blankno] , [brand] , [brandname] , [color] , [color_2] , [color_number] , [color_yellow] , [condition] , [date_ran] , [decision] , [declinereason] , [details] , [doc] , [gps] , [licensedate] , [licensenum] , [lizdetails] , [model] , [name] , [num] , [num2] , [number_ran] , [owner] , [taxi_info_old] , [taxometr] , [todate] , [year] , [MessageId] , [ServiceProperties]) VALUES (@blankno , @brand , @brandname , @color , @color_2 , @color_number , @color_yellow , @condition , @date_ran , @decision , @declinereason , @details , @doc , @gps , @licensedate , @licensenum , @lizdetails , @model , @name , @num , @num2 , @number_ran , @owner , @taxi_info_old , @taxometr , @todate , @year , @MessageId , @ServiceProperties) SELECT [Title] , [blankno] , [brand] , [brandname] , [color] , [color_2] , [color_number] , [color_yellow] , [condition] , [date_ran] , [decision] , [declinereason] , [details] , [doc] , [gps] , [licensedate] , [licensenum] , [lizdetails] , [model] , [name] , [num] , [num2] , [number_ran] , [owner] , [taxi_info_old] , [taxometr] , [todate] , [year] , [Id] , [MessageId] , [ServiceProperties] FROM [dbo].[taxi_info] WHERE [Id] = SCOPE_IDENTITY()";
                 createCommand.Parameters.AddWithValue("@blankno", (newentity.blankno == null) ? (object)DBNull.Value : newentity.blankno);
                 createCommand.Parameters.AddWithValue("@brand", (newentity.brand == null) ? (object)DBNull.Value : newentity.brand);
                 createCommand.Parameters.AddWithValue("@brandname", (newentity.brandname == null) ? (object)DBNull.Value : newentity.brandname);
@@ -2850,7 +2831,6 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@taxometr", (newentity.taxometr == null) ? (object)DBNull.Value : newentity.taxometr);
                 createCommand.Parameters.AddWithValue("@todate", (newentity.todate == null) ? (object)DBNull.Value : newentity.todate);
                 createCommand.Parameters.AddWithValue("@year", (newentity.year == null) ? (object)DBNull.Value : newentity.year);
-                createCommand.Parameters.AddWithValue("@Id", newentity.Id);
                 createCommand.Parameters.AddWithValue("@MessageId", newentity.MessageId);
                 createCommand.Parameters.AddWithValue("@ServiceProperties", newentity.ServiceProperties);
 
@@ -2936,10 +2916,9 @@ namespace TM.SP.BCSModels.CoordinateV5
 
                 SqlCommand updateCommand = new SqlCommand();
                 updateCommand.Connection = thisConn;
-                updateCommand.CommandText = "UPDATE [dbo].[taxi_info] SET [Title] = @Title , [blankno] = @blankno , [brand] = @brand , [brandname] = @brandname , [color] = @color , [color_2] = @color_2 , [color_number] = @color_number , [color_yellow] = @color_yellow , [condition] = @condition , [date_ran] = @date_ran , [decision] = @decision , [declinereason] = @declinereason , [details] = @details , [doc] = @doc , [gps] = @gps , [licensedate] = @licensedate , [licensenum] = @licensenum , [lizdetails] = @lizdetails , [model] = @model , [name] = @name , [num] = @num , [num2] = @num2 , [number_ran] = @number_ran , [owner] = @owner , [taxi_info_old] = @taxi_info_old , [taxometr] = @taxometr , [todate] = @todate , [year] = @year , [MessageId] = @MessageId , [ServiceProperties] = @ServiceProperties WHERE [Id] = @Id";
+                updateCommand.CommandText = "UPDATE [dbo].[taxi_info] SET [blankno] = @blankno , [brand] = @brand , [brandname] = @brandname , [color] = @color , [color_2] = @color_2 , [color_number] = @color_number , [color_yellow] = @color_yellow , [condition] = @condition , [date_ran] = @date_ran , [decision] = @decision , [declinereason] = @declinereason , [details] = @details , [doc] = @doc , [gps] = @gps , [licensedate] = @licensedate , [licensenum] = @licensenum , [lizdetails] = @lizdetails , [model] = @model , [name] = @name , [num] = @num , [num2] = @num2 , [number_ran] = @number_ran , [owner] = @owner , [taxi_info_old] = @taxi_info_old , [taxometr] = @taxometr , [todate] = @todate , [year] = @year , [MessageId] = @MessageId , [ServiceProperties] = @ServiceProperties WHERE [Id] = @Id";
 
                 //add new field values
-                updateCommand.Parameters.AddWithValue("@Title", (updatetaxi_info.Title == null) ? (object)DBNull.Value : updatetaxi_info.Title);
                 updateCommand.Parameters.AddWithValue("@blankno", (updatetaxi_info.blankno == null) ? (object)DBNull.Value : updatetaxi_info.blankno);
                 updateCommand.Parameters.AddWithValue("@brand", (updatetaxi_info.brand == null) ? (object)DBNull.Value : updatetaxi_info.brand);
                 updateCommand.Parameters.AddWithValue("@brandname", (updatetaxi_info.brandname == null) ? (object)DBNull.Value : updatetaxi_info.brandname);
