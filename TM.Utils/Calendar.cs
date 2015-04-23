@@ -36,12 +36,12 @@ namespace TM.Utils
             {
                 var camlDate = SPUtility.CreateISO8601DateTimeFromSystemDateTime(dateToValidate);
                 var weekdayCaml = Camlex.Query().Where(x =>
-                    x["EventDate"] <= ((DataTypes.DateTime)camlDate).IncludeTimeValue()
-                    && x["EndDate"] >= ((DataTypes.DateTime)camlDate).IncludeTimeValue()
+                    x["EventDate"] <= ((DataTypes.DateTime)camlDate)
+                    && x["EndDate"] >= ((DataTypes.DateTime)camlDate)
                     && (string)x["Category"] == StringsRes.CalendarHoliday).ToString();
                 var holidayCaml = Camlex.Query().Where(x =>
-                    x["EventDate"] <= ((DataTypes.DateTime)camlDate).IncludeTimeValue()
-                    && x["EndDate"] >= ((DataTypes.DateTime)camlDate).IncludeTimeValue()
+                    x["EventDate"] <= ((DataTypes.DateTime)camlDate)
+                    && x["EndDate"] >= ((DataTypes.DateTime)camlDate)
                     && (string)x["Category"] == StringsRes.CalendarWorkHours).ToString();
 
                 var isWeekend = dateToValidate.DayOfWeek == DayOfWeek.Saturday || dateToValidate.DayOfWeek == DayOfWeek.Sunday;
