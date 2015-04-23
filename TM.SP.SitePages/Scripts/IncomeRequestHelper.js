@@ -1084,10 +1084,13 @@
 
                 for (var i = 0; i < fd_relateditems_webparts.length; i++) {
                     var ctxNum = g_ViewIdToViewCounterMap['{' + fd_relateditems_webparts[i].toUpperCase() + '}'];
-                    var ctxT = window["ctx" + ctxNum];
+                    if (ctxNum) {
+                        var ctxT = window["ctx" + ctxNum];
 
-                    if (ctxT.listUrlDir == listUrl)
-                        retVal.push(ctxT);
+                        if (ctxT && (ctxT.listUrlDir == listUrl))
+                            retVal.push(ctxT);
+                    }
+                    
                 }
 
                 return retVal;
