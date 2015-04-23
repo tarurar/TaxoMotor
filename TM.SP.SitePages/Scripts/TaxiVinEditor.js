@@ -59,7 +59,7 @@
 
     function init() {
         SP.SOD.executeOrDelayUntilScriptLoaded(sharepointReady, "SP.js");
-        $("#vin").inputmask("Regex");
+        // $("#vin").inputmask("Regex");
     }
 
     if (!_spBodyOnLoadCalled) {
