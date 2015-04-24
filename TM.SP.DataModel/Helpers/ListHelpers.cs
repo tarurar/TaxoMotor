@@ -148,6 +148,28 @@ namespace TM.SP.DataModel
             }
         }
 
+        public static void IndexField(ClientContext context, string listName, string fieldInternalName)
+        {
+            List targetList = WebHelpers.GetWebList(context, listName);
+            if (targetList == null)
+                throw new Exception(String.Format("List {0} not found", listName));
+
+            Field fieldToIndex = null;
+            try
+            {
+                fieldToIndex = targetList.Fields.GetByInternalNameOrTitle(fieldInternalName);
+            }
+            catch (ArgumentException)
+            {
+                throw new Exception(String.Format("Field {0} not found in the list {1}", fieldInternalName, listName));
+            }
+
+            fieldToIndex.Indexed = true;
+            fieldToIndex.Update();
+
+            context.ExecuteQuery();
+        }
+
         #endregion
     }
 }

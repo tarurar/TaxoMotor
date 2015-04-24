@@ -9,6 +9,7 @@ using Microsoft.SharePoint.Client;
 using SPMeta2.CSOM.Behaviours;
 using SPMeta2.CSOM.Extensions;
 using SPMeta2.Syntax.Default;
+using SPMeta2.Enumerations;
 using TM.SP.DataModel.Consts;
 using PlumsailFields = TM.SP.DataModel.Plumsail.Fields;
 
@@ -215,6 +216,31 @@ namespace TM.SP.DataModel
             ListHelpers.AddListContentTypeFieldLink(ctx, Lists.TmIncomeRequestList, ContentTypes.TmCancelIncomeRequest,
                 cancellationReasonLookupField);
             #endregion
+        }
+
+        public static void CreateFieldIndexes(ClientContext ctx)
+        {
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseExternalId.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmTaxiStateNumber.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseOutputDate.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, BuiltInInternalFieldNames.Title);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmRegNumber.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseIsMo.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseStatus.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseFromDate.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseTillDate.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, "_x0421__x0441__x044b__x043b__x04");
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, "ContentType");
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Plumsail.Fields.TmTaxiLookupXml.InternalName);
+
+            ListHelpers.IndexField(ctx, Lists.TmIncomeRequestAttachList.Url, Fields.TmAttachType.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmIncomeRequestAttachList.Url, Plumsail.Fields.TmIncomeRequestLookupXml.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmIncomeRequestAttachList.Url, Plumsail.Fields.TmTaxiLookupXml.InternalName);
+
+            ListHelpers.IndexField(ctx, Lists.TmAttachLib.Url, Plumsail.Fields.TmIncomeRequestAttachLookupXml.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmAttachLib.Url, Plumsail.Fields.TmIncomeRequestLookupXml.InternalName);
+
+            ListHelpers.IndexField(ctx, Lists.TmTaxiList.Url, Plumsail.Fields.TmIncomeRequestLookupXml.InternalName);
         }
 
         #endregion
