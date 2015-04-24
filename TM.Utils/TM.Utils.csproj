@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="BCS.cs" />
     <Compile Include="Calendar.cs" />
+    <Compile Include="CamlexPatch.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Extensions.cs" />

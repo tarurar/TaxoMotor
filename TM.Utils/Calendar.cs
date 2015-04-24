@@ -44,6 +44,9 @@ namespace TM.Utils
                     && x["EndDate"] >= ((DataTypes.DateTime)camlDate)
                     && (string)x["Category"] == StringsRes.CalendarWorkHours).ToString();
 
+                weekdayCaml = CamlexPatch.PatchTimeZone(weekdayCaml);
+                holidayCaml = CamlexPatch.PatchTimeZone(holidayCaml);
+
                 var isWeekend = dateToValidate.DayOfWeek == DayOfWeek.Saturday || dateToValidate.DayOfWeek == DayOfWeek.Sunday;
                 var caml = isWeekend ? holidayCaml : weekdayCaml;
                 var items = calendarList.GetItems(new SPQuery { Query = caml });
