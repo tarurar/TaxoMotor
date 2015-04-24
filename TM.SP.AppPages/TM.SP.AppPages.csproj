@@ -21,6 +21,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <IncludeAssemblyInPackage>True</IncludeAssemblyInPackage>
+    <PostDeploymentCommand>net stop "SharePoint Timer Service"
+net start "SharePoint Timer Service"</PostDeploymentCommand>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -162,6 +164,9 @@
     <Compile Include="ApplicationPages\SendStatus\SendStatus.aspx.designer.cs">
       <DependentUpon>SendStatus.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="Features\TaxoMotor_TaxoMotor_CommonTimerJobs\TaxoMotor_CommonTimerJobs.EventReceiver.cs">
+      <DependentUpon>TaxoMotor_TaxoMotor_CommonTimerJobs.feature</DependentUpon>
+    </Compile>
     <Compile Include="IncomeRequestBuilder.cs" />
     <Compile Include="IncomeRequestHelper.cs" />
     <Compile Include="LicenseHelper.cs" />
@@ -173,6 +178,8 @@
     </Compile>
     <Compile Include="Print\TemplatedDocumentBuilder.cs" />
     <Compile Include="Print\TemplatedLicenseDocumentBuilder.cs" />
+    <Compile Include="Timers\MoTimer.cs" />
+    <Compile Include="Timers\OdopmTimer.cs" />
     <Compile Include="Validators\StringsRes.Designer.cs">
       <DependentUpon>StringsRes.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -218,6 +225,9 @@
     <None Include="ApplicationPages\SendStatus\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{b1abed69-538a-4f16-8179-03ee2139d7cd}</SharePointProjectItemId>
     </None>
+    <None Include="Features\TaxoMotor_TaxoMotor_CommonTimerJobs\TaxoMotor_TaxoMotor_CommonTimerJobs.feature">
+      <FeatureId>{f8e734b9-7306-4d11-8e7c-9145fe72ef2b}</FeatureId>
+    </None>
     <None Include="key.snk" />
     <None Include="Layouts\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{53b62489-1b58-4b8d-b2db-df48ad46cb03}</SharePointProjectItemId>
@@ -232,10 +242,11 @@
     <None Include="Resources\Resources\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{c96f82a7-9013-4b6a-aba4-7ba847a94cbd}</SharePointProjectItemId>
     </None>
+    <None Include="Template\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{068de591-75ce-445c-939e-7d96502fd0e8}</SharePointProjectItemId>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Features\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="3rd\AppLog.dll" />
     <Content Include="3rd\AppLog.pdb" />
@@ -253,11 +264,15 @@
     <Content Include="ApplicationPages\SendRequestCombi\SendRequestCombi.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotor_CommonTimerJobs.gif" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationPages\SendRequestPenaltyPage\SendRequestPenaltyPage.aspx" />
     <Content Include="ApplicationPages\SendRequestPTSPage\SendRequestPTSPage.aspx" />
     <Content Include="ApplicationPages\SendStatus\SendStatus.aspx" />
+    <Content Include="Features\TaxoMotor_TaxoMotor_CommonTimerJobs\TaxoMotor_TaxoMotor_CommonTimerJobs.Template.xml">
+      <DependentUpon>TaxoMotor_TaxoMotor_CommonTimerJobs.feature</DependentUpon>
+    </Content>
     <Content Include="Layouts\TM.SP.AppPages\Images\accept-icon-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\button_minus.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\button_plus.png" />

@@ -15,3 +15,5 @@ RatingsSSOAppId;RatingsAccess
 ProductionCalendarListUrl;Lists/ProdCalendarList
 MigrateIncomeRequestCountPerJob;1
 MigrateLicenseCountPerJob;1
+AutoSendOdopm;0
+AutoSendMo;0

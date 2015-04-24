@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+************************************************************************
+       Company: CompanyName
+   Application: TaxoMotor
+  Created date: 2015-04-24 15:40:55Z
+    Created by: TAXOMOTOR\developer
+  Feature Name: TaxoMotor_CommonTimerJobs
+ Feature Title: ТаксоМотор: Таймеры общего назначения
+   Description: ТаксоМотор: Таймеры общего назначения
+       History: Initial Version 1.0.0.0 
+************************************************************************
+-->
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/">
+	<ElementManifests></ElementManifests>
+</Feature>
