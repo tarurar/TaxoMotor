@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[AppLog] (
-	[Id] [uniqueidentifier] NOT NULL CONSTRAINT [DF_AppLog_Id] DEFAULT(newid())
+	[ID] [uniqueidentifier] NOT NULL CONSTRAINT [DF_AppLog_Id] DEFAULT(NEWSEQUENTIALID())
 	,[EventDateTime] [datetime] NOT NULL
 	,[ApplicationType] [int] NOT NULL
 	,[ApplicationName] [nvarchar](500) NOT NULL
