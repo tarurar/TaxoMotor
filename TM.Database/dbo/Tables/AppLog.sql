@@ -1,12 +1,9 @@
 ﻿CREATE TABLE [dbo].[AppLog] (
 	[ID] [uniqueidentifier] NOT NULL CONSTRAINT [DF_AppLog_Id] DEFAULT(NEWSEQUENTIALID())
-	,[EventDateTime] [datetime] NOT NULL
-	,[ApplicationType] [int] NOT NULL
+	,[EventDateTime] [datetime] NOT NULL CONSTRAINT [DF_AppLog_EventDateTime] DEFAULT (getdate())
 	,[ApplicationName] [nvarchar](500) NOT NULL
 	,[Direction] [int] NOT NULL
 	,[Message] [nvarchar](max) NOT NULL
-	,[MessageType] [int] NOT NULL
-	,[Description] [nvarchar](500) NULL
 	,CONSTRAINT [PK_AppLog] PRIMARY KEY CLUSTERED ([Id] ASC) WITH (
 		PAD_INDEX = OFF
 		,STATISTICS_NORECOMPUTE = OFF
