@@ -63,7 +63,7 @@
             <wssuc:ButtonSection runat="server" ShowStandardCancelButton="False">
             <Template_Buttons>
                 <asp:placeholder ID="Placeholder1" runat="server">
-                    <button type="button" id="BtnOk" class="ms-ButtonHeightWidth" data-bind="click: DoAction">Ок</button>
+                    <button type="button" id="BtnOk" class="ms-ButtonHeightWidth" data-bind="click: DoAction, enable: !InProgress()">Ок</button>
                 <SeparatorHtml>
                     <span id="idSpace" class="ms-SpaceBetButtons" />
                 </SeparatorHtml>

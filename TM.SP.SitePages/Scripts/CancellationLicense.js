@@ -27,6 +27,7 @@
         // model properties
         self.Params = ko.observable(new Params());
         self.Errors = ko.observableArray([]);
+        self.InProgress = ko.observable(false);
         // model methods
         self.Validate = function () {
             self.Errors.removeAll();
@@ -75,10 +76,16 @@
         };
 
         self.DoAction = function () {
+            self.InProgress(true);
+            var def = new $.Deferred();
+
             // client validation logic
             self.Validate();
 
-            if (self.Errors().length > 0) return;
+            if (self.Errors().length > 0) {
+                def.reject();
+                return;
+            }
 
             // server validation logic
             $.ajax({
@@ -116,9 +123,13 @@
                                         signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
                                     } catch (e) {
                                         self.AddError(new ErrorMessage("Ошибка при формировании подписи: " + e.message));
+                                        def.reject();
                                     }
 
-                                    if (typeof signedData === 'undefined' || !signedData) return;
+                                    if (typeof signedData === 'undefined' || !signedData) {
+                                        def.reject();
+                                        return;
+                                    }
 
                                     $.ajax({
                                         type: 'POST',
@@ -131,20 +142,29 @@
                                         },
                                         error: function (xhr, ajaxOptions, thrownError) {
                                             self.AddError(new ErrorMessage("Ошибка сохранения подписанного документа: " + xhr.status + ", " + thrownError));
+                                            def.reject();
                                         }
                                     });
+                                } else {
+                                    def.reject();
                                 }
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             self.AddError(new ErrorMessage("Ошибка получения xml для подписи: " + xhr.status + ", " + thrownError));
+                            def.reject();
                         }
                     });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     var response = $.parseJSON(xhr.responseText).d;
                     self.AddError(new ErrorMessage(response.Error.SystemMessage));
+                    def.reject();
                 }
+            });
+
+            def.always(function () {
+                self.InProgress(false);
             });
         };
 
