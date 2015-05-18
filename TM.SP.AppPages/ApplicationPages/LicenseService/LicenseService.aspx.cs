@@ -155,7 +155,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.CancellationReason = Uri.UnescapeDataString(reason);
                 l.Status             = 3;
             });
@@ -165,7 +165,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.CreationDate = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate   = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.ChangeReason = Uri.UnescapeDataString(reason);
                 // setting status
                 var parent     = GetLicense(l.Parent);
@@ -178,6 +178,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
+                l.OutputDate = DateTime.Now;
                 l.Obsolete = obsolete;
             });
         }
@@ -186,6 +187,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
+                l.OutputDate = DateTime.Now;
                 l.DisableGibddSend = disabled;
             });
         }
@@ -217,7 +219,7 @@ namespace TM.SP.AppPages
         {
             SaveSigned(licenseId, l =>
             {
-                l.CreationDate       = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.CancellationReason = Uri.UnescapeDataString(reason);
                 l.Signature          = Uri.UnescapeDataString(signature);
                 l.Status             = 3;
@@ -228,7 +230,7 @@ namespace TM.SP.AppPages
         {
             SaveSigned(licenseId, l =>
             {
-                l.CreationDate = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate   = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
                 l.ChangeReason = Uri.UnescapeDataString(reason);
                 l.Signature    = Uri.UnescapeDataString(signature);
                 // setting status
@@ -242,6 +244,7 @@ namespace TM.SP.AppPages
         {
             SaveSigned(licenseId, l =>
             {
+                l.OutputDate = DateTime.Now;
                 l.Obsolete  = obsolete;
                 l.Signature = Uri.UnescapeDataString(signature);
             });
@@ -251,6 +254,7 @@ namespace TM.SP.AppPages
         {
             SaveSigned(licenseId, l =>
             {
+                l.OutputDate = DateTime.Now;
                 l.DisableGibddSend = disabled;
                 l.Signature = Uri.UnescapeDataString(signature);
             });
