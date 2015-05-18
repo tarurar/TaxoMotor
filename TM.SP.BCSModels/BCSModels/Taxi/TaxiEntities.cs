@@ -327,7 +327,7 @@ namespace TM.SP.BCSModels.Taxi
                 BlankSeries        = BlankSeries,
                 CancellationReason = CancellationReason,
                 ChangeReason       = ChangeReason,
-                CreationDate       = DateTime.Now,
+                CreationDate       = CreationDate,
                 Document           = String.Empty,
                 Id                 = 0,
                 Inn                = Inn,
