@@ -179,6 +179,10 @@ var TM;
             });
         };
 
+        TM.SP.GetLocalTime = function (date) {
+            return (date.getTime() - (date.getTimezoneOffset() * 60000));
+        };
+
         return TMSP;
     })(TM.SP || (TM.SP = {}));
 
