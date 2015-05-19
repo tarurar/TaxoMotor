@@ -94,73 +94,91 @@ namespace TM.SP.AppPages
         public static dynamic SendOdopm()
         {
             return Utility.WithCatchExceptionOnWebMethod("Отправка данных в ОДОПМ", () =>
-                Utility.WithSPServiceContext(SPContext.Current, web =>
-                {
-                    var ssOdopmAppId =
+                Utility.WithSPServiceContext(SPContext.Current, web => DoSendOdopm(web)));
+        }
+
+        public static void SendOdopm(SPWeb web)
+        {
+            var ctx = SPContext.GetContext(web);
+
+            Utility.WithSPServiceContext(ctx, serviceWeb => DoSendOdopm(serviceWeb));
+        }
+
+        private static void DoSendOdopm(SPWeb web)
+        {
+            var ssOdopmAppId =
                         Config.GetConfigValue(Config.GetConfigItem(web, "OdopmSingleSignOnAppId")).ToString();
-                    var ssLocalDbAccessAppId =
-                        Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId"))
-                            .ToString();
+            var ssLocalDbAccessAppId =
+                Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId"))
+                    .ToString();
 
-                    var odopmUserId     = Security.GetSecureStoreUserNameCredential(ssOdopmAppId);
-                    var odopmPassword   = Security.GetSecureStorePasswordCredential(ssOdopmAppId);
-                    var odopmUrl        = Config.GetConfigValue(Config.GetConfigItem(web, "OdopmUrl")).ToString();
-                    var odopmClientCert = Config.GetConfigValue(Config.GetConfigItem(web, "OdopmClientCertificate")).ToString();
-                    var storeUserId     = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
-                    var storePassword   = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
-                    var storeHost       = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
-                    var storeDbName     = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
+            var odopmUserId = Security.GetSecureStoreUserNameCredential(ssOdopmAppId);
+            var odopmPassword = Security.GetSecureStorePasswordCredential(ssOdopmAppId);
+            var odopmUrl = Config.GetConfigValue(Config.GetConfigItem(web, "OdopmUrl")).ToString();
+            var odopmClientCert = Config.GetConfigValue(Config.GetConfigItem(web, "OdopmClientCertificate")).ToString();
+            var storeUserId = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
+            var storePassword = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
+            var storeHost = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
+            var storeDbName = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
 
-                    var cBuilder = new SqlConnectionStringBuilder
-                    {
-                        DataSource     = storeHost,
-                        InitialCatalog = storeDbName,
-                        UserID         = storeUserId,
-                        Password       = storePassword
-                    };
+            var cBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource = storeHost,
+                InitialCatalog = storeDbName,
+                UserID = storeUserId,
+                Password = storePassword
+            };
 
-                    var sender = new ODOPM_Class();
-                    var parameters = new ODOPM_Class.Parametrs
-                    {
-                        UserNameServiceString     = odopmUserId,
-                        UserPasswordServiceString = odopmPassword,
-                        EndPointUrlString         = odopmUrl,
-                        ConnectionString          = cBuilder.ConnectionString,
-                        ClientSertificate         = odopmClientCert,
-                        ServerSertificate         = odopmClientCert
-                    };
+            var sender = new ODOPM_Class();
+            var parameters = new ODOPM_Class.Parametrs
+            {
+                UserNameServiceString = odopmUserId,
+                UserPasswordServiceString = odopmPassword,
+                EndPointUrlString = odopmUrl,
+                ConnectionString = cBuilder.ConnectionString,
+                ClientSertificate = odopmClientCert,
+                ServerSertificate = odopmClientCert
+            };
 
-                    sender.Process(parameters);
-                }));
+            sender.Process(parameters);
         }
 
         [WebMethod]
         public static dynamic SendMo()
         {
             return Utility.WithCatchExceptionOnWebMethod("Отправка данных в Московскую область", () =>
-                Utility.WithSPServiceContext(SPContext.Current, web =>
-                {
-                    var ssLocalDbAccessAppId =
-                        Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId"))
-                            .ToString();
-
-                    var storeUserId   = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
-                    var storePassword = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
-                    var storeHost     = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
-                    var storeDbName   = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
-                    var moUrl         = Config.GetConfigValue(Config.GetConfigItem(web, "MoServiceUrl")).ToString();
-
-                    var cBuilder = new SqlConnectionStringBuilder
-                    {
-                        DataSource     = storeHost,
-                        InitialCatalog = storeDbName,
-                        UserID         = storeUserId,
-                        Password       = storePassword
-                    };
-
-                    var sender = new ServiceMO();
-                    sender.Process(cBuilder.ConnectionString, moUrl);
+                Utility.WithSPServiceContext(SPContext.Current, web => {
+                    DoSendMo(web);
                 }));
+        }
+
+        public static void SendMo(SPWeb web)
+        {
+            var ctx = SPContext.GetContext(web);
+
+            Utility.WithSPServiceContext(ctx, serviceWeb => DoSendMo(serviceWeb));
+        }
+
+        private static void DoSendMo(SPWeb web)
+        {
+            var ssLocalDbAccessAppId = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId")).ToString();
+
+            var storeUserId   = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
+            var storePassword = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
+            var storeHost     = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
+            var storeDbName   = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
+            var moUrl         = Config.GetConfigValue(Config.GetConfigItem(web, "MoServiceUrl")).ToString();
+
+            var cBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource     = storeHost,
+                InitialCatalog = storeDbName,
+                UserID         = storeUserId,
+                Password       = storePassword
+            };
+
+            var sender = new ServiceMO();
+            sender.Process(cBuilder.ConnectionString, moUrl);
         }
 
         [WebMethod]

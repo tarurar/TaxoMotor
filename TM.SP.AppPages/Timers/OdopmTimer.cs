@@ -74,16 +74,7 @@ namespace TM.SP.AppPages.Timers
             {
                 if (cfg.Equals("1") || cfg.ToUpper().Equals("ДА"))
                 {
-                    var url = SPUtility.ConcatUrls(SPUtility.GetWebLayoutsFolder(web), "TaxoMotor/CommonService.aspx/SendOdopm");
-                    var request = WebRequest.Create(url);
-
-                    request.Method = "POST";
-                    request.ContentLength = 0;
-                    request.UseDefaultCredentials = true;
-                    var response = (HttpWebResponse)request.GetResponse();
-
-                    if (response.StatusCode != HttpStatusCode.OK)
-                        throw new Exception(String.Format("Error sending web request (url = {0})", url));
+                    CommonService.SendOdopm(web);
                 }
             }
         }
