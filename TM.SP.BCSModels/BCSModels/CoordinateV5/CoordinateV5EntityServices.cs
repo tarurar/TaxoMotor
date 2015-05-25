@@ -1096,7 +1096,7 @@ namespace TM.SP.BCSModels.CoordinateV5
                 createCommand.Parameters.AddWithValue("@FullName", (newentity.FullName == null) ? (object)DBNull.Value : newentity.FullName);
                 createCommand.Parameters.AddWithValue("@Name", (newentity.Name == null) ? (object)DBNull.Value : newentity.Name);
                 createCommand.Parameters.AddWithValue("@BrandName", (newentity.BrandName == null) ? (object)DBNull.Value : newentity.BrandName);
-                createCommand.Parameters.AddWithValue("@Brande", (newentity.Brand == null) ? (object)DBNull.Value : newentity.Brand);
+                createCommand.Parameters.AddWithValue("@Brand", (newentity.Brand == null) ? (object)DBNull.Value : newentity.Brand);
                 createCommand.Parameters.AddWithValue("@Ogrn", (newentity.Ogrn == null) ? (object)DBNull.Value : newentity.Ogrn);
                 createCommand.Parameters.AddWithValue("@OgrnAuthority", (newentity.OgrnAuthority == null) ? (object)DBNull.Value : newentity.OgrnAuthority);
                 createCommand.Parameters.AddWithValue("@OgrnAuthorityAddress", (newentity.OgrnAuthorityAddress == null) ? (object)DBNull.Value : newentity.OgrnAuthorityAddress);
