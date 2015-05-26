@@ -13,6 +13,7 @@
 	,@Count INT = 10
 AS
 
+
 DECLARE 	
 	@OFFSET INT
 	,@FETCH INT
@@ -22,6 +23,7 @@ DECLARE
 SELECT 
 	@RegNumberInt = CAST(RIGHT(@LicenseNum, 5) AS INT)
 	,@SortOrder = REPLACE(ISNULL(@SortOrder, N'LicenseNum'), N';', N', ')
+    ,@Name = '%' + REPLACE(@Name, ' ', '%') + '%'
 
 SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE ((@PageNumber - 1) * @Count) + 1 END
 SET	@FETCH = CASE WHEN @PageNumber = 1 THEN @Count ELSE @OFFSET + @Count - 1 END
@@ -63,7 +65,7 @@ FROM
 	        AND (L1.MO IS NULL OR L1.MO = 0)
 	        AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
 	        AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
-	        AND (@Name IS NULL OR L1.ShortName = @Name)
+	        AND (@Name IS NULL OR L1.ShortName LIKE @Name)
 	        AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
 	        AND (@OgrnDate IS NULL OR L1.OgrnDate = @OgrnDate)
 	        AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
