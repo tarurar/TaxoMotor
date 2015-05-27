@@ -37,5 +37,13 @@
       <Property Name="Title" Value="Редактор VIN номера" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\IncomeRequestFilterPage.aspx" Url="IncomeRequestFilterPage.aspx" Type="GhostableInLibrary" ReplaceContent="TRUE">
+      <Property Name="Title" Value="Фильтрация обращений" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
+    <File Path="Pages\LicenseFilterPage.aspx" Url="LicenseFilterPage.aspx" Type="GhostableInLibrary" ReplaceContent="TRUE">
+      <Property Name="Title" Value="Фильтрация разрешений" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

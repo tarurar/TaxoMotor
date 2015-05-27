@@ -108,6 +108,9 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="ApplicationPages\DialogLayoutsPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ApplicationPages\FilterListViewPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx.cs">
       <DependentUpon>IncomeRequestService.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -187,8 +190,30 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     </Compile>
     <Compile Include="Validators\TaxiDuplicateValidator.cs" />
     <Compile Include="Validators\Validator.cs" />
+    <Compile Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPart.cs" />
+    <Compile Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx.cs">
+      <DependentUpon>IncomRequestFilterWebPartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx.designer.cs">
+      <DependentUpon>IncomRequestFilterWebPartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebParts\LicenseFilterWebPart\LicenseFilterWebPart.cs" />
+    <Compile Include="WebParts\LicenseFilterWebPart\LicenseFilterWebPartUserControl.ascx.cs">
+      <DependentUpon>LicenseFilterWebPartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebParts\LicenseFilterWebPart\LicenseFilterWebPartUserControl.ascx.designer.cs">
+      <DependentUpon>LicenseFilterWebPartUserControl.ascx.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Layouts\TM.SP.AppPages\Images\filter-32.png" />
+    <Content Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx" />
+    <Content Include="WebParts\IncomRequestFilterWebPart\WebPartIcon_IncomRequestFilterWebPart.gif" />
+    <Content Include="WebParts\LicenseFilterWebPart\Elements.xml" />
+    <Content Include="WebParts\LicenseFilterWebPart\LicenseFilterWebPartUserControl.ascx" />
+    <Content Include="WebParts\LicenseFilterWebPart\WebPartIcon_LicenseFilterWebPart.gif" />
     <EmbeddedResource Include="3rd\Aspose\Aspose.Total.lic" />
     <EmbeddedResource Include="Validators\StringsRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -225,6 +250,9 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <None Include="ApplicationPages\SendStatus\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{b1abed69-538a-4f16-8179-03ee2139d7cd}</SharePointProjectItemId>
     </None>
+    <None Include="Features\TaxoMotor_TaxoMotorWebParts\TaxoMotor_TaxoMotorWebParts.feature">
+      <FeatureId>{fe4b0764-b8fd-43d1-b8a6-68b12b914038}</FeatureId>
+    </None>
     <None Include="Features\TaxoMotor_TaxoMotor_CommonTimerJobs\TaxoMotor_TaxoMotor_CommonTimerJobs.feature">
       <FeatureId>{f8e734b9-7306-4d11-8e7c-9145fe72ef2b}</FeatureId>
     </None>
@@ -245,6 +273,14 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <None Include="Template\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{068de591-75ce-445c-939e-7d96502fd0e8}</SharePointProjectItemId>
     </None>
+    <Content Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPart.webpart" />
+    <None Include="WebParts\IncomRequestFilterWebPart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{d904d175-a598-4106-ab52-7cdf5242db34}</SharePointProjectItemId>
+    </None>
+    <Content Include="WebParts\LicenseFilterWebPart\LicenseFilterWebPart.webpart" />
+    <None Include="WebParts\LicenseFilterWebPart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{a5b224cc-999e-47b1-b0e7-e07cb5d8cb56}</SharePointProjectItemId>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -264,7 +300,13 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Content Include="ApplicationPages\SendRequestCombi\SendRequestCombi.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRIPPage\SendRequestEGRIPPage.aspx" />
     <Content Include="ApplicationPages\SendRequestEGRULPage\SendRequestEGRULPage.aspx" />
+    <Content Include="Features\TaxoMotor_TaxoMotorWebParts\TaxoMotor_TaxoMotorWebParts.Template.xml">
+      <DependentUpon>TaxoMotor_TaxoMotorWebParts.feature</DependentUpon>
+    </Content>
+    <Content Include="Layouts\TM.SP.AppPages\Scripts\fixListViewByQueryPaging.js" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorWebParts.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotor_CommonTimerJobs.gif" />
+    <Content Include="WebParts\IncomRequestFilterWebPart\Elements.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationPages\SendRequestPenaltyPage\SendRequestPenaltyPage.aspx" />

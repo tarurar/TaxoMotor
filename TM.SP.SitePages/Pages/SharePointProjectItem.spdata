@@ -11,5 +11,7 @@
     <ProjectItemFile Source="ProgressDlg.aspx" Target="Pages\" Type="ElementFile" />
     <ProjectItemFile Source="TaxiBlankNoEditor.aspx" Target="Pages\" Type="ElementFile" />
     <ProjectItemFile Source="TaxiVinEditor.aspx" Target="Pages\" Type="ElementFile" />
+    <ProjectItemFile Source="IncomeRequestFilterPage.aspx" Target="Pages\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseFilterPage.aspx" Target="Pages\" Type="ElementFile" />
   </Files>
 </ProjectItem>

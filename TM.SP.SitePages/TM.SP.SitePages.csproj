@@ -142,6 +142,8 @@
     <Content Include="Pages\DenyIncomeRequest.aspx" />
     <Content Include="Pages\DenyTaxi.aspx" />
     <Content Include="Pages\Elements.xml" />
+    <Content Include="Pages\IncomeRequestFilterPage.aspx" />
+    <Content Include="Pages\LicenseFilterPage.aspx" />
     <Content Include="Pages\licenseSearch.aspx" />
     <Content Include="Pages\ProgressDlg.aspx" />
     <Content Include="Pages\RenewalLicense.aspx" />

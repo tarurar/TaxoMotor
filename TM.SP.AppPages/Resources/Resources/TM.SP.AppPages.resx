@@ -276,4 +276,46 @@
   <data name="DeleteListItems_CommentText" xml:space="preserve">
     <value>Примечание: Список не удаляется. Для удаления элементов списка используется запланированное задание. На этой же странице можно будет отслеживать его статус.</value>
   </data>
+  <data name="IncomeRequestFilterPage_BtnFind" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="IncomeRequestFilterPage_DateFrom" xml:space="preserve">
+    <value>с:</value>
+  </data>
+  <data name="IncomeRequestFilterPage_DateTo" xml:space="preserve">
+    <value>по:</value>
+  </data>
+  <data name="IncomeRequestFilterPage_InputDateDescrText" xml:space="preserve">
+    <value>Укажите диапазон для даты подачи обращения, включительно.</value>
+  </data>
+  <data name="IncomeRequestFilterPage_InputDateText" xml:space="preserve">
+    <value>Дата подачи обращения:</value>
+  </data>
+  <data name="IncomeRequestFilterPage_PrepareFactDateDescrText" xml:space="preserve">
+    <value>Укажите диапазон для даты фактической подготовки, включительно.</value>
+  </data>
+  <data name="IncomeRequestFilterPage_PrepareFactDateText" xml:space="preserve">
+    <value>Дата фактической подготовки:</value>
+  </data>
+  <data name="LicenseFilterPage_BtnFind" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="LicenseFilterPage_DateFrom" xml:space="preserve">
+    <value>с:</value>
+  </data>
+  <data name="LicenseFilterPage_DateTo" xml:space="preserve">
+    <value>по:</value>
+  </data>
+  <data name="LicenseFilterPage_FromDateDescrText" xml:space="preserve">
+    <value>Укажите диапазон для срока действия (с) разрешения, включительно.</value>
+  </data>
+  <data name="LicenseFilterPage_FromDateText" xml:space="preserve">
+    <value>Срок действия (с) разрешения:</value>
+  </data>
+  <data name="LicenseFilterPage_OutputDateDescrText" xml:space="preserve">
+    <value>Укажите диапазон для даты выдачи разрешения, включительно.</value>
+  </data>
+  <data name="LicenseFilterPage_OutputDateText" xml:space="preserve">
+    <value>Дата выдачи разрешения:</value>
+  </data>
 </root>

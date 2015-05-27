@@ -398,6 +398,12 @@ namespace TM.SP.DataModel
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
                             .AddListView(ListViews.TmLicenseListMoscowView, lv => lv
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListFilterView, lv => lv
+                                .OnProvisioned<View>(context => 
+                                { 
+                                    context.Object.MakeFoldersInvisible();
+                                    context.Object.MakeHidden(); 
+                                }))
                         )
                         .AddList(Lists.TmDocumentTypeBookList,
                             l => l.AddContentTypeLink(ContentTypes.TmDocumentType))
@@ -484,6 +490,12 @@ namespace TM.SP.DataModel
                         {
                             context.Object.EnableVersioning = true;
                         })
+                        .AddListView(ListViews.TmIncomRequestListFilterView, lv => lv
+                            .OnProvisioned<View>(context => 
+                            { 
+                                context.Object.MakeFoldersInvisible();
+                                context.Object.MakeHidden();
+                            }))
                     )));
 
             return model;

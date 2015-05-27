@@ -93,6 +93,9 @@
     <None Include="Ribbons\IncomeRequestClose\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{9de7a84a-e06d-49b2-b9bb-57681e0241ef}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\IncomeRequestFilterPage\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{a0ae6f3b-f852-412b-9978-4ba189165d7b}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\IncomeRequestOutput\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{91a25f66-39d4-4690-b64d-b5399f8f058d}</SharePointProjectItemId>
     </None>
@@ -107,6 +110,9 @@
     </None>
     <None Include="Ribbons\LicenseDisableGibdd\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{d39fb85b-03c7-418c-95ea-78dd25a9a5fc}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\LicenseFilterPage\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{1e592cb1-80a6-426c-8e54-6cef50c3e40f}</SharePointProjectItemId>
     </None>
     <None Include="Ribbons\LicenseMakeObsolete\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{c1ee4daf-7edf-40cf-b55e-67f9099e56c1}</SharePointProjectItemId>
@@ -170,6 +176,7 @@
     <Content Include="Ribbons\IncomeRequestClose\Elements.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Ribbons\IncomeRequestFilterPage\Elements.xml" />
     <Content Include="Ribbons\IncomeRequestOutput\Elements.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -183,6 +190,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Ribbons\LicenseDisableGibdd\Elements.xml" />
+    <Content Include="Ribbons\LicenseFilterPage\Elements.xml" />
     <Content Include="Ribbons\LicenseMakeObsolete\Elements.xml" />
     <Content Include="Ribbons\LicenseSendCombi\Elements.xml" />
     <Content Include="Ribbons\LicenseSendMo\Elements.xml" />

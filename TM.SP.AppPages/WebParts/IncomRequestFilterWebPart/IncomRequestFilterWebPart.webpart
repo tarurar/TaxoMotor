@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+	<webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+		<metaData>
+			<type name="TM.SP.AppPages.IncomRequestFilterWebPart, TM.SP.AppPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=63e92b7beac312db" />
+			<importErrorMessage>Cannot import IncomRequestFilterWebPart Title Web Part.</importErrorMessage>
+		</metaData>
+		<data>
+			<properties>
+				<property name="Title" type="string">Фильтрация обращений</property>
+				<property name="Description" type="string">Работа со списком обращений с использованием фильтров</property>
+				<property name="CatalogIconImageUrl" type="string">/_layouts/15/images/TaxoMotor/WebPartIcon_IncomRequestFilterWebPart.gif</property>
+				<property name="TitleIconImageUrl" type="string">/_layouts/15/images/TaxoMotor/WebPartIcon_IncomRequestFilterWebPart.gif</property>
+			</properties>
+		</data>
+	</webPart>
+</webParts>

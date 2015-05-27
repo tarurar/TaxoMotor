@@ -270,5 +270,58 @@ namespace TM.SP.DataModel.Definitions
                  "_x0421__x0441__x044b__x043b__x04"
             }
         };
+
+        public static ListViewDefinition TmIncomRequestListFilterView = new ListViewDefinition
+        {
+            Title = "FilterView",
+            Url = "FilterView",
+            IsDefault = false,
+            RowLimit = 20,
+            Query = "<OrderBy><FieldRef Name='Tm_InternalRegNumber' /></OrderBy>",
+            JSLink = "clienttemplates.js",
+            Fields = new System.Collections.ObjectModel.Collection<string> 
+            { 
+                 BuiltInInternalFieldNames.LinkTitleNoMenu,
+                 Fields.TmInternalRegNumber.InternalName,
+                 Plumsail.Fields.TmRequestedDocumentXml.InternalName,
+                 Plumsail.Fields.TmIncomeRequestStateLookupXml.InternalName,
+                 Fields.TmSingleNumber.InternalName,
+                 Fields.TmRegNumber.InternalName,
+                 Fields.TmIncomeRequestDeclarantNames.InternalName,
+                 Fields.TmRegistrationDate.InternalName,
+                 Fields.TmApplyDate.InternalName,
+                 Fields.TmPrepareFactDate.InternalName,
+                 Fields.TmIncomeRequestTaxiStateNumbers.InternalName,
+                 Fields.TmOutputFactDate.InternalName
+            }
+        };
+
+        public static ListViewDefinition TmLicenseListFilterView = new ListViewDefinition
+        {
+            Title = "FilterView",
+            Url = "FilterView",
+            IsDefault = false,
+            RowLimit = 20,
+            Query = "<OrderBy><FieldRef Name='Title' /></OrderBy>",
+            JSLink = String.Format("clienttemplates.js | ~site/{0}/LicenseViewCSR.js", Lists.TmProjectScripts.Url),
+            Fields = new System.Collections.ObjectModel.Collection<string> 
+            { 
+                 BuiltInInternalFieldNames.LinkTitle,
+                 Fields.TmOrgOgrn.InternalName,
+                 Fields.TmTaxiStateNumber.InternalName,
+                 Fields.TmBlankSeries.InternalName,
+                 Fields.TmBlankNo.InternalName,
+                 Fields.TmLicenseOutputDate.InternalName,
+                 Fields.TmTaxiBrand.InternalName,
+                 Fields.TmTaxiModel.InternalName,
+                 Fields.TmTaxiYear.InternalName,
+                 Fields.TmOrganizationName.InternalName,
+                 Fields.TmLicenseStatus.InternalName,
+                 Fields.TmTaxiLastToDate.InternalName,
+                 Fields.TmLicenseTillDate.InternalName,
+                 Fields.TmLicenseIsMo.InternalName,
+                 "_x0421__x0441__x044b__x043b__x04"
+            }
+        };
     }
 }
