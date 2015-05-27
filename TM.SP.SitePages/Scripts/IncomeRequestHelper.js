@@ -865,16 +865,27 @@
                 $.when.apply($, deferreds).done(onsucces).fail(onfail);
             };
 
-            // Выполняется для всех услуг кроме аннулирования
-            ir.PromoteLicenseDraftsAndSign = function (incomeRequestId) {
+            ir.PromoteLicenseDraftsAndSign = function (incomeRequestId, cancellationMode) {
 
                 var def = $.Deferred();
 
                 ir.GetContentTypeName(incomeRequestId, function (ctName) {
-                    if (ctName == 'Аннулирование') {
-                        def.resolve();
+                    var promote = false;
+                    if (cancellationMode) {
+                        if (ctName != 'Аннулирование') {
+                            def.resolve();
+                        } else {
+                            promote = true;
+                        }
+                    } else {
+                        if (ctName == 'Аннулирование') {
+                            def.resolve();
+                        } else {
+                            promote = true;
+                        }
                     }
-                    else {
+
+                    if (promote) {
                         ir.PromoteLicenseDrafts(incomeRequestId).success(function (data) {
                             ir.GetLicenseXmlById(data.d.Data).success(function (data) {
                                 ir.SignLicenseSaveSignatureMultiple(data.d.Data, def.resolve, def.reject);
@@ -914,7 +925,9 @@
 
             ir.Output = function (incomeRequestId, onsuccess, onfail) {
                 ir.OutputRequest(incomeRequestId)
-                    .success(onsuccess)
+                    .success(function () {
+                        ir.PromoteLicenseDraftsAndSign(incomeRequestId, true).done(onsuccess).fail(onfail);
+                    })
                     .fail(onfail);
             };
 
@@ -985,7 +998,7 @@
                                                     progress.finishAction(action, 50);
                                                     // Для всех услуг кроме аннулирование подписываем разрешения
                                                     action = progress.addAction(actions.signCreateLicenses);
-                                                    ir.PromoteLicenseDraftsAndSign(incomeRequestId).done(function () {
+                                                    ir.PromoteLicenseDraftsAndSign(incomeRequestId, false).done(function () {
                                                         progress.finishAction(action, 70);
 
                                                         action = progress.addAction(actions.deleteDrafts);

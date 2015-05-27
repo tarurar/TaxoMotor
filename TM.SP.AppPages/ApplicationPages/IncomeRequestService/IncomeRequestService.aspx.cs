@@ -1526,9 +1526,6 @@ namespace TM.SP.AppPages
 
                         rItem["Tm_OutputFactDate"] = DateTime.Now.Date;
                         rItem.Update();
-
-                        if (ctId == rList.ContentTypes["Аннулирование"].Id)
-                            innerCatch = PromoteLicenseDrafts(incomeRequestId);
                     })));
 
             object innerError = null;
