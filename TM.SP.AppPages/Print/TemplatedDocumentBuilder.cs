@@ -179,6 +179,32 @@ namespace TM.SP.AppPages
             });
         }
 
+        private void AddExtraFields(DataTable dt)
+        {
+            #region DenyReasonPrintTitle
+            dt.Columns.Add("DenyReasonPrintTitle", typeof(string));
+
+            foreach(DataRow row in dt.Rows)
+            {
+                var taxiId = Convert.ToInt32(row["ID"]);
+                if (taxiId > 0)
+                {
+                    var taxiItem = _taxiList.GetItemById(taxiId);
+                    SPListItem denyReason;
+                    Utility.TryGetListItemFromLookupValue(taxiItem["Tm_DenyReasonLookup"],
+                        taxiItem.Fields.GetFieldByInternalName("Tm_DenyReasonLookup") as SPFieldLookup, out denyReason);
+                    if (denyReason != null)
+                    {
+                        row["DenyReasonPrintTitle"] = denyReason["Tm_PrintTitle"];
+                    }
+                    else continue;
+
+                }
+                else continue;
+            }
+            # endregion
+        }
+
         public DocumentMetaData RenderDocument(int templateNumber)
         {
             var tmplItem = _tmplLib.GetSingleListItemByFieldValue("Tm_ServiceCode",
@@ -237,6 +263,10 @@ namespace TM.SP.AppPages
             if (taxiList != null)
             {
                 var dt = taxiList.GetDataTable() ?? new DataTable();
+                if (dt.Rows.Count > 0)
+                {
+                    AddExtraFields(dt);
+                }
                 dt.TableName = "TaxiList";
                 doc.MailMerge.ExecuteWithRegions(dt);
             }
