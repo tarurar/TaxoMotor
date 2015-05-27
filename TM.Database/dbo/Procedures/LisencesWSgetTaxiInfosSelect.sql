@@ -13,6 +13,7 @@
 	,@Count INT = 10
 AS
 
+
 DECLARE 	
 	@OFFSET INT
 	,@FETCH INT
@@ -22,6 +23,7 @@ DECLARE
 SELECT 
 	@RegNumberInt = CAST(RIGHT(@LicenseNum, 5) AS INT)
 	,@SortOrder = REPLACE(ISNULL(@SortOrder, N'LicenseNum'), N';', N', ')
+    ,@Name = '%' + REPLACE(@Name, ' ', '%') + '%'
 
 SET @OFFSET = CASE WHEN @PageNumber = 1 THEN 0 ELSE ((@PageNumber - 1) * @Count) + 1 END
 SET	@FETCH = CASE WHEN @PageNumber = 1 THEN @Count ELSE @OFFSET + @Count - 1 END
@@ -54,23 +56,22 @@ FROM
             L1.OgrnDate,
             L1.TaxiBrand,
             L1.TaxiModel,
-            L1.Status,
-            ROW_NUMBER() OVER (PARTITION BY L1.RegNumberInt ORDER BY L1.OutputDate DESC) AS NN
+            L1.Status            
         FROM 
-	        License L1 (NOLOCK)
+	        License AS L1 (NOLOCK)
+            LEFT OUTER JOIN License (NOLOCK) AS chld
+                ON chld.Parent = L1.Id
         WHERE
-            L1.Status <> 4 
-	        AND (L1.MO IS NULL OR L1.MO = 0)
+            L1.Status <> 4 AND chld.Id IS NULL
 	        AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
 	        AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
-	        AND (@Name IS NULL OR L1.ShortName = @Name)
+	        AND (@Name IS NULL OR L1.ShortName LIKE @Name)
 	        AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
 	        AND (@OgrnDate IS NULL OR L1.OgrnDate = @OgrnDate)
 	        AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
 	        AND (@Model IS NULL OR L1.TaxiModel = @Model)
 	        AND (@RegNum IS NULL OR L1.TaxiStateNumber = @RegNum)
         ) AS L1
-WHERE L1.NN = 1
 
 SELECT 
 	L1.Signature as ''TaxiInfo''
@@ -109,9 +110,10 @@ IF @Flag = 1
 
 IF @Flag = 2
     SELECT TOP 1
-        License.Signature,
-        License.Parent
+        L1.Signature,
+        L1.Parent
     FROM 
-        License
-    WHERE License.Status <> 4 AND License.RegNumberInt = @RegNumberInt
-    ORDER BY License.OutputDate DESC
+        License AS L1 (NOLOCK)
+        LEFT OUTER JOIN License (NOLOCK) AS chld
+            ON chld.Parent = L1.Id
+    WHERE chld.Id IS NULL AND L1.Status <> 4 AND L1.RegNumberInt = @RegNumberInt    
