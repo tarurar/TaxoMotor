@@ -402,7 +402,9 @@ namespace TM.SP.DataModel
                                 .OnProvisioned<View>(context => 
                                 { 
                                     context.Object.MakeFoldersInvisible();
-                                    context.Object.MakeHidden(); 
+                                    context.Object.MakeHidden();
+                                    context.Object.AggregationsStatus = "On";
+                                    context.Object.Aggregations = "<FieldRef Name='LinkTitle' Type='COUNT' />";
                                 }))
                         )
                         .AddList(Lists.TmDocumentTypeBookList,
@@ -495,6 +497,8 @@ namespace TM.SP.DataModel
                             { 
                                 context.Object.MakeFoldersInvisible();
                                 context.Object.MakeHidden();
+                                context.Object.AggregationsStatus = "On";
+                                context.Object.Aggregations = "<FieldRef Name='LinkTitleNoMenu' Type='COUNT' />";
                             }))
                     )));
 
