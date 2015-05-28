@@ -995,6 +995,8 @@ namespace TM.SP.AppPages
                             if (validator.Execute(null))
                             {
                                 taxiItem["Tm_TaxiStatus"] = "В работе";
+                                taxiItem["Tm_DenyReasonLookup"] = null;
+                                taxiItem["Tm_TaxiDenyComment"] = null;
                                 taxiItem.Update();
                             }
                             break;
@@ -1111,6 +1113,8 @@ namespace TM.SP.AppPages
                             #endregion
 
                             taxiItem["Tm_TaxiStatus"] = "Решено положительно";
+                            taxiItem["Tm_DenyReasonLookup"] = null;
+                            taxiItem["Tm_TaxiDenyComment"] = null;
                             taxiItem.Update();
                             break;
                         #endregion
