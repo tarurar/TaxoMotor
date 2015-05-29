@@ -66,7 +66,7 @@ FROM
 	        AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
 	        AND (@LicenseDate IS NULL OR @LicenseDate = L1.CreationDate)
 	        AND (@Name IS NULL OR L1.ShortName LIKE @Name)
-	        AND (@OgrnNum IS NULL OR L1.OgrnNum = @OgrnNum)
+	        AND (@OgrnNum IS NULL OR L1.Ogrn = @OgrnNum)
 	        AND (@OgrnDate IS NULL OR L1.OgrnDate = @OgrnDate)
 	        AND (@Brand IS NULL OR L1.TaxiBrand = @Brand)
 	        AND (@Model IS NULL OR L1.TaxiModel = @Model)
