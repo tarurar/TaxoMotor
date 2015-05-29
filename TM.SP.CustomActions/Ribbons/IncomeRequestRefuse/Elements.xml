@@ -58,7 +58,7 @@
             else {
               result = 
                 TM.SP.IncomeRequest.currentStatusCode == 1040 || 
-                TM.SP.IncomeRequest.currentStatusCode == 1020 || 
+                TM.SP.IncomeRequest.currentStatusCode == 7704 || 
                 TM.SP.IncomeRequest.currentStatusCode == 1050 || 
                 TM.SP.IncomeRequest.currentStatusCode == 6420;
             }

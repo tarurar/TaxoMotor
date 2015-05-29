@@ -80,7 +80,7 @@ namespace TM.SP.Customizations
                 Utility.TryGetListItemFromLookupValue(rItem["Tm_IncomeRequestStateLookup"], rStatusLookupField, out rStatusItem))
             {
                 var rStatusCode = rStatusItem["Tm_ServiceCode"];
-                if (rStatusCode != null && (string)rStatusCode == "1020")
+                if (rStatusCode != null && (string)rStatusCode == "7704")
                 {
                     var orList = web.GetListOrBreak("Lists/OutcomeRequestStateList");
 

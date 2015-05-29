@@ -54,7 +54,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [second condition check]
             var secondCondition = false;
-            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420").Cast<SPListItem>()
+            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctNew 
                     || i.ContentType.Name == StringsRes.ctDuplicate
                     || i.ContentType.Name == StringsRes.ctRenew);
@@ -87,7 +87,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [third condition check]
             var thirdCondition = false;
-            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420;1075;1030;1080;1085").Cast<SPListItem>()
+            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420;1075;1030;1080;1085").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctCancellation && i["Tm_OutputFactDate"] == null);
             foreach (SPListItem request in requestList)
             {
@@ -164,7 +164,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [second condition check]
             var secondCondition = false;
-            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420").Cast<SPListItem>()
+            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctNew
                     || i.ContentType.Name == StringsRes.ctDuplicate
                     || i.ContentType.Name == StringsRes.ctRenew);
@@ -199,7 +199,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [third condition check]
             var thirdCondition = false;
-            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420;1075;1030;1080;1085").Cast<SPListItem>()
+            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420;1075;1030;1080;1085").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctCancellation && i["Tm_OutputFactDate"] == null);
             foreach (SPListItem request in requestList)
             {
@@ -282,7 +282,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [second condition check]
             var secondCondition = false;
-            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420").Cast<SPListItem>()
+            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctNew
                     || i.ContentType.Name == StringsRes.ctDuplicate
                     || i.ContentType.Name == StringsRes.ctRenew);
@@ -317,7 +317,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [third condition check]
             var thirdCondition = false;
-            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420;1075;1030;1080;1085").Cast<SPListItem>()
+            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420;1075;1030;1080;1085").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctCancellation && i["Tm_OutputFactDate"] == null);
             foreach (SPListItem request in requestList)
             {
@@ -400,7 +400,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [second condition check]
             var secondCondition = false;
-            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420").Cast<SPListItem>()
+            var requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctNew
                     || i.ContentType.Name == StringsRes.ctDuplicate
                     || i.ContentType.Name == StringsRes.ctRenew);
@@ -435,7 +435,7 @@ namespace TM.SP.AppPages.Validators
 
             #region [third condition check]
             var thirdCondition = false;
-            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;1020;6420;1075;1030;1080;1085").Cast<SPListItem>()
+            requestList = IncomeRequestService.GetAllIncomeRequestInStatus("1050;7704;6420;1075;1030;1080;1085").Cast<SPListItem>()
                 .Where(i => i.ContentType.Name == StringsRes.ctCancellation && i["Tm_OutputFactDate"] == null);
             foreach (SPListItem request in requestList)
             {
