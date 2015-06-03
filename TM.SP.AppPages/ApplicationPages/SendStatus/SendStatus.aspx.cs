@@ -242,6 +242,12 @@ namespace TM.SP.AppPages
             }
 
             var stCodeInt = Convert.ToInt32(stCode);
+            string[] denyReasonList = null;
+            if (stCodeInt == 1030 || stCodeInt == 1080)
+            {
+                denyReasonList = IncomeRequestHelper.GetDenyReasons(rItem).Select(x => x["Tm_ServiceCodeSend"].ToString()).ToArray();
+            }
+
             var message = new CV5.CoordinateStatusMessage()
             {
                 ServiceHeader = new CV5.Headers()
@@ -256,8 +262,8 @@ namespace TM.SP.AppPages
                 {
                     ServiceNumber = sNumber,
                     StatusCode    = stCodeInt,
-                    Documents = attachs != null ? new CV5.ServiceDocument[] { attachs } : null,
-                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateV5StatusMessage(stCodeInt)
+                    Documents     = attachs != null ? new CV5.ServiceDocument[] { attachs } : null,
+                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateV5StatusMessage(stCodeInt, denyReasonList)
                 }
             };
            
@@ -303,6 +309,12 @@ namespace TM.SP.AppPages
             }
 
             var stCodeInt = Convert.ToInt32(stCode);
+            string[] denyReasonList = null;
+            if (stCodeInt == 1030 || stCodeInt == 1080)
+            {
+                denyReasonList = IncomeRequestHelper.GetDenyReasons(rItem).Select(x => x["Tm_ServiceCodeSend"].ToString()).ToArray();
+            }
+
             var message = new CV52.CoordinateStatusMessage()
             {
                 ServiceHeader = new CV52.Headers()
@@ -318,7 +330,7 @@ namespace TM.SP.AppPages
                     ServiceNumber = sNumber,
                     StatusCode    = stCodeInt,
                     Documents     = attachs != null ? new CV52.ServiceDocument[] { attachs } : null,
-                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateV52StatusMessage(stCodeInt),
+                    Result        = IncomeRequestHelper.GetResultObjectForCoordinateV52StatusMessage(stCodeInt, denyReasonList),
                     StatusDate    = DateTime.Now
                 }
             };

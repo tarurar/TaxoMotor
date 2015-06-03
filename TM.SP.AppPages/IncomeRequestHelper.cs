@@ -37,6 +37,12 @@ namespace TM.SP.AppPages
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
 
             var stCodeInt = Convert.ToInt32(stCode);
+            string[] denyReasonList = null;
+            if (stCodeInt == 1030 || stCodeInt == 1080)
+            {
+                denyReasonList = GetDenyReasons(rItem).Select(x => x["Tm_ServiceCodeSend"].ToString()).ToArray();
+            }
+
             var message = new CV5.CoordinateStatusMessage
             {
                 ServiceHeader = new CV5.Headers
@@ -51,7 +57,7 @@ namespace TM.SP.AppPages
                 {
                     ServiceNumber = sNumber,
                     StatusCode    = stCodeInt,
-                    Result        = GetResultObjectForCoordinateV5StatusMessage(stCodeInt)
+                    Result        = GetResultObjectForCoordinateV5StatusMessage(stCodeInt, denyReasonList)
                 }
             };
 
@@ -78,6 +84,12 @@ namespace TM.SP.AppPages
                 (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
 
             var stCodeInt = Convert.ToInt32(stCode);
+            string[] denyReasonList = null;
+            if (stCodeInt == 1030 || stCodeInt == 1080)
+            {
+                denyReasonList = GetDenyReasons(rItem).Select(x => x["Tm_ServiceCodeSend"].ToString()).ToArray();
+            }
+
             var message = new CV52.CoordinateStatusMessage
             {
                 ServiceHeader = new CV52.Headers
@@ -92,7 +104,7 @@ namespace TM.SP.AppPages
                 {
                     ServiceNumber = sNumber,
                     StatusCode    = stCodeInt,
-                    Result        = GetResultObjectForCoordinateV52StatusMessage(stCodeInt),
+                    Result        = GetResultObjectForCoordinateV52StatusMessage(stCodeInt, denyReasonList),
                     StatusDate    = DateTime.Now
                 }
             };
@@ -166,7 +178,7 @@ namespace TM.SP.AppPages
                 throw new Exception(String.Format("Error sending web request (url = {0})", url));
         }
 
-        public static CV5.RequestResult GetResultObjectForCoordinateV5StatusMessage(int incomeRequestStatusCode)
+        public static CV5.RequestResult GetResultObjectForCoordinateV5StatusMessage(int incomeRequestStatusCode, string[] denyReasonCodeList)
         {
             int resultCode;
             switch(incomeRequestStatusCode)
@@ -190,10 +202,10 @@ namespace TM.SP.AppPages
 
             if (resultCode == 0) return null;
 
-            return new CV5.RequestResult() { ResultCode = resultCode.ToString() };
+            return new CV5.RequestResult() { ResultCode = resultCode.ToString(), DeclineReasonCode = denyReasonCodeList };
         }
 
-        public static CV52.RequestResult GetResultObjectForCoordinateV52StatusMessage(int incomeRequestStatusCode)
+        public static CV52.RequestResult GetResultObjectForCoordinateV52StatusMessage(int incomeRequestStatusCode, string[] denyReasonCodeList)
         {
             int resultCode;
             switch (incomeRequestStatusCode)
@@ -217,7 +229,39 @@ namespace TM.SP.AppPages
 
             if (resultCode == 0) return null;
 
-            return new CV52.RequestResult() { ResultCode = resultCode.ToString() };
+            return new CV52.RequestResult() { ResultCode = resultCode.ToString(), DeclineReasonCode = denyReasonCodeList };
+        }
+
+        public static List<SPListItem> GetDenyReasons(SPListItem requestItem)
+        {
+            var list = new List<SPListItem>();
+
+            for (int i = 1; i < 4; i++)
+            {
+                var reasonItem = GetDenyReasonItem(requestItem.ID, i, requestItem.Web);
+                if (reasonItem != null)
+                {
+                    list.Add(reasonItem);
+                }
+            }
+
+            return list;
+        }
+
+        public static SPListItem GetDenyReasonItem(int incomeRequestId, int reasonNum, SPWeb web)
+        {
+            var rList = web.GetListOrBreak("Lists/IncomeRequestList");
+            SPListItem rItem = rList.GetItemOrBreak(incomeRequestId);
+
+            SPListItem el = null;
+            var fieldname = "Tm_DenyReasonLookup" + (reasonNum > 1 ? reasonNum.ToString() : "");
+            if (rItem.Fields.ContainsField(fieldname))
+            {
+                var lookupField = rItem.Fields.GetFieldByInternalName(fieldname) as SPFieldLookup;
+                Utility.TryGetListItemFromLookupValue(rItem[fieldname], lookupField, out el);
+            }
+
+            return el;
         }
     }
 }

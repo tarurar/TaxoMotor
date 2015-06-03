@@ -208,6 +208,8 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="3rd\DigitalSignature.dll" />
+    <Content Include="3rd\Ppr.Routine.dll" />
     <Content Include="Layouts\TM.SP.AppPages\Images\filter-32.png" />
     <Content Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx" />
     <Content Include="WebParts\IncomRequestFilterWebPart\WebPartIcon_IncomRequestFilterWebPart.gif" />
@@ -285,14 +287,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
   <ItemGroup />
   <ItemGroup>
     <Content Include="3rd\AppLog.dll" />
-    <Content Include="3rd\AppLog.pdb" />
     <Content Include="3rd\Aspose\Aspose.Words.dll" />
     <Content Include="3rd\ODOPM.dll" />
-    <Content Include="3rd\ODOPM.pdb" />
     <Content Include="3rd\Rkis.Rsmev.ForODOPM.dll" />
-    <Content Include="3rd\Rkis.Rsmev.ForODOPM.pdb" />
     <Content Include="3rd\WebServiceMO.dll" />
-    <Content Include="3rd\WebServiceMO.pdb" />
     <Content Include="ApplicationPages\CommonService\CommonService.aspx" />
     <Content Include="ApplicationPages\DeleteListItems\DeleteListItems.aspx" />
     <Content Include="ApplicationPages\IncomeRequestService\IncomeRequestService.aspx" />
