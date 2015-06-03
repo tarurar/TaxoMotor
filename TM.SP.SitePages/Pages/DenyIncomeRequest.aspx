@@ -28,19 +28,51 @@
         </div>
     </div>
     <div id="paramsForm" data-bind="with: Params">
-        <section style="margin-top: 10px;">
-            <div style="float: left; margin-right: 20px;">
-                <label for="denyReason" style="display: block">Укажите причину отказа</label>
-                <select id="denyReason" data-bind="options: DenyReason, optionsText: 'Title', value: selectedReason"></select>
-            </div>
-            <br style="clear:both;" />
-        </section>
-        <section style="margin-top: 10px;">
-            <div style="float: left; margin-right: 20px; width: 100%;">
-                <label for="actionComment" style="display: block">Комментарий</label>
-                <textarea id="actionComment" style="display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" rows="7" data-bind="value: ActionComment" ></textarea>
-            </div>
-        </section>
+        <div id="s1">
+            <section style="margin-top: 10px;">
+                <div style="float: left; margin-right: 20px;">
+                    <label for="denyReason" style="display: block">Укажите причину отказа</label>
+                    <select id="denyReason" data-bind="options: DenyReason, optionsText: 'Title', value: selectedReason"></select>
+                </div>
+                <br style="clear:both;" />
+            </section>
+            <section style="margin-top: 10px;">
+                <div style="float: left; margin-right: 20px; width: 100%;">
+                    <label for="actionComment" style="display: block">Комментарий</label>
+                    <textarea id="actionComment" style="display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" rows="7" data-bind="value: ActionComment" ></textarea>
+                </div>
+            </section>
+        </div>
+        <div id="s2">
+            <section style="margin-top: 10px;">
+                <div style="float: left; margin-right: 20px;">
+                    <label for="denyReason2" style="display: block">Укажите причину отказа</label>
+                    <select id="denyReason2" data-bind="options: DenyReason, optionsText: 'Title', value: selectedReason2"></select>
+                </div>
+                <br style="clear:both;" />
+            </section>
+            <section style="margin-top: 10px;">
+                <div style="float: left; margin-right: 20px; width: 100%;">
+                    <label for="actionComment2" style="display: block">Комментарий</label>
+                    <textarea id="actionComment2" style="display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" rows="7" data-bind="value: ActionComment2" ></textarea>
+                </div>
+            </section>
+        </div>
+        <div id="s3">
+            <section style="margin-top: 10px;">
+                <div style="float: left; margin-right: 20px;">
+                    <label for="denyReason3" style="display: block">Укажите причину отказа</label>
+                    <select id="denyReason3" data-bind="options: DenyReason, optionsText: 'Title', value: selectedReason3"></select>
+                </div>
+                <br style="clear:both;" />
+            </section>
+            <section style="margin-top: 10px;">
+                <div style="float: left; margin-right: 20px; width: 100%;">
+                    <label for="actionComment3" style="display: block">Комментарий</label>
+                    <textarea id="actionComment3" style="display: block; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" rows="7" data-bind="value: ActionComment3" ></textarea>
+                </div>
+            </section>
+        </div>
         <section style="margin-top: 10px;">
             <div style="float: left; margin-right: 20px; width: 100%;">
                 <p style="display: block;">

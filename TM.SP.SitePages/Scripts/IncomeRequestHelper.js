@@ -578,14 +578,18 @@
                 }).fail(onfail);
             };
 
-            ir.SetRefuseReasonAndComment = function (incomeRequestId, refuseReasonCode, refuseComment, needPersonVisit, refuseDocuments) {
+            ir.SetRefuseReasonAndComment = function (incomeRequestId, refuseReasonCode, refuseComment, refuseReasonCode2, refuseComment2, refuseReasonCode3, refuseComment3, needPersonVisit, refuseDocuments) {
                 return $.ajax({
                     type: 'POST',
                     url: ir.ServiceUrl + '/SetRefuseReasonAndComment',
                     data: '{ incomeRequestId: ' + incomeRequestId +
                             ' , refuseReasonCode: ' + refuseReasonCode +
-                            ' , refuseComment: "' + encodeURIComponent(refuseComment) +
-                            '", needPersonVisit: ' + needPersonVisit +
+                            ' , refuseComment: "' + encodeURIComponent(refuseComment) + '"' +
+                            ' , refuseReasonCode2: ' + refuseReasonCode2 +
+                            ' , refuseComment2: "' + encodeURIComponent(refuseComment2) + '"' +
+                            ' , refuseReasonCode3: ' + refuseReasonCode3 +
+                            ' , refuseComment3: "' + encodeURIComponent(refuseComment3) + '"' +
+                            ' , needPersonVisit: ' + needPersonVisit +
                             ', refuseDocuments: ' +refuseDocuments + ' }',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
@@ -604,12 +608,16 @@
                         if (result == SP.UI.DialogResult.OK) {
 
                             var reasonCode = returnValue.SelectedReason.Code;
+                            var reasonCode2 = returnValue.SelectedReason2.Code;
+                            var reasonCode3 = returnValue.SelectedReason3.Code;
                             var reasonText = returnValue.ActionComment;
+                            var reasonText2 = returnValue.ActionComment2;
+                            var reasonText3 = returnValue.ActionComment3;
                             var needPersonVisit = returnValue.NeedPersonVisit;
                             var refuseDocuments = returnValue.RefuseDocuments;
 
                             // Установка причины отказа и комментария
-                            ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText, needPersonVisit, refuseDocuments).success(function () {
+                            ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText, reasonCode2, reasonText2, reasonCode3, reasonText3, needPersonVisit, refuseDocuments).success(function () {
                                     // Генерация документов отказа
                                     ir.CreateDocumentsWhileRefusing(incomeRequestId).success(function (refuseDocData) {
                                         if (refuseDocData && refuseDocData.d && refuseDocData.d.Data && refuseDocData.d.Data[0]) {

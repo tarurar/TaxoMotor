@@ -50,17 +50,28 @@ namespace TM.SP.AppPages
             }
         }
 
-        public SPListItem DenyReason
+        public SPListItem GetDenyReasonItem(int num)
         {
-            get
-            {
-                SPListItem el;
+            SPListItem el;
 
-                return Utility.TryGetListItemFromLookupValue(_request["Tm_DenyReasonLookup"],
-                    _request.Fields.GetFieldByInternalName("Tm_DenyReasonLookup") as SPFieldLookup, out el)
-                    ? el
+            var fieldname = "Tm_DenyReasonLookup" + (num > 1 ? num.ToString() : "");
+            if (_request.Fields.ContainsField(fieldname)) 
+            {
+                var lookupField = _request.Fields.GetFieldByInternalName(fieldname) as SPFieldLookup;
+                return Utility.TryGetListItemFromLookupValue(_request[fieldname], lookupField, out el) 
+                    ? el 
                     : null;
+            } else return null;
+        }
+
+        public string GetDenyComment(int num)
+        {
+            var fieldname = "Tm_Comment" + (num > 1 ? num.ToString() : "");
+            if (_request.Fields.ContainsField(fieldname))
+            {
+                return _request.TryGetValue<string>(fieldname);
             }
+            else return null;
         }
 
         public SPListItem RequestStatus
@@ -205,6 +216,28 @@ namespace TM.SP.AppPages
             # endregion
         }
 
+        private DataTable GetDenyReasonDataTable()
+        {
+            var dt = new DataTable("DenyReasonList");
+
+            dt.Columns.Add("ReasonText", typeof(string));
+            dt.Columns.Add("Comment", typeof(string));
+
+            #region filling with data
+            for (int i = 1; i < 4; i++)
+            {
+                var reasonItem = GetDenyReasonItem(i);
+
+                if (reasonItem != null)
+                {
+                    dt.Rows.Add(reasonItem["Tm_PrintTitle"], GetDenyComment(i));
+                }
+            }
+            #endregion
+
+            return dt;
+        }
+
         public DocumentMetaData RenderDocument(int templateNumber)
         {
             var tmplItem = _tmplLib.GetSingleListItemByFieldValue("Tm_ServiceCode",
@@ -236,8 +269,7 @@ namespace TM.SP.AppPages
             var scalarValueNames = new string[]
             {
                 "DeclarantNamePE", "DeclarantNameJP", "CeoText", "CreationDate", "SingleNumber", "SubServiceName",
-                "RefuseReasonTitle", "RefuseReasonText", "OperatorDepartment", "OperatorName", 
-                "ApplyDate", "InternalRegNumber"
+                "OperatorDepartment", "OperatorName", "ApplyDate", "InternalRegNumber"
             };
 
             bool isPrvtEntrprnr = _declarant.OrgFormCode.Equals(SendRequestEGRULPage.PrivateEntrepreneurCode);
@@ -249,8 +281,6 @@ namespace TM.SP.AppPages
                 RegistrationDateText,
                 _request["Tm_SingleNumber"] ?? "",
                 RequestedDocument != null ? RequestedDocument.Title : "",
-                DenyReason != null ? DenyReason["Tm_PrintTitle"].ToString() : "",
-                _request["Tm_Comment"] ?? "",
                 OperatorDepartment,
                 _web.CurrentUser.Name,
                 ApplyDateText,
@@ -270,6 +300,7 @@ namespace TM.SP.AppPages
                 dt.TableName = "TaxiList";
                 doc.MailMerge.ExecuteWithRegions(dt);
             }
+            doc.MailMerge.ExecuteWithRegions(GetDenyReasonDataTable());
 
             using (var ms = new MemoryStream())
             {

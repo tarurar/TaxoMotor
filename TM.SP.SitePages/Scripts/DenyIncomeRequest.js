@@ -9,8 +9,12 @@
         var self = this;
 
         self.DenyReason      = ko.observableArray([]);
-        self.selectedReason  = ko.observable();
-        self.ActionComment   = ko.observable("");
+        self.selectedReason = ko.observable();
+        self.selectedReason2 = ko.observable();
+        self.selectedReason3 = ko.observable();
+        self.ActionComment = ko.observable("");
+        self.ActionComment2 = ko.observable("");
+        self.ActionComment3 = ko.observable("");
         self.NeedPersonVisit = ko.observable(false);
         self.RefuseDocuments = ko.observable(false);
     }
@@ -25,7 +29,11 @@
         self.DoAction = function () {
             window.frameElement.commonModalDialogClose(SP.UI.DialogResult.OK, {
                 SelectedReason: self.Params().selectedReason(),
+                SelectedReason2: self.Params().selectedReason2(),
+                SelectedReason3: self.Params().selectedReason3(),
                 ActionComment: self.Params().ActionComment(),
+                ActionComment2: self.Params().ActionComment2(),
+                ActionComment3: self.Params().ActionComment3(),
                 NeedPersonVisit: self.Params().NeedPersonVisit(),
                 RefuseDocuments: self.Params().RefuseDocuments()
             });

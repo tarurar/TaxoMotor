@@ -603,7 +603,7 @@ namespace TM.SP.AppPages
         /// <param name="refuseReasonCode">Код причины отказа</param>
         /// <param name="refuseComment">Текст комментария к отказу</param>
         [WebMethod]
-        public static void SetRefuseReasonAndComment(int incomeRequestId, int refuseReasonCode, string refuseComment, bool needPersonVisit, bool refuseDocuments)
+        public static void SetRefuseReasonAndComment(int incomeRequestId, int refuseReasonCode, string refuseComment, int refuseReasonCode2, string refuseComment2, int refuseReasonCode3, string refuseComment3, bool needPersonVisit, bool refuseDocuments)
         {
             SPWeb web = SPContext.Current.Web;
 
@@ -614,14 +614,30 @@ namespace TM.SP.AppPages
                 var refuseList = web.GetListOrBreak("Lists/DenyReasonBookList");
                 var item = list.GetItemById(incomeRequestId);
                 SPListItem refuseItem = null;
+                SPListItem refuseItem2 = null;
+                SPListItem refuseItem3 = null;
                 if (refuseReasonCode != 0)
                 {
                     refuseItem = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode", 
                         refuseReasonCode.ToString(CultureInfo.InvariantCulture));
                 }
+                if (refuseReasonCode2 != 0)
+                {
+                    refuseItem2 = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode",
+                        refuseReasonCode2.ToString(CultureInfo.InvariantCulture));
+                }
+                if (refuseReasonCode3 != 0)
+                {
+                    refuseItem3 = refuseList.GetSingleListItemByFieldValue("Tm_ServiceCode",
+                        refuseReasonCode3.ToString(CultureInfo.InvariantCulture));
+                }
 
                 item["Tm_DenyReasonLookup"] = refuseItem != null ? new SPFieldLookupValue(refuseItem.ID, refuseItem.Title) : null;
+                item["Tm_DenyReasonLookup2"] = refuseItem2 != null ? new SPFieldLookupValue(refuseItem2.ID, refuseItem2.Title) : null;
+                item["Tm_DenyReasonLookup3"] = refuseItem3 != null ? new SPFieldLookupValue(refuseItem3.ID, refuseItem3.Title) : null;
                 item["Tm_Comment"] = Uri.UnescapeDataString(refuseComment);
+                item["Tm_Comment2"] = Uri.UnescapeDataString(refuseComment2);
+                item["Tm_Comment3"] = Uri.UnescapeDataString(refuseComment3);
                 item["Tm_RefuseDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
                 item["Tm_PrepareFactDate"] = SPUtility.CreateISO8601DateTimeFromSystemDateTime(DateTime.Now.Date);
                 item["Tm_NeedPersonVisit"] = needPersonVisit;

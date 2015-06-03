@@ -15,6 +15,10 @@
     display : none; 
 }
 
+#s4-workspace {
+    height:auto !important;
+}
+
 select, option {
     width: 100%;
 }

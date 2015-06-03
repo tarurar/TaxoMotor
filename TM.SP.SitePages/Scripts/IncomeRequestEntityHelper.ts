@@ -63,6 +63,10 @@ module TM.SP_.IncomeRequest {
         export class RefuseParam extends IncomeRequestCommonParam {
             public refuseReasonCode: number;
             public refuseComment: string;
+            public refuseReasonCode2: number;
+            public refuseComment2: string;
+            public refuseReasonCode3: number;
+            public refuseComment3: string;
             public needPersonVisit: boolean;
             public refuseDocuments: string;
         }
@@ -371,12 +375,16 @@ module TM.SP_.IncomeRequest {
             }, "SaveIncomeRequestStatusLog");
         }
 
-        public SetRefuseReasonAndComment(refuseReasonCode: number, refuseComment: string, needPersonVisit: boolean, refuseDocuments: string): JQueryXHR {
+        public SetRefuseReasonAndComment(refuseReasonCode: number, refuseComment: string, refuseReasonCode2: number, refuseComment2: string, refuseReasonCode3: number, refuseComment3: string, needPersonVisit: boolean, refuseDocuments: string): JQueryXHR {
             return this.PostWebMethod<RequestParams.RefuseParam>(RequestParams.RefuseParam,(param) => {
-                param.refuseReasonCode = refuseReasonCode;
-                param.refuseComment    = encodeURIComponent(refuseComment);
-                param.needPersonVisit  = needPersonVisit;
-                param.refuseDocuments  = refuseDocuments;
+                param.refuseReasonCode  = refuseReasonCode;
+                param.refuseComment     = encodeURIComponent(refuseComment);
+                param.refuseReasonCode2 = refuseReasonCode2;
+                param.refuseComment2    = encodeURIComponent(refuseComment2);
+                param.refuseReasonCode3 = refuseReasonCode3;
+                param.refuseComment3    = encodeURIComponent(refuseComment3);
+                param.needPersonVisit   = needPersonVisit;
+                param.refuseDocuments   = refuseDocuments;
             }, "SetRefuseReasonAndComment");
         }
 
