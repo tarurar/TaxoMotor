@@ -141,6 +141,15 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup
         };
 
+        public static FieldDefinition TmServiceCodeSend = new FieldDefinition
+        {
+            Id           = new Guid("{F3F18824-262B-4714-8474-D8832EE3476B}"),
+            Title        = "Код для отправки",
+            InternalName = "Tm_ServiceCodeSend",
+            FieldType    = BuiltInFieldTypes.Text,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
         #endregion
 
         #region [Обращение - Общие поля]
@@ -205,6 +214,24 @@ namespace TM.SP.DataModel
             Id           = new Guid("{1A89ECD3-C1AE-4BF7-A3D5-DE319FC325CD}"),
             Title        = "Примечание",
             InternalName = "Tm_Comment",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmComment2 = new FieldDefinition()
+        {
+            Id           = new Guid("{2EFC3D01-431A-400E-B58C-BB774C9B3C35}"),
+            Title        = "Примечание 2",
+            InternalName = "Tm_Comment2",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup
+        };
+
+        public static FieldDefinition TmComment3 = new FieldDefinition()
+        {
+            Id           = new Guid("{A2A98DDB-CB70-4F54-ADE7-923DCA394B82}"),
+            Title        = "Примечание 3",
+            InternalName = "Tm_Comment3",
             FieldType    = BuiltInFieldTypes.Note,
             Group        = ModelConsts.ColumnsDefaultGroup
         };

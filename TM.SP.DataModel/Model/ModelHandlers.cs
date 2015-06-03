@@ -126,6 +126,8 @@ namespace TM.SP.DataModel
             PlumsailFields.TmIncomeRequestStateLookupXml.ListId         = incomeRequestStateBookList.Id;
             PlumsailFields.TmIncomeRequestStateInternalLookupXml.ListId = incomeRequestStateInternalBookList.Id;
             PlumsailFields.TmDenyReasonLookupXml.ListId                 = denyReasonBookList.Id;
+            PlumsailFields.TmDenyReasonLookup2Xml.ListId                = denyReasonBookList.Id;
+            PlumsailFields.TmDenyReasonLookup3Xml.ListId                = denyReasonBookList.Id;
             PlumsailFields.TmRequestedDocumentXml.ListId                = govServiceSubTypeBookList.Id;
             PlumsailFields.TmOutputRequestTypeLookupXml.ListId          = outcomeRequestTypeBookList.Id;
             PlumsailFields.TmPossessionReasonLookupXml.ListId           = possessionReasonBookList.Id;
@@ -187,6 +189,10 @@ namespace TM.SP.DataModel
             ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmIncomeRequestStateInternalLookupXml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmDenyReasonLookupXml.ToXml(),
+                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList, PlumsailFields.TmDenyReasonLookup2Xml.ToXml(),
+                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
+            ListHelpers.AddFieldAsXmlToList(incomeRequestList, PlumsailFields.TmDenyReasonLookup3Xml.ToXml(),
                 AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);
             ListHelpers.AddFieldAsXmlToList(incomeRequestList      , PlumsailFields.TmRequestedDocumentXml.ToXml(),
                AddFieldOptions.AddFieldInternalNameHint | AddFieldOptions.AddToAllContentTypes);

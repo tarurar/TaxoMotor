@@ -85,6 +85,8 @@ namespace TM.SP.DataModel
                     .AddField(Fields.TmApplyDate,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeDateOnly()))
                     .AddField(Fields.TmComment)
+                    .AddField(Fields.TmComment2)
+                    .AddField(Fields.TmComment3)
                     .AddField(Fields.TmInstanceCounter)
                     .AddField(Fields.TmRequestedDocumentPrice)
                     .AddField(Fields.TmOutputFactDate,
@@ -216,6 +218,7 @@ namespace TM.SP.DataModel
                         context => context.Object.MakeFillInChoice()))
                     .AddField(Fields.TmIncomeRequestSystemUpdateAvailable, f => f.OnProvisioned<Field>(
                         context => context.Object.MakeDefaultValue("FALSE")))
+                    .AddField(Fields.TmServiceCodeSend)
                     .AddField(Fields.TmMessageId,
                         f => f.OnProvisioned<Field>(context => context.Object.MakeHidden(false)))
                     .AddField(Fields.TmIncomeRequestForm,
@@ -236,7 +239,8 @@ namespace TM.SP.DataModel
                         .AddContentType(ContentTypes.TmDenyReason, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmUsageScopeInteger)
-                            .AddContentTypeFieldLink(Fields.TmPrintTitle))
+                            .AddContentTypeFieldLink(Fields.TmPrintTitle)
+                            .AddContentTypeFieldLink(Fields.TmServiceCodeSend))
                         .AddContentType(ContentTypes.TmGovServiceSubType, ct => ct
                             .AddContentTypeFieldLink(Fields.TmServiceCode)
                             .AddContentTypeFieldLink(Fields.TmTermOfService))
@@ -433,6 +437,8 @@ namespace TM.SP.DataModel
                         .AddContentTypeFieldLink(Fields.TmApplyDate)
                         .AddContentTypeFieldLink(Fields.TmIncomeRequestForm)
                         .AddContentTypeFieldLink(Fields.TmComment)
+                        .AddContentTypeFieldLink(Fields.TmComment2)
+                        .AddContentTypeFieldLink(Fields.TmComment3)
                         .AddContentTypeFieldLink(Fields.TmInstanceCounter)
                         .AddContentTypeFieldLink(Fields.TmRequestedDocumentPrice)
                         .AddContentTypeFieldLink(Fields.TmOutputFactDate)

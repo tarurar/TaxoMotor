@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using SPMeta2.Definitions;
+using SPMeta2.Definitions.Fields;
 using SPMeta2.Enumerations;
 using System.Xml.Linq;
 
@@ -112,6 +113,17 @@ namespace TM.SP.DataModel.Plumsail
             //ListId needs to be set up in runtime
         };
 
+        /*public static FieldDefinition TmIncomRequestStateLookupServiceCode = new LookupFieldDefinition()
+        {
+            Id           = new Guid("{D799C05A-0D57-4F61-B1B4-8B7D28A78372}"),
+            Title        = "Состояние обращения:Код",
+            InternalName = "Tm_IncomeRequestStateLookupCode",
+            Group        = ModelConsts.ColumnsDefaultGroup,
+            LookupField  = "Tm_ServiceCode"
+            // LookupList needs to be set up in runtime
+            // FieldRef need to be set up in runtime
+        };*/
+
         public static CrossSiteLookupDefinition TmIncomeRequestStateInternalLookupXml = new CrossSiteLookupDefinition()
         {
             Id           = new Guid("{136E87D0-C4AA-4710-9E54-5BE31EFE6BCB}"),
@@ -134,6 +146,36 @@ namespace TM.SP.DataModel.Plumsail
             Id           = new Guid("{C6837DD1-0075-4223-BDC3-DEEE57334491}"),
             Title        = "Причина отказа",
             InternalName = "Tm_DenyReasonLookup",
+            FieldType    = BuiltInFieldTypes.Lookup,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+            ShowField    = "Title",
+            Required     = false,
+            Mult         = false,
+            nsShowNew    = true,
+            nsNewText    = "Добавить причину отказа"
+            //ListId needs to be set up in runtime
+        };
+
+        public static CrossSiteLookupDefinition TmDenyReasonLookup2Xml = new CrossSiteLookupDefinition()
+        {
+            Id           = new Guid("{D5A0C93C-45A9-49AC-B1AD-342D1E918481}"),
+            Title        = "Причина отказа 2",
+            InternalName = "Tm_DenyReasonLookup2",
+            FieldType    = BuiltInFieldTypes.Lookup,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+            ShowField    = "Title",
+            Required     = false,
+            Mult         = false,
+            nsShowNew    = true,
+            nsNewText    = "Добавить причину отказа"
+            //ListId needs to be set up in runtime
+        };
+
+        public static CrossSiteLookupDefinition TmDenyReasonLookup3Xml = new CrossSiteLookupDefinition()
+        {
+            Id           = new Guid("{3648BA14-F8E1-4F81-9152-85E64785382B}"),
+            Title        = "Причина отказа 3",
+            InternalName = "Tm_DenyReasonLookup3",
             FieldType    = BuiltInFieldTypes.Lookup,
             Group        = ModelConsts.ColumnsDefaultGroup,
             ShowField    = "Title",
