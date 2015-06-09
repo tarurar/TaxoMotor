@@ -88,12 +88,15 @@ namespace TM.SP.AppPages.Validators
             #endregion
 
             #region [second condition check]
-            var requestListByStatus = IncomeRequestService.GetAllIncomeRequestInStatus("1050;6420").Cast<SPListItem>();
-            var requestFilteredList = requestListByStatus
-                .Where(Predicates.V2.IncomeRequestNew.SelectRequests)
-                .Where(Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
+            var itemsCount1 = FilterRequests("1050;6420",
+                Predicates.V2.IncomeRequestNew.SelectRequestsExceptCancellation,
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
 
-            if (requestFilteredList.Count() != 0)
+            var itemsCount2 = FilterRequests("1050;6420;1085;1075",
+                Predicates.V2.IncomeRequestNew.SelectRequestsCancellation,
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
+
+            if (itemsCount1 != 0 || itemsCount2 != 0)
             {
                 throw new Exception(StringsRes.requestExistsForAny);
             };
@@ -125,12 +128,15 @@ namespace TM.SP.AppPages.Validators
             #endregion
 
             #region [second condition check]
-            var requestListByStatus = IncomeRequestService.GetAllIncomeRequestInStatus("1050;6420").Cast<SPListItem>();
-            var requestFilteredList = requestListByStatus
-                .Where(Predicates.V2.IncomeRequestNew.SelectRequests)
-                .Where(Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно", PrevLicNumberFmt));
+            var itemsCount1 = FilterRequests("1050;6420",
+                Predicates.V2.IncomeRequestNew.SelectRequestsExceptCancellation,
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно", PrevLicNumberFmt));
 
-            if (requestFilteredList.Count() != 0)
+            var itemsCount2 = FilterRequests("1050;6420;1085;1075",
+                Predicates.V2.IncomeRequestNew.SelectRequestsCancellation,
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно", PrevLicNumberFmt));
+
+            if (itemsCount1 != 0 || itemsCount2 != 0)
             {
                 throw new Exception(StringsRes.requestExistsForAny);
             }
@@ -163,12 +169,15 @@ namespace TM.SP.AppPages.Validators
             #endregion
 
             #region [second condition check]
-            var requestListByStatus = IncomeRequestService.GetAllIncomeRequestInStatus("1050;6420").Cast<SPListItem>();
-            var requestFilteredList = requestListByStatus
-                .Where(Predicates.V2.IncomeRequestNew.SelectRequests)
-                .Where(Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
+            var itemsCount1 = FilterRequests("1050;6420",
+                Predicates.V2.IncomeRequestNew.SelectRequestsExceptCancellation,
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
 
-            if (requestFilteredList.Count() != 0)
+            var itemsCount2 = FilterRequests("1050;6420;1085;1075",
+                Predicates.V2.IncomeRequestNew.SelectRequestsCancellation,
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
+
+            if (itemsCount1 != 0 || itemsCount2 != 0)
             {
                 throw new Exception(StringsRes.requestExistsForAny);
             }
@@ -201,18 +210,39 @@ namespace TM.SP.AppPages.Validators
             #endregion
 
             #region [second condition check]
-            var requestListByStatus = IncomeRequestService.GetAllIncomeRequestInStatus("1050;6420").Cast<SPListItem>();
-            var requestFilteredList = requestListByStatus
-                .Where(Predicates.V2.IncomeRequestNew.SelectRequests)
-                .Where(Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
+            var itemsCount1 = FilterRequests("1050;6420", 
+                Predicates.V2.IncomeRequestNew.SelectRequestsExceptCancellation, 
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
 
-            if (requestFilteredList.Count() != 0)
+            var itemsCount2 = FilterRequests("1050;6420;1085;1075",
+                Predicates.V2.IncomeRequestNew.SelectRequestsCancellation,
+                Predicates.V2.GetFor.TaxiInRequest(TaxiStateNumber, "Решено положительно"));
+
+            if (itemsCount1 != 0 || itemsCount2 != 0)
             {
                 throw new Exception(StringsRes.requestExistsForAny);
             }
             #endregion
 
             return true;
+        }
+
+        /// <summary>
+        /// Фильтрация списка обращений по указанным предикатам
+        /// </summary>
+        /// <param name="irStatuses">Статусы обращений, которые нужно фильтровать. Коды статусов через точку с запятой</param>
+        /// <param name="irPredicate">Предикат для отбора обращений по атрибутам обращения</param>
+        /// <param name="taxiPredicate">Предикат для отбора обращений по атрибутам ТС обращения</param>
+        /// <returns>Количество обращений</returns>
+        private static int FilterRequests(string irStatuses, Func<SPListItem, bool> irPredicate, Func<SPListItem, bool> taxiPredicate)
+        {
+            var requestListByStatus = IncomeRequestService.GetAllIncomeRequestInStatus(irStatuses).Cast<SPListItem>();
+
+            var requestFilteredList = requestListByStatus
+                .Where(irPredicate)
+                .Where(taxiPredicate);
+
+            return requestFilteredList.Count();
         }
 
         #endregion

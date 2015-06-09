@@ -12,17 +12,26 @@ namespace TM.SP.AppPages.Validators.Predicates.V2
     {
         public static bool SelectRequests(SPListItem request)
         {
-            var ctPredicate1 =
+            return SelectRequestsExceptCancellation(request) || SelectRequestsCancellation(request);
+        }
+
+        public static bool SelectRequestsCancellation(SPListItem request)
+        {
+            var ctPredicate = request.ContentType.Name == StringsRes.ctCancellation;
+            var datePredicate = request.TryGetValueOrNull<DateTime>("Tm_OutputFactDate") == null;
+
+            return ctPredicate && datePredicate;
+        }
+
+        public static bool SelectRequestsExceptCancellation(SPListItem request)
+        {
+            var ctPredicate =
                    request.ContentType.Name == StringsRes.ctNew
                 || request.ContentType.Name == StringsRes.ctDuplicate
                 || request.ContentType.Name == StringsRes.ctRenew;
-            var ctPredicate2 =
-                   request.ContentType.Name == StringsRes.ctCancellation;
+            var datePredicate = request.TryGetValueOrNull<DateTime>("Tm_PrepareFactDate") == null;
 
-            var datePredicate1 = request.TryGetValueOrNull<DateTime>("Tm_PrepareFactDate") == null;
-            var datePredicate2 = request.TryGetValueOrNull<DateTime>("Tm_OutputFactDate") == null;
-
-            return (ctPredicate1 && datePredicate1) || (ctPredicate2 && datePredicate2);
+            return ctPredicate && datePredicate;
         }
     }
 }
