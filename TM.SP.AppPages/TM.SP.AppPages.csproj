@@ -183,12 +183,15 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Print\TemplatedLicenseDocumentBuilder.cs" />
     <Compile Include="Timers\MoTimer.cs" />
     <Compile Include="Timers\OdopmTimer.cs" />
+    <Compile Include="Validators\Predicates\V2\GetFor.cs" />
+    <Compile Include="Validators\Predicates\V2\IncomeRequestNew.cs" />
     <Compile Include="Validators\StringsRes.Designer.cs">
       <DependentUpon>StringsRes.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Validators\TaxiDuplicateValidator.cs" />
+    <Compile Include="Validators\TaxiDuplicateValidatorV2.cs" />
     <Compile Include="Validators\Validator.cs" />
     <Compile Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPart.cs" />
     <Compile Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx.cs">

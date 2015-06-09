@@ -12,9 +12,40 @@ using TM.Utils.Sql;
 using CamlexNET;
 using System.Net.Http;
 using System.Net;
+using System.Dynamic;
 
 namespace TestSPConsole
 {
+    public static class SPListItemExtensions
+    {
+        public static dynamic AsDyn(this SPListItem item)
+        {
+            return new DynamicListItem(item);
+        }
+    }
+
+    public class DynamicListItem: DynamicObject
+    {
+        private SPListItem _source;
+        public DynamicListItem(SPListItem source)
+        {
+            _source = source;
+        }
+
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            var field = _source.Fields.TryGetFieldByStaticName(binder.Name);
+            if (field != null)
+            {
+                result = _source[binder.Name];
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+    }
+
     public static class StaticCaml
     {
         public static string JoinClause()
@@ -110,8 +141,9 @@ namespace TestSPConsole
                 using (var scope = new SPServiceContextScope(context))
                 {
                     var list = web.GetListOrBreak("Lists/IncomeRequestList");
-                    list.Fields.GetFieldByInternalName("Tm_SingleNumber").Indexed = false;
-                    list.Fields.GetFieldByInternalName("Tm_SingleNumber").Update();
+                    var item = list.GetItemById(17).AsDyn();
+
+                    Console.WriteLine(item.Title);
                 }
             }
 

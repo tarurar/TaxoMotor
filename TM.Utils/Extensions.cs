@@ -306,6 +306,22 @@ namespace TM.Utils
             }
         }
 
+        public static bool ContainsDuplicates<T, T1>(this IEnumerable<T> source, Func<T, bool> condition, Func<T, T1> selector)
+        {
+            var d = new HashSet<T1>();
+            foreach (var item in source)
+            {
+                if (!condition(item)) continue;
+
+                if(!d.Add(selector(item)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
     }
 }

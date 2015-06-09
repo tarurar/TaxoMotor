@@ -171,4 +171,7 @@
   <data name="stateNumMismatchErr" xml:space="preserve">
     <value>Гос. номер ТС не совпадает с данными из разрешения</value>
   </data>
+  <data name="requestExistsForAny" xml:space="preserve">
+    <value>В другом обращении имеется ТС со статусом "Решено положительно", по которому не завершена работа</value>
+  </data>
 </root>

@@ -21,19 +21,85 @@ namespace TM.SP.AppPages.Validators
         protected SPListItem taxiItem;
         protected SPList requestList;
         protected SPList taxiList;
+        protected SPList licenseList;
+        private string _declarantOgrn = null;
+        #endregion
+
+        #region [properties]
+        protected string DeclarantOgrn
+        {
+            get
+            {
+                if (_declarantOgrn != null) return _declarantOgrn;
+
+                try
+                {
+                    var declarantId = BCS.GetBCSFieldLookupId(requestItem, "Tm_RequestAccountBCSLookup");
+                    var declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
+                    _declarantOgrn = declarant.Ogrn;
+                }
+                catch (Exception)
+                {
+                    throw new Exception(StringsRes.noDeclarantOgrnErr);
+                }
+                return _declarantOgrn;
+            }
+        }
+        protected string PrevLicNumberFmt
+        {
+            get
+            {
+                return taxiItem.TryGetValue<string>("Tm_TaxiPrevLicenseNumber");
+            }
+        }
+        protected string PrevLicNumber
+        {
+            get
+            {
+                var prevLicNumber = Convert.ToInt32(PrevLicNumberFmt).ToString();
+                if (String.IsNullOrEmpty(prevLicNumber))
+                    throw new Exception(StringsRes.noPrevLicNumberErr);
+
+                return prevLicNumber;
+            }
+        }
+        protected string TaxiStateNumber
+        {
+            get
+            {
+                return taxiItem.TryGetValue<string>("Tm_TaxiStateNumber");
+            }
+        }
         #endregion
 
         #region [methods]
-        
+
+        protected IEnumerable<SPListItem> GetActingLicensesByNumber(string regNumber)
+        {
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            {
+                // IsLast field - checking if license is acting
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
+                x => (string)x["Tm_RegNumber"] == regNumber
+            };
+
+            return licenseList.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().WhereAll(expressions).ToString(),
+                ViewAttributes = "Scope='Recursive'"
+            }).Cast<SPListItem>();
+        }
+
         public TaxiDuplicateValidator(SPWeb web, int requestItemId, int taxiItemId) : base(web)
         {
             requestList = _web.GetListOrBreak("Lists/IncomeRequestList");
             taxiList = _web.GetListOrBreak("Lists/TaxiList");
+            licenseList = _web.GetListOrBreak("Lists/LicenseList");
 
             requestItem = requestList.GetItemOrBreak(requestItemId);
             taxiItem = taxiList.GetItemOrBreak(taxiItemId);
         }
-        private bool ExecuteForNew()
+        protected virtual bool ExecuteForNew()
         {
             #region [first condition check]
             // выбираем все действующие разрешения
@@ -100,46 +166,14 @@ namespace TM.SP.AppPages.Validators
 
             return true;
         }
-        private bool ExecuteForRenew()
+        protected virtual bool ExecuteForRenew()
         {
-            #region [getting data]
-            var licenseList = _web.GetListOrBreak("Lists/LicenseList");
-
-            var prevLicNumberFmt = taxiItem["Tm_TaxiPrevLicenseNumber"].ToString();
-            var prevLicNumber = Convert.ToInt32(prevLicNumberFmt).ToString();
-            if (String.IsNullOrEmpty(prevLicNumber))
-                throw new Exception(StringsRes.noPrevLicNumberErr);
-
-            var ogrn = String.Empty;
-            try
-            {
-                var declarantId = BCS.GetBCSFieldLookupId(requestItem, "Tm_RequestAccountBCSLookup");
-                var declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
-                ogrn = declarant.Ogrn;
-            }
-            catch (Exception)
-            {
-                throw new Exception(StringsRes.noDeclarantOgrnErr);
-            }
-            #endregion
-
             #region [first condition check]
-            var expressions = new List<Expression<Func<SPListItem, bool>>>
-            {
-                // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
-                x => (string)x["Tm_RegNumber"] == prevLicNumber
-            };
-
-            var actingLicenses = licenseList.GetItems(new SPQuery
-            {
-                Query = Camlex.Query().WhereAll(expressions).ToString(),
-                ViewAttributes = "Scope='RecursiveAll'"
-            }).Cast<SPListItem>();
+            var actingLicenses = GetActingLicensesByNumber(PrevLicNumber);
 
             var hasActingLicenses = actingLicenses.Any();
-            var ogrnMatches = actingLicenses.All(l => (string)l["Tm_OrgOgrn"] == ogrn);
-            var noCancellation = !actingLicenses.Any(l => (string)l["Tm_LicenseStatus"] == StringsRes.LicenseStatusCancellation);
+            var ogrnMatches       = actingLicenses.All(l => (string)l["Tm_OrgOgrn"] == DeclarantOgrn);
+            var noCancellation    = !actingLicenses.Any(l => (string)l["Tm_LicenseStatus"] == StringsRes.LicenseStatusCancellation);
 
             var firstCondition = hasActingLicenses && ogrnMatches && noCancellation;
             if (!firstCondition)
@@ -172,8 +206,8 @@ namespace TM.SP.AppPages.Validators
             foreach (SPListItem request in requestList)
             {
                 secondCondition = 
-                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, taxiItem["Tm_TaxiStateNumber"].ToString()) 
-                    && !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, prevLicNumberFmt);
+                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, TaxiStateNumber) && 
+                    !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, PrevLicNumberFmt);
 
                 if (!secondCondition)
                 {
@@ -204,8 +238,8 @@ namespace TM.SP.AppPages.Validators
             foreach (SPListItem request in requestList)
             {
                 thirdCondition = 
-                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, taxiItem["Tm_TaxiStateNumber"].ToString())
-                    && !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, prevLicNumberFmt);
+                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, TaxiStateNumber) && 
+                    !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, PrevLicNumberFmt);
 
                 if (!thirdCondition) throw new Exception(StringsRes.requestExistsForCancellation);
             }
@@ -213,47 +247,15 @@ namespace TM.SP.AppPages.Validators
 
             return true;
         }
-        private bool ExecuteForDuplicate() 
+        protected virtual bool ExecuteForDuplicate() 
         {
-            #region [getting data]
-            var licenseList = _web.GetListOrBreak("Lists/LicenseList");
-
-            var prevLicNumberFmt = taxiItem["Tm_TaxiPrevLicenseNumber"].ToString();
-            var prevLicNumber = Convert.ToInt32(prevLicNumberFmt).ToString();
-            if (String.IsNullOrEmpty(prevLicNumber))
-                throw new Exception(StringsRes.noPrevLicNumberErr);
-
-            var ogrn = String.Empty;
-            try
-            {
-                var declarantId = BCS.GetBCSFieldLookupId(requestItem, "Tm_RequestAccountBCSLookup");
-                var declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
-                ogrn = declarant.Ogrn;
-            }
-            catch (Exception)
-            {
-                throw new Exception(StringsRes.noDeclarantOgrnErr);
-            }
-            #endregion
-
             #region [first condition check]
-            var expressions = new List<Expression<Func<SPListItem, bool>>>
-            {
-                // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
-                x => (string)x["Tm_RegNumber"] == prevLicNumber
-            };
-
-            var actingLicenses = licenseList.GetItems(new SPQuery
-            {
-                Query = Camlex.Query().WhereAll(expressions).ToString(),
-                ViewAttributes = "Scope='RecursiveAll'"
-            }).Cast<SPListItem>();
+            var actingLicenses = GetActingLicensesByNumber(PrevLicNumber);
 
             var hasActingLicenses = actingLicenses.Any();
-            var ogrnMatches = actingLicenses.All(l => (string)l["Tm_OrgOgrn"] == ogrn);
-            var stateNumMatches = actingLicenses.All(l => (string)l["Tm_TaxiStateNumber"] == taxiItem["Tm_TaxiStateNumber"].ToString());
-            var noCancellation = !actingLicenses.Any(l => (string)l["Tm_LicenseStatus"] == StringsRes.LicenseStatusCancellation);
+            var ogrnMatches       = actingLicenses.All(l => (string)l["Tm_OrgOgrn"] == DeclarantOgrn);
+            var stateNumMatches   = actingLicenses.All(l => (string)l["Tm_TaxiStateNumber"] == TaxiStateNumber);
+            var noCancellation    = !actingLicenses.Any(l => (string)l["Tm_LicenseStatus"] == StringsRes.LicenseStatusCancellation);
 
             var firstCondition = hasActingLicenses && ogrnMatches && stateNumMatches && noCancellation;
             if (!firstCondition)
@@ -290,8 +292,8 @@ namespace TM.SP.AppPages.Validators
             foreach (SPListItem request in requestList)
             {
                 secondCondition =
-                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, taxiItem["Tm_TaxiStateNumber"].ToString())
-                    && !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, prevLicNumberFmt);
+                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, TaxiStateNumber) && 
+                    !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, PrevLicNumberFmt);
 
                 if (!secondCondition)
                 {
@@ -322,8 +324,8 @@ namespace TM.SP.AppPages.Validators
             foreach (SPListItem request in requestList)
             {
                 thirdCondition =
-                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, taxiItem["Tm_TaxiStateNumber"].ToString())
-                    && !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, prevLicNumberFmt);
+                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, TaxiStateNumber) && 
+                    !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, PrevLicNumberFmt);
 
                 if (!thirdCondition) throw new Exception(StringsRes.requestExistsForCancellation);
             }
@@ -331,47 +333,15 @@ namespace TM.SP.AppPages.Validators
 
             return true;
         }
-        private bool ExecuteForCancellation() 
+        protected virtual bool ExecuteForCancellation() 
         {
-            #region [getting data]
-            var licenseList = _web.GetListOrBreak("Lists/LicenseList");
-
-            var prevLicNumberFmt = taxiItem["Tm_TaxiPrevLicenseNumber"].ToString();
-            var prevLicNumber = Convert.ToInt32(prevLicNumberFmt).ToString();
-            if (String.IsNullOrEmpty(prevLicNumber))
-                throw new Exception(StringsRes.noPrevLicNumberErr);
-
-            var ogrn = String.Empty;
-            try
-            {
-                var declarantId = BCS.GetBCSFieldLookupId(requestItem, "Tm_RequestAccountBCSLookup");
-                var declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
-                ogrn = declarant.Ogrn;
-            }
-            catch (Exception)
-            {
-                throw new Exception(StringsRes.noDeclarantOgrnErr);
-            }
-            #endregion
-
             #region [first condition check]
-            var expressions = new List<Expression<Func<SPListItem, bool>>>
-            {
-                // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
-                x => (string)x["Tm_RegNumber"] == prevLicNumber
-            };
-
-            var actingLicenses = licenseList.GetItems(new SPQuery
-            {
-                Query = Camlex.Query().WhereAll(expressions).ToString(),
-                ViewAttributes = "Scope='RecursiveAll'"
-            }).Cast<SPListItem>();
+            var actingLicenses = GetActingLicensesByNumber(PrevLicNumber);
 
             var hasActingLicenses = actingLicenses.Any();
-            var ogrnMatches = actingLicenses.All(l => (string)l["Tm_OrgOgrn"] == ogrn);
-            var stateNumMatches = actingLicenses.All(l => (string)l["Tm_TaxiStateNumber"] == taxiItem["Tm_TaxiStateNumber"].ToString());
-            var noCancellation = !actingLicenses.Any(l => (string)l["Tm_LicenseStatus"] == StringsRes.LicenseStatusCancellation);
+            var ogrnMatches       = actingLicenses.All(l => (string)l["Tm_OrgOgrn"] == DeclarantOgrn);
+            var stateNumMatches   = actingLicenses.All(l => (string)l["Tm_TaxiStateNumber"] == TaxiStateNumber);
+            var noCancellation    = !actingLicenses.Any(l => (string)l["Tm_LicenseStatus"] == StringsRes.LicenseStatusCancellation);
 
             var firstCondition = hasActingLicenses && ogrnMatches && stateNumMatches && noCancellation;
             if (!firstCondition)
@@ -408,8 +378,8 @@ namespace TM.SP.AppPages.Validators
             foreach (SPListItem request in requestList)
             {
                 secondCondition =
-                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, taxiItem["Tm_TaxiStateNumber"].ToString())
-                    && !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, prevLicNumberFmt);
+                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, TaxiStateNumber) && 
+                    !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, PrevLicNumberFmt);
 
                 if (!secondCondition)
                 {
@@ -440,8 +410,8 @@ namespace TM.SP.AppPages.Validators
             foreach (SPListItem request in requestList)
             {
                 thirdCondition =
-                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, taxiItem["Tm_TaxiStateNumber"].ToString())
-                    && !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, prevLicNumberFmt);
+                    !IncomeRequestService.HasRequestTaxiStateNumber(request.ID, TaxiStateNumber) && 
+                    !IncomeRequestService.HasRequestTaxiLicenseNumber(request.ID, PrevLicNumberFmt);
 
                 if (!thirdCondition) throw new Exception(StringsRes.requestExistsForCancellation);
             }

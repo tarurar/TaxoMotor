@@ -178,6 +178,15 @@ namespace TM.SP.AppPages.Validators {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to В другом обращении имеется ТС со статусом &quot;Решено положительно&quot;, по которому не завершена работа.
+        /// </summary>
+        internal static string requestExistsForAny {
+            get {
+                return ResourceManager.GetString("requestExistsForAny", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to В рассмотрении находится обращение по аннулированию разрешения по ТС.
         /// </summary>
         internal static string requestExistsForCancellation {
