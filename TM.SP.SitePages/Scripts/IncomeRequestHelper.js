@@ -474,118 +474,134 @@
                 //}, onfail);
             };
 
-            ir.ApplyForNew = function(incomeRequestId, onsuccess, onfail) {
-                // Проверить всем ли ТС присвоен статус
-                ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
-                    if (data && data.d) {
-                        // Проверить, остались ли в обращении ТС со статусом
-                        ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
-                            if (data && data.d) {
-                                // Провести проверку на дубли разрешений
-                                //ir.CanReleaseNewLicensesForRequest(incomeRequestId).success(function (data) {
+            ir.ApplyForNew = function (incomeRequestId, onsuccess, onfail) {
+                ir.EnsureCerificate(function () {
+                    // Проверить всем ли ТС присвоен статус
+                    ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
+                        if (data && data.d) {
+                            // Проверить, остались ли в обращении ТС со статусом
+                            ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
+                                if (data && data.d) {
+                                    // Провести проверку на дубли разрешений
+                                    //ir.CanReleaseNewLicensesForRequest(incomeRequestId).success(function (data) {
                                     //if (data && data.d.CanRelease) {
-                                        // Заявитель - индивидуальный предприниматель?
-                                        ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
-                                            if (data && data.d) {
-                                                ir.ApplyForNewForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
-                                            } else {
-                                                ir.ApplyForNewForJuridicalPerson(incomeRequestId, onsuccess, onfail);
-                                            }
-                                        }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
+                                    // Заявитель - индивидуальный предприниматель?
+                                    ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
+                                        if (data && data.d) {
+                                            ir.ApplyForNewForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
+                                        } else {
+                                            ir.ApplyForNewForJuridicalPerson(incomeRequestId, onsuccess, onfail);
+                                        }
+                                    }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
                                     //} else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' уже существует');
-                                //}).fail(onfail);
-                            } else onfail('В обращении нет ТС');
-                        }).fail(onfail);
-                    } else onfail('Не всем ТС проставлен признак');
-                }).fail(onfail);
+                                    //}).fail(onfail);
+                                } else onfail('В обращении нет ТС');
+                            }).fail(onfail);
+                        } else onfail('Не всем ТС проставлен признак');
+                    }).fail(onfail);
+                }, function () {
+                    onfail('Не удалось выбрать сертификат для подписания. Действие прервано.');
+                });
             };
 
             ir.ApplyForDuplicate = function (incomeRequestId, onsuccess, onfail) {
-                // Проверить всем ли ТС присвоен статус
-                ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
-                    if (data && data.d) {
-                        // Проверить, остались ли в обращении ТС со статусом
-                        ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
-                            if (data && data.d) {
-                                // Провести проверку на дубли разрешений. Наличие дублей обязательно.
-                                //ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
+                ir.EnsureCerificate(function () {
+                    // Проверить всем ли ТС присвоен статус
+                    ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
+                        if (data && data.d) {
+                            // Проверить, остались ли в обращении ТС со статусом
+                            ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
+                                if (data && data.d) {
+                                    // Провести проверку на дубли разрешений. Наличие дублей обязательно.
+                                    //ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
                                     //if (data && data.d.CanRelease) {
-                                        // Расчет сроков оказания услуги и установка статуса обращения
-                                        ir.CalculateDatesAndSetStatus(incomeRequestId, 1050).success(function () {
-                                            // Получение xml для измененного состояния обращения
-                                            ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
-                                                //Подписывание xml
-                                                if (data && data.d) {
-                                                    ir.SignXml(data.d, function (signedData) {
-                                                        // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                        ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                            // Отправка обращения в АСГУФ
-                                                            ir.SendToAsguf(incomeRequestId);
-                                                            // Отправка статуса обращения по межведомственному взаимодействию
-                                                            ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
-                                                        }).fail(onfail);
-                                                    }, onfail);
-                                                } else onfail("Не удалось получить статус обращения в виде xml");
-                                            }).fail(onfail);
+                                    // Расчет сроков оказания услуги и установка статуса обращения
+                                    ir.CalculateDatesAndSetStatus(incomeRequestId, 1050).success(function () {
+                                        // Получение xml для измененного состояния обращения
+                                        ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                            //Подписывание xml
+                                            if (data && data.d) {
+                                                ir.SignXml(data.d, function (signedData) {
+                                                    // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                    ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                        // Отправка обращения в АСГУФ
+                                                        ir.SendToAsguf(incomeRequestId);
+                                                        // Отправка статуса обращения по межведомственному взаимодействию
+                                                        ir.SendStatus(incomeRequestId).success(onsuccess).fail(function (err) { onfail("При отправке статуса возникла ошибка"); });
+                                                    }).fail(onfail);
+                                                }, onfail);
+                                            } else onfail("Не удалось получить статус обращения в виде xml");
                                         }).fail(onfail);
+                                    }).fail(onfail);
                                     //} else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' не существует');
-                                //}).fail(onfail);
-                            } else onfail('В обращении нет ТС');
-                        }).fail(onfail);
-                    } else onfail('Не всем ТС проставлен признак');
-                }).fail(onfail);
+                                    //}).fail(onfail);
+                                } else onfail('В обращении нет ТС');
+                            }).fail(onfail);
+                        } else onfail('Не всем ТС проставлен признак');
+                    }).fail(onfail);
+                }, function () {
+                    onfail('Не удалось выбрать сертификат для подписания. Действие прервано.');
+                });
             };
 
             ir.ApplyForChange = function (incomeRequestId, onsuccess, onfail) {
-                // Проверить всем ли ТС присвоен статус
-                ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
-                    if (data && data.d) {
-                        // Проверить, остались ли в обращении ТС со статусом
-                        ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
-                            if (data && data.d) {
-                                // Провести проверку на дубли разрешений. Наличие дублей обязательно.
-                                //ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
+                ir.EnsureCerificate(function () {
+                    // Проверить всем ли ТС присвоен статус
+                    ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
+                        if (data && data.d) {
+                            // Проверить, остались ли в обращении ТС со статусом
+                            ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
+                                if (data && data.d) {
+                                    // Провести проверку на дубли разрешений. Наличие дублей обязательно.
+                                    //ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
                                     //if (data && data.d.CanRelease) {
-                                        // Заявитель - индивидуальный предприниматель?
-                                        ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
-                                            if (data && data.d) {
-                                                ir.ApplyForChangeForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
-                                            } else {
-                                                ir.ApplyForChangeForJuridicalPerson(incomeRequestId, onsuccess, onfail);
-                                            }
-                                        }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
+                                    // Заявитель - индивидуальный предприниматель?
+                                    ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
+                                        if (data && data.d) {
+                                            ir.ApplyForChangeForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
+                                        } else {
+                                            ir.ApplyForChangeForJuridicalPerson(incomeRequestId, onsuccess, onfail);
+                                        }
+                                    }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
                                     //} else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' не существует');
-                                //}).fail(onfail);
-                            } else onfail('В обращении нет ТС');
-                        }).fail(onfail);
-                    } else onfail('Не всем ТС проставлен признак');
-                }).fail(onfail);
+                                    //}).fail(onfail);
+                                } else onfail('В обращении нет ТС');
+                            }).fail(onfail);
+                        } else onfail('Не всем ТС проставлен признак');
+                    }).fail(onfail);
+                }, function () {
+                    onfail('Не удалось выбрать сертификат для подписания. Действие прервано.');
+                });
             }
 
             ir.ApplyForCancellation = function (incomeRequestId, onsuccess, onfail) {
-                // Проверить всем ли ТС присвоен статус
-                ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
-                    if (data && data.d) {
-                        // Проверить, остались ли в обращении ТС со статусом
-                        ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
-                            if (data && data.d) {
-                                // Провести проверку на дубли разрешений. Наличие дублей обязательно.
-                                //ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
+                ir.EnsureCerificate(function () {
+                    // Проверить всем ли ТС присвоен статус
+                    ir.IsAllTaxiInStatus(incomeRequestId, "В работе;Отказано").success(function (data) {
+                        if (data && data.d) {
+                            // Проверить, остались ли в обращении ТС со статусом
+                            ir.IsAnyTaxiInStatus(incomeRequestId, "В работе").success(function (data) {
+                                if (data && data.d) {
+                                    // Провести проверку на дубли разрешений. Наличие дублей обязательно.
+                                    //ir.HasRequestActingLicenses(incomeRequestId).success(function (data) {
                                     //if (data && data.d.CanRelease) {
-                                        // Заявитель - индивидуальный предприниматель?
-                                        ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
-                                            if (data && data.d) {
-                                                ir.ApplyForCancellationForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
-                                            } else {
-                                                ir.ApplyForCancellationForJuridicalPerson(incomeRequestId, onsuccess, onfail);
-                                            }
-                                        }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
+                                    // Заявитель - индивидуальный предприниматель?
+                                    ir.IsRequestDeclarantPrivateEntrepreneur(incomeRequestId).success(function (data) {
+                                        if (data && data.d) {
+                                            ir.ApplyForCancellationForPrivateEntrepreneur(incomeRequestId, onsuccess, onfail);
+                                        } else {
+                                            ir.ApplyForCancellationForJuridicalPerson(incomeRequestId, onsuccess, onfail);
+                                        }
+                                    }).fail(function (err) { onfail("При проверке заявителя возникла ошибка"); });
                                     //} else onfail('Разрешение на ТС с номером ' + data.d.TaxiNumber + ' не существует');
-                                //}).fail(onfail);
-                            } else onfail('В обращении нет ТС');
-                        }).fail(onfail);
-                    } else onfail('Не всем ТС проставлен признак');
-                }).fail(onfail);
+                                    //}).fail(onfail);
+                                } else onfail('В обращении нет ТС');
+                            }).fail(onfail);
+                        } else onfail('Не всем ТС проставлен признак');
+                    }).fail(onfail);
+                }, function () {
+                    onfail('Не удалось выбрать сертификат для подписания. Действие прервано.');
+                });
             };
 
             ir.SetRefuseReasonAndComment = function (incomeRequestId, refuseReasonCode, refuseComment, refuseReasonCode2, refuseComment2, refuseReasonCode3, refuseComment3, needPersonVisit, refuseDocuments) {
@@ -606,28 +622,29 @@
                 });
             };
 
-            ir.Refuse = function(incomeRequestId, onsuccess, onfail) {
-                // Получим причину и комментарий
-                var options = {
-                    url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/DenyIncomeRequest.aspx',
-                    title: 'Отказ по обращению',
-                    allowMaximize: false,
-                    width: 600,
-                    showClose: true,
-                    dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
-                        if (result == SP.UI.DialogResult.OK) {
+            ir.Refuse = function (incomeRequestId, onsuccess, onfail) {
+                ir.EnsureCerificate(function () {
+                    // Получим причину и комментарий
+                    var options = {
+                        url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/DenyIncomeRequest.aspx',
+                        title: 'Отказ по обращению',
+                        allowMaximize: false,
+                        width: 600,
+                        showClose: true,
+                        dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                            if (result == SP.UI.DialogResult.OK) {
 
-                            var reasonCode = returnValue.SelectedReason.Code;
-                            var reasonCode2 = returnValue.SelectedReason2.Code;
-                            var reasonCode3 = returnValue.SelectedReason3.Code;
-                            var reasonText = returnValue.ActionComment;
-                            var reasonText2 = returnValue.ActionComment2;
-                            var reasonText3 = returnValue.ActionComment3;
-                            var needPersonVisit = returnValue.NeedPersonVisit;
-                            var refuseDocuments = returnValue.RefuseDocuments;
+                                var reasonCode = returnValue.SelectedReason.Code;
+                                var reasonCode2 = returnValue.SelectedReason2.Code;
+                                var reasonCode3 = returnValue.SelectedReason3.Code;
+                                var reasonText = returnValue.ActionComment;
+                                var reasonText2 = returnValue.ActionComment2;
+                                var reasonText3 = returnValue.ActionComment3;
+                                var needPersonVisit = returnValue.NeedPersonVisit;
+                                var refuseDocuments = returnValue.RefuseDocuments;
 
-                            // Установка причины отказа и комментария
-                            ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText, reasonCode2, reasonText2, reasonCode3, reasonText3, needPersonVisit, refuseDocuments).success(function () {
+                                // Установка причины отказа и комментария
+                                ir.SetRefuseReasonAndComment(incomeRequestId, reasonCode, reasonText, reasonCode2, reasonText2, reasonCode3, reasonText3, needPersonVisit, refuseDocuments).success(function () {
                                     // Генерация документов отказа
                                     ir.CreateDocumentsWhileRefusing(incomeRequestId).success(function (refuseDocData) {
                                         if (refuseDocData && refuseDocData.d && refuseDocData.d.Data && refuseDocData.d.Data[0]) {
@@ -665,7 +682,7 @@
                                                                         } else onfail("Не удалось получить статус обращения в виде xml");
                                                                     }).fail(onfail);
                                                                 }).fail(onfail);
-                                                            }).fail(function(jqXhr, status, error) {
+                                                            }).fail(function (jqXhr, status, error) {
                                                                 var response = $.parseJSON(jqXhr.responseText).d;
                                                                 console.error("Exception Message: " + response.Error.SystemMessage);
                                                                 console.error("Exception StackTrace: " + response.Error.StackTrace);
@@ -681,12 +698,15 @@
                                         console.error("Exception StackTrace: " + response.Error.StackTrace);
                                         onfail(response.Error.UserMessage);
                                     });
-                            }).fail(onfail);
-                        }
-                    })
-                };
+                                }).fail(onfail);
+                            }
+                        })
+                    };
 
-                SP.UI.ModalDialog.showModalDialog(options);
+                    SP.UI.ModalDialog.showModalDialog(options);
+                }, function () {
+                    onfail('Не удалось выбрать сертификат для подписания. Действие прервано.');
+                });
             };
 
             ir.IsRequestDeclarantPrivateEntrepreneur = function (incomeRequestId) {
@@ -942,135 +962,145 @@
             }
 
             ir.Output = function (incomeRequestId, onsuccess, onfail) {
-                ir.OutputRequest(incomeRequestId)
-                    .success(function () {
-                        ir.PromoteLicenseDraftsAndSign(incomeRequestId, true).done(onsuccess).fail(onfail);
-                    })
-                    .fail(onfail);
+                ir.EnsureCerificate(function () {
+                    ir.OutputRequest(incomeRequestId)
+                        .success(function () {
+                            ir.PromoteLicenseDraftsAndSign(incomeRequestId, true).done(onsuccess).fail(onfail);
+                        })
+                        .fail(onfail);
+                }, function () {
+                    onfail('Не удалось выбрать сертификат для подписания. Действие прервано.');
+                });
             };
 
             ir.Close = function (incomeRequestId, onsuccess, onfail) {
+                ir.EnsureCerificate(function () {
+                    var actions = {
+                        taxiPositiveExists: 'Проверка на наличие ТС со статусом "Решено положительно"',
+                        taxiAllInStatuses: 'Проверяем все ли ТС находятся в статусе "Решено положительно" или "Отказано" или "Решено отрицательно"',
+                        taxiAllHasBlankNo: 'Проверяем у всех ли ТС со статусом "Решено положительно" заполнены номер и серия бланка разрешения',
+                        taxiDuplicates: 'Проверка на дубликаты по номеру ТС, номеру VIN и номеру разрешения',
+                        signCreateNotifications: 'Формирование и подписание уведомлений',
+                        signCreateLicenses: 'Подписание разрешений',
+                        deleteDrafts: 'Удаление черновиков разрешений',
+                        sendStatus: 'Установка и отправка статуса обращения в АС ГУФ',
+                        updateOutRequestStatuses: 'Обновление межведомственных запросов'
+                    }
 
-                var actions = {
-                    taxiPositiveExists      : 'Проверка на наличие ТС со статусом "Решено положительно"',
-                    taxiAllInStatuses       : 'Проверяем все ли ТС находятся в статусе "Решено положительно" или "Отказано" или "Решено отрицательно"',
-                    taxiAllHasBlankNo       : 'Проверяем у всех ли ТС со статусом "Решено положительно" заполнены номер и серия бланка разрешения',
-                    taxiDuplicates          : 'Проверка на дубликаты по номеру ТС, номеру VIN и номеру разрешения',
-                    signCreateNotifications : 'Формирование и подписание уведомлений',
-                    signCreateLicenses      : 'Подписание разрешений',
-                    deleteDrafts            : 'Удаление черновиков разрешений',
-                    sendStatus              : 'Установка и отправка статуса обращения в АС ГУФ',
-                    updateOutRequestStatuses: 'Обновление межведомственных запросов'
-                }
+                    var options = {
+                        url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/ProgressDlg.aspx',
+                        title: 'Завершение работы с обращением',
+                        allowMaximize: false,
+                        showClose: false,
+                        dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+                            SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
+                        })
+                    };
+                    SP.UI.ModalDialog.showModalDialog(options);
 
-                var options = {
-                    url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/ProgressDlg.aspx',
-                    title: 'Завершение работы с обращением',
-                    allowMaximize: false,
-                    showClose: false,
-                    dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
-                        SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
-                    })
-                };
-                SP.UI.ModalDialog.showModalDialog(options);
+                    TM.SP.registeredProgressDlgConsumer = function (progress) {
 
-                TM.SP.registeredProgressDlgConsumer = function(progress) {
-                    
-                    var action = progress.addAction(actions.taxiPositiveExists);
-                    ir.IsAnyTaxiInStatus(incomeRequestId, ir.TaxiStatus.Success).success(function(data) {
-                        if (data && data.d) {
-                            progress.finishAction(action, 10);
+                        var action = progress.addAction(actions.taxiPositiveExists);
+                        ir.IsAnyTaxiInStatus(incomeRequestId, ir.TaxiStatus.Success).success(function (data) {
+                            if (data && data.d) {
+                                progress.finishAction(action, 10);
 
-                            action = progress.addAction(actions.taxiAllInStatuses);
-                            var isAllTaxiInStatus = [ir.TaxiStatus.Success, ir.TaxiStatus.Refused, ir.TaxiStatus.Fail].join(";");
-                            ir.IsAllTaxiInStatus(incomeRequestId, isAllTaxiInStatus).success(function (data) {
-                                if (data && data.d) {
-                                    progress.finishAction(action, 20);
+                                action = progress.addAction(actions.taxiAllInStatuses);
+                                var isAllTaxiInStatus = [ir.TaxiStatus.Success, ir.TaxiStatus.Refused, ir.TaxiStatus.Fail].join(";");
+                                ir.IsAllTaxiInStatus(incomeRequestId, isAllTaxiInStatus).success(function (data) {
+                                    if (data && data.d) {
+                                        progress.finishAction(action, 20);
 
-                                    var ctDef = $.Deferred();
-                                    ir.GetContentTypeName(incomeRequestId, function (ctName) {
-                                        if (ctName == "Аннулирование") {
-                                            ctDef.resolve();
-                                        } else {
-                                            action = progress.addAction(actions.taxiAllHasBlankNo);
-                                            ir.IsAllTaxiInStatusHasBlankNo(incomeRequestId, ir.TaxiStatus.Success)
-                                                .success(function (data) {
-                                                    if (data && data.d) {
-                                                        progress.finishAction(action, 30);
-                                                        ctDef.resolve();
-                                                    } else {
-                                                        progress.errorAction(action);
+                                        var ctDef = $.Deferred();
+                                        ir.GetContentTypeName(incomeRequestId, function (ctName) {
+                                            if (ctName == "Аннулирование") {
+                                                ctDef.resolve();
+                                            } else {
+                                                action = progress.addAction(actions.taxiAllHasBlankNo);
+                                                ir.IsAllTaxiInStatusHasBlankNo(incomeRequestId, ir.TaxiStatus.Success)
+                                                    .success(function (data) {
+                                                        if (data && data.d) {
+                                                            progress.finishAction(action, 30);
+                                                            ctDef.resolve();
+                                                        } else {
+                                                            progress.errorAction(action);
+                                                            ctDef.reject();
+                                                        }
+                                                    }).fail(function (jqXhr, status, error) {
+                                                        progress.errorAction(action, error.message);
                                                         ctDef.reject();
-                                                    }
-                                                }).fail(function (jqXhr, status, error) {
-                                                    progress.errorAction(action, error.message);
-                                                    ctDef.reject();
-                                                });
-                                        }
-                                    });
+                                                    });
+                                            }
+                                        });
 
-                                    ctDef.done(function () {
-                                        action = progress.addAction(actions.taxiDuplicates);
-                                        ir.ValidateTaxiDuplicates(incomeRequestId).success(function (data) {
-                                            if (data && data.d) {
-                                                progress.finishAction(action, 40);
+                                        ctDef.done(function () {
+                                            action = progress.addAction(actions.taxiDuplicates);
+                                            ir.ValidateTaxiDuplicates(incomeRequestId).success(function (data) {
+                                                if (data && data.d) {
+                                                    progress.finishAction(action, 40);
 
-                                                action = progress.addAction(actions.signCreateNotifications);
-                                                ir.CreateDocumentsWhileClosing(incomeRequestId).success(function (docs) {
-                                                    if (docs && docs.d) {
-                                                        ir.SignDocumentSaveSignatureMultiple(docs.d, function () {
-                                                            progress.finishAction(action, 50);
-                                                            // Для всех услуг кроме аннулирование подписываем разрешения
-                                                            action = progress.addAction(actions.signCreateLicenses);
-                                                            ir.PromoteLicenseDraftsAndSign(incomeRequestId, false).done(function () {
-                                                                progress.finishAction(action, 70);
+                                                    action = progress.addAction(actions.signCreateNotifications);
+                                                    ir.CreateDocumentsWhileClosing(incomeRequestId).success(function (docs) {
+                                                        if (docs && docs.d) {
+                                                            ir.SignDocumentSaveSignatureMultiple(docs.d, function () {
+                                                                progress.finishAction(action, 50);
+                                                                // Для всех услуг кроме аннулирование подписываем разрешения
+                                                                action = progress.addAction(actions.signCreateLicenses);
+                                                                ir.PromoteLicenseDraftsAndSign(incomeRequestId, false).done(function () {
+                                                                    progress.finishAction(action, 70);
 
-                                                                action = progress.addAction(actions.deleteDrafts);
-                                                                ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, ir.TaxiStatus.Refused).success(function () {
+                                                                    action = progress.addAction(actions.deleteDrafts);
+                                                                    ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, ir.TaxiStatus.Refused).success(function () {
 
-                                                                    ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, ir.TaxiStatus.Fail).success(function () {
-                                                                        progress.finishAction(action, 80);
+                                                                        ir.DeleteLicenseDraftsByTaxiStatus(incomeRequestId, ir.TaxiStatus.Fail).success(function () {
+                                                                            progress.finishAction(action, 80);
 
-                                                                        action = progress.addAction(actions.sendStatus);
-                                                                        ir.SetStatusOnClosing(incomeRequestId).success(function () {
-                                                                            // Получение xml для измененного состояния обращения
-                                                                            ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
-                                                                                //Подписание xml
-                                                                                if (data && data.d) {
-                                                                                    ir.SignXml(data.d, function (signedData) {
-                                                                                        // Сохранение факта изменения статуса обращения в историю изменения статусов
-                                                                                        ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
-                                                                                            // Отправка статуса обращения по межведомственному взаимодействию
-                                                                                            // сначала получим список документов, которые необходимо прикрепить
-                                                                                            ir.GetDocumentsForSendStatus(incomeRequestId).success(function (docs) {
-                                                                                                var attachs = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
-                                                                                                ir.SendStatus(incomeRequestId, attachs).success(function () {
-                                                                                                    progress.finishAction(action, 90);
+                                                                            action = progress.addAction(actions.sendStatus);
+                                                                            ir.SetStatusOnClosing(incomeRequestId).success(function () {
+                                                                                // Получение xml для измененного состояния обращения
+                                                                                ir.GetIncomeRequestCoordinateV5StatusMessage(incomeRequestId).success(function (data) {
+                                                                                    //Подписание xml
+                                                                                    if (data && data.d) {
+                                                                                        ir.SignXml(data.d, function (signedData) {
+                                                                                            // Сохранение факта изменения статуса обращения в историю изменения статусов
+                                                                                            ir.SaveIncomeRequestStatusLog(incomeRequestId, signedData).success(function () {
+                                                                                                // Отправка статуса обращения по межведомственному взаимодействию
+                                                                                                // сначала получим список документов, которые необходимо прикрепить
+                                                                                                ir.GetDocumentsForSendStatus(incomeRequestId).success(function (docs) {
+                                                                                                    var attachs = $.map(docs.d, function (el) { return el.DocumentId; }).join(',');
+                                                                                                    ir.SendStatus(incomeRequestId, attachs).success(function () {
+                                                                                                        progress.finishAction(action, 90);
 
-                                                                                                    action = progress.addAction(actions.updateOutRequestStatuses);
-                                                                                                    ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function () {
-                                                                                                        progress.finishAction(action, 100);
+                                                                                                        action = progress.addAction(actions.updateOutRequestStatuses);
+                                                                                                        ir.UpdateOutcomeRequestsOnClosing(incomeRequestId).success(function () {
+                                                                                                            progress.finishAction(action, 100);
+                                                                                                        }).fail(function (jqXhr, status, error) {
+                                                                                                            progress.errorAction(action, error);
+                                                                                                        });
+
                                                                                                     }).fail(function (jqXhr, status, error) {
                                                                                                         progress.errorAction(action, error);
                                                                                                     });
-
                                                                                                 }).fail(function (jqXhr, status, error) {
                                                                                                     progress.errorAction(action, error);
                                                                                                 });
                                                                                             }).fail(function (jqXhr, status, error) {
                                                                                                 progress.errorAction(action, error);
                                                                                             });
-                                                                                        }).fail(function (jqXhr, status, error) {
+                                                                                        }, function (jqXhr, status, error) {
                                                                                             progress.errorAction(action, error);
                                                                                         });
-                                                                                    }, function (jqXhr, status, error) {
-                                                                                        progress.errorAction(action, error);
-                                                                                    });
-                                                                                } else {
-                                                                                    progress.errorAction(action, "Не удалось получить статус обращения в виде xml");
-                                                                                };
+                                                                                    } else {
+                                                                                        progress.errorAction(action, "Не удалось получить статус обращения в виде xml");
+                                                                                    };
+                                                                                }).fail(function (jqXhr, status, error) {
+                                                                                    progress.errorAction(action, error);
+                                                                                });
                                                                             }).fail(function (jqXhr, status, error) {
-                                                                                progress.errorAction(action, error);
+                                                                                var response = $.parseJSON(jqXhr.responseText).d;
+                                                                                console.error("Exception Message: " + response.Error.SystemMessage);
+                                                                                console.error("Exception StackTrace: " + response.Error.StackTrace);
+                                                                                progress.errorAction(action, response.Error.UserMessage);
                                                                             });
                                                                         }).fail(function (jqXhr, status, error) {
                                                                             var response = $.parseJSON(jqXhr.responseText).d;
@@ -1084,36 +1114,33 @@
                                                                         console.error("Exception StackTrace: " + response.Error.StackTrace);
                                                                         progress.errorAction(action, response.Error.UserMessage);
                                                                     });
-                                                                }).fail(function (jqXhr, status, error) {
-                                                                    var response = $.parseJSON(jqXhr.responseText).d;
-                                                                    console.error("Exception Message: " + response.Error.SystemMessage);
-                                                                    console.error("Exception StackTrace: " + response.Error.StackTrace);
-                                                                    progress.errorAction(action, response.Error.UserMessage);
+                                                                }).fail(function (err) {
+                                                                    progress.errorAction(action, err);
                                                                 });
-                                                            }).fail(function (err) {
+                                                            }, function (err) {
                                                                 progress.errorAction(action, err);
                                                             });
-                                                        }, function (err) {
-                                                            progress.errorAction(action, err);
-                                                        });
-                                                    } else progress.errorAction(action);
-                                                }).fail(function (jqXhr, status, error) {
-                                                    progress.errorAction(action, error.message);
-                                                });
-                                            } else progress.errorAction(action);
-                                        }).fail(function (jqXhr, status, error) {
-                                            progress.errorAction(action, error.message);
+                                                        } else progress.errorAction(action);
+                                                    }).fail(function (jqXhr, status, error) {
+                                                        progress.errorAction(action, error.message);
+                                                    });
+                                                } else progress.errorAction(action);
+                                            }).fail(function (jqXhr, status, error) {
+                                                progress.errorAction(action, error.message);
+                                            });
                                         });
-                                    });
-                                } else progress.errorAction(action);
-                            }).fail(function (jqXhr, status, error) {
-                                progress.errorAction(action, error.message);
-                            });
-                        } else progress.errorAction(action);
-                    }).fail(function (jqXHR, status, error) {
-                        progress.errorAction(action, error.message);
-                    });
-                }
+                                    } else progress.errorAction(action);
+                                }).fail(function (jqXhr, status, error) {
+                                    progress.errorAction(action, error.message);
+                                });
+                            } else progress.errorAction(action);
+                        }).fail(function (jqXHR, status, error) {
+                            progress.errorAction(action, error.message);
+                        });
+                    }
+                }, function () {
+                    onfail('Не удалось выбрать сертификат для подписания. Действие прервано.');
+                });
             };
 
             ir.SelectedCertificate = null;
@@ -1194,6 +1221,11 @@
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json'
                 });
+            };
+
+            ir.EnsureCerificate = function (onsuccess, onfail) {
+                var fakeString = "Fake string for signing";
+                ir.SignPkcs7(fakeString, onsuccess, onfail);
             };
 
             return ir;
