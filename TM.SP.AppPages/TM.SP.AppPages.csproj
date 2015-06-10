@@ -33,6 +33,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -377,6 +378,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <ProjectReference Include="..\TP.SP.DataMigration\TP.SP.DataMigration.csproj">
       <Project>{484e3049-16b0-4d2d-9dce-58159469427b}</Project>
       <Name>TP.SP.DataMigration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebClientGIBDD\WebClientGIBDD.csproj">
+      <Project>{5200f36c-153c-46c5-b66d-8fc60f3afc16}</Project>
+      <Name>WebClientGIBDD</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

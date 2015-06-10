@@ -498,6 +498,68 @@ namespace TM.SP.AppPages
             };
         }
 
+        private static WebClientGIBDD.WebServiceClient GetGibddClientInstance(SPWeb web)
+        {
+            var serviceUrl1 = Config.GetConfigValue(Config.GetConfigItem(web, "GibddSpecTransportServiceUrl")).ToString();
+            var serviceUrl2 = Config.GetConfigValue(Config.GetConfigItem(web, "GibddTakeOffServiceUrl")).ToString();
+
+            var ssLocalDbAccessAppId = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId")).ToString();
+            var storeUserId          = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
+            var storePassword        = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
+            var storeHost            = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
+            var storeDbName          = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
+
+            var cBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource               = storeHost,
+                InitialCatalog           = storeDbName,
+                UserID                   = storeUserId,
+                Password                 = storePassword,
+                MultipleActiveResultSets = true
+            };
+
+            return new WebClientGIBDD.WebServiceClient("Реестр СТ ГИБДД", serviceUrl1, serviceUrl2, cBuilder.ConnectionString);
+        }
+
+        [WebMethod]
+        public static dynamic GibddPutDataPackage()
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при отправке данных в реестр спецтранспорта ГИБДД", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
+                        Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
+                        {
+                            var client = GetGibddClientInstance(safeWeb);
+                            client.putDataPackages();
+                        })));
+        }
+
+        [WebMethod]
+        public static dynamic GibddGetCancelledLicenses()
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при получении сведений о снятых с учета ТС в ГИБДД", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
+                        Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
+                        {
+                            var client = GetGibddClientInstance(safeWeb);
+                            client.getCancelledLicenses();
+                        })));
+        }
+
+        [WebMethod]
+        public static dynamic GibddGetDataPackagesInfo()
+        {
+            return
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при получении сведений о стадии обработки отправленных данных", () =>
+                    Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
+                        Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
+                        {
+                            var client = GetGibddClientInstance(safeWeb);
+                            client.getDataPackagesInfo();
+                        })));
+        }
+
     }
 }
 

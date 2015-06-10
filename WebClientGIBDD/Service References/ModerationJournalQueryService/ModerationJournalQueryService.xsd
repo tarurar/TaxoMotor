@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:tns="urn:ws.query.moderationjournal" targetNamespace="urn:ws.query.moderationjournal" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="queryCancelledLicensesRequest" type="tns:CancelledLicensesQueryRequest" />
+  <xsd:element name="queryCancelledLicensesResponse" type="tns:CancelledLicensesQueryResponse" />
+  <xsd:complexType name="CancelledLicensesQueryRequest">
+    <xsd:annotation>
+      <xsd:documentation>Запрос аннулированных разрешений из журнала модерации.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="filter" type="tns:CancelledLicensesFilter">
+        <xsd:annotation>
+          <xsd:documentation>Фильтр запроса аннулированных разрешений.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="pageNumber" type="xsd:positiveInteger">
+        <xsd:annotation>
+          <xsd:documentation>Номер страницы (порции данных) выдачи. Нумерация страниц начинается с 1.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CancelledLicensesFilter">
+    <xsd:annotation>
+      <xsd:documentation>Фильтр запроса аннулированных разрешений.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="owner" type="tns:OwnerType">
+        <xsd:annotation>
+          <xsd:documentation>Код владельца (источника), от имени которого было загружено разрешение.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="cancelStartDate" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Дата начала периода, за который запрашивается перечень аннулированных разрешений.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="cancelEndDate" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Дата окончания периода, за который запрашивается перечень аннулированных разрешений.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="licencePlateNumber" type="tns:LicencePlateNumber">
+        <xsd:annotation>
+          <xsd:documentation>Государственный регистрационный номер транспортного средства.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CancelledLicensesQueryResponse">
+    <xsd:annotation>
+      <xsd:documentation>Синхронный ответ на запрос аннулированных разрешений.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="status" type="tns:ResponseStatusType">
+        <xsd:annotation>
+          <xsd:documentation>Статус ответа.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="statusComment" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Комментарий к статусу.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="hasMoreRecords" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Флаг, обозначающий наличие в следующей порции данных хотя бы одной записи.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="licenses" type="tns:ResponseLicenses" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseLicenses">
+    <xsd:annotation>
+      <xsd:documentation>Перечень разрешений.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" maxOccurs="200" name="license" type="tns:ResponseLicense" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseLicense">
+    <xsd:annotation>
+      <xsd:documentation>Информация о разрешении.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="owner" type="tns:OwnerType">
+        <xsd:annotation>
+          <xsd:documentation>Код владельца (источника), от имени которого было загружено разрешение.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="licenseId" type="tns:LicenseIdType">
+        <xsd:annotation>
+          <xsd:documentation>Уникальный идентификатор записи (например, реестровый номер).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="catalogNumber" type="tns:CatalogNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Номер, соответствующий разрешению в первоисточнике (например, реестровый номер, номер пропуска).
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="licencePlateNumber" type="tns:LicencePlateNumber">
+        <xsd:annotation>
+          <xsd:documentation>Государственный регистрационный номер транспортного средства.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uploadDate" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Дата загрузки разрешения.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="cancelDate" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Дата аннулирования.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="cancelComment" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Основание аннулирования (комментарий).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="OwnerType">
+    <xsd:annotation>
+      <xsd:documentation>Код владельца (источника), от имени которого было загружено разрешение.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:whiteSpace value="collapse" />
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="20" />
+      <xsd:pattern value="[A-Z]([A-Z]|\d|-|_){0,19}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LicencePlateNumber">
+    <xsd:annotation>
+      <xsd:documentation>Государственный регистрационный номер транспортного средства.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="10" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CatalogNumberType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Номер, соответствующий разрешению в первоисточнике (например, реестровый номер, номер пропуска).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:whiteSpace value="collapse" />
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="256" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LicenseIdType">
+    <xsd:annotation>
+      <xsd:documentation>Уникальный идентификатор записи (например, реестровый номер).</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:whiteSpace value="collapse" />
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="256" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ResponseStatusType">
+    <xsd:annotation>
+      <xsd:documentation>Статус ответа.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:whiteSpace value="collapse" />
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="10" />
+      <xsd:enumeration value="OK" />
+      <xsd:enumeration value="ERROR" />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

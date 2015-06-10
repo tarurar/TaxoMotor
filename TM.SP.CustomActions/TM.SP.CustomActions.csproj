@@ -28,6 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -150,6 +151,15 @@
     <None Include="Ribbons\TaxiEditVin\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{c96b314b-a83c-4496-8762-f32b01fe2620}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\TaxiGibddGetCancelledLicenses\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{63c6659f-2021-4300-bce6-f0cee23e7b40}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\TaxiGibddGetDataPackagesInfo\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{2ac6c2b5-349b-4375-ad3b-ca3dca112541}</SharePointProjectItemId>
+    </None>
+    <None Include="Ribbons\TaxiGibddPutDataPackage\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{c3b606a6-1768-4665-b638-bf546a292102}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\TaxiPrintLicense\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{15498d58-19e3-43e6-9da5-61e9849d723b}</SharePointProjectItemId>
     </None>
@@ -207,6 +217,9 @@
     </Content>
     <Content Include="Ribbons\TaxiEditBlankNo\Elements.xml" />
     <Content Include="Ribbons\TaxiEditVin\Elements.xml" />
+    <Content Include="Ribbons\TaxiGibddGetCancelledLicenses\Elements.xml" />
+    <Content Include="Ribbons\TaxiGibddGetDataPackagesInfo\Elements.xml" />
+    <Content Include="Ribbons\TaxiGibddPutDataPackage\Elements.xml" />
     <Content Include="Ribbons\TaxiPrintLicense\Elements.xml" />
     <Content Include="Ribbons\TaxiRefuse\Elements.xml">
       <SubType>Designer</SubType>

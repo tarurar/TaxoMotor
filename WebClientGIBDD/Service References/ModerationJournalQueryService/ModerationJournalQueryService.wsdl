@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:ws.query.moderationjournal" targetNamespace="urn:ws.query.moderationjournal" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://188.127.245.220:1022/ModerationJournal/ModerationJournalQueryService?xsd=1" namespace="urn:ws.query.moderationjournal" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="queryCancelledLicensesRequest">
+    <wsdl:part name="parameters" element="tns:queryCancelledLicensesRequest" />
+  </wsdl:message>
+  <wsdl:message name="queryCancelledLicensesResponse">
+    <wsdl:part name="parameters" element="tns:queryCancelledLicensesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ModerationJournalQueryService">
+    <wsdl:operation name="getCancelledLicenses">
+      <wsdl:documentation>Запрос аннулированных разрешений.</wsdl:documentation>
+      <wsdl:input message="tns:queryCancelledLicensesRequest" />
+      <wsdl:output message="tns:queryCancelledLicensesResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ModerationJournalQueryServiceSOAP" type="tns:ModerationJournalQueryService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getCancelledLicenses">
+      <soap:operation soapAction="urn:getCancelledLicensesAction" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ModerationJournal">
+    <wsdl:documentation>Сервис запроса данных из журнала модерации.</wsdl:documentation>
+    <wsdl:port name="ModerationJournalQueryServiceSOAP" binding="tns:ModerationJournalQueryServiceSOAP">
+      <soap:address location="http://188.127.245.220:1022/ModerationJournal/ModerationJournalQueryService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

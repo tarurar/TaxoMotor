@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5410533f-4235-4012-8c0b-448df56ccafa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://188.127.245.220:1022/SpecialTransportDataReceiverService/SpecialTransportDataReceiver?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SpecialTransportDataReceiver.wsdl" MetadataType="Wsdl" ID="cd5bce7c-2516-4e6b-bc27-47b6bec51a44" SourceId="1" SourceUrl="http://188.127.245.220:1022/SpecialTransportDataReceiverService/SpecialTransportDataReceiver?wsdl" />
+    <MetadataFile FileName="SpecialTransportDataReceiver.xsd" MetadataType="Schema" ID="1ec76a84-bb13-46cc-8b4e-d39b93b4983c" SourceId="1" SourceUrl="http://188.127.245.220:1022/SpecialTransportDataReceiverService/SpecialTransportDataReceiver?xsd=1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -52,6 +52,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.CustomActions", "TM.SP.CustomActions\TM.SP.CustomActions.csproj", "{6E8AC362-B961-45D9-9454-BFC13ABDCA74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.AppPages", "TM.SP.AppPages\TM.SP.AppPages.csproj", "{B2A464EC-6524-415E-A218-457D4AA37D83}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5200F36C-153C-46C5-B66D-8FC60F3AFC16} = {5200F36C-153C-46C5-B66D-8FC60F3AFC16}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.Customizations", "TM.SP.Customizations\TM.SP.Customizations.csproj", "{CD8191B0-D5A4-4AC3-AA3D-A8D4B99EC30D}"
 EndProject
@@ -94,6 +97,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TM.SP.Ratings", "TM.SP.Ratings\TM.SP.Ratings.csproj", "{4604D411-C7DB-448C-8DF0-E858E60669BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SP.PlumsailFormsBackup", "SP.PlumsailFormsBackup\SP.PlumsailFormsBackup.csproj", "{B16ECB22-2B4F-4338-81E0-F2C090B0798B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClientGIBDD", "WebClientGIBDD\WebClientGIBDD.csproj", "{5200F36C-153C-46C5-B66D-8FC60F3AFC16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -223,6 +228,10 @@ Global
 		{B16ECB22-2B4F-4338-81E0-F2C090B0798B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B16ECB22-2B4F-4338-81E0-F2C090B0798B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B16ECB22-2B4F-4338-81E0-F2C090B0798B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5200F36C-153C-46C5-B66D-8FC60F3AFC16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5200F36C-153C-46C5-B66D-8FC60F3AFC16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5200F36C-153C-46C5-B66D-8FC60F3AFC16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5200F36C-153C-46C5-B66D-8FC60F3AFC16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

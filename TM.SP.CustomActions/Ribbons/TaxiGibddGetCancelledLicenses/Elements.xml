@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.TaxiGibddGetCancelledLicenses"
+		Location="CommandUI.Ribbon.ListView"
+		Title="TaxiGibddGetCancelledLicenses"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/TaxiList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListItem.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.TaxiGibddGetCancelledLicenses.Button"
+						Command="TaxoMotor.TaxiGibddGetCancelledLicenses.ButtonCommand"
+						Sequence="510"
+						Image16by16="/_layouts/15/1033/images/formatmap16x16.png"
+						Image16by16Top="-64"
+						Image16by16Left="-192"
+						Image32by32="/_layouts/15/1033/images/formatmap32x32.png"
+						Image32by32Top="0"
+						Image32by32Left="-384"
+						LabelText="Получить список снятых с учета"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.TaxiGibddGetCancelledLicenses.ButtonCommand"
+					CommandAction="javascript:(function(){
+	          SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function() {
+	            SP.UI.Status.removeAllStatus(true);
+	            var serviceUrl = _spPageContextInfo.webAbsoluteUrl + '/' + _spPageContextInfo.layoutsUrl + '/TaxoMotor/CommonService.aspx';
+	  
+	            $.ajax({
+			          type: 'POST',
+			          url: serviceUrl + '/GibddGetCancelledLicenses',
+			          contentType: 'application/json; charset=utf-8',
+			          dataType: 'json'
+		          }).success(function(data){
+			          var successStatus = SP.UI.Status.addStatus('Выполнено успешно');
+			          SP.UI.Status.setStatusPriColor(successStatus, 'green');
+		          }).fail(function(jqXhr, status, error) {
+			          var response = $.parseJSON(jqXhr.responseText).d;
+			          var failStatus = SP.UI.Status.addStatus('Произошла ошибка: ' + response.Error.UserMessage);
+			          SP.UI.Status.setStatusPriColor(failStatus, 'red');
+			
+			          console.error('Exception Message: ' + response.Error.SystemMessage);
+			          console.error('Exception StackTrace: ' + response.Error.StackTrace);
+		          })
+	          });
+          })();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

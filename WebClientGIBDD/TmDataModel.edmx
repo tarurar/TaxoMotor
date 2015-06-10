@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище TM.DataModel" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="Хранилище TMDataModelContainer">
+          <EntitySet Name="AppLog" EntityType="Хранилище TM.DataModel.AppLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ExcludeVehicles" EntityType="Хранилище TM.DataModel.ExcludeVehicles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GibddServiceErrors" EntityType="Хранилище TM.DataModel.GibddServiceErrors" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="License" EntityType="Хранилище TM.DataModel.License" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SpecialVehiclesRegister" EntityType="Хранилище TM.DataModel.SpecialVehiclesRegister" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_License_ToLicense_Parent" Association="Хранилище TM.DataModel.FK_License_ToLicense_Parent">
+            <End Role="License" EntitySet="License" />
+            <End Role="License1" EntitySet="License" />
+          </AssociationSet>
+          <AssociationSet Name="FK_License_ToLicense_RootParent" Association="Хранилище TM.DataModel.FK_License_ToLicense_RootParent">
+            <End Role="License" EntitySet="License" />
+            <End Role="License1" EntitySet="License" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpecialVehiclesRegister_License" Association="Хранилище TM.DataModel.FK_SpecialVehiclesRegister_License">
+            <End Role="License" EntitySet="License" />
+            <End Role="SpecialVehiclesRegister" EntitySet="SpecialVehiclesRegister" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AppLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EventDateTime" Type="datetime" Nullable="false" />
+          <Property Name="ApplicationName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="Direction" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MessageID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ExcludeVehicles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="owner" Type="nvarchar" MaxLength="100" />
+          <Property Name="licenseId" Type="nvarchar" MaxLength="250" />
+          <Property Name="catalogNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="licencePlateNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="uploadDate" Type="datetime" />
+          <Property Name="cancelDate" Type="datetime" />
+          <Property Name="cancelComment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GibddServiceErrors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorDate" Type="datetime" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="License">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" MaxLength="64" StoreGeneratedPattern="Computed" />
+          <Property Name="RegNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="RegNumberInt" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="BlankSeries" Type="nvarchar" MaxLength="12" />
+          <Property Name="BlankNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="OrgName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Ogrn" Type="nvarchar" MaxLength="255" />
+          <Property Name="Inn" Type="nvarchar" MaxLength="255" />
+          <Property Name="Parent" Type="int" />
+          <Property Name="RootParent" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Document" Type="xml" />
+          <Property Name="Signature" Type="xml" />
+          <Property Name="TaxiId" Type="int" />
+          <Property Name="Lfb" Type="nvarchar" MaxLength="128" />
+          <Property Name="JuridicalAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="AddContactData" Type="nvarchar(max)" />
+          <Property Name="AccountAbbr" Type="nvarchar" MaxLength="12" />
+          <Property Name="TaxiBrand" Type="nvarchar" MaxLength="64" />
+          <Property Name="TaxiModel" Type="nvarchar" MaxLength="64" />
+          <Property Name="TaxiStateNumber" Type="nvarchar" MaxLength="24" />
+          <Property Name="TaxiYear" Type="int" />
+          <Property Name="OutputDate" Type="datetime" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="TillDate" Type="datetime" />
+          <Property Name="TillSuspensionDate" Type="datetime" />
+          <Property Name="CancellationReason" Type="nvarchar(max)" />
+          <Property Name="SuspensionReason" Type="nvarchar(max)" />
+          <Property Name="ChangeReason" Type="nvarchar(max)" />
+          <Property Name="InvalidReason" Type="nvarchar(max)" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="64" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="64" />
+          <Property Name="SecondName" Type="nvarchar" MaxLength="64" />
+          <Property Name="OgrnDate" Type="datetime" />
+          <Property Name="Country" Type="nvarchar" MaxLength="64" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="64" />
+          <Property Name="Locality" Type="nvarchar" MaxLength="64" />
+          <Property Name="Region" Type="nvarchar" MaxLength="64" />
+          <Property Name="City" Type="nvarchar" MaxLength="64" />
+          <Property Name="Town" Type="nvarchar" MaxLength="64" />
+          <Property Name="Street" Type="nvarchar" MaxLength="64" />
+          <Property Name="House" Type="nvarchar" MaxLength="64" />
+          <Property Name="Building" Type="nvarchar" MaxLength="64" />
+          <Property Name="Structure" Type="nvarchar" MaxLength="64" />
+          <Property Name="Facility" Type="nvarchar" MaxLength="64" />
+          <Property Name="Ownership" Type="nvarchar" MaxLength="64" />
+          <Property Name="Flat" Type="nvarchar" MaxLength="64" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="64" />
+          <Property Name="EMail" Type="nvarchar" MaxLength="64" />
+          <Property Name="TaxiColor" Type="nvarchar" MaxLength="64" />
+          <Property Name="TaxiNumberColor" Type="nvarchar" MaxLength="64" />
+          <Property Name="TaxiVin" Type="nvarchar" MaxLength="64" />
+          <Property Name="ChangeDate" Type="datetime" />
+          <Property Name="Guid_OD" Type="nvarchar" MaxLength="64" />
+          <Property Name="Date_OD" Type="datetime" />
+          <Property Name="FromPortal" Type="bit" />
+          <Property Name="FirmName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="128" />
+          <Property Name="OgrnNum" Type="nvarchar" MaxLength="64" />
+          <Property Name="OgrnName" Type="nvarchar" MaxLength="256" />
+          <Property Name="GRAddress" Type="nvarchar" MaxLength="256" />
+          <Property Name="InnDate" Type="datetime" />
+          <Property Name="InnName" Type="nvarchar" MaxLength="256" />
+          <Property Name="InnNum" Type="nvarchar" MaxLength="64" />
+          <Property Name="Address_Fact" Type="nvarchar" MaxLength="256" />
+          <Property Name="Country_Fact" Type="nvarchar" MaxLength="32" />
+          <Property Name="PostalCode_Fact" Type="nvarchar" MaxLength="32" />
+          <Property Name="Locality_Fact" Type="nvarchar" MaxLength="64" />
+          <Property Name="Region_Fact" Type="nvarchar" MaxLength="64" />
+          <Property Name="City_Fact" Type="nvarchar" MaxLength="32" />
+          <Property Name="Town_Fact" Type="nvarchar" MaxLength="64" />
+          <Property Name="Street_Fact" Type="nvarchar" MaxLength="64" />
+          <Property Name="House_Fact" Type="nvarchar" MaxLength="16" />
+          <Property Name="Building_Fact" Type="nvarchar" MaxLength="16" />
+          <Property Name="Structure_Fact" Type="nvarchar" MaxLength="16" />
+          <Property Name="Facility_Fact" Type="nvarchar" MaxLength="16" />
+          <Property Name="Ownership_Fact" Type="nvarchar" MaxLength="16" />
+          <Property Name="Flat_Fact" Type="nvarchar" MaxLength="16" />
+          <Property Name="Gps" Type="bit" />
+          <Property Name="Taxometr" Type="bit" />
+          <Property Name="TODate" Type="datetime" />
+          <Property Name="STSNumber" Type="nvarchar" MaxLength="32" />
+          <Property Name="STSDate" Type="datetime" />
+          <Property Name="OwnType" Type="int" />
+          <Property Name="OwnNumber" Type="nvarchar" MaxLength="32" />
+          <Property Name="OwnDate" Type="datetime" />
+          <Property Name="MO" Type="bit" />
+          <Property Name="GUID_MO" Type="nvarchar" MaxLength="64" />
+          <Property Name="DATE_MO" Type="datetime" />
+          <Property Name="Obsolete" Type="bit" />
+          <Property Name="DisableGibddSend" Type="bit" />
+        </EntityType>
+        <EntityType Name="SpecialVehiclesRegister">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="License_id" Type="int" />
+          <Property Name="RecordId" Type="uniqueidentifier" />
+          <Property Name="PackageId" Type="nvarchar" MaxLength="256" />
+          <Property Name="ProccessingStageCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProcessingStageDate" Type="datetime" />
+          <Property Name="ProcessingStageInfo" Type="nvarchar" MaxLength="512" />
+          <Property Name="RecordStatusCode" Type="nvarchar" MaxLength="15" />
+          <Property Name="RecordStatusText" Type="nvarchar" MaxLength="512" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_License_ToLicense_Parent">
+          <End Role="License" Type="Хранилище TM.DataModel.License" Multiplicity="0..1" />
+          <End Role="License1" Type="Хранилище TM.DataModel.License" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="License1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_License_ToLicense_RootParent">
+          <End Role="License" Type="Хранилище TM.DataModel.License" Multiplicity="0..1" />
+          <End Role="License1" Type="Хранилище TM.DataModel.License" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="License1">
+              <PropertyRef Name="RootParent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpecialVehiclesRegister_License">
+          <End Role="License" Type="Хранилище TM.DataModel.License" Multiplicity="0..1" />
+          <End Role="SpecialVehiclesRegister" Type="Хранилище TM.DataModel.SpecialVehiclesRegister" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpecialVehiclesRegister">
+              <PropertyRef Name="License_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TM.DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="TmDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ExcludeVehicles" EntityType="TM.DataModel.ExcludeVehicles" />
+          <EntitySet Name="License" EntityType="TM.DataModel.License" />
+          <EntitySet Name="SpecialVehiclesRegister" EntityType="TM.DataModel.SpecialVehiclesRegister" />
+          <AssociationSet Name="FK_License_ToLicense_Parent" Association="TM.DataModel.FK_License_ToLicense_Parent">
+            <End Role="License" EntitySet="License" />
+            <End Role="License1" EntitySet="License" />
+          </AssociationSet>
+          <AssociationSet Name="FK_License_ToLicense_RootParent" Association="TM.DataModel.FK_License_ToLicense_RootParent">
+            <End Role="License" EntitySet="License" />
+            <End Role="License1" EntitySet="License" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpecialVehiclesRegister_License" Association="TM.DataModel.FK_SpecialVehiclesRegister_License">
+            <End Role="License" EntitySet="License" />
+            <End Role="SpecialVehiclesRegister" EntitySet="SpecialVehiclesRegister" />
+          </AssociationSet>
+          <EntitySet Name="AppLog" EntityType="TM.DataModel.AppLog" />
+          <EntitySet Name="GibddServiceErrors" EntityType="TM.DataModel.GibddServiceErrors" />
+        </EntityContainer>
+        <EntityType Name="ExcludeVehicles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="owner" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="licenseId" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="catalogNumber" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="licencePlateNumber" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="uploadDate" Type="DateTime" Precision="3" />
+          <Property Name="cancelDate" Type="DateTime" Precision="3" />
+          <Property Name="cancelComment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="License">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="64" Unicode="true" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RegNumber" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="RegNumberInt" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="BlankSeries" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+          <Property Name="BlankNo" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+          <Property Name="OrgName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Ogrn" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Inn" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Parent" Type="Int32" />
+          <Property Name="RootParent" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Document" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Signature" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiId" Type="Int32" />
+          <Property Name="Lfb" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="JuridicalAddress" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="AddContactData" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="AccountAbbr" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiBrand" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiModel" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiStateNumber" Type="String" MaxLength="24" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiYear" Type="Int32" />
+          <Property Name="OutputDate" Type="DateTime" Precision="3" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="TillDate" Type="DateTime" Precision="3" />
+          <Property Name="TillSuspensionDate" Type="DateTime" Precision="3" />
+          <Property Name="CancellationReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SuspensionReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ChangeReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="InvalidReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ShortName" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="SecondName" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="OgrnDate" Type="DateTime" Precision="3" />
+          <Property Name="Country" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Locality" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Region" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Town" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Street" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="House" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Building" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Structure" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Facility" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Ownership" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Flat" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Fax" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="EMail" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiColor" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiNumberColor" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="TaxiVin" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="Guid_OD" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Date_OD" Type="DateTime" Precision="3" />
+          <Property Name="FromPortal" Type="Boolean" />
+          <Property Name="FirmName" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="Brand" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="OgrnNum" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="OgrnName" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="GRAddress" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="InnDate" Type="DateTime" Precision="3" />
+          <Property Name="InnName" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="InnNum" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Address_Fact" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="Country_Fact" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+          <Property Name="PostalCode_Fact" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+          <Property Name="Locality_Fact" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Region_Fact" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="City_Fact" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+          <Property Name="Town_Fact" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="Street_Fact" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="House_Fact" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Building_Fact" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Structure_Fact" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Facility_Fact" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Ownership_Fact" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Flat_Fact" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="Gps" Type="Boolean" />
+          <Property Name="Taxometr" Type="Boolean" />
+          <Property Name="TODate" Type="DateTime" Precision="3" />
+          <Property Name="STSNumber" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+          <Property Name="STSDate" Type="DateTime" Precision="3" />
+          <Property Name="OwnType" Type="Int32" />
+          <Property Name="OwnNumber" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+          <Property Name="OwnDate" Type="DateTime" Precision="3" />
+          <Property Name="MO" Type="Boolean" />
+          <Property Name="GUID_MO" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+          <Property Name="DATE_MO" Type="DateTime" Precision="3" />
+          <Property Name="Obsolete" Type="Boolean" />
+          <Property Name="DisableGibddSend" Type="Boolean" />
+          <NavigationProperty Name="License1" Relationship="TM.DataModel.FK_License_ToLicense_Parent" FromRole="License" ToRole="License1" />
+          <NavigationProperty Name="License2" Relationship="TM.DataModel.FK_License_ToLicense_Parent" FromRole="License1" ToRole="License" />
+          <NavigationProperty Name="License11" Relationship="TM.DataModel.FK_License_ToLicense_RootParent" FromRole="License" ToRole="License1" />
+          <NavigationProperty Name="License3" Relationship="TM.DataModel.FK_License_ToLicense_RootParent" FromRole="License1" ToRole="License" />
+          <NavigationProperty Name="SpecialVehiclesRegister" Relationship="TM.DataModel.FK_SpecialVehiclesRegister_License" FromRole="License" ToRole="SpecialVehiclesRegister" />
+        </EntityType>
+        <EntityType Name="SpecialVehiclesRegister">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="License_id" Type="Int32" />
+          <Property Name="RecordId" Type="Guid" />
+          <Property Name="PackageId" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="ProccessingStageCode" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="ProcessingStageDate" Type="DateTime" Precision="3" />
+          <Property Name="ProcessingStageInfo" Type="String" MaxLength="512" Unicode="true" FixedLength="false" />
+          <Property Name="RecordStatusCode" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+          <Property Name="RecordStatusText" Type="String" MaxLength="512" Unicode="true" FixedLength="false" />
+          <Property Name="Exception" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="License" Relationship="TM.DataModel.FK_SpecialVehiclesRegister_License" FromRole="SpecialVehiclesRegister" ToRole="License" />
+        </EntityType>
+        <Association Name="FK_License_ToLicense_Parent">
+          <End Role="License" Type="TM.DataModel.License" Multiplicity="0..1" />
+          <End Role="License1" Type="TM.DataModel.License" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="License1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_License_ToLicense_RootParent">
+          <End Role="License" Type="TM.DataModel.License" Multiplicity="0..1" />
+          <End Role="License1" Type="TM.DataModel.License" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="License1">
+              <PropertyRef Name="RootParent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpecialVehiclesRegister_License">
+          <End Role="License" Type="TM.DataModel.License" Multiplicity="0..1" />
+          <End Role="SpecialVehiclesRegister" Type="TM.DataModel.SpecialVehiclesRegister" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpecialVehiclesRegister">
+              <PropertyRef Name="License_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="EventDateTime" Nullable="false" Precision="3" />
+          <Property Type="String" Name="ApplicationName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Direction" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="MessageID" />
+        </EntityType>
+        <EntityType Name="GibddServiceErrors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="ErrorDate" Precision="3" />
+          <Property Type="String" Name="Exception" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TMDataModelContainer" CdmEntityContainer="TmDataModelContainer">
+          <EntitySetMapping Name="ExcludeVehicles">
+            <EntityTypeMapping TypeName="TM.DataModel.ExcludeVehicles">
+              <MappingFragment StoreEntitySet="ExcludeVehicles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="owner" ColumnName="owner" />
+                <ScalarProperty Name="licenseId" ColumnName="licenseId" />
+                <ScalarProperty Name="catalogNumber" ColumnName="catalogNumber" />
+                <ScalarProperty Name="licencePlateNumber" ColumnName="licencePlateNumber" />
+                <ScalarProperty Name="uploadDate" ColumnName="uploadDate" />
+                <ScalarProperty Name="cancelDate" ColumnName="cancelDate" />
+                <ScalarProperty Name="cancelComment" ColumnName="cancelComment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="License">
+            <EntityTypeMapping TypeName="TM.DataModel.License">
+              <MappingFragment StoreEntitySet="License">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RegNumber" ColumnName="RegNumber" />
+                <ScalarProperty Name="RegNumberInt" ColumnName="RegNumberInt" />
+                <ScalarProperty Name="BlankSeries" ColumnName="BlankSeries" />
+                <ScalarProperty Name="BlankNo" ColumnName="BlankNo" />
+                <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+                <ScalarProperty Name="Ogrn" ColumnName="Ogrn" />
+                <ScalarProperty Name="Inn" ColumnName="Inn" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="RootParent" ColumnName="RootParent" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="TaxiId" ColumnName="TaxiId" />
+                <ScalarProperty Name="Lfb" ColumnName="Lfb" />
+                <ScalarProperty Name="JuridicalAddress" ColumnName="JuridicalAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="AddContactData" ColumnName="AddContactData" />
+                <ScalarProperty Name="AccountAbbr" ColumnName="AccountAbbr" />
+                <ScalarProperty Name="TaxiBrand" ColumnName="TaxiBrand" />
+                <ScalarProperty Name="TaxiModel" ColumnName="TaxiModel" />
+                <ScalarProperty Name="TaxiStateNumber" ColumnName="TaxiStateNumber" />
+                <ScalarProperty Name="TaxiYear" ColumnName="TaxiYear" />
+                <ScalarProperty Name="OutputDate" ColumnName="OutputDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="TillDate" ColumnName="TillDate" />
+                <ScalarProperty Name="TillSuspensionDate" ColumnName="TillSuspensionDate" />
+                <ScalarProperty Name="CancellationReason" ColumnName="CancellationReason" />
+                <ScalarProperty Name="SuspensionReason" ColumnName="SuspensionReason" />
+                <ScalarProperty Name="ChangeReason" ColumnName="ChangeReason" />
+                <ScalarProperty Name="InvalidReason" ColumnName="InvalidReason" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="OgrnDate" ColumnName="OgrnDate" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Town" ColumnName="Town" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+                <ScalarProperty Name="Structure" ColumnName="Structure" />
+                <ScalarProperty Name="Facility" ColumnName="Facility" />
+                <ScalarProperty Name="Ownership" ColumnName="Ownership" />
+                <ScalarProperty Name="Flat" ColumnName="Flat" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="TaxiColor" ColumnName="TaxiColor" />
+                <ScalarProperty Name="TaxiNumberColor" ColumnName="TaxiNumberColor" />
+                <ScalarProperty Name="TaxiVin" ColumnName="TaxiVin" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="Guid_OD" ColumnName="Guid_OD" />
+                <ScalarProperty Name="Date_OD" ColumnName="Date_OD" />
+                <ScalarProperty Name="FromPortal" ColumnName="FromPortal" />
+                <ScalarProperty Name="FirmName" ColumnName="FirmName" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="OgrnNum" ColumnName="OgrnNum" />
+                <ScalarProperty Name="OgrnName" ColumnName="OgrnName" />
+                <ScalarProperty Name="GRAddress" ColumnName="GRAddress" />
+                <ScalarProperty Name="InnDate" ColumnName="InnDate" />
+                <ScalarProperty Name="InnName" ColumnName="InnName" />
+                <ScalarProperty Name="InnNum" ColumnName="InnNum" />
+                <ScalarProperty Name="Address_Fact" ColumnName="Address_Fact" />
+                <ScalarProperty Name="Country_Fact" ColumnName="Country_Fact" />
+                <ScalarProperty Name="PostalCode_Fact" ColumnName="PostalCode_Fact" />
+                <ScalarProperty Name="Locality_Fact" ColumnName="Locality_Fact" />
+                <ScalarProperty Name="Region_Fact" ColumnName="Region_Fact" />
+                <ScalarProperty Name="City_Fact" ColumnName="City_Fact" />
+                <ScalarProperty Name="Town_Fact" ColumnName="Town_Fact" />
+                <ScalarProperty Name="Street_Fact" ColumnName="Street_Fact" />
+                <ScalarProperty Name="House_Fact" ColumnName="House_Fact" />
+                <ScalarProperty Name="Building_Fact" ColumnName="Building_Fact" />
+                <ScalarProperty Name="Structure_Fact" ColumnName="Structure_Fact" />
+                <ScalarProperty Name="Facility_Fact" ColumnName="Facility_Fact" />
+                <ScalarProperty Name="Ownership_Fact" ColumnName="Ownership_Fact" />
+                <ScalarProperty Name="Flat_Fact" ColumnName="Flat_Fact" />
+                <ScalarProperty Name="Gps" ColumnName="Gps" />
+                <ScalarProperty Name="Taxometr" ColumnName="Taxometr" />
+                <ScalarProperty Name="TODate" ColumnName="TODate" />
+                <ScalarProperty Name="STSNumber" ColumnName="STSNumber" />
+                <ScalarProperty Name="STSDate" ColumnName="STSDate" />
+                <ScalarProperty Name="OwnType" ColumnName="OwnType" />
+                <ScalarProperty Name="OwnNumber" ColumnName="OwnNumber" />
+                <ScalarProperty Name="OwnDate" ColumnName="OwnDate" />
+                <ScalarProperty Name="MO" ColumnName="MO" />
+                <ScalarProperty Name="GUID_MO" ColumnName="GUID_MO" />
+                <ScalarProperty Name="DATE_MO" ColumnName="DATE_MO" />
+                <ScalarProperty Name="Obsolete" ColumnName="Obsolete" />
+                <ScalarProperty Name="DisableGibddSend" ColumnName="DisableGibddSend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpecialVehiclesRegister">
+            <EntityTypeMapping TypeName="TM.DataModel.SpecialVehiclesRegister">
+              <MappingFragment StoreEntitySet="SpecialVehiclesRegister">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="License_id" ColumnName="License_id" />
+                <ScalarProperty Name="RecordId" ColumnName="RecordId" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="ProccessingStageCode" ColumnName="ProccessingStageCode" />
+                <ScalarProperty Name="ProcessingStageDate" ColumnName="ProcessingStageDate" />
+                <ScalarProperty Name="ProcessingStageInfo" ColumnName="ProcessingStageInfo" />
+                <ScalarProperty Name="RecordStatusCode" ColumnName="RecordStatusCode" />
+                <ScalarProperty Name="RecordStatusText" ColumnName="RecordStatusText" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppLog">
+            <EntityTypeMapping TypeName="TM.DataModel.AppLog">
+              <MappingFragment StoreEntitySet="AppLog">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+                <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GibddServiceErrors">
+            <EntityTypeMapping TypeName="TM.DataModel.GibddServiceErrors">
+              <MappingFragment StoreEntitySet="GibddServiceErrors">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="ErrorDate" ColumnName="ErrorDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

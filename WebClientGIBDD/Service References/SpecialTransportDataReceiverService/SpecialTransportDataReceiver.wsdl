@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:ws.receiver.specialtransport" targetNamespace="urn:ws.receiver.specialtransport" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://188.127.245.220:1022/SpecialTransportDataReceiverService/SpecialTransportDataReceiver?xsd=1" namespace="urn:ws.receiver.specialtransport" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="putDataPackagesRequest">
+    <wsdl:part name="input" element="tns:DataPackages" />
+  </wsdl:message>
+  <wsdl:message name="putDataPackagesResponse">
+    <wsdl:part name="output" element="tns:DataPackagesInfo" />
+  </wsdl:message>
+  <wsdl:message name="getDataPackagesInfoRequest">
+    <wsdl:part name="input" element="tns:DataPackagesInfoRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDataPackagesInfoResponse">
+    <wsdl:part name="output" element="tns:DataPackagesInfo" />
+  </wsdl:message>
+  <wsdl:message name="putDataPackagesFault">
+    <wsdl:part name="error" element="tns:RuntimeException" />
+  </wsdl:message>
+  <wsdl:message name="getDataPackagesInfoFault">
+    <wsdl:part name="error" element="tns:RuntimeException" />
+  </wsdl:message>
+  <wsdl:portType name="SpecialTransportDataReceiverService">
+    <wsdl:operation name="putDataPackages">
+      <wsdl:documentation>Операция передачи пакета данных на загрузку в регистр "Специальный транспорт".
+Возвращается информация по пакетам с данными для регистра (без информации по записям).</wsdl:documentation>
+      <wsdl:input message="tns:putDataPackagesRequest" />
+      <wsdl:output message="tns:putDataPackagesResponse">
+        <wsdl:documentation>Информация о переданных пакетах (без информации о записях)</wsdl:documentation>
+      </wsdl:output>
+      <wsdl:fault name="fault" message="tns:putDataPackagesFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getDataPackagesInfo">
+      <wsdl:documentation>Операция получения статуса обработки по пакету данных, переданного на загрузку в регистр "Специальный транспорт".</wsdl:documentation>
+      <wsdl:input message="tns:getDataPackagesInfoRequest" />
+      <wsdl:output message="tns:getDataPackagesInfoResponse" />
+      <wsdl:fault name="fault" message="tns:getDataPackagesInfoFault" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SpecialTransportDataReceiverServiceSOAP" type="tns:SpecialTransportDataReceiverService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="putDataPackages">
+      <soap:operation soapAction="urn:putSpecialTransportDataPackageAction" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataPackagesInfo">
+      <soap:operation soapAction="urn:getSpecialTransportDataPackagesInfoAction" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SpecialTransportDataReceiverService">
+    <wsdl:documentation>Сервис приема данных в регистр "Специальный транспорт".</wsdl:documentation>
+    <wsdl:port name="SpecialTransportDataReceiverServiceSOAP" binding="tns:SpecialTransportDataReceiverServiceSOAP">
+      <soap:address location="http://188.127.245.220:1022/SpecialTransportDataReceiverService/SpecialTransportDataReceiver" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
