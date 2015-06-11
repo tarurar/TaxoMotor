@@ -121,7 +121,7 @@ namespace WebClientGIBDD
                                                     new RecordType
                                                         {
                                                             RecordId = svr.RecordId.ToString(),
-                                                            CatalogNumber = l.RegNumber,
+                                                            CatalogNumber = l.RegNumber.PadLeft(5,'0'),
                                                             AgreementDate =
                                                                 l.CreationDate < minDate ||
                                                                 l.CreationDate == null
