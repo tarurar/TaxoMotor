@@ -74,73 +74,81 @@ module TM.SP_.License {
 
         public ChangeObsoleteAttribute(obsolete: boolean, success: () => void, fail: (msg: string) => void): void
         {
-            this.MakeObsoleteGetXml(obsolete).done((xml : any) => {
+            this.EnsureCertificate((data) => {
+                this.MakeObsoleteGetXml(obsolete).done((xml: any) => {
 
-                var dataToSign: string = xml.d;
-                var oCertificate = cryptoPro.SelectCertificate(
-                    cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
-                    cryptoPro.StoreNames.CAPICOM_MY_STORE,
-                    cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+                    var dataToSign: string = xml.d;
+                    var oCertificate = cryptoPro.SelectCertificate(
+                        cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
+                        cryptoPro.StoreNames.CAPICOM_MY_STORE,
+                        cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
 
-                if (oCertificate) {
-                    dataToSign =
-                    "<?xml version=\"1.0\"?>\n" +
-                    "<Envelope xmlns=\"urn:envelope\">\n" +
-                    dataToSign +
-                    " \n" +
-                    "</Envelope>";
+                    if (oCertificate) {
+                        dataToSign =
+                        "<?xml version=\"1.0\"?>\n" +
+                        "<Envelope xmlns=\"urn:envelope\">\n" +
+                        dataToSign +
+                        " \n" +
+                        "</Envelope>";
 
-                    var signedData: string;
-                    try {
-                        signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
-                    } catch (e) {
-                        fail("Ошибка при формировании подписи: " + e.message);
+                        var signedData: string;
+                        try {
+                            signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
+                        } catch (e) {
+                            fail("Ошибка при формировании подписи: " + e.message);
+                        }
+
+                        if (typeof signedData === "undefined" || !signedData) {
+                            fail("Ошибка при формировании подписи");
+                        }
+
+                        this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
                     }
-
-                    if (typeof signedData === "undefined" || !signedData) {
-                        fail("Ошибка при формировании подписи");
-                    }
-
-                    this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
-                }
-            }).fail(() => {
-                fail("Ошибка при получении xml для разрешения");
+                }).fail(() => {
+                    fail("Ошибка при получении xml для разрешения");
+                });
+            },(error) => {
+                fail('Не удалось выбрать сертификат для подписания. Действие прервано.');
             });
         }
 
         public ChangeDisableGibddAttribute(disabled: boolean, success: () => void, fail: (msg: string) => void): void
         {
-            this.DisableGibddGetXml(disabled).done((xml: any) => {
-                var dataToSign: string = xml.d;
+            this.EnsureCertificate((data) => {
+                this.DisableGibddGetXml(disabled).done((xml: any) => {
+                    var dataToSign: string = xml.d;
 
-                var oCertificate = cryptoPro.SelectCertificate(
-                    cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
-                    cryptoPro.StoreNames.CAPICOM_MY_STORE,
-                    cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+                    var oCertificate = cryptoPro.SelectCertificate(
+                        cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
+                        cryptoPro.StoreNames.CAPICOM_MY_STORE,
+                        cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
 
-                if (oCertificate) {
-                    dataToSign =
-                    "<?xml version=\"1.0\"?>\n" +
-                    "<Envelope xmlns=\"urn:envelope\">\n" +
-                    dataToSign +
-                    " \n" +
-                    "</Envelope>";
+                    if (oCertificate) {
+                        dataToSign =
+                        "<?xml version=\"1.0\"?>\n" +
+                        "<Envelope xmlns=\"urn:envelope\">\n" +
+                        dataToSign +
+                        " \n" +
+                        "</Envelope>";
 
-                    var signedData: string;
-                    try {
-                        signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
-                    } catch (e) {
-                        fail("Ошибка при формировании подписи: " + e.message);
+                        var signedData: string;
+                        try {
+                            signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
+                        } catch (e) {
+                            fail("Ошибка при формировании подписи: " + e.message);
+                        }
+
+                        if (typeof signedData === "undefined" || !signedData) {
+                            fail("Ошибка при формировании подписи");
+                        }
+
+                        this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
                     }
-
-                    if (typeof signedData === "undefined" || !signedData) {
-                        fail("Ошибка при формировании подписи");
-                    }
-
-                    this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
-                }
-            }).fail(function () {
-                fail("Ошибка при получении xml для разрешения");
+                }).fail(function () {
+                    fail("Ошибка при получении xml для разрешения");
+                });
+            }, (error) => {
+                fail('Не удалось выбрать сертификат для подписания. Действие прервано.');
             });
         }
     }

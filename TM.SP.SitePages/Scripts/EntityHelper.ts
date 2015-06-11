@@ -37,6 +37,7 @@ module TM.SP_ {
     export class EntityHelper {
         private _serviceUrl: string;
         private _currentItem: SP.ListItem;
+        protected _selectedCertificate: any;
 
         public get currentItem(): SP.ListItem {
             return this._currentItem;
@@ -84,7 +85,7 @@ module TM.SP_ {
 
             return RequestMethods.MakePostRequest(param, this.BuildMethodUrl(methodName));
         }
-
+        
         public PostNonEntityWebMethod<T extends RequestParams.CommonParam>(t: { new (): T }, updateParam: (param: T) => void, methodName: string): JQueryXHR {
             var param = new t();
             if (updateParam) {
@@ -92,6 +93,37 @@ module TM.SP_ {
             }
 
             return RequestMethods.MakePostRequest(param, this.BuildMethodUrl(methodName));
+        }
+
+        public EnsureCertificate(success: (data: string) => void, fail: (msg: string) => void): void {
+            var fakeString = "Fake string for signing";
+
+            var oCertificate = this._selectedCertificate || (cryptoPro.SelectCertificate(
+                cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
+                cryptoPro.StoreNames.CAPICOM_MY_STORE,
+                cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED));
+
+            this._selectedCertificate = this._selectedCertificate || oCertificate;
+
+            if (oCertificate != null) {
+                var signedData;
+                var errorMsg;
+                try {
+                    signedData = cryptoPro.signPkcs7Create(oCertificate, fakeString);
+                } catch (e) {
+                    errorMsg = "Ошибка при формировании подписи pkcs7: " + e.message;
+                }
+
+                if (errorMsg) {
+                    fail(errorMsg);
+                } else {
+                    success(signedData);
+                }
+
+            } else {
+                fail("При формировании ЭЦП pkcs7 не удалось обнаружить сертификат");
+            }
+
         }
     }
 

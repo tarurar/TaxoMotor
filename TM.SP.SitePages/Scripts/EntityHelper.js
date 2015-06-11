@@ -93,6 +93,30 @@ var TM;
                 }
                 return RequestMethods.MakePostRequest(param, this.BuildMethodUrl(methodName));
             };
+            EntityHelper.prototype.EnsureCertificate = function (success, fail) {
+                var fakeString = "Fake string for signing";
+                var oCertificate = this._selectedCertificate || (cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */));
+                this._selectedCertificate = this._selectedCertificate || oCertificate;
+                if (oCertificate != null) {
+                    var signedData;
+                    var errorMsg;
+                    try {
+                        signedData = cryptoPro.signPkcs7Create(oCertificate, fakeString);
+                    }
+                    catch (e) {
+                        errorMsg = "Ошибка при формировании подписи pkcs7: " + e.message;
+                    }
+                    if (errorMsg) {
+                        fail(errorMsg);
+                    }
+                    else {
+                        success(signedData);
+                    }
+                }
+                else {
+                    fail("При формировании ЭЦП pkcs7 не удалось обнаружить сертификат");
+                }
+            };
             return EntityHelper;
         })();
         SP_.EntityHelper = EntityHelper;

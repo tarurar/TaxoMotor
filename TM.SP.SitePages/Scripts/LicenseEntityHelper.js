@@ -95,48 +95,56 @@ var TM;
                 };
                 LicenseEntityHelper.prototype.ChangeObsoleteAttribute = function (obsolete, success, fail) {
                     var _this = this;
-                    this.MakeObsoleteGetXml(obsolete).done(function (xml) {
-                        var dataToSign = xml.d;
-                        var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
-                        if (oCertificate) {
-                            dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
-                            var signedData;
-                            try {
-                                signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
+                    this.EnsureCertificate(function (data) {
+                        _this.MakeObsoleteGetXml(obsolete).done(function (xml) {
+                            var dataToSign = xml.d;
+                            var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                            if (oCertificate) {
+                                dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
+                                var signedData;
+                                try {
+                                    signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
+                                }
+                                catch (e) {
+                                    fail("Ошибка при формировании подписи: " + e.message);
+                                }
+                                if (typeof signedData === "undefined" || !signedData) {
+                                    fail("Ошибка при формировании подписи");
+                                }
+                                _this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
                             }
-                            catch (e) {
-                                fail("Ошибка при формировании подписи: " + e.message);
-                            }
-                            if (typeof signedData === "undefined" || !signedData) {
-                                fail("Ошибка при формировании подписи");
-                            }
-                            _this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
-                        }
-                    }).fail(function () {
-                        fail("Ошибка при получении xml для разрешения");
+                        }).fail(function () {
+                            fail("Ошибка при получении xml для разрешения");
+                        });
+                    }, function (error) {
+                        fail('Не удалось выбрать сертификат для подписания. Действие прервано.');
                     });
                 };
                 LicenseEntityHelper.prototype.ChangeDisableGibddAttribute = function (disabled, success, fail) {
                     var _this = this;
-                    this.DisableGibddGetXml(disabled).done(function (xml) {
-                        var dataToSign = xml.d;
-                        var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
-                        if (oCertificate) {
-                            dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
-                            var signedData;
-                            try {
-                                signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
+                    this.EnsureCertificate(function (data) {
+                        _this.DisableGibddGetXml(disabled).done(function (xml) {
+                            var dataToSign = xml.d;
+                            var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                            if (oCertificate) {
+                                dataToSign = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
+                                var signedData;
+                                try {
+                                    signedData = cryptoPro.SignXMLCreate(oCertificate, dataToSign);
+                                }
+                                catch (e) {
+                                    fail("Ошибка при формировании подписи: " + e.message);
+                                }
+                                if (typeof signedData === "undefined" || !signedData) {
+                                    fail("Ошибка при формировании подписи");
+                                }
+                                _this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
                             }
-                            catch (e) {
-                                fail("Ошибка при формировании подписи: " + e.message);
-                            }
-                            if (typeof signedData === "undefined" || !signedData) {
-                                fail("Ошибка при формировании подписи");
-                            }
-                            _this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
-                        }
-                    }).fail(function () {
-                        fail("Ошибка при получении xml для разрешения");
+                        }).fail(function () {
+                            fail("Ошибка при получении xml для разрешения");
+                        });
+                    }, function (error) {
+                        fail('Не удалось выбрать сертификат для подписания. Действие прервано.');
                     });
                 };
                 return LicenseEntityHelper;
