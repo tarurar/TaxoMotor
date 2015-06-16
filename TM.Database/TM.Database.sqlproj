@@ -181,6 +181,8 @@
     <Build Include="dbo\Tables\ExcludedVehicles.sql" />
     <Build Include="dbo\Tables\GibddServiceErrors.sql" />
     <Build Include="dbo\Tables\SpecialVehiclesRegister.sql" />
+    <Build Include="dbo\Indexes\IX_AppLog_MID.sql" />
+    <Build Include="dbo\Indexes\IX_License_ID_ParentID.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TM.Database.publish.xml" />
