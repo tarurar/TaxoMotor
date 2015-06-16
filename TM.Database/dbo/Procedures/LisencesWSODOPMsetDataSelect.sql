@@ -57,7 +57,7 @@ BEGIN
                                 N'STRING' AS '@type',
                                 N'false' AS '@pk',
                                 0 AS 'values/value/@occurrence',
-                                l.RegNumber AS 'values/value'
+                                RIGHT('00000' + l.RegNumber, 5) AS 'values/value'
                                 FOR XML PATH('attribute'), TYPE
                             ),
                             (
@@ -66,7 +66,7 @@ BEGIN
                                 N'STRING' AS '@type',
                                 N'false' AS '@pk',
                                 0 AS 'values/value/@occurrence',
-                                ISNULL(l.TaxiStateNumber, '') AS 'values/value'
+                                UPPER(ISNULL(l.TaxiStateNumber, '')) AS 'values/value'
                                 FOR XML PATH('attribute'), TYPE
                             ),
                             (
@@ -75,7 +75,7 @@ BEGIN
                                 N'STRING' AS '@type',
                                 N'false' AS '@pk',
                                 0 AS 'values/value/@occurrence',
-                                ISNULL(l.ShortName, '') AS 'values/value'
+                                REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(ISNULL(l.ShortName, ''),' "',' «'),'"','»'),'   ',' '),'  ',' '))),'A','А'),'C','С'),'c','с'),'M','м'),'O','О'),'P','Р'),'E','Е'),'X','Х'),'B','В'),'“','«'),'”','»') AS 'values/value'
                                 FOR XML PATH('attribute'), TYPE
                             ),
                             (
@@ -112,7 +112,7 @@ BEGIN
                                 N'STRING' AS '@type',
                                 N'false' AS '@pk',
                                 0 AS 'values/value/@occurrence',
-                                RTRIM(LTRIM(ISNULL(l.TaxiBrand,'') + ' ' + ISNULL(l.TaxiModel, ''))) AS 'values/value'
+                                REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(RTRIM(LTRIM(ISNULL(l.TaxiBrand,'') + ' ' + ISNULL(l.TaxiModel, ''))),',','.'),'   ',' '),'  ',' '),'`',''),'\','/'),'*',''),'’',''),'&','S'),' "',' «'),'"','»'),'?',''),'|','/'),'~',''),'?',''),'?','') AS 'values/value'
                                 FOR XML PATH('attribute'), TYPE
                             ),
                             (
@@ -151,7 +151,6 @@ BEGIN
         par.Status <> 4
         AND par.Date_OD IS NULL 
         AND chd.Id IS NULL
-    
 END
 
 -- Обновление строк ответом из ОДОПМ
