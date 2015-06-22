@@ -3,7 +3,7 @@
 --  Дата        28.04.2015
 --  Описание    Вставка в таблицу лога
 --=================================================================
-ALTER PROCEDURE [dbo].[AppLogInsert]	
+CREATE PROCEDURE [dbo].[AppLogInsert]	
     @ApplicationName NVARCHAR(500),
     @Direction NCHAR(1),
     @Message NVARCHAR(MAX),

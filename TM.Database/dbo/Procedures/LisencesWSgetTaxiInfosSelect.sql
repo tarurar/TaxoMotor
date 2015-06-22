@@ -61,6 +61,7 @@ FROM
 	        License AS L1 (NOLOCK)
             LEFT OUTER JOIN License (NOLOCK) AS chld
                 ON chld.Parent = L1.Id
+                    AND chld.Status <> 4
         WHERE
             L1.Status <> 4 AND chld.Id IS NULL
 	        AND (@RegNumberInt IS NULL OR L1.RegNumberInt = @RegNumberInt)
@@ -109,11 +110,15 @@ IF @Flag = 1
 	    @FETCH = @FETCH
 
 IF @Flag = 2
-    SELECT TOP 1
+   SELECT TOP 1
         L1.Signature,
         L1.Parent
     FROM 
         License AS L1 (NOLOCK)
         LEFT OUTER JOIN License (NOLOCK) AS chld
             ON chld.Parent = L1.Id
-    WHERE chld.Id IS NULL AND L1.Status <> 4 AND L1.RegNumberInt = @RegNumberInt    
+                AND chld.Status <> 4
+    WHERE 
+        chld.Id IS NULL 
+        AND L1.Status <> 4 
+        AND L1.RegNumberInt = @RegNumberInt
