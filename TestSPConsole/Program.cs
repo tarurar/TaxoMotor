@@ -13,9 +13,23 @@ using CamlexNET;
 using System.Net.Http;
 using System.Net;
 using System.Dynamic;
+using System.Diagnostics;
+using System.Threading;
 
 namespace TestSPConsole
 {
+
+    public class TimeKeeper
+    {
+        public TimeSpan Measure(Action action)
+        {
+            var watch = new Stopwatch();
+            watch.Start();
+            action();
+            return watch.Elapsed;
+        }
+    }
+
     public static class SPListItemExtensions
     {
         public static dynamic AsDyn(this SPListItem item)
@@ -137,14 +151,37 @@ namespace TestSPConsole
             using (SPSite site = new SPSite("http://77.95.132.133"))
             using (SPWeb web = site.OpenWeb())
             {
-                var context = SPServiceContext.GetContext(site);
+                /*var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
                     var list = web.GetListOrBreak("Lists/IncomeRequestList");
                     var item = list.GetItemById(17).AsDyn();
 
                     Console.WriteLine(item.Title);
-                }
+                }*/
+
+                var tk = new TimeKeeper();
+
+
+                var t1 = tk.Measure(() =>
+                {
+                    Parallel.ForEach(web.Lists.Cast<SPList>(), (list) =>
+                    {
+                        Console.WriteLine(String.Format("Список: {0}, ИД процесса: {1}, ИД потока: {2}", list.Title, Process.GetCurrentProcess().Id, Thread.CurrentThread.ManagedThreadId));
+                    });
+                });
+
+                var t2 = tk.Measure(() =>
+                {
+                    web.Lists.Cast<SPList>().ToList().ForEach(list =>
+                    {
+                        Console.WriteLine(String.Format("Список: {0}, ИД процесса: {1}, ИД потока: {2}", list.Title, Process.GetCurrentProcess().Id, Thread.CurrentThread.ManagedThreadId));
+                    });
+                });
+
+                Console.WriteLine("Параллельно: {0}", t1);
+                Console.WriteLine("Последовательно: {0}", t2);
+
             }
 
             Console.WriteLine("Finished");

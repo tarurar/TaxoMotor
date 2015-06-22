@@ -9,6 +9,13 @@ using TM.SP.BCSModels.Taxi;
 using TM.Utils;
 using CamlexNET;
 using System.Linq.Expressions;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Xml.Linq;
+using System.Reflection;
+using TM.Utils.Attributes;
 
 namespace TM.SP.AppPages
 {
@@ -275,6 +282,97 @@ namespace TM.SP.AppPages
             #endregion
 
             return draft.Id;
+        }
+
+
+        public static string GetLicenseXml(int licenseId, SPWeb web)
+        {
+            SPList spList     = web.GetListOrBreak("Lists/LicenseList");
+            SPListItem spItem = spList.GetItemOrBreak(licenseId);
+            var license = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
+
+            //serialization
+            var intWriter    = new StringWriter(new StringBuilder());
+            XmlWriter writer = new XmlTextWriter(intWriter);
+            var serializer   = new XmlSerializer(typeof(License));
+            serializer.Serialize(writer, license);
+
+            return intWriter.ToString();
+        }
+
+        /// <summary>
+        /// Получение xml разрешения из подписи
+        /// </summary>
+        /// <param name="licenseId">Идентификатора разрешения в SharePoint</param>
+        /// <param name="web">Объект SPWeb</param>
+        /// <returns>Строка с xml</returns>
+        public static string GetLicenseSavedXml(int licenseId, SPWeb web)
+        {
+            SPList spList = web.GetListOrBreak("Lists/LicenseList");
+            SPListItem spItem = spList.GetItemOrBreak(licenseId);
+            var license = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
+
+            return GetLicenseSavedXml(license);
+        }
+
+        /// <summary>
+        /// Получение xml разрешения из подписи
+        /// </summary>
+        /// <param name="license">Объект разрешения (BCS)</param>
+        /// <returns></returns>
+        public static string GetLicenseSavedXml(License license)
+        {
+            var savedXml = String.Empty;
+            if (!String.IsNullOrEmpty(license.Signature))
+            {
+                XDocument xdoc = XDocument.Parse(license.Signature);
+                var licenseNode = xdoc.Descendants().Where(n => n.Name.LocalName == "License").FirstOrDefault();
+                if (licenseNode != null)
+                {
+                    savedXml = licenseNode.ToString();
+                }
+            }
+
+            return savedXml;
+        }
+
+        public static License GetLicense(int? id)
+        {
+            if (id == null || id == 0)
+                throw new Exception("Item id must be specified");
+
+            var item = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                contentType = "License",
+                lob = BCS.LOBTaxiSystemName,
+                ns = BCS.LOBTaxiSystemNamespace,
+                methodName = "ReadLicenseItem",
+                methodType = MethodInstanceType.SpecificFinder
+            }, id);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Получение списка свойств объекта разрешения (BCS), которые необходимо сравнивать с клоном в SharePoint на равенство
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<MemberInfo> GetLicenseFieldsToCompare()
+        {
+            Func<MemberInfo, bool> predicate = (mi) => 
+            {
+                var xmlAttrib = mi.GetCustomAttribute<XmlElementAttribute>();
+                var spAttrib = mi.GetCustomAttribute<SharepointFieldAttribute>();
+
+                return xmlAttrib != null && spAttrib != null;
+            };
+
+            Type licenseType = typeof(License);
+
+            return 
+                licenseType.GetFields().Where(predicate)
+                .Concat(
+                licenseType.GetProperties().Where(predicate));
         }
     }
 }

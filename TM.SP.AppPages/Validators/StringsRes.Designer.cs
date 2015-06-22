@@ -124,7 +124,7 @@ namespace TM.SP.AppPages.Validators {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Отсутствует действующее разрешение для аннулирования.
+        ///   Looks up a localized string similar to Отсутствует действующее разрешение для аннулирования с соответствующими параметрами.
         /// </summary>
         internal static string noActingLicenseForCancellationErr {
             get {
@@ -133,7 +133,7 @@ namespace TM.SP.AppPages.Validators {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Отсутствует действующее разрешение для выдачи дубликата.
+        ///   Looks up a localized string similar to Отсутствует действующее разрешение для выдачи дубликата с соответствующими параметрами.
         /// </summary>
         internal static string noActingLicenseForDuplicateErr {
             get {
@@ -142,7 +142,7 @@ namespace TM.SP.AppPages.Validators {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Отсутствует действующее разрешение для переоформления.
+        ///   Looks up a localized string similar to Отсутствует действующее разрешение для переоформления с соответствующими параметрами.
         /// </summary>
         internal static string noActingLicenseForRenewErr {
             get {

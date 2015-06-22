@@ -1222,7 +1222,7 @@ namespace TM.SP.AppPages
 
                                         var parentLicense = licenseItems[0];
                                         var parentLicenseExt =
-                                            LicenseService.GetLicense(Convert.ToInt32(parentLicense["Tm_LicenseExternalId"]));
+                                            LicenseHelper.GetLicense(Convert.ToInt32(parentLicense["Tm_LicenseExternalId"]));
 
                                         licenseDraft.RegNumber = parentLicenseExt.RegNumber;
                                         licenseDraft.CreationDate = parentLicenseExt.CreationDate;
@@ -1438,7 +1438,7 @@ namespace TM.SP.AppPages
                             {
                                 var externalId = LicenseHelper.PromoteDraftFor(safeWeb, incomeRequestId, taxiItem.ID);
                                 // immediately execute migration on item
-                                var license = LicenseService.GetLicense(externalId);
+                                var license = LicenseHelper.GetLicense(externalId);
                                 LicenseService.MigrateItem(licenseList, license);
                                 externalIdList.Add(externalId);
                             }

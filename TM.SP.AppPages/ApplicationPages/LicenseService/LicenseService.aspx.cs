@@ -6,6 +6,8 @@
 
 using System.Web;
 using System.Linq;
+using Microsoft.XmlDiffPatch;
+using TM.SP.AppPages.Validators;
 // ReSharper disable CheckNamespace
 
 
@@ -27,6 +29,7 @@ namespace TM.SP.AppPages
     using TP.SP.DataMigration;
     using Microsoft.BusinessData.MetadataModel;
     using CamlexNET;
+    using System.Xml.Linq;
 
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class LicenseService : LayoutsPageBase
@@ -74,7 +77,7 @@ namespace TM.SP.AppPages
             SPList spList     = web.GetListOrBreak("Lists/LicenseList");
             SPListItem spItem = spList.GetItemOrBreak(licenseId);
 
-            var parentLicense = GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
+            var parentLicense = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
             var newLicenseBefore = parentLicense.Clone();
             contextAction(newLicenseBefore);
@@ -105,7 +108,7 @@ namespace TM.SP.AppPages
             SPList spList     = web.GetListOrBreak("Lists/LicenseList");
             SPListItem spItem = spList.GetItemOrBreak(licenseId);
 
-            var license = GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
+            var license = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
             var newLicense = license.Clone();
             contextAction(newLicense);
@@ -120,22 +123,6 @@ namespace TM.SP.AppPages
             
             return intWriter.ToString();
         }
-        public static License GetLicense(int? id)
-        {
-            if (id == null || id == 0)
-                throw new Exception("Item id must be specified");
-
-            var item = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                contentType = "License",
-                lob         = BCS.LOBTaxiSystemName,
-                ns          = BCS.LOBTaxiSystemNamespace,
-                methodName  = "ReadLicenseItem",
-                methodType  = MethodInstanceType.SpecificFinder
-            }, id);
-
-            return item;
-        }
         #endregion
 
         #region [getting xml methods]
@@ -144,8 +131,8 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom; ;
-                l.TillSuspensionDate = dateTo.IsJavascriptNullDate() ? (DateTime?)null : dateTo;
+                l.OutputDate         = GetUnspecifiedDate(dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom);
+                l.TillSuspensionDate = GetUnspecifiedDate(dateTo.IsJavascriptNullDate() ? DateTime.Now: dateTo);
                 l.SuspensionReason   = Uri.UnescapeDataString(reason);
                 l.Status             = 2;
             });
@@ -155,7 +142,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate         = GetUnspecifiedDate(dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom);
                 l.CancellationReason = Uri.UnescapeDataString(reason);
                 l.Status             = 3;
             });
@@ -165,11 +152,11 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate   = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate   = GetUnspecifiedDate(dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom);
                 l.ChangeReason = Uri.UnescapeDataString(reason);
                 // setting status
-                var parent     = GetLicense(l.Parent);
-                var grandpa    = GetLicense(parent.Parent);
+                var parent     = LicenseHelper.GetLicense(l.Parent);
+                var grandpa    = LicenseHelper.GetLicense(parent.Parent);
                 l.Status       = grandpa.Status;
             });
         }
@@ -178,7 +165,7 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate = DateTime.Now;
+                l.OutputDate = GetUnspecifiedDate(DateTime.Now);
                 l.Obsolete = obsolete;
             });
         }
@@ -187,11 +174,39 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate = DateTime.Now;
+                l.OutputDate = GetUnspecifiedDate(DateTime.Now);
                 l.DisableGibddSend = disabled;
             });
         }
         #endregion
+
+
+        private static DateTime GetDateTimeFromXml(string sourceXml, string tagName)
+        {
+            var xmlDoc = XDocument.Parse(sourceXml);
+            var dateXml = xmlDoc.Descendants().Where(n => n.Name.LocalName == tagName).FirstOrDefault();
+            if (dateXml == null)
+                throw new Exception(String.Format("В предоставленном xml нет тэга {0}", tagName));
+
+            DateTime parsedDate;
+            if (!DateTime.TryParse(dateXml.Value, out parsedDate))
+                throw new Exception(String.Format("Невозможно получить значение типа 'Дата' из тэга {0}", tagName));
+
+            return parsedDate;
+        }
+
+        private static DateTime GetUnspecifiedDate(DateTime date)
+        {
+            return new DateTime(
+                date.Year, 
+                date.Month, 
+                date.Day, 
+                date.Hour, 
+                date.Minute, 
+                date.Second, 
+                0, 
+                DateTimeKind.Unspecified);
+        }
 
         #region [save signed methods]
         /// <summary>
@@ -205,58 +220,84 @@ namespace TM.SP.AppPages
         [WebMethod]
         public static void SaveSignedSuspension(int licenseId, DateTime dateFrom, DateTime dateTo, string reason, string signature)
         {
+            var signedXml = Uri.UnescapeDataString(signature);
+            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+            var tillsuspDate = GetDateTimeFromXml(signedXml, "tillsuspensiondate");
+
             SaveSigned(licenseId, l =>
             {
-                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
-                l.TillSuspensionDate = dateTo.IsJavascriptNullDate() ? (DateTime?)null : dateTo;
+                l.OutputDate         = outputDate;
+                l.ChangeDate         = changeDate;
+                l.TillSuspensionDate = tillsuspDate;
                 l.SuspensionReason   = Uri.UnescapeDataString(reason);
-                l.Signature          = Uri.UnescapeDataString(signature);
+                l.Signature          = signedXml;
                 l.Status             = 2;
             });
         }
         [WebMethod]
         public static void SaveSignedCancellation(int licenseId, DateTime dateFrom, string reason, string signature)
         {
+            var signedXml = Uri.UnescapeDataString(signature);
+            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+
             SaveSigned(licenseId, l =>
             {
-                l.OutputDate         = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate         = outputDate;
+                l.ChangeDate         = changeDate;
                 l.CancellationReason = Uri.UnescapeDataString(reason);
-                l.Signature          = Uri.UnescapeDataString(signature);
+                l.Signature          = signedXml;
                 l.Status             = 3;
             });
         }
         [WebMethod]
         public static void SaveSignedRenewal(int licenseId, DateTime dateFrom, string reason, string signature)
         {
+            var signedXml = Uri.UnescapeDataString(signature);
+            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+
             SaveSigned(licenseId, l =>
             {
-                l.OutputDate   = dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom;
+                l.OutputDate   = outputDate;
+                l.ChangeDate   = changeDate;
                 l.ChangeReason = Uri.UnescapeDataString(reason);
-                l.Signature    = Uri.UnescapeDataString(signature);
+                l.Signature    = signedXml;
                 // setting status
-                var parent     = GetLicense(l.Parent);
-                var grandpa    = GetLicense(parent.Parent);
+                var parent     = LicenseHelper.GetLicense(l.Parent);
+                var grandpa    = LicenseHelper.GetLicense(parent.Parent);
                 l.Status       = grandpa.Status;
             });
         }
         [WebMethod]
         public static void SaveSignedMakeObsolete(int licenseId, bool obsolete, string signature)
         {
+            var signedXml = Uri.UnescapeDataString(signature);
+            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+
             SaveSigned(licenseId, l =>
             {
-                l.OutputDate = DateTime.Now;
-                l.Obsolete  = obsolete;
-                l.Signature = Uri.UnescapeDataString(signature);
+                l.OutputDate = outputDate;
+                l.ChangeDate = changeDate;
+                l.Obsolete   = obsolete;
+                l.Signature  = signedXml;
             });
         }
         [WebMethod]
         public static void SaveSignedDisableGibdd(int licenseId, bool disabled, string signature)
         {
+            var signedXml = Uri.UnescapeDataString(signature);
+            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+
             SaveSigned(licenseId, l =>
             {
-                l.OutputDate = DateTime.Now;
+                l.OutputDate       = outputDate;
+                l.ChangeDate       = changeDate;
                 l.DisableGibddSend = disabled;
-                l.Signature = Uri.UnescapeDataString(signature);
+                l.Signature        = signedXml;                
             });
         }
         #endregion
@@ -347,6 +388,36 @@ namespace TM.SP.AppPages
                         throw new Exception("Необходимо указать причину");
                 });
         }
+
+        /// <summary>
+        /// Проверка целостности данных, соответствия текущих данных разрешения его состоянию на момент подписания
+        /// </summary>
+        /// <param name="licenseId">Идентификатор разрешения</param>
+        /// <returns>Булево значение, false - данные не соответствуют</returns>
+        [WebMethod]
+        public static dynamic ValidateLicense(int licenseId)
+        {
+            bool valid = false;
+            var catchData = 
+                Utility.WithCatchExceptionOnWebMethod("Ошибка при проверке разрешения", () =>
+                Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
+                {
+                    IValidator validator = new LicenseSPDataValidator(serviceContextWeb, licenseId);
+                    valid = validator.Execute(null);
+                }));
+
+            var payLoad = valid;
+            var catchDataObj = catchData as object;
+            var errorDataProp = catchDataObj.GetType().GetProperty("Error");
+            var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
+
+            return new
+            {
+                Error = errorData,
+                Data = payLoad
+            };
+        }
+
         #endregion
     }
 }

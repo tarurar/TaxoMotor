@@ -72,6 +72,11 @@ module TM.SP_.License {
             return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedDisableGibdd"));
         }
 
+        public ValidateLicense(): JQueryXHR {
+            return this.PostWebMethod<RequestParams.LicenseCommonParam>(
+                RequestParams.LicenseCommonParam, null, "ValidateLicense");
+        }
+
         public ChangeObsoleteAttribute(obsolete: boolean, success: () => void, fail: (msg: string) => void): void
         {
             this.EnsureCertificate((data) => {

@@ -139,13 +139,13 @@
     <value>Аннулировано</value>
   </data>
   <data name="noActingLicenseForCancellationErr" xml:space="preserve">
-    <value>Отсутствует действующее разрешение для аннулирования</value>
+    <value>Отсутствует действующее разрешение для аннулирования с соответствующими параметрами</value>
   </data>
   <data name="noActingLicenseForDuplicateErr" xml:space="preserve">
-    <value>Отсутствует действующее разрешение для выдачи дубликата</value>
+    <value>Отсутствует действующее разрешение для выдачи дубликата с соответствующими параметрами</value>
   </data>
   <data name="noActingLicenseForRenewErr" xml:space="preserve">
-    <value>Отсутствует действующее разрешение для переоформления</value>
+    <value>Отсутствует действующее разрешение для переоформления с соответствующими параметрами</value>
   </data>
   <data name="noDeclarantOgrnErr" xml:space="preserve">
     <value>В обращении не указан заявитель или у заявителя не указан ОГРН</value>

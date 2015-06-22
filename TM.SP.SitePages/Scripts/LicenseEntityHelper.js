@@ -93,6 +93,9 @@ var TM;
                     param.signature = encodeURIComponent(signature);
                     return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedDisableGibdd"));
                 };
+                LicenseEntityHelper.prototype.ValidateLicense = function () {
+                    return this.PostWebMethod(RequestParams.LicenseCommonParam, null, "ValidateLicense");
+                };
                 LicenseEntityHelper.prototype.ChangeObsoleteAttribute = function (obsolete, success, fail) {
                     var _this = this;
                     this.EnsureCertificate(function (data) {

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code initially generated with SharePoint Software Factory, Version 4.1 , spsf.codeplex.com -->
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+	<CustomAction
+		Id="Ribbon.TaxoMotor.LicenseCheckSignature"
+		Location="CommandUI.Ribbon.DisplayForm"
+		Title="Проверить подпись"
+		RegistrationType="List"
+		RegistrationId="{$ListId:Lists/LicenseList;}">
+		<CommandUIExtension>
+			<CommandUIDefinitions>
+				<CommandUIDefinition
+					Location="Ribbon.ListForm.Display.Actions.Controls._children">
+					<Button
+						Id="Ribbon.TaxoMotor.LicenseCheckSignature.Button"
+						Command="TaxoMotor.LicenseCheckSignature.ButtonCommand"
+						Sequence="120"
+						Image16by16="/_layouts/15/TM.SP.AppPages/Images/license-check-signature-16.png"
+						Image32by32="/_layouts/15/TM.SP.AppPages/Images/license-check-signature-32.png"
+						LabelText="Проверить подпись"
+						TemplateAlias="o1" />
+				</CommandUIDefinition>
+			</CommandUIDefinitions>
+			<CommandUIHandlers>
+				<CommandUIHandler
+					Command="TaxoMotor.LicenseCheckSignature.ButtonCommand"
+					CommandAction="javascript:(function(){
+            SP.UI.Status.removeAllStatus(true);
+            var listId = decodeURIComponent(JSRequest.QueryString['List']);
+            var itemId = decodeURIComponent(JSRequest.QueryString['ID']);
+
+            TM.SP_.License.LicenseEntityHelper.Create(TM.SP_.License.LicenseEntityHelper, listId, itemId, function(helper) {
+  
+              helper.ValidateLicense().success(function(response) {
+              var successMsg = 'Данные разрешения не изменялись с момента подписания';
+              var failMsg = 'Данные разрешения были изменены с момента подписания';
+	
+	            if (response &amp;&amp; response.d &amp;&amp; response.d.Data) {
+                var successStatus = SP.UI.Status.addStatus(successMsg);
+		            SP.UI.Status.setStatusPriColor(successStatus, 'green');
+	            } else {
+                var failStatus = SP.UI.Status.addStatus(failMsg);
+		            SP.UI.Status.setStatusPriColor(failStatus, 'red');
+	            }
+            }).fail(function(jqXhr, status, error) {
+              var response = $.parseJSON(jqXhr.responseText).d;
+              console.error('Exception Message: ' + response.Error.SystemMessage);
+              console.error('Exception StackTrace: ' + response.Error.StackTrace);
+          
+	            var failStatus = SP.UI.Status.addStatus(response.Error.UserMessage);
+	            SP.UI.Status.setStatusPriColor(failStatus, 'red');
+            });
+
+          }, function() {
+	          var failStatus = SP.UI.Status.addStatus('Ошибка при создании сервисного объекта LicenseEntityHelper');
+	          SP.UI.Status.setStatusPriColor(failStatus, 'red');
+          });
+          
+          })();" />
+			</CommandUIHandlers>
+		</CommandUIExtension>
+	</CustomAction>
+</Elements>

@@ -87,6 +87,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rd\WebServiceMO.dll</HintPath>
     </Reference>
+    <Reference Include="XmlDiffPatch, Version=1.0.8.28, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\XMLDiffPatch.1.0.8.28\lib\net\XmlDiffPatch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -184,6 +188,8 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Print\TemplatedLicenseDocumentBuilder.cs" />
     <Compile Include="Timers\MoTimer.cs" />
     <Compile Include="Timers\OdopmTimer.cs" />
+    <Compile Include="Validators\LicenseDataValidator.cs" />
+    <Compile Include="Validators\LicenseSPDataValidator.cs" />
     <Compile Include="Validators\Predicates\V2\GetFor.cs" />
     <Compile Include="Validators\Predicates\V2\IncomeRequestNew.cs" />
     <Compile Include="Validators\StringsRes.Designer.cs">
@@ -215,6 +221,8 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Content Include="3rd\DigitalSignature.dll" />
     <Content Include="3rd\Ppr.Routine.dll" />
     <Content Include="Layouts\TM.SP.AppPages\Images\filter-32.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-check-signature-16.png" />
+    <Content Include="Layouts\TM.SP.AppPages\Images\license-check-signature-32.png" />
     <Content Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx" />
     <Content Include="WebParts\IncomRequestFilterWebPart\WebPartIcon_IncomRequestFilterWebPart.gif" />
     <Content Include="WebParts\LicenseFilterWebPart\Elements.xml" />
@@ -414,4 +422,8 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

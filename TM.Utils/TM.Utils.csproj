@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\SharepointFieldAttribute.cs" />
     <Compile Include="BCS.cs" />
     <Compile Include="Calendar.cs" />
     <Compile Include="CamlexPatch.cs" />

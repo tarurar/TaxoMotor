@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using System.Data;
 using System.ComponentModel;
 using Microsoft.SharePoint;
+using System.Reflection;
 
 
 namespace TM.Utils
@@ -322,6 +323,19 @@ namespace TM.Utils
             return false;
         }
 
+        public static Type GetFieldType(this MemberInfo mi)
+        {
+            Type result = null;
+
+            if (mi is FieldInfo)
+            {
+                result = ((FieldInfo)mi).FieldType;
+            } else if (mi is PropertyInfo) {
+                result = ((PropertyInfo)mi).PropertyType;
+            }
+
+            return result;
+        }
 
     }
 }
