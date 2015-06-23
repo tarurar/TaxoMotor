@@ -46,10 +46,10 @@ namespace WebClientGIBDD
                 using (var tmData = new TmDataModelContainer(DBConnectionString))
                 {
                     var licenseids = tmData.Database.SqlQuery<int>(
-                        @"      create table #tt(id uniqueidentifier,licenseid int, recordid uniqueidentifier)
+                        @"      create table #tt(id uniqueidentifier,licenseid int, recordid decimal(18,0))
                                  
                                 insert into #tt(id, licenseid, recordId)
-                                select NEWID(), license.Id, NEWID()
+                                select NEWID(), license.Id, license.RootParent
                                 from License 
                                     left join SpecialVehiclesRegister svr on license.id = svr.License_id
                                 where svr.License_id is null and license.status < 4;
@@ -76,13 +76,14 @@ namespace WebClientGIBDD
                         var newSvrs = (from tm in tmData.License
                                        join svr in tmData.SpecialVehiclesRegister on tm.Id equals svr.License_id
                                        where nextIds.Contains(tm.Id) && tm.Status < 4
-                                       select new { License = tm, SpecialVehReg = svr }).ToList();
+                                       select new { License = tm, SpecialVehReg = svr}).ToList();
                         foreach (var newSvr in newSvrs)
                         {
-                            recordId = newSvr.SpecialVehReg.RecordId;
+                            recordId = Guid.NewGuid();
                             try
                             {
-                                var package = GetDataPackage(newSvr.License, newSvr.SpecialVehReg, minDate);
+                                var package = GetDataPackage(newSvr.License, newSvr.SpecialVehReg, minDate, recordId);
+                                newSvr.SpecialVehReg.PackageId = recordId.ToString();
                                 result.AddRange(srv.putDataPackages(package));
                             }
                             catch (Exception ex)
@@ -90,7 +91,6 @@ namespace WebClientGIBDD
                                 newSvr.SpecialVehReg.Exception = ex.Message;
                             }
                         }
-                        tmData.SaveChanges();
 
                         UpdateSpecialTransportRegister(result, newSvrs.Select(x => x.SpecialVehReg).ToList(), tmData);
                     }
@@ -98,7 +98,8 @@ namespace WebClientGIBDD
             }
         }
 
-        private static DataPackagesType GetDataPackage(License l, SpecialVehiclesRegister svr, DateTime minDate )
+
+        private static DataPackagesType GetDataPackage(License l, SpecialVehiclesRegister svr, DateTime minDate, Guid? packageId)
         {
             return new DataPackagesType
                 {
@@ -110,8 +111,7 @@ namespace WebClientGIBDD
                         {
                             new DataPackageType()
                                 {
-
-                                    PackageId = svr.RecordId.ToString(),
+                                    PackageId = packageId.ToString(),
                                     PackageCreatedDate = DateTime.Now,
                                     Records = new RecordsType
                                         {
@@ -170,8 +170,8 @@ namespace WebClientGIBDD
         {
             foreach (var res in result)
             {
-                var recordId = new Guid(res.PackageId);
-                var svr = newSvrs.FirstOrDefault(x => x.RecordId == recordId);
+                var recordId = res.PackageId;
+                var svr = newSvrs.FirstOrDefault(x => x.PackageId == recordId);
                 if (svr == null)
                     continue;
 
@@ -181,7 +181,8 @@ namespace WebClientGIBDD
                 svr.PackageId = res.PackageId;
                 if (res.RecordsStatuses != null && res.RecordsStatuses.RecordStatus != null)
                 {
-                    var stat = res.RecordsStatuses.RecordStatus.FirstOrDefault(x => new Guid(x.RecordId) == svr.RecordId);
+                    var rec = (svr.RecordId).ToString();
+                    var stat = res.RecordsStatuses.RecordStatus.FirstOrDefault(x => x.RecordId == rec);
                     if (stat != null)
                     {
                         svr.RecordStatusCode = stat.RecordStatusCode.ToString();
@@ -259,7 +260,6 @@ namespace WebClientGIBDD
 
                 using (var tmData = new TmDataModelContainer(DBConnectionString))
                 {
-                    /*tmData.Database.Connection.ConnectionString = */;
                     var allCancelled = new List<ResponseLicense>();
                     foreach (var own in new[] {"TAXOMOTOR_LICTX", "TAXOMOTOR_YLWTX"})
                     {

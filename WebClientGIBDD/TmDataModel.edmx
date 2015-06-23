@@ -161,7 +161,6 @@
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="License_id" Type="int" />
-          <Property Name="RecordId" Type="uniqueidentifier" />
           <Property Name="PackageId" Type="nvarchar" MaxLength="256" />
           <Property Name="ProccessingStageCode" Type="nvarchar" MaxLength="100" />
           <Property Name="ProcessingStageDate" Type="datetime" />
@@ -169,6 +168,7 @@
           <Property Name="RecordStatusCode" Type="nvarchar" MaxLength="15" />
           <Property Name="RecordStatusText" Type="nvarchar" MaxLength="512" />
           <Property Name="Exception" Type="nvarchar(max)" />
+          <Property Name="RecordId" Type="decimal" />
         </EntityType>
         <Association Name="FK_License_ToLicense_Parent">
           <End Role="License" Type="Хранилище TM.DataModel.License" Multiplicity="0..1" />
@@ -352,7 +352,7 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="License_id" Type="Int32" />
-          <Property Name="RecordId" Type="Guid" />
+          <Property Name="RecordId" Type="Decimal" />
           <Property Name="PackageId" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ProccessingStageCode" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="ProcessingStageDate" Type="DateTime" Precision="3" />

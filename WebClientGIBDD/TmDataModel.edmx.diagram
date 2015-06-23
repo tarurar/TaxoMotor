@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f7f594c17f3c42f69c1f8e836c14f3c1" Name="Диаграмма1" ZoomLevel="46">
+      <Diagram DiagramId="f7f594c17f3c42f69c1f8e836c14f3c1" Name="Диаграмма1" ZoomLevel="77">
         <EntityTypeShape EntityType="TM.DataModel.ExcludeVehicles" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TM.DataModel.License" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TM.DataModel.SpecialVehiclesRegister" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
         <AssociationConnector Association="TM.DataModel.FK_License_ToLicense_Parent" ManuallyRouted="false" />
         <AssociationConnector Association="TM.DataModel.FK_License_ToLicense_RootParent" ManuallyRouted="false" />
         <AssociationConnector Association="TM.DataModel.FK_SpecialVehiclesRegister_License" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="TM.DataModel.AppLog" Width="1.5" PointX="0.548762826504541" PointY="15.19657009057541" />
+        <EntityTypeShape EntityType="TM.DataModel.AppLog" Width="1.5" PointX="4.625" PointY="14.875" />
         <EntityTypeShape EntityType="TM.DataModel.GibddServiceErrors" Width="1.5" PointX="4" PointY="7.375" />
       </Diagram>
     </edmx:Diagrams>

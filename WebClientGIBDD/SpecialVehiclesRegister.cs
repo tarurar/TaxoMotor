@@ -16,7 +16,7 @@ namespace WebClientGIBDD
     {
         public System.Guid ID { get; set; }
         public Nullable<int> License_id { get; set; }
-        public Nullable<System.Guid> RecordId { get; set; }
+        public Nullable<decimal> RecordId { get; set; }
         public string PackageId { get; set; }
         public string ProccessingStageCode { get; set; }
         public Nullable<System.DateTime> ProcessingStageDate { get; set; }
