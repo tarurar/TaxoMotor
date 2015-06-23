@@ -182,6 +182,36 @@ namespace TM.SP.AppPages
         }
 
         [WebMethod]
+        public static dynamic UpdateSQLViews()
+        {
+            return Utility.WithCatchExceptionOnWebMethod("Обновление представлений SQL", () =>
+                Utility.WithSPServiceContext(SPContext.Current, web =>
+                {
+                    UpdateSQLViews(web);
+                }));
+        }
+
+        public static void UpdateSQLViews(SPWeb web)
+        {
+            var ctx = SPContext.GetContext(web);
+
+            Utility.WithSPServiceContext(ctx, serviceWeb => DoUpdateSQLViews(serviceWeb));
+        }
+
+        private static void DoUpdateSQLViews(SPWeb web)
+        {
+            var ssLocalDbAccessAppId = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBWriterAccessSingleSignOnAppId")).ToString();
+
+            var storeUserId   = Security.GetSecureStoreUserNameCredential(ssLocalDbAccessAppId);
+            var storePassword = Security.GetSecureStorePasswordCredential(ssLocalDbAccessAppId);
+            var storeHost     = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBHost")).ToString();
+            var storeDbName   = Config.GetConfigValue(Config.GetConfigItem(web, "LocalDBName")).ToString();
+
+            var updater = new ViewUpdater.ViewUpdater(storeHost, storeDbName, storeUserId, storePassword);
+            updater.UpdateViews();
+        }
+
+        [WebMethod]
         public static dynamic GetPtsRequestDetails(int taxiId, int licenseId)
         {
             string payLoad = String.Empty;

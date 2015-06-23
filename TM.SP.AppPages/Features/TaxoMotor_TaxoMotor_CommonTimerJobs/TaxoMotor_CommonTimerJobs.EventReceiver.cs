@@ -22,6 +22,7 @@ namespace TM.SP.AppPages
     {
         private static readonly string OdopmJobName = "TaxoMotorOdopmJob";
         private static readonly string MoJobName = "TaxoMotorMoJob";
+        private static readonly string UpdateSqlViewsJobName = "TaxoMotorUpdateSqlViewsJob";
 
         public bool DeleteExistingJob(string jobName, SPWebApplication site)
         {
@@ -59,6 +60,7 @@ namespace TM.SP.AppPages
                     {
                         DeleteExistingJob(OdopmJobName, webApp);
                         DeleteExistingJob(MoJobName, webApp);
+                        DeleteExistingJob(UpdateSqlViewsJobName, webApp);
 
                         try
                         {
@@ -85,6 +87,24 @@ namespace TM.SP.AppPages
                             {
                                 BeginHour = 4,
                                 BeginMinute = 0,
+                                EndHour = 4,
+                                EndMinute = 15
+                            };
+                            job.Schedule = schedule;
+                            job.Update();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(String.Format("Couldn't create timer job definition for {0}. Details: {1}", MoJobName, ex.Message));
+                        }
+
+                        try
+                        {
+                            UpdateViewsTimer job = new UpdateViewsTimer(UpdateSqlViewsJobName, webApp);
+                            SPDailySchedule schedule = new SPDailySchedule
+                            {
+                                BeginHour = 2,
+                                BeginMinute = 15,
                                 EndHour = 4,
                                 EndMinute = 15
                             };
@@ -122,6 +142,7 @@ namespace TM.SP.AppPages
                         {
                             DeleteExistingJob(OdopmJobName, webApp);
                             DeleteExistingJob(MoJobName, webApp);
+                            DeleteExistingJob(UpdateSqlViewsJobName, webApp);
                         }
                     });
                 }

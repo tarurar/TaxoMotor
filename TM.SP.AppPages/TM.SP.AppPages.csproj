@@ -189,6 +189,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Print\TemplatedLicenseDocumentBuilder.cs" />
     <Compile Include="Timers\MoTimer.cs" />
     <Compile Include="Timers\OdopmTimer.cs" />
+    <Compile Include="Timers\UpdateViewsTimer.cs" />
     <Compile Include="Validators\LicenseDataValidator.cs" />
     <Compile Include="Validators\LicenseSignatureValidator.cs" />
     <Compile Include="Validators\LicenseSPDataValidator.cs" />
@@ -388,6 +389,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <ProjectReference Include="..\TP.SP.DataMigration\TP.SP.DataMigration.csproj">
       <Project>{484e3049-16b0-4d2d-9dce-58159469427b}</Project>
       <Name>TP.SP.DataMigration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UpdateViews\ViewUpdater.csproj">
+      <Project>{05102ba6-4eaa-4b25-84b0-7121ffcb6183}</Project>
+      <Name>ViewUpdater</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebClientGIBDD\WebClientGIBDD.csproj">
       <Project>{5200f36c-153c-46c5-b66d-8fc60f3afc16}</Project>

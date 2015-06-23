@@ -18,6 +18,7 @@
     <customAssembly location="EntityFramework.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll" />
     <customAssembly location="EntityFramework.SqlServer.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll" />
     <customAssembly location="XmlDiffPatch.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\XMLDiffPatch.1.0.8.28\lib\net\XmlDiffPatch.dll" />
+    <projectOutputAssembly location="UpdateViews.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\UpdateViews\ViewUpdater.csproj" />
   </assemblies>
   <features>
     <featureReference itemId="f8e734b9-7306-4d11-8e7c-9145fe72ef2b" />
