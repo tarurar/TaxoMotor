@@ -72,6 +72,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -189,6 +190,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Timers\MoTimer.cs" />
     <Compile Include="Timers\OdopmTimer.cs" />
     <Compile Include="Validators\LicenseDataValidator.cs" />
+    <Compile Include="Validators\LicenseSignatureValidator.cs" />
     <Compile Include="Validators\LicenseSPDataValidator.cs" />
     <Compile Include="Validators\Predicates\V2\GetFor.cs" />
     <Compile Include="Validators\Predicates\V2\IncomeRequestNew.cs" />

@@ -410,7 +410,7 @@ module TM.SP_.IncomeRequest {
 
             if (oCertificate) {
                 xml =
-                "<?xml version=\"1.0\"?>\n" +
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<Envelope xmlns=\"urn:envelope\">\n" +
                 xml +
                 " \n" +

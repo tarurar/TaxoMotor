@@ -10,7 +10,7 @@
 	,[RootParent]
 	,[Status]
 	,[Document]
-	,[Signature]
+	,[SignatureBinary]
 	,[TaxiId]
 	,[Lfb]
 	,[JuridicalAddress]

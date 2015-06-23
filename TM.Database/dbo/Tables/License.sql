@@ -13,7 +13,7 @@
     [RootParent] INT NULL, 
     [Status] INT NULL, 
     [Document] XML NULL, 
-    [Signature] XML NULL, 
+    [Signature] AS CAST(SignatureBinary as XML), 
     [TaxiId] INT NULL, 
     [Lfb] NVARCHAR(128) NULL, 
     [JuridicalAddress] NVARCHAR(255) NULL, 
@@ -157,5 +157,7 @@
     -- Признак отмены отправки данных в ГИБДД
     [DisableGibddSend] BIT NULL
     CONSTRAINT [FK_License_ToLicense_Parent] FOREIGN KEY ([Parent]) REFERENCES [dbo].[License]([Id]),
+	-- Бинарное представление подписи
+    [SignatureBinary] VARBINARY(MAX) NULL, 
     CONSTRAINT [FK_License_ToLicense_RootParent] FOREIGN KEY ([RootParent]) REFERENCES [dbo].[License]([Id]) 
 )

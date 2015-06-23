@@ -58,7 +58,27 @@ namespace TM.SP.BCSModels.Taxi
         [XmlIgnore]
         public String Document { get; set; }
         [XmlIgnore]
-        public String Signature { get; set; }
+        public String Signature
+        {
+            get
+            {
+                var binary = this.SignatureBinary;
+                return binary == null ? String.Empty : Encoding.UTF8.GetString(binary);
+            }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    this.SignatureBinary = null;
+                }
+                else
+                {
+                    this.SignatureBinary = Encoding.UTF8.GetBytes(value);
+                }
+            }
+        }
+        [XmlIgnore]
+        public byte[] SignatureBinary { get; set; }
         [XmlIgnore]
         public int? TaxiId { get; set; }
         [XmlElement("lfb"), SharepointField("Tm_OrgLfb")]

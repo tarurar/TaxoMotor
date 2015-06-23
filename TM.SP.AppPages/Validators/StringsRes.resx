@@ -174,4 +174,22 @@
   <data name="requestExistsForAny" xml:space="preserve">
     <value>В другом обращении имеется ТС со статусом "Решено положительно", по которому не завершена работа</value>
   </data>
+  <data name="SignatureCheckUserError" xml:space="preserve">
+    <value>Подпись некорректна, обратитесь в службу технической поддержки</value>
+  </data>
+  <data name="SignatureCheckUserSuccessFmt" xml:space="preserve">
+    <value>Подпись корректна. Подписал {0}</value>
+  </data>
+  <data name="SPCompareDeveloperError" xml:space="preserve">
+    <value>Данные в SharePoint отличаются от данных в подписанном XML</value>
+  </data>
+  <data name="SQLCompareDeveloperError" xml:space="preserve">
+    <value>Данные в SQL отличаются от данных в подписанном XML</value>
+  </data>
+  <data name="SQLCompareUserError" xml:space="preserve">
+    <value>Данные не соответствуют подписанным, обратитесь в службу технической поддержки</value>
+  </data>
+  <data name="SQLCompareUserSuccess" xml:space="preserve">
+    <value>Данные соответствуют подписанным</value>
+  </data>
 </root>

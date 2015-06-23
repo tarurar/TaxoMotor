@@ -1,13 +1,3 @@
-USE [TM.Data]
-GO
-
-/****** Object:  Table [dbo].[SpecialVehiclesRegister]    Script Date: 05.06.2015 1:05:42 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[SpecialVehiclesRegister](
 	[ID] [uniqueidentifier] NOT NULL,
 	[License_id] [int] NULL,

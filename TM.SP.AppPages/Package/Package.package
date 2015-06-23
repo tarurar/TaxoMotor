@@ -8,9 +8,9 @@
     <customAssembly location="Camlex.NET.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll" />
     <projectOutputAssembly location="TP.SP.DataMigration.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\TP.SP.DataMigration\TP.SP.DataMigration.csproj" />
     <customAssembly location="Aspose.Words.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\Aspose\Aspose.Words.dll" />
-    <customAssembly location="ODOPM.dll" deploymentTarget="WebApplication" sourcePath="3rd\ODOPM.dll" />
-    <customAssembly location="WebServiceMO.dll" deploymentTarget="WebApplication" sourcePath="3rd\WebServiceMO.dll" />
-    <customAssembly location="Rkis.Rsmev.ForODOPM.dll" deploymentTarget="WebApplication" sourcePath="3rd\Rkis.Rsmev.ForODOPM.dll" />
+    <customAssembly location="ODOPM.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\ODOPM.dll" />
+    <customAssembly location="WebServiceMO.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\WebServiceMO.dll" />
+    <customAssembly location="Rkis.Rsmev.ForODOPM.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="3rd\Rkis.Rsmev.ForODOPM.dll" />
     <customAssembly location="AppLog.dll" deploymentTarget="WebApplication" sourcePath="3rd\AppLog.dll" />
     <customAssembly location="DigitalSignature.dll" deploymentTarget="WebApplication" sourcePath="3rd\DigitalSignature.dll" />
     <customAssembly location="Ppr.Routine.dll" deploymentTarget="WebApplication" sourcePath="3rd\Ppr.Routine.dll" />

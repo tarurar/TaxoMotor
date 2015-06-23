@@ -9,7 +9,7 @@
 	,[RootParent]
 	,[Status]
 	,[Document]
-	,[Signature]
+	,[SignatureBinary]
 	,[TaxiId]
 	,[Lfb]
 	,[JuridicalAddress]
@@ -102,7 +102,7 @@ VALUES (
 	,@RootParent
 	,@Status
 	,@Document
-	,@Signature
+	,@SignatureBinary
 	,@TaxiId
 	,@Lfb
 	,@JuridicalAddress
@@ -197,7 +197,7 @@ SELECT [Id]
 	,[RootParent]
 	,[Status]
 	,[Document]
-	,[Signature]
+	,[SignatureBinary]
 	,[TaxiId]
 	,[Lfb]
 	,[JuridicalAddress]

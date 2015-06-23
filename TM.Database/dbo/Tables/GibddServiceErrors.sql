@@ -1,13 +1,3 @@
-USE [TM.Data]
-GO
-
-/****** Object:  Table [dbo].[GibddServiceErrors]    Script Date: 08.06.2015 14:19:51 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[GibddServiceErrors](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[ErrorDate] [datetime] NULL,

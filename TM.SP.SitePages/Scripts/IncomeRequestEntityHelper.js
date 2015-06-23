@@ -413,7 +413,7 @@ var TM;
                     var oCertificate = this.SelectedCertificate || (cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */));
                     this.SelectedCertificate = this.SelectedCertificate || oCertificate;
                     if (oCertificate) {
-                        xml = "<?xml version=\"1.0\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + xml + " \n" + "</Envelope>";
+                        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + xml + " \n" + "</Envelope>";
                         var signedData;
                         var errorMsg;
                         try {

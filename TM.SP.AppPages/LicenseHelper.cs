@@ -374,5 +374,21 @@ namespace TM.SP.AppPages
                 .Concat(
                 licenseType.GetProperties().Where(predicate));
         }
+
+        /// <summary>
+        /// Возвращает значение CN из поля SubjectName сертификата
+        /// </summary>
+        /// <param name="subjectName"></param>
+        /// <returns></returns>
+        public static string GetCNFromSubjectName(string subjectName)
+        {
+            var searchString = "CN=";
+            var tokens = subjectName.Split(',');
+            return tokens
+                    .Select(t => t.Trim())
+                    .Where(t => t.StartsWith(searchString))
+                    .Select(t => t.Substring(searchString.Length))
+                    .FirstOrDefault();
+        }
     }
 }

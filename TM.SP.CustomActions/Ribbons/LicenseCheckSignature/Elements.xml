@@ -32,16 +32,29 @@
             TM.SP_.License.LicenseEntityHelper.Create(TM.SP_.License.LicenseEntityHelper, listId, itemId, function(helper) {
   
               helper.ValidateLicense().success(function(response) {
-              var successMsg = 'Данные разрешения не изменялись с момента подписания';
-              var failMsg = 'Данные разрешения были изменены с момента подписания';
-	
-	            if (response &amp;&amp; response.d &amp;&amp; response.d.Data) {
-                var successStatus = SP.UI.Status.addStatus(successMsg);
-		            SP.UI.Status.setStatusPriColor(successStatus, 'green');
-	            } else {
-                var failStatus = SP.UI.Status.addStatus(failMsg);
-		            SP.UI.Status.setStatusPriColor(failStatus, 'red');
-	            }
+                
+                var wholeData = response.d.Data;
+                for (var i = 0; i &lt; wholeData.length; i++) {
+                  var validationData = wholeData[i];
+                  // в случае успешного прохождения проверки выводим сообщение об успехе - в случае если оно задано
+                  if (validationData.Valid) {
+                    if (validationData.SuccessMessage) {
+                      var successStatus = SP.UI.Status.addStatus(validationData.SuccessMessage);
+                      SP.UI.Status.setStatusPriColor(successStatus, 'green');
+                    }
+                  // иначе сообщение о неуспехе - в случае если оно задано
+                  } else {
+                      // всегда выводим информацию для разработчика
+                      if (validationData.DeveloperInfo) {
+                        console.error(validationData.DeveloperInfo);
+                      }
+                      
+                      if (validationData.FailMessage) {
+                        var failStatus = SP.UI.Status.addStatus(validationData.FailMessage);
+                        SP.UI.Status.setStatusPriColor(failStatus, 'red');
+                      }
+                  }
+                }
             }).fail(function(jqXhr, status, error) {
               var response = $.parseJSON(jqXhr.responseText).d;
               console.error('Exception Message: ' + response.Error.SystemMessage);

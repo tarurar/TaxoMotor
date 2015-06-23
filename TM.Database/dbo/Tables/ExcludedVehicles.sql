@@ -1,13 +1,3 @@
-USE [TM.Data]
-GO
-
-/****** Object:  Table [dbo].[ExcludeVehicles]    Script Date: 05.06.2015 1:06:26 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[ExcludeVehicles](
 	[ID] [uniqueidentifier] NOT NULL,
 	[owner] [nvarchar](100) NULL,

@@ -223,6 +223,60 @@ namespace TM.SP.AppPages.Validators {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Подпись некорректна, обратитесь в службу технической поддержки.
+        /// </summary>
+        internal static string SignatureCheckUserError {
+            get {
+                return ResourceManager.GetString("SignatureCheckUserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подпись корректна. Подписал {0}.
+        /// </summary>
+        internal static string SignatureCheckUserSuccessFmt {
+            get {
+                return ResourceManager.GetString("SignatureCheckUserSuccessFmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Данные в SharePoint отличаются от данных в подписанном XML.
+        /// </summary>
+        internal static string SPCompareDeveloperError {
+            get {
+                return ResourceManager.GetString("SPCompareDeveloperError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Данные в SQL отличаются от данных в подписанном XML.
+        /// </summary>
+        internal static string SQLCompareDeveloperError {
+            get {
+                return ResourceManager.GetString("SQLCompareDeveloperError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Данные не соответствуют подписанным, обратитесь в службу технической поддержки.
+        /// </summary>
+        internal static string SQLCompareUserError {
+            get {
+                return ResourceManager.GetString("SQLCompareUserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Данные соответствуют подписанным.
+        /// </summary>
+        internal static string SQLCompareUserSuccess {
+            get {
+                return ResourceManager.GetString("SQLCompareUserSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Гос. номер ТС не совпадает с данными из разрешения.
         /// </summary>
         internal static string stateNumMismatchErr {

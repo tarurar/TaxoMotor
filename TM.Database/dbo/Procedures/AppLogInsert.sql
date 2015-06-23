@@ -12,8 +12,7 @@ AS
 INSERT INTO AppLog
         (ApplicationName,
          Direction,
-         Message,
-         MessageID)
+         Message)
 VALUES
         (@ApplicationName,
          @Direction,

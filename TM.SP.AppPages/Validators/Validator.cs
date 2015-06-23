@@ -7,10 +7,15 @@
     using Microsoft.SharePoint.Security;
 
     #region [interfaces]
-    public interface IValidator
+    public interface IValidatorResult
+    {
+        object GetResult();
+    }
+    public interface IValidator : IValidatorResult
     {
         bool Execute(params object[] paramsList);
     }
+
     #endregion
 
     #region [classes]
@@ -28,6 +33,11 @@
         }
 
         public virtual bool Execute(params object[] paramsList) 
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual object GetResult()
         {
             throw new NotImplementedException();
         }

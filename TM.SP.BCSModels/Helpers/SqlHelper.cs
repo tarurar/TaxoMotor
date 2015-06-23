@@ -44,7 +44,7 @@ namespace TM.SP.BCSModels.Helpers
             entity.RootParent         = reader["RootParent"] as System.Nullable<System.Int32>;
             entity.Status             = reader["Status"] as System.Nullable<System.Int32>;
             entity.Document           = (reader["Document"] == DBNull.Value) ? null : reader["Document"].ToString();
-            entity.Signature          = (reader["Signature"] == DBNull.Value) ? null : reader["Signature"].ToString();
+            entity.SignatureBinary    = (reader["SignatureBinary"] == DBNull.Value) ? null : reader["SignatureBinary"] as byte[];
             entity.TaxiId             = reader["TaxiId"] as System.Nullable<System.Int32>;
             entity.Lfb                = (reader["Lfb"] == DBNull.Value) ? null : reader["Lfb"].ToString();
             entity.JuridicalAddress   = (reader["JuridicalAddress"] == DBNull.Value) ? null : reader["JuridicalAddress"].ToString();
@@ -138,7 +138,7 @@ namespace TM.SP.BCSModels.Helpers
             parameters.AddWithValue("@RootParent", (newEntity.RootParent == null) ? (object)DBNull.Value : newEntity.RootParent);
             parameters.AddWithValue("@Status", (newEntity.Status == null) ? (object)DBNull.Value : newEntity.Status);
             parameters.AddWithValue("@Document", (newEntity.Document == null) ? (object)DBNull.Value : newEntity.Document);
-            parameters.AddWithValue("@Signature", (newEntity.Signature == null) ? (object)DBNull.Value : newEntity.Signature);
+            parameters.AddWithValue("@SignatureBinary", (newEntity.SignatureBinary == null) ? (object)DBNull.Value : newEntity.SignatureBinary);
             parameters.AddWithValue("@TaxiId", (newEntity.TaxiId == null) ? (object)DBNull.Value : newEntity.TaxiId);
             parameters.AddWithValue("@Lfb", (newEntity.Lfb == null) ? (object)DBNull.Value : newEntity.Lfb);
             parameters.AddWithValue("@JuridicalAddress", (newEntity.JuridicalAddress == null) ? (object)DBNull.Value : newEntity.JuridicalAddress);
@@ -232,7 +232,7 @@ namespace TM.SP.BCSModels.Helpers
             parameters.AddWithValue("@RootParent", (updateLicense.RootParent == null) ? (object)DBNull.Value : updateLicense.RootParent);
             parameters.AddWithValue("@Status", (updateLicense.Status == null) ? (object)DBNull.Value : updateLicense.Status);
             parameters.AddWithValue("@Document", (updateLicense.Document == null) ? (object)DBNull.Value : updateLicense.Document);
-            parameters.AddWithValue("@Signature", (updateLicense.Signature == null) ? (object)DBNull.Value : updateLicense.Signature);
+            parameters.AddWithValue("@SignatureBinary", (updateLicense.SignatureBinary == null) ? (object)DBNull.Value : updateLicense.SignatureBinary);
             parameters.AddWithValue("@TaxiId", (updateLicense.TaxiId == null) ? (object)DBNull.Value : updateLicense.TaxiId);
             parameters.AddWithValue("@Lfb", (updateLicense.Lfb == null) ? (object)DBNull.Value : updateLicense.Lfb);
             parameters.AddWithValue("@JuridicalAddress", (updateLicense.JuridicalAddress == null) ? (object)DBNull.Value : updateLicense.JuridicalAddress);

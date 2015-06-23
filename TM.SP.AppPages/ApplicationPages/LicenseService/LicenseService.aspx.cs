@@ -30,6 +30,16 @@ namespace TM.SP.AppPages
     using Microsoft.BusinessData.MetadataModel;
     using CamlexNET;
     using System.Xml.Linq;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Collections.Generic;
+
+    public struct LicenseValidationData
+    {
+        public bool Valid;
+        public string DeveloperInfo;
+        public string FailMessage;
+        public string SuccessMessage;
+    }
 
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
     public partial class LicenseService : LayoutsPageBase
@@ -393,20 +403,46 @@ namespace TM.SP.AppPages
         /// Проверка целостности данных, соответствия текущих данных разрешения его состоянию на момент подписания
         /// </summary>
         /// <param name="licenseId">Идентификатор разрешения</param>
-        /// <returns>Булево значение, false - данные не соответствуют</returns>
+        /// <returns></returns>
         [WebMethod]
         public static dynamic ValidateLicense(int licenseId)
         {
-            bool valid = false;
+            var results = new List<LicenseValidationData>();
+
             var catchData = 
                 Utility.WithCatchExceptionOnWebMethod("Ошибка при проверке разрешения", () =>
                 Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
                 {
-                    IValidator validator = new LicenseSPDataValidator(serviceContextWeb, licenseId);
-                    valid = validator.Execute(null);
+                    IValidator v1 = new LicenseSPDataValidator(serviceContextWeb, licenseId);
+                    bool v1Valid = v1.Execute(null);
+                    results.Add(new LicenseValidationData 
+                    { 
+                        Valid         = v1Valid,
+                        DeveloperInfo = StringsRes.SPCompareDeveloperError
+                    });
+
+                    IValidator v2 = new LicenseDataValidator(serviceContextWeb, licenseId);
+                    var v2Valid = v2.Execute(null);
+                    results.Add(new LicenseValidationData 
+                    { 
+                        Valid          = v2Valid && v1Valid,
+                        DeveloperInfo  = StringsRes.SQLCompareDeveloperError,
+                        FailMessage    = StringsRes.SQLCompareUserError,
+                        SuccessMessage = StringsRes.SQLCompareUserSuccess
+                    });
+
+                    IValidator v3 = new LicenseSignatureValidator(serviceContextWeb, licenseId);
+                    var data3 = new LicenseValidationData();
+                    data3.Valid = v3.Execute(null);
+                    var cert = v3.GetResult() as X509Certificate2;
+                    var author = LicenseHelper.GetCNFromSubjectName(cert.SubjectName.Name);
+                    data3.FailMessage = StringsRes.SignatureCheckUserError;
+                    data3.SuccessMessage = String.Format(StringsRes.SignatureCheckUserSuccessFmt, author);
+
+                    results.Add(data3);
+                    
                 }));
 
-            var payLoad = valid;
             var catchDataObj = catchData as object;
             var errorDataProp = catchDataObj.GetType().GetProperty("Error");
             var errorData = errorDataProp != null ? errorDataProp.GetValue(catchDataObj, null) : null;
@@ -414,10 +450,10 @@ namespace TM.SP.AppPages
             return new
             {
                 Error = errorData,
-                Data = payLoad
+                Data = results
             };
         }
-
+        
         #endregion
     }
 }
