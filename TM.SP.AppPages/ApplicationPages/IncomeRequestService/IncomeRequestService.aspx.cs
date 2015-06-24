@@ -1318,7 +1318,19 @@ namespace TM.SP.AppPages
                     taxiItem["Tm_TaxiDenyComment"] = Uri.UnescapeDataString(refuseComment);
                     taxiItem["Tm_NeedPersonVisit"] = needPersonVisit;
                     if ((rStatusCode == "6420") || (rStatusCode == "1050"))
+                    {
                         taxiItem["Tm_TaxiStatus"] = "Решено отрицательно";
+                        //удалим черновик если он есть
+                        BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+                        {
+                            lob         = BCS.LOBTaxiSystemName,
+                            ns          = BCS.LOBTaxiSystemNamespace,
+                            contentType = "License",
+                            methodName  = "DeleteLicenseDraftForSPTaxiIdInstance",
+                            methodType  = MethodInstanceType.Updater
+                        }, taxiItem.ID);
+
+                    }
                     else taxiItem["Tm_TaxiStatus"] = "Отказано";
 
                     taxiItem.Update();
