@@ -406,7 +406,7 @@ namespace TP.SP.DataMigration
             {
                 // marking income request with error status
                 var stateList = web.GetListOrBreak("Lists/IncomeRequestStateBookList");
-                var stateError = GetSingleListItemByFieldValue(stateList, "Tm_ServiceCode", "2010");
+                var stateError = GetSingleListItemByFieldValue(stateList, "Tm_ServiceCode", "1010");
                 if (stateError != null)
                 {
                     spRequest["Tm_IncomeRequestStateLookup"] = new SPFieldLookupValue(stateError.ID, stateError.Title);
