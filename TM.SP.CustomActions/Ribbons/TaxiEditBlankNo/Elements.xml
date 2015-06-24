@@ -45,7 +45,15 @@
             };
 
             SP.UI.ModalDialog.showModalDialog(options);
-          })();" />
+          })();" EnabledScript="javascript: function enabled() { 
+            var result = true;
+            var status = fd.field('Tm_TaxiStatus').control()._el().text().trim();
+            if (status) {
+              result = !(status == 'Решено отрицательно' || status == 'Отказ');
+            }
+                        
+            return result;
+          } enabled();" />
 			</CommandUIHandlers>
 		</CommandUIExtension>
 	</CustomAction>
