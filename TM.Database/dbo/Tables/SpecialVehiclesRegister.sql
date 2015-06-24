@@ -1,7 +1,6 @@
 CREATE TABLE [dbo].[SpecialVehiclesRegister](
 	[ID] [uniqueidentifier] NOT NULL,
 	[License_id] [int] NULL,
-	[RecordId] [uniqueidentifier] NULL,
 	[PackageId] [nvarchar](256) NULL,
 	[ProccessingStageCode] [nvarchar](100) NULL,
 	[ProcessingStageDate] [datetime] NULL,
@@ -9,6 +8,7 @@ CREATE TABLE [dbo].[SpecialVehiclesRegister](
 	[RecordStatusCode] [nvarchar](15) NULL,
 	[RecordStatusText] [nvarchar](512) NULL,
 	[Exception] [nvarchar](max) NULL,
+	[RecordId] [decimal](18, 0) NULL,
  CONSTRAINT [PK_SpecialVehiclesRegister] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -23,4 +23,3 @@ GO
 
 ALTER TABLE [dbo].[SpecialVehiclesRegister] CHECK CONSTRAINT [FK_SpecialVehiclesRegister_License]
 GO
-
