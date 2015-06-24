@@ -138,7 +138,10 @@ namespace TM.SP.BCSModels.Helpers
             parameters.AddWithValue("@RootParent", (newEntity.RootParent == null) ? (object)DBNull.Value : newEntity.RootParent);
             parameters.AddWithValue("@Status", (newEntity.Status == null) ? (object)DBNull.Value : newEntity.Status);
             parameters.AddWithValue("@Document", (newEntity.Document == null) ? (object)DBNull.Value : newEntity.Document);
-            parameters.AddWithValue("@SignatureBinary", (newEntity.SignatureBinary == null) ? (object)DBNull.Value : newEntity.SignatureBinary);
+
+            var signatureParam = parameters.Add("@SignatureBinary", System.Data.SqlDbType.VarBinary, -1);
+            signatureParam.Value = (newEntity.SignatureBinary == null) ? (object)DBNull.Value : newEntity.SignatureBinary;
+
             parameters.AddWithValue("@TaxiId", (newEntity.TaxiId == null) ? (object)DBNull.Value : newEntity.TaxiId);
             parameters.AddWithValue("@Lfb", (newEntity.Lfb == null) ? (object)DBNull.Value : newEntity.Lfb);
             parameters.AddWithValue("@JuridicalAddress", (newEntity.JuridicalAddress == null) ? (object)DBNull.Value : newEntity.JuridicalAddress);
@@ -232,7 +235,10 @@ namespace TM.SP.BCSModels.Helpers
             parameters.AddWithValue("@RootParent", (updateLicense.RootParent == null) ? (object)DBNull.Value : updateLicense.RootParent);
             parameters.AddWithValue("@Status", (updateLicense.Status == null) ? (object)DBNull.Value : updateLicense.Status);
             parameters.AddWithValue("@Document", (updateLicense.Document == null) ? (object)DBNull.Value : updateLicense.Document);
-            parameters.AddWithValue("@SignatureBinary", (updateLicense.SignatureBinary == null) ? (object)DBNull.Value : updateLicense.SignatureBinary);
+
+            var signatureParam = parameters.Add("@SignatureBinary", System.Data.SqlDbType.VarBinary, -1);
+            signatureParam.Value = (updateLicense.SignatureBinary == null) ? (object)DBNull.Value : updateLicense.SignatureBinary;
+
             parameters.AddWithValue("@TaxiId", (updateLicense.TaxiId == null) ? (object)DBNull.Value : updateLicense.TaxiId);
             parameters.AddWithValue("@Lfb", (updateLicense.Lfb == null) ? (object)DBNull.Value : updateLicense.Lfb);
             parameters.AddWithValue("@JuridicalAddress", (updateLicense.JuridicalAddress == null) ? (object)DBNull.Value : updateLicense.JuridicalAddress);
