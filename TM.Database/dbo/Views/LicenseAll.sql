@@ -97,5 +97,5 @@ SELECT [L1].[Id]
 		ELSE 0
 		END AS IsLast
 FROM [dbo].[License] AS L1
-LEFT JOIN [dbo].[License] L2 ON L1.Id = L2.Parent
+LEFT JOIN [dbo].[License] L2 ON L1.Id = L2.Parent AND L2.STATUS <> 4
 WHERE L1.STATUS <> 4 -- no drafts

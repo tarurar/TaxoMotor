@@ -92,7 +92,7 @@ SELECT [L1].[Id]
 	,[L1].[GUID_MO]
 	,[L1].[DATE_MO]
 FROM [dbo].[License] AS L1
-LEFT JOIN [dbo].[License] L2 ON L1.Id = L2.Parent
+LEFT JOIN [dbo].[License] L2 ON L1.Id = L2.Parent AND L2.STATUS <> 4
 WHERE L2.Id IS NULL -- last record
 	AND L1.TillSuspensionDate IS NULL -- not paused
 	AND L1.STATUS <> 3 -- not cancelled
