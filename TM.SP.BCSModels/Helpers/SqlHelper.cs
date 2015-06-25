@@ -125,6 +125,7 @@ namespace TM.SP.BCSModels.Helpers
             entity.DATE_MO            = reader["DATE_MO"] as System.Nullable<System.DateTime>;
             entity.Obsolete           = reader["Obsolete"] as System.Nullable<System.Boolean>;
             entity.DisableGibddSend   = reader["DisableGibddSend"] as System.Nullable<System.Boolean>;
+            entity.HasAnyChilds       = reader["HasAnyChilds"] as System.Nullable<System.Boolean>;
         }
         public static void NewLicenseParams(License newEntity, SqlParameterCollection parameters)
         {

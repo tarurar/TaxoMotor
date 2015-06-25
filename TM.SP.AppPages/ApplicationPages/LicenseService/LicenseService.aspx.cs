@@ -88,6 +88,8 @@ namespace TM.SP.AppPages
             SPListItem spItem = spList.GetItemOrBreak(licenseId);
 
             var parentLicense = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
+            if (parentLicense.HasAnyChilds.HasValue && parentLicense.HasAnyChilds.Value)
+                throw new Exception("Выполнение операции неавозможно. Данное разрешение находится в работе в одном из обращений или не является последней редацией.");
 
             var newLicenseBefore = parentLicense.Clone();
             contextAction(newLicenseBefore);
@@ -228,87 +230,102 @@ namespace TM.SP.AppPages
         /// <param name="reason"></param>
         /// <param name="signature"></param>
         [WebMethod]
-        public static void SaveSignedSuspension(int licenseId, DateTime dateFrom, DateTime dateTo, string reason, string signature)
+        public static dynamic SaveSignedSuspension(int licenseId, DateTime dateFrom, DateTime dateTo, string reason, string signature)
         {
-            var signedXml = Uri.UnescapeDataString(signature);
-            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
-            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
-            var tillsuspDate = GetDateTimeFromXml(signedXml, "tillsuspensiondate");
+            return Utility.WithCatchExceptionOnWebMethod("Ошибка при сохранении подписи", () =>
+                {
+                    var signedXml = Uri.UnescapeDataString(signature);
+                    var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+                    var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+                    var tillsuspDate = GetDateTimeFromXml(signedXml, "tillsuspensiondate");
 
-            SaveSigned(licenseId, l =>
-            {
-                l.OutputDate         = outputDate;
-                l.ChangeDate         = changeDate;
-                l.TillSuspensionDate = tillsuspDate;
-                l.SuspensionReason   = Uri.UnescapeDataString(reason);
-                l.Signature          = signedXml;
-                l.Status             = 2;
-            });
+                    SaveSigned(licenseId, l =>
+                    {
+                        l.OutputDate = outputDate;
+                        l.ChangeDate = changeDate;
+                        l.TillSuspensionDate = tillsuspDate;
+                        l.SuspensionReason = Uri.UnescapeDataString(reason);
+                        l.Signature = signedXml;
+                        l.Status = 2;
+                    });
+                });
         }
         [WebMethod]
-        public static void SaveSignedCancellation(int licenseId, DateTime dateFrom, string reason, string signature)
+        public static dynamic SaveSignedCancellation(int licenseId, DateTime dateFrom, string reason, string signature)
         {
-            var signedXml = Uri.UnescapeDataString(signature);
-            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
-            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+            return Utility.WithCatchExceptionOnWebMethod("Ошибка при сохранении подписи", () =>
+                {
+                    var signedXml = Uri.UnescapeDataString(signature);
+                    var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+                    var changeDate = GetDateTimeFromXml(signedXml, "changedate");
 
-            SaveSigned(licenseId, l =>
-            {
-                l.OutputDate         = outputDate;
-                l.ChangeDate         = changeDate;
-                l.CancellationReason = Uri.UnescapeDataString(reason);
-                l.Signature          = signedXml;
-                l.Status             = 3;
-            });
+                    SaveSigned(licenseId, l =>
+                    {
+                        l.OutputDate = outputDate;
+                        l.ChangeDate = changeDate;
+                        l.CancellationReason = Uri.UnescapeDataString(reason);
+                        l.Signature = signedXml;
+                        l.Status = 3;
+                    });
+                });
         }
         [WebMethod]
-        public static void SaveSignedRenewal(int licenseId, DateTime dateFrom, string reason, string signature)
+        public static dynamic SaveSignedRenewal(int licenseId, DateTime dateFrom, string reason, string signature)
         {
-            var signedXml = Uri.UnescapeDataString(signature);
-            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
-            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+            return Utility.WithCatchExceptionOnWebMethod("Ошибка при сохранении подписи", () =>
+                {
+                    var signedXml = Uri.UnescapeDataString(signature);
+                    var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+                    var changeDate = GetDateTimeFromXml(signedXml, "changedate");
 
-            SaveSigned(licenseId, l =>
-            {
-                l.OutputDate   = outputDate;
-                l.ChangeDate   = changeDate;
-                l.ChangeReason = Uri.UnescapeDataString(reason);
-                l.Signature    = signedXml;
-                // setting status
-                var parent     = LicenseHelper.GetLicense(l.Parent);
-                var grandpa    = LicenseHelper.GetLicense(parent.Parent);
-                l.Status       = grandpa.Status;
-            });
+                    SaveSigned(licenseId, l =>
+                    {
+                        l.OutputDate = outputDate;
+                        l.ChangeDate = changeDate;
+                        l.ChangeReason = Uri.UnescapeDataString(reason);
+                        l.Signature = signedXml;
+                        // setting status
+                        var parent = LicenseHelper.GetLicense(l.Parent);
+                        var grandpa = LicenseHelper.GetLicense(parent.Parent);
+                        l.Status = grandpa.Status;
+                    });
+                });
         }
         [WebMethod]
-        public static void SaveSignedMakeObsolete(int licenseId, bool obsolete, string signature)
+        public static dynamic SaveSignedMakeObsolete(int licenseId, bool obsolete, string signature)
         {
-            var signedXml = Uri.UnescapeDataString(signature);
-            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
-            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+            return Utility.WithCatchExceptionOnWebMethod("Ошибка при сохранении подписи", () =>
+                {
+                    var signedXml = Uri.UnescapeDataString(signature);
+                    var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+                    var changeDate = GetDateTimeFromXml(signedXml, "changedate");
 
-            SaveSigned(licenseId, l =>
-            {
-                l.OutputDate = outputDate;
-                l.ChangeDate = changeDate;
-                l.Obsolete   = obsolete;
-                l.Signature  = signedXml;
-            });
+                    SaveSigned(licenseId, l =>
+                    {
+                        l.OutputDate = outputDate;
+                        l.ChangeDate = changeDate;
+                        l.Obsolete = obsolete;
+                        l.Signature = signedXml;
+                    });
+                });
         }
         [WebMethod]
-        public static void SaveSignedDisableGibdd(int licenseId, bool disabled, string signature)
+        public static dynamic SaveSignedDisableGibdd(int licenseId, bool disabled, string signature)
         {
-            var signedXml = Uri.UnescapeDataString(signature);
-            var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
-            var changeDate = GetDateTimeFromXml(signedXml, "changedate");
+            return Utility.WithCatchExceptionOnWebMethod("Ошибка при сохранении подписи", () =>
+                {
+                    var signedXml = Uri.UnescapeDataString(signature);
+                    var outputDate = GetDateTimeFromXml(signedXml, "outputdate");
+                    var changeDate = GetDateTimeFromXml(signedXml, "changedate");
 
-            SaveSigned(licenseId, l =>
-            {
-                l.OutputDate       = outputDate;
-                l.ChangeDate       = changeDate;
-                l.DisableGibddSend = disabled;
-                l.Signature        = signedXml;                
-            });
+                    SaveSigned(licenseId, l =>
+                    {
+                        l.OutputDate = outputDate;
+                        l.ChangeDate = changeDate;
+                        l.DisableGibddSend = disabled;
+                        l.Signature = signedXml;
+                    });
+                });
         }
         #endregion
 
@@ -329,6 +346,7 @@ namespace TM.SP.AppPages
                     SPWeb web         = SPContext.Current.Web;
                     SPList spList     = web.GetListOrBreak("Lists/LicenseList");
                     SPListItem spItem = spList.GetItemOrBreak(licenseId);
+                    var license = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
                     var licCreationDate   = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
                     var licTillDate       = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
@@ -336,6 +354,8 @@ namespace TM.SP.AppPages
                     var dateToCondition   = (dateTo >= licCreationDate && dateTo <= licTillDate);
                     var reasonCondition   = !String.IsNullOrEmpty(Uri.UnescapeDataString(reason));
 
+                    if (license.HasAnyChilds.HasValue && license.HasAnyChilds.Value)
+                        throw new Exception("Выполнение операции неавозможно. Данное разрешение находится в работе в одном из обращений или не является последней редацией.");
                     if (!dateFromCondition || !dateToCondition)
                         throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
                     if (!reasonCondition)
@@ -358,12 +378,15 @@ namespace TM.SP.AppPages
                     SPWeb web = SPContext.Current.Web;
                     SPList spList = web.GetListOrBreak("Lists/LicenseList");
                     SPListItem spItem = spList.GetItemOrBreak(licenseId);
+                    var license = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
                     var licCreationDate = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
                     var licTillDate = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
                     var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
                     var reasonCondition = !String.IsNullOrEmpty(Uri.UnescapeDataString(reason));
 
+                    if (license.HasAnyChilds.HasValue && license.HasAnyChilds.Value)
+                        throw new Exception("Выполнение операции неавозможно. Данное разрешение находится в работе в одном из обращений или не является последней редацией.");
                     if (!dateFromCondition)
                         throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
                     if (!reasonCondition)
@@ -386,12 +409,15 @@ namespace TM.SP.AppPages
                     SPWeb web = SPContext.Current.Web;
                     SPList spList = web.GetListOrBreak("Lists/LicenseList");
                     SPListItem spItem = spList.GetItemOrBreak(licenseId);
+                    var license = LicenseHelper.GetLicense(Convert.ToInt32(spItem["Tm_LicenseExternalId"]));
 
                     var licCreationDate = spItem.TryGetValue<DateTime>("Tm_LicenseFromDate");
                     var licTillDate = spItem.TryGetValue<DateTime>("Tm_LicenseTillDate");
                     var dateFromCondition = (dateFrom >= licCreationDate && dateFrom <= licTillDate);
                     var reasonCondition = !String.IsNullOrEmpty(Uri.UnescapeDataString(reason));
 
+                    if (license.HasAnyChilds.HasValue && license.HasAnyChilds.Value)
+                        throw new Exception("Выполнение операции неавозможно. Данное разрешение находится в работе в одном из обращений или не является последней редацией.");
                     if (!dateFromCondition)
                         throw new Exception("Указанные даты не попадают в диапазон дат разрешения");
                     if (!reasonCondition)

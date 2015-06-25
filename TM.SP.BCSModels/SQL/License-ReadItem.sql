@@ -91,5 +91,14 @@
 	,[DATE_MO]
 	,[Obsolete]
 	,[DisableGibddSend]
+	,CAST(CASE 
+		WHEN EXISTS (
+				SELECT [Id]
+				FROM [dbo].[License]
+				WHERE [Parent] = @Id
+				)
+			THEN 1
+		ELSE 0
+		END as BIT) AS [HasAnyChilds]
 FROM [dbo].[License]
 WHERE [Id] = @Id

@@ -50,8 +50,11 @@
                     gobackBtn.click();
                   }
 	              }, 2000);
-              }, function(err) {
-                var failStatus = SP.UI.Status.addStatus(err);
+              }, function(jqXhr, status, error) {
+                var response = $.parseJSON(jqXhr.responseText).d;
+                console.error('Exception Message: ' + response.Error.SystemMessage);
+                console.error('Exception StackTrace: ' + response.Error.StackTrace);
+                var failStatus = SP.UI.Status.addStatus(response.Error.UserMessage + ': ' + response.Error.SystemMessage);
 	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
               });
           

@@ -334,6 +334,11 @@ namespace TM.SP.BCSModels.Taxi
         public bool? Obsolete { get; set; }
         [XmlIgnore]
         public bool? DisableGibddSend { get; set; }
+
+        [XmlIgnore]
+        // признак обозначает что есть хотя бы одно разрешение (в том числе черновик),
+        // ссылающееся на данное
+        public bool? HasAnyChilds { get; set; }
         #endregion
 
         #region [methods]
