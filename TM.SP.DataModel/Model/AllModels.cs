@@ -648,6 +648,16 @@ namespace TM.SP.DataModel
             return model;
         }
 
+        public static ModelNode GetTaxomotorLookupsModel(ClientContext ctx)
+        {
+            var model = SPMeta2Model.NewListModel(Lists.TmIncomeRequestList, list => 
+            {
+                list.AddField(Fields.TmIncomeRequestTaxiCount);
+            });
+
+            return model;
+        }
+
         #endregion
     }
 }

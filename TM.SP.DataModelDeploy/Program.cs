@@ -91,6 +91,8 @@ namespace TM.SP.DataModelDeploy
                     AllModels.GetTaxoMotorIncomeRequestWebDependentModel(ctx));
                 pService.DeployModel(WebModelHost.FromClientContext(ctx),
                     AllModels.GetTaxoMotorWebPagesModel(ctx));
+                pService.DeployModel(WebModelHost.FromClientContext(ctx),
+                    AllModels.GetTaxomotorLookupsModel(ctx));
                 
                 ModelHandlers.MakeContentTypesDefault(ctx);
                 ModelHandlers.CreateBcsFields(ctx);

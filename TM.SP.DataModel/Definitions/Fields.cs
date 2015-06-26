@@ -352,6 +352,25 @@ namespace TM.SP.DataModel
             new XAttribute("Version"        , "1")
         );
 
+        /// <summary>
+        /// Сопутствующий подсчет количества ТС в обращении
+        /// </summary>
+        public static LookupFieldDefinition TmIncomeRequestTaxiCount = new LookupFieldDefinition
+        {
+            Id                   = new Guid("{A732D29D-AF21-4857-B82B-743521E9F734}"),
+            Title                = "Количество ТС",
+            InternalName         = "Tm_IncomeRequestTaxiCount",
+            Group                = ModelConsts.ColumnsDefaultGroup,
+            LookupListUrl        = "Lists/" + Lists.TmTaxiList.Url,
+            LookupField          = Plumsail.Fields.TmIncomeRequestLookupXml.InternalName,
+            AllowDeletion        = true,
+            AddFieldOptions      = BuiltInAddFieldOptions.AddFieldInternalNameHint | BuiltInAddFieldOptions.AddToAllContentTypes,
+            AdditionalAttributes = new List<FieldAttributeValue>() { 
+                new FieldAttributeValue("CountRelated", "TRUE"),
+                new FieldAttributeValue("ReadOnly", "TRUE")
+            }
+        };
+
         #endregion
 
         #region [Обращение - Вычислимые поля для поиска]
