@@ -1273,6 +1273,15 @@ namespace TM.SP.AppPages
                 var rStatusCode = rStatus["Tm_ServiceCode"] != null
                     ? rStatus["Tm_ServiceCode"].ToString()
                     : String.Empty;
+                // проверка по статусу
+                var acceptedStatuses = new string[] { "1040", "1050", "6420" };
+                if (Array.IndexOf(acceptedStatuses, rStatusCode) == -1)
+                {
+                    throw new Exception(
+                                String.Format(
+                                    "Не предусмотрено принятие ТС в данном статусе обращения. Код статуса: {0}",
+                                    rStatusCode));
+                }
 
                 var taxiIdArr = taxiIdList.Split(';');
                 foreach (var taxiItem in taxiIdArr.Select(taxiId => taxiList.GetItemById(Convert.ToInt32(taxiId))))

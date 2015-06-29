@@ -45,7 +45,7 @@
 				            SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);
 			            }, 1000);
 		            }, function(message){
-			            var failStatus = SP.UI.Status.addStatus(message.responseJSON.d.Error.UserMessage);
+                  var failStatus = SP.UI.Status.addStatus(message.responseJSON.d.Error.UserMessage + ': ' + message.responseJSON.d.Error.SystemMessage);
 			            console.error('Exception Message: ' + message.responseJSON.d.Error.SystemMessage);
 			            console.error('Exception StackTrace: ' + message.responseJSON.d.Error.StackTrace);
 			            SP.UI.Status.setStatusPriColor(failStatus, 'red');

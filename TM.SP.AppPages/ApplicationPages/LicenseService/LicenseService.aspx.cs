@@ -157,8 +157,10 @@ namespace TM.SP.AppPages
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate   = GetUnspecifiedDate(dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom);
-                l.ChangeReason = Uri.UnescapeDataString(reason);
+                l.OutputDate         = GetUnspecifiedDate(dateFrom.IsJavascriptNullDate() ? DateTime.Now : dateFrom);
+                l.ChangeReason       = Uri.UnescapeDataString(reason);
+                l.SuspensionReason   = "";
+                l.TillSuspensionDate = null;
                 // setting status
                 var parent     = LicenseHelper.GetLicense(l.Parent);
                 var grandpa    = LicenseHelper.GetLicense(parent.Parent);
@@ -273,13 +275,15 @@ namespace TM.SP.AppPages
 
                     SaveSigned(licenseId, l =>
                     {
-                        l.OutputDate = outputDate;
-                        l.ChangeDate = changeDate;
-                        l.ChangeReason = Uri.UnescapeDataString(reason);
-                        l.Signature = signedXml;
+                        l.OutputDate         = outputDate;
+                        l.ChangeDate         = changeDate;
+                        l.ChangeReason       = Uri.UnescapeDataString(reason);
+                        l.SuspensionReason   = "";
+                        l.TillSuspensionDate = null;
+                        l.Signature          = signedXml;
                         // setting status
-                        var parent = LicenseHelper.GetLicense(l.Parent);
-                        var grandpa = LicenseHelper.GetLicense(parent.Parent);
+                        var parent           = LicenseHelper.GetLicense(l.Parent);
+                        var grandpa          = LicenseHelper.GetLicense(parent.Parent);
                         l.Status = grandpa.Status;
                     });
                 });
