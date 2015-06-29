@@ -39,6 +39,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.BusinessData, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.SharePoint\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.SharePoint.dll</HintPath>
@@ -63,6 +64,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TM.SP.AppPages\TM.SP.AppPages.csproj">
+      <Project>{b2a464ec-6524-415e-a218-457d4aa37d83}</Project>
+      <Name>TM.SP.AppPages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TM.SP.BCSModels\TM.SP.BCSModels.csproj">
+      <Project>{73514d73-abd3-440e-8a49-93026866c619}</Project>
+      <Name>TM.SP.BCSModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TM.Utils\TM.Utils.csproj">
       <Project>{cc6f29a8-e24e-41ae-9cc6-aa69c2ce8b4d}</Project>
       <Name>TM.Utils</Name>

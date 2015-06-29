@@ -15,6 +15,13 @@ using System.Net;
 using System.Dynamic;
 using System.Diagnostics;
 using System.Threading;
+using TM.SP.AppPages.VirtualSigner;
+using System.Security.Cryptography.X509Certificates;
+using TM.SP.BCSModels.Taxi;
+using Microsoft.BusinessData.MetadataModel;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace TestSPConsole
 {
@@ -147,40 +154,42 @@ namespace TestSPConsole
         {
             Console.WriteLine("Press any key to start");
             Console.ReadKey();
+            
 
             using (SPSite site = new SPSite("http://77.95.132.133"))
             using (SPWeb web = site.OpenWeb())
             {
-                /*var context = SPServiceContext.GetContext(site);
+                var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
-                    var list = web.GetListOrBreak("Lists/IncomeRequestList");
-                    var item = list.GetItemById(17).AsDyn();
 
-                    Console.WriteLine(item.Title);
-                }*/
-
-                var tk = new TimeKeeper();
-
-
-                var t1 = tk.Measure(() =>
-                {
-                    Parallel.ForEach(web.Lists.Cast<SPList>(), (list) =>
+                    var lic = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
                     {
-                        Console.WriteLine(String.Format("Список: {0}, ИД процесса: {1}, ИД потока: {2}", list.Title, Process.GetCurrentProcess().Id, Thread.CurrentThread.ManagedThreadId));
-                    });
-                });
+                        lob = BCS.LOBTaxiSystemName,
+                        ns = BCS.LOBTaxiSystemNamespace,
+                        contentType = "License",
+                        methodName = "TakeAnyUnsignedLicense",
+                        methodType = MethodInstanceType.Scalar
+                    }, null);
 
-                var t2 = tk.Measure(() =>
-                {
-                    web.Lists.Cast<SPList>().ToList().ForEach(list =>
-                    {
-                        Console.WriteLine(String.Format("Список: {0}, ИД процесса: {1}, ИД потока: {2}", list.Title, Process.GetCurrentProcess().Id, Thread.CurrentThread.ManagedThreadId));
-                    });
-                });
+                    var intWriter = new StringWriter(new StringBuilder());
+                    XmlWriter writer = new XmlTextWriter(intWriter);
+                    var serializer = new XmlSerializer(typeof(License));
+                    writer.WriteStartElement("Data");
+                    serializer.Serialize(writer, lic);
+                    writer.WriteEndElement();
+                    var content2 = intWriter.ToString();
+                    var dataToSign = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                                            "<Envelope xmlns=\"urn:envelope\">\n" +
+                                            content2 +
+                                            " \n" +
+                                            "</Envelope>";
 
-                Console.WriteLine("Параллельно: {0}", t1);
-                Console.WriteLine("Последовательно: {0}", t2);
+                    var cert = CertificateHelper.GetCryptoProCertificate("e5 14 d8 fb 77 09 7a 58 68 ff cb 10 e9 5d b1 18 35 11 36 73");
+                    var signer = new X509Signer(cert);
+                    var xml = signer.SignXml(dataToSign);
+                    Console.WriteLine(xml);
+                }
 
             }
 
