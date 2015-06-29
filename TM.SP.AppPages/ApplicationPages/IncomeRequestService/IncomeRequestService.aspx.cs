@@ -1024,14 +1024,7 @@ namespace TM.SP.AppPages
                         string[] allTaxiArr = allTaxiStr.Split(';');
                         foreach (string taxiId in allTaxiArr)
                         {
-                            BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                            {
-                                lob         = BCS.LOBTaxiSystemName,
-                                ns          = BCS.LOBTaxiSystemNamespace,
-                                contentType = "License",
-                                methodName  = "DeleteLicenseDraftForSPTaxiIdInstance",
-                                methodType  = MethodInstanceType.Updater
-                            }, Convert.ToInt32(taxiId));
+                            LicenseHelper.DeleteLicenseDraftForSPTaxiId(Convert.ToInt32(taxiId));
                         }
                     }
                 }
@@ -1057,14 +1050,7 @@ namespace TM.SP.AppPages
                                 string[] allTaxiArr = allTaxiStr.Split(';');
                                 foreach (string taxiId in allTaxiArr)
                                 {
-                                    BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                    {
-                                        lob = BCS.LOBTaxiSystemName,
-                                        ns = BCS.LOBTaxiSystemNamespace,
-                                        contentType = "License",
-                                        methodName = "DeleteLicenseDraftForSPTaxiIdInstance",
-                                        methodType = MethodInstanceType.Updater
-                                    }, Convert.ToInt32(taxiId));
+                                    LicenseHelper.DeleteLicenseDraftForSPTaxiId(Convert.ToInt32(taxiId));
                                 }    
                             }
                         })));
@@ -1151,14 +1137,7 @@ namespace TM.SP.AppPages
                                 # region [Попытка обнаружить черновик]
                                 try
                                 {
-                                    var draft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                    {
-                                        lob = BCS.LOBTaxiSystemName,
-                                        ns = BCS.LOBTaxiSystemNamespace,
-                                        contentType = "License",
-                                        methodName = "GetLicenseDraftForSPTaxiId",
-                                        methodType = MethodInstanceType.SpecificFinder
-                                    }, taxiItem.ID);
+                                    var draft = LicenseHelper.GetLicenseDraftForSPTaxiId(taxiItem.ID);
                                 }
                                 catch (Exception ex)
                                 {
@@ -1178,14 +1157,7 @@ namespace TM.SP.AppPages
                                         licenseDraft.ChangeDate = DateTime.Now.Date;
                                         licenseDraft.OutputDate = DateTime.Now.Date;
                                         licenseDraft.TillDate = DateTime.Now.AddYears(5).AddDays(-1).Date;
-                                        var storedLicenseDraft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                        {
-                                            lob = BCS.LOBTaxiSystemName,
-                                            ns = BCS.LOBTaxiSystemNamespace,
-                                            contentType = "License",
-                                            methodName = "CreateLicense",
-                                            methodType = MethodInstanceType.Creator
-                                        }, licenseDraft);
+                                        var storedLicenseDraft = LicenseHelper.CreateLicense(licenseDraft);
                                         if (storedLicenseDraft != null)
                                         {
                                             var num = String.Format("{0:00000}", Convert.ToInt32(storedLicenseDraft.RegNumber));
@@ -1243,14 +1215,7 @@ namespace TM.SP.AppPages
                                         }
                                         #endregion
 
-                                        BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                        {
-                                            lob = BCS.LOBTaxiSystemName,
-                                            ns = BCS.LOBTaxiSystemNamespace,
-                                            contentType = "License",
-                                            methodName = "CreateLicense",
-                                            methodType = MethodInstanceType.Creator
-                                        }, licenseDraft);
+                                        LicenseHelper.CreateLicense(licenseDraft);
                                     }
                                     #endregion
                                 }
@@ -1321,15 +1286,7 @@ namespace TM.SP.AppPages
                     {
                         taxiItem["Tm_TaxiStatus"] = "Решено отрицательно";
                         //удалим черновик если он есть
-                        BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                        {
-                            lob         = BCS.LOBTaxiSystemName,
-                            ns          = BCS.LOBTaxiSystemNamespace,
-                            contentType = "License",
-                            methodName  = "DeleteLicenseDraftForSPTaxiIdInstance",
-                            methodType  = MethodInstanceType.Updater
-                        }, taxiItem.ID);
-
+                        LicenseHelper.DeleteLicenseDraftForSPTaxiId(taxiItem.ID);
                     }
                     else taxiItem["Tm_TaxiStatus"] = "Отказано";
 
@@ -1487,15 +1444,8 @@ namespace TM.SP.AppPages
 
                         foreach (string licenseId in licenseIdArr)
                         {
-                            var license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                            {
-                                lob         = BCS.LOBTaxiSystemName,
-                                ns          = BCS.LOBTaxiSystemNamespace,
-                                contentType = "License",
-                                methodName  = "ReadLicenseItem",
-                                methodType  = MethodInstanceType.SpecificFinder
-                            }, Convert.ToInt32(licenseId));
-
+                            var license = LicenseHelper.ReadLicenseItem(Convert.ToInt32(licenseId));
+                            
                             if (license == null) continue;
 
                             //serialization
@@ -1541,27 +1491,12 @@ namespace TM.SP.AppPages
                     Utility.WithSPServiceContext(SPContext.Current, serviceContextWeb =>
                         Utility.WithSafeUpdate(serviceContextWeb, safeWeb =>
                         {
-                            var license = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                            {
-                                lob         = BCS.LOBTaxiSystemName,
-                                ns          = BCS.LOBTaxiSystemNamespace,
-                                contentType = "License",
-                                methodName  = "ReadLicenseItem",
-                                methodType  = MethodInstanceType.SpecificFinder
-                            }, licenseId);
+                            var license = LicenseHelper.ReadLicenseItem(licenseId);
 
                             if (license != null)
                             {
                                 license.Signature = Uri.UnescapeDataString(signature);
-
-                                BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                                {
-                                    lob         = BCS.LOBTaxiSystemName,
-                                    ns          = BCS.LOBTaxiSystemNamespace,
-                                    contentType = "License",
-                                    methodName  = "UpdateLicense",
-                                    methodType  = MethodInstanceType.Updater
-                                }, license);
+                                LicenseHelper.UpdateLicense(license);
                             }
                             else throw new Exception("Разрешение не найдено");
 

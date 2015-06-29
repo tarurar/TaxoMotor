@@ -20,7 +20,7 @@
           </LobSystemInstance>
 			</LobSystemInstances>
 			<Entities>
-				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.78" EstimatedInstanceCount="100000" DefaultDisplayName="License">
+				<Entity Name="License" Namespace="TM.SP.BCSModels.Taxi" Version="1.0.0.96" EstimatedInstanceCount="100000" DefaultDisplayName="License">
 					<Properties>
 						<Property Name="Class" Type="System.String">TM.SP.BCSModels.Taxi.LicenseEntityService, TM.SP.BCSModels</Property>
 						<Property Name="Title" Type="System.String">Title</Property>
@@ -4736,6 +4736,15 @@
               <MethodInstances>
                 <MethodInstance Name="GetAnyLicenseForSPTaxiId" Type="SpecificFinder" DefaultDisplayName="Get Any License For SPTaxi Id" ReturnParameterName="returnLicense" />
               </MethodInstances></Method>
+            <Method Name="TakeAnyUnsignedLicense">
+              <Parameters>
+                <Parameter Name="returnParameter" Direction="Return">
+                  <TypeDescriptor Name="returnLicense" TypeName="TM.SP.BCSModels.Taxi.License, TM.SP.BCSModels" /></Parameter>
+              </Parameters>
+              <MethodInstances>
+                <MethodInstance Name="TakeAnyUnsignedLicense" Type="Scalar" DefaultDisplayName="Get License with an empty signature" ReturnParameterName="returnParameter" />
+              </MethodInstances>
+              </Method>
 					</Methods>
 					<AssociationGroups>
             <AssociationGroup Name="IdOfLicenseToParentOfLicenseAssociation" DefaultDisplayName="License to License(Parent)">

@@ -23,6 +23,7 @@ namespace TM.SP.AppPages
         private static readonly string OdopmJobName = "TaxoMotorOdopmJob";
         private static readonly string MoJobName = "TaxoMotorMoJob";
         private static readonly string UpdateSqlViewsJobName = "TaxoMotorUpdateSqlViewsJob";
+        private static readonly string VirtualSignerJobName = "TaxoMotorVirtualSignLicenses";
 
         public bool DeleteExistingJob(string jobName, SPWebApplication site)
         {
@@ -61,6 +62,7 @@ namespace TM.SP.AppPages
                         DeleteExistingJob(OdopmJobName, webApp);
                         DeleteExistingJob(MoJobName, webApp);
                         DeleteExistingJob(UpdateSqlViewsJobName, webApp);
+                        DeleteExistingJob(VirtualSignerJobName, webApp);
 
                         try
                         {
@@ -115,6 +117,16 @@ namespace TM.SP.AppPages
                         {
                             throw new Exception(String.Format("Couldn't create timer job definition for {0}. Details: {1}", MoJobName, ex.Message));
                         }
+
+                        try
+                        {
+                            VirualSignerTimer job = new VirualSignerTimer(VirtualSignerJobName, webApp);
+                            job.Update();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(String.Format("Couldn't create timer job definition for {0}. Details: {1}", MoJobName, ex.Message));
+                        }
                     }
                 });
             }
@@ -143,6 +155,7 @@ namespace TM.SP.AppPages
                             DeleteExistingJob(OdopmJobName, webApp);
                             DeleteExistingJob(MoJobName, webApp);
                             DeleteExistingJob(UpdateSqlViewsJobName, webApp);
+                            DeleteExistingJob(VirtualSignerJobName, webApp);
                         }
                     });
                 }

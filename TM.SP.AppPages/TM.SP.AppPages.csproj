@@ -53,6 +53,14 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Camlex.NET.dll.4.0.0.0\lib\net20\Camlex.NET.dll</HintPath>
     </Reference>
+    <Reference Include="CryptoPro.Sharpei.Base, Version=1.4.0.10, Culture=neutral, PublicKeyToken=473b8c5086e795f5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Crypto Pro\.NET SDK\Assemblies\4.0\CryptoPro.Sharpei.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="CryptoPro.Sharpei.Xml, Version=1.4.0.10, Culture=neutral, PublicKeyToken=473b8c5086e795f5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Crypto Pro\.NET SDK\Assemblies\4.0\CryptoPro.Sharpei.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.BusinessData, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.BusinessData\v4.0_15.0.0.0__71e9bce111e9429c\Microsoft.BusinessData.dll</HintPath>
@@ -190,6 +198,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Timers\MoTimer.cs" />
     <Compile Include="Timers\OdopmTimer.cs" />
     <Compile Include="Timers\UpdateViewsTimer.cs" />
+    <Compile Include="Timers\VirualSignerTimer.cs" />
     <Compile Include="Validators\LicenseDataValidator.cs" />
     <Compile Include="Validators\LicenseSignatureValidator.cs" />
     <Compile Include="Validators\LicenseSPDataValidator.cs" />
@@ -203,6 +212,9 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Validators\TaxiDuplicateValidator.cs" />
     <Compile Include="Validators\TaxiDuplicateValidatorV2.cs" />
     <Compile Include="Validators\Validator.cs" />
+    <Compile Include="VirtualSigner\CertificateHelper.cs" />
+    <Compile Include="VirtualSigner\ISigner.cs" />
+    <Compile Include="VirtualSigner\X509Signer.cs" />
     <Compile Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPart.cs" />
     <Compile Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx.cs">
       <DependentUpon>IncomRequestFilterWebPartUserControl.ascx</DependentUpon>

@@ -94,14 +94,7 @@ namespace TM.SP.AppPages
             var newLicenseBefore = parentLicense.Clone();
             contextAction(newLicenseBefore);
 
-            var newLicenseAfter = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                contentType = "License",
-                lob         = BCS.LOBTaxiSystemName,
-                methodName  = "CreateLicense",
-                methodType  = MethodInstanceType.Creator,
-                ns          = BCS.LOBTaxiSystemNamespace
-            }, newLicenseBefore);
+            var newLicenseAfter = LicenseHelper.CreateLicense(newLicenseBefore);
 
             web.AllowUnsafeUpdates = true;
             try

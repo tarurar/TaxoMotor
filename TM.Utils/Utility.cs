@@ -173,5 +173,17 @@ namespace TM.Utils
 
             return fileName;
         }
+
+        public static string PrepareXmlDataForSign(string xml)
+        {
+            var wrapper = 
+                        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                        "<Envelope xmlns=\"urn:envelope\">\n" +
+                        xml +
+                        " \n" +
+                        "</Envelope>";
+
+            return wrapper;
+        }
     }
 }

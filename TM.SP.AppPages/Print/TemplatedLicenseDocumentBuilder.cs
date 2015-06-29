@@ -25,18 +25,8 @@ namespace TM.SP.AppPages.Print
         #region [methods]
         public TemplatedLicenseDocumentBuilder(SPWeb web, int requestId, int taxiId): base(web, requestId)
         {
-            this._taxiItem   = _web.GetListOrBreak("Lists/TaxiList").GetItemById(taxiId);
-            
-            #region [getting existing license]
-            this._existingLicense = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                lob         = BCS.LOBTaxiSystemName,
-                ns          = BCS.LOBTaxiSystemNamespace,
-                contentType = "License",
-                methodName  = "GetAnyLicenseForSPTaxiId",
-                methodType  = MethodInstanceType.SpecificFinder
-            }, taxiId);
-            #endregion
+            _taxiItem        = _web.GetListOrBreak("Lists/TaxiList").GetItemById(taxiId);
+            _existingLicense = LicenseHelper.GetAnyLicenseForSPTaxiId(taxiId);
         }
         public override MemoryStream RenderDocument(int templateNumber, out string fileExtension)
         {

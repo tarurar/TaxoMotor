@@ -13,7 +13,7 @@ namespace TM.SP.AppPages.Timers
 {
     public class MoTimer: SPJobDefinition
     {
-         #region [resource strings]
+        #region [resource strings]
 
         public static readonly string TaxiListsFeatureId = "{fd2daa37-e95d-4e98-b360-2f8390c3f2ba}";
         public static readonly string TaxiV2ListsFeatureId = "{38cd390b-fda5-434c-8f3b-2810dee6c8a1}";

@@ -22,6 +22,7 @@ using Microsoft.BusinessData.MetadataModel;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using TM.SP.AppPages;
 
 namespace TestSPConsole
 {
@@ -172,18 +173,9 @@ namespace TestSPConsole
                         methodType = MethodInstanceType.Scalar
                     }, null);
 
-                    var intWriter = new StringWriter(new StringBuilder());
-                    XmlWriter writer = new XmlTextWriter(intWriter);
-                    var serializer = new XmlSerializer(typeof(License));
-                    writer.WriteStartElement("Data");
-                    serializer.Serialize(writer, lic);
-                    writer.WriteEndElement();
-                    var content2 = intWriter.ToString();
-                    var dataToSign = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                                            "<Envelope xmlns=\"urn:envelope\">\n" +
-                                            content2 +
-                                            " \n" +
-                                            "</Envelope>";
+
+                    var content2 = LicenseHelper.Serialize(lic);
+                    var dataToSign = TM.Utils.Utility.PrepareXmlDataForSign(content2);
 
                     var cert = CertificateHelper.GetCryptoProCertificate("e5 14 d8 fb 77 09 7a 58 68 ff cb 10 e9 5d b1 18 35 11 36 73");
                     var signer = new X509Signer(cert);

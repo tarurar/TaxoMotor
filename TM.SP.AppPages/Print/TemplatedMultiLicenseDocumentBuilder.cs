@@ -67,14 +67,7 @@ namespace TM.SP.AppPages.Print
         {
             foreach (SPListItem taxiItem in _taxiItems)
             {
-                var existingLicense = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                {
-                    lob         = BCS.LOBTaxiSystemName,
-                    ns          = BCS.LOBTaxiSystemNamespace,
-                    contentType = "License",
-                    methodName  = "GetAnyLicenseForSPTaxiId",
-                    methodType  = MethodInstanceType.SpecificFinder
-                }, taxiItem.ID);
+                var existingLicense = LicenseHelper.GetAnyLicenseForSPTaxiId(taxiItem.ID);
 
                 var dr = dt.NewRow();
 

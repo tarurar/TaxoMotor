@@ -51,17 +51,7 @@ namespace TM.SP.AppPages
             var taxiItem             = taxiList.GetItemById(taxiId);
             var ctId                 = new SPContentTypeId(rItem["ContentTypeId"].ToString());
 
-            #region [getting draft object from bcs list]
-
-            var draft = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                lob         = BCS.LOBTaxiSystemName,
-                ns          = BCS.LOBTaxiSystemNamespace,
-                contentType = "License",
-                methodName  = "GetLicenseDraftForSPTaxiId",
-                methodType  = MethodInstanceType.SpecificFinder
-            }, taxiItem.ID);
-            #endregion
+            var draft = LicenseHelper.GetLicenseDraftForSPTaxiId(taxiItem.ID);
             #region [getting declarant and orgHead objects]
             var declarantId = rItem["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(rItem, "Tm_RequestAccountBCSLookup") : null;
             var declarant = declarantId != null ? SendRequestEGRULPage.GetRequestAccount((int)declarantId) : null;
@@ -106,15 +96,7 @@ namespace TM.SP.AppPages
             #endregion
             #region [getting parent license]
             var parentId = draft.Parent;
-            var parent = parentId != null
-                ? BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                {
-                    lob         = BCS.LOBTaxiSystemName,
-                    ns          = BCS.LOBTaxiSystemNamespace,
-                    contentType = "License",
-                    methodName  = "ReadLicenseItem",
-                    methodType  = MethodInstanceType.SpecificFinder
-                }, parentId) : null;
+            var parent = parentId != null && parentId.HasValue ? LicenseHelper.ReadLicenseItem(parentId.Value) : null;
             #endregion
             #region [getting taxi posession item]
             string posessionItemServiceCode = null;
@@ -270,16 +252,7 @@ namespace TM.SP.AppPages
             draft.ShortName        = declarant != null ? declarant.Name : "";
             #endregion
 
-            #region [update bcs list item]
-            BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                lob         = BCS.LOBTaxiSystemName,
-                ns          = BCS.LOBTaxiSystemNamespace,
-                contentType = "License",
-                methodName  = "UpdateLicense",
-                methodType  = MethodInstanceType.Updater
-            }, draft);
-            #endregion
+            LicenseHelper.UpdateLicense(draft);
 
             return draft.Id;
         }
@@ -341,16 +314,7 @@ namespace TM.SP.AppPages
             if (id == null || id == 0)
                 throw new Exception("Item id must be specified");
 
-            var item = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-            {
-                contentType = "License",
-                lob = BCS.LOBTaxiSystemName,
-                ns = BCS.LOBTaxiSystemNamespace,
-                methodName = "ReadLicenseItem",
-                methodType = MethodInstanceType.SpecificFinder
-            }, id);
-
-            return item;
+            return LicenseHelper.ReadLicenseItem(id.Value); 
         }
 
         /// <summary>
@@ -389,6 +353,108 @@ namespace TM.SP.AppPages
                     .Where(t => t.StartsWith(searchString))
                     .Select(t => t.Substring(searchString.Length))
                     .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Сериализация разрешения в xml
+        /// </summary>
+        /// <param name="license"></param>
+        /// <returns>Строка в виде xml</returns>
+        public static string Serialize(License license)
+        {
+            var intWriter  = new StringWriter(new StringBuilder());
+            var writer     = new XmlTextWriter(intWriter);
+            var serializer = new XmlSerializer(typeof(License));
+
+            writer.WriteStartElement("Data");
+            serializer.Serialize(writer, license);
+            writer.WriteEndElement();
+
+            return intWriter.ToString();
+        }
+
+        public static License GetUnsignedLicense()
+        {
+            return BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "TakeAnyUnsignedLicense",
+                methodType  = MethodInstanceType.Scalar
+            }, null);
+        }
+
+        public static void UpdateLicense(License license)
+        {
+            BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "UpdateLicense",
+                methodType  = MethodInstanceType.Updater
+            }, license);
+        }
+
+        public static void DeleteLicenseDraftForSPTaxiId(int taxiId)
+        {
+            BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "DeleteLicenseDraftForSPTaxiIdInstance",
+                methodType  = MethodInstanceType.Updater
+            }, taxiId);
+        }
+
+        public static License GetLicenseDraftForSPTaxiId(int taxiId)
+        {
+            return BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "GetLicenseDraftForSPTaxiId",
+                methodType  = MethodInstanceType.SpecificFinder
+            }, taxiId);
+        }
+
+        public static License CreateLicense(License license)
+        {
+            return BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "CreateLicense",
+                methodType  = MethodInstanceType.Creator
+            }, license);
+        }
+
+        public static License ReadLicenseItem(int licenseId)
+        {
+            return BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "ReadLicenseItem",
+                methodType  = MethodInstanceType.SpecificFinder
+            }, licenseId);
+        }
+
+        public static License GetAnyLicenseForSPTaxiId(int taxiId)
+        {
+            return BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "GetAnyLicenseForSPTaxiId",
+                methodType  = MethodInstanceType.SpecificFinder
+            }, taxiId);
         }
     }
 }

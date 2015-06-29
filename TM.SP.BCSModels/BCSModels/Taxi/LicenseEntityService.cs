@@ -167,5 +167,29 @@ namespace TM.SP.BCSModels.Taxi
             thisReader.Close();
             return entity;
         }
+
+        public License TakeAnyUnsignedLicense()
+        {
+            License entity = new License();
+            SqlConnection thisConn = getSqlConnection();
+            thisConn.Open();
+            var selectCommand = new SqlCommand
+            {
+                CommandText = SqlHelper.LoadSQLStatement("License-TakeAnyUnsigned.sql")
+            };
+
+            selectCommand.Connection = thisConn;
+            SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            if (thisReader.Read())
+            {
+                SqlHelper.LicenseFillFromReader(entity, thisReader);
+            }
+            else
+            {
+                throw new UnsignedNotFoundException();
+            }
+            thisReader.Close();
+            return entity;
+        }
     }
 }

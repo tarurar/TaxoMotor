@@ -9,4 +9,9 @@ namespace TM.SP.BCSModels.Taxi.Exceptions
     public class DraftNotFoundException: Exception
     {
     }
+
+    public class UnsignedNotFoundException: Exception
+    {
+
+    }
 }
