@@ -6,69 +6,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TM.Utils;
+using TM.Utils.TimerJobs;
 using TM.SP.BCSModels.Taxi;
 using Microsoft.BusinessData.MetadataModel;
 using TM.SP.AppPages.VirtualSigner;
 
 namespace TM.SP.AppPages.Timers
 {
-    public class VirualSignerTimer : SPJobDefinition
+    public class VirualSignerTimer : JobDefinition
     {
-        #region [resource strings]
-
-        public static readonly string TaxiListsFeatureId = "{fd2daa37-e95d-4e98-b360-2f8390c3f2ba}";
-        public static readonly string TaxiV2ListsFeatureId = "{38cd390b-fda5-434c-8f3b-2810dee6c8a1}";
-
-        #endregion
-
         #region [methods]
         public VirualSignerTimer()
         {}
 
-        public VirualSignerTimer(string jobName, SPService service): base(jobName, service, null, SPJobLockType.None)
-        {
-            Title = "ТаксоМотор: Виртуальный подписант разрешений";
-        }
+        public VirualSignerTimer(string jobName, string jobTitle, SPService service): base(jobName, jobTitle, service) { }
 
-        public VirualSignerTimer(string jobName, SPWebApplication webapp)
-            : base(jobName, webapp, null, SPJobLockType.Job)
-        {
-            Title = "ТаксоМотор: Виртуальный подписант разрешений";
-        }
+        public VirualSignerTimer(string jobName, string jobTitle, SPWebApplication webapp): base(jobName, jobTitle, webapp) { }
 
-        public override void Execute(Guid targetInstanceId)
-        {
-            try
-            {
-                var webApp = Parent as SPWebApplication;
-                if (webApp != null)
-                {
-                    foreach (SPSite siteCollection in webApp.Sites)
-                    {
-                        try
-                        {
-                            SPWeb web = siteCollection.RootWeb;
-
-                            if (web.Features[new Guid(TaxiListsFeatureId)] != null &&
-                                web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
-                            {
-                                Work(web);
-                            }
-                        }
-                        finally
-                        {
-                            siteCollection.Dispose();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-	        {
-                throw new Exception(String.Format("Детали: {0}", ex.Message));
-	        }
-        }
-
-        private void Work(SPWeb web)
+        protected override void Work(SPWeb web)
         {
             var configParamName = "OdopmClientCertificate";
             var certThumbprint = Config.GetConfigValueOrDefault<string>(web, configParamName);

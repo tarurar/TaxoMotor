@@ -66,6 +66,9 @@
     <Compile Include="Config.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="TimerJobs\Creator.cs" />
+    <Compile Include="TimerJobs\ICreationInfo.cs" />
+    <Compile Include="TimerJobs\JobDefinition.cs" />
     <Compile Include="MimeTypeMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection.cs" />
@@ -77,6 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StringsRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="TimerJobs\CreationInfo.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="WebPart.cs" />
     <Compile Include="Sql\XmlToSql.cs" />
