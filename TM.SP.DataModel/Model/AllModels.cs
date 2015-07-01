@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SPMeta2.Models;
 using SPMeta2.Syntax.Default;
 using SPMeta2.CSOM.Behaviours;
+using SPMeta2.Utils;
 using Microsoft.SharePoint.Client;
 using SPMeta2.Syntax.Default.Modern;
 using TM.SP.DataModel.Definitions;
@@ -626,7 +627,7 @@ namespace TM.SP.DataModel
                                     WebParts.IncomeRequestListView.WebpartXmlTemplate = wpXml;
                                     page.AddWebPart(WebParts.IncomeRequestListView);
                                 })
-                                .AddWebPartPage(Pages.LicenseMo, page => 
+                                .AddWebPartPage(Pages.LicenseMo, page =>
                                 {
                                     IEnumerable<List> allLists = WebHelpers.GetWebLists(ctx);
                                     List licenseList = ListHelpers.GetList(allLists, Lists.TmLicenseList.Url);
@@ -641,6 +642,10 @@ namespace TM.SP.DataModel
                                         WebParts.LicenseMoListView.Title, wpXml);
                                     WebParts.LicenseMoListView.WebpartXmlTemplate = wpXml;
                                     page.AddWebPart(WebParts.LicenseMoListView);
+                                })
+                                .AddWebPartPage(Pages.LicenseFilterPage, page =>
+                                {
+                                    page.AddWebPart(WebParts.LicenseFilterWebPart);
                                 });
                         })
                 ));

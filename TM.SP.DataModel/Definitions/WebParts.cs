@@ -36,5 +36,15 @@ namespace TM.SP.DataModel.Definitions
             ZoneId             = "Main",
             ZoneIndex          = 1
         };
+
+        public static WebPartDefinition LicenseFilterWebPart = new WebPartDefinition()
+        {
+            Id                 = "licenseFilterWebPart",
+            WebpartXmlTemplate = WebPartsRes.LicenseFilterWebPartXml,
+            ChromeType         = "None",
+            Title              = "Фильтрация разрешений",
+            ZoneId             = "Main",
+            ZoneIndex          = 1
+        };
     }
 }

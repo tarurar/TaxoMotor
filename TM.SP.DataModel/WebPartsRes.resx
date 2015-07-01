@@ -204,6 +204,41 @@
   &lt;/webPart&gt;
 &lt;/webParts&gt;</value>
   </data>
+  <data name="LicenseFilterWebPartXml" xml:space="preserve">
+    <value>&lt;webParts&gt;
+  &lt;webPart xmlns="http://schemas.microsoft.com/WebPart/v3"&gt;
+    &lt;metaData&gt;
+      &lt;type name="TM.SP.AppPages.LicenseFilterWebPart, TM.SP.AppPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=63e92b7beac312db" /&gt;
+      &lt;importErrorMessage&gt;Невозможно импортироватьве часть Фильтрация разрешений.&lt;/importErrorMessage&gt;
+    &lt;/metaData&gt;
+    &lt;data&gt;
+      &lt;properties&gt;
+        &lt;property name="ExportMode" type="exportmode"&gt;All&lt;/property&gt;
+        &lt;property name="HelpUrl" type="string" /&gt;
+        &lt;property name="Hidden" type="bool"&gt;False&lt;/property&gt;
+        &lt;property name="Description" type="string"&gt;Фильтрация разрешений&lt;/property&gt;
+        &lt;property name="CatalogIconImageUrl" type="string"&gt;/_layouts/15/images/TaxoMotor/WebPartIcon_LicenseFilterWebPart.gif&lt;/property&gt;
+        &lt;property name="Title" type="string"&gt;Фильтрация разрешений&lt;/property&gt;
+        &lt;property name="AllowHide" type="bool"&gt;True&lt;/property&gt;
+        &lt;property name="AllowMinimize" type="bool"&gt;True&lt;/property&gt;
+        &lt;property name="AllowZoneChange" type="bool"&gt;True&lt;/property&gt;
+        &lt;property name="TitleUrl" type="string" /&gt;
+        &lt;property name="ChromeType" type="chrometype"&gt;None&lt;/property&gt;
+        &lt;property name="AllowConnect" type="bool"&gt;True&lt;/property&gt;
+        &lt;property name="Width" type="unit" /&gt;
+        &lt;property name="View" type="string"&gt;FilterView&lt;/property&gt;
+        &lt;property name="HelpMode" type="helpmode"&gt;Navigate&lt;/property&gt;
+        &lt;property name="Height" type="unit" /&gt;
+        &lt;property name="AllowEdit" type="bool"&gt;True&lt;/property&gt;
+        &lt;property name="TitleIconImageUrl" type="string"&gt;/_layouts/15/images/TaxoMotor/WebPartIcon_LicenseFilterWebPart.gif&lt;/property&gt;
+        &lt;property name="Direction" type="direction"&gt;NotSet&lt;/property&gt;
+        &lt;property name="AllowClose" type="bool"&gt;True&lt;/property&gt;
+        &lt;property name="ChromeState" type="chromestate"&gt;Normal&lt;/property&gt;
+      &lt;/properties&gt;
+    &lt;/data&gt;
+  &lt;/webPart&gt;
+&lt;/webParts&gt;</value>
+  </data>
   <data name="LicenseMoListViewXml" xml:space="preserve">
     <value>&lt;webParts&gt;
   &lt;webPart xmlns="http://schemas.microsoft.com/WebPart/v3"&gt;

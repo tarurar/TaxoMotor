@@ -30,6 +30,14 @@ namespace TM.SP.DataModel
             PageLayoutTemplate = BuiltInWebPartPageTemplates.spstd1
         };
 
+        public static WebPartPageDefinition LicenseFilterPage = new WebPartPageDefinition()
+        {
+            FileName           = "LicenseFilterPage.aspx",
+            Title              = "Фильтрация разрешений",
+            NeedOverride       = true,
+            PageLayoutTemplate = BuiltInWebPartPageTemplates.spstd1
+        };
+
         #endregion
     }
 }

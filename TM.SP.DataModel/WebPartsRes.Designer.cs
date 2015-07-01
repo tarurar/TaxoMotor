@@ -83,6 +83,25 @@ namespace TM.SP.DataModel {
         ///   Looks up a localized string similar to &lt;webParts&gt;
         ///  &lt;webPart xmlns=&quot;http://schemas.microsoft.com/WebPart/v3&quot;&gt;
         ///    &lt;metaData&gt;
+        ///      &lt;type name=&quot;TM.SP.AppPages.LicenseFilterWebPart, TM.SP.AppPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=63e92b7beac312db&quot; /&gt;
+        ///      &lt;importErrorMessage&gt;Невозможно импортироватьве часть Фильтрация разрешений.&lt;/importErrorMessage&gt;
+        ///    &lt;/metaData&gt;
+        ///    &lt;data&gt;
+        ///      &lt;properties&gt;
+        ///        &lt;property name=&quot;ExportMode&quot; type=&quot;exportmode&quot;&gt;All&lt;/property&gt;
+        ///        &lt;property name=&quot;HelpUrl&quot; type=&quot;string&quot; /&gt;
+        ///        [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LicenseFilterWebPartXml {
+            get {
+                return ResourceManager.GetString("LicenseFilterWebPartXml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;webParts&gt;
+        ///  &lt;webPart xmlns=&quot;http://schemas.microsoft.com/WebPart/v3&quot;&gt;
+        ///    &lt;metaData&gt;
         ///      &lt;type name=&quot;Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c&quot; /&gt;
         ///      &lt;importErrorMessage&gt;Невозможно импортировать эту веб-часть.&lt;/importErrorMessage&gt;
         ///    &lt;/metaData&gt;
