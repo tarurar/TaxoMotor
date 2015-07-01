@@ -25,33 +25,7 @@ namespace TM.SP.AppPages.Timers
 
         protected override void Work(SPWeb web)
         {
-            var configParamName = "OdopmClientCertificate";
-            var certThumbprint = Config.GetConfigValueOrDefault<string>(web, configParamName);
-            if (String.IsNullOrEmpty(certThumbprint))
-                throw new Exception(String.Format("В конфигурации не указан отпечаток сертификата для подписания. Параметр конфигурации: {0}", configParamName));
-
-            Utility.WithSPServiceContext(web, serviceContextWeb => 
-            {
-                bool hasUnsigned = true;
-                do
-                {
-                    try
-                    {
-                        var license       = LicenseHelper.GetUnsignedLicense();
-                        var xmltoSign     = Utility.PrepareXmlDataForSign(LicenseHelper.Serialize(license));
-                        var signer        = new X509Signer(CertificateHelper.GetCryptoProCertificate(certThumbprint));
-                        license.Signature = signer.SignXml(xmltoSign);
-
-                        LicenseHelper.UpdateLicense(license);
-                    }
-                    catch (Exception ex)
-                    {
-                        if (!ex.Message.Contains("UnsignedNotFoundException")) throw;
-                        hasUnsigned = false;
-                    }
-                        
-                } while (hasUnsigned);
-            });
+            CommonService.RunVirtualSigner(web);
         }
 
         #endregion

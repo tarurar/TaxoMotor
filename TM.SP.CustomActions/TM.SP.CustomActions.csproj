@@ -121,6 +121,9 @@
     <None Include="Ribbons\LicenseMakeObsolete\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{c1ee4daf-7edf-40cf-b55e-67f9099e56c1}</SharePointProjectItemId>
     </None>
+    <None Include="Ribbons\LicenseRunVirtualSigner\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{cf52aa12-cca1-4a3e-a1ec-016edcd85227}</SharePointProjectItemId>
+    </None>
     <None Include="Ribbons\LicenseSendCombi\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{68c23367-e881-47ca-adc4-ed9fcd988016}</SharePointProjectItemId>
     </None>
@@ -208,6 +211,7 @@
     <Content Include="Ribbons\LicenseDisableGibdd\Elements.xml" />
     <Content Include="Ribbons\LicenseFilterPage\Elements.xml" />
     <Content Include="Ribbons\LicenseMakeObsolete\Elements.xml" />
+    <Content Include="Ribbons\LicenseRunVirtualSigner\Elements.xml" />
     <Content Include="Ribbons\LicenseSendCombi\Elements.xml" />
     <Content Include="Ribbons\LicenseSendMo\Elements.xml" />
     <Content Include="Ribbons\LicenseSendOdopm\Elements.xml" />

@@ -17,6 +17,7 @@ using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint;
 using TM.SP.BCSModels.CoordinateV5;
 using TM.Utils;
+using TM.SP.AppPages.VirtualSigner;
 using ODOPM;
 using WebServiceMO;
 
@@ -588,6 +589,51 @@ namespace TM.SP.AppPages
                             var client = GetGibddClientInstance(safeWeb);
                             client.getDataPackagesInfo();
                         })));
+        }
+
+        [WebMethod]
+        public static dynamic RunVirtualSigner()
+        {
+            return Utility.WithCatchExceptionOnWebMethod("Подписание разрешений", () =>
+                Utility.WithSPServiceContext(SPContext.Current, web =>
+                {
+                    DoRunVirtualSigner(web);
+                }));
+        }
+
+        public static void RunVirtualSigner(SPWeb web)
+        {
+            var ctx = SPContext.GetContext(web);
+
+            Utility.WithSPServiceContext(ctx, serviceWeb => DoRunVirtualSigner(serviceWeb));
+        }
+
+        private static void DoRunVirtualSigner(SPWeb web)
+        {
+            var configParamName = "OdopmClientCertificate";
+            var certThumbprint = Config.GetConfigValueOrDefault<string>(web, configParamName);
+            if (String.IsNullOrEmpty(certThumbprint))
+                throw new Exception(String.Format("В конфигурации не указан отпечаток сертификата для подписания. Параметр конфигурации: {0}", configParamName));
+
+            bool hasUnsigned = true;
+            do
+            {
+                try
+                {
+                    var license       = LicenseHelper.GetUnsignedLicense();
+                    var xmltoSign     = Utility.PrepareXmlDataForSign(LicenseHelper.Serialize(license));
+                    var signer        = new X509Signer(CertificateHelper.GetCryptoProCertificate(certThumbprint));
+                    license.Signature = signer.SignXml(xmltoSign);
+
+                    LicenseHelper.UpdateLicense(license);
+                }
+                catch (Exception ex)
+                {
+                    if (!ex.Message.Contains("UnsignedNotFoundException")) throw;
+                    hasUnsigned = false;
+                }
+
+            } while (hasUnsigned);
         }
 
     }

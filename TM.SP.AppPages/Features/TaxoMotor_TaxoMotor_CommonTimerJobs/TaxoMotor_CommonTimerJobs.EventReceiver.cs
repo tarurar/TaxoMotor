@@ -68,6 +68,7 @@ namespace TM.SP.AppPages
                 }
             },
             #endregion
+            /*
             #region Виртуальное подписание
             new CreationInfo
             {
@@ -77,6 +78,7 @@ namespace TM.SP.AppPages
                 Schedule = null
             }
             #endregion
+            */
         };
         
         /// <summary>
