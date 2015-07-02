@@ -53,7 +53,7 @@ namespace WebClientGIBDD
                                 from License l1
                                     left join SpecialVehiclesRegister svr on l1.id = svr.License_id
                                     left join license l2 on l2.Parent = l1.id
-                                where svr.License_id is null and license.status < 4 and l2.id is null;
+                                where svr.License_id is null and l1.status < 4 and l2.id is null;
 
                                 insert into [SpecialVehiclesRegister](ID, [License_id], [RecordId])
                                 select id,licenseid,recordid from #tt
