@@ -197,6 +197,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Print\TemplatedLicenseDocumentBuilder.cs" />
     <Compile Include="Timers\MoTimer.cs" />
     <Compile Include="Timers\OdopmTimer.cs" />
+    <Compile Include="Timers\SpecialTransportRegisterTimer.cs" />
     <Compile Include="Timers\UpdateViewsTimer.cs" />
     <Compile Include="Timers\VirualSignerTimer.cs" />
     <Compile Include="Validators\LicenseDataValidator.cs" />

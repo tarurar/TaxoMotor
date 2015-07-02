@@ -50,9 +50,9 @@ namespace WebClientGIBDD
                                  
                                 insert into #tt(id, licenseid, recordId)
                                 select NEWID(), l1.Id, l1.RootParent
-                                from License l1
-                                    left join SpecialVehiclesRegister svr on l1.id = svr.License_id
-                                    left join license l2 on l2.Parent = l1.id
+                                from [TM.Data].[dbo].License l1
+                                    left join [TM.Data].[dbo].SpecialVehiclesRegister svr on l1.id = svr.License_id
+                                    left join [TM.Data].[dbo].license l2 on l2.Parent = l1.id and l2.Status<4
                                 where svr.License_id is null and l1.status < 4 and l2.id is null;
 
                                 insert into [SpecialVehiclesRegister](ID, [License_id], [RecordId])

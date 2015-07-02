@@ -560,9 +560,21 @@ namespace TM.SP.AppPages
                     Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
                         Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
                         {
-                            var client = GetGibddClientInstance(safeWeb);
-                            client.putDataPackages();
+                            DoGibddPutDataPAckage(safeWeb);
                         })));
+        }
+
+        private static void DoGibddPutDataPAckage(SPWeb web)
+        {
+            var client = GetGibddClientInstance(web);
+            client.putDataPackages();
+        }
+
+        public static void GibddPutDataPackage(SPWeb web)
+        {
+            var ctx = SPContext.GetContext(web);
+
+            Utility.WithSPServiceContext(ctx, serviceWeb => DoGibddPutDataPAckage(serviceWeb));
         }
 
         [WebMethod]
@@ -573,9 +585,21 @@ namespace TM.SP.AppPages
                     Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
                         Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
                         {
-                            var client = GetGibddClientInstance(safeWeb);
-                            client.getCancelledLicenses();
+                            DoGibddGetCancelledLicenses(safeWeb);
                         })));
+        }
+
+        private static void DoGibddGetCancelledLicenses(SPWeb web)
+        {
+            var client = GetGibddClientInstance(web);
+            client.getCancelledLicenses();
+        }
+
+        public static void GibddGetCancelledLicenses(SPWeb web)
+        {
+            var ctx = SPContext.GetContext(web);
+
+            Utility.WithSPServiceContext(ctx, serviceWeb => DoGibddGetCancelledLicenses(serviceWeb));
         }
 
         [WebMethod]
@@ -586,10 +610,23 @@ namespace TM.SP.AppPages
                     Utility.WithSPServiceContext(SPContext.Current, (serviceContextWeb) =>
                         Utility.WithSafeUpdate(serviceContextWeb, (safeWeb) =>
                         {
-                            var client = GetGibddClientInstance(safeWeb);
-                            client.getDataPackagesInfo();
+                            DoGibddGetDataPackagesInfo(safeWeb);
                         })));
         }
+
+        private static void DoGibddGetDataPackagesInfo(SPWeb web)
+        {
+            var client = GetGibddClientInstance(web);
+            client.getDataPackagesInfo();
+        }
+
+        public static void GibddGetDataPackagesInfo(SPWeb web)
+        {
+            var ctx = SPContext.GetContext(web);
+
+            Utility.WithSPServiceContext(ctx, serviceWeb => DoGibddGetDataPackagesInfo(serviceWeb));
+        }
+
 
         [WebMethod]
         public static dynamic RunVirtualSigner()

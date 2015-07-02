@@ -68,6 +68,21 @@ namespace TM.SP.AppPages
                 }
             },
             #endregion
+            #region Отправка в РСТ
+            new CreationInfo
+            {
+                Name     = "TaxoMotorSendSpecialVehicleRegister", 
+                Title    = "ТаксоМотор: Отправка сведений в РСТ", 
+                Type     = typeof(SpecialTransportRegisterTimer), 
+                Schedule = new SPDailySchedule 
+                {
+                    BeginHour   = 3,
+                    BeginMinute = 15,
+                    EndHour     = 5,
+                    EndMinute   = 15
+                }
+            }
+            #endregion
             /*
             #region Виртуальное подписание
             new CreationInfo

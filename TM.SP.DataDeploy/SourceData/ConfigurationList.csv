@@ -17,6 +17,7 @@ MigrateIncomeRequestCountPerJob;1;Количество элементов обр
 MigrateLicenseCountPerJob;1;Количество элементов разрешений для миграции за один запуск менеджера миграции (один запуск Timer Job)
 AutoSendOdopm;0;Автоматическая отправка в ОДОПМ
 AutoSendMo;0;Автоматическая отправка в МО
+AutoSendSpecVehicleRegister;0;Автоматическая отправка в РСТ
 UseVIN;0;Использовать для проверок ТС код VIN
 GibddSpecTransportServiceUrl;http://188.127.245.220:1022/SpecialTransportDataReceiverService/SpecialTransportDataReceiver?wsdl;Адрес сервиса реестра спецтранспорта ГИБДД
 GibddTakeOffServiceUrl;http://188.127.245.220:1022/ModerationJournal/ModerationJournalQueryService?wsdl;Адрес сервиса снятых с учета ТС в ГИБДД
