@@ -49,10 +49,11 @@ namespace WebClientGIBDD
                         @"      create table #tt(id uniqueidentifier,licenseid int, recordid decimal(18,0))
                                  
                                 insert into #tt(id, licenseid, recordId)
-                                select NEWID(), license.Id, license.RootParent
-                                from License 
-                                    left join SpecialVehiclesRegister svr on license.id = svr.License_id
-                                where svr.License_id is null and license.status < 4;
+                                select NEWID(), l1.Id, l1.RootParent
+                                from License l1
+                                    left join SpecialVehiclesRegister svr on l1.id = svr.License_id
+                                    left join license l2 on l2.Parent = l1.id
+                                where svr.License_id is null and license.status < 4 and l2.id is null;
 
                                 insert into [SpecialVehiclesRegister](ID, [License_id], [RecordId])
                                 select id,licenseid,recordid from #tt
