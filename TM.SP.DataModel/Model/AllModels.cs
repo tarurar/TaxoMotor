@@ -387,8 +387,6 @@ namespace TM.SP.DataModel
                             })
                             .AddListView(ListViews.TmLicenseListDefaultView, lv => lv
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
-                            .AddListView(ListViews.TmLicenseListAllView, lv => lv
-                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
                             .AddListView(ListViews.TmLicenseListCancelledView, lv => lv
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
                             .AddListView(ListViews.TmLicenseListPausedView, lv => lv
@@ -399,10 +397,13 @@ namespace TM.SP.DataModel
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
                             .AddListView(ListViews.TmLicenseListDuplicateView, lv => lv
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
-                            .AddListView(ListViews.TmLicenseListMOView, lv => lv
-                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
-                            .AddListView(ListViews.TmLicenseListMoscowView, lv => lv
-                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                            .AddListView(ListViews.TmLicenseListRenewView, lv => lv
+                                .OnProvisioned<View>(context => 
+                                {
+                                    context.Object.MakeFoldersInvisible();
+                                    context.Object.AggregationsStatus = "On";
+                                    context.Object.Aggregations = "<FieldRef Name='LinkTitle' Type='COUNT' />";
+                                }))
                             .AddListView(ListViews.TmLicenseListFilterView, lv => lv
                                 .OnProvisioned<View>(context => 
                                 { 
