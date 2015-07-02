@@ -35,7 +35,7 @@
                 <input id="dateFrom" style="display: block" data-bind="datepicker: DateFrom"/>
             </div>
             <div style="float: left;">
-                <label for="dateTill" style="display: block">Дата по</label>
+                <label for="dateTill" style="display: block">Дата до</label>
                 <input id="dateTill" style="display: block" data-bind="datepicker: DateTill"/>
             </div>
             <br style="clear:both;" />
