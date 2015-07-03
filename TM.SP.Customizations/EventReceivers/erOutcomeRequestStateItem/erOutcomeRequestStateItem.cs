@@ -108,12 +108,13 @@ namespace TM.SP.Customizations
                             rItem.SystemUpdate();
                             // saving income request status change history
                             string statusXml = "";
-                            var svcGuid = Config.GetConfigValueOrDefault<string>(web, "AsGufServiceGuid");
-                            if (svcGuid == TM.Services.MessageQueueServices.V5Guid)
+                            var svcGuidStr = Config.GetConfigValueOrDefault<string>(web, "AsGufServiceGuid");
+                            var svcGuid = new Guid(svcGuidStr);
+                            if (svcGuid.Equals(TM.Services.MessageQueueServices.V5Guid))
                             {
                                 statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV5StatusMessage(rItem.ID, web);
                             }
-                            else if (svcGuid == TM.Services.MessageQueueServices.V52Guid)
+                            else if (svcGuid.Equals(TM.Services.MessageQueueServices.V52Guid))
                             {
                                 statusXml = IncomeRequestHelper.GetIncomeRequestCoordinateV52StatusMessage(rItem.ID, web);
                             }

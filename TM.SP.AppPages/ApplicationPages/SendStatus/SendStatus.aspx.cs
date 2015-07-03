@@ -168,10 +168,11 @@ namespace TM.SP.AppPages
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
             SendStatusRequestItem doc = document as SendStatusRequestItem;
-            var svcGuid = Config.GetConfigValueOrDefault<string>(this.Web, ServiceGuidConfigName);
-            var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
+            var svcGuidStr = Config.GetConfigValueOrDefault<string>(this.Web, ServiceGuidConfigName);
+            var svcGuid = new Guid(svcGuidStr);
+            var svc = GetServiceClientInstance().GetService(svcGuid);
 
-            if (svcGuid == TM.Services.MessageQueueServices.V5Guid)
+            if (svcGuid.Equals(TM.Services.MessageQueueServices.V5Guid))
             {
                 CV5.CoordinateStatusMessage internalMessage = GetCoordinateV5StatusMessage(doc);
 
@@ -185,7 +186,7 @@ namespace TM.SP.AppPages
                     MessageText   = internalMessage.ToXElement<CV5.CoordinateStatusMessage>().ToString()
                 };
             }
-            else if (svcGuid == TM.Services.MessageQueueServices.V52Guid)
+            else if (svcGuid.Equals(TM.Services.MessageQueueServices.V52Guid))
             {
                 CV52.CoordinateStatusMessage internalMessage = GetCoordinateV52StatusMessage(doc);
 
