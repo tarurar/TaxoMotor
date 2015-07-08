@@ -64,7 +64,7 @@ namespace TM.SP.AppPages.Print
             this._requestItem = _web.GetListOrBreak("Lists/IncomeRequestList").GetItemOrBreak(requestId);
 
             var declarantId = BCS.GetBCSFieldLookupId(_requestItem, "Tm_RequestAccountBCSLookup");
-            this._declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
+            this._declarant = IncomeRequestHelper.ReadRequestAccountItem((int) declarantId);
 
             var docList = _web.GetListOrBreak("Lists/IncomeRequestAttachList");
             var identityDocId = IncomeRequestService.GetDeclarantIdentityId(_requestItem.ID);

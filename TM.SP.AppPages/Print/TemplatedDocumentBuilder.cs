@@ -149,7 +149,7 @@ namespace TM.SP.AppPages
             _asposeLic.SetLicense("Aspose.Total.lic");
 
             var declarantId = BCS.GetBCSFieldLookupId(_request, "Tm_RequestAccountBCSLookup");
-            this._declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
+            this._declarant = IncomeRequestHelper.ReadRequestAccountItem((int)declarantId);
         }
 
         private SPListItemCollection GetTaxiItemsInStatus(string statuses, List<Expression<Func<SPListItem, bool>>> additionalExprAnd)

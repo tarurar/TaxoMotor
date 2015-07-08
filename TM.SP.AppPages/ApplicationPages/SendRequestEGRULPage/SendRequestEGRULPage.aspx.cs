@@ -4,7 +4,7 @@
 // <author>SPDEV\developer</author>
 // <date>2014-08-06 17:56:53Z</date>
 
-using System.Globalization;
+using TM.SP.AppPages.Communication;
 // ReSharper disable CheckNamespace
 
 
@@ -14,24 +14,20 @@ namespace TM.SP.AppPages
     using System;
     using System.Security.Permissions;
     using System.Web.UI.WebControls;
-    using System.Xml;
-    using System.Xml.Linq;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
     using Microsoft.SharePoint.WebControls;
-    using Microsoft.BusinessData.MetadataModel;
     using CamlexNET;
-
     using ApplicationPages;
     using BcsCoordinateV5Model = BCSModels.CoordinateV5;
     using Utils;
-    using Services.CoordinateV5;
     using MessageQueueService = ServiceClients.MessageQueue;
 
 
     [Serializable]
+// ReSharper disable once InconsistentNaming
     public class EGRULRequestItem : RequestItem
     {
         public string RequestAccount { get; set; }
@@ -44,13 +40,12 @@ namespace TM.SP.AppPages
         }
     }
 
-    /// <summary>
-    /// TODO: Add comment for SendRequestEGRULPage
-    /// </summary>
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
+// ReSharper disable once InconsistentNaming
     public partial class SendRequestEGRULPage : SendRequestDialogBase
     {
         #region [resourceStrings]
+// ReSharper disable InconsistentNaming
         protected static readonly string resRequestListCaption      = "$Resources:EGRULRequest_DlgRequestListCaption";
         protected static readonly string resPrecautionMessage       = "$Resources:EGRULRequest_DlgPrecautionMessageText";
         protected static readonly string resNoRequestMessage        = "$Resources:EGRULRequest_DlgNoRequestMessageText";
@@ -64,79 +59,18 @@ namespace TM.SP.AppPages
         protected static readonly string resNoDocumentsError        = "$Resources:EGRULRequest_DlgNoDocumentsError";
         protected static readonly string resProcessNotifyText       = "$Resources:EGRULRequest_DlgProcessNotifyText";
         protected static readonly string resAccIsEntrprnrErrorFmt   = "$Resources:EGRULRequest_DlgAccountIsEntrepreneurErrorFmt";
+// ReSharper restore InconsistentNaming
         #endregion
 
         #region [fields]
-        protected static readonly string EGRULServiceGuidConfigName   = "BR2ServiceGuid";
-        public static readonly string PrivateEntrepreneurCode      = "91";
+        protected static readonly string EgrulServiceGuidConfigName   = "BR2ServiceGuid";
+        public static readonly string PrivateEntrepreneurCode = "91";
 
         protected SPGridView requestListGrid;
         protected SPGridView errorListGrid;
         #endregion
 
         #region [methods]
-        /// <summary>
-        /// Getting bcs entity RequestAccount by Id
-        /// </summary>
-        /// <param name="id">Id of entity RequestAccount</param>
-        /// <returns></returns>
-        public static BcsCoordinateV5Model.RequestAccount GetRequestAccount(int id)
-        {
-            IEntity contentType = BCS.GetEntity(SPServiceContext.Current, String.Empty, 
-                BCS.LOBRequestSystemNamespace, "RequestAccount");
-            List<object> args = new List<object>();
-            args.Add(id);
-            var parameters = args.ToArray();
-            return (BcsCoordinateV5Model.RequestAccount)BCS.GetDataFromMethod(BCS.LOBRequestSystemName, 
-                contentType, "ReadRequestAccountItem", MethodInstanceType.SpecificFinder, ref parameters);
-        }
-        /// <summary>
-        /// Building TaskMessage.Data.Parameter for CoordinateTaskMessage according to EGRUL request
-        /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        protected XmlElement getTaskParam(BcsCoordinateV5Model.RequestAccount account)
-        {
-            XElement el = new XElement("ServiceProperties", 
-                            new XAttribute("xmlns", String.Empty), 
-                            new XElement("ogrn", account.Ogrn),
-                            new XElement("inn", account.Inn));
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load(el.CreateReader());
-
-            return doc.DocumentElement;
-        }
-        /// <summary>
-        ///  Building CoordinateTaskMessage
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        protected virtual CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item) where T : EGRULRequestItem
-        {
-            // request item
-            SPListItem rItem = Web.GetListOrBreak(String.Format("Lists/{0}", item.ListName)).GetItemOrBreak(item.Id);
-            var rDocument    = rItem["Tm_RequestedDocument"] == null ? 0 : new SPFieldLookupValue(rItem["Tm_RequestedDocument"].ToString()).LookupId;
-            var sNumber      = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
-            // request account
-            BcsCoordinateV5Model.RequestAccount rAccount = GetRequestAccount(item.RequestAccountId);
-            if (rAccount == null)
-                throw new Exception(String.Format("Bcs entity with Id = {0} not found", item.RequestAccountId));
-            // service code lookup item
-            var stList  = Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
-            var stItem  = stList.GetItemOrNull(rDocument);
-            var sCode   = stItem == null ? String.Empty : 
-                (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
-
-            var message = Helpers.GetEGRULMessageTemplate(getTaskParam(rAccount));
-            message.ServiceHeader.ServiceNumber            = sNumber;
-            message.TaskMessage.Task.Responsible.FirstName = String.Empty;
-            message.TaskMessage.Task.Responsible.LastName  = Web.CurrentUser.Name;
-            message.TaskMessage.Task.ServiceNumber         = sNumber;
-            message.TaskMessage.Task.ServiceTypeCode       = sCode;
-            return message;
-        }
-
         protected override void CreateChildControls()
         {
             base.CreateChildControls();
@@ -253,7 +187,7 @@ namespace TM.SP.AppPages
                 var accountStr  = item["Tm_RequestAccountBCSLookup"] != null ? item["Tm_RequestAccountBCSLookup"].ToString() : String.Empty;
                 var accountId   = item["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestAccountBCSLookup") : null;
                 if (accountId != null)
-                    accountEntity = GetRequestAccount((int)accountId);
+                    accountEntity = IncomeRequestHelper.ReadRequestAccountItem((int)accountId);
 
                 retVal.Add(new EGRULRequestItem
                 {
@@ -280,11 +214,11 @@ namespace TM.SP.AppPages
         {
             var retVal = new List<ValidationErrorInfo>();
 
-            foreach (T document in documentList)
+            foreach (var document in documentList)
             {
-                EGRULRequestItem doc = document as EGRULRequestItem;
+                var doc = document as EGRULRequestItem;
                 #region [Rule#1 - RequestAccount cannot be null]
-                if (String.IsNullOrEmpty(doc.RequestAccount))
+                if (doc != null && String.IsNullOrEmpty(doc.RequestAccount))
                 {
                     retVal.Add(new ValidationErrorInfo
                     {
@@ -296,7 +230,7 @@ namespace TM.SP.AppPages
                 }
                 #endregion
                 #region [Rule#2 - RequestAccount must be legal person (not private entrepreneur)]
-                if (doc.OrgFormCode == PrivateEntrepreneurCode)
+                if (doc != null && doc.OrgFormCode == PrivateEntrepreneurCode)
                 {
                     retVal.Add(new ValidationErrorInfo
                     {
@@ -331,32 +265,22 @@ namespace TM.SP.AppPages
             ViewState["requestDocumentList"] = documentList.Cast<EGRULRequestItem>().ToList();
             // UI
             RequestList.Visible = !(documentList.All(i => i.HasError));
-            ErrorList.Visible = errorList.Count() > 0;
-            BtnOk.Enabled = !errorList.Any(err => err.Severity == ValidationErrorSeverity.Critical);
+            ErrorList.Visible = errorList.Any();
+            BtnOk.Enabled = errorList.All(err => err.Severity != ValidationErrorSeverity.Critical);
         }
 
-        /// <summary>
-        /// TODO: Add comment
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Arguments of the event</param>
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             EndOperation(0);
         }
 
-        /// <summary>
-        /// TODO: Add comment
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Arguments of the event</param>
         private void BtnOk_Click(object sender, EventArgs e)
         {
             var success = false;
             try
             {
                 var documentList = (List<EGRULRequestItem>)ViewState["requestDocumentList"];
-                success = SendRequests<EGRULRequestItem>(documentList);
+                success = SendRequests(documentList);
             }
             catch (Exception)
             {
@@ -368,22 +292,15 @@ namespace TM.SP.AppPages
 
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
-            EGRULRequestItem doc = document as EGRULRequestItem;
-            SPListItem configItem = Config.GetConfigItem(Web, EGRULServiceGuidConfigName);
-            var svcGuid = Config.GetConfigValue(configItem);
-            var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
-            var internalMessage = GetRelevantCoordinateTaskMessage(doc);
-            
-            return new MessageQueueService.Message
-            {
-                Service         = svc,
-                MessageId       = new Guid(internalMessage.ServiceHeader.MessageId),
-                MessageType     = 2,
-                MessageMethod   = 2,
-                MessageDate     = DateTime.Now,
-                MessageText     = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
-                RequestId       = new Guid(internalMessage.TaskMessage.Task.RequestId)
-            };
+            var doc = document as EGRULRequestItem;
+            if (doc == null)
+                throw new Exception("Must be of type EGRULRequestItem");
+
+            var svcGuid = new Guid(Config.GetConfigValueOrDefault<string>(Web, EgrulServiceGuidConfigName));
+            var spItem = GetList().GetItemOrBreak(doc.Id);
+            var buildOptions = new QueueMessageBuildOptions {Date = DateTime.Now, Method = 2, ServiceGuid = svcGuid};
+            return QueueMessageBuilder.Build(new CoordinateV5EgrulMessageBuilder(spItem, doc.RequestAccountId),
+                QueueClient, buildOptions);
         }
         #endregion
 

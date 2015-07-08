@@ -1,15 +1,15 @@
-﻿using Microsoft.SharePoint;
+﻿using Microsoft.BusinessData.MetadataModel;
+using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using CV5 = TM.Services.CoordinateV5;
 using CV52 = TM.Services.CoordinateV52;
+using TM.SP.BCSModels.CoordinateV5;
 using TM.Utils;
 
 namespace TM.SP.AppPages
@@ -262,6 +262,18 @@ namespace TM.SP.AppPages
             }
 
             return el;
+        }
+
+        public static RequestAccount ReadRequestAccountItem(int itemId)
+        {
+            return BCS.ExecuteBcsMethod<RequestAccount>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBRequestSystemName,
+                ns          = BCS.LOBRequestSystemNamespace,
+                contentType = "RequestAccount",
+                methodName  = "ReadRequestAccountItem",
+                methodType  = MethodInstanceType.SpecificFinder
+            }, itemId);
         }
     }
 }

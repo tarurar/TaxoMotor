@@ -8,11 +8,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
-using System.Xml;
-using System.Xml.Linq;
 using CamlexNET;
-using TM.Services.CoordinateV5;
 using TM.SP.AppPages.ApplicationPages;
+using TM.SP.AppPages.Communication;
 using TM.Utils;
 
 // ReSharper disable CheckNamespace
@@ -165,7 +163,7 @@ namespace TM.SP.AppPages
                           {
                               Id              = item.ID,
                               Title           = item.Title,
-                              TaxiStateNumber = item["Tm_TaxiStateNumber"] != null ? item["Tm_TaxiStateNumber"].ToString() : String.Empty,
+                              TaxiStateNumber = item.TryGetValue<string>("Tm_TaxiStateNumber"),
                               HasError        = false
                           }).ToList();
 
@@ -230,58 +228,13 @@ namespace TM.SP.AppPages
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
             var doc = document as PenaltyRequestItem;
-            SPListItem configItem = Config.GetConfigItem(Web, PenaltyServiceGuidConfigName);
-            var svcGuid = Config.GetConfigValue(configItem);
-            var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
-            var internalMessage = GetRelevantCoordinateTaskMessage(doc);
+            if (doc == null)
+                throw new Exception("Must be of type PenaltyRequestItem");
 
-            return new MessageQueueService.Message
-            {
-                Service       = svc,
-                MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
-                MessageType   = 2,
-                MessageMethod = 2,
-                MessageDate   = DateTime.Now,
-                MessageText   = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
-                RequestId     = new Guid(internalMessage.TaskMessage.Task.RequestId)
-            };
-        }
-
-// ReSharper disable InconsistentNaming
-        protected XmlElement getTaskParam(SPListItem licenseItem)
-// ReSharper restore InconsistentNaming
-        {
-            var el = new XElement("ServiceProperties",
-                            new XAttribute("xmlns", String.Empty),
-                            new XElement("regpointnum", licenseItem["Tm_TaxiStateNumber"]));
-
-            var doc = new XmlDocument();
-            doc.Load(el.CreateReader());
-
-            return doc.DocumentElement;
-        }
-
-        protected virtual CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item) where T : PenaltyRequestItem
-        {
-            const string snPattern = "{0}-{1}-{2}-{3}/{4}";
-            string sn = String.Format(snPattern, Consts.TaxoMotorDepCode, Consts.TaxoMotorSysCode, "77200101",
-                String.Format("{0:000000}", 1), DateTime.Now.Year.ToString(CultureInfo.InvariantCulture).Right(2));
-
-            #region [Getting list instances]
-            var licList = Web.GetListOrBreak("Lists/LicenseList");
-            var licItem = licList.GetItemById(item.Id);
-            #endregion
-
-            #region [Building outcome request]
-            var message = Helpers.GetPenaltyMessageTemplate(getTaskParam(licItem));
-            message.ServiceHeader.ServiceNumber            = sn;
-            message.TaskMessage.Task.Responsible.FirstName = String.Empty;
-            message.TaskMessage.Task.Responsible.LastName  = Web.CurrentUser.Name;
-            message.TaskMessage.Task.ServiceNumber         = sn;
-            message.TaskMessage.Task.ServiceTypeCode       = "77200101";
-            #endregion
-
-            return message;
+            var svcGuid = new Guid(Config.GetConfigValueOrDefault<string>(Web, PenaltyServiceGuidConfigName));
+            var spItem = GetList().GetItemOrBreak(doc.Id);
+            var buildOptions = new QueueMessageBuildOptions { Date = DateTime.Now, Method = 2, ServiceGuid = svcGuid };
+            return QueueMessageBuilder.Build(new CoordinateV5PenaltyMessageBuilder(spItem), QueueClient, buildOptions);
         }
 
         protected override SPListItem TrackOutcomeRequest<T>(T document, bool success, Guid requestId)

@@ -185,5 +185,14 @@ namespace TM.Utils
 
             return wrapper;
         }
+
+        public static int GetStatusServiceCodeFromLookup(SPFieldLookupValue lookupValue)
+        {
+            if (lookupValue == null)
+                throw new Exception("Lookup value couldn't be null");
+
+            var statusCodeStr = lookupValue.LookupValue;
+            return Convert.ToInt32(statusCodeStr);
+        }
     }
 }

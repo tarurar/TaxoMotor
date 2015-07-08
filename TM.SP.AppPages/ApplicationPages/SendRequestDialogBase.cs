@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.SharePoint;
-
+using TM.SP.AppPages.Communication;
 using TM.Utils;
 using MessageQueueService = TM.ServiceClients.MessageQueue;
 
@@ -48,6 +45,16 @@ namespace TM.SP.AppPages.ApplicationPages
 
     public class SendRequestDialogBase : DialogLayoutsPageBase
     {
+        protected ServiceClients.MessageQueue.IDataService QueueClient
+        {
+            get { return ServiceLocator.Instance.GetService<ServiceClients.MessageQueue.IDataService>(); } 
+        }
+
+        protected IQueueMessageBuilder QueueMessageBuilder
+        {
+            get { return ServiceLocator.Instance.GetService<IQueueMessageBuilder>(); }
+        }
+
         /// <summary>
         /// Getting current list instance which triggered the send event
         /// </summary>
@@ -84,11 +91,11 @@ namespace TM.SP.AppPages.ApplicationPages
                 EnsureChildControls();
 
                 var documentList = LoadDocuments<RequestItem>();
-                var errorList = ValidateDocuments<RequestItem>(documentList);
-                BindDocuments<RequestItem>(documentList);
+                var errorList = ValidateDocuments(documentList);
+                BindDocuments(documentList);
                 if (errorList.Count > 0)
                     BindErrors(errorList);
-                HandleDocumentsLoad<RequestItem>(documentList, errorList);
+                HandleDocumentsLoad(documentList, errorList);
             }
         }
         /// <summary>
@@ -143,18 +150,7 @@ namespace TM.SP.AppPages.ApplicationPages
         {
             throw new NotImplementedException();
         }
-        /// <summary>
-        /// Getting queue service client instance
-        /// </summary>
-        /// <returns></returns>
-        protected virtual MessageQueueService.DataServiceClient GetServiceClientInstance()
-        {
-            SPListItem confItem = Config.GetConfigItem(this.Web, "MessageQueueServiceUrl");
-            var binding = new System.ServiceModel.BasicHttpBinding();
-            var address = new System.ServiceModel.EndpointAddress(Config.GetConfigValue(confItem).ToString());
-
-            return new MessageQueueService.DataServiceClient(binding, address);
-        }
+        
         /// <summary>
         /// Building message for queue
         /// Descedants have to implement
@@ -199,10 +195,10 @@ namespace TM.SP.AppPages.ApplicationPages
 
         protected virtual SPFolder CreateOutcomeRequestFolder(SPList list)
         {
-            string yearStr  = DateTime.Now.ToString("yyyy");
-            string monthstr = DateTime.Now.ToString("MMMM");
-            string dayStr   = DateTime.Now.ToString("dd");
-            string hourStr  = DateTime.Now.ToString("hh");
+            var yearStr  = DateTime.Now.ToString("yyyy");
+            var monthstr = DateTime.Now.ToString("MMMM");
+            var dayStr   = DateTime.Now.ToString("dd");
+            var hourStr  = DateTime.Now.ToString("hh");
 
             return list.RootFolder.CreateSubFolders(new[] {yearStr, monthstr, dayStr, hourStr});
         }
@@ -212,21 +208,21 @@ namespace TM.SP.AppPages.ApplicationPages
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="documentList">Documents requests have to be send for</param>
+        /// <param name="needsTracking">Whether request have to be tracked</param>
         /// <returns></returns>
         protected bool SendRequests<T>(List<T> documentList, bool needsTracking = true) where T : RequestItem
         {
-            bool success = true;
-            var svcClient = GetServiceClientInstance();
+            var success = true;
 
-            foreach (T document in documentList)
+            foreach (var document in documentList)
             {
                 if (document.HasError) continue;
 
-                var newMessage = BuildMessage<T>(document);
-                bool sent = svcClient.AddMessage(newMessage);
+                var newMessage = BuildMessage(document);
+                var sent = QueueClient.AddMessage(newMessage);
                 if (needsTracking)
                 {
-                    TrackOutcomeRequest<T>(document, sent, newMessage.RequestId);
+                    TrackOutcomeRequest(document, sent, newMessage.RequestId);
                 }
                 success |= sent;
             }

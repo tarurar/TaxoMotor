@@ -7,11 +7,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
 using CamlexNET;
-using Microsoft.BusinessData.MetadataModel;
 using TM.SP.AppPages.ApplicationPages;
+using TM.SP.AppPages.Communication;
 
 // ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
@@ -26,8 +24,6 @@ namespace TM.SP.AppPages
     using MessageQueueService = ServiceClients.MessageQueue;
     using BcsCoordinateV5Model = BCSModels.CoordinateV5;
     using Utils;
-    using Services.CoordinateV5;
-
 
     [Serializable]
     public class CombiRequestItem : RequestItem, IEquatable<CombiRequestItem>
@@ -39,8 +35,8 @@ namespace TM.SP.AppPages
         public string Inn { get; set; }
         public bool Equals(CombiRequestItem other)
         {
-            if (Object.ReferenceEquals(other, null)) return false;
-            if (Object.ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(other, null)) return false;
+            if (ReferenceEquals(this, other)) return true;
 
             return Ogrn.Equals(other.Ogrn);
         }
@@ -161,83 +157,48 @@ namespace TM.SP.AppPages
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
             var doc = document as CombiRequestItem;
-            SPListItem configItem = Config.GetConfigItem(Web, ServiceGuidConfigName);
-            var svcGuid = Config.GetConfigValue(configItem);
-            var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
-            var internalMessage = GetRelevantCoordinateTaskMessage(doc);
+            if (doc == null)
+                throw new Exception("Must be of type CombiRequestItem");
 
-            return new MessageQueueService.Message
-            {
-                Service       = svc,
-                MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
-                MessageType   = 2,
-                MessageMethod = 2,
-                MessageDate   = DateTime.Now,
-                MessageText   = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
-                RequestId     = new Guid(internalMessage.TaskMessage.Task.RequestId)
-            };
-        }
+            var svcGuid = new Guid(Config.GetConfigValueOrDefault<string>(Web, ServiceGuidConfigName));
+            var spItem = GetList().GetItemOrBreak(doc.Id);
+            var buildOptions = new QueueMessageBuildOptions { Date = DateTime.Now, Method = 2, ServiceGuid = svcGuid };
+            var isJuridical = doc.OrgFormCode != PrivateEntrepreneurCode;
 
-        protected virtual CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item) where T : CombiRequestItem
-        {
-            const string snPattern = "{0}-{1}-{2}-{3}/{4}";
-            string sn = String.Format(snPattern, Consts.TaxoMotorDepCode, Consts.TaxoMotorSysCode, "77200101",
-                String.Format("{0:000000}", 1), DateTime.Now.Year.ToString(CultureInfo.InvariantCulture).Right(2));
-            var isJuridical = item.OrgFormCode.Trim() != PrivateEntrepreneurCode;
-            var paramValue = GetTaskParam(item.Ogrn, item.Inn);
-
-            var message = isJuridical
-                ? Helpers.GetEGRULMessageTemplate(paramValue)
-                : Helpers.GetEGRIPMessageTemplate(paramValue);
-            message.ServiceHeader.ServiceNumber = sn;
-            message.TaskMessage.Task.Responsible.FirstName = String.Empty;
-            message.TaskMessage.Task.Responsible.LastName = Web.CurrentUser.Name;
-            message.TaskMessage.Task.ServiceNumber = sn;
-            message.TaskMessage.Task.ServiceTypeCode = "77200101";
-            return message;
-        }
-
-        protected XmlElement GetTaskParam(string ogrn, string inn)
-        {
-            var el = new XElement("ServiceProperties",
-                new XAttribute("xmlns", String.Empty),
-                new XElement("ogrn", ogrn),
-                new XElement("inn", inn));
-
-            var doc = new XmlDocument();
-            doc.Load(el.CreateReader());
-
-            return doc.DocumentElement;
+            return
+                QueueMessageBuilder.Build(
+                    isJuridical
+                        ? new CoordinateV5EgrulMessageBuilder(spItem, doc.RequestAccountId)
+                        : new CoordinateV5EgripMessageBuilder(spItem, doc.RequestAccountId), QueueClient, buildOptions);
         }
 
         protected override List<T> LoadDocuments<T>()
         {
-            SPList docList = GetList();
+            var docList = GetList();
             var listName = docList.RootFolder.Name;
             var idList = ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
 
-            SPListItemCollection docItems = docList.GetItems(new SPQuery
+            var docItems = docList.GetItems(new SPQuery
             {
                 Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString(),
-                ViewAttributes = "Scope='RecursiveAll'"
+                ViewAttributes = "Scope='Recursive'"
             });
 
             var retVal = (from SPListItem item in docItems
-                let orgCode = item["Tm_OrgLfb"] != null ? item["Tm_OrgLfb"].ToString().Trim() : String.Empty
+                let orgCode = item.TryGetValue<string>("Tm_OrgLfb").Trim()
                 select new CombiRequestItem
                 {
-                    Id = item.ID,
-                    Title = item.Title,
-                    RequestAccount =
-                        item["Tm_OrganizationName"] != null ? item["Tm_OrganizationName"].ToString() : String.Empty,
+                    Id               = item.ID,
+                    Title            = item.Title,
+                    RequestAccount   = item.TryGetValue<string>("Tm_OrganizationName"),
                     RequestAccountId = 0,
-                    OrgFormCode = orgCode,
-                    HasError = false,
-                    Ogrn = item["Tm_OrgOgrn"] != null ? item["Tm_OrgOgrn"].ToString() : String.Empty,
-                    Inn = item["Tm_OrgInn"] != null ? item["Tm_OrgInn"].ToString() : String.Empty,
-                    RequestTypeCode =
+                    OrgFormCode      = orgCode,
+                    HasError         = false,
+                    Ogrn             = item.TryGetValue<string>("Tm_OrgOgrn"),
+                    Inn              = item.TryGetValue<string>("Tm_OrgInn"),
+                    RequestTypeCode  =
                         orgCode == PrivateEntrepreneurCode ? OutcomeRequestType.Egrip : OutcomeRequestType.Egrul,
-                    ListName = listName
+                    ListName         = listName
                 }).ToList();
 
             return retVal.Cast<T>().ToList();
@@ -249,12 +210,11 @@ namespace TM.SP.AppPages
             RequestListGrid.DataBind();
         }
 
-
         protected override List<ValidationErrorInfo> ValidateDocuments<T>(List<T> documentList)
         {
             var retVal = new List<ValidationErrorInfo>();
 
-            foreach (T document in documentList)
+            foreach (var document in documentList)
             {
                 var doc = document as CombiRequestItem;
                 #region [Rule#1 - RequestAccount cannot be null]

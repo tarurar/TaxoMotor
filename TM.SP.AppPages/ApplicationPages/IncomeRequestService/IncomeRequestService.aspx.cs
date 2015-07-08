@@ -609,7 +609,7 @@ namespace TM.SP.AppPages
                         var declarantId = item["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(item, "Tm_RequestAccountBCSLookup") : null;
                         if (declarantId != null)
                         {
-                            var declarant = SendRequestEGRULPage.GetRequestAccount((int) declarantId);
+                            var declarant = IncomeRequestHelper.ReadRequestAccountItem((int) declarantId);
                             retVal = declarant.OrgFormCode == SendRequestEGRULPage.PrivateEntrepreneurCode;
                         }
                         else throw new Exception("Declarant is not specified");

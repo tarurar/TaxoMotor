@@ -5,14 +5,14 @@
 // <date>2014-09-11 17:00:28Z</date>
 
 using System.Globalization;
+using TM.SP.AppPages.Communication;
 
+// ReSharper disable once CheckNamespace
 namespace TM.SP.AppPages
 {
     using System;
     using System.Security.Permissions;
     using System.Web.UI.WebControls;
-    using System.Xml;
-    using System.Xml.Linq;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.SharePoint;
@@ -20,27 +20,24 @@ namespace TM.SP.AppPages
     using Microsoft.SharePoint.WebControls;
     using CamlexNET;
 
-    using TM.SP.AppPages.ApplicationPages;
-    using BcsCoordinateV5Model = TM.SP.BCSModels.CoordinateV5;
-    using TM.Utils;
-    using TM.Services.CoordinateV5;
-    using MessageQueueService = TM.ServiceClients.MessageQueue;
+    using ApplicationPages;
+    using BcsCoordinateV5Model = BCSModels.CoordinateV5;
+    using Utils;
+    using MessageQueueService = ServiceClients.MessageQueue;
 
     [Serializable]
-    public class PTSRequestItem : RequestItem
+    public class PtsRequestItem : RequestItem
     {
         public string TaxiStateNumber { get; set; }
 
-        public PTSRequestItem()
+        public PtsRequestItem()
         {
             RequestTypeCode = OutcomeRequestType.Pts;
         }
     }
 
-    /// <summary>
-    /// TODO: Add comment for SendRequestPTSPage
-    /// </summary>
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
+// ReSharper disable once InconsistentNaming
     public partial class SendRequestPTSPage : SendRequestDialogBase
     {
         #region [resourceStrings]
@@ -61,7 +58,7 @@ namespace TM.SP.AppPages
         #endregion
 
         #region [fields]
-        protected static readonly string PTSServiceGuidConfigName = "BR2ServiceGuid";
+        protected static readonly string PtsServiceGuidConfigName = "BR2ServiceGuid";
 
         protected SPGridView requestListGrid;
         protected SPGridView errorListGrid;
@@ -94,8 +91,8 @@ namespace TM.SP.AppPages
             RequestListTablePanel.Controls.Add(requestListGrid);
             #endregion
             #region [error list grid]
-            errorListGrid = new SPGridView() { AutoGenerateColumns = false };
-            errorListGrid.Columns.Add(new SPBoundField()
+            errorListGrid = new SPGridView { AutoGenerateColumns = false };
+            errorListGrid.Columns.Add(new SPBoundField
             {
                 HeaderText = GetLocalizedString(resErrorListHeader1),
                 DataField = "Message",
@@ -111,7 +108,7 @@ namespace TM.SP.AppPages
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                var rowData = e.Row.DataItem as PTSRequestItem;
+                var rowData = e.Row.DataItem as PtsRequestItem;
                 if ((rowData != null) && rowData.HasError)
                     e.Row.CssClass = "error-row";
             }
@@ -125,8 +122,8 @@ namespace TM.SP.AppPages
         {
             base.OnLoad(e);
 
-            this.BtnOk.Click += new EventHandler(this.BtnOk_Click);
-            this.BtnCancel.Click += new EventHandler(this.BtnCancel_Click);
+            BtnOk.Click += BtnOk_Click;
+            BtnCancel.Click += BtnCancel_Click;
         }
 
         /// <summary>
@@ -136,18 +133,18 @@ namespace TM.SP.AppPages
         /// <returns></returns>
         protected override List<T> LoadDocuments<T>()
         {
-            SPList docList = GetList();
+            var docList = GetList();
             var listName = docList.RootFolder.Name;
             var idList = ItemIdListParam.Split(',').Select(v => Convert.ToInt32(v)).ToList();
 
-            SPListItemCollection docItems = docList.GetItems(new SPQuery()
+            var docItems = docList.GetItems(new SPQuery
             {
                 Query = Camlex.Query().Where(x => idList.Contains((int)x["ID"])).ToString(),
                 ViewAttributes = "Scope='RecursiveAll'"
             });
 
             var retVal = (from SPListItem item in docItems
-                select new PTSRequestItem()
+                select new PtsRequestItem
                 {
                     Id = item.ID,
                     Title = item.Title,
@@ -170,13 +167,13 @@ namespace TM.SP.AppPages
         {
             var retVal = new List<ValidationErrorInfo>();
 
-            foreach (T document in documentList)
+            foreach (var document in documentList)
             {
-                var doc = document as PTSRequestItem;
+                var doc = document as PtsRequestItem;
                 #region [Rule#1 - State Number cannot be null]
                 if (doc !=null && String.IsNullOrEmpty(doc.TaxiStateNumber))
                 {
-                    retVal.Add(new ValidationErrorInfo()
+                    retVal.Add(new ValidationErrorInfo
                     {
                         Message = String.Format(GetLocalizedString(resNoStateNumberErrorFmt), doc.Title),
                         Severity = ValidationErrorSeverity.Warning
@@ -188,7 +185,7 @@ namespace TM.SP.AppPages
             }
 
             if (documentList.All(i => i.HasError))
-                retVal.Add(new ValidationErrorInfo()
+                retVal.Add(new ValidationErrorInfo
                 {
                     Message = GetLocalizedString(resNoDocumentsError),
                     Severity = ValidationErrorSeverity.Critical
@@ -206,16 +203,16 @@ namespace TM.SP.AppPages
         protected override void HandleDocumentsLoad<T>(List<T> documentList, List<ValidationErrorInfo> errorList)
         {
             // Save state
-            this.ViewState["requestDocumentList"] = documentList.Cast<PTSRequestItem>().ToList();
+            ViewState["requestDocumentList"] = documentList.Cast<PtsRequestItem>().ToList();
             // UI
             RequestList.Visible = !(documentList.All(i => i.HasError));
-            ErrorList.Visible = errorList.Count() > 0;
-            BtnOk.Enabled = !errorList.Any<ValidationErrorInfo>(err => err.Severity == ValidationErrorSeverity.Critical);
+            ErrorList.Visible = errorList.Any();
+            BtnOk.Enabled = errorList.All(err => err.Severity != ValidationErrorSeverity.Critical);
         }
         
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            this.EndOperation(0);
+            EndOperation(0);
         }
 
         private void BtnOk_Click(object sender, EventArgs e)
@@ -223,104 +220,27 @@ namespace TM.SP.AppPages
             var success = false;
             try
             {
-                var documentList = (List<PTSRequestItem>)this.ViewState["requestDocumentList"];
-                success = SendRequests<PTSRequestItem>(documentList);
+                var documentList = (List<PtsRequestItem>)ViewState["requestDocumentList"];
+                success = SendRequests(documentList);
             }
             catch (Exception)
             {
-                this.EndOperation(-1);
+                EndOperation(-1);
             }
 
-            this.EndOperation(success ? 1 : -1);
+            EndOperation(success ? 1 : -1);
         }
 
         protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
-            var doc = document as PTSRequestItem;
-            SPListItem configItem = Config.GetConfigItem(this.Web, PTSServiceGuidConfigName);
-            var svcGuid = Config.GetConfigValue(configItem);
-            var svc = GetServiceClientInstance().GetService(new Guid(svcGuid.ToString()));
-            var internalMessage = GetRelevantCoordinateTaskMessage(doc);
+            var doc = document as PtsRequestItem;
+            if (doc == null)
+                throw new Exception("Must be of type PtsRequestItem");
 
-            return new MessageQueueService.Message()
-            {
-                Service       = svc,
-                MessageId     = new Guid(internalMessage.ServiceHeader.MessageId),
-                MessageType   = 2,
-                MessageMethod = 2,
-                MessageDate   = DateTime.Now,
-                MessageText   = internalMessage.ToXElement<CoordinateTaskMessage>().ToString(),
-                RequestId     = new Guid(internalMessage.TaskMessage.Task.RequestId)
-            };
-        }
-
-        protected XmlElement GetTaskParam(string stateNumber)
-        {
-            var el = new XElement("ServiceProperties",
-                new XAttribute("xmlns", String.Empty),
-                new XElement("regno", stateNumber));
-
-            var doc = new XmlDocument();
-            doc.Load(el.CreateReader());
-
-            return doc.DocumentElement;
-        }
-
-        protected virtual CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item) where T : PTSRequestItem
-        {
-            const string snPattern = "{0}-{1}-{2}-{3}/{4}";
-
-            #region [Getting list instances]
-            var irList  = this.Web.GetListOrBreak("Lists/IncomeRequestList");
-            var stList  = this.Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
-            #endregion
-            #region [Getting linked items from lists]
-            string sNumber = null;
-            string sCode = null;
-
-            if (item.ListName == "TaxiList")
-            {
-                SPListItem rItem = Web.GetListOrBreak(String.Format("Lists/{0}", item.ListName)).GetItemOrBreak(item.Id);
-                var irId = rItem["Tm_IncomeRequestLookup"] == null
-                    ? 0
-                    : new SPFieldLookupValue(rItem["Tm_IncomeRequestLookup"].ToString()).LookupId;
-                var irItem = irList.GetItemOrNull(irId);
-                if (irItem != null)
-                {
-                    int irDocId = irItem["Tm_RequestedDocument"] == null
-                        ? 0
-                        : new SPFieldLookupValue(irItem["Tm_RequestedDocument"].ToString()).LookupId;
-                    SPListItem stItem = stList.GetItemOrNull(irDocId);
-
-                    sNumber = irItem["Tm_SingleNumber"] == null ? String.Empty : irItem["Tm_SingleNumber"].ToString();
-                    sCode = stItem == null
-                        ? String.Empty
-                        : (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
-                }
-            }
-                
-            if (String.IsNullOrEmpty(sNumber))
-            {
-                sNumber = String.Format(snPattern, Consts.TaxoMotorDepCode, Consts.TaxoMotorSysCode, "77200101",
-                    String.Format("{0:000000}", 1), DateTime.Now.Year.ToString(CultureInfo.InvariantCulture).Right(2));
-            }
-            if (String.IsNullOrEmpty(sCode))
-            {
-                sCode = "77200101";
-            }
-
-            #endregion
-            
-            #region [Building outcome request]
-            var message = Helpers.GetPTSMessageTemplate(GetTaskParam(item.TaxiStateNumber));
-            message.ServiceHeader.ServiceNumber            = sNumber;
-            message.TaskMessage.Task.Responsible.FirstName = String.Empty;
-            message.TaskMessage.Task.Responsible.LastName  = this.Web.CurrentUser.Name;
-            message.TaskMessage.Task.ServiceNumber         = sNumber;
-            message.TaskMessage.Task.ServiceTypeCode       = sCode;
-            #endregion
-
-            return message;
+            var svcGuid = new Guid(Config.GetConfigValueOrDefault<string>(Web, PtsServiceGuidConfigName));
+            var spItem = GetList().GetItemOrBreak(doc.Id);
+            var buildOptions = new QueueMessageBuildOptions {Date = DateTime.Now, Method = 2, ServiceGuid = svcGuid};
+            return QueueMessageBuilder.Build(new CoordinateV5PtsMessageBuilder(spItem), QueueClient, buildOptions);
         }
 
         protected override SPListItem TrackOutcomeRequest<T>(T document, bool success, Guid requestId)

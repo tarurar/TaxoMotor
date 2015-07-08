@@ -656,10 +656,8 @@ namespace TM.SP.DataModel
 
         public static ModelNode GetTaxomotorLookupsModel(ClientContext ctx)
         {
-            var model = SPMeta2Model.NewListModel(Lists.TmIncomeRequestList, list => 
-            {
-                list.AddField(Fields.TmIncomeRequestTaxiCount);
-            });
+            var model = SPMeta2Model.NewWebModel(web => web
+                .AddHostList(Lists.TmIncomeRequestList, list => list.AddField(Fields.TmIncomeRequestTaxiCount)));
 
             return model;
         }

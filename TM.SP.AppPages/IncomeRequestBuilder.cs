@@ -28,7 +28,7 @@ namespace TM.SP.AppPages
                 : null;
             if (raLookupId == null) return null;
 
-            var declarant = SendRequestEGRULPage.GetRequestAccount((int)raLookupId);
+            var declarant = IncomeRequestHelper.ReadRequestAccountItem((int)raLookupId);
             if (declarant == null) return null;
 
             var orgHeadId = declarant.RequestContact;

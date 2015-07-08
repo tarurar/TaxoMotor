@@ -4,7 +4,11 @@
 // <author>SPDEV\developer</author>
 // <date>2014-09-09 16:35:29Z</date>
 
+using TM.SP.AppPages.Communication;
+using TM.Utils;
 // ReSharper disable CheckNamespace
+
+
 namespace TM.SP.AppPages
 // ReSharper restore CheckNamespace
 {
@@ -12,24 +16,22 @@ namespace TM.SP.AppPages
     using System.Security.Permissions;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.SharePoint;
     using Microsoft.SharePoint.Security;
     using ApplicationPages;
     using BcsCoordinateV5Model = BCSModels.CoordinateV5;
-    using Utils;
-    using Services.CoordinateV5;
     using MessageQueueService = ServiceClients.MessageQueue;
 
 
-    /// <summary>
-    /// TODO: Add comment for SendRequestEGRIPPage
-    /// </summary>
     [SharePointPermission(SecurityAction.InheritanceDemand, ObjectModel = true)]
+// ReSharper disable InconsistentNaming
     public partial class SendRequestEGRIPPage : SendRequestEGRULPage
+// ReSharper restore InconsistentNaming
     {
 
         #region [resourceStrings]
+// ReSharper disable InconsistentNaming
         protected static readonly string resAccNotEntrprnrErrorFmt  = "$Resources:EGRIPRequest_DlgAccountIsNotEntrepreneurErrorFmt";
+// ReSharper restore InconsistentNaming
         #endregion
 
         #region [methods]
@@ -51,9 +53,9 @@ namespace TM.SP.AppPages
 
             foreach (T document in documentList)
             {
-                EGRULRequestItem doc = document as EGRULRequestItem;
+                var doc = document as EGRULRequestItem;
                 #region [Rule#1 - RequestAccount cannot be null]
-                if (String.IsNullOrEmpty(doc.RequestAccount))
+                if (doc != null && String.IsNullOrEmpty(doc.RequestAccount))
                 {
                     retVal.Add(new ValidationErrorInfo
                     {
@@ -65,7 +67,7 @@ namespace TM.SP.AppPages
                 }
                 #endregion
                 #region [Rule#2 - RequestAccount must be private entrepreneur]
-                if (doc.OrgFormCode != PrivateEntrepreneurCode)
+                if (doc != null && doc.OrgFormCode != PrivateEntrepreneurCode)
                 {
                     retVal.Add(new ValidationErrorInfo
                     {
@@ -88,31 +90,18 @@ namespace TM.SP.AppPages
             return retVal;
         }
 
-        protected override CoordinateTaskMessage GetRelevantCoordinateTaskMessage<T>(T item)
+        protected override ServiceClients.MessageQueue.Message BuildMessage<T>(T document)
         {
-            // request item
-            SPListItem rItem = Web.GetListOrBreak(String.Format("Lists/{0}", item.ListName)).GetItemOrBreak(item.Id);
-            var rDocument = rItem["Tm_RequestedDocument"] == null ? 0 : new SPFieldLookupValue(rItem["Tm_RequestedDocument"].ToString()).LookupId;
-            var sNumber   = rItem["Tm_SingleNumber"] == null ? String.Empty : rItem["Tm_SingleNumber"].ToString();
-            // request contact
-            BcsCoordinateV5Model.RequestAccount rAccount = GetRequestAccount(item.RequestAccountId);
-            if (rAccount == null)
-                throw new Exception(String.Format("Bcs entity with Id = {0} not found", item.RequestAccountId));
-            // service code lookup item
-            var stList = Web.GetListOrBreak("Lists/GovServiceSubTypeBookList");
-            var stItem = stList.GetItemOrNull(rDocument);
-            var sCode  = stItem == null ? String.Empty :
-                (stItem["Tm_ServiceCode"] == null ? String.Empty : stItem["Tm_ServiceCode"].ToString());
+            var doc = document as EGRULRequestItem;
+            if (doc == null)
+                throw new Exception("Must be of type EGRULRequestItem");
 
-            var message = Helpers.GetEGRIPMessageTemplate(getTaskParam(rAccount));
-            message.ServiceHeader.ServiceNumber            = sNumber;
-            message.TaskMessage.Task.Responsible.FirstName = String.Empty;
-            message.TaskMessage.Task.Responsible.LastName  = Web.CurrentUser.Name;
-            message.TaskMessage.Task.ServiceNumber         = sNumber;
-            message.TaskMessage.Task.ServiceTypeCode       = sCode;
-            return message;
+            var svcGuid = new Guid(Config.GetConfigValueOrDefault<string>(Web, EgrulServiceGuidConfigName));
+            var spItem = GetList().GetItemOrBreak(doc.Id);
+            var buildOptions = new QueueMessageBuildOptions { Date = DateTime.Now, Method = 2, ServiceGuid = svcGuid };
+            return QueueMessageBuilder.Build(new CoordinateV5EgripMessageBuilder(spItem, doc.RequestAccountId),
+                QueueClient, buildOptions);
         }
-
         #endregion
     }
 }

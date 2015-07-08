@@ -54,7 +54,7 @@ namespace TM.SP.AppPages
             var draft = LicenseHelper.GetLicenseDraftForSPTaxiId(taxiItem.ID);
             #region [getting declarant and orgHead objects]
             var declarantId = rItem["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(rItem, "Tm_RequestAccountBCSLookup") : null;
-            var declarant = declarantId != null ? SendRequestEGRULPage.GetRequestAccount((int)declarantId) : null;
+            var declarant = declarantId != null ? IncomeRequestHelper.ReadRequestAccountItem((int)declarantId) : null;
 
             var orgHeadId = declarant != null ? declarant.RequestContact : null;
             var orgHead = orgHeadId != null

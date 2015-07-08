@@ -35,7 +35,7 @@ namespace TM.SP.AppPages.Validators
                 try
                 {
                     var declarantId = BCS.GetBCSFieldLookupId(requestItem, "Tm_RequestAccountBCSLookup");
-                    var declarant = SendRequestEGRULPage.GetRequestAccount((int)declarantId);
+                    var declarant = IncomeRequestHelper.ReadRequestAccountItem((int)declarantId);
                     _declarantOgrn = declarant.Ogrn;
                 }
                 catch (Exception)

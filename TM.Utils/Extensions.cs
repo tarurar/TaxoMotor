@@ -274,6 +274,22 @@ namespace TM.Utils
             return default(T);
         }
 
+        public static SPFieldLookupValue TryGetLookupValue(this SPListItem listItem, string fieldInternalName)
+        {
+            if (!String.IsNullOrEmpty(fieldInternalName) &&
+                listItem != null &&
+                listItem.Fields.ContainsField(fieldInternalName))
+            {
+                var stringValue = (string)listItem[fieldInternalName];
+                if (!String.IsNullOrEmpty(stringValue))
+                {
+                    return new SPFieldLookupValue(stringValue);
+                }
+            }
+
+            return null;
+        }
+
         public static Nullable<T> TryGetValueOrNull<T>(this SPListItem listItem, string fieldInternalName) where T : struct
         {
             if (!String.IsNullOrEmpty(fieldInternalName) &&
