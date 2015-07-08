@@ -97,10 +97,14 @@ namespace TM.SP.AppPages
                 throw new Exception("Must be of type EGRULRequestItem");
 
             var svcGuid = new Guid(Config.GetConfigValueOrDefault<string>(Web, EgrulServiceGuidConfigName));
+            var requestAccount = IncomeRequestHelper.ReadRequestAccountItem(doc.RequestAccountId);
             var spItem = GetList().GetItemOrBreak(doc.Id);
             var buildOptions = new QueueMessageBuildOptions { Date = DateTime.Now, Method = 2, ServiceGuid = svcGuid };
-            return QueueMessageBuilder.Build(new CoordinateV5EgripMessageBuilder(spItem, doc.RequestAccountId),
-                QueueClient, buildOptions);
+            return
+                QueueMessageBuilder.Build(
+                    new CoordinateV5EgripMessageBuilder(spItem,
+                        new RequestAccountData {Ogrn = requestAccount.Ogrn, Inn = requestAccount.Inn}),
+                    QueueClient, buildOptions);
         }
         #endregion
     }

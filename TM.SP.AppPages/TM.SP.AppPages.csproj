@@ -181,6 +181,8 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="ApplicationPages\SendStatus\SendStatus.aspx.designer.cs">
       <DependentUpon>SendStatus.aspx.cs</DependentUpon>
     </Compile>
+    <Compile Include="Collections\ICollectionGetter.cs" />
+    <Compile Include="Collections\LicenseRequestToSendCollection.cs" />
     <Compile Include="Communication\CoordinateBaseMessageBuilder.cs" />
     <Compile Include="Communication\CoordinateV52BaseMessageBuilder.cs" />
     <Compile Include="Communication\CoordinateV52StatusMessageBuilder.cs" />
@@ -192,8 +194,10 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Communication\CoordinateV5StatusMessageBuilder.cs" />
     <Compile Include="Communication\ICoordinateMessageBuilder.cs" />
     <Compile Include="Communication\IQueueMessageBuilder.cs" />
+    <Compile Include="Communication\IRequestAccountData.cs" />
     <Compile Include="Communication\QueueMessageBuilder.cs" />
     <Compile Include="Communication\QueueMessageBuildOptions.cs" />
+    <Compile Include="Communication\RequestAccountData.cs" />
     <Compile Include="Features\TaxoMotor_TaxoMotor_CommonTimerJobs\TaxoMotor_CommonTimerJobs.EventReceiver.cs">
       <DependentUpon>TaxoMotor_TaxoMotor_CommonTimerJobs.feature</DependentUpon>
     </Compile>

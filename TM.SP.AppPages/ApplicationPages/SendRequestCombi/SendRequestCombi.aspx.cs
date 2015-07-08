@@ -164,12 +164,13 @@ namespace TM.SP.AppPages
             var spItem = GetList().GetItemOrBreak(doc.Id);
             var buildOptions = new QueueMessageBuildOptions { Date = DateTime.Now, Method = 2, ServiceGuid = svcGuid };
             var isJuridical = doc.OrgFormCode != PrivateEntrepreneurCode;
+            IRequestAccountData raData = new RequestAccountData {Ogrn = doc.Ogrn, Inn = doc.Inn};
 
             return
                 QueueMessageBuilder.Build(
                     isJuridical
-                        ? new CoordinateV5EgrulMessageBuilder(spItem, doc.RequestAccountId)
-                        : new CoordinateV5EgripMessageBuilder(spItem, doc.RequestAccountId), QueueClient, buildOptions);
+                        ? new CoordinateV5EgrulMessageBuilder(spItem, raData)
+                        : new CoordinateV5EgripMessageBuilder(spItem, raData), QueueClient, buildOptions);
         }
 
         protected override List<T> LoadDocuments<T>()

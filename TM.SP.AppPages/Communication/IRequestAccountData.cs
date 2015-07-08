@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TM.SP.AppPages.Communication
+{
+    public interface IRequestAccountData
+    {
+        string Ogrn { get; set; }
+        string Inn { get; set; }
+    }
+}
