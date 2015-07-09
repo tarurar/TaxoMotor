@@ -1295,6 +1295,24 @@ namespace TM.SP.DataModel
             Group        = ModelConsts.ColumnsDefaultGroup,
         };
 
+        public static FieldDefinition TmLicenseObsoleteComment = new FieldDefinition
+        {
+            Id           = new Guid("{00C76846-0AB2-461D-B49E-C3335E7FA2EC}"),
+            Title        = "Устаревшие данные (комментарий)",
+            InternalName = "Tm_LicenseObsoleteComment",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+        };
+
+        public static FieldDefinition TmLicenseDisableGibddComment = new FieldDefinition
+        {
+            Id           = new Guid("{B0A7E559-745A-4DC3-BD2B-DD3A07B09640}"),
+            Title        = "Не отправлять в ГИБДД (комментарий)",
+            InternalName = "Tm_LicenseDisableGibddComment",
+            FieldType    = BuiltInFieldTypes.Note,
+            Group        = ModelConsts.ColumnsDefaultGroup,
+        };
+
         /// <summary>
         /// Ссылка на разрешение (BCS список)
         /// </summary>

@@ -159,5 +159,8 @@
     CONSTRAINT [FK_License_ToLicense_Parent] FOREIGN KEY ([Parent]) REFERENCES [dbo].[License]([Id]),
 	-- Бинарное представление подписи
     [SignatureBinary] VARBINARY(MAX) NULL, 
+    [LastRequestSendDate] DATETIME NULL, 
+    [ObsoleteComment] NVARCHAR(MAX) NULL, 
+    [DisableGibddSendComment] NVARCHAR(MAX) NULL, 
     CONSTRAINT [FK_License_ToLicense_RootParent] FOREIGN KEY ([RootParent]) REFERENCES [dbo].[License]([Id]) 
 )

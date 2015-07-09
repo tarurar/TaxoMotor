@@ -90,4 +90,7 @@ SET [RegNumber] = @RegNumber
 	,[DATE_MO] = @DATE_MO
 	,[Obsolete] = @Obsolete
 	,[DisableGibddSend] = @DisableGibddSend
+	,[LastRequestSendDate] = @LastRequestSendDate
+    ,[ObsoleteComment] = @ObsoleteComment
+    ,[DisableGibddSendComment] = @DisableGibddSendComment
 WHERE [Id] = @Id

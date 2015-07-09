@@ -90,6 +90,9 @@
 	,[DATE_MO]
 	,[Obsolete]
 	,[DisableGibddSend]
+	,[LastRequestSendDate]
+    ,[ObsoleteComment]
+    ,[DisableGibddSendComment]
 	)
 VALUES (
 	@RegNumber
@@ -183,6 +186,9 @@ VALUES (
 	,@DATE_MO
 	,@Obsolete
 	,@DisableGibddSend
+	,@LastRequestSendDate
+    ,@ObsoleteComment
+    ,@DisableGibddSendComment
 	)
 
 SELECT [L1].[Id]
@@ -278,6 +284,9 @@ SELECT [L1].[Id]
 	,[L1].[DATE_MO]
 	,[L1].[Obsolete]
 	,[L1].[DisableGibddSend]
+	,[L1].[LastRequestSendDate]
+    ,[L1].[ObsoleteComment]
+    ,[L1].[DisableGibddSendComment]
 	,CAST(CASE 
 		WHEN EXISTS (
 				SELECT [L2].[Id]

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using TM.SP.BCSModels.Helpers;
 using TM.SP.BCSModels.Taxi.Exceptions;
 
+// ReSharper disable once CheckNamespace
 namespace TM.SP.BCSModels.Taxi
 {
     public partial class LicenseEntityService
@@ -34,9 +32,9 @@ namespace TM.SP.BCSModels.Taxi
             {
                 retVal = new MigratingLicense()
                 {
-                    TicketId = (System.Int32)thisReader["Id"],
-                    Status = thisReader["Status"] == DBNull.Value ? (System.Int32)MigratingStatus.Undefined : (System.Int32)thisReader["Status"],
-                    ItemId = (System.Int32)thisReader["LicenseId"],
+                    TicketId  = (Int32)thisReader["Id"],
+                    Status    = thisReader["Status"] == DBNull.Value ? (Int32)MigratingStatus.Undefined : (Int32)thisReader["Status"],
+                    ItemId    = (Int32)thisReader["LicenseId"],
                     ErrorInfo = String.Empty,
                     StackInfo = String.Empty
                 };
@@ -53,8 +51,11 @@ namespace TM.SP.BCSModels.Taxi
                 thisConn = getSqlConnection();
                 thisConn.Open();
 
-                SqlCommand updateCommand = new SqlCommand() { Connection = thisConn };
-                updateCommand.CommandText = SqlHelper.LoadSQLStatement("License-FinishMigration.sql");
+                var updateCommand = new SqlCommand
+                {
+                    Connection = thisConn,
+                    CommandText = SqlHelper.LoadSQLStatement("License-FinishMigration.sql")
+                };
 
                 var errorInfo = String.IsNullOrEmpty(migratingLicense.ErrorInfo) ? (object)DBNull.Value : migratingLicense.ErrorInfo;
                 var stackTrace = String.IsNullOrEmpty(migratingLicense.StackInfo) ? (object)DBNull.Value : migratingLicense.StackInfo;
@@ -80,8 +81,11 @@ namespace TM.SP.BCSModels.Taxi
                 thisConn = getSqlConnection();
                 thisConn.Open();
 
-                SqlCommand updateCommand = new SqlCommand() { Connection = thisConn };
-                updateCommand.CommandText = SqlHelper.LoadSQLStatement("License-UpdateMigrationStatus.sql");
+                var updateCommand = new SqlCommand
+                {
+                    Connection = thisConn,
+                    CommandText = SqlHelper.LoadSQLStatement("License-UpdateMigrationStatus.sql")
+                };
                 updateCommand.Parameters.AddWithValue("@Status", request.Status);
                 updateCommand.Parameters.AddWithValue("@Id", request.TicketId);
 
@@ -119,8 +123,8 @@ namespace TM.SP.BCSModels.Taxi
 
         public License GetLicenseDraftForSPTaxiId(int spTaxiId)
         {
-            License entity = new License();
-            SqlConnection thisConn = getSqlConnection();
+            var entity = new License();
+            var thisConn = getSqlConnection();
             thisConn.Open();
             var selectCommand = new SqlCommand
             {
@@ -130,7 +134,7 @@ namespace TM.SP.BCSModels.Taxi
             selectCommand.Parameters.AddWithValue("@Status", 4);
 
             selectCommand.Connection = thisConn;
-            SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            var thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             if (thisReader.Read())
             {
                 SqlHelper.LicenseFillFromReader(entity, thisReader);
@@ -145,8 +149,8 @@ namespace TM.SP.BCSModels.Taxi
 
         public License GetAnyLicenseForSPTaxiId(int spTaxiId)
         {
-            License entity = new License();
-            SqlConnection thisConn = getSqlConnection();
+            var entity = new License();
+            var thisConn = getSqlConnection();
             thisConn.Open();
             var selectCommand = new SqlCommand
             {
@@ -155,7 +159,7 @@ namespace TM.SP.BCSModels.Taxi
             selectCommand.Parameters.AddWithValue("@TaxiId", spTaxiId);
 
             selectCommand.Connection = thisConn;
-            SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            var thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             if (thisReader.Read())
             {
                 SqlHelper.LicenseFillFromReader(entity, thisReader);
@@ -170,16 +174,16 @@ namespace TM.SP.BCSModels.Taxi
 
         public License TakeAnyUnsignedLicense()
         {
-            License entity = new License();
-            SqlConnection thisConn = getSqlConnection();
+            var entity = new License();
+            var thisConn = getSqlConnection();
             thisConn.Open();
             var selectCommand = new SqlCommand
             {
-                CommandText = SqlHelper.LoadSQLStatement("License-TakeAnyUnsigned.sql")
+                CommandText = SqlHelper.LoadSQLStatement("License-TakeAnyUnsigned.sql"),
+                Connection = thisConn
             };
 
-            selectCommand.Connection = thisConn;
-            SqlDataReader thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            var thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
             if (thisReader.Read())
             {
                 SqlHelper.LicenseFillFromReader(entity, thisReader);

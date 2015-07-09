@@ -91,6 +91,9 @@
 	,[DATE_MO]
 	,[Obsolete]
 	,[DisableGibddSend]
+	,[LastRequestSendDate]
+    ,[ObsoleteComment]
+    ,[DisableGibddSendComment]
 	,CAST(CASE 
 		WHEN EXISTS (
 				SELECT [Id]
