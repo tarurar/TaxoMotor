@@ -51,7 +51,7 @@ namespace TM.SP.AppPages
             var taxiItem             = taxiList.GetItemById(taxiId);
             var ctId                 = new SPContentTypeId(rItem["ContentTypeId"].ToString());
 
-            var draft = LicenseHelper.GetLicenseDraftForSPTaxiId(taxiItem.ID);
+            var draft = GetLicenseDraftForSPTaxiId(taxiItem.ID);
             #region [getting declarant and orgHead objects]
             var declarantId = rItem["Tm_RequestAccountBCSLookup"] != null ? BCS.GetBCSFieldLookupId(rItem, "Tm_RequestAccountBCSLookup") : null;
             var declarant = declarantId != null ? IncomeRequestHelper.ReadRequestAccountItem((int)declarantId) : null;
@@ -96,7 +96,7 @@ namespace TM.SP.AppPages
             #endregion
             #region [getting parent license]
             var parentId = draft.Parent;
-            var parent = parentId != null && parentId.HasValue ? LicenseHelper.ReadLicenseItem(parentId.Value) : null;
+            var parent = parentId != null && parentId.HasValue ? ReadLicenseItem(parentId.Value) : null;
             #endregion
             #region [getting taxi posession item]
             string posessionItemServiceCode = null;
@@ -145,21 +145,24 @@ namespace TM.SP.AppPages
             #endregion
 
             #region [setting common values]
-            draft.AccountAbbr        = "";
-            draft.AddContactData     = "";
-            draft.CancellationReason = "";
-            draft.ChangeReason       = GetChangeReasonText(rItem);
-            draft.Date_OD            = null;
-            draft.Document           = "";
-            draft.FromPortal         = rItem["Tm_RegNumber"] != null;
-            draft.Guid_OD            = ctId == rList.ContentTypes["Новое"].Id ? "" : (parent != null ? parent.Guid_OD : "");
-            draft.InvalidReason      = "";
-            draft.Signature          = "";
-            draft.SuspensionReason   = "";
-            draft.TillSuspensionDate = null;
-            draft.OwnType            = String.IsNullOrEmpty(posessionItemServiceCode) ? null : (int?)Convert.ToInt32(posessionItemServiceCode);
-            draft.OwnNumber          = ownNumber;
-            draft.OwnDate            = ownDate;
+            draft.AccountAbbr             = "";
+            draft.AddContactData          = "";
+            draft.CancellationReason      = "";
+            draft.ChangeReason            = GetChangeReasonText(rItem);
+            draft.Date_OD                 = null;
+            draft.Document                = "";
+            draft.FromPortal              = rItem["Tm_RegNumber"] != null;
+            draft.Guid_OD                 = ctId == rList.ContentTypes["Новое"].Id ? "" : (parent != null ? parent.Guid_OD : "");
+            draft.InvalidReason           = "";
+            draft.Signature               = "";
+            draft.SuspensionReason        = "";
+            draft.TillSuspensionDate      = null;
+            draft.OwnType                 = String.IsNullOrEmpty(posessionItemServiceCode) ? null : (int?)Convert.ToInt32(posessionItemServiceCode);
+            draft.OwnNumber               = ownNumber;
+            draft.OwnDate                 = ownDate;
+            draft.LastRequestSendDate     = parent != null ? parent.LastRequestSendDate : null;
+            draft.ObsoleteComment         = parent != null ? parent.ObsoleteComment : String.Empty;
+            draft.DisableGibddSendComment = parent != null ? parent.DisableGibddSendComment : String.Empty;
 
             if (ctId == rList.ContentTypes["Новое"].Id || ctId == rList.ContentTypes["Переоформление"].Id)
             {
