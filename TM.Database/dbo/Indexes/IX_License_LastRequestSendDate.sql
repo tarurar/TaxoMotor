@@ -1,0 +1,1 @@
+﻿CREATE INDEX [IX_License_LastRequestSendDate] ON [dbo].[License] ([LastRequestSendDate] ASC)

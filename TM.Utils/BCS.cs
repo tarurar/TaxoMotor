@@ -704,15 +704,26 @@ namespace TM.Utils
             return decodedId[0];
         }
 
-        public static EntityType ExecuteBcsMethod<EntityType>(BcsMethodExecutionInfo methodInfo, object inParam)
+        public static TEntityType ExecuteBcsMethod<TEntityType>(BcsMethodExecutionInfo methodInfo, object inParam)
         {
-            IEntity contentType = GetEntity(SPServiceContext.Current, String.Empty, methodInfo.ns, methodInfo.contentType);
+            var contentType = GetEntity(SPServiceContext.Current, String.Empty, methodInfo.ns, methodInfo.contentType);
 
-            List<object> args = new List<object>();
-            if (inParam != null) args.Add(inParam);
+            var args = new List<object>();
+            if (inParam != null)
+            {
+                if (inParam is IEnumerable<object>)
+                {
+                    var paramList = inParam as IEnumerable<object>;
+                    args.AddRange(paramList);
+                }
+                else
+                {
+                    args.Add(inParam);
+                }
+            }
             var parameters = args.ToArray();
 
-            return (EntityType)GetDataFromMethod(methodInfo.lob, contentType, methodInfo.methodName, methodInfo.methodType, ref parameters);
+            return (TEntityType)GetDataFromMethod(methodInfo.lob, contentType, methodInfo.methodName, methodInfo.methodType, ref parameters);
         }
 
         #endregion

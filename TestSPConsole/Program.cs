@@ -163,24 +163,8 @@ namespace TestSPConsole
                 var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
-
-                    var lic = BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
-                    {
-                        lob = BCS.LOBTaxiSystemName,
-                        ns = BCS.LOBTaxiSystemNamespace,
-                        contentType = "License",
-                        methodName = "TakeAnyUnsignedLicense",
-                        methodType = MethodInstanceType.Scalar
-                    }, null);
-
-
-                    var content2 = LicenseHelper.Serialize(lic);
-                    var dataToSign = TM.Utils.Utility.PrepareXmlDataForSign(content2);
-
-                    var cert = CertificateHelper.GetCryptoProCertificate("e5 14 d8 fb 77 09 7a 58 68 ff cb 10 e9 5d b1 18 35 11 36 73");
-                    var signer = new X509Signer(cert);
-                    var xml = signer.SignXml(dataToSign);
-                    Console.WriteLine(xml);
+                    var l = LicenseHelper.GetLicenseRequestToSend(0);
+                    Console.WriteLine(l.RegNumber);
                 }
 
             }

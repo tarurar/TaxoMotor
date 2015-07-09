@@ -1627,7 +1627,6 @@ namespace TM.SP.AppPages
                     {
                         var rList = safeWeb.GetListOrBreak("Lists/IncomeRequestList");
                         var rItem = rList.GetItemById(incomeRequestId);
-                        var ctId = new SPContentTypeId(rItem["ContentTypeId"].ToString());
 
                         rItem["Tm_OutputFactDate"] = DateTime.Now.Date;
                         rItem.Update();

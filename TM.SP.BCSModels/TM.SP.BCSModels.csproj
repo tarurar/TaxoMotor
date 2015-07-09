@@ -275,6 +275,7 @@
     <EmbeddedResource Include="SQL\License-ReadDraftForTaxi.sql" />
     <EmbeddedResource Include="SQL\License-ReadAnyForTaxi.sql" />
     <EmbeddedResource Include="SQL\License-TakeAnyUnsigned.sql" />
+    <EmbeddedResource Include="SQL\License-GetRequestToSend.sql" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSLists.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_CoordinateV5BCSModel.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxiBCSLists.gif" />

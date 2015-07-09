@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using TM.SP.BCSModels.Helpers;
 using TM.SP.BCSModels.Taxi.Exceptions;
+using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
 namespace TM.SP.BCSModels.Taxi
@@ -195,5 +196,31 @@ namespace TM.SP.BCSModels.Taxi
             thisReader.Close();
             return entity;
         }
+
+        public License GetLicenseRequestToSend(int daysCycleCount)
+        {
+            var entity = new License();
+            var thisConn = getSqlConnection();
+            thisConn.Open();
+            var selectCommand = new SqlCommand
+            {
+                Connection = thisConn,
+                CommandText = SqlHelper.LoadSQLStatement("License-GetRequestToSend.sql")
+            };
+            selectCommand.Parameters.AddWithValue("@DaysCycleCount", daysCycleCount);
+
+            var thisReader = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            if (thisReader.Read())
+            {
+                SqlHelper.LicenseFillFromReader(entity, thisReader);
+            }
+            else
+            {
+                throw new Exception("No licenses for requests to be sent on");
+            }
+            thisReader.Close();
+            return entity;
+        }
+
     }
 }

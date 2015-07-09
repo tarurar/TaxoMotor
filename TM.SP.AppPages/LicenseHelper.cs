@@ -456,5 +456,17 @@ namespace TM.SP.AppPages
                 methodType  = MethodInstanceType.SpecificFinder
             }, taxiId);
         }
+
+        public static License GetLicenseRequestToSend(int daysCycleCount)
+        {
+            return BCS.ExecuteBcsMethod<License>(new BcsMethodExecutionInfo
+            {
+                lob         = BCS.LOBTaxiSystemName,
+                ns          = BCS.LOBTaxiSystemNamespace,
+                contentType = "License",
+                methodName  = "GetLicenseRequestToSend",
+                methodType  = MethodInstanceType.SpecificFinder
+            }, daysCycleCount);
+        }
     }
 }
