@@ -18,6 +18,7 @@ module TM.SP_.License {
 
         export class MakeObsoleteParam extends LicenseCommonParam {
             public obsolete: boolean;
+            public reason: string;
         }
 
         export class MakeObsoleteSignedParam extends MakeObsoleteParam {
@@ -26,6 +27,7 @@ module TM.SP_.License {
 
         export class DisableGibddParam extends LicenseCommonParam {
             public disabled: boolean;
+            public reason: string;
         }
 
         export class DisableGibddSignedParam extends DisableGibddParam {
@@ -40,33 +42,37 @@ module TM.SP_.License {
             return SP.ScriptHelpers.urlCombine(rootUrl, "LicenseService.aspx");
         }
 
-        public MakeObsoleteGetXml(obsolete: boolean): JQueryXHR {
+        public MakeObsoleteGetXml(obsolete: boolean, reason: string): JQueryXHR {
 
             var param = new RequestParams.MakeObsoleteParam(this);
             param.obsolete = obsolete;
+            param.reason = reason;
 
             return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("MakeObsoleteGetXml"));
         }
 
-        public MakeObsoleteSaveSigned(obsolete: boolean, signature: string): JQueryXHR {
+        public MakeObsoleteSaveSigned(obsolete: boolean, reason: string, signature: string): JQueryXHR {
 
             var param       = new RequestParams.MakeObsoleteSignedParam(this);
             param.obsolete  = obsolete;
+            param.reason    = reason;
             param.signature = encodeURIComponent(signature);
 
             return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedMakeObsolete"));
         }
 
-        public DisableGibddGetXml(disabled: boolean): JQueryXHR {
+        public DisableGibddGetXml(disabled: boolean, reason: string): JQueryXHR {
             var param = new RequestParams.DisableGibddParam(this);
             param.disabled = disabled;
+            param.reason = reason;
 
             return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("DisableGibddGetXml"));
         }
 
-        public DisabledGibddSaveSigned(disabled: boolean, signature: string): JQueryXHR {
+        public DisabledGibddSaveSigned(disabled: boolean, reason: string, signature: string): JQueryXHR {
             var param       = new RequestParams.DisableGibddSignedParam(this);
             param.disabled  = disabled;
+            param.reason    = reason;
             param.signature = encodeURIComponent(signature);
 
             return RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedDisableGibdd"));
@@ -77,10 +83,10 @@ module TM.SP_.License {
                 RequestParams.LicenseCommonParam, null, "ValidateLicense");
         }
 
-        public ChangeObsoleteAttribute(obsolete: boolean, success: () => void, fail: (msg: string) => void): void
+        public ChangeObsoleteAttribute(obsolete: boolean, reason: string, success: () => void, fail: (msg: string) => void): void
         {
             this.EnsureCertificate((data) => {
-                this.MakeObsoleteGetXml(obsolete).done((xml: any) => {
+                this.MakeObsoleteGetXml(obsolete, reason).done((xml: any) => {
 
                     var dataToSign: string = xml.d;
                     var oCertificate = cryptoPro.SelectCertificate(
@@ -107,7 +113,7 @@ module TM.SP_.License {
                             fail("Ошибка при формировании подписи");
                         }
 
-                        this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
+                        this.MakeObsoleteSaveSigned(obsolete, reason, signedData).done(success).fail(fail);
                     }
                 }).fail(() => {
                     fail("Ошибка при получении xml для разрешения");
@@ -117,10 +123,10 @@ module TM.SP_.License {
             });
         }
 
-        public ChangeDisableGibddAttribute(disabled: boolean, success: () => void, fail: (msg: string) => void): void
+        public ChangeDisableGibddAttribute(disabled: boolean, reason: string, success: () => void, fail: (msg: string) => void): void
         {
             this.EnsureCertificate((data) => {
-                this.DisableGibddGetXml(disabled).done((xml: any) => {
+                this.DisableGibddGetXml(disabled, reason).done((xml: any) => {
                     var dataToSign: string = xml.d;
 
                     var oCertificate = cryptoPro.SelectCertificate(
@@ -147,9 +153,9 @@ module TM.SP_.License {
                             fail("Ошибка при формировании подписи");
                         }
 
-                        this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
+                        this.DisabledGibddSaveSigned(disabled, reason, signedData).done(success).fail(fail);
                     }
-                }).fail(function () {
+                }).fail(() => {
                     fail("Ошибка при получении xml для разрешения");
                 });
             }, (error) => {

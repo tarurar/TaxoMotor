@@ -27,41 +27,73 @@
 					Command="TaxoMotor.LicenseMakeObsolete.ButtonCommand"
 					CommandAction="javascript:(function(){
             JSRequest.EnsureSetup();
+            SP.UI.Status.removeAllStatus(true);
             var id = JSRequest.QueryString.ID;
-            
             var curValue = TM.SP_.License.getCurrent().get_item('Tm_LicenseObsolete');
             var newValue = !curValue;
           
-            SP.UI.Status.removeAllStatus(true);
+            if (newValue) {
+              var options = {
+	              url: _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/LicenseMakeObsolete.aspx?ListId={ListId}&amp;ItemId={ItemId}',
+	              title: 'Установка признака &quot;Устаревшие данные&quot;',
+	              allowMaximize: false,
+	              showClose: true,
+	              dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
+		              if (result == SP.UI.DialogResult.OK) {
+			              if (returnValue == null) {
+				              TM.SP.showIconNotification('Признак &quot;Устаревшие данные&quot; изменен', '_layouts/15/images/kpinormal-0.gif', true);
+				              setTimeout(function() {
+				                var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
+				                if (gobackBtn) {
+					              gobackBtn.click();
+				                }
+				              }, 2000);
+			              }
+			              else {
+				              location.href = returnValue;
+			              }
+		              }
+		              else if (result == -1){
+			              TM.SP.showIconNotification('В процессе установки признака возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+			              setTimeout(function() {
+			                SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);  
+			              }, 2000);
+		              }
+	              })
+              };
+
+              SP.UI.ModalDialog.showModalDialog(options);
+            } else {
             
-            var listId = decodeURIComponent(JSRequest.QueryString['List']);
-            var itemId = decodeURIComponent(JSRequest.QueryString['ID']);
+              var listId = decodeURIComponent(JSRequest.QueryString['List']);
+              var itemId = decodeURIComponent(JSRequest.QueryString['ID']);
             
-            TM.SP_.License.LicenseEntityHelper.Create(TM.SP_.License.LicenseEntityHelper, listId, itemId, function(helper) {
+              TM.SP_.License.LicenseEntityHelper.Create(TM.SP_.License.LicenseEntityHelper, listId, itemId, function(helper) {
               
-              helper.ChangeObsoleteAttribute(newValue, function() {
-                var successMsgPart = newValue ? 'установлен' : 'снят';
-                var successStatus = SP.UI.Status.addStatus('Признак &quot;Устаревшие данные&quot; успешно ' + successMsgPart);
-	              SP.UI.Status.setStatusPriColor(successStatus, 'green');
+                helper.ChangeObsoleteAttribute(newValue, '', function() {
+                  var successMsgPart = newValue ? 'установлен' : 'снят';
+                  var successStatus = SP.UI.Status.addStatus('Признак &quot;Устаревшие данные&quot; успешно ' + successMsgPart);
+	                SP.UI.Status.setStatusPriColor(successStatus, 'green');
               
-	              setTimeout(function() {
-		              var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
-                  if (gobackBtn) {
-                    gobackBtn.click();
-                  }
-	              }, 2000);
-              }, function(jqXhr, status, error) {
-                var response = $.parseJSON(jqXhr.responseText).d;
-                console.error('Exception Message: ' + response.Error.SystemMessage);
-                console.error('Exception StackTrace: ' + response.Error.StackTrace);
-                var failStatus = SP.UI.Status.addStatus(response.Error.UserMessage + ': ' + response.Error.SystemMessage);
-	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
-              })
+	                setTimeout(function() {
+		                var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
+                    if (gobackBtn) {
+                      gobackBtn.click();
+                    }
+	                }, 2000);
+                }, function(jqXhr, status, error) {
+                  var response = $.parseJSON(jqXhr.responseText).d;
+                  console.error('Exception Message: ' + response.Error.SystemMessage);
+                  console.error('Exception StackTrace: ' + response.Error.StackTrace);
+                  var failStatus = SP.UI.Status.addStatus(response.Error.UserMessage + ': ' + response.Error.SystemMessage);
+	                SP.UI.Status.setStatusPriColor(failStatus, 'red');
+                })
           
-            }, function() {
-              var failStatus = SP.UI.Status.addStatus('Ошибка при создании сервисного объекта LicenseEntityHelper');
-	            SP.UI.Status.setStatusPriColor(failStatus, 'red');
-            });
+              }, function() {
+                var failStatus = SP.UI.Status.addStatus('Ошибка при создании сервисного объекта LicenseEntityHelper');
+	              SP.UI.Status.setStatusPriColor(failStatus, 'red');
+              });
+            }
           })();" 
           EnabledScript="javascript: function enabled() { 
             var result = false;

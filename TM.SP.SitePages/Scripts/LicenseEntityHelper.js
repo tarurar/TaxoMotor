@@ -71,35 +71,39 @@ var TM;
                     var rootUrl = _super.prototype.ServiceUrl.call(this);
                     return SP.ScriptHelpers.urlCombine(rootUrl, "LicenseService.aspx");
                 };
-                LicenseEntityHelper.prototype.MakeObsoleteGetXml = function (obsolete) {
+                LicenseEntityHelper.prototype.MakeObsoleteGetXml = function (obsolete, reason) {
                     var param = new RequestParams.MakeObsoleteParam(this);
                     param.obsolete = obsolete;
+                    param.reason = reason;
                     return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("MakeObsoleteGetXml"));
                 };
-                LicenseEntityHelper.prototype.MakeObsoleteSaveSigned = function (obsolete, signature) {
+                LicenseEntityHelper.prototype.MakeObsoleteSaveSigned = function (obsolete, reason, signature) {
                     var param = new RequestParams.MakeObsoleteSignedParam(this);
                     param.obsolete = obsolete;
+                    param.reason = reason;
                     param.signature = encodeURIComponent(signature);
                     return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedMakeObsolete"));
                 };
-                LicenseEntityHelper.prototype.DisableGibddGetXml = function (disabled) {
+                LicenseEntityHelper.prototype.DisableGibddGetXml = function (disabled, reason) {
                     var param = new RequestParams.DisableGibddParam(this);
                     param.disabled = disabled;
+                    param.reason = reason;
                     return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("DisableGibddGetXml"));
                 };
-                LicenseEntityHelper.prototype.DisabledGibddSaveSigned = function (disabled, signature) {
+                LicenseEntityHelper.prototype.DisabledGibddSaveSigned = function (disabled, reason, signature) {
                     var param = new RequestParams.DisableGibddSignedParam(this);
                     param.disabled = disabled;
+                    param.reason = reason;
                     param.signature = encodeURIComponent(signature);
                     return SP_.RequestMethods.MakePostRequest(param, this.BuildMethodUrl("SaveSignedDisableGibdd"));
                 };
                 LicenseEntityHelper.prototype.ValidateLicense = function () {
                     return this.PostWebMethod(RequestParams.LicenseCommonParam, null, "ValidateLicense");
                 };
-                LicenseEntityHelper.prototype.ChangeObsoleteAttribute = function (obsolete, success, fail) {
+                LicenseEntityHelper.prototype.ChangeObsoleteAttribute = function (obsolete, reason, success, fail) {
                     var _this = this;
                     this.EnsureCertificate(function (data) {
-                        _this.MakeObsoleteGetXml(obsolete).done(function (xml) {
+                        _this.MakeObsoleteGetXml(obsolete, reason).done(function (xml) {
                             var dataToSign = xml.d;
                             var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
                             if (oCertificate) {
@@ -114,7 +118,7 @@ var TM;
                                 if (typeof signedData === "undefined" || !signedData) {
                                     fail("Ошибка при формировании подписи");
                                 }
-                                _this.MakeObsoleteSaveSigned(obsolete, signedData).done(success).fail(fail);
+                                _this.MakeObsoleteSaveSigned(obsolete, reason, signedData).done(success).fail(fail);
                             }
                         }).fail(function () {
                             fail("Ошибка при получении xml для разрешения");
@@ -123,10 +127,10 @@ var TM;
                         fail('Не удалось выбрать сертификат для подписания. Действие прервано.');
                     });
                 };
-                LicenseEntityHelper.prototype.ChangeDisableGibddAttribute = function (disabled, success, fail) {
+                LicenseEntityHelper.prototype.ChangeDisableGibddAttribute = function (disabled, reason, success, fail) {
                     var _this = this;
                     this.EnsureCertificate(function (data) {
-                        _this.DisableGibddGetXml(disabled).done(function (xml) {
+                        _this.DisableGibddGetXml(disabled, reason).done(function (xml) {
                             var dataToSign = xml.d;
                             var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
                             if (oCertificate) {
@@ -141,7 +145,7 @@ var TM;
                                 if (typeof signedData === "undefined" || !signedData) {
                                     fail("Ошибка при формировании подписи");
                                 }
-                                _this.DisabledGibddSaveSigned(disabled, signedData).done(success).fail(fail);
+                                _this.DisabledGibddSaveSigned(disabled, reason, signedData).done(success).fail(fail);
                             }
                         }).fail(function () {
                             fail("Ошибка при получении xml для разрешения");

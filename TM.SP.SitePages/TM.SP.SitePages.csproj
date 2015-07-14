@@ -144,6 +144,8 @@
     <Content Include="Pages\DenyTaxi.aspx" />
     <Content Include="Pages\Elements.xml" />
     <Content Include="Pages\IncomeRequestFilterPage.aspx" />
+    <Content Include="Pages\LicenseDisableGibdd.aspx" />
+    <Content Include="Pages\LicenseMakeObsolete.aspx" />
     <Content Include="Pages\licenseSearch.aspx" />
     <Content Include="Pages\ProgressDlg.aspx" />
     <Content Include="Pages\RenewalLicense.aspx" />
@@ -174,9 +176,11 @@
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
+    <Content Include="Scripts\LicenseDisableGibdd.js" />
     <Content Include="Scripts\LicenseEntityHelper.js">
       <DependentUpon>LicenseEntityHelper.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\LicenseMakeObsolete.js" />
     <Content Include="Scripts\licenseSearchModel.js" />
     <Content Include="Scripts\LicenseViewCSR.js" />
     <Content Include="Scripts\ProgressDlg.js" />

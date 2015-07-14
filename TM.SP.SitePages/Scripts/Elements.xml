@@ -30,5 +30,7 @@
     <File Path="Scripts\IncomeRequestEntityHelper.ts" Url="IncomeRequestEntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
     <File Path="Scripts\LicenseEntityHelper.ts" Url="LicenseEntityHelper.ts" Type="GhostableInLibrary" ReplaceContent="TRUE" />
     <File Path="Scripts\TaxiVinEditor.js" Url="TaxiVinEditor.js" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\LicenseDisableGibdd.js" Url="LicenseDisableGibdd.js" Type="GhostableInLibrary" ReplaceContent="TRUE" />
+    <File Path="Scripts\LicenseMakeObsolete.js" Url="LicenseMakeObsolete.js" Type="GhostableInLibrary" ReplaceContent="TRUE" />
   </Module>
 </Elements>

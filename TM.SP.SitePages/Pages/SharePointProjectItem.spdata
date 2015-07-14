@@ -12,5 +12,7 @@
     <ProjectItemFile Source="TaxiBlankNoEditor.aspx" Target="Pages\" Type="ElementFile" />
     <ProjectItemFile Source="TaxiVinEditor.aspx" Target="Pages\" Type="ElementFile" />
     <ProjectItemFile Source="IncomeRequestFilterPage.aspx" Target="Pages\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseDisableGibdd.aspx" Target="Pages\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseMakeObsolete.aspx" Target="Pages\" Type="ElementFile" />
   </Files>
 </ProjectItem>

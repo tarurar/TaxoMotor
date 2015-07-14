@@ -31,5 +31,7 @@
     <ProjectItemFile Source="IncomeRequestEntityHelper.ts" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="LicenseEntityHelper.ts" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="TaxiVinEditor.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseDisableGibdd.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="LicenseMakeObsolete.js" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

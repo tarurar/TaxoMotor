@@ -41,5 +41,13 @@
       <Property Name="Title" Value="Фильтрация обращений" />
       <Property Name="ContentType" Value="Web Part Page" />
     </File>
+    <File Path="Pages\LicenseDisableGibdd.aspx" Url="LicenseDisableGibdd.aspx" Type="GhostableInLibrary" ReplaceContent="TRUE">
+      <Property Name="Title" Value="Установка признака 'Запрет отправки в ГИБДД'" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
+    <File Path="Pages\LicenseMakeObsolete.aspx" Url="LicenseMakeObsolete.aspx" Type="GhostableInLibrary" ReplaceContent="TRUE">
+      <Property Name="Title" Value="Установка признака 'Устаревшие данные'" />
+      <Property Name="ContentType" Value="Web Part Page" />
+    </File>
   </Module>
 </Elements>

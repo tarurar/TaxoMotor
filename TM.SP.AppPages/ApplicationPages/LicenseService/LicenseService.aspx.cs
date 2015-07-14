@@ -169,21 +169,23 @@ namespace TM.SP.AppPages
             });
         }
         [WebMethod]
-        public static string MakeObsoleteGetXml(int licenseId, bool obsolete)
+        public static string MakeObsoleteGetXml(int licenseId, bool obsolete, string reason)
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate = GetUnspecifiedDate(DateTime.Now);
-                l.Obsolete = obsolete;
+                l.OutputDate      = GetUnspecifiedDate(DateTime.Now);
+                l.ObsoleteComment = Uri.UnescapeDataString(reason);
+                l.Obsolete        = obsolete;
             });
         }
         [WebMethod]
-        public static string DisableGibddGetXml(int licenseId, bool disabled)
+        public static string DisableGibddGetXml(int licenseId, bool disabled, string reason)
         {
             return GetLicenseXml(licenseId, l =>
             {
-                l.OutputDate = GetUnspecifiedDate(DateTime.Now);
-                l.DisableGibddSend = disabled;
+                l.OutputDate              = GetUnspecifiedDate(DateTime.Now);
+                l.DisableGibddSendComment = Uri.UnescapeDataString(reason);
+                l.DisableGibddSend        = disabled;
             });
         }
         #endregion
@@ -290,7 +292,7 @@ namespace TM.SP.AppPages
                 });
         }
         [WebMethod]
-        public static dynamic SaveSignedMakeObsolete(int licenseId, bool obsolete, string signature)
+        public static dynamic SaveSignedMakeObsolete(int licenseId, bool obsolete, string reason, string signature)
         {
             return Utility.WithCatchExceptionOnWebMethod("Ошибка при сохранении подписи", () =>
                 {
@@ -300,15 +302,16 @@ namespace TM.SP.AppPages
 
                     SaveSigned(licenseId, l =>
                     {
-                        l.OutputDate = outputDate;
-                        l.ChangeDate = changeDate;
-                        l.Obsolete = obsolete;
-                        l.Signature = signedXml;
+                        l.OutputDate      = outputDate;
+                        l.ChangeDate      = changeDate;
+                        l.Obsolete        = obsolete;
+                        l.ObsoleteComment = Uri.UnescapeDataString(reason);
+                        l.Signature       = signedXml;
                     });
                 });
         }
         [WebMethod]
-        public static dynamic SaveSignedDisableGibdd(int licenseId, bool disabled, string signature)
+        public static dynamic SaveSignedDisableGibdd(int licenseId, bool disabled, string reason, string signature)
         {
             return Utility.WithCatchExceptionOnWebMethod("Ошибка при сохранении подписи", () =>
                 {
@@ -318,10 +321,11 @@ namespace TM.SP.AppPages
 
                     SaveSigned(licenseId, l =>
                     {
-                        l.OutputDate = outputDate;
-                        l.ChangeDate = changeDate;
-                        l.DisableGibddSend = disabled;
-                        l.Signature = signedXml;
+                        l.OutputDate              = outputDate;
+                        l.ChangeDate              = changeDate;
+                        l.DisableGibddSend        = disabled;
+                        l.DisableGibddSendComment = Uri.UnescapeDataString(reason);
+                        l.Signature               = signedXml;
                     });
                 });
         }
