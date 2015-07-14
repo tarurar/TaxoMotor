@@ -165,8 +165,8 @@ namespace TestSPConsole
                 {
                     var l = LicenseHelper.GetLicenseRequestToSend(0);
                     Console.WriteLine(l.RegNumber);
-                }
 
+                }
             }
 
             Console.WriteLine("Finished");

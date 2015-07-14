@@ -5,6 +5,7 @@
 // <date>2014-09-09 16:35:29Z</date>
 
 using TM.SP.AppPages.Communication;
+using TM.SP.AppPages.Tracker;
 using TM.Utils;
 // ReSharper disable CheckNamespace
 
@@ -41,7 +42,7 @@ namespace TM.SP.AppPages
             var documentList = base.LoadDocuments<T>();
             foreach (var doc in documentList.Select(document => document as EGRULRequestItem))
             {
-                doc.RequestTypeCode = OutcomeRequestType.Egrip;
+                doc.RequestTypeCode = OutcomeRequest.Egrip;
             }
 
             return documentList;
@@ -106,6 +107,17 @@ namespace TM.SP.AppPages
                         new RequestAccountData {Ogrn = requestAccount.Ogrn, Inn = requestAccount.Inn}),
                     QueueClient, buildOptions);
         }
+
+        protected override void TrackOutcomeRequest<T>(T document, bool success, Guid requestId)
+        {
+            if (!success) return;
+
+            var spItem = Web.GetListOrBreak("Lists/IncomeRequestList").GetItemById(document.Id);
+            var tracker = new RequestTracker(new IncomeRequestTrackingContext(spItem),
+                new OutcomeRequestTrackingData { Id = requestId, Type = OutcomeRequest.Egrip });
+            tracker.Track();
+        }
+
         #endregion
     }
 }

@@ -81,6 +81,19 @@ namespace TM.SP.AppPages
                     EndHour     = 5,
                     EndMinute   = 15
                 }
+            },
+            #endregion
+            #region Отправка запросов по м/в взаимодействию для разрешений
+            new CreationInfo()
+            {
+                Name     = "TaxoMotorSendLicenseRequests", 
+                Title    = "ТаксоМотор: Отправка м/в запросов по разрешениям", 
+                Type     = typeof(LicenseRequestsAutoSender), 
+                Schedule = new SPHourlySchedule() 
+                {
+                    BeginMinute = 0,
+                    EndMinute   = 59
+                }
             }
             #endregion
             /*
@@ -107,7 +120,7 @@ namespace TM.SP.AppPages
             {
                 SPSecurity.RunWithElevatedPrivileges(delegate()
                 {
-                    SPWebApplication webApp = (SPWebApplication)properties.Feature.Parent;
+                    var webApp = (SPWebApplication)properties.Feature.Parent;
                     if (webApp != null)
                     {
                         Creator.RunDelete(jobList, webApp);
@@ -134,7 +147,7 @@ namespace TM.SP.AppPages
                 {
                     SPSecurity.RunWithElevatedPrivileges(delegate()
                     {
-                        SPWebApplication webApp = (SPWebApplication)properties.Feature.Parent;
+                        var webApp = (SPWebApplication)properties.Feature.Parent;
                         if (webApp != null)
                         {
                             Creator.RunDelete(jobList, webApp);

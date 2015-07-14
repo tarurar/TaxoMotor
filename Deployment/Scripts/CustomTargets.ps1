@@ -154,6 +154,16 @@
 				}
 			}
 		}
+
+	# Desc: ...
+		function DisableCASPolicy() {
+			Log -message ("Disabling CAS policy (OWSTIMER.EXE) ...") -type $SPSD.LogTypes.Information
+			$path = "C:\\Program Files\\Common Files\\microsoft shared\\Web Server Extensions\\15\\bin\\owstimer.exe.config"
+			$xml = New-Object XML
+			$xml.Load($path)
+			$xml.configuration.runtime.NetFx40_LegacySecurityPolicy.enabled = "false"
+			$xml.Save($path)
+		}
 #endregion
 
 #region BeforeDeploy
@@ -174,7 +184,7 @@
         #     Install-SPFeature -Path '[feature name]' -Force
         #     Enable-SPFeature -Identity '[feature name]' -Url '$vars["SiteUrl"]' -Force
         #     Enable-SPFeature -Identity [feature guid] -Url '$vars["SiteUrl"]' -Force
-        #activate content type association feature in content web application
+        # activate content type association feature in content web application
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "CoordinateV5"
 		UpdateBCSLobSystemProperties  -vars $vars -lobName "DeveloperData"
         UpdateBCSLobSystemProperties  -vars $vars -lobName "Taxi"
@@ -185,7 +195,8 @@
 		AddConfigurationListEntry -vars $vars -confKey "BR2ServiceGuid" -confValue $vars['BR2ServiceGuid']
 		AddConfigurationListEntry -vars $vars -confKey "AsGufServiceGuid" -confValue $vars['AsGufServiceGuid']
 		AddConfigurationListEntry -vars $vars -confKey "RatingsSSOAppId" -confValue $vars['RatingsSSOAppId']
-
+		# disabling CAS Policy (otherwise, leads to problems with dynamic instances)
+		DisableCASPolicy
      }
 #endregion
 

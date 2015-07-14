@@ -44,7 +44,11 @@ namespace TM.Utils.TimerJobs
                             if (web.Features[new Guid(TaxiListsFeatureId)] != null &&
                                 web.Features[new Guid(TaxiV2ListsFeatureId)] != null)
                             {
-                                Work(web);
+                                var context = SPServiceContext.GetContext(siteCollection);
+                                using (new SPServiceContextScope(context))
+                                {
+                                    Work(web);
+                                }
                             }
                         }
                         finally

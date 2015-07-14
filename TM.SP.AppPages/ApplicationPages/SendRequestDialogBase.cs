@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.SharePoint;
 using TM.SP.AppPages.Communication;
+using TM.SP.AppPages.Tracker;
 using TM.Utils;
 using MessageQueueService = TM.ServiceClients.MessageQueue;
 
@@ -18,18 +19,10 @@ namespace TM.SP.AppPages.ApplicationPages
         public int Id {get; set;}
         public string Title { get; set; }
         public bool HasError {get; set;}
-        public OutcomeRequestType RequestTypeCode { get; set; }
+        public OutcomeRequest RequestTypeCode { get; set; }
         public string ListName { get; set; }
     }
 
-    public enum OutcomeRequestType
-    {
-        Pts = 1,
-        Egrul,
-        Egrip,
-        Penalty
-    }
-    
     public enum ValidationErrorSeverity
     {
         Warning = 0,
@@ -171,36 +164,9 @@ namespace TM.SP.AppPages.ApplicationPages
         /// <param name="success"></param>
         /// <param name="requestId">Message Id value</param>
         /// <returns></returns>
-        protected virtual SPListItem TrackOutcomeRequest<T>(T document, bool success, Guid requestId) where T : RequestItem
+        protected virtual void TrackOutcomeRequest<T>(T document, bool success, Guid requestId) where T : RequestItem
         {
-            if (!success) return null;
-            
-            var trackList = Web.GetListOrBreak("Lists/OutcomeRequestStateList");
-            var requestTypeList = Web.GetListOrBreak("Lists/OutcomeRequestTypeBookList");
-            var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
-                ((int) document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
-
-            var pFolder = CreateOutcomeRequestFolder(trackList);
-            var newItem = trackList.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
-            newItem["Title"]                        = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
-            newItem["Tm_OutputDate"]                = DateTime.Now;
-            newItem["Tm_IncomeRequestLookup"]       = new SPFieldLookupValue(document.Id, document.Title);
-            newItem["Tm_OutputRequestTypeLookup"]   = new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title);
-            newItem["Tm_AnswerReceived"]            = false;
-            newItem["Tm_MessageId"]                 = requestId;
-            newItem.Update();
-
-            return newItem;
-        }
-
-        protected virtual SPFolder CreateOutcomeRequestFolder(SPList list)
-        {
-            var yearStr  = DateTime.Now.ToString("yyyy");
-            var monthstr = DateTime.Now.ToString("MMMM");
-            var dayStr   = DateTime.Now.ToString("dd");
-            var hourStr  = DateTime.Now.ToString("hh");
-
-            return list.RootFolder.CreateSubFolders(new[] {yearStr, monthstr, dayStr, hourStr});
+            throw new NotImplementedException();
         }
 
         /// <summary>

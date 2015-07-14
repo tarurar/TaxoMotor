@@ -471,5 +471,24 @@ namespace TM.SP.AppPages
                 methodType  = MethodInstanceType.SpecificFinder
             }, daysCycleCount);
         }
+
+        public static SPListItem GetSharePointItemFromBusinessItem(SPWeb web, License license)
+        {
+            var list = web.GetListOrBreak("Lists/LicenseList");
+            var spItems = list.GetItems(new SPQuery
+            {
+                Query = Camlex.Query().Where(x => (int)x["Tm_LicenseExternalId"] == license.Id).ToString(),
+                ViewAttributes = "Scope='Recursive'"
+            });
+
+            if (spItems.Count > 1)
+            {
+                throw new Exception(
+                    String.Format("Too many sharepoint items ({0}) for license business item with id {1}",
+                        spItems.Count, license.Id));
+            }
+
+            return (spItems.Count > 0) ? spItems[0] : null;
+        }
     }
 }

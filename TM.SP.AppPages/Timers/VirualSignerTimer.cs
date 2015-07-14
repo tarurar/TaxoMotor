@@ -1,15 +1,6 @@
 ﻿using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TM.Utils;
 using TM.Utils.TimerJobs;
-using TM.SP.BCSModels.Taxi;
-using Microsoft.BusinessData.MetadataModel;
-using TM.SP.AppPages.VirtualSigner;
 
 namespace TM.SP.AppPages.Timers
 {

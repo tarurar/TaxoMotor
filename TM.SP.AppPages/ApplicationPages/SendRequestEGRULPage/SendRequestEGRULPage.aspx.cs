@@ -5,6 +5,8 @@
 // <date>2014-08-06 17:56:53Z</date>
 
 using TM.SP.AppPages.Communication;
+using TM.SP.AppPages.Tracker;
+
 // ReSharper disable CheckNamespace
 
 
@@ -36,7 +38,7 @@ namespace TM.SP.AppPages
 
         public EGRULRequestItem()
         {
-            RequestTypeCode = OutcomeRequestType.Egrul;
+            RequestTypeCode = OutcomeRequest.Egrul;
         }
     }
 
@@ -306,6 +308,17 @@ namespace TM.SP.AppPages
                         new RequestAccountData {Ogrn = requestAccount.Ogrn, Inn = requestAccount.Inn}),
                     QueueClient, buildOptions);
         }
+
+        protected override void TrackOutcomeRequest<T>(T document, bool success, Guid requestId)
+        {
+            if (!success) return;
+
+            var spItem = Web.GetListOrBreak("Lists/IncomeRequestList").GetItemById(document.Id);
+            var tracker = new RequestTracker(new IncomeRequestTrackingContext(spItem),
+                new OutcomeRequestTrackingData {Id = requestId, Type = OutcomeRequest.Egrul});
+            tracker.Track();
+        }
+
         #endregion
 
     }

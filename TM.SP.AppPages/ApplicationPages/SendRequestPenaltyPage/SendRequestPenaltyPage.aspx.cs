@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using CamlexNET;
 using TM.SP.AppPages.ApplicationPages;
 using TM.SP.AppPages.Communication;
+using TM.SP.AppPages.Tracker;
 using TM.Utils;
 
 // ReSharper disable CheckNamespace
@@ -32,7 +33,7 @@ namespace TM.SP.AppPages
 
         public PenaltyRequestItem()
         {
-            RequestTypeCode = OutcomeRequestType.Penalty;
+            RequestTypeCode = OutcomeRequest.Penalty;
         }
     }
 
@@ -237,34 +238,14 @@ namespace TM.SP.AppPages
             return QueueMessageBuilder.Build(new CoordinateV5PenaltyMessageBuilder(spItem), QueueClient, buildOptions);
         }
 
-        protected override SPListItem TrackOutcomeRequest<T>(T document, bool success, Guid requestId)
+        protected override void TrackOutcomeRequest<T>(T document, bool success, Guid requestId)
         {
-            if (!success) return null;
+            if (!success) return;
 
-            var trackList       = Web.GetListOrBreak("Lists/OutcomeRequestStateList");
-            var requestTypeList = Web.GetListOrBreak("Lists/OutcomeRequestTypeBookList");
-            var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
-                ((int) document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
-            var licList = Web.GetListOrBreak("Lists/LicenseList");
-            var licItem = licList.GetItemById(document.Id);
-            SPListItem taxiItem;
-            Utility.TryGetListItemFromLookupValue(licItem["Tm_TaxiLookup"],
-                licItem.Fields.GetFieldByInternalName("Tm_TaxiLookup") as SPFieldLookup, out taxiItem);
-
-            var pFolder = CreateOutcomeRequestFolder(trackList);
-            var newItem = trackList.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
-            newItem["Title"]                           = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
-            newItem["Tm_OutputDate"]                   = DateTime.Now;
-            newItem["Tm_TaxiLookup"]                   = licItem["Tm_TaxiLookup"];
-            newItem["Tm_IncomeRequestLookup"]          = taxiItem != null ? taxiItem["Tm_IncomeRequestLookup"] : null;
-            newItem["Tm_LicenseLookup"]                = new SPFieldLookupValue(licItem.ID, licItem.Title);
-            newItem["Tm_LicenseRtParentLicenseLookup"] = licItem["Tm_LicenseRtParentLicenseLookup"];
-            newItem["Tm_OutputRequestTypeLookup"]      = requestTypeItem != null ? new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title) : null;
-            newItem["Tm_AnswerReceived"]               = false;
-            newItem["Tm_MessageId"]                    = requestId;
-            newItem.Update();
-
-            return newItem;
+            var licItem = Web.GetListOrBreak("Lists/LicenseList").GetItemById(document.Id);
+            var tracker = new RequestTracker(new LicenseTrackingContext(licItem),
+                new OutcomeRequestTrackingData {Id = requestId, Type = OutcomeRequest.Penalty});
+            tracker.Track();
         }
     }
 }

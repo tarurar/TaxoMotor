@@ -181,8 +181,12 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="ApplicationPages\SendStatus\SendStatus.aspx.designer.cs">
       <DependentUpon>SendStatus.aspx.cs</DependentUpon>
     </Compile>
-    <Compile Include="Collections\ICollectionGetter.cs" />
-    <Compile Include="Collections\LicenseRequestToSendCollection.cs" />
+    <Compile Include="Communication\OutcomeRequest.cs" />
+    <Compile Include="Pipeline\BasePipelineWorker.cs" />
+    <Compile Include="Pipeline\IPipeline.cs" />
+    <Compile Include="Pipeline\IPipelineWorker.cs" />
+    <Compile Include="Pipeline\LicenseBasePipeline.cs" />
+    <Compile Include="Pipeline\LicenseRequestsPipeline.cs" />
     <Compile Include="Communication\CoordinateBaseMessageBuilder.cs" />
     <Compile Include="Communication\CoordinateV52BaseMessageBuilder.cs" />
     <Compile Include="Communication\CoordinateV52StatusMessageBuilder.cs" />
@@ -214,11 +218,24 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Compile Include="Print\TemplatedLicenseDocumentBuilder.cs" />
     <Compile Include="ServiceLocator\IServiceLocator.cs" />
     <Compile Include="ServiceLocator\ServiceLocator.cs" />
+    <Compile Include="Strategies\IPipelineStrategy.cs" />
+    <Compile Include="Strategies\IStrategy.cs" />
+    <Compile Include="Strategies\LicenseBaseStrategy.cs" />
+    <Compile Include="Strategies\LicenseRequestAutoSendStrategy.cs" />
+    <Compile Include="Timers\LicenseRequestsAutoSender.cs" />
     <Compile Include="Timers\MoTimer.cs" />
     <Compile Include="Timers\OdopmTimer.cs" />
     <Compile Include="Timers\SpecialTransportRegisterTimer.cs" />
     <Compile Include="Timers\UpdateViewsTimer.cs" />
     <Compile Include="Timers\VirualSignerTimer.cs" />
+    <Compile Include="Tracker\OutcomeRequestTrackingData.cs" />
+    <Compile Include="Tracker\RequestTracker.cs" />
+    <Compile Include="Tracker\BaseTrackingContext.cs" />
+    <Compile Include="Tracker\IncomeRequestTrackingContext.cs" />
+    <Compile Include="Tracker\ITracker.cs" />
+    <Compile Include="Tracker\ITrackingContext.cs" />
+    <Compile Include="Tracker\LicenseTrackingContext.cs" />
+    <Compile Include="Tracker\TaxiTrackingContext.cs" />
     <Compile Include="Validators\LicenseDataValidator.cs" />
     <Compile Include="Validators\LicenseSignatureValidator.cs" />
     <Compile Include="Validators\LicenseSPDataValidator.cs" />

@@ -10,6 +10,7 @@ using System.Linq;
 using CamlexNET;
 using TM.SP.AppPages.ApplicationPages;
 using TM.SP.AppPages.Communication;
+using TM.SP.AppPages.Tracker;
 
 // ReSharper disable CheckNamespace
 namespace TM.SP.AppPages
@@ -198,7 +199,7 @@ namespace TM.SP.AppPages
                     Ogrn             = item.TryGetValue<string>("Tm_OrgOgrn"),
                     Inn              = item.TryGetValue<string>("Tm_OrgInn"),
                     RequestTypeCode  =
-                        orgCode == PrivateEntrepreneurCode ? OutcomeRequestType.Egrip : OutcomeRequestType.Egrul,
+                        orgCode == PrivateEntrepreneurCode ? OutcomeRequest.Egrip : OutcomeRequest.Egrul,
                     ListName         = listName
                 }).ToList();
 
@@ -258,39 +259,23 @@ namespace TM.SP.AppPages
             BtnOk.Enabled       = errorList.All(err => err.Severity != ValidationErrorSeverity.Critical);
         }
 
-        protected override SPListItem TrackOutcomeRequest<T>(T document, bool success, Guid requestId)
+        protected override void TrackOutcomeRequest<T>(T document, bool success, Guid requestId)
         {
-            if (!success) return null;
+            if (!success) return;
 
-            var trackList = Web.GetListOrBreak("Lists/OutcomeRequestStateList");
-            var requestTypeList = Web.GetListOrBreak("Lists/OutcomeRequestTypeBookList");
-            var requestTypeItem = requestTypeList.GetSingleListItemByFieldValue("Tm_ServiceCode",
-                ((int)document.RequestTypeCode).ToString(CultureInfo.InvariantCulture));
             var requestList = Web.GetListOrBreak("Lists/IncomeRequestList");
             var licList = Web.GetListOrBreak("Lists/LicenseList");
+            ITrackingContext<SPListItem> trackingContext = null;
+            if (document.ListName == "IncomeRequestList")
+                trackingContext = new IncomeRequestTrackingContext(requestList.GetItemById(document.Id));
+            if (document.ListName == "LicenseList")
+                trackingContext = new LicenseTrackingContext(licList.GetItemById(document.Id));
+            if (trackingContext == null)
+                throw new Exception("Couldn't determine the context of the request");
 
-            SPListItem rItem = null;
-            SPListItem licItem = null;
-            if (document.ListName == "IncomeRequestList") rItem = requestList.GetItemById(document.Id);
-            if (document.ListName == "LicenseList") licItem = licList.GetItemById(document.Id);
-
-            var pFolder = CreateOutcomeRequestFolder(trackList);
-            var newItem = trackList.AddItem(pFolder.ServerRelativeUrl, SPFileSystemObjectType.File);
-            newItem["Title"] = requestTypeItem != null ? requestTypeItem.Title : "Запрос";
-            newItem["Tm_OutputDate"] = DateTime.Now;
-            newItem["Tm_IncomeRequestLookup"] = rItem != null ? new SPFieldLookupValue(rItem.ID, rItem.Title) : null;
-            newItem["Tm_OutputRequestTypeLookup"] = requestTypeItem != null
-                ? new SPFieldLookupValue(requestTypeItem.ID, requestTypeItem.Title)
-                : null;
-            newItem["Tm_LicenseLookup"] = licItem != null ? new SPFieldLookupValue(licItem.ID, licItem.Title) : null;
-            newItem["Tm_LicenseRtParentLicenseLookup"] = licItem != null
-                ? licItem["Tm_LicenseRtParentLicenseLookup"]
-                : null;
-            newItem["Tm_AnswerReceived"] = false;
-            newItem["Tm_MessageId"] = requestId;
-            newItem.Update();
-
-            return newItem;
+            var tracker = new RequestTracker(trackingContext,
+                new OutcomeRequestTrackingData {Id = requestId, Type = document.RequestTypeCode});
+            tracker.Track();
         }
 
         #endregion

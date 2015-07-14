@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Globalization;
+using System.Xml;
 using System.Xml.Linq;
 using Microsoft.SharePoint;
 using System;
@@ -39,6 +40,13 @@ namespace TM.SP.AppPages.Communication
         public override CV5.CoordinateTaskMessage Build()
         {
             var sNumber = _item.TryGetValue<string>("Tm_SingleNumber");
+            if (String.IsNullOrEmpty(sNumber))
+            {
+                const string snPattern = "{0}-{1}-{2}-{3}/{4}";
+                sNumber = String.Format(snPattern, Consts.TaxoMotorDepCode, Consts.TaxoMotorSysCode, "77200101",
+                    String.Format("{0:000000}", 1), DateTime.Now.Year.ToString(CultureInfo.InvariantCulture).Right(2));
+            }
+
             var sCode = "77200101";
             if (_item.Fields.ContainsField("Tm_RequestedDocument"))
             {

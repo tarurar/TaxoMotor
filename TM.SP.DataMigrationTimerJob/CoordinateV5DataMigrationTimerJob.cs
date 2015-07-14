@@ -141,11 +141,18 @@ namespace TM.SP.DataMigrationTimerJob
                 var webApp = Parent as SPWebApplication;
                 foreach (SPSite siteCollection in webApp.Sites)
                 {
-                    SPWeb web = siteCollection.RootWeb;
-                    var context = SPServiceContext.GetContext(siteCollection);
-                    using (var scope = new SPServiceContextScope(context))
+                    try
                     {
-                        ProcessMigration(web);
+                        var web = siteCollection.RootWeb;
+                        var context = SPServiceContext.GetContext(siteCollection);
+                        using (var scope = new SPServiceContextScope(context))
+                        {
+                            ProcessMigration(web);
+                        }
+                    }
+                    finally
+                    {
+                        siteCollection.Dispose();
                     }
                 }
             }
