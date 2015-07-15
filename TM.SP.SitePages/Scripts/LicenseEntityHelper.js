@@ -105,7 +105,7 @@ var TM;
                     this.EnsureCertificate(function (data) {
                         _this.MakeObsoleteGetXml(obsolete, reason).done(function (xml) {
                             var dataToSign = xml.d;
-                            var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                            var oCertificate = _this.selectedCertificate || cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
                             if (oCertificate) {
                                 dataToSign = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
                                 var signedData;
@@ -132,7 +132,7 @@ var TM;
                     this.EnsureCertificate(function (data) {
                         _this.DisableGibddGetXml(disabled, reason).done(function (xml) {
                             var dataToSign = xml.d;
-                            var oCertificate = cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
+                            var oCertificate = _this.selectedCertificate || cryptoPro.SelectCertificate(2 /* CAPICOM_CURRENT_USER_STORE */, cryptoPro.StoreNames.CAPICOM_MY_STORE, 2 /* CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED */);
                             if (oCertificate) {
                                 dataToSign = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<Envelope xmlns=\"urn:envelope\">\n" + dataToSign + " \n" + "</Envelope>";
                                 var signedData;

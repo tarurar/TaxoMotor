@@ -83,13 +83,11 @@ module TM.SP_.License {
                 RequestParams.LicenseCommonParam, null, "ValidateLicense");
         }
 
-        public ChangeObsoleteAttribute(obsolete: boolean, reason: string, success: () => void, fail: (msg: string) => void): void
-        {
+        public ChangeObsoleteAttribute(obsolete: boolean, reason: string, success: () => void, fail: (msg: string) => void): void {
             this.EnsureCertificate((data) => {
                 this.MakeObsoleteGetXml(obsolete, reason).done((xml: any) => {
-
                     var dataToSign: string = xml.d;
-                    var oCertificate = cryptoPro.SelectCertificate(
+                    var oCertificate = this.selectedCertificate || cryptoPro.SelectCertificate(
                         cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                         cryptoPro.StoreNames.CAPICOM_MY_STORE,
                         cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
@@ -128,8 +126,8 @@ module TM.SP_.License {
             this.EnsureCertificate((data) => {
                 this.DisableGibddGetXml(disabled, reason).done((xml: any) => {
                     var dataToSign: string = xml.d;
-
-                    var oCertificate = cryptoPro.SelectCertificate(
+                    
+                    var oCertificate = this.selectedCertificate || cryptoPro.SelectCertificate(
                         cryptoPro.StoreLocation.CAPICOM_CURRENT_USER_STORE,
                         cryptoPro.StoreNames.CAPICOM_MY_STORE,
                         cryptoPro.StoreOpenMode.CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
