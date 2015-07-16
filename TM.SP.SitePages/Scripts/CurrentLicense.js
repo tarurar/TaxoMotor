@@ -9,10 +9,15 @@ var TM;
         (function (License) {
             "use strict";
             var _current = null;
+            var _helper = null;
             function getCurrent() {
                 return _current;
             }
             License.getCurrent = getCurrent;
+            function getHelper() {
+                return _helper;
+            }
+            License.getHelper = getHelper;
             SP.SOD.loadMultiple(["sp.js", "sp.init.js"], function () {
                 var def = $.Deferred();
                 JSRequest.EnsureSetup();
@@ -22,6 +27,7 @@ var TM;
                     var listGuid = new SP.Guid(listId);
                     License.LicenseEntityHelper.Create(License.LicenseEntityHelper, listGuid, itemId, function (helper) {
                         _current = helper.currentItem;
+                        _helper = helper;
                         def.resolve();
                     }, def.reject);
                 }

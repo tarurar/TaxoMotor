@@ -1,6 +1,9 @@
 ﻿ /// <reference path="typings/sharepoint/SharePoint.d.ts" />
  /// <reference path="typings/jquery/jquery.d.ts" />
 
+// ReSharper disable once InconsistentNaming
+declare function RefreshCommandUI(): void;
+
 module TM.SP_ {
     "use strict";
 

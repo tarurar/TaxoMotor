@@ -2,6 +2,7 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="EntityHelper.ts" />
 /// <reference path="CryptoProTs.ts" />
+/// <reference path="CurrentLicense.ts" />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -157,6 +158,84 @@ var TM;
                 return LicenseEntityHelper;
             })(SP_.EntityHelper);
             License.LicenseEntityHelper = LicenseEntityHelper;
+            var RibbonActions = (function () {
+                function RibbonActions() {
+                }
+                RibbonActions.makeObsolete = function () {
+                    JSRequest.EnsureSetup();
+                    SP.UI.Status.removeAllStatus(true);
+                    var newValue = !License.getCurrent().get_item('Tm_LicenseObsolete');
+                    if (newValue) {
+                        var options = new SP.UI.DialogOptions();
+                        options.url = _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/LicenseMakeObsolete.aspx?ItemId=' + License.getCurrent().get_id();
+                        options.title = 'Установка признака "Устаревшие данные"';
+                        options.allowMaximize = false;
+                        options.showClose = true;
+                        options.dialogReturnValueCallback = function (dialogResult, returnValue) {
+                            if (dialogResult == SP.UI.DialogResult.OK) {
+                                if (returnValue == null) {
+                                    TM["SP"].showIconNotification('Признак "Устаревшие данные" изменен', '_layouts/15/images/kpinormal-0.gif', true);
+                                    debugger;
+                                    setTimeout(function () {
+                                        var gobackBtn = $('input[type=button][name*="GoBack"]');
+                                        if (gobackBtn) {
+                                            gobackBtn.click();
+                                        }
+                                    }, 2000);
+                                }
+                                else if (returnValue == -1) {
+                                    TM["SP"].showIconNotification('В процессе установки признака возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                                    setTimeout(function () {
+                                        SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);
+                                    }, 2000);
+                                }
+                            }
+                        };
+                        SP.UI.ModalDialog.showModalDialog(options);
+                    }
+                    else {
+                        License.getHelper().ChangeObsoleteAttribute(false, '', function () {
+                            var successMsgPart = newValue ? 'установлен' : 'снят';
+                            var successStatus = SP.UI.Status.addStatus('Признак "Устаревшие данные" успешно ' + successMsgPart);
+                            SP.UI.Status.setStatusPriColor(successStatus, 'green');
+                            debugger;
+                            setTimeout(function () {
+                                var gobackBtn = $('input[type=button][name*="GoBack"]');
+                                if (gobackBtn) {
+                                    gobackBtn.click();
+                                }
+                            }, 2000);
+                        }, function (failObj) {
+                            var msg;
+                            if (typeof failObj == 'string') {
+                                msg = failObj;
+                            }
+                            else {
+                                var jqXhr = failObj;
+                                var response = $.parseJSON(jqXhr.responseText).d;
+                                console.error('Exception Message: ' + response.Error.SystemMessage);
+                                console.error('Exception StackTrace: ' + response.Error.StackTrace);
+                                msg = response.Error.UserMessage + ': ' + response.Error.SystemMessage;
+                            }
+                            var failStatus = SP.UI.Status.addStatus(msg);
+                            SP.UI.Status.setStatusPriColor(failStatus, 'red');
+                        });
+                    }
+                };
+                RibbonActions.makeObsoleteEnabled = function () {
+                    var result = false;
+                    if (License.getCurrent() != null) {
+                        var isLast = License.getCurrent().get_item('_x0421__x0441__x044b__x043b__x04');
+                        result = isLast;
+                    }
+                    else {
+                        SP.SOD.executeOrDelayUntilScriptLoaded(RefreshCommandUI, 'CurrentLicense.js');
+                    }
+                    return result;
+                };
+                return RibbonActions;
+            })();
+            License.RibbonActions = RibbonActions;
         })(License = SP_.License || (SP_.License = {}));
     })(SP_ = TM.SP_ || (TM.SP_ = {}));
 })(TM || (TM = {}));

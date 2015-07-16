@@ -6,9 +6,14 @@ module TM.SP_.License {
     "use strict";
 
     var _current: SP.ListItem = null;
+    var _helper: LicenseEntityHelper = null;
 
     export function getCurrent(): SP.ListItem {
         return _current;
+    }
+
+    export function getHelper(): LicenseEntityHelper {
+        return _helper;
     }
 
     SP.SOD.loadMultiple(["sp.js", "sp.init.js"], () => {
@@ -21,6 +26,7 @@ module TM.SP_.License {
             var listGuid = new SP.Guid(listId);
             LicenseEntityHelper.Create<LicenseEntityHelper>(LicenseEntityHelper, listGuid, itemId, (helper: LicenseEntityHelper) => {
                 _current = helper.currentItem;
+                _helper = helper;
                 def.resolve();
             }, def.reject);
         } else {

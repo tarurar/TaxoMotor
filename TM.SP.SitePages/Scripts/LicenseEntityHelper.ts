@@ -2,6 +2,7 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="EntityHelper.ts" />
 /// <reference path="CryptoProTs.ts" />
+/// <reference path="CurrentLicense.ts" />
 
 module TM.SP_.License {
     "use strict";
@@ -83,7 +84,7 @@ module TM.SP_.License {
                 RequestParams.LicenseCommonParam, null, "ValidateLicense");
         }
 
-        public ChangeObsoleteAttribute(obsolete: boolean, reason: string, success: () => void, fail: (msg: string) => void): void {
+        public ChangeObsoleteAttribute(obsolete: boolean, reason: string, success: () => void, fail: (failObj: any) => void): void {
             this.EnsureCertificate((data) => {
                 this.MakeObsoleteGetXml(obsolete, reason).done((xml: any) => {
                     var dataToSign: string = xml.d;
@@ -159,6 +160,82 @@ module TM.SP_.License {
             }, (error) => {
                 fail('Не удалось выбрать сертификат для подписания. Действие прервано.');
             });
+        }
+    }
+
+    export class RibbonActions {
+        public static makeObsolete(): void {
+            JSRequest.EnsureSetup();
+            SP.UI.Status.removeAllStatus(true);
+            var newValue = !getCurrent().get_item('Tm_LicenseObsolete');
+
+            if (newValue) {
+                var options = new SP.UI.DialogOptions();
+                options.url = _spPageContextInfo.webAbsoluteUrl + '/ProjectSitePages/LicenseMakeObsolete.aspx?ItemId=' + getCurrent().get_id();
+                options.title = 'Установка признака "Устаревшие данные"';
+                options.allowMaximize = false;
+                options.showClose = true;
+                options.dialogReturnValueCallback = (dialogResult, returnValue) => {
+                    if (dialogResult == SP.UI.DialogResult.OK) {
+                        if (returnValue == null) {
+                            TM["SP"].showIconNotification('Признак "Устаревшие данные" изменен', '_layouts/15/images/kpinormal-0.gif', true);
+                            debugger;
+                            setTimeout(() => {
+                                var gobackBtn = $('input[type=button][name*="GoBack"]');
+                                if (gobackBtn) {
+                                    gobackBtn.click();
+                                }
+                            }, 2000);
+                        }
+                        else if (returnValue == -1) {
+                            TM["SP"].showIconNotification('В процессе установки признака возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                            setTimeout(() => {
+                                SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);
+                            }, 2000);
+                        }
+                    }
+                };
+
+                SP.UI.ModalDialog.showModalDialog(options);
+            } else {
+                getHelper().ChangeObsoleteAttribute(false, '',() => {
+                    var successMsgPart = newValue ? 'установлен' : 'снят';
+                    var successStatus = SP.UI.Status.addStatus('Признак "Устаревшие данные" успешно ' + successMsgPart);
+                    SP.UI.Status.setStatusPriColor(successStatus, 'green');
+
+                    debugger;
+                    setTimeout(() => {
+                        var gobackBtn = $('input[type=button][name*="GoBack"]');
+                        if (gobackBtn) {
+                            gobackBtn.click();
+                        }
+                    }, 2000);
+                },(failObj: any) => {
+                        var msg: string;
+                        if (typeof failObj == 'string') {
+                            msg = failObj;
+                        } else {
+                            var jqXhr = <JQueryXHR> failObj;
+                            var response = $.parseJSON(jqXhr.responseText).d;
+                            console.error('Exception Message: ' + response.Error.SystemMessage);
+                            console.error('Exception StackTrace: ' + response.Error.StackTrace);
+                            msg = response.Error.UserMessage + ': ' + response.Error.SystemMessage;
+                        }
+                        var failStatus = SP.UI.Status.addStatus(msg);
+                        SP.UI.Status.setStatusPriColor(failStatus, 'red');
+                });
+            }
+        }
+        public static makeObsoleteEnabled(): boolean {
+            var result = false;
+            if (getCurrent() != null) {
+                var isLast = getCurrent().get_item('_x0421__x0441__x044b__x043b__x04');
+                result = isLast;
+            } else {
+                SP.SOD.executeOrDelayUntilScriptLoaded(RefreshCommandUI, 'CurrentLicense.js');
+            }
+
+            return result;
         }
     }
 }
