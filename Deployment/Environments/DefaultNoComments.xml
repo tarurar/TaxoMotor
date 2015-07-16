@@ -34,6 +34,7 @@
     <Variables ID="Default">
       <Variable Name="UserID">$(env:USERDOMAIN)\$(env:USERNAME)</Variable>
       <Variable Name="WebAppUrl">http://$(env:COMPUTERNAME).$(env:USERDNSDOMAIN)</Variable>
+      <Variable Name="WebAppWebConfigPath">C:\inetpub\wwwroot\wss\VirtualDirectories\80</Variable>
       <Variable Name="SiteUrl">http://$(env:COMPUTERNAME).$(env:USERDNSDOMAIN)/sites/TestSite</Variable>
       <Variable Name="LCID">1033</Variable>
     </Variables>

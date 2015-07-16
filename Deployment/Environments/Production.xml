@@ -17,6 +17,10 @@
       <MinimalSharePointLicense>Foundation</MinimalSharePointLicense>
     </Restrictions>
     <Actions AfterDeploy="true" AfterRetract="true" AfterUpdate="true">
+      <RestartService Name="SPAdminV4" Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
+      <RestartService Name="SPTimerV4" Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
+      <RestartService Name="SPUserCodeV4" Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
+      <ResetIIS Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
       <WarmUpUrls AllWebApps="false" AllSites="false" AfterDeploy="true" AfterUpdate="true">
         <WarmUp Url="$(SiteUrl)" />
       </WarmUpUrls>
@@ -26,6 +30,7 @@
     <Variables ID="Default">
       <Variable Name="UserID">$(env:USERDOMAIN)\$(env:USERNAME)</Variable>
       <Variable Name="WebAppUrl">http://$(env:COMPUTERNAME)</Variable>
+      <Variable Name="WebAppWebConfigPath">C:\inetpub\wwwroot\wss\VirtualDirectories\80</Variable>
       <Variable Name="SiteUrl">http://$(env:COMPUTERNAME)/</Variable>
       <Variable Name="LCID">1033</Variable>
       <Variable Name="BCS_Requests_DBServerName">ProductionDBServerName</Variable>

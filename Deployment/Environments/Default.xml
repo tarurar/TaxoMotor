@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<SPSD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="5.0.3.6439">
+<SPSD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="4.1.0.6928">
   <Configuration ID="Default">
     <Settings>
       <DeploymentRetries>3</DeploymentRetries>
@@ -17,7 +17,11 @@
       <MinimalSharePointLicense>Foundation</MinimalSharePointLicense>
     </Restrictions>
     <Actions AfterDeploy="true" AfterRetract="true" AfterUpdate="true">
-      <WarmUpUrls AllWebApps="false" AllSites="false" AfterDeploy="true" AfterUpdate="true">
+      <RestartService Name="SPAdminV4" Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
+      <RestartService Name="SPTimerV4" Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
+      <RestartService Name="SPUserCodeV4" Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
+      <ResetIIS Force="false" AfterDeploy="true" AfterRetract="true" AfterUpdate="true" />
+      <WarmUpUrls AllWebApps="false" AllSites="true" AfterDeploy="true" AfterUpdate="true">
         <WarmUp Url="$(SiteUrl)" />
       </WarmUpUrls>
     </Actions>
@@ -26,6 +30,7 @@
     <Variables ID="Default">
       <Variable Name="UserID">$(env:USERDOMAIN)\$(env:USERNAME)</Variable>
       <Variable Name="WebAppUrl">http://$(env:COMPUTERNAME)</Variable>
+      <Variable Name="WebAppWebConfigPath">C:\inetpub\wwwroot\wss\VirtualDirectories\80</Variable>
       <Variable Name="SiteUrl">http://$(env:COMPUTERNAME)/</Variable>
       <Variable Name="LCID">1033</Variable>
       <Variable Name="BCS_Requests_DBServerName">$(env:COMPUTERNAME)</Variable>
@@ -33,14 +38,12 @@
       <Variable Name="BCS_Requests_CredentialsSecureStoreAppId">asguf_MSCRM</Variable>
       <Variable Name="ConfigListUrl">/Lists/ConfigurationList</Variable>
       <Variable Name="DisabledMimeTypes">image/jpeg;image/png;image/tiff;image/bmp;application/pdf;application/zip;application/x-gzip;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/msword;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.ms-excel</Variable>
-      <!-- Config Values -->
       <Variable Name="MessageQueueServiceUrl">http://77.95.132.133:8082/DataService.svc</Variable>
       <Variable Name="BR2ServiceGuid">df8ff4be-d4ae-e011-91ec-000c29d12628</Variable>
       <Variable Name="AsGufServiceGuid">fee650d8-5048-e311-ba9a-005056802550</Variable>
-      <Variable Name="SignerName">ФИО подписанта</Variable>
-      <Variable Name="SignerJob">Должность подписанта</Variable>
+      <Variable Name="SignerName">??? ??????????</Variable>
+      <Variable Name="SignerJob">????????? ??????????</Variable>
       <Variable Name="RatingsSSOAppId">RatingsAccess</Variable>
-      <!-- End Config Values -->
     </Variables>
     <PreRequisiteSolutions ID="Default" />
     <Solutions ID="Default">

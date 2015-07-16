@@ -163,6 +163,16 @@
 			$xml.Load($path)
 			$xml.configuration.runtime.NetFx40_LegacySecurityPolicy.enabled = "false"
 			$xml.Save($path)
+
+			Log -message ("Disabling CAS policy (web application) ...") -type $SPSD.LogTypes.Information
+			$path = $vars["WebAppWebConfigPath"]
+			$xml = New-Object XML
+			$xml.Load($path)
+			$xml.configuration."system.web".trust.legacyCasModel = "false"
+			$xml.configuration."system.web".trust.level = "Full"
+			$xml.configuration."system.web".trust.originUrl = ""
+			$xml.Save($path)
+			# WebAppWebConfigPath
 		}
 #endregion
 
