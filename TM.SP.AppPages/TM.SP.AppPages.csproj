@@ -412,7 +412,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Content Include="Layouts\TM.SP.AppPages\Images\taxi-print-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\vin-edit-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Scripts\SendRequestDialog.js" />
-    <Content Include="Layouts\TM.SP.AppPages\Styles\dialog-lists.css" />
+    <Content Include="Layouts\1049\STYLES\TM.SP.AppPages\dialog-lists.css" />
     <Content Include="Resources\Resources\TM.SP.AppPages.resx" />
   </ItemGroup>
   <ItemGroup>

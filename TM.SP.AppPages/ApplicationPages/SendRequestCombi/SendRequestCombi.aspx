@@ -13,8 +13,8 @@
 	<SharePoint:EncodedLiteral runat="server" text="Page Title" EncodeMethod='HtmlEncode'/>
 </asp:Content>
 <asp:Content ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
-    <SharePoint:CssRegistration ID="CssRegistration1" Name="/_layouts/15/TM.SP.AppPages/Styles/dialog-lists.css" runat="server" />
-    <SharePoint:ScriptLink ID="jsSendRequestDialog" OnDemand="false" runat="server" Localizable="false" Name="/_layouts/15/TM.SP.AppPages/Scripts/SendRequestDialog.js"></SharePoint:ScriptLink>
+    <SharePoint:CssRegistration ID="CssRegistration1" Name="TM.SP.AppPages/dialog-lists.css" runat="server" />
+    <SharePoint:ScriptLink ID="jsSendRequestDialog" OnDemand="false" runat="server" Localizable="false" Name="TM.SP.AppPages/Scripts/SendRequestDialog.js"></SharePoint:ScriptLink>
     <SharePoint:ScriptBlock runat="server">
         var ShowSendWaitingScreen = function(){
             var waitingMarkup = TM.SP.getProcessingMarkup('<%=GetLocalizedString(resProcessNotifyText) %>');

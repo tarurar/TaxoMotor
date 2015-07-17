@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~masterurl/default.master" Inherits="Microsoft.SharePoint.WebPartPages.WebPartPage,Microsoft.SharePoint,Version=15.0.0.0,Culture=neutral,PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register TagPrefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Register TagPrefix="wssuc" TagName="ButtonSection" Src="/_controltemplates/15/ButtonSection.ascx" %>
 
 <asp:Content ContentPlaceHolderID="PlaceHolderPageTitle" runat="server">
@@ -10,10 +11,13 @@
 </asp:Content>
 
 <asp:Content ID="AddPageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
-    <link rel="Stylesheet" type="text/css" href="/ProjectScripts/IncomeRequestActions.css" />
-    <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/core.css" />
-    <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/theme.css" />
-    <script type="text/javascript" src="/ProjectScripts/CryptoProTs.js"></script>
+    <SharePoint:CssRegistration runat="server" ID="CssRegistration1" Name="TM.SP.Customizations/themes/base/core.css"></SharePoint:CssRegistration>
+    <SharePoint:CssRegistration runat="server" ID="CssRegistration3" Name="TM.SP.Customizations/themes/base/theme.css"></SharePoint:CssRegistration>
+    
+    <script type="text/javascript">
+        document.write(TM.SP.GetVersionedStyleMarkup('/ProjectScripts/IncomeRequestActions.css'));
+        document.write(TM.SP.GetVersionedScriptMarkup('/ProjectScripts/CryptoProTs.js'));
+    </script>
 
     <object id="cadesplugin" type="application/x-cades" class="hiddenObject"></object>
     <object id='certEnrollClassFactory' classid='clsid:884e2049-217d-11da-b2a4-000e7bbb2b09' class="hiddenObject"></object>
@@ -102,5 +106,7 @@
         </table>
     </div>
 
-    <script type="text/javascript" src="/ProjectScripts/DenyIncomeRequest.js"></script>
+    <script type="text/javascript">
+        document.write(TM.SP.GetVersionedScriptMarkup('/ProjectScripts/DenyIncomeRequest.js'));
+    </script>
 </asp:Content>

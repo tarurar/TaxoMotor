@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~masterurl/default.master" Inherits="Microsoft.SharePoint.WebPartPages.WebPartPage,Microsoft.SharePoint,Version=15.0.0.0,Culture=neutral,PublicKeyToken=71e9bce111e9429c" %>
+<%@ Register TagPrefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 
 <asp:Content ContentPlaceHolderID="PlaceHolderPageTitle" runat="server">
     Реестр разрешений
@@ -9,10 +10,13 @@
 </asp:Content>
 
 <asp:Content ID="AddPageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
-    <link rel="Stylesheet" type="text/css" href="/ProjectScripts/licenseSearchModel.css" />
-    <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/core.css" />
-    <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/datepicker.css" />
-    <link rel="Stylesheet" type="text/css" href="/_layouts/15/TM.SP.Customizations/Styles/themes/base/theme.css" />
+    <SharePoint:CssRegistration runat="server" ID="CssRegistration1" Name="TM.SP.Customizations/themes/base/core.css"></SharePoint:CssRegistration>
+    <SharePoint:CssRegistration runat="server" ID="CssRegistration2" Name="TM.SP.Customizations/themes/base/datepicker.css"></SharePoint:CssRegistration>
+    <SharePoint:CssRegistration runat="server" ID="CssRegistration3" Name="TM.SP.Customizations/themes/base/theme.css"></SharePoint:CssRegistration>
+
+    <script type="text/javascript">
+        document.write(TM.SP.GetVersionedStyleMarkup('/ProjectScripts/licenseSearchModel.css'));
+    </script>
 </asp:Content>
 
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
@@ -153,5 +157,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="/ProjectScripts/licenseSearchModel.js"></script>
+    <script type="text/javascript">
+        document.write(TM.SP.GetVersionedScriptMarkup('/ProjectScripts/licenseSearchModel.js'));
+    </script>
 </asp:Content>

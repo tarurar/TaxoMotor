@@ -1,25 +1,25 @@
-﻿.ms-core-sideNavBox-removeLeftMargin { 
-    display: none;
+﻿.ms-core-sideNavBox-removeLeftMargin {
+    display: none !important;
 }
 
 #contentBox {
-    margin-left: 0;
+    margin-left: 0 !important;
 }
 
 #suiteBarLeft {
-    background-color: #993300;
+    background-color: #993300 !important;
 }
 
 #suiteBarRight {
-    background-color: #e5e5e5;
+    background-color: #e5e5e5 !important;
 }
 
 .ms-core-suiteLink-a:hover {
-    background-color: #009899;
+    background-color: #009899 !important;
 }
 
 #globalNavBox, .ms-clientcontrol-chromeheader {
-    background-color: #e5e5e5;
+    background-color: #e5e5e5 !important;
 }
 
 #s4-titlerow {

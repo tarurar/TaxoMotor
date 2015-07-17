@@ -5,6 +5,15 @@ var TM;
 (function (TM) {
 
     TM.SP = (function (TMSP) {
+        TMSP.jsVersion = "1.0.0.22";
+
+        TMSP.GetVersionedScriptMarkup = function(scriptPath) {
+            return '<script type="text/javascript" src="' + scriptPath + '?rev=' + TMSP.jsVersion + '"></script>';
+        }
+
+        TMSP.GetVersionedStyleMarkup = function(cssPath) {
+            return '<link rel="Stylesheet" type="text/css" href="' + cssPath + '?rev=' + TMSP.jsVersion + '" />';
+        }
 
         TMSP.showIconNotification = function (message, iconUrl, autoClose) {
             var messageHtml = '<div><span style="float: left;"><img src="' +
