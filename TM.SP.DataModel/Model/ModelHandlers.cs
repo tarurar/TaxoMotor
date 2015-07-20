@@ -251,6 +251,11 @@ namespace TM.SP.DataModel
 
             ListHelpers.IndexField(ctx, Lists.TmIncomeRequestList.Url, Fields.TmRegistrationDate.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmIncomeRequestList.Url, Fields.TmPrepareFactDate.InternalName);
+
+            ListHelpers.IndexField(ctx, Lists.TmOutcomeRequestStateList.Url, Plumsail.Fields.TmTaxiLookupXml.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmOutcomeRequestStateList.Url, Plumsail.Fields.TmLicenseLookupXml.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmOutcomeRequestStateList.Url, Plumsail.Fields.TmIncomeRequestLookupXml.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmOutcomeRequestStateList.Url, Fields.TmAnswerReceived.InternalName);
         }
 
         #endregion
