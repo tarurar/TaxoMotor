@@ -20,12 +20,14 @@ namespace TM.SP.BCSModels.CoordinateV5
             const string selectAnyText = @"INSERT INTO [dbo].[RequestMigrationTicket] ([MessageId], [Status], [StartDate], [RequestId])
                                         OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[RequestId]
                                         SELECT TOP 1 r.[MessageId], @Status, GETDATE(), r.[Id] FROM [dbo].[Request] r
+                                        WITH (XLOCK, ROWLOCK)
                                         LEFT JOIN [dbo].[RequestMigrationTicket] m on m.[RequestId] = r.[Id]
                                         WHERE m.[Title] IS NULL";
 
             const string selectItemText = @"INSERT INTO [dbo].[RequestMigrationTicket] ([MessageId], [Status], [StartDate], [RequestId])
                                         OUTPUT INSERTED.[Id], INSERTED.[Status], INSERTED.[RequestId]
                                         SELECT r.[MessageId], @Status, GETDATE(), r.[Id] FROM [dbo].[Request] r
+                                        WITH (XLOCK, ROWLOCK)
                                         LEFT JOIN [dbo].[RequestMigrationTicket] m on m.[RequestId] = r.[Id]
                                         WHERE m.[Title] IS NULL AND r.[Id] = @ItemId";
 

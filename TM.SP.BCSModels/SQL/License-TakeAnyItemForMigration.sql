@@ -10,6 +10,7 @@ SELECT TOP 1 @Status
 	,GETDATE()
 	,l.[Id]
 FROM [dbo].[License] l
+WITH (XLOCK, ROWLOCK)
 LEFT JOIN [dbo].[LicenseMigrationTicket] m ON m.[LicenseId] = l.[Id]
 WHERE m.[Title] IS NULL
 	AND l.[Status] <> 4
