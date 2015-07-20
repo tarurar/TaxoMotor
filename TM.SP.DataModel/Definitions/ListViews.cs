@@ -75,7 +75,7 @@ namespace TM.SP.DataModel.Definitions
             Url = "Search",
             IsDefault = false,
             RowLimit = 20,
-            Query = "<OrderBy><FieldRef Name='Title' /></OrderBy>",
+            Query = "<OrderBy><FieldRef Name='Title' /></OrderBy><Where><Eq><FieldRef Name='ContentType' /><Value Type='Computed'>Tm_License</Value></Eq></Where>",
             JSLink = String.Format("clienttemplates.js | ~site/{0}/LicenseViewCSR.js", Lists.TmProjectScripts.Url),
             Fields = new System.Collections.ObjectModel.Collection<string> 
             { 

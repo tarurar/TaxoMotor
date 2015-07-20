@@ -398,7 +398,10 @@ namespace TM.SP.DataModel
                             .AddListView(ListViews.TmLicenseListArchiveView, lv => lv
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
                             .AddListView(ListViews.TmLicenseListSearchView, lv => lv
-                                .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
+                                .OnProvisioned<View>(context =>
+                                {
+                                    context.Object.Aggregations = "On";
+                                }))
                             .AddListView(ListViews.TmLicenseListDuplicateView, lv => lv
                                 .OnProvisioned<View>(context => context.Object.MakeFoldersInvisible()))
                             .AddListView(ListViews.TmLicenseListRenewView, lv => lv

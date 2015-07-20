@@ -6,6 +6,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
+using SPMeta2.BuiltInDefinitions;
 using SPMeta2.CSOM.Behaviours;
 using SPMeta2.CSOM.Extensions;
 using SPMeta2.Syntax.Default;
@@ -236,7 +237,7 @@ namespace TM.SP.DataModel
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseFromDate.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseTillDate.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, "_x0421__x0441__x044b__x043b__x04");
-            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, "ContentType");
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, BuiltInFieldDefinitions.ContentType.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Plumsail.Fields.TmTaxiLookupXml.InternalName);
 
             ListHelpers.IndexField(ctx, Lists.TmIncomeRequestAttachList.Url, Fields.TmAttachType.InternalName);
