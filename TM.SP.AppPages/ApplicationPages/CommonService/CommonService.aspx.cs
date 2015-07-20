@@ -231,11 +231,7 @@ namespace TM.SP.AppPages
                 var orTypeIdStr    = orPtsItem.ID.ToString(CultureInfo.InvariantCulture);
                 const string formatMessagePattern = "{{ \"message\": \"{0}\" }}";
 
-                var expressions = new List<Expression<Func<SPListItem, bool>>>
-                {
-                    x => x["Tm_OutputRequestTypeLookup"] == (DataTypes.LookupId) orTypeIdStr,
-                    x => (bool) x["Tm_AnswerReceived"],
-                };
+                var expressions = new List<Expression<Func<SPListItem, bool>>>();
                 if (taxiId != 0)
                 {
                     expressions.Add(x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) taxiIdStr);
@@ -244,6 +240,9 @@ namespace TM.SP.AppPages
                 {
                     expressions.Add(x => x["Tm_LicenseLookup"] == (DataTypes.LookupId)licenseIdStr);
                 }
+                expressions.Add(x => x["Tm_OutputRequestTypeLookup"] == (DataTypes.LookupId) orTypeIdStr);
+                expressions.Add(x => (bool) x["Tm_AnswerReceived"]);
+
                 SPListItemCollection outRequestItems = outRequestList.GetItems(new SPQuery
                 {
                     Query =
