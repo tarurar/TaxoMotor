@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
-using System.Threading.Tasks;
-using Microsoft.SharePoint;
 using Microsoft.SharePoint.Client;
 using CommandLine;
 using NLog;
-using SPMeta2.CSOM;
-using SPMeta2.CSOM.DefaultSyntax;
-using SPMeta2.CSOM.Extensions;
 using SPMeta2.CSOM.ModelHosts;
 using SPMeta2.CSOM.Services;
-using SPMeta2.Definitions;
-
 using TM.SP.DataModel;
 
 namespace TM.SP.DataModelDeploy

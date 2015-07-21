@@ -88,12 +88,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TM.ClientUtils\TM.ClientUtils.csproj">
-      <Project>{c7e55faa-3035-49de-86cc-20b7f5d89c33}</Project>
-      <Name>TM.ClientUtils</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
