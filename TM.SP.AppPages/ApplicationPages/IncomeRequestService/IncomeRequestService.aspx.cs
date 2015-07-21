@@ -75,17 +75,15 @@ namespace TM.SP.AppPages
             var taxiList = web.GetListOrBreak("Lists/TaxiList");
             var arrStatuses = statuses.Split(';');
 
-            var expressions = new List<Expression<Func<SPListItem, bool>>>();
+            var expressions = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_IncomeRequestLookup"] == (DataTypes.LookupId) incomeRequestId.ToString(CultureInfo.InvariantCulture)
+            };
             foreach (string t in arrStatuses)
             {
                 string token = t;
                 expressions.Add(x => x["Tm_TaxiStatus"] != (DataTypes.Choice) token);
             }
-            expressions.Add(
-                x =>
-                    x["Tm_IncomeRequestLookup"] ==
-                    (DataTypes.LookupId) incomeRequestId.ToString(CultureInfo.InvariantCulture));
-
             SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
             {
                 Query = Camlex.Query().WhereAll(expressions).ToString(),
@@ -148,14 +146,6 @@ namespace TM.SP.AppPages
             var taxiList = web.GetListOrBreak("Lists/TaxiList");
             var arrStatuses = statuses.Split(';');
 
-            var choicesCondition = new List<Expression<Func<SPListItem, bool>>>();
-            foreach (string t in arrStatuses)
-            {
-                string token = t;
-                choicesCondition.Add(x => x["Tm_TaxiStatus"] == (DataTypes.Choice)token);
-            }
-            var choicesExpr = ExpressionsHelper.CombineOr(choicesCondition);
-
             var parentConditions = new List<Expression<Func<SPListItem, bool>>>
             {
                 x =>
@@ -163,7 +153,15 @@ namespace TM.SP.AppPages
                     (DataTypes.LookupId) incomeRequestId.ToString(CultureInfo.InvariantCulture)
             };
             var parentExpr = ExpressionsHelper.CombineOr(parentConditions);
-            var expressions = new List<Expression<Func<SPListItem, bool>>> { choicesExpr, parentExpr };
+
+            var choicesCondition = new List<Expression<Func<SPListItem, bool>>>();
+            foreach (string t in arrStatuses)
+            {
+                string token = t;
+                choicesCondition.Add(x => x["Tm_TaxiStatus"] == (DataTypes.Choice)token);
+            }
+            var choicesExpr = ExpressionsHelper.CombineOr(choicesCondition);
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { parentExpr, choicesExpr };
 
             SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
             {
@@ -249,10 +247,10 @@ namespace TM.SP.AppPages
 
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
-                // IsLast field - checking if license is acting
-                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
                 // checking for exactly this taxi
-                x => (string)x["Tm_TaxiVin"] == vinNumber
+                x => (string)x["Tm_TaxiVin"] == vinNumber,
+                // IsLast field - checking if license is acting
+                x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1"
             };
             SPListItemCollection licenseItems = licenseList.GetItems(new SPQuery
             {
@@ -311,14 +309,9 @@ namespace TM.SP.AppPages
 
             var expressions = new List<Expression<Func<SPListItem, bool>>>
             {
+                x => (string)x["Tm_TaxiStateNumber"] == taxiStNum.ToString(),
                 // IsLast field - checking if license is acting
                 x => x["_x0421__x0441__x044b__x043b__x04"] == (DataTypes.Number) "1",
-
-                // checking for exactly this taxi license
-                // x => x["Tm_TaxiLookup"] == (DataTypes.LookupId) taxiId.ToString(CultureInfo.InvariantCulture),
-
-                x => (string)x["Tm_TaxiStateNumber"] == taxiStNum.ToString(),
-
                 // license status is not Аннулировано
                 x => x["Tm_LicenseStatus"] != (DataTypes.Choice) "Аннулировано",
                 // we can release new license only if old license expires in < then 45 days
@@ -1316,12 +1309,6 @@ namespace TM.SP.AppPages
             SPWeb web = SPContext.Current.Web;
             var taxiList = web.GetListOrBreak("Lists/TaxiList");
 
-            var choicesCondition = new List<Expression<Func<SPListItem, bool>>>
-            {
-                x => x["Tm_TaxiStatus"] == (DataTypes.Choice)status
-            };
-            var choicesExpr = ExpressionsHelper.CombineOr(choicesCondition);
-
             var parentCondition = new List<Expression<Func<SPListItem, bool>>>
             {
                 x =>
@@ -1330,13 +1317,19 @@ namespace TM.SP.AppPages
             };
             var parentExpr = ExpressionsHelper.CombineOr(parentCondition);
 
+            var choicesCondition = new List<Expression<Func<SPListItem, bool>>>
+            {
+                x => x["Tm_TaxiStatus"] == (DataTypes.Choice)status
+            };
+            var choicesExpr = ExpressionsHelper.CombineOr(choicesCondition);
+
             var blankNoCondition = new List<Expression<Func<SPListItem, bool>>>
             {
                 x => x["Tm_BlankNo"] == null,
                 x => x["Tm_BlankSeries"] == null
             };
             var blankExpr = ExpressionsHelper.CombineOr(blankNoCondition);
-            var expressions = new List<Expression<Func<SPListItem, bool>>> { choicesExpr, parentExpr, blankExpr };
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { parentExpr, choicesExpr, blankExpr };
 
             SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
             {
@@ -1378,7 +1371,7 @@ namespace TM.SP.AppPages
                 x => x["Tm_TaxiPrevLicenseNumber"] == null
             };
             var licExpr = ExpressionsHelper.CombineOr(licNoCondition);
-            var expressions = new List<Expression<Func<SPListItem, bool>>> { choicesExpr, parentExpr, licExpr };
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { parentExpr, choicesExpr, licExpr };
 
             SPListItemCollection taxiItems = taxiList.GetItems(new SPQuery
             {

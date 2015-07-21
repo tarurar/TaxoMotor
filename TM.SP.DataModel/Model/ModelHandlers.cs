@@ -236,6 +236,7 @@ namespace TM.SP.DataModel
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseStatus.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseFromDate.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmLicenseTillDate.InternalName);
+            ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Fields.TmTaxiVin.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, "_x0421__x0441__x044b__x043b__x04");
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, BuiltInFieldDefinitions.ContentType.InternalName);
             ListHelpers.IndexField(ctx, Lists.TmLicenseList.Url, Plumsail.Fields.TmTaxiLookupXml.InternalName);

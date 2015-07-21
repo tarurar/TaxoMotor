@@ -177,7 +177,7 @@ namespace TM.SP.AppPages
                 additionalExpr = ExpressionsHelper.CombineAnd(additionalExprAnd);
             }
 
-            var expressions = new List<Expression<Func<SPListItem, bool>>> { statusExpr, parentExpr };
+            var expressions = new List<Expression<Func<SPListItem, bool>>> { parentExpr, statusExpr };
             if (additionalExpr != null)
             {
                 expressions.Add(additionalExpr);
