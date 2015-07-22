@@ -75,9 +75,6 @@
     <None Include="Pages\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{e1f1de0f-c193-4d1b-b439-8f6b576bc08b}</SharePointProjectItemId>
     </None>
-    <None Include="Styles\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{e3e1b591-f155-4895-9d21-337a3bc333b4}</SharePointProjectItemId>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\TaxoMotor_SitePages\TaxoMotor_SitePages.Template.xml">
@@ -95,12 +92,6 @@
     <Content Include="Pages\RenewalLicense.aspx" />
     <Content Include="Pages\SuspendLicense.aspx" />
     <Content Include="Pages\TaxiVinEditor.aspx" />
-    <Content Include="Styles\Elements.xml" />
-    <Content Include="Styles\IncomeRequestActions.css" />
-    <Content Include="Styles\LicenseActions.css" />
-    <Content Include="Styles\licenseSearchModel.css" />
-    <Content Include="Styles\ProgressDlg.css" />
-    <Content Include="Styles\TaxiActions.css" />
     <Content Include="Pages\TaxiBlankNoEditor.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
