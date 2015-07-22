@@ -72,27 +72,11 @@
     <None Include="Package\Package.Template.xml">
       <DependentUpon>Package.package</DependentUpon>
     </None>
-    <None Include="Pages\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{e1f1de0f-c193-4d1b-b439-8f6b576bc08b}</SharePointProjectItemId>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Features\TaxoMotor_SitePages\TaxoMotor_SitePages.Template.xml">
       <DependentUpon>TaxoMotor_SitePages.feature</DependentUpon>
     </Content>
-    <Content Include="Pages\CancellationLicense.aspx" />
-    <Content Include="Pages\DenyIncomeRequest.aspx" />
-    <Content Include="Pages\DenyTaxi.aspx" />
-    <Content Include="Pages\Elements.xml" />
-    <Content Include="Pages\IncomeRequestFilterPage.aspx" />
-    <Content Include="Pages\LicenseDisableGibdd.aspx" />
-    <Content Include="Pages\LicenseMakeObsolete.aspx" />
-    <Content Include="Pages\licenseSearch.aspx" />
-    <Content Include="Pages\ProgressDlg.aspx" />
-    <Content Include="Pages\RenewalLicense.aspx" />
-    <Content Include="Pages\SuspendLicense.aspx" />
-    <Content Include="Pages\TaxiVinEditor.aspx" />
-    <Content Include="Pages\TaxiBlankNoEditor.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

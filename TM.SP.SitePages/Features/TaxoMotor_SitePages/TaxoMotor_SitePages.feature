@@ -3,7 +3,4 @@
   <activationDependencies>
     <referencedFeatureActivationDependency minimumVersion="" itemId="d4fccc5c-9d92-46ee-9a14-8fcaa89c2c07" projectPath="..\TM.SP.Customizations\TM.SP.Customizations.csproj" />
   </activationDependencies>
-  <projectItems>
-    <projectItemReference itemId="e1f1de0f-c193-4d1b-b439-8f6b576bc08b" />
-  </projectItems>
 </feature>
