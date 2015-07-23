@@ -136,9 +136,6 @@
       <DependentUpon>Package.package</DependentUpon>
     </None>
     <None Include="Layouts\TM.SP.Customizations\Scripts\jquery-2.1.1.min.map" />
-    <None Include="Scripts\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{bab2c7a1-d7b1-4a2e-b5ec-4cc909717a0e}</SharePointProjectItemId>
-    </None>
     <None Include="Template\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{3341b68c-c9a7-4585-9e95-fa91c96d0e5e}</SharePointProjectItemId>
     </None>
@@ -198,7 +195,6 @@
     <Content Include="Features\TaxoMotor_TaxoMotorWebAppLevelCustomizations\TaxoMotor_TaxoMotorWebAppLevelCustomizations.Template.xml">
       <DependentUpon>TaxoMotor_TaxoMotorWebAppLevelCustomizations.feature</DependentUpon>
     </Content>
-    <Content Include="Layouts\TM.SP.Customizations\Scripts\tm.sp.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery-ui.min-1.11.1.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\knockout-3.2.0.debug.js" />
@@ -209,8 +205,6 @@
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.numeric.extensions.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.phone.extensions.js" />
     <Content Include="Layouts\TM.SP.Customizations\Scripts\jquery.inputmask\jquery.inputmask.regex.extensions.js" />
-    <Content Include="Scripts\Elements.xml" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorSiteLevelCustomizations.gif" />
     <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxoMotorWebAppLevelCustomizations.gif" />
   </ItemGroup>

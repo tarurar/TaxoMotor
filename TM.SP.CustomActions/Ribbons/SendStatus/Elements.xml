@@ -31,10 +31,10 @@
               url: encodeURI(url),
               method: 'POST',
               success: function (data) {
-                TM.SP.showIconNotification('Отправка статуса завершена', '_layouts/15/images/kpinormal-0.gif', true);
+                TM.SP_.showIconNotification('Отправка статуса завершена', '_layouts/15/images/kpinormal-0.gif', true);
               },
               error: function (data, errorCode, errorMessage) {
-                TM.SP.showIconNotification('При отправке статуса возникла ошибка', '_layouts/15/images/kpinormal-2.gif', true);
+                TM.SP_.showIconNotification('При отправке статуса возникла ошибка', '_layouts/15/images/kpinormal-2.gif', true);
               }
             });
           })();" />

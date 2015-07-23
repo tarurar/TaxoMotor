@@ -36,7 +36,7 @@
                 showClose: true,
                 dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
                     if (result == SP.UI.DialogResult.OK) {
-                        TM.SP.showIconNotification('Данные обновлены', '_layouts/15/images/kpinormal-0.gif', true);
+                        TM.SP_.showIconNotification('Данные обновлены', '_layouts/15/images/kpinormal-0.gif', true);
                         setTimeout(function() {
                           SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.OK);  
                         }, 1500);

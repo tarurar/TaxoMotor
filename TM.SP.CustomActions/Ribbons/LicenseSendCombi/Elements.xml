@@ -42,14 +42,14 @@
                 dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
                     if (result == SP.UI.DialogResult.OK) {
                         if (returnValue == null) {
-                            TM.SP.showIconNotification('Отправка запросов завершена', '_layouts/15/images/kpinormal-0.gif', true);
+                            TM.SP_.showIconNotification('Отправка запросов завершена', '_layouts/15/images/kpinormal-0.gif', true);
                         }
                         else {
                             location.href = returnValue;
                         }
                     }
                     else if (result == -1){
-                        TM.SP.showIconNotification('При отправке запросов возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+                        TM.SP_.showIconNotification('При отправке запросов возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
                     }
                 })
             };

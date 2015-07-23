@@ -41,7 +41,7 @@
 	              dialogReturnValueCallback: Function.createDelegate(null, function (result, returnValue) {
 		              if (result == SP.UI.DialogResult.OK) {
 			              if (returnValue == null) {
-				              TM.SP.showIconNotification('Признак &quot;Запрет отправки в ГИБДД&quot; изменен', '_layouts/15/images/kpinormal-0.gif', true);
+				              TM.SP_.showIconNotification('Признак &quot;Запрет отправки в ГИБДД&quot; изменен', '_layouts/15/images/kpinormal-0.gif', true);
 				              setTimeout(function() {
 				                var gobackBtn = $('input[type=button][name*=&quot;GoBack&quot;]');
 				                if (gobackBtn) {
@@ -54,7 +54,7 @@
 			              }
 		              }
 		              else if (result == -1){
-			              TM.SP.showIconNotification('В процессе установки признака возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
+			              TM.SP_.showIconNotification('В процессе установки признака возникли ошибки', '_layouts/15/images/kpinormal-2.gif', true);
 			              setTimeout(function() {
 			                SP.UI.ModalDialog.RefreshPage(SP.UI.DialogResult.cancel);  
 			              }, 2000);
