@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.EntityClient;
 using System.Linq;
 using System.ServiceModel;
 using WebClientGIBDD;
@@ -45,14 +46,14 @@ namespace WebClientGIBDD
 
                 using (var tmData = new TmDataModelContainer(DBConnectionString))
                 {
-                    var licenseids = tmData.Database.SqlQuery<int>(
+                    var licenseids = tmData.ExecuteStoreQuery<int>(
                         @"      create table #tt(id uniqueidentifier,licenseid int, recordid decimal(18,0))
                                  
                                 insert into #tt(id, licenseid, recordId)
                                 select NEWID(), l1.Id, l1.RootParent
-                                from [TM.Data].[dbo].License l1
-                                    left join [TM.Data].[dbo].SpecialVehiclesRegister svr on l1.id = svr.License_id
-                                    left join [TM.Data].[dbo].license l2 on l2.Parent = l1.id and l2.Status<4
+                                from License l1
+                                    left join SpecialVehiclesRegister svr on l1.id = svr.License_id
+                                    left join license l2 on l2.Parent = l1.id and l2.Status<4
                                 where svr.License_id is null and l1.status < 4 and l2.id is null;
 
                                 insert into [SpecialVehiclesRegister](ID, [License_id], [RecordId])
@@ -285,10 +286,10 @@ namespace WebClientGIBDD
                             }
                             catch(Exception ex)
                             {
-                                var err = tmData.GibddServiceErrors.Create();
+                                var err = tmData.GibddServiceErrors.CreateObject();
                                 err.ErrorDate = DateTime.Now;
                                 err.Exception = ex.Message;
-                                tmData.GibddServiceErrors.Add(err);
+                                tmData.GibddServiceErrors.AddObject(err);
                                 tmData.SaveChanges();
 
                                 error = true;
@@ -304,7 +305,8 @@ namespace WebClientGIBDD
                         if (tmData.ExcludeVehicles.Any(x => x.licencePlateNumber == rl.licencePlateNumber && x.cancelDate == rl.cancelDate))
                             continue;
 
-                        var exv = tmData.ExcludeVehicles.Create();
+                        var exv = tmData.ExcludeVehicles.CreateObject();
+                        exv.ID = Guid.NewGuid();
                         exv.owner = rl.owner;
                         exv.catalogNumber = rl.catalogNumber;
                         exv.licencePlateNumber = rl.licencePlateNumber;
@@ -312,7 +314,7 @@ namespace WebClientGIBDD
                         exv.cancelDate = rl.cancelDate;
                         exv.cancelComment = rl.cancelComment;
                         exv.licenseId = rl.licenseId;
-                        tmData.ExcludeVehicles.Add(exv);
+                        tmData.ExcludeVehicles.AddObject(exv);
                     }
                     tmData.SaveChanges();
                 }
@@ -332,15 +334,12 @@ namespace WebClientGIBDD
         {
             using (var tmData = new TmDataModelContainer(DBConnectionString))
             {
-                var applog = tmData.AppLog.Create();
-                applog.ID = Guid.NewGuid();
-                applog.EventDateTime = DateTime.Now;
-                applog.ApplicationName = applicationName;
-                applog.Direction = direction == Direction.Send ? "S" : "R";
-                applog.Message = message;
-                applog.MessageID = messageId;
-                tmData.AppLog.Add(applog);
-                tmData.SaveChanges();
+                tmData.AppLogInsert(
+                    applicationName,
+                    direction == Direction.Send ? "S" : "R",
+                    message,
+                    messageId);
+
             }
         }
 

@@ -155,19 +155,35 @@ namespace TestSPConsole
         {
             Console.WriteLine("Press any key to start");
             Console.ReadKey();
-            
 
-            using (SPSite site = new SPSite("http://77.95.132.133"))
+
+            /*using (SPSite site = new SPSite("http://77.95.132.133"))
             using (SPWeb web = site.OpenWeb())
-            {
-                var context = SPServiceContext.GetContext(site);
+            {*/
+                for (int i = 1; i <= 10; i++)
+                {
+                    var t = new Thread(() =>
+                    {
+                        using (SPSite site = new SPSite("http://77.95.132.133"))
+                        using (SPWeb web = site.OpenWeb())
+                        {
+                            var list = web.GetList("Lists/TestThread");
+                            var item = list.AddItem();
+                            item["Title"] = Thread.CurrentThread.ManagedThreadId.GetHashCode().ToString();
+                            item.Update();
+                        }
+                    });    
+                    t.Start();
+                }
+                
+                /*var context = SPServiceContext.GetContext(site);
                 using (var scope = new SPServiceContextScope(context))
                 {
                     var l = LicenseHelper.GetLicenseRequestToSend(0);
                     Console.WriteLine(l.RegNumber);
 
-                }
-            }
+                }*/
+            //}
 
             Console.WriteLine("Finished");
             Console.ReadKey();

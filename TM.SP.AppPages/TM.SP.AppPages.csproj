@@ -275,6 +275,7 @@ net start "SharePoint Timer Service"</PostDeploymentCommand>
     <Content Include="Layouts\TM.SP.AppPages\Images\filter-32.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\license-check-signature-16.png" />
     <Content Include="Layouts\TM.SP.AppPages\Images\license-check-signature-32.png" />
+    <Content Include="Template\Images\TaxoMotor\FeatureIcon_TaxomotorHandlers.gif" />
     <Content Include="WebParts\IncomRequestFilterWebPart\IncomRequestFilterWebPartUserControl.ascx" />
     <Content Include="WebParts\IncomRequestFilterWebPart\WebPartIcon_IncomRequestFilterWebPart.gif" />
     <Content Include="WebParts\LicenseFilterWebPart\Elements.xml" />

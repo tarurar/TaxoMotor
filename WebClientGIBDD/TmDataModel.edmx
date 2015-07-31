@@ -206,6 +206,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AppLogInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Direction" Type="nchar" Mode="In" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="MessageID" Type="uniqueidentifier" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -228,6 +234,12 @@
           </AssociationSet>
           <EntitySet Name="AppLog" EntityType="TM.DataModel.AppLog" />
           <EntitySet Name="GibddServiceErrors" EntityType="TM.DataModel.GibddServiceErrors" />
+          <FunctionImport Name="AppLogInsert">
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+            <Parameter Name="Direction" Mode="In" Type="String" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+            <Parameter Name="MessageID" Mode="In" Type="Guid" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="ExcludeVehicles">
           <Key>
@@ -352,7 +364,7 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="License_id" Type="Int32" />
-          <Property Name="RecordId" Type="Decimal" />
+          <Property Name="RecordId" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PackageId" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ProccessingStageCode" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="ProcessingStageDate" Type="DateTime" Precision="3" />
@@ -574,6 +586,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AppLogInsert" FunctionName="Хранилище TM.DataModel.AppLogInsert" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
