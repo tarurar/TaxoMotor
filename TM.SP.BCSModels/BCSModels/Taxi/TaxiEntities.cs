@@ -223,7 +223,7 @@ namespace TM.SP.BCSModels.Taxi
         public System.String OgrnNum { get; set; }
         [XmlElement("ogrnname"), SharepointField("Tm_OgrnName")]
         public System.String OgrnName { get; set; }
-        [XmlElement("graaddress"), SharepointField("Tm_GrAddress")]
+        [XmlElement("graddress"), SharepointField("Tm_GrAddress")]
         public System.String GRAddress { get; set; }
 
         #region [InnDate]
@@ -242,7 +242,7 @@ namespace TM.SP.BCSModels.Taxi
         public System.String Address_Fact { get; set; }
         [XmlElement("country_fact")]
         public System.String Country_Fact { get; set; }
-        [XmlElement("postalCode_fact")]
+        [XmlElement("postalcode_fact")]
         public System.String PostalCode_Fact { get; set; }
         [XmlElement("locality_fact")]
         public System.String Locality_Fact { get; set; }
